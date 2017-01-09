@@ -1,0 +1,13 @@
+
+<div class="post-form">
+  <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <textarea rows="4" formControlName="content" class="form-control" placeholder="been wondering wandering?"></textarea>
+    </div>
+
+    <button type="submit" class="primaryButton" [disabled]="!postForm.valid">Post</button>
+
+  </form>
+
+</div>

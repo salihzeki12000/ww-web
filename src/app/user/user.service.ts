@@ -10,8 +10,8 @@ export class UserService  {
   currentUser: User;
   updateCurrentUser = new ReplaySubject();
 
-  private url = 'http://localhost:9000';
-  // private url = 'https://vast-island-87972.herokuapp.com';
+  // private url = 'http://localhost:9000';
+  private url = 'https://vast-island-87972.herokuapp.com';
 
   constructor( private http: Http)  {}
 

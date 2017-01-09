@@ -1,0 +1,39 @@
+.user-posts {
+  padding: 20px;
+  border-bottom: 1px solid lightgrey;
+}
+
+h6  {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-size: 0.8rem;
+  color: #ccc;
+}
+
+.fa-user {
+  padding-left: 9.5px;
+  padding-top: 10px;
+}
+
+.user-detail  {
+  height: 35px;
+}
+
+.user-detail > div,
+.user-detail > .name-time {
+  display: inline-block;
+}
+
+.name-time  {
+  margin-left: 5px;
+  vertical-align: top;
+}
+
+.content  {
+  margin: 10px 40px;
+}
+
+textarea  {
+  width: 100%;
+  resize: none;
+}

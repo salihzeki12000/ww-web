@@ -7,8 +7,12 @@ import { routing } from './app.routing';
 import { AppComponent } from './app.component';
 
 import { AuthComponent, AuthService, SignupComponent, SigninComponent } from './auth';
+import { UserComponent, UserService } from './user';
 
-import { UserService } from './user';
+import { MeComponent } from './me';
+import { MainNavigationComponent, SideNavigationComponent } from './navigation';
+
+import { PostsComponent, PostComponent, PostInputComponent, PostListComponent, PostService } from './post';
 
 @NgModule({
   declarations: [
@@ -16,6 +20,14 @@ import { UserService } from './user';
     AuthComponent,
     SignupComponent,
     SigninComponent,
+    UserComponent,
+    MeComponent,
+    MainNavigationComponent,
+    SideNavigationComponent,
+    PostsComponent,
+    PostInputComponent,
+    PostListComponent,
+    PostComponent,
   ],
   imports: [
     BrowserModule,
@@ -24,7 +36,7 @@ import { UserService } from './user';
     HttpModule,
     routing,
   ],
-  providers: [ AuthService, UserService ],
+  providers: [ AuthService, UserService, PostService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

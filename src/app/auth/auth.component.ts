@@ -33,7 +33,6 @@ export class AuthComponent implements OnInit, AfterViewInit {
 
   ngOnInit()  {
     FB.getLoginStatus(response => {
-      console.log(response);
       this.statusChangeCallback(response);
     });
   }
@@ -64,7 +63,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
                 data => {
                   this.userService.getCurrentUserDetails()
                       .subscribe( result => {
-                        // this.router.navigateByUrl('/me');
+                        this.router.navigateByUrl('/me');
                       } );
                 }
               )
@@ -99,10 +98,9 @@ export class AuthComponent implements OnInit, AfterViewInit {
         email: email,
         displayPic: displayPic,
       }).subscribe( data => {
-        console.log(data);
         this.userService.getCurrentUserDetails()
             .subscribe( result => {
-              // this.router.navigateByUrl('/me');
+              this.router.navigateByUrl('/me');
             } );
       });
 

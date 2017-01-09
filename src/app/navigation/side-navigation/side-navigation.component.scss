@@ -1,0 +1,75 @@
+.category {
+  margin-bottom: 10px;
+}
+
+.heading  {
+  border-bottom: 1px solid grey;
+}
+
+.heading > h4,
+.heading > a  {
+  display: inline-block;
+}
+
+a{
+  font-size: 1.1rem;
+}
+
+h4  {
+  font-size: 1.3rem;
+}
+
+h5  {
+  font-size: 1rem;
+}
+
+h6  {
+  font-size: 1rem;
+  color: grey;
+}
+
+.itineraryList  {
+  padding-left: 5px;
+  margin-top: 2px;
+  margin-bottom: 5px;
+}
+
+.itineraryList > a  {
+  color: black;
+  &:hover {
+    color: darkblue;
+    text-decoration: none;
+  }
+}
+
+.active {
+  font-weight: bolder;
+}
+
+
+/**************************
+ new itinerary form modal
+**************************/
+.modal-header {
+  background-color: #6494ED;
+  border-radius: 5px 5px 0 0;
+}
+
+.modal-footer {
+  border-top: none;
+}
+
+#new-itin-form  {
+  top: 20%;
+}
+
+/*************************
+ find friend modal-footer
+ *************************/
+.x-close  {
+  top: 5%;
+}
+
+.follow-button  {
+  float: right;
+}

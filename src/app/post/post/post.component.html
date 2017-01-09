@@ -1,0 +1,28 @@
+<div class="user-posts">
+
+  <div class="update">
+    <a (click)="onEdit()"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+    <a (click)="onDelete()"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+  </div>
+
+  <div class="user-detail">
+    <div>
+      <img src="{{ post?.user.displayPic }}" alt="display picture for {{ post?.user.username }}" class="user-profile-thumbnail">
+    </div>
+    <div class="name-time">
+      <h5>{{ post?.user.username}}</h5>
+      <h6>{{ post?.created_at | date:'medium'}}</h6>
+    </div>
+  </div>
+
+  <div class="content">
+    <div [class.editing]="editing">
+      <div class="view">
+        <p>{{ post.content }}</p>
+      </div>
+    </div>
+
+    <textarea rows="4" *ngIf="editing" [value]="post.content" class="edit form-control" (keyup.enter)="updatePost(post, editedPost.value)" (blur)="updatePost(post, editedPost.value)" #editedPost autofocus></textarea>
+  </div>
+
+</div>
