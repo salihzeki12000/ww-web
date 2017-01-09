@@ -1,0 +1,28 @@
+<h5>New to wondererwanderer? Sign up with us now!</h5>
+
+<form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input type="text" id="username" formControlName="username" class="form-control">
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="text" id="email" #email formControlName="email" class="form-control">
+    <span *ngIf="!email.pristine && email.errors != null && email.errors['invalidEmail']">Invalid email address</span>
+  </div>
+
+  <div class="form-group">
+    <label for="password">Password</label><span>( at least 6 characters )</span>
+    <input type="password" id="password" formControlName="password" class="form-control">
+  </div>
+
+  <div class="form-group">
+    <label for="passwordConfirmation">Confirm Password</label>
+    <input type="password" id="passwordConfirmation" #passwordConfirmation formControlName="passwordConfirmation" class="form-control">
+    <span *ngIf="!passwordConfirmation.pristine && passwordConfirmation.errors != null && passwordConfirmation.errors['passwordsNotMatch']">Passwords do not match</span>
+  </div>
+
+  <button type="submit" name="button" [disabled]="!signupForm.valid">Sign Up Now</button>
+
+</form>
