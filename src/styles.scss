@@ -1,1 +1,450 @@
 /* You can add global styles to this file, and also import other style files */
+
+// http://paletton.com/#uid=73I2a0kkvUghaSyiTTim6VonEWB
+// #6494ED - blue
+// #FFC65C - accent color
+// #56EEAD - green
+// #FF8A5C - orange
+// #DC143C - crimson(red)
+// #3A4A4D - dark grey
+// #C0C0C0 - light grey
+
+
+$primaryColor: #6495ED;
+$accentColor: #FF8A5C;
+$darkGrey: #3A4A4D;
+$lightGrey: #F9FBFB;
+$crimsonRed: #DC143C;
+$buttonFontSize: 0.8em;
+
+* {
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6, p  {
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+}
+
+h1  { font-size: 2em }
+h2  { font-size: 1.5em }
+h3  { font-size: 1.17em }
+h4  { font-size: 1em }
+h5  { font-size: 0.83em }
+h6  { font-size: 0.67em }
+a  { font-size: 0.83em }
+
+@mixin primaryButton  {
+  padding: 8px 20px;
+  color: white;
+  border: transparent;
+  background-color: $accentColor;
+  &:hover {
+    color: $accentColor;
+    border: 1px solid $accentColor;
+    background-color: white;
+  };
+  &[disabled] {
+    background-color: #ccc;
+    color: white;
+  }
+}
+
+@mixin button  {
+  padding: 8px 20px;
+  color: $primaryColor;
+  border: 1px solid $primaryColor;
+  background-color: white;
+  &:hover {
+    color: white;
+    background-color: $primaryColor;
+  }
+}
+
+@mixin reverseButton  {
+  padding: 8px 20px;
+  color: white;
+  border: 1px solid $primaryColor;
+  background-color: $primaryColor;
+  &:hover {
+    color: $primaryColor;
+    background-color: white;
+  }
+}
+
+@mixin deleteButton {
+  padding: 8px 20px;
+  color: $darkGrey;
+  border: 1px solid $darkGrey;
+  background-color: white;
+  &:hover {
+    color: $crimsonRed;
+    border-color: $crimsonRed;
+    background-color: white;
+  }
+}
+
+button.primaryButton  {
+  @include primaryButton;
+}
+
+button.reverseButton  {
+  @include reverseButton;
+}
+
+button.deleteButton {
+  @include deleteButton;
+}
+
+button  {
+  @include button;
+  font-size: $buttonFontSize
+}
+
+button[disabled]  {
+  color: #ccc;
+  border: 1px solid #ccc;
+  &:hover {
+    color: #ccc;
+    border: 1px solid #ccc;
+    background-color: white;
+  }
+}
+
+.form-control {
+  padding: 4px 12px;
+  height: 24px;
+  font-size: 12px;
+}
+
+/** to allow google search to show in modal **/
+.navbar-fixed-top {
+  z-index: 900;
+}
+
+/***************
+  forms style
+***************/
+label {
+  font-size: 11px;
+  margin-bottom: 3px;
+  padding-left: 2px;
+}
+
+input[type=text]  {
+  max-width: 400px;
+}
+
+input[type=date],
+input[type=time],
+#depTerminal,
+#arrTerminal,
+#referenceNumber,
+#contactNumber  {
+  max-width: 175px;
+}
+
+.form-group {
+  margin-bottom: 5px;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.block  {
+  display: block;
+}
+
+a {
+  cursor: pointer;
+}
+
+.float-right  {
+  float: right;
+}
+
+/**********************
+  user thumbnail image
+***********************/
+.user-profile-thumbnail  {
+  height: 30px;
+  width: 30px;
+  background-color: #AEAFAF;
+  border-radius: 5px;
+}
+
+/**********************
+ for edit/delete icons
+ *********************/
+.update {
+  float: right;
+}
+
+.fa-trash-o,
+.fa-pencil {
+  color: #ccc;
+  &:hover {
+    color: #666;
+  }
+}
+
+/* trash-o is for deleting existing record, a.delete is to delete form */
+a.delete  {
+  color: #ccc;
+  &:hover {
+    text-decoration: none;
+    color: $crimsonRed;
+  }
+}
+
+/****************
+ for editing view
+ ****************/
+.editing > .view{
+  display: none;
+}
+
+// .linkDetails.editing,
+// .detailsCard.editing,
+// .activityCard.editing  {
+//   border: 2px solid lightcoral;
+// }
+
+/*****************
+ for form display
+ *****************/
+.formCard {
+  padding: 10px 20px 20px 20px;
+  -webkit-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+  border-radius: 5px;
+  border: 2px solid #099FFF;
+}
+
+.formCard:last-child  {
+  margin-bottom: 10px;
+}
+
+/** add and save buttons **/
+.addOption,
+.saveOption {
+  display: inline-block;
+  margin-top: 10px;
+}
+
+/***************
+  sub headings
+***************/
+.subHeading {
+  width: 100%;
+  padding-bottom: 10px;
+  font-size: 1.6rem;
+  border-bottom: 1px solid #ccc;
+}
+
+.subHeading > a {
+  float: right;
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.placeSearch,
+.flightSearch {
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+  background-color: aliceblue;
+}
+
+.checkInOut {
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+  background-color: #ffe5e5;
+}
+
+.checkInOut > h6  {
+  padding-left: 2px;
+}
+
+/***********************
+  activityCard display
+***********************/
+.activityCard {
+  display: inline-block;
+  margin: 0 5px 5px 0;
+  width: 300px;
+  vertical-align: text-top;
+  -webkit-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+  border-radius: 5px;
+}
+
+.activityDetails  {
+  padding: 10px 20px;
+}
+
+.img {
+  padding-top: 60px;
+  width: 300px;
+  height: 200px;
+  background-color: #f5f5fd;
+  text-align: center;
+}
+
+.activityCheckIn  {
+  float: right;
+  min-width: 36px;
+  padding: 5px;
+  color: #c39d63;
+  text-align: center;
+  border: 2px solid #c39d63;
+  border-radius: 5px;
+  &:hover {
+    color: white;
+    background-color: #c39d63;
+    cursor: pointer;
+  }
+}
+
+.activityTitle,
+.activityDescription,  {
+  padding: 4px 0;
+  text-align: justify;
+}
+
+.activityTitle  {
+  width: 85%;
+  text-transform: capitalize;
+}
+
+.activitySmall {
+  padding-bottom: 5px;
+}
+
+.activitySubDescription {
+  color: grey;
+}
+
+.note{
+  color: grey;
+}
+
+/*****************************************************
+  display username for created post/activity/resource
+******************************************************/
+.postby > h6,
+.postby > p {
+  display: inline-block;
+}
+
+.postby > p {
+  color: grey;
+  font-size: 0.5em;
+}
+
+/************
+   all modal
+*************/
+.modal-footer {
+  border-top: none;
+}
+
+.custom-modal {
+  background-color: rgba(0,0,0,0.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 1000;
+}
+
+/****************
+  delete modal
+****************/
+.delete-modal {
+  background-color: rgba(0,0,0,0.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 1050;
+}
+
+.confirm-delete {
+  min-width: 600px;
+  position: fixed;
+  top: 25%;
+  left: 30%;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.confirm-delete-header  {
+  padding: 20px 40px 10px 40px;
+  background-color: #fae6f0;
+  border-bottom: 1px solid lightgray;
+  border-radius: 5px 5px 0 0;
+}
+
+.confirm-delete-content {
+  padding: 40px 60px;
+}
+
+.confirm-delete-header > h4 {
+  display: inline-block;
+}
+
+.confirm-delete-footer  {
+  padding-left: 40px;
+  padding-bottom: 20px;
+}
+
+.x-close  {
+  position: absolute;
+  top: 8%;
+  right: 5%;
+  cursor: pointer;
+  color: grey;
+}
+
+span.confirm-delete-name {
+  color: red;
+  font-size: 1.2em;
+}
+
+/*************************
+ add members modal-footer
+ *************************/
+.show-users  {
+  min-width: 400px;
+  position: fixed;
+  top: 25%;
+  left: 30%;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.show-users-header  {
+  padding: 10px;
+  background-color: #fae6f0;
+  border-bottom: 1px solid lightgray;
+  border-radius: 5px 5px 0 0;
+}
+
+.show-users-footer  {
+  padding: 15px;
+}
+
+.user-card  {
+  padding: 10px;
+  border-bottom: 1px solid #C0C0C0;
+}

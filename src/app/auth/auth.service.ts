@@ -33,7 +33,7 @@ export class AuthService  {
     const body = JSON.stringify(user);
     const headers = new Headers({ 'Content-Type': 'application/json' });
 
-    return this.http.post(this.url + '/users/new', body, { headers: headers })
+    return this.http.post(this.url + '/users/new/', body, { headers: headers })
                     .map((response: Response) => {
                       this.loginType = 'local';
                       localStorage.setItem('token', response.json()['token']);
@@ -46,7 +46,7 @@ export class AuthService  {
     const body = JSON.stringify(user);
     const headers = new Headers({ 'Content-Type': 'application/json' });
 
-    return this.http.post(this.url + '/users/signin', body, { headers: headers })
+    return this.http.post(this.url + '/users/signin/', body, { headers: headers })
                     .map((response: Response) => {
                       this.loginType = 'local';
                       localStorage.setItem('token', response.json()['token']);
