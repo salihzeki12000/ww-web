@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
-import { AuthService } from '../auth';
-import { User, UserService } from '../user';
+import { AuthService } from '../../auth';
+import { User, UserService } from '../../user';
 
 @Component({
   selector: 'ww-main-navigation',
