@@ -12,8 +12,8 @@ import { User }        from '../user/user';
 
 @Injectable()
 export class AuthService  {
-  private url = 'http://localhost:9000';
-  // private url = 'https://vast-island-87972.herokuapp.com';
+  // private url = 'http://localhost:9000';
+  private url = 'https://vast-island-87972.herokuapp.com';
 
   loginType;
 
