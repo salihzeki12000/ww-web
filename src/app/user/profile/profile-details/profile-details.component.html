@@ -1,0 +1,15 @@
+<div class="col-md-6 col-md-offset-1">
+  <h5>Username</h5>
+  <h6>{{ user?.username }}</h6>
+  <hr>
+
+  <h5>Email</h5>
+  <h6>{{ user?.email }}</h6>
+  <hr>
+
+  <h5>Date Join</h5>
+  <h6>{{ user?.created_at | date:'medium' }}</h6>
+  <hr>
+
+  <button type="button" (click)="onDelete()">Delete my account</button>
+</div>

@@ -1,0 +1,40 @@
+p {
+  margin-right: 5px;
+  font-size: 8px;
+  color: grey;
+}
+
+.checkIn i {
+  display: inline-block;
+  color: grey;
+}
+
+.checkin-status {
+  text-align: center;
+  margin-right: -4px;
+  width: 34%;
+  color: white;
+  font-size: 0.8em;
+  background-color: #f08080;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.green  {
+  background-color: #66cdaa;
+}
+
+.dateTime {
+  text-align: center;
+  margin-right: -4px;
+  width: 300px;
+  color: white;
+  font-size: 0.8em;
+  background-color: #c39d63;
+}
+
+img {
+  width: 300px;
+  height: 200px;
+}

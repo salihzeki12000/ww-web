@@ -1,0 +1,30 @@
+<div class="toggle-select">
+  <label for="toggle">
+    Expand all
+    <input name="toggle" type="radio" (click)="expandAll()">
+  </label>
+
+  <label for="toggle">
+    Collapse all
+    <input name="toggle" type="radio" (click)="collapseAll()">
+  </label>
+</div>
+
+<div class="activity-collapse">
+  <div *ngFor="let date of itinDateRange; let i = index">
+    <div class="itin-date">
+      <div *ngIf="date === 'any day'">
+        <h5 *ngIf="collapseDate[i]" (click)="toggleCollapse(i)">Any day <i class="fa fa-plus" aria-hidden="true"></i></h5>
+        <h5 *ngIf="!collapseDate[i]" (click)="toggleCollapse(i)">Any day <i class="fa fa-minus" aria-hidden="true"></i></h5>
+      </div>
+      <div *ngIf="date !== 'any day'">
+        <h5 *ngIf="collapseDate[i]" (click)="toggleCollapse(i)">Day {{ i }} - {{ date | date: "dd MMM yyyy (EEEE)" }}<i class="fa fa-plus" aria-hidden="true"></i></h5>
+        <h5 *ngIf="!collapseDate[i]" (click)="toggleCollapse(i)">Day {{ i }} - {{ date | date: "dd MMM yyyy (EEEE)" }}<i class="fa fa-minus" aria-hidden="true"></i></h5>
+      </div>
+    <div>
+
+    <div *ngIf="!collapseDate[i]">
+      <ww-activity-collapse [date]="date" [event]="event" *ngFor="let event of events"></ww-activity-collapse>
+    </div>
+  </div>
+</div>

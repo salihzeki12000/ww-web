@@ -2,7 +2,6 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 declare var google:any;
 
-// import { Activity, ActivityService } from '../../../activities';
 import { ItineraryEvent } from '../itinerary-events/itinerary-event';
 import { ItineraryEventService } from '../itinerary-events/itinerary-event.service';
 
@@ -15,11 +14,10 @@ import { ItineraryEventService } from '../itinerary-events/itinerary-event.servi
 })
 export class ItineraryMapComponent implements OnInit {
   @ViewChild('map') map: ElementRef;
-  events: Event[] = [];
+  events: ItineraryEvent[] = [];
 
   constructor(
     private itineraryEventService: ItineraryEventService,
-    // private activityService: ActivityService,
     private route: ActivatedRoute) { }
 
   ngOnInit() {

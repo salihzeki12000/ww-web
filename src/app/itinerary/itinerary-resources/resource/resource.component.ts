@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 
 import { Resource } from '../resource';
 import { ResourceService } from '../resource.service';
-// import { FlashMessageService } from '../../../../flash-message';
+import { FlashMessageService } from '../../../flash-message';
 
 @Component({
   selector: 'ww-resource',
@@ -19,7 +19,7 @@ export class ResourceComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    // private flashMessageService: FlashMessageService,
+    private flashMessageService: FlashMessageService,
     private resourceService: ResourceService) {
       this.editResourceForm = this.formBuilder.group({
         'link': '',
@@ -53,7 +53,7 @@ export class ResourceComponent implements OnInit {
     this.resourceService.editResource(this.resource)
         .subscribe(
           data => {
-            // this.flashMessageService.handleFlashMessage(data.message);
+            this.flashMessageService.handleFlashMessage(data.message);
           })
     this.editing = false;
   }
@@ -70,7 +70,7 @@ export class ResourceComponent implements OnInit {
     this.resourceService.deleteResource(this.resource)
         .subscribe(
           data => {
-            // this.flashMessageService.handleFlashMessage(data.message);
+            this.flashMessageService.handleFlashMessage(data.message);
           })
     this.deleteResource = false;
   }

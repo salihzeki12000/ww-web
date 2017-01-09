@@ -8,7 +8,7 @@ import { Itinerary } from '../../itinerary';
 import { UserService } from '../../../user';
 import { ItineraryEvent } from '../itinerary-event';
 import { ItineraryEventService } from '../itinerary-event.service';
-// import { FlashMessageService } from '../../../flash-message';
+import { FlashMessageService } from '../../../flash-message';
 
 @Component({
   selector: 'ww-itinerary-accommodation-transport',
@@ -46,7 +46,7 @@ export class ItineraryAccommodationTransportComponent implements OnInit, DoCheck
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
     private userService: UserService,
-    // private flashMessageService: FlashMessageService,
+    private flashMessageService: FlashMessageService,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder) {
       this.editAccommodationForm = this.formBuilder.group({
@@ -153,7 +153,7 @@ export class ItineraryAccommodationTransportComponent implements OnInit, DoCheck
     this.itineraryEventService.editEvent(originalAccommodation)
         .subscribe(
           data => {
-            // this.flashMessageService.handleFlashMessage(data.message);
+            this.flashMessageService.handleFlashMessage(data.message);
           })
 
     this.editAccommodationForm.reset({
@@ -207,7 +207,7 @@ export class ItineraryAccommodationTransportComponent implements OnInit, DoCheck
     this.itineraryEventService.editEvent(originalTransport)
         .subscribe(
           data => {
-            // this.flashMessageService.handleFlashMessage(data.message);
+            this.flashMessageService.handleFlashMessage(data.message);
           })
   }
 
@@ -254,7 +254,7 @@ export class ItineraryAccommodationTransportComponent implements OnInit, DoCheck
           data => {
             this.displayTransportDelete = 'none';
             this.transportToDelete = '';
-            // this.flashMessageService.handleFlashMessage(data.message);
+            this.flashMessageService.handleFlashMessage(data.message);
           })
   }
 

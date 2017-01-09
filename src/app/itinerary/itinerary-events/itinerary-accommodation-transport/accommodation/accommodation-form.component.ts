@@ -3,14 +3,13 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
 
-import { Itinerary } from '../../itinerary';
-import { ItineraryService } from '../../itinerary.service';
-import { ItineraryEvent } from '../itinerary-event';
-import { ItineraryEventService } from '../itinerary-event.service';
+import { Itinerary } from '../../../itinerary';
+import { ItineraryService } from '../../../itinerary.service';
+import { ItineraryEvent } from '../../itinerary-event';
+import { ItineraryEventService } from '../../itinerary-event.service';
 
-import { UserService } from '../../../user';
-
-// import { FlashMessageService } from '../../../flash-message';
+import { UserService } from '../../../../user';
+import { FlashMessageService } from '../../../../flash-message';
 
 @Component({
   selector: 'ww-accommodation-form',
@@ -35,7 +34,7 @@ export class AccommodationFormComponent implements OnInit {
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
     private userService: UserService,
-    // private flashMessageService: FlashMessageService,
+    private flashMessageService: FlashMessageService,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder) {
       this.addAccommodationForm = this.formBuilder.group({
@@ -103,7 +102,7 @@ export class AccommodationFormComponent implements OnInit {
     this.itineraryEventService.addEvent(newAccommodation, this.itinerary['_id'])
         .subscribe(
           data => {
-            // this.flashMessageService.handleFlashMessage(data.message);
+            this.flashMessageService.handleFlashMessage(data.message);
           })
 
     this.cancelAccommodationForm.emit(false)

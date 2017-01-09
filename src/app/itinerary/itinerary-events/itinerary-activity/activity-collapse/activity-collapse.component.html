@@ -1,0 +1,145 @@
+<div *ngIf="event?.date == date">
+  <div *ngIf="event?.type === 'activity'">
+
+    <div *ngIf="collapse" >
+      <div class="collapseCard">
+        <div (click)="toggleCollapse()">
+          <h4 class="truncate"><span [class.anytime]="event?.time === 'anytime'">{{ event?.time }}</span> {{ event?.name }}</h4>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!collapse" [class.highlight]="!collapse">
+
+      <div *ngIf="event?.photo" (click)="toggleCollapse()">
+        <img src="{{event?.photo}}" alt="picture of {{ event?.name}}">
+      </div>
+
+      <div *ngIf="!event?.photo">
+        <div class="img" (click)="toggleCollapse()">
+          <i class="fa fa-camera fa-4x" aria-hidden="true"></i>
+          <h5>add a photo</h5>
+        </div>
+      </div>
+
+      <div class="dateTime" *ngIf="event?.date === 'any day'">{{ event?.date }} - {{ event?.time }}</div>
+      <div class="dateTime" *ngIf="event?.date !== 'any day'">{{ event?.date | date: 'EEE, dd MMM yyyy' }} - {{ event?.time }}</div>
+
+      <!-- <div class="checkin-status inline-block" [class.green]="event?.locationCheckedIn[1]" (click)="checkIn()">Check In</div> -->
+
+      <div class="collapseCard">
+
+        <div (click)="toggleCollapse()">
+          <h4>{{ event?.name }}</h4>
+        </div>
+
+        <h5 class="activityDescription">{{ event?.description }}</h5>
+        <h6 class="activitySmall activitySubDescription">{{ event?.subDescription }}</h6>
+        <h6 class="activitySmall"><i class="fa fa-clock-o" aria-hidden="true"></i> {{ event?.opening_hours }}</h6>
+        <h6 class="activitySmall"><i class="fa fa-money" aria-hidden="true"></i> {{ event?.entryFee }}</h6>
+        <h6 class="activitySmall"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ event?.formatted_address }}</h6>
+        <h6 class="activitySmall"><i class="fa fa-phone" aria-hidden="true"></i> {{ event?.international_phone_number }}</h6>
+
+        <div class="block note">
+          <h6 class="activitySmall">{{ event?.note }}</h6>
+        </div>
+
+        <a href="{{event?.website}}" target="_blank"><h5 class="truncate link">{{ event?.website }}</h5></a>
+
+        <div class="inline-block">
+          <h6 class="inline-block"><i class="fa fa-tags" aria-hidden="true"></i></h6>
+          <div *ngFor="let category of event.categories" class="inline-block">
+            <h6 *ngIf="category.checked">|  {{ category.value }}  |</h6>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div><!-- end of if event type = activity -->
+
+</div>
+
+<div *ngIf="event?.checkInDate == date">
+  <div *ngIf="collapse">
+    <div class="collapseCard">
+      <div>
+        <h4 class="truncate accomCheckIn"><i class="fa fa-bed" aria-hidden="true"></i>  Check in {{ event?.name }}</h4>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="event?.checkOutDate == date">
+  <div *ngIf="collapse">
+    <div class="collapseCard">
+      <div>
+        <h4 class="truncate accomCheckOut"><i class="fa fa-bed" aria-hidden="true"></i>  Check out {{ event?.name }}</h4>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="event?.depDate == date">
+  <div *ngIf="collapse">
+    <div [ngSwitch]="event?.transportType" class="collapseCard">
+
+      <div *ngSwitchCase="'flight'">
+        <h4 class="truncate"><span>{{ event?.depTime }}</span> <i class="fa fa-plane fa-lg" aria-hidden="true"></i> {{ event?.referenceNumber }} {{ event?.depCity }} to {{ event?.arrCity }}</h4>
+      </div>
+
+      <div *ngSwitchCase="'train'">
+        <i class="fa fa-train fa-lg" aria-hidden="true">Train details</i>
+      </div>
+
+      <div *ngSwitchCase="'bus'">
+        <i class="fa fa-bus fa-lg" aria-hidden="true">Bus details</i>
+      </div>
+
+      <div *ngSwitchCase="'cruise'">
+        <i class="fa fa-ship fa-lg" aria-hidden="true">Cruise details</i>
+      </div>
+
+      <div *ngSwitchCase="'vehicle rental'">
+        <i class="fa fa-car fa-lg" aria-hidden="true">Vehicle rental details</i>
+      </div>
+
+      <div *ngSwitchCase="'others'">
+        <i class="fa fa-rocket fa-lg" aria-hidden="true">Other transport details</i>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div *ngIf="event?.arrDate == date">
+  <div *ngIf="collapse">
+    <div [ngSwitch]="event?.transportType" class="collapseCard">
+
+      <div *ngSwitchCase="'flight'">
+        <h4 class="truncate arrival"><span>{{ event?.arrTime }}</span> <i class="fa fa-arrow-right fa-lg" aria-hidden="true"></i> {{ event?.referenceNumber }} arrives {{ event?.arrCity }}</h4>
+      </div>
+
+      <div *ngSwitchCase="'train'">
+        <i class="fa fa-train fa-lg" aria-hidden="true">Train details</i>
+      </div>
+
+      <div *ngSwitchCase="'bus'">
+        <i class="fa fa-bus fa-lg" aria-hidden="true">Bus details</i>
+      </div>
+
+      <div *ngSwitchCase="'cruise'">
+        <i class="fa fa-ship fa-lg" aria-hidden="true">Cruise details</i>
+      </div>
+
+      <div *ngSwitchCase="'vehicle rental'">
+        <i class="fa fa-car fa-lg" aria-hidden="true">Vehicle rental details</i>
+      </div>
+
+      <div *ngSwitchCase="'others'">
+        <i class="fa fa-rocket fa-lg" aria-hidden="true">Other transport details</i>
+      </div>
+
+    </div>
+  </div>
+</div>

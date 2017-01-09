@@ -8,7 +8,8 @@ import { Resource } from './resource';
 @Injectable()
 export class ResourceService  {
   private resources: Resource[] = [];
-  private url = 'http://localhost:9000';
+  // private url = 'http://localhost:9000';
+  private url = 'https://vast-island-87972.herokuapp.com';
 
   constructor( private http: Http)  {}
 

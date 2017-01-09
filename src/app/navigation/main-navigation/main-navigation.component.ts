@@ -24,12 +24,19 @@ export class MainNavigationComponent implements OnInit {
   ngOnInit() {
     this.currentUser = this.userService.currentUser;
     console.log(this.currentUser);
-    // this.currentUserSubscription = this.userService.updateCurrentUser
-    //                                    .subscribe(
-    //                                      data =>  {
-    //                                        this.user = data;
-    //                                      }
-    //                                    )
+    this.currentUserSubscription = this.userService.updateCurrentUser
+                                       .subscribe(
+                                         data =>  {
+                                           this.currentUser = data;
+                                           console.log(this.currentUser);
+                                         }
+                                       )
+
+    // this.userService.getCurrentUserDetails()
+    //     .subscribe( data => {
+    //       this.currentUser = this.userService.currentUser;
+    //       console.log(this.currentUser);
+    //     });
   }
 
   logout()  {

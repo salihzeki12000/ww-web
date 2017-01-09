@@ -4,7 +4,7 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 
 import { ItineraryService } from './itinerary.service';
 import { Itinerary } from './itinerary';
-// import { FlashMessageService } from '../flash-message';
+import { FlashMessageService } from '../flash-message';
 import { User, UserService } from '../user';
 
 @Component({
@@ -25,7 +25,7 @@ export class ItineraryComponent implements OnInit {
 
   constructor(
     private itineraryService: ItineraryService,
-    // private flashMessageService: FlashMessageService,
+    private flashMessageService: FlashMessageService,
     private userService: UserService,
     private route: ActivatedRoute,
     private router: Router,
@@ -44,6 +44,7 @@ export class ItineraryComponent implements OnInit {
       .subscribe(
         data => {
           this.itinerary = data.itinerary;
+          console.log(this.itinerary);
         }
       );
     })
@@ -86,7 +87,7 @@ export class ItineraryComponent implements OnInit {
     this.itineraryService.editItin(this.itinerary)
         .subscribe(
           data => {
-            // this.flashMessageService.handleFlashMessage(data.message);
+            this.flashMessageService.handleFlashMessage(data.message);
           }
         )
   }
@@ -104,7 +105,7 @@ export class ItineraryComponent implements OnInit {
         .subscribe(
           data => {
             this.router.navigateByUrl('/me');
-            // this.flashMessageService.handleFlashMessage(data.message);
+            this.flashMessageService.handleFlashMessage(data.message);
         })
     this.deleteItinerary = false;
   }

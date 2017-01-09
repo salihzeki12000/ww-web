@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Rx';
 
 import { PostService } from '../post.service';
 import { User, UserService } from '../../user';
+import { FlashMessageService } from '../../flash-message';
 
 @Component({
   selector: 'ww-post-input',
@@ -19,6 +20,7 @@ export class PostInputComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
+    private flashMessageService: FlashMessageService,
     private postService: PostService) {
       this.postForm = formBuilder.group({
         content: ['', Validators.required],
@@ -36,8 +38,9 @@ export class PostInputComponent implements OnInit {
       }
       })
      .subscribe(
-       data => console.log(data),
-       error => console.error(error)
+       data =>  {
+         this.flashMessageService.handleFlashMessage(data.message);
+       }
      );
     //  this.postForm.reset();
   }

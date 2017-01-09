@@ -3,12 +3,13 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
 
-import { ItineraryService } from '../../itinerary.service';
-import { Itinerary } from '../../itinerary';
-import { UserService } from '../../../user';
-import { ItineraryEvent } from '../itinerary-event';
-import { ItineraryEventService } from '../itinerary-event.service';
-// import { FlashMessageService } from '../../../flash-message';
+import { ItineraryService } from '../../../itinerary.service';
+import { Itinerary } from '../../../itinerary';
+import { ItineraryEvent } from '../../itinerary-event';
+import { ItineraryEventService } from '../../itinerary-event.service';
+
+import { UserService } from '../../../../user';
+import { FlashMessageService } from '../../../../flash-message';
 
 @Component({
   selector: 'ww-transport-form',
@@ -40,7 +41,7 @@ export class TransportFormComponent implements OnInit {
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
     private userService: UserService,
-    // private flashMessageService: FlashMessageService,
+    private flashMessageService: FlashMessageService,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder) {
       this.addTransportForm = this.formBuilder.group({
@@ -324,7 +325,7 @@ export class TransportFormComponent implements OnInit {
     this.itineraryEventService.addEvent(newTransport, this.itinerary['_id'])
         .subscribe(
           data => {
-            // this.flashMessageService.handleFlashMessage(data.message);
+            this.flashMessageService.handleFlashMessage(data.message);
           })
 
     this.transportOption = 'flight';

@@ -1,0 +1,27 @@
+.category > label {
+  padding: 5px;
+  margin-bottom: 0;
+  border: 1px solid grey;
+}
+
+.checked  {
+  background-color: #5eebab;
+  border: transparent;
+}
+
+.activityForm {
+  padding-bottom: 20px;
+  border-bottom: 2px solid grey;
+}
+
+.checkedIn  {
+  padding: 10px;
+  background-color: #ffe5e5;
+  border-bottom: 1px solid #ccc;
+}
+
+.formCard {
+  margin: 3% auto;
+  width: 50%;
+  background-color: white;
+}

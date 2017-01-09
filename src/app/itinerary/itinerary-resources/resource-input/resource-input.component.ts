@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs/Rx';
 
 import { ItineraryService } from '../../itinerary.service';
 import { ResourceService } from '../resource.service';
-// import { FlashMessageService } from '../../../flash-message';
+import { FlashMessageService } from '../../../flash-message';
 import { UserService } from '../../../user';
 
 @Component({
@@ -22,7 +22,7 @@ export class ResourceInputComponent implements OnInit {
     private formBuilder: FormBuilder,
     private resourceService: ResourceService,
     private userService: UserService,
-    // private flashMessageService: FlashMessageService,
+    private flashMessageService: FlashMessageService,
     private itineraryService: ItineraryService) {
       this.resourceForm = formBuilder.group({
         link: ['', Validators.required],
@@ -46,7 +46,7 @@ export class ResourceInputComponent implements OnInit {
     })
     .subscribe(
       data => {
-        // this.flashMessageService.handleFlashMessage(data.message);
+        this.flashMessageService.handleFlashMessage(data.message);
       },
       error => console.error(error)
     )

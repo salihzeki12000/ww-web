@@ -34,7 +34,7 @@ export class SignupComponent implements OnInit {
             this.userService.getCurrentUserDetails()
                 .subscribe( data => {
                   this.router.navigateByUrl('/me');
-                } );
+                });
           },
           error => console.error(error)
         )

@@ -10,10 +10,15 @@ export * from './itinerary-events/itinerary-event.service';
 export * from './itinerary-events/itinerary-event';
 
 export * from './itinerary-events/itinerary-accommodation-transport/itinerary-accommodation-transport.component';
-export * from './itinerary-events/itinerary-accommodation-transport/accommodation-form.component';
-export * from './itinerary-events/itinerary-accommodation-transport/transport-form.component';
+export * from './itinerary-events/itinerary-accommodation-transport/accommodation/accommodation-form.component';
+export * from './itinerary-events/itinerary-accommodation-transport/transport/transport-form.component';
 
 export * from './itinerary-events/itinerary-activity/itinerary-activity.component';
+export * from './itinerary-events/itinerary-activity/activity/activity.component';
+export * from './itinerary-events/itinerary-activity/activity-list/activity-list.component';
+export * from './itinerary-events/itinerary-activity/activity-input/activity-input.component';
+export * from './itinerary-events/itinerary-activity/activity-collapse-list/activity-collapse-list.component';
+export * from './itinerary-events/itinerary-activity/activity-collapse/activity-collapse.component';
 
 export * from './itinerary-map/itinerary-map.component';
 

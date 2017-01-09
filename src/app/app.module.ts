@@ -7,16 +7,19 @@ import { routing } from './app.routing';
 import { AppComponent } from './app.component';
 
 import { AuthComponent, AuthService, SignupComponent, SigninComponent } from './auth';
-import { UserComponent, UserService } from './user';
+import { UserComponent, UserService, ProfileComponent, ProfileDetailsComponent, FollowingComponent, FollowingService } from './user';
 
 import { MeComponent } from './me';
 import { MainNavigationComponent, SideNavigationComponent } from './navigation';
 
 import { PostsComponent, PostComponent, PostInputComponent, PostListComponent, PostService } from './post';
 
-import { GoogleAPIComponent, GooglePlaceSearchComponent, GoogleCheckinComponent } from './google-api';
+import { GooglePlaceSearchComponent, GoogleCheckinComponent } from './google-api';
 
-import { ItineraryComponent, ItineraryAccommodationTransportComponent, ItineraryEventsComponent, ItineraryService, ItineraryActivityComponent, ItineraryResourcesComponent, ResourceInputComponent, ResourceService, ResourceListComponent, ResourceComponent, ItineraryMapComponent, AccommodationFormComponent, TransportFormComponent, ItineraryEventService } from './itinerary';
+import { ItineraryComponent, ItineraryAccommodationTransportComponent, ItineraryEventsComponent, ItineraryService, ItineraryActivityComponent, ItineraryResourcesComponent, ResourceInputComponent, ResourceService, ResourceListComponent, ResourceComponent, ItineraryMapComponent, AccommodationFormComponent, TransportFormComponent, ItineraryEventService, ActivityComponent, ActivityListComponent, ActivityInputComponent, ActivityCollapseComponent, ActivityCollapseListComponent } from './itinerary';
+
+import { FlashMessageComponent, FlashMessageService } from './flash-message';
+
 
 @NgModule({
   declarations: [
@@ -25,6 +28,9 @@ import { ItineraryComponent, ItineraryAccommodationTransportComponent, Itinerary
     SignupComponent,
     SigninComponent,
     UserComponent,
+    ProfileComponent,
+    ProfileDetailsComponent,
+    FollowingComponent,
     MeComponent,
     MainNavigationComponent,
     SideNavigationComponent,
@@ -38,7 +44,11 @@ import { ItineraryComponent, ItineraryAccommodationTransportComponent, Itinerary
     AccommodationFormComponent,
     TransportFormComponent,
     ItineraryActivityComponent,
-    GoogleAPIComponent,
+    ActivityComponent,
+    ActivityListComponent,
+    ActivityInputComponent,
+    ActivityCollapseComponent,
+    ActivityCollapseListComponent,
     GooglePlaceSearchComponent,
     GoogleCheckinComponent,
     ItineraryResourcesComponent,
@@ -46,6 +56,7 @@ import { ItineraryComponent, ItineraryAccommodationTransportComponent, Itinerary
     ResourceListComponent,
     ResourceComponent,
     ItineraryMapComponent,
+    FlashMessageComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,7 +65,7 @@ import { ItineraryComponent, ItineraryAccommodationTransportComponent, Itinerary
     HttpModule,
     routing,
   ],
-  providers: [ AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService ],
+  providers: [ AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, FollowingService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
