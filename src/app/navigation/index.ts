@@ -1,2 +1,2 @@
-export * from './main-navgiation/main-navigation.component';
-export * from './side-navgiation/side-navigation.component';
+export * from './main-navigation/main-navigation.component';
+export * from './side-navigation/side-navigation.component';
