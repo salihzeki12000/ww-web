@@ -1,0 +1,139 @@
+/*********************************
+  accommodation/transport section
+*********************************/
+.section  {
+  margin-bottom: 15px;
+}
+
+.sectionHeader  {
+  padding: 10px 20px;
+  border-bottom: 4px solid #6494ED;
+  border-top: 2px solid #6494ed;
+}
+
+.sectionHeader > h4,
+.sectionHeader > a  {
+  display: inline-block;
+}
+
+.sectionHeader > a  {
+  float: right;
+}
+
+.new  {
+  margin-right: 10px;
+  padding: 1px 20px;
+  color: white;
+  background-color: #6495ED;
+  border: 1px solid #6495ED;
+  border-radius: 3px;
+  &:hover {
+    text-decoration: none;
+    color: #6495ED;
+    background-color: white;
+  }
+}
+
+/*****************************************
+  accommodation/transport details display
+******************************************/
+.detailsCard {
+  margin: 0.5%;
+  display: inline-block;
+  width: 49%;
+  padding: 10px 20px 20px 20px;
+  vertical-align: text-top;
+  border-bottom: 1px solid #ccc;
+  -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+}
+
+.dateHeader {
+  color: #3A4A4D;
+}
+
+#delete-accommodation,
+#delete-transport {
+  top: 20%;
+}
+
+.accommodationHeader,
+.transportHeader {
+  margin: 10px 0;
+  padding: 5px;
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+}
+
+.departureDetails {
+  margin-bottom: 5px;
+  color: darkred;
+}
+
+.arrivalDetails {
+  margin-bottom: 5px;
+  color: darkblue;
+}
+
+.address,
+.contactNumber  {
+  margin-bottom: 5px;
+}
+
+.website  {
+  margin-bottom: 10px;
+}
+
+.note{
+  padding-left: 10px;
+  color: grey;
+}
+
+.transportDetails,
+.accommodationDetails {
+  padding: 10px 10px 0 10px;
+}
+
+/**************************
+  transport details display
+***************************/
+span.city-highlight  {
+  font-size: 1.3em;
+}
+
+.space  {
+  margin-right: 40px;
+}
+
+h5, h6  {
+  line-height: 1.5;
+}
+
+.departureSection {
+  padding-bottom: 10px;
+  border-bottom: 1px dotted grey;
+}
+
+.arrivalSection {
+  padding: 10px 0;
+}
+
+
+/************************
+  flight details display
+*************************/
+.delete {
+  float: right;
+}
+
+.fa::before {
+  margin-right: 5px;
+}
+
+/******************************
+  accommodation/transport form
+******************************/
+.custom-modal {
+  background-color: rgba(0,0,0,0.6);
+}

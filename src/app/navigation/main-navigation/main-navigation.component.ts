@@ -11,7 +11,7 @@ import { User, UserService } from '../../user';
   styleUrls: ['./main-navigation.component.scss']
 })
 export class MainNavigationComponent implements OnInit {
-  user: User;
+  currentUser: User;
 
   currentUserSubscription: Subscription;
 
@@ -22,7 +22,8 @@ export class MainNavigationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.user = this.userService.currentUser;
+    this.currentUser = this.userService.currentUser;
+    console.log(this.currentUser);
     // this.currentUserSubscription = this.userService.updateCurrentUser
     //                                    .subscribe(
     //                                      data =>  {

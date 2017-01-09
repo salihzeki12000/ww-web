@@ -1,0 +1,18 @@
+
+<div class="resourceForm">
+  <form [formGroup]="resourceForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label for="description">Title</label>
+      <input type="text" id="description" formControlName="description" class="form-control" placeholder="what's the link about?">
+    </div>
+
+    <div class="form-group">
+      <label for="link">Link</label>
+      <input type="url" id="link" formControlName="link" class="form-control" placeholder="add a link here...">
+    </div>
+
+    <button type="submit" name="button" class="primaryButton" [disabled]="!resourceForm.valid"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save new resource</button>
+    <div style="clear: both;"></div>
+  </form>
+</div>

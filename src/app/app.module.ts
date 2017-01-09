@@ -14,6 +14,10 @@ import { MainNavigationComponent, SideNavigationComponent } from './navigation';
 
 import { PostsComponent, PostComponent, PostInputComponent, PostListComponent, PostService } from './post';
 
+import { GoogleAPIComponent, GooglePlaceSearchComponent, GoogleCheckinComponent } from './google-api';
+
+import { ItineraryComponent, ItineraryAccommodationTransportComponent, ItineraryEventsComponent, ItineraryService, ItineraryActivityComponent, ItineraryResourcesComponent, ResourceInputComponent, ResourceService, ResourceListComponent, ResourceComponent, ItineraryMapComponent, AccommodationFormComponent, TransportFormComponent, ItineraryEventService } from './itinerary';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +32,20 @@ import { PostsComponent, PostComponent, PostInputComponent, PostListComponent, P
     PostInputComponent,
     PostListComponent,
     PostComponent,
+    ItineraryComponent,
+    ItineraryEventsComponent,
+    ItineraryAccommodationTransportComponent,
+    AccommodationFormComponent,
+    TransportFormComponent,
+    ItineraryActivityComponent,
+    GoogleAPIComponent,
+    GooglePlaceSearchComponent,
+    GoogleCheckinComponent,
+    ItineraryResourcesComponent,
+    ResourceInputComponent,
+    ResourceListComponent,
+    ResourceComponent,
+    ItineraryMapComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,7 +54,7 @@ import { PostsComponent, PostComponent, PostInputComponent, PostListComponent, P
     HttpModule,
     routing,
   ],
-  providers: [ AuthService, UserService, PostService ],
+  providers: [ AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

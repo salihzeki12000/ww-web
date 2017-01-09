@@ -59,7 +59,7 @@ export class AuthService  {
     const body = JSON.stringify(user);
     const headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
 
-    return this.http.post(this.url + '/users/social-login', body, { headers: headers })
+    return this.http.post(this.url + '/users/social-login/', body, { headers: headers })
                     .map((response: Response) => {
                       this.loginType = 'facebook';
                       console.log("facebook sign in")
@@ -73,7 +73,7 @@ export class AuthService  {
     const body = JSON.stringify(user);
     const headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
 
-    return this.http.post(this.url + '/users/social-login', body, { headers: headers })
+    return this.http.post(this.url + '/users/social-login/', body, { headers: headers })
                     .map((response: Response) => {
                       this.loginType = 'google';
                       console.log("google sign in")

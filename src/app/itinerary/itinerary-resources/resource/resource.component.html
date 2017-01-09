@@ -1,0 +1,59 @@
+<div class="resourceCard">
+  <div class="update">
+    <a (click)="onEdit()"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+    <a (click)="confirmDelete()"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+  </div>
+
+  <div class="linkDetails">
+
+    <div [class.editing]="editing">
+      <div class="view">
+
+        <h4 class="description">{{ resource?.description }}</h4>
+        <a href="{{resource?.link}}" target="_blank"><h5 class="truncate link">{{ resource?.link }}</h5></a>
+
+      </div>
+    </div>
+
+    <div *ngIf="editing">
+
+      <form [formGroup]="editResourceForm" (ngSubmit)="onUpdateResource()">
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input type="text" id="description" formControlName="description" class="form-control" [value]="resource.description">
+        </div>
+
+        <div class="form-group">
+          <label for="link">Link</label>
+          <input type="text" id="link" formControlName="link" class="form-control" [value]="resource.link">
+        </div>
+
+        <button type="button" class="deleteButton" (click)="cancelEditResource()">Cancel edit</button>
+        <button type="submit" class="primaryButton"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save changes</button>
+      </form>
+
+    </div>
+
+    <div class="postby">
+      <h6>added by <a routerLink="/users/{{resource?.user['_Id']}}">{{ resource?.user.username }}</a></h6>
+      <p>{{ resource?.created_at | date: 'medium' }}</p>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="delete-modal" *ngIf="deleteResource">
+  <div class="confirm-delete">
+    <div class="confirm-delete-header">
+      <h4>Delete resource {{ resource?.name }}</h4>
+      <span class="x-close" (click)="cancelDelete()">&times;</span>
+    </div>
+    <h4 class="confirm-delete-content">Deleting resource <span class="confirm-delete-name">{{ resource?.name }}</span> will permanently remove it from your itinerary.</h4>
+    <div class="confirm-delete-footer">
+      <button type="button" (click)="cancelDelete()">Cancel delete</button>
+      <button type="button" class="deleteButton" (click)="onDeleteResource()">Yes, delete {{ resource?.name }}</button>
+    </div>
+  </div>
+</div>

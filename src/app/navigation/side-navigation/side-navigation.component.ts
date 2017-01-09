@@ -41,13 +41,16 @@ export class SideNavigationComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.currentUserSubscription = this.userService.updateCurrentUser
-                                       .subscribe(
-                                         data => {
-                                           this.currentUser = data;
-                                          //  this.getFollowings();
-                                         }
-                                       )
+    this.currentUser = this.userService.currentUser;
+    // this.getFollowings();
+
+    // this.currentUserSubscription = this.userService.updateCurrentUser
+    //                                    .subscribe(
+    //                                      data => {
+    //                                        this.currentUser = data;
+    //                                        this.getFollowings();
+    //                                      }
+    //                                    )
 
     // this.itinerariesSubscription = this.itineraryService.updateItineraries
     //                                 .subscribe(

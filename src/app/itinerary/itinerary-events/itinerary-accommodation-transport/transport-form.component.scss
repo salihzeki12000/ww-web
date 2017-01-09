@@ -1,0 +1,75 @@
+.formCard {
+  margin: 3% auto;
+  width: 50%;
+  background-color: white;
+}
+
+.transportMode  {
+  padding: 10px;
+}
+
+.transportOptions {
+  margin-right: 20px;
+  padding-top: 5px;
+}
+
+.transportTypeHeader {
+  padding: 10px;
+  width: 100%;
+  font-size: 1.3rem;
+  color: #6494ED;
+  background-color: cornsilk;
+  border-radius: 10px 10px 0 0;
+}
+
+#searchAirlineCode  {
+  width: 70px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.stopOver {
+  padding: 10px;
+  background-color: #ffe5e5;
+}
+
+.stopOver > h5:first-child  {
+  margin-bottom: 10px;
+}
+
+.flightSearch > button  {
+  margin-top: 10px;
+}
+
+.departure  {
+  display: inline-block;
+  width: 50%;
+  border-right: 1px solid #ccc;
+}
+
+.departure > h5 {
+  padding: 5px 0;
+  color: #262626;
+  text-align: center;
+  background-color: lightblue;
+  border-radius: 0 0 0 10px;
+}
+
+.arrival  {
+  display: inline-block;
+  margin-left: -4px;
+  width: 50%;
+  vertical-align: top;
+}
+
+.arrival > h5 {
+  padding: 5px 0;
+  color: #262626;
+  text-align: center;
+  background-color: pink;
+  border-radius: 0 0 10px 0;
+}
+
+.transportFormDetails {
+  padding: 10px;
+}
