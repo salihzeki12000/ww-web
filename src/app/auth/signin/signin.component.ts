@@ -33,6 +33,7 @@ export class SigninComponent implements OnInit {
           data => {
             this.userService.getCurrentUserDetails()
                 .subscribe( data => {
+                  console.log("redirect to /me");
                   this.router.navigateByUrl('/me');
                 });
           },

@@ -14,9 +14,11 @@ import { FlashMessageService } from './flash-message.service';
   styles: [`
       .flash-message  {
         position: fixed;
-        padding: 10px 100px;
-        top: 10%;
+        padding: 10px;
+        width: 30%;
+        top: 2%;
         left: 35%;
+        text-align: center;
         background-color: #DFF0D8;
         border: 2px solid #D6E9C6;
         border-radius: 5px;
@@ -49,9 +51,9 @@ export class FlashMessageComponent implements OnInit {
               (flashMessage: FlashMessage) => {
                   this.flashMessage = flashMessage;
                   this.display = 'block';
-                  // setInterval(()  =>  {
-                  //   this.display = 'none';
-                  // }, 1000);
+                  setTimeout(()  =>  {
+                    this.display = 'none';
+                  }, 5000);
               }
           );
   }

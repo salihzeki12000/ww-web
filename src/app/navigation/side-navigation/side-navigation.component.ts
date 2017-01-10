@@ -40,9 +40,6 @@ export class SideNavigationComponent implements OnInit {
     }
 
   ngOnInit() {
-    // this.currentUser = this.userService.currentUser;
-    // this.getFollowings();
-
     this.currentUserSubscription = this.userService.updateCurrentUser
                                        .subscribe(
                                          data => {
@@ -54,32 +51,7 @@ export class SideNavigationComponent implements OnInit {
     this.itinerariesSubscription = this.itineraryService.updateItineraries
                                     .subscribe(
                                       result => {
-                                        let method = result['method'];
-                                        let userItineraries = this.currentUser['itineraries'];
-
-                                        if(method === 'add')  {
-                                          userItineraries.push({
-                                            _id: result['_id'],
-                                            name: result['name'],
-                                            dateFrom: result['dateFrom'],
-                                            dateTo: result['dateTo']
-                                          });
-                                        } else if (method === 'edit') {
-                                          for (let i = 0; i < userItineraries.length; i++) {
-                                            if(userItineraries[i]['_id'] === result['_id'])  {
-                                              userItineraries[i]['name'] = result['name'],
-                                              userItineraries[i]['dateFrom'] = result['dateFrom'],
-                                              userItineraries[i]['dateTo'] = result['dateTo']
-                                            }
-                                          }
-                                        } else if (method === 'delete') {
-                                          for (let i = 0; i < userItineraries.length; i++) {
-                                            if(userItineraries[i]['_id'] === result['_id'])  {
-                                              let indexOfItin = userItineraries.indexOf(userItineraries[i]);
-                                              userItineraries.splice(indexOfItin, 1);
-                                            }
-                                          }
-                                        }
+                                        this.handleItinChange(result)
                                       })
 
     this.userService.getAllUsers()
@@ -94,7 +66,6 @@ export class SideNavigationComponent implements OnInit {
     this.followingService.getRelationships()
         .subscribe(
           data => {
-            console.log(data);
             this.filterFollowers(data.followings);
           }
         )
@@ -109,8 +80,6 @@ export class SideNavigationComponent implements OnInit {
         this.follower.push(relationship[i]);
       }
     }
-    console.log(this.following);
-    console.log(this.follower);
     this.groupUsers();
   }
 
@@ -133,6 +102,35 @@ export class SideNavigationComponent implements OnInit {
               this.users[i]['status'] = 'following';
             }
           }
+        }
+      }
+    }
+  }
+
+  handleItinChange(result)  {
+    let method = result['method'];
+    let userItineraries = this.currentUser['itineraries'];
+
+    if(method === 'add')  {
+      userItineraries.push({
+        _id: result['_id'],
+        name: result['name'],
+        dateFrom: result['dateFrom'],
+        dateTo: result['dateTo']
+      });
+    } else if (method === 'edit') {
+      for (let i = 0; i < userItineraries.length; i++) {
+        if(userItineraries[i]['_id'] === result['_id'])  {
+          userItineraries[i]['name'] = result['name'],
+          userItineraries[i]['dateFrom'] = result['dateFrom'],
+          userItineraries[i]['dateTo'] = result['dateTo']
+        }
+      }
+    } else if (method === 'delete') {
+      for (let i = 0; i < userItineraries.length; i++) {
+        if(userItineraries[i]['_id'] === result['_id'])  {
+          let indexOfItin = userItineraries.indexOf(userItineraries[i]);
+          userItineraries.splice(indexOfItin, 1);
         }
       }
     }

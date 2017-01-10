@@ -1,0 +1,134 @@
+<div class="detailsCard">
+
+  <!-- accommodation details view -->
+  <div class="inline-block update">
+    <a (click)="editAccommodation()"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+    <a (click)="confirmDeleteAccommodation()"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+  </div>
+
+  <h4 class="dateHeader">{{ event?.checkInDate | date: 'dd MMM yyyy' }}</h4>
+
+  <h4 class="accommodationHeader">{{ event?.name | uppercase }}</h4>
+
+  <div class="accommodationDetails">
+    <div class="departureDetails">
+      <h5>Check in: {{ event?.checkInDate | date:'dd MMM yyyy' }}</h5>
+    </div>
+
+    <div class="arrivalDetails">
+      <h5>Check out: {{ event?.checkOutDate | date:'dd MMM yyyy' }}</h5>
+    </div>
+
+    <div class="address">
+      <h5><i class="fa fa-map-marker inline-block" aria-hidden="true"></i>{{ event?.formatted_address }}</h5>
+    </div>
+
+    <div class="contactNumber">
+      <h5><i class="fa fa-phone inline-block" aria-hidden="true"></i>{{ event?.international_phone_number }}</h5>
+    </div>
+
+    <div class="website">
+      <a href="{{ event?.website }}" target="_blank"><h5 class="truncate">{{ event?.website }}</h5></a>
+    </div>
+
+  </div>
+
+  <div class="note">
+    <h6>{{ event?.note }}</h6>
+  </div>
+
+  <div class="postby">
+    <h6>added by <a routerLink="/users/{{event?.user['_Id']}}">{{ event?.user.username }}</a></h6>
+    <p>{{ event?.created_at | date: 'medium' }}</p>
+  </div>
+
+</div>
+<!-- end of accommodation details view -->
+
+<!-- accommodation edit modal -->
+<div *ngIf="editing">
+  <div class="custom-modal">
+    <div class="formCard">
+
+      <div class="edit-header">
+        <h4>Editing accommodation {{ event?.name }}</h4>
+        <span class="x-close" (click)="cancelEditAccommodation()">&times;</span>
+      </div>
+
+      <form [formGroup]="editAccommodationForm" (ngSubmit)="onEditAccommodation()">
+        <div class="form-group">
+          <label for="name">Name of accommodation</label>
+          <input type="text" id="name" formControlName="name" class="form-control" [value]="event.name">
+        </div>
+
+        <div class="form-group">
+          <label for="formatted_address">Address</label>
+          <input type="text" id="formatted_address" formControlName="formatted_address" class="form-control" [value]="event.formatted_address">
+        </div>
+
+        <div class="form-group">
+          <label for="international_phone_number">Contact number</label>
+          <input type="text" id="international_phone_number" formControlName="international_phone_number" class="form-control" [value]="event.international_phone_number">
+        </div>
+
+        <div class="form-group">
+          <label for="website">Website</label>
+          <input type="text" id="website" formControlName="website" class="form-control" [value]="event.website">
+        </div>
+
+        <div class="form-group inline-block">
+          <label for="checkInDate">Check in date</label>
+          <select name="checkInDate" class="form-control" formControlName="checkInDate" [value]="event.checkInDate">
+            <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
+              <div *ngIf="itinDate === 'any day'">
+                <h5>{{ itinDate }}</h5>
+              </div>
+              <div *ngIf="itinDate !== 'any day'">
+                <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+              </div>
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group inline-block">
+          <label for="checkOutDate">Check out date</label>
+          <select name="checkOutDate" class="form-control" formControlName="checkOutDate" [value]="event.checkOutDate">
+            <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
+              <div *ngIf="itinDate === 'any day'">
+                <h5>{{ itinDate }}</h5>
+              </div>
+              <div *ngIf="itinDate !== 'any day'">
+                <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+              </div>
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="note">Note</label>
+          <textarea name="name" rows="3" cols="80" formControlName="note" class="form-control" [value]="event.note"></textarea>
+        </div>
+
+        <button type="button" class="deleteButton" (click)="cancelEditAccommodation()">Cancel edit</button>
+        <button type="submit" class="primaryButton" [disabled]="!editAccommodationForm.valid"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save changes</button>
+
+      </form>
+    </div>
+  </div>
+</div>
+<!-- end of accommodation edit modal -->
+
+
+<div class="custom-modal" *ngIf="deleteAccommodation">
+  <div class="confirm-delete">
+    <div class="confirm-delete-header">
+      <h4>Delete accommodation {{ event?.name }}</h4>
+      <span class="x-close" (click)="cancelDeleteAccommodation()">&times;</span>
+    </div>
+    <h4 class="confirm-delete-content">Deleting accommodation <span class="confirm-delete-name">{{ event?.name }}</span> will permanently remove it from your itinerary.</h4>
+    <div class="confirm-delete-footer">
+      <button type="button" (click)="cancelDeleteAccommodation()">Cancel delete</button>
+      <button type="button" class="deleteButton" (click)="onDeleteAccommodation()">Yes, delete {{ event?.name }}</button>
+    </div>
+  </div>
+</div>

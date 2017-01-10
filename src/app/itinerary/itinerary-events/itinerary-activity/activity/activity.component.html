@@ -1,66 +1,77 @@
 <div class="activityCard" *ngIf="activity?.type === 'activity'">
 
-  <div [class.editing]="editing">
-    <div class="view">
+  <div *ngIf="activity?.photo">
+    <img src="{{activity?.photo}}" alt="picture of {{ activity?.name}}">
+  </div>
 
-      <div *ngIf="activity?.photo">
-        <img src="{{activity?.photo}}" alt="picture of {{ activity?.name}}">
+  <div *ngIf="!activity?.photo">
+    <div class="img">
+      <i class="fa fa-camera fa-4x" aria-hidden="true"></i>
+      <h5>add a photo</h5>
+    </div>
+  </div>
+
+  <div class="dateTime" *ngIf="activity?.date === 'any day'">{{ activity?.date }} - {{ activity?.time }}</div>
+  <div class="dateTime" *ngIf="activity?.date !== 'any day'">{{ activity?.date | date: 'EEE, dd MMM yyyy' }} - {{ activity?.time }}</div>
+
+  <!-- <div class="checkin-status inline-block" [class.green]="activity?.locationCheckedIn[1]" (click)="checkIn()">Check In</div> -->
+
+  <div class="activityDetails">
+
+    <h4 class="activityTitle inline-block">{{ activity?.name }}</h4>
+
+    <div class="update">
+      <a (click)="onEdit()"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+      <a (click)="confirmDelete()"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+    </div>
+
+    <!-- <div class="checkIn">
+      <i class="fa fa-check-circle-o inline-block" aria-hidden="true"></i>
+      <div *ngFor="let checkIn of activity?.locationCheckedIn" class="inline-block">
+        <p>{{ checkIn }}</p>
       </div>
+    </div> -->
 
-      <div *ngIf="!activity?.photo">
-        <div class="img">
-          <i class="fa fa-camera fa-4x" aria-hidden="true"></i>
-          <h5>add a photo</h5>
-        </div>
-      </div>
+    <h5 class="activityDescription">{{ activity?.description }}</h5>
+    <h6 class="activitySmall activitySubDescription">{{ activity?.subDescription }}</h6>
+    <h6 class="activitySmall"><i class="fa fa-clock-o" aria-hidden="true"></i> {{ activity?.opening_hours }}</h6>
+    <h6 class="activitySmall"><i class="fa fa-money" aria-hidden="true"></i> {{ activity?.entryFee }}</h6>
+    <h6 class="activitySmall"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ activity?.formatted_address }}</h6>
+    <h6 class="activitySmall"><i class="fa fa-phone" aria-hidden="true"></i> {{ activity?.international_phone_number }}</h6>
 
-      <div class="dateTime" *ngIf="activity?.date === 'any day'">{{ activity?.date }} - {{ activity?.time }}</div>
-      <div class="dateTime" *ngIf="activity?.date !== 'any day'">{{ activity?.date | date: 'EEE, dd MMM yyyy' }} - {{ activity?.time }}</div>
+    <div class="block note">
+      <h6 class="activitySmall">{{ activity?.note }}</h6>
+    </div>
 
-      <!-- <div class="checkin-status inline-block" [class.green]="activity?.locationCheckedIn[1]" (click)="checkIn()">Check In</div> -->
+    <a href="{{activity?.website}}" target="_blank"><h5 class="truncate link">{{ activity?.website }}</h5></a>
 
-      <div class="activityDetails">
-
-        <h4 class="activityTitle inline-block">{{ activity?.name }}</h4>
-
-        <div class="update">
-          <a (click)="onEdit()"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-          <a (click)="confirmDelete()"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-        </div>
-
-        <!-- <div class="checkIn">
-          <i class="fa fa-check-circle-o inline-block" aria-hidden="true"></i>
-          <div *ngFor="let checkIn of activity?.locationCheckedIn" class="inline-block">
-            <p>{{ checkIn }}</p>
-          </div>
-        </div> -->
-
-        <h5 class="activityDescription">{{ activity?.description }}</h5>
-        <h6 class="activitySmall activitySubDescription">{{ activity?.subDescription }}</h6>
-        <h6 class="activitySmall"><i class="fa fa-clock-o" aria-hidden="true"></i> {{ activity?.opening_hours }}</h6>
-        <h6 class="activitySmall"><i class="fa fa-money" aria-hidden="true"></i> {{ activity?.entryFee }}</h6>
-        <h6 class="activitySmall"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ activity?.formatted_address }}</h6>
-        <h6 class="activitySmall"><i class="fa fa-phone" aria-hidden="true"></i> {{ activity?.international_phone_number }}</h6>
-
-        <div class="block note">
-          <h6 class="activitySmall">{{ activity?.note }}</h6>
-        </div>
-
-        <a href="{{activity?.website}}" target="_blank"><h5 class="truncate link">{{ activity?.website }}</h5></a>
-
-        <div class="inline-block">
-          <h6 class="inline-block"><i class="fa fa-tags" aria-hidden="true"></i></h6>
-          <div *ngFor="let category of activity.categories" class="inline-block">
-            <h6 *ngIf="category.checked">|  {{ category.value }}  |</h6>
-          </div>
-        </div>
+    <div class="inline-block">
+      <h6 class="inline-block"><i class="fa fa-tags" aria-hidden="true"></i></h6>
+      <div *ngFor="let category of activity.categories" class="inline-block">
+        <h6 *ngIf="category.checked">|  {{ category.value }}  |</h6>
       </div>
     </div>
   </div>
 
-  <div *ngIf="editing">
+  <div class="activityDetails">
+    <div class="postby">
+      <h6>added by <a routerLink="/users/{{activity.user['_Id']}}">{{ activity?.user.username }}</a></h6>
+      <p>{{ activity?.created_at | date: 'medium' }}</p>
+    </div>
+  </div>
 
-    <div class="activityDetails">
+</div>
+<!-- end of activity display -->
+
+<div *ngIf="editing">
+
+  <div class="custom-modal">
+    <div class="formCard">
+
+      <div class="edit-header">
+        <h4>Editing activity {{ activity?.name }}</h4>
+        <span class="x-close" (click)="cancelEditActivity()">&times;</span>
+      </div>
 
       <form [formGroup]="editCustomActivityForm" (ngSubmit)="onUpdateActivity()">
 
@@ -153,19 +164,13 @@
       </form>
 
     </div>
-
-  </div>
-
-  <div class="activityDetails">
-    <div class="postby">
-      <h6>added by <a routerLink="/users/{{activity.user['_Id']}}">{{ activity?.user.username }}</a></h6>
-      <p>{{ activity?.created_at | date: 'medium' }}</p>
-    </div>
   </div>
 
 </div>
+<!-- end of editing modal -->
 
-<div class="delete-modal" *ngIf="deleteActivity">
+
+<div class="custom-modal" *ngIf="deleteActivity">
   <div class="confirm-delete">
     <div class="confirm-delete-header">
       <h4>Delete activity {{ activity?.name }}</h4>

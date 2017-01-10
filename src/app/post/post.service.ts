@@ -19,7 +19,6 @@ export class PostService  {
     return this.http.get( this.url + "/posts/" + token)
                     .map((response: Response) => {
                       this.posts = response.json().posts;
-                      console.log(this.posts);
                       return this.posts;
                     })
                     .catch((error: Response) => Observable.throw(error.json()));

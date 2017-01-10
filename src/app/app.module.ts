@@ -16,7 +16,7 @@ import { PostsComponent, PostComponent, PostInputComponent, PostListComponent, P
 
 import { GooglePlaceSearchComponent, GoogleCheckinComponent } from './google-api';
 
-import { ItineraryComponent, ItineraryAccommodationTransportComponent, ItineraryEventsComponent, ItineraryService, ItineraryActivityComponent, ItineraryResourcesComponent, ResourceInputComponent, ResourceService, ResourceListComponent, ResourceComponent, ItineraryMapComponent, AccommodationFormComponent, TransportFormComponent, ItineraryEventService, ActivityComponent, ActivityListComponent, ActivityInputComponent, ActivityCollapseComponent, ActivityCollapseListComponent } from './itinerary';
+import { ItineraryComponent, ItineraryAccommodationTransportComponent, ItineraryEventsComponent, ItineraryService, ItineraryActivityComponent, ItineraryResourcesComponent, ResourceInputComponent, ResourceService, ResourceListComponent, ResourceComponent, ItineraryMapComponent, AccommodationFormComponent, TransportFormComponent, ItineraryEventService, ActivityComponent, ActivityListComponent, ActivityInputComponent, ActivityCollapseComponent, ActivityCollapseListComponent, AccommodationComponent, TransportComponent } from './itinerary';
 
 import { FlashMessageComponent, FlashMessageService } from './flash-message';
 
@@ -41,7 +41,9 @@ import { FlashMessageComponent, FlashMessageService } from './flash-message';
     ItineraryComponent,
     ItineraryEventsComponent,
     ItineraryAccommodationTransportComponent,
+    AccommodationComponent,
     AccommodationFormComponent,
+    TransportComponent,
     TransportFormComponent,
     ItineraryActivityComponent,
     ActivityComponent,

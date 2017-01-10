@@ -55,7 +55,7 @@ export class ItineraryEventService  {
                         username: event['user'].username
                       }
                       this.events.push(newEvent);
-                      this.updateEvent.next(this.events);
+                      this.sortEventByDate(this.events);
 
                       return response.json();
                     })
@@ -71,11 +71,18 @@ export class ItineraryEventService  {
                     .map((response: Response) => {
                       let index = this.events.indexOf(event);
                       this.events[index] = event;
-                      this.updateEvent.next(this.events);
+                      this.sortEventByDate(this.events);
 
                       return response.json()
                     })
                     .catch((error: Response) => Observable.throw(error.json()));
+  }
+
+  sortEventByDate(events) {
+    events.sort((a,b) =>  {
+      return new Date(a['date']).getTime() - new Date(b['date']).getTime()
+    })
+    this.updateEvent.next(events);
   }
 
   deleteEvent(event: ItineraryEvent)  {

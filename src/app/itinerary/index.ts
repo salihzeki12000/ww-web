@@ -10,8 +10,12 @@ export * from './itinerary-events/itinerary-event.service';
 export * from './itinerary-events/itinerary-event';
 
 export * from './itinerary-events/itinerary-accommodation-transport/itinerary-accommodation-transport.component';
-export * from './itinerary-events/itinerary-accommodation-transport/accommodation/accommodation-form.component';
-export * from './itinerary-events/itinerary-accommodation-transport/transport/transport-form.component';
+
+export * from './itinerary-events/itinerary-accommodation-transport/accommodation/accommodation.component';
+export * from './itinerary-events/itinerary-accommodation-transport/accommodation/accommodation-form/accommodation-form.component';
+
+export * from './itinerary-events/itinerary-accommodation-transport/transport/transport.component';
+export * from './itinerary-events/itinerary-accommodation-transport/transport/transport-form/transport-form.component';
 
 export * from './itinerary-events/itinerary-activity/itinerary-activity.component';
 export * from './itinerary-events/itinerary-activity/activity/activity.component';

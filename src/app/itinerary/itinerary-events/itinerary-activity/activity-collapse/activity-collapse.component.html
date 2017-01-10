@@ -2,7 +2,7 @@
   <div *ngIf="event?.type === 'activity'">
 
     <div *ngIf="collapse" >
-      <div class="collapseCard">
+      <div class="collapseCard activity-indicator">
         <div (click)="toggleCollapse()">
           <h4 class="truncate"><span [class.anytime]="event?.time === 'anytime'">{{ event?.time }}</span> {{ event?.name }}</h4>
         </div>
@@ -60,29 +60,10 @@
 
 </div>
 
-<div *ngIf="event?.checkInDate == date">
-  <div *ngIf="collapse">
-    <div class="collapseCard">
-      <div>
-        <h4 class="truncate accomCheckIn"><i class="fa fa-bed" aria-hidden="true"></i>  Check in {{ event?.name }}</h4>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div *ngIf="event?.checkOutDate == date">
-  <div *ngIf="collapse">
-    <div class="collapseCard">
-      <div>
-        <h4 class="truncate accomCheckOut"><i class="fa fa-bed" aria-hidden="true"></i>  Check out {{ event?.name }}</h4>
-      </div>
-    </div>
-  </div>
-</div>
 
 <div *ngIf="event?.depDate == date">
   <div *ngIf="collapse">
-    <div [ngSwitch]="event?.transportType" class="collapseCard">
+    <div [ngSwitch]="event?.transportType" class="collapseCard transport-indicator">
 
       <div *ngSwitchCase="'flight'">
         <h4 class="truncate"><span>{{ event?.depTime }}</span> <i class="fa fa-plane fa-lg" aria-hidden="true"></i> {{ event?.referenceNumber }} {{ event?.depCity }} to {{ event?.arrCity }}</h4>
@@ -114,7 +95,7 @@
 
 <div *ngIf="event?.arrDate == date">
   <div *ngIf="collapse">
-    <div [ngSwitch]="event?.transportType" class="collapseCard">
+    <div [ngSwitch]="event?.transportType" class="collapseCard transport-indicator">
 
       <div *ngSwitchCase="'flight'">
         <h4 class="truncate arrival"><span>{{ event?.arrTime }}</span> <i class="fa fa-arrow-right fa-lg" aria-hidden="true"></i> {{ event?.referenceNumber }} arrives {{ event?.arrCity }}</h4>
@@ -140,6 +121,26 @@
         <i class="fa fa-rocket fa-lg" aria-hidden="true">Other transport details</i>
       </div>
 
+    </div>
+  </div>
+</div>
+
+<div *ngIf="event?.checkOutDate == date">
+  <div *ngIf="collapse">
+    <div class="collapseCard accommodation-indicator">
+      <div>
+        <h4 class="truncate accomCheckOut"><i class="fa fa-bed" aria-hidden="true"></i>  Check out {{ event?.name }}</h4>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="event?.checkInDate == date">
+  <div *ngIf="collapse">
+    <div class="collapseCard accommodation-indicator">
+      <div>
+        <h4 class="truncate accomCheckIn"><i class="fa fa-bed" aria-hidden="true"></i>  Check in {{ event?.name }}</h4>
+      </div>
     </div>
   </div>
 </div>

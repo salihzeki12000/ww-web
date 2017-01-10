@@ -28,6 +28,15 @@ export class PostInputComponent implements OnInit {
       })
   }
 
+  ngOnInit() {
+    this.currentUserSubscription = this.userService.updateCurrentUser
+                                       .subscribe(
+                                         data => {
+                                           this.currentUser = data;
+                                         }
+                                       )
+  }
+
   onSubmit()  {
     this.postService.addPost({
       content: this.postForm.value.content,
@@ -42,19 +51,7 @@ export class PostInputComponent implements OnInit {
          this.flashMessageService.handleFlashMessage(data.message);
        }
      );
-    //  this.postForm.reset();
-  }
-
-  ngOnInit() {
-    this.currentUser = this.userService.currentUser;
-    console.log(this.currentUser);
-    // this.currentUserSubscription = this.userService.updateCurrentUser
-    //                                    .subscribe(
-    //                                      data => {
-    //                                        this.userId = data['id'];
-    //                                        this.username = data['username'];
-    //                                      }
-    //                                    )
+     this.postForm.reset();
   }
 
 }

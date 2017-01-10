@@ -1,0 +1,76 @@
+.detailsCard {
+  margin: 0.5%;
+  display: inline-block;
+  width: 48.5%;
+  padding: 10px 20px 20px 20px;
+  vertical-align: text-top;
+  border-bottom: 1px solid #ccc;
+  -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+}
+
+.space  {
+  margin-right: 40px;
+}
+
+h5, h6  {
+  line-height: 1.5;
+}
+
+.fa::before {
+  margin-right: 5px;
+}
+
+.dateHeader {
+  color: #3A4A4D;
+}
+
+.transportDetails {
+  padding: 10px 10px 0 10px;
+}
+
+.departureSection {
+  padding-bottom: 10px;
+  border-bottom: 1px dotted grey;
+}
+
+.departureDetails {
+  margin-bottom: 5px;
+  color: darkred;
+}
+
+.arrivalSection {
+  padding: 10px 0;
+}
+
+.arrivalDetails {
+  margin-bottom: 5px;
+  color: darkblue;
+}
+
+span.city-highlight  {
+  font-size: 1.3em;
+}
+
+.note{
+  padding-left: 10px;
+  color: grey;
+}
+
+/******************************
+  accommodation edit
+******************************/
+.formCard {
+  position: relative;
+  margin: 3% auto;
+  width: 50%;
+  background-color: white;
+}
+
+.edit-header  {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid lightgray;
+  border-radius: 5px 5px 0 0;
+}

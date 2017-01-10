@@ -27,10 +27,6 @@ export class AuthComponent implements OnInit, AfterViewInit {
         });
     }
 
-    // google
-    // client id: '93839965709-mmulmhsh4vlqdhqdi9e41ve51julgak1.apps.googleusercontent.com'
-    // secret: 'Y_iq4EPLf2QN-67KA6fjbf6-'
-
   ngOnInit()  {
     FB.getLoginStatus(response => {
       this.statusChangeCallback(response);
@@ -63,6 +59,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
                 data => {
                   this.userService.getCurrentUserDetails()
                       .subscribe( result => {
+                        console.log("redirect to /me");
                         this.router.navigateByUrl('/me');
                       } );
                 }
@@ -100,6 +97,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
       }).subscribe( data => {
         this.userService.getCurrentUserDetails()
             .subscribe( result => {
+              console.log("redirect to /me");
               this.router.navigateByUrl('/me');
             } );
       });

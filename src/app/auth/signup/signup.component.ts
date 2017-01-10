@@ -30,9 +30,9 @@ export class SignupComponent implements OnInit {
     this.authService.signup(this.signupForm.value)
         .subscribe(
           data => {
-            console.log(data);
             this.userService.getCurrentUserDetails()
                 .subscribe( data => {
+                  console.log("redirect to /me");
                   this.router.navigateByUrl('/me');
                 });
           },

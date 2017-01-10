@@ -1,0 +1,434 @@
+<div class="detailsCard">
+
+  <div class="inline-block update">
+    <a (click)="editTransport()"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+    <a (click)="confirmDeleteTransport()"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+  </div>
+
+  <h4 class="dateHeader">{{ event?.depDate | date: 'dd MMM yyyy' }}</h4>
+
+  <div *ngIf="event.transportType === 'flight'">
+
+    <div class="transportHeader">
+      <h2><i class="fa fa-plane inline-block" aria-hidden="true"></i>{{ event.referenceNumber | uppercase }}</h2>
+      <h4>from {{ event.depCity | uppercase }} to {{ event.arrCity | uppercase }}</h4>
+    </div>
+
+    <div class="transportDetails">
+
+      <div class="departureSection">
+        <h5 class="departureDetails">Departs <span class="city-highlight">{{ event.depCity | uppercase }}</span></h5>
+        <h5>{{ event.depStation | uppercase }} / terminal {{ event.depTerminal | uppercase }}</h5>
+        <h5>{{ event?.depDate | date:'dd MMM yy' }} - {{ event.depTime }}hrs</h5>
+      </div>
+
+      <div class="arrivalSection">
+        <h5 class="arrivalDetails">Arrives <span class="city-highlight">{{ event.arrCity | uppercase }}</span></h5>
+        <h5>{{ event.arrStation | uppercase }} / terminal {{ event.arrTerminal | uppercase }}</h5>
+        <h5>{{ event?.arrDate | date:'dd MMM yy' }} - {{ event.arrTime }}hrs</h5>
+      </div>
+
+    </div>
+
+  </div><!-- end of flight -->
+
+  <div *ngIf="event.transportType === 'train'">
+
+    <div class="block">
+      <i class="fa fa-train" aria-hidden="true"></i>
+      <h4 class="inline-block">Train from {{ event.depCity | uppercase }} to {{ event.arrCity | uppercase }} ( {{ event?.depDate | date: 'dd MMM yy' }} )</h4>
+    </div>
+
+    <div class="transportDetails">
+
+      <div class="inline-block space">
+        <h6 class="departureDetails">Departs <span class="city-highlight">{{ event.depCity | uppercase }}</span></h6>
+        <h6>{{ event.depStation | uppercase }}</h6>
+        <h5>{{ event?.depDate | date:'dd MMM yy' }}</h5>
+        <h5>{{ event.depTime }} Local Time</h5>
+      </div>
+
+      <div class="inline-block space">
+        <h6 class="arrivalDetails">Arrives <span class="city-highlight">{{ event.arrCity | uppercase }}</span></h6>
+        <h6>{{ event.arrStation | uppercase }}</h6>
+        <h5>{{ event?.arrDate | date:'dd MMM yy' }}</h5>
+        <h5>{{ event.arrTime }} Local Time</h5>
+      </div>
+
+    </div>
+
+  </div><!-- end of train -->
+
+  <div *ngIf="event.transportType === 'bus'">
+
+    <div>
+      <i class="fa fa-bus" aria-hidden="true"></i>
+      <h4 class="inline-block">Bus from {{ event.depCity | uppercase }} to {{ event.arrCity | uppercase }} ( {{ event?.depDate | date: 'dd MMM yy' }} )</h4>
+    </div>
+
+    <div class="transportDetails">
+
+      <div>
+        <h6>Bus number</h6>
+        <h3>{{ event.referenceNumber | uppercase }}</h3>
+        <br>
+      </div>
+
+      <div class="inline-block space">
+        <h6 class="departureDetails">Departs <span class="city-highlight">{{ event.depCity | uppercase }}</span></h6>
+        <h6>{{ event.depStation | uppercase }}</h6>
+        <h5>{{ event?.depDate | date:'dd MMM yy' }}</h5>
+        <h5>{{ event.depTime }} Local Time</h5>
+      </div>
+
+      <div class="inline-block space">
+        <h6 class="arrivalDetails">Arrives <span class="city-highlight">{{ event.arrCity | uppercase }}</span></h6>
+        <h6>{{ event.arrStation | uppercase }}</h6>
+        <h5>{{ event?.arrDate | date:'dd MMM yy' }}</h5>
+        <h5>{{ event.arrTime }} Local Time</h5>
+      </div>
+
+    </div>
+
+  </div><!-- end of bus -->
+
+  <div *ngIf="event.transportType === 'cruise'">
+
+    <div class="block">
+      <i class="fa fa-ship" aria-hidden="true"></i>
+      <h4 class="inline-block">Cruise from {{ event.depCity | uppercase }} to {{ event.arrCity | uppercase }} ( {{ event?.depDate | date: 'dd MMM yy' }} )</h4>
+    </div>
+
+    <div class="transportDetails">
+
+      <div class="inline-block space">
+        <h6 class="departureDetails">Departs <span class="city-highlight">{{ event.depCity | uppercase }}</span></h6>
+        <h6>{{ event.depStation | uppercase }}</h6>
+        <h5>{{ event?.depDate | date:'dd MMM yy' }}</h5>
+        <h5>{{ event.depTime }} Local Time</h5>
+      </div>
+
+      <div class="inline-block space">
+        <h6 class="arrivalDetails">Arrives <span class="city-highlight">{{ event.arrCity | uppercase }}</span></h6>
+        <h6>{{ event.arrStation | uppercase }}</h6>
+        <h5>{{ event?.arrDate | date:'dd MMM yy' }}</h5>
+        <h5>{{ event.arrTime }} Local Time</h5>
+      </div>
+
+    </div>
+
+
+  </div><!-- end of cruise -->
+
+  <div *ngIf="event.transportType === 'vehicle rental'">
+
+    <div class="block">
+      <i class="fa fa-car" aria-hidden="true"></i>
+      <h4 class="inline-block">Vehicle rental from {{ event.depCity | uppercase }} to {{ event.arrCity | uppercase }} ( {{ event?.depDate | date: 'dd MMM yy' }} )</h4>
+    </div>
+
+    <div class="transportDetails">
+
+      <div class="inline-block space">
+        <h6>Rental company</h6>
+        <h4>{{ event.transportCompany }}</h4>
+        <br>
+        <h6 class="departureDetails">Departs <span class="city-highlight">{{ event.depCity | uppercase }}</span></h6>
+        <h5>{{ event?.depDate | date:'dd MMM yy' }}</h5>
+        <h5>{{ event.depTime }} Local Time</h5>
+      </div>
+
+      <div class="inline-block space">
+        <h6>Contact number</h6>
+        <h4>{{ event.contactNumber }}</h4>
+        <br>
+        <h6 class="arrivalDetails">Arrives <span class="city-highlight">{{ event.arrCity | uppercase }}</span></h6>
+        <h5>{{ event?.arrDate | date:'dd MMM yy' }}</h5>
+        <h5>{{ event.arrTime }} Local Time</h5>
+      </div>
+
+    </div>
+
+  </div><!-- end of vehicle rental -->
+
+  <div *ngIf="event.transportType === 'others'">
+
+    <div class="block">
+      <i class="fa fa-rocket" aria-hidden="true"></i>
+      <h4 class="inline-block">Transport from {{ event.depCity | uppercase }} to {{ event.arrCity | uppercase }} ( {{ event?.depDate | date: 'dd MMM yy' }} )</h4>
+    </div>
+
+    <div class="transportDetails">
+
+      <div class="inline-block space">
+        <h6 class="departureDetails">Departs <span class="city-highlight">{{ event.depCity | uppercase }}</span></h6>
+        <h5>{{ event?.depDate | date:'dd MMM yy' }}</h5>
+        <h5>{{ event.depTime }} Local Time</h5>
+      </div>
+
+      <div class="inline-block space">
+        <h6 class="arrivalDetails">Arrives <span class="city-highlight">{{ event.arrCity | uppercase }}</span></h6>
+        <h5>{{ event?.arrDate | date:'dd MMM yy' }}</h5>
+        <h5>{{ event.arrTime }} Local Time</h5>
+      </div>
+
+    </div>
+  </div><!-- end of others -->
+
+  <div class="note">
+    <h6>{{ event.note }}</h6>
+  </div>
+
+  <div class="postby">
+    <h6>added by <a routerLink="/users/{{event?.user['_Id']}}">{{ event?.user.username }}</a></h6>
+    <p>{{ event?.created_at | date: 'medium' }}</p>
+  </div>
+
+</div>
+<!-- end of transport details view -->
+
+<!-- transport edit modal -->
+<div *ngIf="editing">
+  <div class="custom-modal">
+    <div class="formCard">
+
+      <div class="edit-header">
+        <h4>Editing transport {{ event?.transportType }} from {{ event?.depCity }} to {{ event?.arrCity }}</h4>
+        <span class="x-close" (click)="cancelEditTransport()">&times;</span>
+      </div>
+
+      <form [formGroup]="editTransportForm" (ngSubmit)="onEditTransport()">
+
+      <div [ngSwitch]="event.transportType">
+
+        <div *ngSwitchCase="'flight'">
+          <i class="fa fa-plane inline-block" aria-hidden="true"></i>
+          <h4 class="inline-block">Flight from {{ event.depCity | uppercase }} to {{ event.arrCity | uppercase }} ( {{ event?.depDate | date: 'dd MMM yy' }} )</h4>
+        </div>
+
+        <div *ngSwitchCase="'train'">
+          <i class="fa fa-train inline-block" aria-hidden="true"></i>
+          <h4 class="inline-block">Train from {{ event.depCity | uppercase }} to {{ event.arrCity | uppercase }} ( {{ event?.depDate | date: 'dd MMM yy' }} )</h4>
+        </div>
+
+        <div *ngSwitchCase="'bus'">
+          <i class="fa fa-bus inline-block" aria-hidden="true"></i>
+          <h4 class="inline-block">Bus from {{ event.depCity | uppercase }} to {{ event.arrCity | uppercase }} ( {{ event?.depDate | date: 'dd MMM yy' }} )</h4>
+        </div>
+
+        <div *ngSwitchCase="'cruise'">
+          <i class="fa fa-ship inline-block" aria-hidden="true"></i>
+          <h4 class="inline-block">Cruise from {{ event.depCity | uppercase }} to {{ event.arrCity | uppercase }} ( {{ event?.depDate | date: 'dd MMM yy' }} )</h4>
+        </div>
+
+        <div *ngSwitchCase="'vehicle rental'">
+          <i class="fa fa-car inline-block" aria-hidden="true"></i>
+          <h4 class="inline-block">Vehicle rental from {{ event.depCity | uppercase }} to {{ event.arrCity | uppercase }} ( {{ event?.depDate | date: 'dd MMM yy' }} )</h4>
+        </div>
+
+        <div *ngSwitchCase="'others'">
+          <i class="fa fa-rocket inline-block" aria-hidden="true"></i>
+          <h4 class="inline-block">Other transport from {{ event.depCity | uppercase }} to {{ event.arrCity | uppercase }} ( {{ event?.depDate | date: 'dd MMM yy' }} )</h4>
+        </div>
+
+      </div>
+
+      <div class="departure">
+        <h5>Departure details</h5>
+
+        <div class="transportDetails">
+
+          <div class="form-group">
+            <label for="depCity">Depart from (city)</label>
+            <input type="text" id="depCity" formControlName="depCity" class="form-control" [value]="event.depCity">
+          </div>
+
+          <!-- departure template for flight -->
+          <div *ngIf="event.transportType === 'flight'">
+
+            <div class="form-group">
+              <label for="depStation">Departure airport</label>
+              <input type="text" id="depStation" formControlName="depStation" class="form-control" [value]="event.depStation">
+            </div>
+
+            <div class="form-group">
+              <label for="referenceNumber">Flight number</label>
+              <input type="text" id="referenceNumber" formControlName="referenceNumber" class="form-control" [value]="event.referenceNumber">
+            </div>
+
+            <div class="form-group">
+              <label for="depTerminal">Terminal</label>
+              <input type="text" id="depTerminal" formControlName="depTerminal" class="form-control" [value]="event.depTerminal">
+            </div>
+
+          </div>
+
+          <!-- departure template for train -->
+          <div *ngIf="event.transportType === 'train'">
+
+            <div class="form-group">
+              <label for="depStation">Departure station</label>
+              <input type="text" id="depStation" formControlName="depStation" class="form-control" [value]="event.depStation">
+            </div>
+
+            <div class="form-group">
+              <label for="depTerminal">Train platform</label>
+              <input type="text" id="depTerminal" formControlName="depTerminal" class="form-control" [value]="event.depTerminal">
+            </div>
+
+          </div>
+
+          <!-- departure template for bus -->
+          <div *ngIf="event.transportType === 'bus'">
+
+            <div class="form-group">
+              <label for="depStation">Departure station</label>
+              <input type="text" id="depStation" formControlName="depStation" class="form-control" [value]="event.depStation">
+            </div>
+
+            <div class="form-group">
+              <label for="referenceNumber">Bus Number</label>
+              <input type="text" id="referenceNumber" formControlName="referenceNumber" class="form-control" [value]="event.referenceNumber">
+            </div>
+
+          </div>
+
+          <!-- departure template for cruise -->
+          <div *ngIf="event.transportType === 'cruise'">
+
+            <div class="form-group">
+              <label for="depStation">Departure terminal</label>
+              <input type="text" id="depStation" formControlName="depStation" class="form-control" [value]="event.depStation">
+            </div>
+
+          </div>
+
+          <!-- departure date & time for all transport type -->
+          <div class="form-group">
+            <label for="depDate">Departure date (dd/mm/yyyy)</label>
+            <input type="date" id="depDate" formControlName="depDate" class="form-control" [value]="event?.depDate | date: 'yyyy-MM-dd'" max="9999-12-31">
+          </div>
+
+          <div class="form-group">
+            <label for="depTime">Departure time</label>
+            <input type="time" id="depTime" formControlName="depTime" class="form-control" [value]="event.depTime">
+          </div>
+
+        </div><!-- end of departure details -->
+      </div><!-- end of departure -->
+
+      <div class="arrival">
+        <h5>Arrival details</h5>
+
+        <div class="transportDetails">
+
+          <div class="form-group">
+            <label for="arrCity">Going to (city)</label>
+            <input type="text" id="arrCity" formControlName="arrCity" class="form-control" [value]="event.arrCity">
+          </div>
+
+          <!-- arrival template for flight -->
+          <div *ngIf="event.transportType === 'flight'">
+
+            <div class="form-group">
+              <label for="arrStation">Arrival airport</label>
+              <input type="text" id="arrStation" formControlName="arrStation" class="form-control" [value]="event.arrStation">
+            </div>
+
+            <div class="form-group">
+              <label for="arrTerminal">Terminal</label>
+              <input type="text" id="arrTerminal" formControlName="arrTerminal" class="form-control" [value]="event.arrTerminal">
+            </div>
+
+          </div>
+
+          <!-- arrival template for train -->
+          <div *ngIf="event.transportType === 'train'">
+
+            <div class="form-group">
+              <label for="arrStation">Arrival station</label>
+              <input type="text" id="arrStation" formControlName="arrStation" class="form-control" [value]="event.arrStation">
+            </div>
+
+          </div>
+
+          <!-- arrival template for bus -->
+          <div *ngIf="event.transportType === 'bus'">
+
+            <div class="form-group">
+              <label for="arrStation">Arrival station</label>
+              <input type="text" id="arrStation" formControlName="arrStation" class="form-control" [value]="event.arrStation">
+            </div>
+
+          </div>
+
+          <!-- arrival template for cruise -->
+          <div *ngIf="event.transportType === 'cruise'">
+
+            <div class="form-group">
+              <label for="arrStation">Arrival terminal</label>
+              <input type="text" id="arrStation" formControlName="arrStation" class="form-control" [value]="event.arrStation">
+            </div>
+
+          </div>
+
+          <!-- arrival date & time for all transport type -->
+          <div class="form-group">
+            <label for="arrDate">Arrival date (dd/mm/yyyy)</label>
+            <input type="date" id="arrDate" formControlName="arrDate" class="form-control" [value]="event?.arrDate | date: 'yyyy-MM-dd'" max="9999-12-31">
+          </div>
+
+          <div class="form-group">
+            <label for="arrTime">Arrival time</label>
+            <input type="time" id="arrTime" formControlName="arrTime" class="form-control" [value]="event.arrTime">
+          </div>
+
+        </div><!-- end of arrival details-->
+      </div><!-- end of arrival -->
+
+      <!-- template for vehicle rental -->
+      <div *ngIf="event.transportType === 'vehicle rental'">
+
+        <div class="form-group">
+          <label for="transportCompany">Rental company</label>
+          <input type="text" id="transportCompany" formControlName="transportCompany" class="form-control" [value]="event.transportCompany">
+        </div>
+
+        <div class="form-group">
+          <label for="contactNumber">Contact number</label>
+          <input type="text" id="contactNumber" formControlName="contactNumber" class="form-control" [value]="event.contactNumber">
+        </div>
+
+      </div>
+
+      <!-- template for others -->
+      <div *ngIf="event.transportType === 'others'"></div>
+
+      <div class="form-group">
+        <label for="note">Note</label>
+        <textarea name="name" rows="3" cols="80" formControlName="note" class="form-control" [value]="event.note"></textarea>
+      </div>
+
+      <button type="button" class="deleteButton" (click)="cancelEditTransport()">Cancel edit</button>
+      <button type="submit" class="primaryButton" [disabled]="!editTransportForm.valid"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save changes</button>
+
+    </form>
+
+    </div>
+  </div>
+</div>
+<!-- end of transport edit modal -->
+
+<div class="delete-modal" *ngIf="deleteTransport">
+  <div class="confirm-delete">
+    <div class="confirm-delete-header">
+      <h4>Delete transport arrangement - {{ event?.transportType }} from {{ event?.depCity }} to {{ event?.arrCity }}</h4>
+      <span class="x-close" (click)="cancelDeleteTransport()">&times;</span>
+    </div>
+    <h4 class="confirm-delete-content">Deleting transport arrangement - <span class="confirm-delete-name">{{ event?.transportType }} from {{ event?.depCity }} to {{ event?.arrCity }}</span> - will permanently remove it from your itinerary.</h4>
+    <div class="confirm-delete-footer">
+      <button type="button" (click)="cancelDeleteTransport()">Cancel delete</button>
+      <button type="button" class="deleteButton" (click)="onDeleteTransport()">Yes, delete transport arrangement</button>
+    </div>
+  </div>
+</div>

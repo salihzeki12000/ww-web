@@ -15,25 +15,25 @@ export class UserService  {
 
   constructor( private http: Http)  {}
 
-  getAllUsers() {
-    const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
-    const headers = new Headers({ 'Content-Type': 'application/json' });
-    return this.http.get(this.url + '/users' + token, { headers: headers })
-                    .map((response: Response) => {
-                       return response.json();
-                    })
-                    .catch((error: Response) => Observable.throw(error.json()));
-  }
-
   getCurrentUserDetails()  {
     const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
     const headers = new Headers({ 'Content-Type': 'application/json' });
     return this.http.get(this.url + '/users/currentUser' + token, { headers: headers })
                     .map((response: Response) => {
                       this.currentUser = response.json().user;
+                      this.updateCurrentUser.next(this.currentUser);
                       console.log(this.currentUser);
-                      this.updateCurrentUser.next(this.currentUser)
                       return this.currentUser;
+                    })
+                    .catch((error: Response) => Observable.throw(error.json()));
+  }
+
+  getAllUsers() {
+    const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    return this.http.get(this.url + '/users' + token, { headers: headers })
+                    .map((response: Response) => {
+                       return response.json();
                     })
                     .catch((error: Response) => Observable.throw(error.json()));
   }
