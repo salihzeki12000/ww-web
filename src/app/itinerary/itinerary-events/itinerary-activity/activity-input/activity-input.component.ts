@@ -3,9 +3,10 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
-import { UserService }         from '../../../../user';
-import { ItineraryEventService }        from '../../itinerary-event.service';
-import { FlashMessageService } from '../../../../flash-message';
+import { UserService }           from '../../../../user';
+import { ItineraryService }      from '../../../itinerary.service';
+import { ItineraryEventService } from '../../itinerary-event.service';
+import { FlashMessageService }   from '../../../../flash-message';
 
 @Component({
   selector: 'ww-activity-input',
@@ -20,19 +21,16 @@ export class ActivityInputComponent implements OnInit {
   categories;
 
   currentUserSubscription: Subscription;
-  userId;
-  username;
+  currentUser;
+  itineraryId;
 
   activityDetail;
   anytime = false;
 
-  checkedIn;
-  traveling;
-
-
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
+    private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
     private flashMessageService: FlashMessageService,
     private route: ActivatedRoute) {
@@ -53,41 +51,34 @@ export class ActivityInputComponent implements OnInit {
     })
   }
 
+  ngOnInit() {
+    this.currentUserSubscription = this.userService.updateCurrentUser
+                                       .subscribe(
+                                         result => {
+                                           this.currentUser = result;
+                                         }
+                                       )
+    this.itineraryId = this.itineraryService.itineraryId;
+  }
+
   initCategoryArray() {
     this.categories = this.formBuilder.array([
       this.formBuilder.group({ value:'sight-seeing', icon: 'eye', checked: false }),
       this.formBuilder.group({ value: 'food/drink', icon: 'cutlery', checked: false }),
-      this.formBuilder.group({ value: 'adventure', icon: 'hand-peace-o', checked: false })
+      this.formBuilder.group({ value: 'adventure', icon: 'hand-peace-o', checked: false }),
+      this.formBuilder.group({ value: 'shopping', icon: 'shopping-bag', checked: false })
     ])
     return this.categories;
   }
 
-  resetActivityForm() {
-    this.customActivityForm.reset([{
-      'categories': this.initCategoryArray(),
-      'name': '',
-      'description': '',
-      'subDescription': '',
-      'opening_hours': '',
-      'entryFee': '',
-      'website': '',
-      'formatted_address': '',
-      'international_phone_number':'',
-      'date': '',
-      'time': '',
-      'note': '',
-      'locationCheckedIn': '',
-    }])
-  }
-
   onSubmit()  {
     let activityForm = this.customActivityForm.value;
-    let itineraryId = this.route.snapshot['_urlSegment'].segments[2].path;
     let additionalField = ['url', 'place_id', 'photo'];
     let categoryArray = [
       { value:'sight-seeing', icon: 'eye' },
       { value: 'food/drink', icon: 'cutlery' },
-      { value: 'adventure', icon: 'hand-peace-o' }
+      { value: 'adventure', icon: 'hand-peace-o' },
+      { value: 'shopping', icon: 'shopping-bag'}
     ]
 
     if(this.activityDetail)  {
@@ -121,30 +112,23 @@ export class ActivityInputComponent implements OnInit {
       activityForm['lng'] = lng;
     } // end of data adjustment if details pre-populated by Google
 
-    // if (activityForm['locationCheckedIn']) {
-    //   let now = new Date();
-    //   activityForm['locationCheckedIn'] = now;
-    //   activityForm['date'] = now;
-    //   activityForm['time'] = now.getTime();
-    // }
-
     if(activityForm['time'] === '' || this.anytime)  {
       activityForm['time'] = 'anytime';
     }
 
     activityForm['user'] = {
-      _Id: this.userId,
-      username: this.username,
+      _Id: this.currentUser['id'],
+      username: this.currentUser['username'],
     }
 
     activityForm['created_at'] = new Date();
 
     activityForm['type'] = 'activity';
 
-    this.itineraryEventService.addEvent(activityForm, itineraryId)
+    this.itineraryEventService.addEvent(activityForm, this.itineraryId)
         .subscribe(
-          data => {
-            this.flashMessageService.handleFlashMessage(data.message);
+          result => {
+            this.flashMessageService.handleFlashMessage(result.message);
           }
         );
 
@@ -156,35 +140,7 @@ export class ActivityInputComponent implements OnInit {
     this.hideForm.emit(false);
   }
 
-  // deleteCustomActivity(i) {
-  //   if(this.activities.length === 1)  {
-  //     this.hideForm.emit(false);
-  //     this.resetActivityForm();
-  //   } else  {
-  //     this.activities.removeAt(i);
-  //   }
-  // }
-
-  ngOnInit() {
-    this.currentUserSubscription = this.userService.updateCurrentUser
-                                       .subscribe(
-                                         data => {
-                                           this.userId = data['id'];
-                                           this.username = data['username'];
-                                         }
-                                       )
-
-    //to check whether to enable check in now option
-    let now = new Date();
-    let itinStart = this.itinDateRange[1];
-
-    if(now < itinStart) {
-      this.traveling = false;
-    } else  {
-      this.traveling = true;
-    }
-  }
-
+  //date retreived from google
   getActivityDetails(value)  {
     this.resetActivityForm();
 
@@ -194,8 +150,6 @@ export class ActivityInputComponent implements OnInit {
       this.activityDetail.photo = this.activityDetail.photos[0].getUrl({'maxWidth': 300, 'maxHeight': 250});
     }
     this.activityDetail.opening_hours = this.getOpeningHours(this.activityDetail.opening_hours);
-
-    console.log(this.activityDetail);
   }
 
   getOpeningHours(hours)  {
@@ -243,12 +197,26 @@ export class ActivityInputComponent implements OnInit {
     return output;
   }
 
-  toggleCheckedIn()  {
-    this.checkedIn = !this.checkedIn;
-  }
-
   toggleAnytime() {
     this.anytime = !this.anytime;
+  }
+
+  resetActivityForm() {
+    this.customActivityForm.reset([{
+      'categories': this.initCategoryArray(),
+      'name': '',
+      'description': '',
+      'subDescription': '',
+      'opening_hours': '',
+      'entryFee': '',
+      'website': '',
+      'formatted_address': '',
+      'international_phone_number':'',
+      'date': '',
+      'time': '',
+      'note': '',
+      'locationCheckedIn': '',
+    }])
   }
 
 }

@@ -14,9 +14,10 @@ import { UserService } from '../../../user';
 })
 export class ResourceInputComponent implements OnInit {
   resourceForm: FormGroup;
-  username;
-  userId;
   currentUserSubscription: Subscription;
+
+  currentUser;
+  itineraryId;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -30,25 +31,31 @@ export class ResourceInputComponent implements OnInit {
       })
   }
 
-  onSubmit()  {
-    let itinerary = this.itineraryService.itin();
-    let itineraryId = itinerary['_id'];
+  ngOnInit() {
+    this.currentUserSubscription = this.userService.updateCurrentUser
+                                       .subscribe(
+                                         result => {
+                                           this.currentUser = result;
+                                         }
+                                       )
+    this.itineraryId = this.itineraryService.itineraryId;
+  }
 
+  onSubmit()  {
     this.resourceService.addResource({
       link: this.resourceForm.value.link,
       description: this.resourceForm.value.description,
-      itineraryId: itineraryId,
+      itineraryId: this.itineraryId,
       user: {
-        _Id: this.userId,
-        username: this.username,
+        _Id: this.currentUser['id'],
+        username: this.currentUser['username'],
       },
       created_at: Date.now()
     })
     .subscribe(
-      data => {
-        this.flashMessageService.handleFlashMessage(data.message);
-      },
-      error => console.error(error)
+      result => {
+        this.flashMessageService.handleFlashMessage(result.message);
+      }
     )
 
     this.resourceForm.reset({
@@ -57,14 +64,6 @@ export class ResourceInputComponent implements OnInit {
     })
   }
 
-  ngOnInit() {
-    this.currentUserSubscription = this.userService.updateCurrentUser
-                                       .subscribe(
-                                         data => {
-                                           this.userId = data['id'];
-                                           this.username = data['username'];
-                                         }
-                                       )
-  }
+
 
 }

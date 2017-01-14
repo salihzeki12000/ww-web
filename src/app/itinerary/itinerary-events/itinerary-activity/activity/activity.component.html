@@ -14,8 +14,6 @@
   <div class="dateTime" *ngIf="activity?.date === 'any day'">{{ activity?.date }} - {{ activity?.time }}</div>
   <div class="dateTime" *ngIf="activity?.date !== 'any day'">{{ activity?.date | date: 'EEE, dd MMM yyyy' }} - {{ activity?.time }}</div>
 
-  <!-- <div class="checkin-status inline-block" [class.green]="activity?.locationCheckedIn[1]" (click)="checkIn()">Check In</div> -->
-
   <div class="activityDetails">
 
     <h4 class="activityTitle inline-block">{{ activity?.name }}</h4>
@@ -25,19 +23,12 @@
       <a (click)="confirmDelete()"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
     </div>
 
-    <!-- <div class="checkIn">
-      <i class="fa fa-check-circle-o inline-block" aria-hidden="true"></i>
-      <div *ngFor="let checkIn of activity?.locationCheckedIn" class="inline-block">
-        <p>{{ checkIn }}</p>
-      </div>
-    </div> -->
-
     <h5 class="activityDescription">{{ activity?.description }}</h5>
     <h6 class="activitySmall activitySubDescription">{{ activity?.subDescription }}</h6>
-    <h6 class="activitySmall"><i class="fa fa-clock-o" aria-hidden="true"></i> {{ activity?.opening_hours }}</h6>
-    <h6 class="activitySmall"><i class="fa fa-money" aria-hidden="true"></i> {{ activity?.entryFee }}</h6>
-    <h6 class="activitySmall"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ activity?.formatted_address }}</h6>
-    <h6 class="activitySmall"><i class="fa fa-phone" aria-hidden="true"></i> {{ activity?.international_phone_number }}</h6>
+    <h6 class="activitySmall"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i> {{ activity?.opening_hours }}</h6>
+    <h6 class="activitySmall"><i class="fa fa-money fa-fw" aria-hidden="true"></i> {{ activity?.entryFee }}</h6>
+    <h6 class="activitySmall"><i class="fa fa-map-marker fa-fw" aria-hidden="true"></i> {{ activity?.formatted_address }}</h6>
+    <h6 class="activitySmall"><i class="fa fa-phone fa-fw" aria-hidden="true"></i> {{ activity?.international_phone_number }}</h6>
 
     <div class="block note">
       <h6 class="activitySmall">{{ activity?.note }}</h6>

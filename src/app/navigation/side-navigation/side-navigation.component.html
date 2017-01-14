@@ -1,12 +1,17 @@
 <div class="col-md-2">
 
+  <div class="profile">
+    <h4 (click)="logout()">Log out</h4>
+  </div>
+
   <div class="friends category">
     <div class="heading">
       <h4>My friends</h4>
       <a (click)="getUsers()">find</a>
     </div>
-    <h5>followers ({{ follower.length }})</h5>
-    <h5>followings ({{ following.length }})</h5>
+    <h5>requests ({{ requests.length }})</h5>
+    <h5>followers ({{ followers.length }})</h5>
+    <h5>followings ({{ followings.length }})</h5>
   </div>
 
   <div class="itinerary category">
@@ -18,7 +23,7 @@
     <div>
       <div *ngFor="let itinerary of currentUser?.itineraries">
         <div class="itineraryList">
-          <a [routerLink]="['itinerary/', itinerary._id]" routerLinkActive="active" (click)="changeItin(itinerary._id)">
+          <a [routerLink]="['itinerary/', itinerary._id]" routerLinkActive="active">
             <h5>{{ itinerary.name }}</h5>
             <h6>( {{ itinerary.dateFrom | date:'dd MMM yy' }} to {{ itinerary.dateTo | date:'dd MMM yy' }} )</h6>
           </a>

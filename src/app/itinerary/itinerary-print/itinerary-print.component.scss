@@ -1,0 +1,100 @@
+.itinerary-print  {
+  border-top: 2px solid #6494ed;
+}
+
+.options  {
+  width: 100%;
+  // padding: 10px;
+  border-bottom: 1px solid grey;
+}
+
+.print,
+.pdf  {
+  padding: 10px;
+  display: inline-block;
+  margin-left: 10px;
+  &:hover {
+    color: white;
+    background-color: #6494ED;
+    cursor: pointer;
+  }
+}
+
+.itinerary-header {
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid grey;
+}
+
+.itinerary-date {
+  margin-top: 20px;
+}
+
+.sectionHeader  {
+  margin: 10px 0;
+  padding: 10px 20px;
+  border-bottom: 4px solid #6494ED;
+  border-top: 2px solid #6494ed;
+}
+
+/********************
+ transport section
+*******************/
+.space  {
+  margin-right: 40px;
+}
+
+h5, h6  {
+  line-height: 1.5;
+}
+
+.fa::before {
+  margin-right: 5px;
+}
+
+.transportDetails {
+  padding: 10px 10px 0 10px;
+}
+
+.departureSection {
+  padding-bottom: 10px;
+  border-bottom: 1px dotted grey;
+}
+
+.departureDetails {
+  margin-bottom: 5px;
+  color: darkred;
+}
+
+.arrivalSection {
+  padding: 10px 0;
+}
+
+.arrivalDetails {
+  margin-bottom: 5px;
+  color: darkblue;
+}
+
+span.city-highlight  {
+  font-size: 1.3em;
+}
+/*******************
+  activity section
+********************/
+.activityTitle  {
+  display: inline-block;
+  margin: 10px 0;
+  padding: 5px;
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+}
+
+.img-thumbnail {
+  display: inline-block;
+  padding: 0;
+}
+
+.img-thumbnail > img  {
+  height: 30px;
+  width: 30px;
+}

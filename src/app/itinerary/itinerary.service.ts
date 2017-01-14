@@ -8,11 +8,13 @@ import { Itinerary } from './itinerary';
 @Injectable()
 export class ItineraryService {
   itinerary: Itinerary;
+  itineraryId;
   private itineraries: Itinerary[] = [];
+
   updateDate = new ReplaySubject();
   updateItineraries = new ReplaySubject();
+  currentItinerary = new ReplaySubject();
 
-  // private url = 'http://localhost:9000';
   private url = 'https://vast-island-87972.herokuapp.com';
 
   constructor( private http: Http)  {}
@@ -21,15 +23,11 @@ export class ItineraryService {
     return this.http.get( this.url + "/itinerary/" + itineraryId)
                     .map((response: Response) => {
                       this.itinerary = response.json().itinerary;
+                      this.itineraryId = this.itinerary['_id'];
                       this.updateDate.next(this.setDateRange(this.itinerary));
+                      this.currentItinerary.next(this.itinerary);
                       return response.json();
                     })
-                    .catch((error: Response) => Observable.throw(error.json()));
-  }
-
-  getItinList(itineraryId) {
-    return this.http.get( this.url + "/itinerary/list/" + itineraryId)
-                    .map((response: Response) => response.json())
                     .catch((error: Response) => Observable.throw(error.json()));
   }
 

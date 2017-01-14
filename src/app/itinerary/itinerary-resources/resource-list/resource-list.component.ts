@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs/Rx';
 
 import { Resource } from '../resource';
 import { ResourceService } from '../resource.service';
@@ -11,18 +11,17 @@ import { ResourceService } from '../resource.service';
 })
 export class ResourceListComponent implements OnInit {
   resources: Resource[] = [];
+  updateResourcesSubscription: Subscription;
 
-  constructor(
-    private resourceService: ResourceService,
-    private route: ActivatedRoute) { }
+  constructor(private resourceService: ResourceService) { }
 
   ngOnInit() {
-    this.resourceService.getResources(this.route.snapshot['_urlSegment'].segments[2].path)
-        .subscribe(
-          data => {
-            this.resources = data;
-          })
-
+    this.updateResourcesSubscription = this.resourceService.updateResources
+                                           .subscribe(
+                                             result => {
+                                               this.resources = Object.keys(result).map(key => result[key]);
+                                             }
+                                           )
   }
 
 }

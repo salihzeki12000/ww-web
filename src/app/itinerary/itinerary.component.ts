@@ -2,10 +2,12 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
-import { ItineraryService } from './itinerary.service';
-import { Itinerary } from './itinerary';
-import { FlashMessageService } from '../flash-message';
-import { User, UserService } from '../user';
+import { Itinerary }             from './itinerary';
+import { ItineraryService }      from './itinerary.service';
+import { ItineraryEventService } from './itinerary-events/itinerary-event.service';
+import { FlashMessageService }   from '../flash-message';
+import { User, UserService }     from '../user';
+import { ResourceService }       from './itinerary-resources/resource.service';
 
 @Component({
   selector: 'ww-itinerary',
@@ -25,6 +27,8 @@ export class ItineraryComponent implements OnInit {
 
   constructor(
     private itineraryService: ItineraryService,
+    private itineraryEventService: ItineraryEventService,
+    private resourceService: ResourceService,
     private flashMessageService: FlashMessageService,
     private userService: UserService,
     private route: ActivatedRoute,
@@ -42,17 +46,28 @@ export class ItineraryComponent implements OnInit {
       let id = params['id'];
       this.itineraryService.getItin(id)
       .subscribe(
-        data => {
-          this.itinerary = data.itinerary;
-          console.log(this.itinerary);
+        result => {
+          this.itinerary = result.itinerary;
+
+          this.itineraryEventService.getEvents(id)
+              .subscribe(
+                result => {}
+              )
+
+          this.resourceService.getResources(id)
+              .subscribe(
+                result => {}
+              )
         }
       );
     })
 
+
+
     this.userService.getAllUsers()
         .subscribe(
-          data => {
-            this.users = data.users;
+          result => {
+            this.users = result.users;
           }
         )
   }

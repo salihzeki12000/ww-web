@@ -22,7 +22,6 @@ export class UserService  {
                     .map((response: Response) => {
                       this.currentUser = response.json().user;
                       this.updateCurrentUser.next(this.currentUser);
-                      console.log(this.currentUser);
                       return this.currentUser;
                     })
                     .catch((error: Response) => Observable.throw(error.json()));

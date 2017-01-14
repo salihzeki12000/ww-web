@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
 import { ItineraryService } from '../../../itinerary.service';
@@ -21,17 +20,9 @@ export class ActivityCollapseListComponent implements OnInit {
 
   constructor(
     private itineraryEventService: ItineraryEventService,
-    private itineraryService: ItineraryService,
-    private route: ActivatedRoute) { }
+    private itineraryService: ItineraryService) { }
 
   ngOnInit() {
-    this.itineraryEventService.getEvents(this.route.snapshot['_urlSegment'].segments[2].path)
-        .subscribe(
-          data => {
-            this.events = data;
-          }
-        )
-
     this.eventSubscription = this.itineraryEventService.updateEvent
                                  .subscribe(
                                   result => {

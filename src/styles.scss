@@ -9,6 +9,7 @@
 // #3A4A4D - dark grey
 // #C0C0C0 - light grey
 
+@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700);
 
 $primaryColor: #6495ED;
 $accentColor: #FF8A5C;
@@ -118,10 +119,6 @@ button[disabled]  {
   font-size: 12px;
 }
 
-/** to allow google search to show in modal **/
-.navbar-fixed-top {
-  z-index: 900;
-}
 
 /***************
   forms style
@@ -276,7 +273,6 @@ a.delete  {
   activityCard display
 ***********************/
 .activityCard {
-  display: inline-block;
   margin: 0 5px 5px 0;
   width: 300px;
   vertical-align: text-top;
@@ -454,6 +450,17 @@ span.confirm-delete-name {
 /********************************
  accommodation/transport display
  *******************************/
+ .detailsCard {
+   margin: 0.5%;
+   display: inline-block;
+   width: 48.5%;
+   padding: 10px 20px 20px 20px;
+   vertical-align: text-top;
+   border-bottom: 1px solid #ccc;
+   -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+   -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+   box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+ }
 
 .accommodationHeader,
 .transportHeader {
@@ -461,4 +468,41 @@ span.confirm-delete-name {
   padding: 5px;
   border-bottom: 1px solid black;
   border-top: 1px solid black;
+}
+
+.dateHeader {
+  color: #3A4A4D;
+}
+
+.note{
+  padding-left: 10px;
+  color: grey;
+}
+/********************************
+  resource display
+ *******************************/
+.resourceCard {
+  display: inline-block;
+  padding: 10px 20px 10px 20px;
+  width: 49.5%;
+  vertical-align: text-top;
+  border-bottom: 1px solid #ccc;
+  -webkit-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+  border-radius: 5px;
+}
+
+.description,
+.link  {
+  margin-bottom: 10px;
+}
+
+.description{
+  padding: 3px;
+  border-bottom: 2px solid purple;
+}
+
+.linkDetails  {
+  width: 90%;
 }

@@ -43,8 +43,6 @@ export class ActivityComponent implements OnInit {
         'date': '',
         'time': '',
         'note': '',
-        'checkedIn': '',
-
       })
     }
 
@@ -61,7 +59,8 @@ export class ActivityComponent implements OnInit {
     this.categories = this.formBuilder.array([
       this.formBuilder.group({ value:'sight-seeing', icon: 'eye', checked: false }),
       this.formBuilder.group({ value: 'food/drink', icon: 'cutlery', checked: false }),
-      this.formBuilder.group({ value: 'adventure', icon: 'hand-peace-o', checked: false })
+      this.formBuilder.group({ value: 'adventure', icon: 'hand-peace-o', checked: false }),
+      this.formBuilder.group({ value: 'shopping', icon: 'shopping-bag', checked: false })
     ])
     return this.categories;
   }
@@ -82,7 +81,8 @@ export class ActivityComponent implements OnInit {
     let categoryArray = [
       { value:'sight-seeing', icon: 'eye' },
       { value: 'food/drink', icon: 'cutlery' },
-      { value: 'adventure', icon: 'hand-peace-o' }
+      { value: 'adventure', icon: 'hand-peace-o' },
+      { value: 'shopping', icon: 'shopping-bag'}
     ]
 
     let editedActivity = this.editCustomActivityForm.value;
@@ -107,8 +107,8 @@ export class ActivityComponent implements OnInit {
 
     this.itineraryEventService.editEvent(this.activity)
         .subscribe(
-          data => {
-          this.flashMessageService.handleFlashMessage(data.message);
+          result => {
+          this.flashMessageService.handleFlashMessage(result.message);
         })
 
     this.editing = false;
@@ -126,11 +126,10 @@ export class ActivityComponent implements OnInit {
       'date': '',
       'time': '',
       'note': '',
-      'locationCheckedIn': '',
-
     }])
   }
 
+  // delete activity
   confirmDelete() {
     this.deleteActivity = true;
   }
@@ -142,20 +141,10 @@ export class ActivityComponent implements OnInit {
   onDeleteActivity()  {
     this.itineraryEventService.deleteEvent(this.activity)
         .subscribe(
-          data => {
-            this.flashMessageService.handleFlashMessage(data.message);
+          result => {
+            this.flashMessageService.handleFlashMessage(result.message);
           })
     this.deleteActivity = false;
-  }
-
-  checkIn() {
-    this.activity['locationCheckedIn'].push(new Date);
-    this.itineraryEventService.editEvent(this.activity)
-        .subscribe(
-          data => {
-            this.flashMessageService.handleFlashMessage(data.message);
-          }
-        )
   }
 
   toggleAnytime() {

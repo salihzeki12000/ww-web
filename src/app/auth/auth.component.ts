@@ -60,7 +60,9 @@ export class AuthComponent implements OnInit, AfterViewInit {
                   this.userService.getCurrentUserDetails()
                       .subscribe( result => {
                         console.log("redirect to /me");
-                        this.router.navigateByUrl('/me');
+                        setTimeout(() =>  {
+                          this.router.navigateByUrl('/me');
+                        }, 1000)
                       } );
                 }
               )
@@ -98,7 +100,9 @@ export class AuthComponent implements OnInit, AfterViewInit {
         this.userService.getCurrentUserDetails()
             .subscribe( result => {
               console.log("redirect to /me");
-              this.router.navigateByUrl('/me');
+              setTimeout(() =>  {
+                this.router.navigateByUrl('/me');
+              }, 1000)
             } );
       });
 

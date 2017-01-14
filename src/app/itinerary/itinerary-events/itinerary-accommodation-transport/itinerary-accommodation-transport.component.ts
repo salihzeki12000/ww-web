@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
@@ -15,13 +15,14 @@ import { FlashMessageService } from '../../../flash-message';
   templateUrl: './itinerary-accommodation-transport.component.html',
   styleUrls: ['./itinerary-accommodation-transport.component.scss']
 })
-export class ItineraryAccommodationTransportComponent implements OnInit, DoCheck {
+export class ItineraryAccommodationTransportComponent implements OnInit {
   itinerary: Itinerary;
-  eventSubscription: Subscription;
+  itinDateRange = [];
   events: ItineraryEvent[] = [];
 
+  itinerarySubscription: Subscription;
   itinDateSubscription: Subscription;
-  itinDateRange = [];
+  eventSubscription: Subscription;
 
   // for editing accommodation
   accommodationSection = true;
@@ -41,6 +42,29 @@ export class ItineraryAccommodationTransportComponent implements OnInit, DoCheck
     private userService: UserService,
     private flashMessageService: FlashMessageService,
     private route: ActivatedRoute) { }
+
+  ngOnInit() {
+    this.itinerarySubscription = this.itineraryService.currentItinerary
+                                     .subscribe(
+                                       result =>  {
+                                         this.itinerary = result;
+                                       }
+                                     )
+
+    this.itinDateSubscription = this.itineraryService.updateDate
+                                    .subscribe(
+                                      result => {
+                                        this.itinDateRange = Object.keys(result).map(key => result[key]);
+                                    })
+
+    this.eventSubscription = this.itineraryEventService.updateEvent
+                                 .subscribe(
+                                    result => {
+                                      this.events = Object.keys(result).map(key => result[key]);
+                                      this.filterEventType();
+                                  })
+
+  }
 
   // show/hide accommodation/transport section
   toggleAccommodation() {
@@ -71,31 +95,6 @@ export class ItineraryAccommodationTransportComponent implements OnInit, DoCheck
     this.addNewTransport = false;
   }
 
-  ngOnInit() {
-    this.itinDateSubscription = this.itineraryService.updateDate
-                                    .subscribe(
-                                      result => {
-                                        let updatedItinDate = Object.keys(result).map(key => result[key]);
-                                        this.itinDateRange = updatedItinDate;
-                                    })
-
-    this.itineraryEventService.getEvents(this.route.snapshot['_urlSegment'].segments[2].path)
-        .subscribe(
-          data => {
-            this.events = data;
-            this.filterEventType();
-          }
-        )
-
-    this.eventSubscription = this.itineraryEventService.updateEvent
-                                 .subscribe(
-                                  result => {
-                                    this.events = Object.keys(result).map(key => result[key]);
-                                    this.filterEventType();
-                                  })
-
-  }
-
   filterEventType() {
     this.accommodations = [];
     this.transports = [];
@@ -109,11 +108,4 @@ export class ItineraryAccommodationTransportComponent implements OnInit, DoCheck
       }
     }
   }
-
-  ngDoCheck() {
-    this.itinerary = this.itineraryService.itin();
-    // console.log(this.itinerary);
-  }
-
-
 }

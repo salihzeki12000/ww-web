@@ -1,0 +1,320 @@
+<div class="itinerary-print">
+  <div class="options">
+    <!-- <div class="print" (click)="print()">
+      <h5><i class="fa fa-print" aria-hidden="true"></i> Print</h5>
+    </div> -->
+    <div class="pdf" (click)="save()">
+      <h5><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Save to PDF</h5>
+    </div>
+  </div>
+
+  <div class="itinerary-header">
+    <h2>{{ itinerary?.name }}</h2>
+
+    <div class="itinerary-date">
+      <h5><i class="fa fa-calendar" aria-hidden="true"></i> {{ itinerary?.dateFrom | date:'dd MMM yyyy' }} to {{ itinerary?.dateTo | date:'dd MMM yyyy' }}</h5>
+    </div>
+  </div>
+
+  <div class="transport-section">
+    <div class="sectionHeader">
+      <h4>Transport Arrangements</h4>
+    </div>
+
+    <div *ngFor="let transport of transports" class="detailsCard">
+
+      <h4 class="dateHeader">{{ transport?.depDate | date: 'dd MMM yyyy' }}</h4>
+
+      <div *ngIf="transport.transportType === 'flight'">
+
+        <div class="transportHeader">
+          <h2><i class="fa fa-plane inline-block" aria-hidden="true"></i>{{ transport.referenceNumber | uppercase }}</h2>
+          <h4>from {{ transport.depCity | uppercase }} to {{ transport.arrCity | uppercase }}</h4>
+        </div>
+
+        <div class="transportDetails">
+
+          <div class="departureSection">
+            <h5 class="departureDetails">Departs <span class="city-highlight">{{ transport.depCity | uppercase }}</span></h5>
+            <h5>{{ transport.depStation | uppercase }} / terminal {{ transport.depTerminal | uppercase }}</h5>
+            <h5>{{ transport?.depDate | date:'dd MMM yy' }} - {{ transport.depTime }}hrs</h5>
+          </div>
+
+          <div class="arrivalSection">
+            <h5 class="arrivalDetails">Arrives <span class="city-highlight">{{ transport.arrCity | uppercase }}</span></h5>
+            <h5>{{ transport.arrStation | uppercase }} / terminal {{ transport.arrTerminal | uppercase }}</h5>
+            <h5>{{ transport?.arrDate | date:'dd MMM yy' }} - {{ transport.arrTime }}hrs</h5>
+          </div>
+
+        </div>
+
+      </div><!-- end of flight -->
+
+      <div *ngIf="transport.transportType === 'train'">
+
+        <div class="block">
+          <i class="fa fa-train" aria-hidden="true"></i>
+          <h4 class="inline-block">Train from {{ transport.depCity | uppercase }} to {{ transport.arrCity | uppercase }} ( {{ transport?.depDate | date: 'dd MMM yy' }} )</h4>
+        </div>
+
+        <div class="transportDetails">
+
+          <div class="inline-block space">
+            <h6 class="departureDetails">Departs <span class="city-highlight">{{ transport.depCity | uppercase }}</span></h6>
+            <h6>{{ transport.depStation | uppercase }}</h6>
+            <h5>{{ transport?.depDate | date:'dd MMM yy' }}</h5>
+            <h5>{{ transport.depTime }} Local Time</h5>
+          </div>
+
+          <div class="inline-block space">
+            <h6 class="arrivalDetails">Arrives <span class="city-highlight">{{ transport.arrCity | uppercase }}</span></h6>
+            <h6>{{ transport.arrStation | uppercase }}</h6>
+            <h5>{{ transport?.arrDate | date:'dd MMM yy' }}</h5>
+            <h5>{{ transport.arrTime }} Local Time</h5>
+          </div>
+
+        </div>
+
+      </div><!-- end of train -->
+
+      <div *ngIf="transport.transportType === 'bus'">
+
+        <div>
+          <i class="fa fa-bus" aria-hidden="true"></i>
+          <h4 class="inline-block">Bus from {{ transport.depCity | uppercase }} to {{ transport.arrCity | uppercase }} ( {{ transport?.depDate | date: 'dd MMM yy' }} )</h4>
+        </div>
+
+        <div class="transportDetails">
+
+          <div>
+            <h6>Bus number</h6>
+            <h3>{{ transport.referenceNumber | uppercase }}</h3>
+            <br>
+          </div>
+
+          <div class="inline-block space">
+            <h6 class="departureDetails">Departs <span class="city-highlight">{{ transport.depCity | uppercase }}</span></h6>
+            <h6>{{ transport.depStation | uppercase }}</h6>
+            <h5>{{ transport?.depDate | date:'dd MMM yy' }}</h5>
+            <h5>{{ transport.depTime }} Local Time</h5>
+          </div>
+
+          <div class="inline-block space">
+            <h6 class="arrivalDetails">Arrives <span class="city-highlight">{{ transport.arrCity | uppercase }}</span></h6>
+            <h6>{{ transport.arrStation | uppercase }}</h6>
+            <h5>{{ transport?.arrDate | date:'dd MMM yy' }}</h5>
+            <h5>{{ transport.arrTime }} Local Time</h5>
+          </div>
+
+        </div>
+
+      </div><!-- end of bus -->
+
+      <div *ngIf="transport.transportType === 'cruise'">
+
+        <div class="block">
+          <i class="fa fa-ship" aria-hidden="true"></i>
+          <h4 class="inline-block">Cruise from {{ transport.depCity | uppercase }} to {{ transport.arrCity | uppercase }} ( {{ transport?.depDate | date: 'dd MMM yy' }} )</h4>
+        </div>
+
+        <div class="transportDetails">
+
+          <div class="inline-block space">
+            <h6 class="departureDetails">Departs <span class="city-highlight">{{ transport.depCity | uppercase }}</span></h6>
+            <h6>{{ transport.depStation | uppercase }}</h6>
+            <h5>{{ transport?.depDate | date:'dd MMM yy' }}</h5>
+            <h5>{{ transport.depTime }} Local Time</h5>
+          </div>
+
+          <div class="inline-block space">
+            <h6 class="arrivalDetails">Arrives <span class="city-highlight">{{ transport.arrCity | uppercase }}</span></h6>
+            <h6>{{ transport.arrStation | uppercase }}</h6>
+            <h5>{{ transport?.arrDate | date:'dd MMM yy' }}</h5>
+            <h5>{{ transport.arrTime }} Local Time</h5>
+          </div>
+
+        </div>
+
+
+      </div><!-- end of cruise -->
+
+      <div *ngIf="transport.transportType === 'vehicle rental'">
+
+        <div class="block">
+          <i class="fa fa-car" aria-hidden="true"></i>
+          <h4 class="inline-block">Vehicle rental from {{ transport.depCity | uppercase }} to {{ transport.arrCity | uppercase }} ( {{ transport?.depDate | date: 'dd MMM yy' }} )</h4>
+        </div>
+
+        <div class="transportDetails">
+
+          <div class="inline-block space">
+            <h6>Rental company</h6>
+            <h4>{{ transport.transportCompany }}</h4>
+            <br>
+            <h6 class="departureDetails">Departs <span class="city-highlight">{{ transport.depCity | uppercase }}</span></h6>
+            <h5>{{ transport?.depDate | date:'dd MMM yy' }}</h5>
+            <h5>{{ transport.depTime }} Local Time</h5>
+          </div>
+
+          <div class="inline-block space">
+            <h6>Contact number</h6>
+            <h4>{{ transport.contactNumber }}</h4>
+            <br>
+            <h6 class="arrivalDetails">Arrives <span class="city-highlight">{{ transport.arrCity | uppercase }}</span></h6>
+            <h5>{{ transport?.arrDate | date:'dd MMM yy' }}</h5>
+            <h5>{{ transport.arrTime }} Local Time</h5>
+          </div>
+
+        </div>
+
+      </div><!-- end of vehicle rental -->
+
+      <div *ngIf="transport.transportType === 'others'">
+
+        <div class="block">
+          <i class="fa fa-rocket" aria-hidden="true"></i>
+          <h4 class="inline-block">Transport from {{ transport.depCity | uppercase }} to {{ transport.arrCity | uppercase }} ( {{ transport?.depDate | date: 'dd MMM yy' }} )</h4>
+        </div>
+
+        <div class="transportDetails">
+
+          <div class="inline-block space">
+            <h6 class="departureDetails">Departs <span class="city-highlight">{{ transport.depCity | uppercase }}</span></h6>
+            <h5>{{ transport?.depDate | date:'dd MMM yy' }}</h5>
+            <h5>{{ transport.depTime }} Local Time</h5>
+          </div>
+
+          <div class="inline-block space">
+            <h6 class="arrivalDetails">Arrives <span class="city-highlight">{{ transport.arrCity | uppercase }}</span></h6>
+            <h5>{{ transport?.arrDate | date:'dd MMM yy' }}</h5>
+            <h5>{{ transport.arrTime }} Local Time</h5>
+          </div>
+
+        </div>
+      </div><!-- end of others -->
+
+      <div class="note">
+        <h6>{{ transport.note }}</h6>
+      </div>
+
+      <div class="postby">
+        <h6>added by <a routerLink="/users/{{transport?.user['_Id']}}">{{ transport?.user.username }}</a></h6>
+        <p>{{ transport?.created_at | date: 'medium' }}</p>
+      </div>
+
+      <!-- end of transport details view -->
+    </div>
+  </div>
+
+  <div class="accommodation-section">
+    <div class="sectionHeader">
+      <h4>Accommodation Arrangements</h4>
+    </div>
+
+    <div *ngFor="let accommodation of accommodations" class="detailsCard">
+
+      <div class="details">
+        <h4 class="dateHeader">{{ accommodation?.checkInDate | date: 'dd MMM yyyy' }}</h4>
+
+        <h4 class="accommodationHeader">{{ accommodation?.name | uppercase }}</h4>
+
+        <div class="accommodationDetails">
+          <div class="departureDetails">
+            <h5>Check in: {{ accommodation?.checkInDate | date:'dd MMM yyyy' }}</h5>
+          </div>
+
+          <div class="arrivalDetails">
+            <h5>Check out: {{ accommodation?.checkOutDate | date:'dd MMM yyyy' }}</h5>
+          </div>
+
+          <div class="address">
+            <h5><i class="fa fa-map-marker inline-block" aria-hidden="true"></i>{{ accommodation?.formatted_address }}</h5>
+          </div>
+
+          <div class="contactNumber">
+            <h5><i class="fa fa-phone inline-block" aria-hidden="true"></i>{{ accommodation?.international_phone_number }}</h5>
+          </div>
+
+          <div class="website">
+            <a href="{{ accommodation?.website }}" target="_blank"><h5>{{ accommodation?.website }}</h5></a>
+          </div>
+
+        </div>
+
+        <div class="note">
+          <h6>{{ accommodation?.note }}</h6>
+        </div>
+
+        <div class="postby">
+          <h6>added by <a routerLink="/users/{{accommodation?.user['_Id']}}">{{ accommodation?.user.username }}</a></h6>
+          <p>{{ accommodation?.created_at | date: 'medium' }}</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="activities-section">
+    <div class="sectionHeader">
+      <h4>Activities</h4>
+    </div>
+
+    <div *ngFor="let activity of activities" class="detailsCard">
+      <div class="details">
+
+        <h4 class="dateHeader" *ngIf="activity?.date === 'any day'">{{ activity?.date }} - {{ activity?.time }}</h4>
+        <div class="dateHeader" *ngIf="activity?.date !== 'any day'">{{ activity?.date | date: 'EEE, dd MMM yyyy' }} - {{ activity?.time }}</div>
+
+        <h4 class="activityTitle">{{ activity?.name }}</h4>
+
+        <h5 class="activityDescription">{{ activity?.description }}</h5>
+        <h6 class="activitySmall activitySubDescription">{{ activity?.subDescription }}</h6>
+        <h6 class="activitySmall"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i> {{ activity?.opening_hours }}</h6>
+        <h6 class="activitySmall"><i class="fa fa-money fa-fw" aria-hidden="true"></i> {{ activity?.entryFee }}</h6>
+        <h6 class="activitySmall"><i class="fa fa-map-marker fa-fw" aria-hidden="true"></i> {{ activity?.formatted_address }}</h6>
+        <h6 class="activitySmall"><i class="fa fa-phone fa-fw" aria-hidden="true"></i> {{ activity?.international_phone_number }}</h6>
+
+        <div class="block note">
+          <h6 class="activitySmall">{{ activity?.note }}</h6>
+        </div>
+
+        <a href="{{activity?.website}}" target="_blank"><h5 class="link">{{ activity?.website }}</h5></a>
+
+        <div class="inline-block">
+          <h6 class="inline-block"><i class="fa fa-tags" aria-hidden="true"></i></h6>
+          <div *ngFor="let category of activity.categories" class="inline-block">
+            <h6 *ngIf="category.checked">|  {{ category.value }}  |</h6>
+          </div>
+        </div>
+
+        <div class="postby">
+          <h6>added by <a routerLink="/users/{{activity.user['_Id']}}">{{ activity?.user.username }}</a></h6>
+          <p>{{ activity?.created_at | date: 'medium' }}</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="resources-section">
+    <div class="sectionHeader">
+      <h4>Resources</h4>
+    </div>
+
+    <div *ngFor="let resource of resources" class="resourceCard">
+      <div class="linkDetails">
+
+        <h4 class="description">{{ resource?.description }}</h4>
+        <a href="{{resource?.link}}" target="_blank"><h5 class="link">{{ resource?.link }}</h5></a>
+
+        <div class="postby">
+          <h6>added by <a routerLink="/users/{{resource?.user['_Id']}}">{{ resource?.user.username }}</a></h6>
+          <p>{{ resource?.created_at | date: 'medium' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

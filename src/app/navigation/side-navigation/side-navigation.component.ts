@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs/Rx';
 
 import { User, UserService, FollowingService } from '../../user';
 import { ItineraryService, ItineraryEventService } from '../../itinerary';
+import { AuthService } from '../../auth';
 
 @Component({
   selector: 'ww-side-navigation',
@@ -21,13 +22,15 @@ export class SideNavigationComponent implements OnInit {
   users: User[] = [];
   showUsers = false;
 
-  follower = [];
-  following = [];
+  followers = [];
+  followings = [];
+  requests = [];
 
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
     private userService: UserService,
+    private authService: AuthService,
     private itineraryEventService: ItineraryEventService,
     private followingService: FollowingService,
     private itineraryService: ItineraryService
@@ -72,31 +75,39 @@ export class SideNavigationComponent implements OnInit {
   }
 
   filterFollowers(relationship) {
+    this.followings = [];
+    this.followers = [];
+    this.requests = [];
+
     for (let i = 0; i < relationship.length; i++) {
       if(relationship[i]['user'] === this.currentUser['id']) {
-        this.following.push(relationship[i]);
+        this.followings.push(relationship[i]);
       }
       if(relationship[i]['following'] === this.currentUser['id']) {
-        this.follower.push(relationship[i]);
+        if(relationship[i]['status'] === 'requested')  {
+          this.requests.push(relationship[i])
+        } else  {
+          this.followers.push(relationship[i]);
+        }
       }
     }
     this.groupUsers();
   }
 
   groupUsers()  {
-    if(this.following.length === 0) {
+    if(this.followings.length === 0) {
       for (let i = 0; i < this.users.length; i++) {
         this.users[i]['status'] = '';
       }
     }
-    if(this.following.length > 0 )  {
+    if(this.followings.length > 0 )  {
       for (let i = 0; i < this.users.length; i++) {
-        for (let j = 0; j < this.following.length; j++) {
-          if(this.users[i]['_id'] !== this.following[j]['following']) {
+        for (let j = 0; j < this.followings.length; j++) {
+          if(this.users[i]['_id'] !== this.followings[j]['following']) {
             this.users[i]['status'] = '';
           }
-          if(this.users[i]['_id'] === this.following[j]['following'])  {
-            if(this.following[j]['status'] === 'requested') {
+          if(this.users[i]['_id'] === this.followings[j]['following'])  {
+            if(this.followings[j]['status'] === 'requested') {
               this.users[i]['status'] = 'requested';
             } else  {
               this.users[i]['status'] = 'following';
@@ -150,13 +161,6 @@ export class SideNavigationComponent implements OnInit {
         );
   }
 
-  changeItin(id)  {
-    this.itineraryEventService.getEvents(id)
-        .subscribe(
-          data => {}
-        )
-  }
-
   getUsers()  {
     this.showUsers = true;
   }
@@ -180,5 +184,9 @@ export class SideNavigationComponent implements OnInit {
 
   cancelRequest(user) {
     user.status = '';
+  }
+
+  logout()  {
+    this.authService.logout()
   }
 }

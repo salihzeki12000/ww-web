@@ -16,9 +16,11 @@ import { PostsComponent, PostComponent, PostInputComponent, PostListComponent, P
 
 import { GooglePlaceSearchComponent, GoogleCheckinComponent } from './google-api';
 
-import { ItineraryComponent, ItineraryAccommodationTransportComponent, ItineraryEventsComponent, ItineraryService, ItineraryActivityComponent, ItineraryResourcesComponent, ResourceInputComponent, ResourceService, ResourceListComponent, ResourceComponent, ItineraryMapComponent, AccommodationFormComponent, TransportFormComponent, ItineraryEventService, ActivityComponent, ActivityListComponent, ActivityInputComponent, ActivityCollapseComponent, ActivityCollapseListComponent, AccommodationComponent, TransportComponent } from './itinerary';
+import { ItineraryComponent, ItineraryAccommodationTransportComponent, ItineraryEventsComponent, ItineraryService, ItineraryActivityComponent, ItineraryResourcesComponent, ResourceInputComponent, ResourceService, ResourceListComponent, ResourceComponent, ItineraryMapComponent, AccommodationFormComponent, TransportFormComponent, ItineraryEventService, ActivityComponent, ActivityListComponent, ActivityInputComponent, ActivityCollapseComponent, ActivityCollapseListComponent, AccommodationComponent, TransportComponent, ItineraryPrintComponent, ItineraryPrintPreviewComponent } from './itinerary';
 
 import { FlashMessageComponent, FlashMessageService } from './flash-message';
+
+import { NotificationComponent, NotificationsComponent, NotificationListComponent, NotificationService } from './notifications';
 
 
 @NgModule({
@@ -53,12 +55,17 @@ import { FlashMessageComponent, FlashMessageService } from './flash-message';
     ActivityCollapseListComponent,
     GooglePlaceSearchComponent,
     GoogleCheckinComponent,
+    ItineraryPrintComponent,
+    ItineraryPrintPreviewComponent,
     ItineraryResourcesComponent,
     ResourceInputComponent,
     ResourceListComponent,
     ResourceComponent,
     ItineraryMapComponent,
     FlashMessageComponent,
+    NotificationComponent,
+    NotificationsComponent,
+    NotificationListComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,7 +74,7 @@ import { FlashMessageComponent, FlashMessageService } from './flash-message';
     HttpModule,
     routing,
   ],
-  providers: [ AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, FollowingService ],
+  providers: [ AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, FollowingService, NotificationService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

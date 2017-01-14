@@ -1,5 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs/Rx';
 declare var google:any;
 
 import { ItineraryEvent } from '../itinerary-events/itinerary-event';
@@ -15,19 +16,20 @@ import { ItineraryEventService } from '../itinerary-events/itinerary-event.servi
 export class ItineraryMapComponent implements OnInit {
   @ViewChild('map') map: ElementRef;
   events: ItineraryEvent[] = [];
+  eventSubscription: Subscription;
 
   constructor(
     private itineraryEventService: ItineraryEventService,
     private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.itineraryEventService.getEvents(this.route.snapshot['_urlSegment'].segments[2].path)
-        .subscribe(
-          data => {
-            this.events = data;
-            this.initMap()
-          }
-        )
+    this.eventSubscription = this.itineraryEventService.updateEvent
+                                .subscribe(
+                                  result => {
+                                    this.events = Object.keys(result).map(key => result[key]);
+                                    this.initMap()
+                                  }
+                                )
   }
 
   initMap() {

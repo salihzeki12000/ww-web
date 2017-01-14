@@ -10,21 +10,23 @@ import { ItineraryEvent } from './itinerary-event';
 export class ItineraryEventService  {
   private events: ItineraryEvent[] = [];
 
+  updateEvent = new ReplaySubject();
+
   // private url = 'http://localhost:9000';
   private url = 'https://vast-island-87972.herokuapp.com';
 
   private flightStatsUrl = "https://api.flightstats.com/flex/schedules/rest/v1/json/"
   // flight/SQ/346/departing/2017/2/12?appId=8d4596b2&appKey=ab8b1a3b2f1f66e0db7be662f41425cc
-  updateEvent = new ReplaySubject();
 
   constructor( private http: Http, private route: ActivatedRoute)  {}
 
   getFlightDetails(criteria)  {
-    // const id = '?appId=8d4596b2&appKey=ab8b1a3b2f1f66e0db7be662f41425cc';
-    const id = '?appId=c3a7246f&appKey=f214b2595cbf42e49935c44246c09259';
+    const id = '?appId=8d4596b2&appKey=ab8b1a3b2f1f66e0db7be662f41425cc';
     let myHeaders: Headers = new Headers
     myHeaders.append('Accept', 'application/json')
     myHeaders.append('Access-Control-Allow-Origin', '*')
+    myHeaders.append('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token')
+    myHeaders.append('Access-Control-Allow-Methods', 'GET')
 
     return this.http.get(this.flightStatsUrl + criteria + id, { headers: myHeaders })
                     .map((response: Response) => response.json())
@@ -47,7 +49,7 @@ export class ItineraryEventService  {
     const headers = new Headers({ 'Content-Type': 'application/json' });
     const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
 
-    return this.http.post( this.url + "/event/custom/" + itineraryId + token, body, { headers: headers })
+    return this.http.post( this.url + "/event/new/" + itineraryId + token, body, { headers: headers })
                     .map((response: Response) => {
                       let newEvent = response.json().eventItem;
                       newEvent.user = {
@@ -78,13 +80,6 @@ export class ItineraryEventService  {
                     .catch((error: Response) => Observable.throw(error.json()));
   }
 
-  sortEventByDate(events) {
-    events.sort((a,b) =>  {
-      return new Date(a['date']).getTime() - new Date(b['date']).getTime()
-    })
-    this.updateEvent.next(events);
-  }
-
   deleteEvent(event: ItineraryEvent)  {
     const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
 
@@ -96,6 +91,13 @@ export class ItineraryEventService  {
                       return response.json()
                     })
                     .catch((error: Response) => Observable.throw(error.json()));
+  }
+
+  sortEventByDate(events) {
+    events.sort((a,b) =>  {
+      return new Date(a['date']).getTime() - new Date(b['date']).getTime()
+    })
+    this.updateEvent.next(events);
   }
 
 }

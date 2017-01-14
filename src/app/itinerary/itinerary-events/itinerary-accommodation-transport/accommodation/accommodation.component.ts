@@ -1,11 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { Subscription } from 'rxjs/Rx';
 
-import { ItineraryService } from '../../../itinerary.service';
-import { Itinerary } from '../../../itinerary';
-import { UserService } from '../../../../user';
 import { ItineraryEvent } from '../../itinerary-event';
 import { ItineraryEventService } from '../../itinerary-event.service';
 import { FlashMessageService } from '../../../../flash-message';
@@ -25,11 +20,8 @@ export class AccommodationComponent implements OnInit {
   deleteAccommodation = false;
 
   constructor(
-    private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
-    private userService: UserService,
     private flashMessageService: FlashMessageService,
-    private route: ActivatedRoute,
     private formBuilder: FormBuilder) {
       this.editAccommodationForm = this.formBuilder.group({
         'name': '',

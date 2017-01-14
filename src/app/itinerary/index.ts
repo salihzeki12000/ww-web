@@ -26,6 +26,9 @@ export * from './itinerary-events/itinerary-activity/activity-collapse/activity-
 
 export * from './itinerary-map/itinerary-map.component';
 
+export * from './itinerary-print/itinerary-print.component';
+export * from './itinerary-print/itinerary-print-preview.component';
+
 export * from './itinerary-resources/itinerary-resources.component';
 export * from './itinerary-resources/resource';
 export * from './itinerary-resources/resource.service';

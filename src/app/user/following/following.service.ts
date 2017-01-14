@@ -3,17 +3,16 @@ import { Http, Headers, Response } from '@angular/http';
 import 'rxjs/Rx';
 import { Observable, ReplaySubject } from 'rxjs';
 
-// import { NotificationService } from '../../notifications';
+import { NotificationService } from '../../notifications';
 
 @Injectable()
 export class FollowingService  {
 
-  // private url = 'http://localhost:9000';
   private url = 'https://vast-island-87972.herokuapp.com';
 
   constructor(
     private http: Http,
-    // private notificationService: NotificationService,
+    private notificationService: NotificationService,
   )  {}
 
   getRelationships()  {
@@ -32,14 +31,15 @@ export class FollowingService  {
     const headers = new Headers({ 'Content-Type': 'application/json' });
     return this.http.post(this.url + '/following/new' + token, body, { headers: headers })
                     .map((response: Response) => {
-                      let following = response.json();
-                      // this.notificationService.newNotification({
-                      //   recipient: following.following,
-                      //   originator: following.user,
-                      //   message: 'has requested to follow you.',
-                      //   read: false
-                      // })
-                       return following;
+                      let following = response.json().following;
+                      console.log(following);
+                      this.notificationService.newNotification({
+                        recipient: following.following,
+                        originator: following.user,
+                        message: 'has requested to follow you.',
+                        read: false
+                      }).subscribe( data => {});
+                      return following;
                     })
                     .catch((error: Response) => Observable.throw(error.json()));
   }

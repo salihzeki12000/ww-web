@@ -38,6 +38,27 @@
           <input type="number" id="searchFlightNumber" formControlName="searchFlightNumber" class="form-control" min="1" max="9999" required>
         </div>
 
+        <div class="flightExample inline-block">
+          <div class="inline-block">
+            <h5>example:</h5>
+          </div>
+
+          <div class="inline-block">
+            <label>Airline code</label>
+            <div class="example">
+              <h5>SQ</h5>
+            </div>
+          </div>
+
+          <div class="inline-block">
+            <label>Flight number</label>
+            <div class="example">
+              <h5>123</h5>
+            </div>
+          </div>
+        </div>
+
+
         <div class="form-group">
           <label for="searchDepDate">Date of departure (dd/mm/yyyy)</label>
           <input type="date" id="searchDepDate" formControlName="searchDepDate" class="form-control" min="2017-01-01" max="2050-12-31">
@@ -49,7 +70,7 @@
       </form>
 
       <div *ngIf="stopOver" class="stopOver">
-        <h5>Your selected flight has more than one leg. Please select your departure and arrival airports.</h5>
+        <h5>Your selected flight travels from and to multiple airports. Please select your departure and arrival airports.</h5>
 
         <h5>Departure airport</h5>
         <div class="radio" *ngFor="let airport of depAirports">
@@ -62,7 +83,9 @@
         </div>
       </div>
 
-      <div class="departure">
+      <div *ngIf="populateFlightDetails">
+
+        <div class="departure">
         <h5>Departure details</h5>
 
         <div class="transportFormDetails">
@@ -99,7 +122,7 @@
         </div><!-- end of transportFormDetails -->
       </div><!-- end of departure details for flight -->
 
-      <div class="arrival">
+        <div class="arrival">
         <h5>Arrival details</h5>
 
         <div class="transportFormDetails">
@@ -130,6 +153,7 @@
 
         </div><!-- end of transportFormDetails -->
       </div><!-- end of arrival details for flight -->
+      </div>
     </div>
 
     <div *ngIf="transportOption !== 'flight'">

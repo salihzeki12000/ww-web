@@ -52,8 +52,8 @@ export class ResourceComponent implements OnInit {
 
     this.resourceService.editResource(this.resource)
         .subscribe(
-          data => {
-            this.flashMessageService.handleFlashMessage(data.message);
+          result => {
+            this.flashMessageService.handleFlashMessage(result.message);
           })
     this.editing = false;
   }
@@ -69,8 +69,8 @@ export class ResourceComponent implements OnInit {
   onDeleteResource()  {
     this.resourceService.deleteResource(this.resource)
         .subscribe(
-          data => {
-            this.flashMessageService.handleFlashMessage(data.message);
+          result => {
+            this.flashMessageService.handleFlashMessage(result.message);
           })
     this.deleteResource = false;
   }

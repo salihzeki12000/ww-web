@@ -36,6 +36,7 @@ export class TransportFormComponent implements OnInit {
   stopOver = false; //to toggle view
   depAirports = [];
   arrAirports = [];
+  populateFlightDetails = false;
 
   constructor(
     private itineraryService: ItineraryService,
@@ -88,6 +89,7 @@ export class TransportFormComponent implements OnInit {
     this.itineraryEventService.getFlightDetails(criteria)
         .subscribe(
           data => {
+            console.log(data);
             let scheduledFlights = data['scheduledFlights'];
             let appendix = data['appendix'];
 
@@ -111,12 +113,12 @@ export class TransportFormComponent implements OnInit {
               let departureYear = scheduledFlights[0].departureTime.slice(0,4);
               let departureMonth = scheduledFlights[0].departureTime.slice(5,7);
               let departureDay = scheduledFlights[0].departureTime.slice(8,10);
-              let departureDate = new Date(departureYear, departureMonth - 1, departureDay);
+              let departureDate = "'" + departureYear + "-" + departureMonth + "-" + departureDay + "'";
 
               let arrivalYear = scheduledFlights[0].arrivalTime.slice(0,4);
               let arrivalMonth = scheduledFlights[0].arrivalTime.slice(5,7);
               let arrivalDay = scheduledFlights[0].arrivalTime.slice(8,10);
-              let arrivalDate = new Date(arrivalYear, arrivalMonth - 1, arrivalDay);
+              let arrivalDate = "'" + arrivalYear + "-" + arrivalMonth + "-" + arrivalDay + "'";
 
               let departureAirport;
               let departureCity;
@@ -172,6 +174,7 @@ export class TransportFormComponent implements OnInit {
                 arrTime: arrivalTime,
                 arrAirportLocation: arrivalAirportLocation
               };
+              this.populateFlightDetails = true;
             }//end of section where there is only 01 flight
 
             if (scheduledFlights.length > 1)  {
@@ -224,6 +227,7 @@ export class TransportFormComponent implements OnInit {
                   }
                 }
               }
+              this.populateFlightDetails = true;
             }//end of if more than 01 flight
           }
         )//end of subscribe
@@ -249,7 +253,7 @@ export class TransportFormComponent implements OnInit {
         let departureYear = scheduledFlights[i].departureTime.slice(0,4);
         let departureMonth = scheduledFlights[i].departureTime.slice(5,7);
         let departureDay = scheduledFlights[i].departureTime.slice(8,10);
-        currentFlightSearch['depDate'] = new Date(departureYear, departureMonth - 1, departureDay);
+        currentFlightSearch['depDate'] = "'" + departureYear + "-" + departureMonth + "-" + departureDay + "'";
       }
     }
 
@@ -279,7 +283,7 @@ export class TransportFormComponent implements OnInit {
         let arrivalYear = scheduledFlights[i].arrivalTime.slice(0,4);
         let arrivalMonth = scheduledFlights[i].arrivalTime.slice(5,7);
         let arrivalDay = scheduledFlights[i].arrivalTime.slice(8,10);
-        currentFlightSearch['arrDate'] = new Date(arrivalYear, arrivalMonth - 1, arrivalDay);
+        currentFlightSearch['arrDate'] = "'" + arrivalYear + "-" + arrivalMonth + "-" + arrivalDay + "'";
       }
     }
 
@@ -298,7 +302,7 @@ export class TransportFormComponent implements OnInit {
 
   onSubmitNewTransports()  {
     let newTransport = this.addTransportForm.value;
-
+    console.log(this.flightSearchDetail);
     if(this.flightSearchDetail)  {
       for (var value in newTransport) {
         if(newTransport[value] === '' && this.flightSearchDetail[value]) {
@@ -314,6 +318,7 @@ export class TransportFormComponent implements OnInit {
       newTransport['transportType'] = 'flight'
     }
 
+    console.log(newTransport['depDate'])
     newTransport['date'] = newTransport['depDate']
     newTransport['type'] = 'transport';
     newTransport['user'] =  {

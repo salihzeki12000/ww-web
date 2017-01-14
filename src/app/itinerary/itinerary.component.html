@@ -7,11 +7,7 @@
         <h3 class="itin-name inline-block">{{ itinerary?.name }}   |   </h3>
 
         <div class="inline-block">
-          <i class="fa fa-calendar" aria-hidden="true"></i>
-        </div>
-
-        <div class="inline-block">
-          <h5>{{ itinerary?.dateFrom | date:'dd MMM yyyy' }} to {{ itinerary?.dateTo | date:'dd MMM yyyy' }}</h5>
+          <h5><i class="fa fa-calendar" aria-hidden="true"></i> {{ itinerary?.dateFrom | date:'dd MMM yyyy' }} to {{ itinerary?.dateTo | date:'dd MMM yyyy' }}</h5>
         </div>
 
         <div class="inline-block">
