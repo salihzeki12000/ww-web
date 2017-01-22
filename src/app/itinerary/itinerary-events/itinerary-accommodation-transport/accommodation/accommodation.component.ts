@@ -13,11 +13,14 @@ import { FlashMessageService } from '../../../../flash-message';
 export class AccommodationComponent implements OnInit {
   @Input() event: ItineraryEvent;
   @Input() itinDateRange;
+  @Input() currentUser;
 
   editAccommodationForm: FormGroup;
   editing = false;
 
   deleteAccommodation = false;
+
+  sameUser;
 
   constructor(
     private itineraryEventService: ItineraryEventService,
@@ -35,11 +38,17 @@ export class AccommodationComponent implements OnInit {
     }
 
   ngOnInit()  {
+    this.checkSameUser();
+  }
+
+  checkSameUser() {
+    if(this.currentUser['id'] === this.event['user']['_id']) {
+      this.sameUser = true;
+    }
   }
 
   // to show/hide edit form
   editAccommodation()  {
-    console.log(this.event);
     this.editing = true;
   }
 
@@ -63,8 +72,8 @@ export class AccommodationComponent implements OnInit {
 
     this.itineraryEventService.editEvent(originalAccommodation)
         .subscribe(
-          data => {
-            this.flashMessageService.handleFlashMessage(data.message);
+          result => {
+            this.flashMessageService.handleFlashMessage(result.message);
           })
 
     this.editing = false;
@@ -92,8 +101,8 @@ export class AccommodationComponent implements OnInit {
   onDeleteAccommodation() {
     this.itineraryEventService.deleteEvent(this.event)
         .subscribe(
-          data => {
-            this.flashMessageService.handleFlashMessage(data.message);
+          result => {
+            this.flashMessageService.handleFlashMessage(result.message);
           })
     this.deleteAccommodation = false;
   }

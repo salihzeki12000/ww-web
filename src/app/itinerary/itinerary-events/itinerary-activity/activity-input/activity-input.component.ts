@@ -44,7 +44,7 @@ export class ActivityInputComponent implements OnInit {
       'website': '',
       'formatted_address': '',
       'international_phone_number':'',
-      'date': ['', Validators.required],
+      'date': '',
       'time': '',
       'note': '',
       'locationCheckedIn': '',
@@ -63,10 +63,10 @@ export class ActivityInputComponent implements OnInit {
 
   initCategoryArray() {
     this.categories = this.formBuilder.array([
-      this.formBuilder.group({ value:'sight-seeing', icon: 'eye', checked: false }),
-      this.formBuilder.group({ value: 'food/drink', icon: 'cutlery', checked: false }),
       this.formBuilder.group({ value: 'adventure', icon: 'hand-peace-o', checked: false }),
-      this.formBuilder.group({ value: 'shopping', icon: 'shopping-bag', checked: false })
+      this.formBuilder.group({ value: 'food/drink', icon: 'cutlery', checked: false }),
+      this.formBuilder.group({ value: 'shopping', icon: 'shopping-bag', checked: false }),
+      this.formBuilder.group({ value: 'sight-seeing', icon: 'eye', checked: false }),
     ])
     return this.categories;
   }
@@ -75,10 +75,10 @@ export class ActivityInputComponent implements OnInit {
     let activityForm = this.customActivityForm.value;
     let additionalField = ['url', 'place_id', 'photo'];
     let categoryArray = [
-      { value:'sight-seeing', icon: 'eye' },
-      { value: 'food/drink', icon: 'cutlery' },
       { value: 'adventure', icon: 'hand-peace-o' },
-      { value: 'shopping', icon: 'shopping-bag'}
+      { value: 'food/drink', icon: 'cutlery' },
+      { value: 'shopping', icon: 'shopping-bag'},
+      { value: 'sight-seeing', icon: 'eye' },
     ]
 
     if(this.activityDetail)  {

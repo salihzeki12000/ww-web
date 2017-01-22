@@ -1,40 +1,29 @@
-.departureDetails {
-  margin-bottom: 5px;
-  color: darkred;
+.check-in-out-header,
+.check-in-out-dates {
+  display: inline-block;
 }
 
-.arrivalDetails {
-  margin-bottom: 5px;
-  color: darkblue;
+.check-in-out-header  {
+  text-align: right;
 }
 
-.address,
-.contactNumber  {
-  margin-bottom: 5px;
+.address > i,
+.contact-number > i  {
+  vertical-align: top;
 }
 
-.website  {
-  margin-bottom: 10px;
+.address > h5,
+.contact-number > h5  {
+  vertical-align: top;
+  display: inline-block;
+  width: 90%;
 }
 
-
-.accommodationDetails {
-  padding:0 10px;
+.note{
+  margin-bottom: 15px;
 }
 
-/******************************
-  accommodation edit
-******************************/
-.formCard {
-  position: relative;
-  margin: 3% auto;
-  width: 50%;
-  background-color: white;
-}
-
-.edit-header  {
-  padding: 10px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid lightgray;
-  border-radius: 5px 5px 0 0;
+/* edit form */
+.accommodation-note {
+  display: block;
 }

@@ -1,15 +1,40 @@
-.nav-tabs {
-  margin-bottom: 15px;
+.itinerary-nav-tabs {
+  padding: 20px 10px 15px 0;
   border: none;
+  list-style: none;
+  overflow: auto;
+  white-space: nowrap;
 }
 
-.nav-tabs>li>a {
+.itinerary-nav-tabs>li  {
+  display:inline-block;
+}
+
+.itinerary-nav-tabs>li>a {
+  padding: 10px;
   color: #6494ED;
   border-radius: 0;
   border: 1px solid #6494ED;
+  text-decoration: none;
 }
 
-.nav-tabs>li.active>a {
+.itinerary-nav-tabs>li.active>a {
   color: #F9FBFB;
   background-color: #6494ED;
+}
+/* to display horizontal scrollbar */
+
+.itinerary-nav-tabs::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+.itinerary-nav-tabs::-webkit-scrollbar:horizontal {
+    height: 5px;
+}
+.itinerary-nav-tabs::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, .5);
+}
+.itinerary-nav-tabs::-webkit-scrollbar-track {
+    background-color: #fff;
+    border-radius: 8px;
 }

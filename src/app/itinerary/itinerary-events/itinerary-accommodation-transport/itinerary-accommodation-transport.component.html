@@ -1,17 +1,19 @@
 
 <div class="section">
   <div *ngIf="!accommodationSection" class="sectionHeader">
-    <h4>Accommodation Arrangements</h4>
+    <h4>Accommodation Arrangements ( {{ accommodations.length }} )</h4>
     <a (click)="toggleAccommodation()">show</a>
-    <a (click)="addAccommodation()" class="new"><i class="fa fa-plus" aria-hidden="true"></i> Add new accommodation</a>
+    <p (click)="addAccommodation()" class="new"><i class="fa fa-plus" aria-hidden="true"></i> Add new accommodation</p>
   </div>
 
   <div *ngIf="accommodationSection">
     <div class="sectionHeader">
-      <h4>Accommodation Arrangements</h4>
+      <h4>Accommodation Arrangements ( {{ accommodations.length }} )</h4>
       <a (click)="toggleAccommodation()">hide</a>
-      <a (click)="addAccommodation()" class="new"><i class="fa fa-plus" aria-hidden="true"></i> Add new accommodation</a>
+      <p (click)="addAccommodation()" class="new"><i class="fa fa-plus" aria-hidden="true"></i> Add new accommodation</p>
     </div>
+    <button (click)="addAccommodation()" class="reverseButton new-mobile"><i class="fa fa-plus" aria-hidden="true"></i> Add new accommodation</button>
+
 
     <!-- add new accommodation form -->
     <div *ngIf="addNewAccommodation" class="custom-modal">
@@ -19,7 +21,7 @@
     </div>
 
     <!-- iterate through existing list of accommodations -->
-    <ww-accommodation *ngFor="let event of accommodations" [event]="event"  [itinDateRange]="itinDateRange"></ww-accommodation>
+    <ww-accommodation *ngFor="let event of accommodations" [event]="event"  [itinDateRange]="itinDateRange" [currentUser]="currentUser"></ww-accommodation>
 
   </div><!-- end of accommodation section -->
 </div>
@@ -27,17 +29,19 @@
 <div class="section">
   <!-- START OF TRANSPORT SECTION -->
   <div *ngIf="!transportSection" class="sectionHeader">
-    <h4>Transport Arrangements</h4>
+    <h4>Transport Arrangements ( {{ transports.length }} )</h4>
     <a (click)="toggleTransport()">show</a>
-    <a (click)="addTransport()" class="new"><i class="fa fa-plus" aria-hidden="true"></i> Add new transport</a>
+    <p (click)="addTransport()" class="new"><i class="fa fa-plus" aria-hidden="true"></i> Add new transport</p>
   </div>
 
   <div *ngIf="transportSection">
     <div class="sectionHeader">
-      <h4>Transport Arrangements</h4>
+      <h4>Transport Arrangements ( {{ transports.length }} )</h4>
       <a (click)="toggleTransport()">hide</a>
-      <a (click)="addTransport()" class="new"><i class="fa fa-plus" aria-hidden="true"></i> Add new transport</a>
+      <p (click)="addTransport()" class="new"><i class="fa fa-plus" aria-hidden="true"></i> Add new transport</p>
     </div>
+
+    <button (click)="addTransport()" class="reverseButton new-mobile"><i class="fa fa-plus" aria-hidden="true"></i> Add new transport</button>
 
     <!-- add new transport form -->
     <div *ngIf="addNewTransport" class="custom-modal">
@@ -45,7 +49,7 @@
     </div><!-- end of add new transport -->
 
     <!-- iterate through existing list of transports -->
-    <ww-transport *ngFor="let event of transports" [event]="event"  [itinDateRange]="itinDateRange"></ww-transport>
+    <ww-transport *ngFor="let event of transports" [event]="event"  [itinDateRange]="itinDateRange" [currentUser]="currentUser"></ww-transport>
 
   </div><!-- end of transport section -->
 

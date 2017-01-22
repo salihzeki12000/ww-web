@@ -28,9 +28,9 @@ export class AuthComponent implements OnInit, AfterViewInit {
     }
 
   ngOnInit()  {
-    FB.getLoginStatus(response => {
-      this.statusChangeCallback(response);
-    });
+    // FB.getLoginStatus(response => {
+    //   this.statusChangeCallback(response);
+    // });
   }
 
   statusChangeCallback(res) {
@@ -60,6 +60,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
                   this.userService.getCurrentUserDetails()
                       .subscribe( result => {
                         console.log("redirect to /me");
+                        // this.router.navigateByUrl('/me');
                         setTimeout(() =>  {
                           this.router.navigateByUrl('/me');
                         }, 1000)
@@ -79,7 +80,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
       'width': 300,
       'height': 30,
       'theme': 'dark',
-      'onsuccess': params => this.loginGoogle(params),
+      // 'onsuccess': params => this.loginGoogle(params),
       // 'onfailure': onFailure
     })
   }
@@ -100,6 +101,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
         this.userService.getCurrentUserDetails()
             .subscribe( result => {
               console.log("redirect to /me");
+              // this.router.navigateByUrl('/me');
               setTimeout(() =>  {
                 this.router.navigateByUrl('/me');
               }, 1000)

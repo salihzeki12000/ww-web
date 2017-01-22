@@ -58,6 +58,9 @@ export class ItineraryPrintComponent implements OnInit {
   }
 
   filterEvents(events)  {
+    this.transports = [];
+    this.accommodations = [];
+    this.activities = [];
     for (let i = 0; i < events.length; i++) {
       if(events[i]['type'] === 'transport') {
         this.transports.push(events[i]);

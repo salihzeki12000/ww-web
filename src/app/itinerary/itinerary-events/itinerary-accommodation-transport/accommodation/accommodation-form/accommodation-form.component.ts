@@ -26,9 +26,8 @@ export class AccommodationFormComponent implements OnInit {
   itinDateSubscription: Subscription;
   itinDateRange = [];
 
-  userId;
-  username;
   currentUserSubscription: Subscription;
+  currentUser;
 
   constructor(
     private itineraryService: ItineraryService,
@@ -48,27 +47,25 @@ export class AccommodationFormComponent implements OnInit {
       })
     }
 
-  cancelForm()  {
-    this.cancelAccommodationForm.emit(false)
+  ngOnInit() {
+    this.currentUserSubscription = this.userService.updateCurrentUser
+                                       .subscribe(
+                                         result => {
+                                           this.currentUser = result;
+                                         }
+                                       )
+
+    this.itinDateSubscription = this.itineraryService.updateDate
+                                    .subscribe(
+                                      result => {
+                                        this.itinDateRange  = Object.keys(result).map(key => result[key]);
+                                    })
   }
 
   // get place details form Google API
   getAccommodationDetails(value)  {
     this.googleAccommodationDetail = value;
   }
-
-  // resetAccommodationForm()  {
-  //   this.accommodations.reset([{
-  //     'name': '',
-  //     'formatted_address': '',
-  //     'website': '',
-  //     'international_phone_number': '',
-  //     'checkInDate': '',
-  //     'checkOutDate': '',
-  //     'note': '',
-  //     'editing': false
-  //   }])
-  // }
 
   // to submit new accommodation/transport form
   onSubmitNewAccommodation()  {
@@ -94,34 +91,21 @@ export class AccommodationFormComponent implements OnInit {
     newAccommodation['date'] = newAccommodation['checkInDate'];
     newAccommodation['type'] = 'accommodation';
     newAccommodation['user'] =  {
-      _Id: this.userId,
-      username: this.username,
+      _Id: this.currentUser['id'],
+      username: this.currentUser['username'],
     }
     newAccommodation['created_at'] = new Date();
 
     this.itineraryEventService.addEvent(newAccommodation, this.itinerary['_id'])
         .subscribe(
-          data => {
-            this.flashMessageService.handleFlashMessage(data.message);
+          result => {
+            this.flashMessageService.handleFlashMessage(result.message);
           })
 
     this.cancelAccommodationForm.emit(false)
   }
 
-  ngOnInit() {
-    this.currentUserSubscription = this.userService.updateCurrentUser
-                                       .subscribe(
-                                         data => {
-                                           this.userId = data['id'];
-                                           this.username = data['username'];
-                                         }
-                                       )
-
-    this.itinDateSubscription = this.itineraryService.updateDate
-                                    .subscribe(
-                                      result => {
-                                        let updatedItinDate = Object.keys(result).map(key => result[key]);
-                                        this.itinDateRange = updatedItinDate;
-                                    })
+  cancelForm()  {
+    this.cancelAccommodationForm.emit(false)
   }
 }

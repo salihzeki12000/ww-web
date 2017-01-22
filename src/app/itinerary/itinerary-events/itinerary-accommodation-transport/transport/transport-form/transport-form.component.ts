@@ -23,9 +23,8 @@ export class TransportFormComponent implements OnInit {
   itinDateSubscription: Subscription;
   itinDateRange = [];
 
-  userId;
-  username;
   currentUserSubscription: Subscription;
+  currentUser;
 
   addTransportForm: FormGroup;
   transportType = [ 'flight', 'train', 'bus', 'cruise', 'vehicle rental', 'others' ];
@@ -63,12 +62,26 @@ export class TransportFormComponent implements OnInit {
         'note': '',
       }),
       this.searchFlightForm = this.formBuilder.group({
-        'searchAirlineCode': '',
-        'searchFlightNumber': '',
-        'searchDepDate': '',
+        'searchAirlineCode': ['', Validators.required],
+        'searchFlightNumber': ['', Validators.required],
+        'searchDepDate': ['', Validators.required],
       })
     }
 
+  ngOnInit() {
+    this.currentUserSubscription = this.userService.updateCurrentUser
+                                       .subscribe(
+                                         result => {
+                                           this.currentUser = result;
+                                         }
+                                       )
+
+    this.itinDateSubscription = this.itineraryService.updateDate
+                                    .subscribe(
+                                      result => {
+                                        this.itinDateRange = Object.keys(result).map(key => result[key]);
+                                    })
+  }
 
   onSelectTransportType(transport)  {
     this.transportOption = transport;
@@ -302,7 +315,7 @@ export class TransportFormComponent implements OnInit {
 
   onSubmitNewTransports()  {
     let newTransport = this.addTransportForm.value;
-    console.log(this.flightSearchDetail);
+
     if(this.flightSearchDetail)  {
       for (var value in newTransport) {
         if(newTransport[value] === '' && this.flightSearchDetail[value]) {
@@ -322,15 +335,15 @@ export class TransportFormComponent implements OnInit {
     newTransport['date'] = newTransport['depDate']
     newTransport['type'] = 'transport';
     newTransport['user'] =  {
-      _Id: this.userId,
-      username: this.username,
+      _Id: this.currentUser['id'],
+      username: this.currentUser['username'],
     }
     newTransport['created_at'] = new Date();
 
     this.itineraryEventService.addEvent(newTransport, this.itinerary['_id'])
         .subscribe(
-          data => {
-            this.flashMessageService.handleFlashMessage(data.message);
+          result => {
+            this.flashMessageService.handleFlashMessage(result.message);
           })
 
     this.transportOption = 'flight';
@@ -342,41 +355,4 @@ export class TransportFormComponent implements OnInit {
     this.cancelTransportForm.emit(false)
   }
 
-  // resetTransportForm() {
-  //   this.transports.reset([{
-  //     'transportType': 'flight',
-  //     'referenceNumber': '',
-  //     'depTerminal': '',
-  //     'arrTerminal': '',
-  //     'depStation': '',
-  //     'arrStation': '',
-  //     'depCity': '',
-  //     'arrCity': '',
-  //     'depDate': '',
-  //     'depTime': '',
-  //     'arrDate': '',
-  //     'arrTime': '',
-  //     'transportCompany': '',
-  //     'contactNumber': '',
-  //     'note': '',
-  //     'editing': false
-  //   }])
-  // }
-
-  ngOnInit() {
-    this.currentUserSubscription = this.userService.updateCurrentUser
-                                       .subscribe(
-                                         data => {
-                                           this.userId = data['id'];
-                                           this.username = data['username'];
-                                         }
-                                       )
-
-    this.itinDateSubscription = this.itineraryService.updateDate
-                                    .subscribe(
-                                      result => {
-                                        let updatedItinDate = Object.keys(result).map(key => result[key]);
-                                        this.itinDateRange = updatedItinDate;
-                                    })
-  }
 }

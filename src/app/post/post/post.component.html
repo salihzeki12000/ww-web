@@ -1,6 +1,6 @@
 <div class="user-posts">
 
-  <div class="update">
+  <div class="edit-delete" *ngIf="sameUser">
     <a (click)="onEdit()"><i class="fa fa-pencil" aria-hidden="true"></i></a>
     <a (click)="onDelete()"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
   </div>
@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <textarea rows="4" *ngIf="editing" [value]="post.content" class="edit form-control" (keyup.enter)="updatePost(post, editedPost.value)" (blur)="updatePost(post, editedPost.value)" #editedPost autofocus></textarea>
+    <textarea rows="4" *ngIf="editing" [value]="post.content" class="edit" (keyup.enter)="updatePost(post, editedPost.value)" (blur)="updatePost(post, editedPost.value)" #editedPost autofocus></textarea>
   </div>
 
 </div>

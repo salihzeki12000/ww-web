@@ -1,16 +1,16 @@
-<div class="col-md-7">
+<div class="itinerary">
 
   <div [class.editing]="editing">
     <div class="view">
       <div class="heading">
 
-        <h3 class="itin-name inline-block">{{ itinerary?.name }}   |   </h3>
+        <h3 class="itinearary-name">{{ itinerary?.name }}   |   </h3>
 
-        <div class="inline-block">
+        <div class="itinerary-date">
           <h5><i class="fa fa-calendar" aria-hidden="true"></i> {{ itinerary?.dateFrom | date:'dd MMM yyyy' }} to {{ itinerary?.dateTo | date:'dd MMM yyyy' }}</h5>
         </div>
 
-        <div class="inline-block">
+        <div class="itinerary-edit">
           <a (click)="editDetails()"><i class="fa fa-pencil" aria-hidden="true"></i></a>
         </div>
 
@@ -18,41 +18,11 @@
     </div>
   </div>
 
-  <div *ngIf="editing" class="edit-form">
-
-    <form [formGroup]="basicDetailsForm" (ngSubmit)="saveDetails()">
-      <div class="form-group">
-        <label for="name">Itinerary Name</label>
-        <input type="text" id="name" formControlName="name" class="form-control" [value]="itinerary.name">
-      </div>
-
-      <div class="form-group inline-block">
-        <label for="dateFrom">Travel Date From</label>
-        <input type="date" id="dateFrom" formControlName="dateFrom" class="form-control" [value]="itinerary?.dateFrom | date: 'yyyy-MM-dd'">
-      </div>
-
-      <div class="form-group inline-block">
-        <label for="dateTo">Travel Date To</label>
-        <input type="date" id="dateTo" formControlName="dateTo" class="form-control" [value]="itinerary?.dateTo | date: 'yyyy-MM-dd'">
-      </div>
-
-      <div class="buttons">
-        <button type="button" class="deleteButton" (click)="cancelEdit()">Cancel edit</button>
-        <button type="submit" class="primaryButton" [disabled]="!basicDetailsForm.valid"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save changes</button>
-      </div>
-    </form>
-
-    <div class="delete-itin-button">
-      <button type="button" class="deleteButton" (click)="confirmDelete()">Delete this itinerary</button>
-    </div>
-
-  </div>
-
   <div class="members">
-    <div class="members-count inline-block">
+    <div class="members-count">
       <h4><i class="fa fa-user-plus" aria-hidden="true" (click)="getUsers()"></i> {{ itinerary?.members.length }}</h4>
     </div>
-    <div *ngFor="let member of itinerary?.members" class="inline-block">
+    <div *ngFor="let member of itinerary?.members" class="member">
       <div class="tool-tip">
         <img src="{{ member.displayPic }}" alt="display picture for {{ member.username }}" class="user-profile-thumbnail">
         <span class="tool-tiptext">{{ member.username }}</span>
@@ -64,10 +34,56 @@
 
 </div>
 
-<div class="col-md-3">
+<div class="custom-modal" *ngIf="showActivities" (click)="showCollapseActivities()"></div>
+
+<div class="activity-collapse-dropdown">
+  <i class="fa fa-list fa-2x" aria-hidden="true" (click)="showCollapseActivities()"></i>
+</div>
+
+<div class="activity-collapse-list" [class.show-collapse-activities]="showActivities">
   <ww-activity-collapse-list></ww-activity-collapse-list>
 </div>
 
+<!-- edit itinerary form modal -->
+<div *ngIf="editing">
+  <div class="custom-modal">
+    <div class="form-card">
+
+      <div class="form-header">
+        <h3>Editing itinerary {{ itinerary?.name }}</h3>
+        <a (click)="cancelEdit()">x</a>
+      </div>
+
+      <form [formGroup]="basicDetailsForm" (ngSubmit)="saveDetails()">
+        <label>Itinerary Name</label>
+        <input type="text" formControlName="name" [value]="itinerary.name">
+
+        <div class="itinerary-date">
+          <label>Travel Date From</label>
+          <input type="date" formControlName="dateFrom" [value]="itinerary?.dateFrom | date: 'yyyy-MM-dd'">
+        </div>
+
+        <div class="itinerary-date">
+          <label>Travel Date To</label>
+          <input type="date" formControlName="dateTo" [value]="itinerary?.dateTo | date: 'yyyy-MM-dd'">
+        </div>
+
+        <div class="save-option">
+          <button type="button" class="deleteButton" (click)="cancelEdit()">Cancel edit</button>
+          <button type="submit" class="primaryButton" [disabled]="!basicDetailsForm.valid"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save changes</button>
+        </div>
+      </form>
+
+      <div class="delete-itin-button">
+        <button type="button" class="deleteButton" (click)="confirmDelete()">Delete this itinerary</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- delete itinerary modal -->
 <div class="custom-modal" *ngIf="deleteItinerary">
   <div class="confirm-delete">
 
@@ -86,6 +102,7 @@
   </div>
 </div>
 
+<!-- show users to add members modal -->
 <div class="custom-modal" *ngIf="showUsers">
   <div class="show-users">
 
@@ -94,14 +111,14 @@
       <span class="x-close" (click)="cancelShowUsers()">&times;</span>
     </div>
 
-    <!-- <form [formGroup]="addUsersForm" (ngSubmit)="addMembers()"> -->
-      <div *ngFor="let user of users" class="user-card">
-        <img src="{{ user.displayPic }}" alt="" class="user-profile-thumbnail">
-        <h5 class="inline-block">{{ user.username }}</h5>
-        <input type="checkbox" (click)="toggleAdd(user)">
+    <div *ngFor="let user of users" class="user-card">
+      <img src="{{ user.displayPic }}" alt="" class="user-profile-thumbnail">
+      <div class="user-details">
+        <h5 class="user-username">{{ user.username }}</h5>
+        <h6 class="user-search-description">{{ user.description }}</h6>
       </div>
-    <!-- </form> -->
-
+      <input class="add-member" type="checkbox" (click)="toggleAdd(user)">
+    </div>
 
     <div class="show-users-footer">
       <button type="button" (click)="cancelShowUsers()">Cancel add member</button>

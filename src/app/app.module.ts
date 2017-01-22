@@ -22,6 +22,7 @@ import { FlashMessageComponent, FlashMessageService } from './flash-message';
 
 import { NotificationComponent, NotificationsComponent, NotificationListComponent, NotificationService } from './notifications';
 
+import { AuthGuard } from './_guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,7 @@ import { NotificationComponent, NotificationsComponent, NotificationListComponen
     HttpModule,
     routing,
   ],
-  providers: [ AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, FollowingService, NotificationService ],
+  providers: [ AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, FollowingService, NotificationService, AuthGuard ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

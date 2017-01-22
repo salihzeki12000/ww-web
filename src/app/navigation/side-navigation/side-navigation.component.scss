@@ -1,51 +1,198 @@
-.category {
-  margin-bottom: 10px;
+.custom-modal {
+  z-index: 800;
 }
 
-.heading  {
-  border-bottom: 1px solid grey;
-}
-
-.heading > h4,
-.heading > a  {
-  display: inline-block;
-}
-
-a{
-  font-size: 1.1rem;
-}
-
-h4  {
-  font-size: 1.3rem;
-}
-
-h5  {
-  font-size: 1rem;
-}
-
-h6  {
-  font-size: 1rem;
-  color: grey;
-}
-
-.itineraryList  {
-  padding-left: 5px;
-  margin-top: 2px;
-  margin-bottom: 5px;
-}
-
-.itineraryList > a  {
-  color: black;
+/***************************
+  Side navigation pull down
+****************************/
+.side-navigation-pulldown {
+  display: none;
   &:hover {
-    color: darkblue;
-    text-decoration: none;
+    cursor: pointer;
+  }
+
+  @media only screen and (min-width: 1350px) and (max-width: 1550px) {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    display: block;
+    color: white;
+    z-index: 900;
+  }
+  @media only screen and (min-width: 1000px) and (max-width: 1200px) {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    display: block;
+    color: white;
+    z-index: 900;
+  }
+  @media only screen and (max-width: 880px) {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    display: block;
+    color: white;
+    z-index: 900;
   }
 }
 
-.active {
-  font-weight: bolder;
+/*****************
+  Side navigation
+******************/
+.side-navigation {
+  @media only screen and (min-width: 1350px) and (max-width: 1550px) {
+    display: none;
+    height: 0;
+  }
+  @media only screen and (min-width: 1000px) and (max-width: 1200px) {
+    display: none;
+    height: 0;
+  }
+  @media only screen and (max-width: 880px) {
+    display: none;
+    height: 0;
+  }
 }
 
+.show-side-menu {
+  display: block;
+  @media only screen and (min-width: 1350px) and (max-width: 1550px) {
+    display: block;
+  }
+  @media only screen and (min-width: 1000px) and (max-width: 1200px) {
+    display: block;
+  }
+  @media only screen and (max-width: 880px) {
+    display: block;
+  }
+}
+
+/* profile */
+.profile  {
+  position: fixed;
+  top: 0;
+  padding: 15px 20px;
+  height: 140px;
+  width: 200px;
+  color: white;
+  text-align: center;
+  background-color: #6494ed;
+  -webkit-box-shadow: inset -7px 0 10px -7px rgba(0,0,0,0.2);
+  -moz-box-shadow: inset -7px 0 10px -7px rgba(0,0,0,0.2);
+  box-shadow: inset -7px 0 10px -7px rgba(0,0,0,0.2);
+  z-index: 900;
+
+  @media only screen and (max-width: 880px) {
+    width: 250px;
+  }
+}
+
+.profile > img  {
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.username {
+  margin-top: 5px;
+  vertical-align: middle;
+  text-align: center;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.user-description {
+  padding-top: 5px;
+  color: lightgray;
+}
+
+/* Side menu */
+.side-menu  {
+  position: fixed;
+  top: 140px;
+  height: calc(100vh - 140px);
+  width: 200px;
+  background-color: white;
+  -webkit-box-shadow: inset -7px 0 10px -7px rgba(0,0,0,0.2);
+  -moz-box-shadow: inset -7px 0 10px -7px rgba(0,0,0,0.2);
+  box-shadow: inset -7px 0 10px -7px rgba(0,0,0,0.2);
+  z-index: 900;
+
+  @media only screen and (max-width: 880px) {
+    width: 250px;
+  }
+}
+
+.arrow-down {
+  margin-bottom: 5px;
+  width: 0;
+  height: 0;
+  border-left: 100px solid transparent;
+  border-right: 100px solid transparent;
+  border-top: 50px solid #6494ED;
+
+  @media only screen and (max-width: 880px) {
+    border-left: 125px solid transparent;
+    border-right: 125px solid transparent;
+    border-top: 50px solid #6494ED;
+  }
+}
+
+.category-header  {
+  margin-top: 15px;
+  margin-bottom: 10px;
+  padding: 5px 10px;
+  -webkit-box-shadow: -5px 0px 10px 0px rgba(0,0,0,0.2);
+  -moz-box-shadow: -5px 0px 10px 0px rgba(0,0,0,0.2);
+  box-shadow: -5px 0px 10px 0px rgba(0,0,0,0.2);
+}
+
+.category-item  {
+  padding: 5px 20px;
+  text-align: right;
+  &:hover {
+    cursor: pointer;
+    color: #6494ED;
+  }
+}
+
+/* connections */
+.fa-search  {
+  padding-left: 5px;
+  &:hover {
+    color: #6494ED;
+    cursor: pointer;
+  }
+}
+.friends > h4,
+.friends > h5 {
+  display: inline-block;
+}
+
+.friends > h4 {
+  padding-left: 10px;
+}
+
+/* itineraries */
+.new-itinerary {
+  color: grey;
+  &:hover  {
+    color: #6494ED;
+  }
+}
+
+.fa-caret-down  {
+  float: right;
+  &:hover {
+    cursor: pointer;
+  }
+}
 
 /**************************
  new itinerary form modal
@@ -53,6 +200,10 @@ h6  {
 .modal-header {
   background-color: #6494ED;
   border-radius: 5px 5px 0 0;
+}
+
+.modal-title  {
+  color: white;
 }
 
 .modal-footer {
@@ -70,6 +221,11 @@ h6  {
   top: 5%;
 }
 
+.user-profile-thumbnail {
+  display: inline-block;
+}
+
 .follow-button  {
+  display: inline-block;
   float: right;
 }

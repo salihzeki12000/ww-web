@@ -1,6 +1,5 @@
-.collapseCard {
-  display: inline-block;
-  padding: 10px 20px;
+.collapse-card {
+  position: relative;
   width: 300px;
   vertical-align: text-top;
   -webkit-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.1);
@@ -9,22 +8,47 @@
   cursor: pointer;
 }
 
+.collapse-view {
+  position: relative;
+  width: 300px;
+  padding: 10px;
+  vertical-align: text-top;
+  -webkit-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.1);
+  -moz-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.1);
+  box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.1);
+  cursor: pointer;
+}
+
 .accommodation-indicator  {
-  border-left: 10px solid #ff7f50;
+  border-left: 10px solid rgba(100,235,219,0.5);
 }
 
 .transport-indicator  {
-  border-left: 10px solid #50ff7f;
+  border-left: 10px solid rgba(237,100,148,0.5);
 }
 
 .activity-indicator {
-  border-left: 10px solid #7f50ff;
+  border-left: 10px solid rgba(237,189,100,0.5);
 }
 
+img {
+  width: 300px;
+  height: 200px;
+  overflow: hidden;
+  cursor: pointer;
+}
 
 .img  {
   width: 300px;
+  height: 200px;
+  background-color: #f5f5fd;
+  text-align: center;
   cursor: pointer;
+}
+
+.note {
+  margin-top: 10px;
+  padding-left: 0;
 }
 
 .highlight {
@@ -40,38 +64,8 @@ span  {
   font-size: 0.617em;
 }
 
-.arrival  {
+.arrival-highlight  {
   color: #6494ED;
-}
-
-.green  {
-  background-color: #66cdaa;
-}
-
-.checkin-status {
-  text-align: center;
-  margin-right: -4px;
-  width: 34%;
-  color: white;
-  font-size: 0.8em;
-  background-color: #f08080;
-  &:hover {
-    cursor: pointer;
-  }
-}
-
-.dateTime {
-  text-align: center;
-  margin-right: -4px;
-  width: 300px;
-  color: white;
-  font-size: 0.8em;
-  background-color: #c39d63;
-}
-
-img {
-  width: 300px;
-  height: 200px;
 }
 
 .accomCheckIn {

@@ -1,9 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { Subscription } from 'rxjs/Rx';
 
-import { Resource } from '../resource';
-import { ResourceService } from '../resource.service';
+import { Resource }            from '../resource';
+import { ResourceService }     from '../resource.service';
 import { FlashMessageService } from '../../../flash-message';
+import { UserService }         from '../../../user';
 
 @Component({
   selector: 'ww-resource',
@@ -17,8 +19,13 @@ export class ResourceComponent implements OnInit {
 
   editResourceForm: FormGroup;
 
+  currentUserSubscription: Subscription;
+  currentUser;
+  sameUser;
+
   constructor(
     private formBuilder: FormBuilder,
+    private userService: UserService,
     private flashMessageService: FlashMessageService,
     private resourceService: ResourceService) {
       this.editResourceForm = this.formBuilder.group({
@@ -28,6 +35,19 @@ export class ResourceComponent implements OnInit {
     }
 
   ngOnInit() {
+    this.currentUserSubscription = this.userService.updateCurrentUser
+                                       .subscribe(
+                                         result => {
+                                           this.currentUser = result;
+                                           this.checkSameUser();
+                                         }
+                                       )
+  }
+
+  checkSameUser() {
+    if(this.currentUser['id'] === this.resource['user']['_id']) {
+      this.sameUser = true;
+    }
   }
 
   onEdit()  {

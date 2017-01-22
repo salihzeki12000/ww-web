@@ -1,27 +1,36 @@
-.category > label {
-  padding: 5px;
-  margin-bottom: 0;
-  border: 1px solid grey;
-}
-
-.checked  {
-  background-color: #5eebab;
-  border: transparent;
-}
-
-.activityForm {
+.activity-form {
   padding-bottom: 20px;
   border-bottom: 2px solid grey;
 }
 
-.checkedIn  {
+.date-time-visit  {
   padding: 10px;
   background-color: #ffe5e5;
   border-bottom: 1px solid #ccc;
 }
 
-.formCard {
-  margin: 3% auto;
-  width: 50%;
-  background-color: white;
+select  {
+  width: 190px;
+}
+
+.anytime-input  {
+  display: inline-block;
+}
+
+.anytime-input > label > input  {
+  display: inline-block;
+  width: 15px;
+}
+
+.marginBottom {
+  margin-bottom: 10px;
+}
+
+.category-input > input {
+  display: inline-block;
+  width: 15px;
+}
+
+.category-input > label {
+  display: inline-block;
 }

@@ -3,8 +3,17 @@
   margin-bottom: 10px;
   border-top: 2px solid #6494ed;
   border-bottom: 4px solid #6494ed;
+
+  @media only screen and (max-width: 700px) {
+    padding: 10px 0;
+    width: 100%;
+  }
 }
 
 .primaryButton  {
   margin-top: 10px;
+
+  @media only screen and (max-width: 700px) {
+    width: 100%;
+  }
 }

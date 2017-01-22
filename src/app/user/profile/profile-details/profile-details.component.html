@@ -1,15 +1,29 @@
-<div class="col-md-6 col-md-offset-1">
-  <h5>Username</h5>
-  <h6>{{ user?.username }}</h6>
-  <hr>
+<div class="profile">
 
-  <h5>Email</h5>
-  <h6>{{ user?.email }}</h6>
-  <hr>
+  <div class="profile-menu">
+    <img src="{{ user?.displayPic }}" alt="">
+    <h6>a wonderer wanderer</h6>
+    <h6>since {{ user?.created_at | date:'dd MMMM y' }}</h6>
+  </div>
 
-  <h5>Date Join</h5>
-  <h6>{{ user?.created_at | date:'medium' }}</h6>
-  <hr>
+  <div class="profile-details">
+    <form [formGroup]="profileUpdateForm" (ngSubmit)="onSubmit()">
+      <label>Username</label>
+      <input type="text" formControlName="username" [value]="user?.username">
 
-  <button type="button" (click)="onDelete()">Delete my account</button>
+      <label>Describe yourself in 50 characters or less</label>
+      <span>Characters: {{ profileUpdateForm?.value.description.length }}</span>
+      <input type="text" formControlName="description" [value]="user?.description" maxlength="50">
+
+      <label>Email</label>
+      <input type="text" formControlName="email" [value]="user?.email">
+
+      <button type="submit" class="primaryButton"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save changes</button>
+
+    </form>
+
+  </div>
+
+
+  <!-- <button type="button" (click)="onDelete()">Delete my account</button> -->
 </div>

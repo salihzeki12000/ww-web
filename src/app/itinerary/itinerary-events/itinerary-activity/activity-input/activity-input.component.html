@@ -1,116 +1,86 @@
-<div class="activityForm">
+<div class="activity-form">
 
   <form [formGroup]="customActivityForm" (ngSubmit)="onSubmit()">
 
-    <div class="formCard">
+    <div class="form-card">
 
-        <div class="subHeading">
-          <i class="fa fa-calendar-plus-o inline-block" aria-hidden="true"></i>
-          <h5 class="inline-block">Add activity</h5>
-          <a class="inline-block delete" (click)="cancelForm()">x</a>
+        <div class="form-header">
+          <h3>Add activity</h3>
+          <a (click)="cancelForm()">x</a>
         </div>
 
-        <div class="placeSearch">
-          <div class="form-group">
-            <label>Enter name of place or address (local name or address may be required)</label>
-          </div>
+        <div class="place-search">
+          <label>Enter name of place or address (local name or address may be required)</label>
           <ww-google-place-search (placeDetail)="getActivityDetails($event)"></ww-google-place-search>
         </div>
 
-        <div class="checkedIn">
-          <div>
-            <h5 style="padding-left:2px;color:brown">When do you want to visit this place?</h5>
+        <div class="date-time-visit">
 
-            <div class="form-group inline-block">
-              <label for="date">Date to visit</label>
-              <select name="date" class="form-control" formControlName="date">
-                <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
-                  <div *ngIf="itinDate === 'any day'">
-                    <h5>{{ itinDate }}</h5>
-                  </div>
-                  <div *ngIf="itinDate !== 'any day'">
-                    <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
-                  </div>
-                </option>
-              </select>
-            </div>
+          <h5 style="padding-left:2px;color:brown">When do you plan to visit this place?</h5>
 
-            <div class="time">
-              <div class="form-group inline-block">
-                <label for="time">Time to visit (AM/PM)</label>
-                <input type="time" id="time" formControlName="time" class="form-control" *ngIf="!anytime">
+          <label>Date to visit <span class="required"> - required</span></label>
+          <select name="date" formControlName="date">
+            <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
+              <div *ngIf="itinDate === 'any day'">
+                <h5>{{ itinDate }}</h5>
               </div>
+              <div *ngIf="itinDate !== 'any day'">
+                <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+              </div>
+            </option>
+          </select>
 
-              <div class="form-group inline-block">
-                <label>
+          <div class="time" [class.marginBottom]="anytime">
+            <label>Time to visit (
+
+              <div class="anytime-input">
+                <label>Any time
                   <input type="checkbox" (click)="toggleAnytime()">
-                  Any time
                 </label>
               </div>
-            </div>
-
+              )
+            </label>
+            <input type="time" formControlName="time" *ngIf="!anytime">
           </div>
         </div>
 
+        <label>Name <span class="required"> - required</span></label>
+        <input type="text" formControlName="name" value="{{ activityDetail?.name}}">
 
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input type="text" id="name" formControlName="name" class="form-control" value="{{ activityDetail?.name}}">
-        </div>
+        <label>Address</label>
+        <input type="text" formControlName="formatted_address" value="{{ activityDetail?.formatted_address}}">
 
-        <div class="form-group">
-          <label for="formatted_address">Address</label>
-          <input type="text" id="formatted_address" formControlName="formatted_address" class="form-control" value="{{ activityDetail?.formatted_address}}">
-        </div>
+        <label>Contact Number</label>
+        <input type="text" formControlName="international_phone_number" value="{{ activityDetail?.international_phone_number}}" class="contact-number-input">
 
-        <div class="form-group">
-          <label for="website">Website</label>
-          <input type="text" id="website" formControlName="website" class="form-control" value="{{ activityDetail?.website}}">
-        </div>
+        <label>Website</label>
+        <input type="url" id="website" formControlName="website" value="{{ activityDetail?.website}}">
 
-        <div class="form-group">
-          <label for="international_phone_number">Contact Number</label>
-          <input type="text" id="international_phone_number" formControlName="international_phone_number" class="form-control" value="{{ activityDetail?.international_phone_number}}">
-        </div>
+        <label>Opening hours</label>
+        <textarea rows="3" formControlName="opening_hours" value="{{ activityDetail?.opening_hours}}"></textarea>
 
-        <div class="form-group">
-          <label for="opening_hours">Opening hours</label>
-          <textarea rows="7" cols="20" formControlName="opening_hours" class="form-control" value="{{ activityDetail?.opening_hours}}">
-        </div>
+        <label>Cost / Entry fee</label>
+        <input type="text" formControlName="entryFee">
 
-        <div class="form-group">
-          <label for="entryFee">Cost / Entry fee</label>
-          <input type="text" id="entryFee" formControlName="entryFee" class="form-control">
-        </div>
-
-        <div class="form-group">
-          <label for="description">Description</label>
-          <textarea rows="3" cols="80" formControlName="description" class="form-control"></textarea>
-        </div>
-
-        <div class="form-group">
-          <label for="note">Note</label>
-          <textarea name="name" rows="3" cols="80" formControlName="note" class="form-control"></textarea>
-        </div>
+        <label>Note</label>
+        <textarea rows="2" formControlName="note"></textarea>
 
         <div formArrayName="categories">
-          <label class="block">Category</label>
+          <label>Category</label>
 
-          <div *ngFor="let category of categories.controls; let j = index" [formGroupName]="j" class="inline-block">
+          <div *ngFor="let category of categories.controls; let j = index" [formGroupName]="j">
 
-            <div class="form-group category">
+            <div class="category-input">
+              <input type="checkbox" formControlName="checked">
               <label>
-                <i class="fa fa-{{ category.controls.value.icon }}" aria-hidden="true"></i>
-                {{ category.controls.value.value }}
-                <input type="checkbox" formControlName="checked">
+                <i class="fa fa-{{ category?.value.icon }} fa-fw" aria-hidden="true"></i>
+                {{ category.value.value }}
               </label>
             </div>
-
           </div>
-
         </div>
 
-        <div class="saveOption">
+        <div class="save-option">
           <button type="submit" class="primaryButton" [disabled]="!customActivityForm.valid"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save activity</button>
         </div>
 

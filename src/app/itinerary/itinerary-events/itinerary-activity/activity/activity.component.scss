@@ -1,54 +1,60 @@
-p {
-  margin-right: 5px;
-  font-size: 8px;
-  color: grey;
-}
-
-.checkIn i {
-  display: inline-block;
-  color: grey;
-}
-
-.checkin-status {
-  text-align: center;
-  margin-right: -4px;
-  width: 34%;
-  color: white;
-  font-size: 0.8em;
-  background-color: #f08080;
-  &:hover {
-    cursor: pointer;
-  }
-}
-
-.green  {
-  background-color: #66cdaa;
-}
-
-.dateTime {
-  text-align: center;
-  margin-right: -4px;
+.activity-card {
+  position: relative;
+  margin: 7px;
   width: 300px;
-  color: white;
-  font-size: 0.8em;
-  background-color: #c39d63;
+  vertical-align: text-top;
+  -webkit-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+  border-radius: 5px;
 }
 
 img {
   width: 300px;
   height: 200px;
+  overflow: hidden;
 }
 
-.formCard {
-  position: relative;
-  margin: 3% auto;
-  width: 50%;
-  background-color: white;
+.img {
+  padding-top: 60px;
+  width: 300px;
+  height: 200px;
+  background-color: #f5f5fd;
+  text-align: center;
 }
 
-.edit-header  {
-  padding: 10px;
+.note {
+  margin: 10px 0 50px 0;
+  padding-left: 0;
+}
+
+.postby {
+  left: 20px;
+}
+
+/* edit view */
+select  {
+  width: 190px;
+}
+
+.anytime-input  {
+  display: inline-block;
+}
+
+.anytime-input > label > input  {
+  display: inline-block;
+  width: 15px;
+}
+
+.marginBottom {
   margin-bottom: 10px;
-  border-bottom: 1px solid lightgray;
-  border-radius: 5px 5px 0 0;
+}
+
+.category-input > input {
+  display: inline-block;
+  width: 15px;
+}
+
+.category-input > label {
+  display: inline-block;
 }

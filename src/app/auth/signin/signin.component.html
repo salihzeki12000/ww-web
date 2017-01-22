@@ -2,18 +2,14 @@
 
 <form [formGroup]="signinForm" (ngSubmit)="onSubmit()">
 
-  <div class="form-group">
-    <label for="email">Email</label>
-    <input type="text" id="email" #email formControlName="email" class="form-control">
-    <span *ngIf="!email.pristine && email.errors != null && email.errors['invalidEmail']">Invalid email address</span>
-  </div>
+  <label>Email</label>
+  <input type="text" #email formControlName="email">
+  <span *ngIf="!email.pristine && email.errors != null && email.errors['invalidEmail']">Invalid email address</span>
 
-  <div class="form-group">
-    <label for="password">Password</label><span>(at least 6 characters)</span>
-    <input type="password" id="password" formControlName="password" class="form-control">
-  </div>
+  <label>Password</label><span>(at least 6 characters)</span>
+  <input type="password" formControlName="password">
 
-  <button type="submit" name="button" [disabled]="!signinForm.valid">Sign In Now</button>
+  <button type="submit" [disabled]="!signinForm.valid">Sign In Now</button>
 
 </form>
 

@@ -88,7 +88,11 @@ export class AuthService  {
       if (response.status === 'connected') {
         FB.logout((response) => {
           // Person is now logged out
-          this.router.navigateByUrl('/signin');
+          localStorage.clear();
+
+          setTimeout(() =>  {
+            this.router.navigateByUrl('/signin');
+          },1000)
           console.log("logout of facebook");
         })
       }
@@ -98,13 +102,18 @@ export class AuthService  {
   signoutGoogle() {
     let auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(() => {
-      this.router.navigateByUrl('/signin');
+      localStorage.clear();
+
+      setTimeout(() =>  {
+        this.router.navigateByUrl('/signin');
+      },1000)
       console.log('google user sign out');
     });
   }
 
   logout()  {
-    console.log(this.loginType);
+    localStorage.clear();
+    console.log("logout");
     if(this.loginType === 'facebook')  {
       this.signoutFacebook();
     } else if(this.loginType === 'google')  {
@@ -113,7 +122,6 @@ export class AuthService  {
       this.router.navigateByUrl('/signin');
     }
 
-    localStorage.clear();
   }
 
   isLoggedIn()  {

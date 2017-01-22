@@ -17,6 +17,7 @@ export class ActivityCollapseListComponent implements OnInit {
   itinDateSubscription: Subscription;
   itinDateRange = [];
   collapseDate = [];
+  collapse = false;
 
   constructor(
     private itineraryEventService: ItineraryEventService,
@@ -47,12 +48,14 @@ export class ActivityCollapseListComponent implements OnInit {
     for (let i = 0; i < this.collapseDate.length; i++) {
         this.collapseDate[i] = false;
     }
+    this.collapse = false;
   }
 
   collapseAll() {
     for (let i = 0; i < this.collapseDate.length; i++) {
         this.collapseDate[i] = true;
     }
+    this.collapse = true;
   }
 
 }

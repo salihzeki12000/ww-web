@@ -4,9 +4,7 @@ declare var google:any;
 @Component({
   selector: 'ww-google-place-search',
   template: `
-    <div class="form-group">
-      <input type="text" #ggPlaceSearch class="form-control" (dblclick)="getDetails()" placeholder="">
-    </div>
+    <input type="text" #ggPlaceSearch (dblclick)="getDetails()" placeholder="">
   `,
   styleUrls: ['./google-place-search.component.scss']
 })

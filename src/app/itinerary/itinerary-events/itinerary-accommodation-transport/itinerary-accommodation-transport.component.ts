@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
 
 import { ItineraryService } from '../../itinerary.service';
 import { Itinerary } from '../../itinerary';
-import { UserService } from '../../../user';
 import { ItineraryEvent } from '../itinerary-event';
 import { ItineraryEventService } from '../itinerary-event.service';
-import { FlashMessageService } from '../../../flash-message';
+import { UserService } from '../../../user';
 
 @Component({
   selector: 'ww-itinerary-accommodation-transport',
@@ -18,19 +16,21 @@ import { FlashMessageService } from '../../../flash-message';
 export class ItineraryAccommodationTransportComponent implements OnInit {
   itinerary: Itinerary;
   itinDateRange = [];
-  events: ItineraryEvent[] = [];
 
   itinerarySubscription: Subscription;
   itinDateSubscription: Subscription;
   eventSubscription: Subscription;
 
-  // for editing accommodation
-  accommodationSection = true;
-  accommodations = [];
+  currentUserSubscription: Subscription;
+  currentUser;
 
-  // for editing transport
+  // to show/hide accommodation/transport section
+  accommodationSection = true;
   transportSection = true;
-  transports = [];
+
+  // array of accommodations/transports to pass to respective views
+  accommodations: ItineraryEvent[] = [];
+  transports: ItineraryEvent[] = [];
 
   // to see the add new accommodation/transport form
   addNewAccommodation = false;
@@ -39,9 +39,7 @@ export class ItineraryAccommodationTransportComponent implements OnInit {
   constructor(
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
-    private userService: UserService,
-    private flashMessageService: FlashMessageService,
-    private route: ActivatedRoute) { }
+    private userService: UserService) { }
 
   ngOnInit() {
     this.itinerarySubscription = this.itineraryService.currentItinerary
@@ -60,10 +58,29 @@ export class ItineraryAccommodationTransportComponent implements OnInit {
     this.eventSubscription = this.itineraryEventService.updateEvent
                                  .subscribe(
                                     result => {
-                                      this.events = Object.keys(result).map(key => result[key]);
-                                      this.filterEventType();
+                                      this.filterEvent(result);
                                   })
 
+    this.currentUserSubscription = this.userService.updateCurrentUser
+                                       .subscribe(
+                                         result => {
+                                           this.currentUser = result;
+                                         }
+                                       )
+  }
+
+  filterEvent(events) {
+    this.accommodations = [];
+    this.transports = [];
+    for (let i = 0; i < events.length; i++) {
+      if(events[i]['type'] === 'accommodation') {
+        this.accommodations.push(events[i])
+      }
+
+      if(events[i]['type'] === 'transport') {
+        this.transports.push(events[i])
+      }
+    }
   }
 
   // show/hide accommodation/transport section
@@ -95,17 +112,4 @@ export class ItineraryAccommodationTransportComponent implements OnInit {
     this.addNewTransport = false;
   }
 
-  filterEventType() {
-    this.accommodations = [];
-    this.transports = [];
-    for (let i = 0; i < this.events.length; i++) {
-      if(this.events[i]['type'] === 'accommodation') {
-        this.accommodations.push(this.events[i])
-      }
-
-      if(this.events[i]['type'] === 'transport') {
-        this.transports.push(this.events[i])
-      }
-    }
-  }
 }

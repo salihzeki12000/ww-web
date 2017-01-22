@@ -1,13 +1,6 @@
 <div class="toggle-select">
-  <label for="toggle">
-    Expand all
-    <input name="toggle" type="radio" (click)="expandAll()">
-  </label>
-
-  <label for="toggle">
-    Collapse all
-    <input name="toggle" type="radio" (click)="collapseAll()">
-  </label>
+  <h5 class="toggle" (click)="expandAll()" [class.selected]="!collapse">Expand all</h5>
+  <h5 class="toggle" (click)="collapseAll()" [class.selected]="collapse">Collapse all</h5>
 </div>
 
 <div class="event-type-legend">
@@ -20,7 +13,7 @@
     <div class="activity-indicator"></div>
     <h6>Activity</h6>
   </div>
-  
+
   <div class="legend">
     <div class="transport-indicator"></div>
     <h6>Transport</h6>
@@ -31,12 +24,12 @@
   <div *ngFor="let date of itinDateRange; let i = index">
     <div class="itin-date">
       <div *ngIf="date === 'any day'">
-        <h5 *ngIf="collapseDate[i]" (click)="toggleCollapse(i)">Any day <i class="fa fa-plus" aria-hidden="true"></i></h5>
-        <h5 *ngIf="!collapseDate[i]" (click)="toggleCollapse(i)">Any day <i class="fa fa-minus" aria-hidden="true"></i></h5>
+        <h5 *ngIf="collapseDate[i]" (click)="toggleCollapse(i)" class="date-header">Any day <i class="fa fa-plus" aria-hidden="true"></i></h5>
+        <h5 *ngIf="!collapseDate[i]" (click)="toggleCollapse(i)" class="date-header">Any day <i class="fa fa-minus" aria-hidden="true"></i></h5>
       </div>
       <div *ngIf="date !== 'any day'">
-        <h5 *ngIf="collapseDate[i]" (click)="toggleCollapse(i)">Day {{ i }} - {{ date | date: "dd MMM yyyy (EEEE)" }}<i class="fa fa-plus" aria-hidden="true"></i></h5>
-        <h5 *ngIf="!collapseDate[i]" (click)="toggleCollapse(i)">Day {{ i }} - {{ date | date: "dd MMM yyyy (EEEE)" }}<i class="fa fa-minus" aria-hidden="true"></i></h5>
+        <h5 *ngIf="collapseDate[i]" (click)="toggleCollapse(i)" class="date-header">Day {{ i }} - {{ date | date: "dd MMM yyyy (EEEE)" }}<i class="fa fa-plus" aria-hidden="true"></i></h5>
+        <h5 *ngIf="!collapseDate[i]" (click)="toggleCollapse(i)" class="date-header">Day {{ i }} - {{ date | date: "dd MMM yyyy (EEEE)" }}<i class="fa fa-minus" aria-hidden="true"></i></h5>
       </div>
     <div>
 

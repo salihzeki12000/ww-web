@@ -6,13 +6,17 @@ nav {
   font-family: 'Roboto Condensed', sans-serif;
   font-weight: 700;
   color: white;
-  text-align: center;
   background-color: #6494ED;
-  z-index: 900; /** to allow google search to show in modal **/
+  z-index: 500; /** to allow google search to show in modal **/
 }
 
-.logo:hover  {
-  cursor: pointer;
+.logo {
+  text-align: center;
+  width: 100px;
+  margin-left: calc((100vw - 100px) / 2);
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 h1, .sub-title {
@@ -25,8 +29,10 @@ h1, .sub-title {
 
 h1  {
   font-size: 3em;
+  // text-shadow: -1px -1px 0px rgba(255,255,255,0.3), 1px 1px 0px rgba(0,0,0,0.8);
 }
 
 h2  {
   line-height: 0.85;
+  // text-shadow: -1px -1px 0px rgba(255,255,255,0.3), 1px 1px 0px rgba(0,0,0,0.8);
 }

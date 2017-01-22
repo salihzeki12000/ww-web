@@ -1,0 +1,8 @@
+.posts  {
+  margin-left: 300px;
+  max-width: 600px;
+
+  @media only screen and (max-width: 1500px) {
+    margin-left: 100px;
+  }
+}

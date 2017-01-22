@@ -1,38 +1,84 @@
-<div class="col-md-2">
+<div class="custom-modal" *ngIf="showMenu" (click)="showSideMenu()"></div>
+
+<div class="side-navigation-pulldown" (click)="showSideMenu()">
+  <i class="fa fa-bars fa-2x" aria-hidden="true"></i>
+</div>
+
+<div class="side-navigation" [class.show-side-menu]="showMenu">
 
   <div class="profile">
-    <h4 (click)="logout()">Log out</h4>
+    <img src="{{ currentUser?.displayPic }}" alt="" [routerLink]="['profile']" (click)="exitMenu()">
+    <div class="username">
+      <h4 [routerLink]="['profile']" (click)="exitMenu()">{{ currentUser?.username }}</h4>
+    </div>
+    <h5 class="user-description">{{ currentUser?.description }}</h5>
   </div>
 
-  <div class="friends category">
-    <div class="heading">
-      <h4>My friends</h4>
-      <a (click)="getUsers()">find</a>
-    </div>
-    <h5>requests ({{ requests.length }})</h5>
-    <h5>followers ({{ followers.length }})</h5>
-    <h5>followings ({{ followings.length }})</h5>
-  </div>
 
-  <div class="itinerary category">
-    <div class="heading">
-      <h4>My itineraries</h4>
-      <a data-toggle="modal" data-target="#new-itin-form">new</a>
+  <div class="side-menu">
 
-    </div>
+    <div class="arrow-down"></div>
+
     <div>
-      <div *ngFor="let itinerary of currentUser?.itineraries">
-        <div class="itineraryList">
-          <a [routerLink]="['itinerary/', itinerary._id]" routerLinkActive="active">
-            <h5>{{ itinerary.name }}</h5>
-            <h6>( {{ itinerary.dateFrom | date:'dd MMM yy' }} to {{ itinerary.dateTo | date:'dd MMM yy' }} )</h6>
-          </a>
+      <div class="category-header" (click)="toggleConnectionsSection()">
+        <h4>
+          Connections
+          <i class="fa fa-search" aria-hidden="true" (click)="getUsers()"></i>
+          <i class="fa fa-caret-down" aria-hidden="true"></i>
+        </h4>
+      </div>
+
+      <div *ngIf="connectionsSection">
+
+        <div class="category-item friends">
+          <h5>Followers</h5>
+          <h4>{{ followers.length }}</h4>
+        </div>
+
+        <div class="category-item friends">
+          <h5>Followings</h5>
+          <h4>{{ followings.length }}</h4>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div>
+      <div class="category-header" (click)="toggleItinerariesSection()">
+        <h4>Itineraries <i class="fa fa-caret-down" aria-hidden="true"></i></h4>
+      </div>
+
+      <div *ngIf="itinerariesSection">
+        <div class="category-item">
+          <h5 data-toggle="modal" data-target="#new-itin-form" class="new-itinerary" (click)="exitMenu()"><i class="fa fa-plus" aria-hidden="true"></i> Create a new itinerary</h5>
+        </div>
+        <div>
+          <div *ngFor="let itinerary of currentUser?.itineraries" class="category-item">
+            <div [routerLink]="['itinerary/', itinerary._id]" routerLinkActive="active" (click)="exitMenu()">
+              <h5>{{ itinerary.name }}</h5>
+              <h6>( {{ itinerary.dateFrom | date:'dd MMM yy' }} to {{ itinerary.dateTo | date:'dd MMM yy' }} )</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div>
+      <div class="category-header" (click)="toggleSettingsSection()">
+        <h4>Settings <i class="fa fa-caret-down" aria-hidden="true"></i></h4>
+      </div>
+      <div *ngIf="settingsSection">
+        <div class="category-item" (click)="logout()">
+          <h5><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</h5>
         </div>
       </div>
     </div>
-  </div>
 
+  </div>
 </div>
+
 
 <!-- new itin form -->
 <div class="modal fade" id="new-itin-form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -45,26 +91,21 @@
             <!-- <span class="sr-only">Close</span> -->
           </button>
 
-          <h3 class="modal-title" id="myModalLabel">3 details to get you started</h3>
+          <h3 class="modal-title" id="myModalLabel">Create a new itinerary</h3>
       </div>
 
       <!-- Modal Body -->
       <div class="modal-body">
         <form [formGroup]="itineraryForm" (ngSubmit)="onSubmit()">
-          <div class="form-group">
-            <label for="name">Itinerary name</label>
-            <input type="text" id="name" formControlName="name" class="form-control">
-          </div>
 
-          <div class="form-group">
-            <label for="dateFrom">Travel date from (dd/mm/yyyy)</label>
-            <input type="date" id="dateFrom" formControlName="dateFrom" class="form-control" max="9999-12-31">
-          </div>
+          <label>Itinerary name</label>
+          <input type="text" formControlName="name">
 
-          <div class="form-group">
-            <label for="dateTo">Travel date to (dd/mm/yyyy)</label>
-            <input type="date" id="dateTo" formControlName="dateTo" class="form-control" max="9999-12-31">
-          </div>
+          <label>Travel date from (dd/mm/yyyy)</label>
+          <input type="date" formControlName="dateFrom" max="2050-12-31">
+
+          <label>Travel date to (dd/mm/yyyy)</label>
+          <input type="date" formControlName="dateTo" max="2050-12-31">
 
           <div class="modal-footer">
               <button type="submit" (click)="onSubmit()" data-dismiss="modal" [disabled]="!itineraryForm.valid">Create itinerary</button>
@@ -89,9 +130,12 @@
     <!-- <form [formGroup]="addUsersForm" (ngSubmit)="addMembers()"> -->
       <div *ngFor="let user of users" class="user-card">
         <img src="{{ user.displayPic }}" alt="" class="user-profile-thumbnail">
-        <h5 class="inline-block">{{ user.username }}</h5>
+        <div class="user-details">
+          <h5 class="user-username">{{ user.username }}</h5>
+          <h6 class="user-search-description">{{ user.description }}</h6>
+        </div>
 
-        <div class="inline-block follow-button">
+        <div class="follow-button">
           <div *ngIf="user.status === 'requested'">
             <button type="button" class="follow" (click)="cancelRequest(user)">Requested</button>
           </div>

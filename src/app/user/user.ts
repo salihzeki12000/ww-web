@@ -3,6 +3,7 @@ export class User {
     userId: string,
     username: string,
     email: string,
+    description: string,
     password: string,
     displayPic: string) {}
 }

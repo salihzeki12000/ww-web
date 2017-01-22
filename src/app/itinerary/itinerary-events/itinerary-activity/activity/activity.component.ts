@@ -2,10 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
 
-import { ItineraryService } from '../../../itinerary.service';
-import { ItineraryEvent } from '../../itinerary-event';
+import { ItineraryService }      from '../../../itinerary.service';
+import { ItineraryEvent }        from '../../itinerary-event';
 import { ItineraryEventService } from '../../itinerary-event.service';
-import { FlashMessageService } from '../../../../flash-message';
+import { FlashMessageService }   from '../../../../flash-message';
+import { UserService }           from '../../../../user';
 
 @Component({
   selector: 'ww-activity',
@@ -25,8 +26,13 @@ export class ActivityComponent implements OnInit {
   itinDateSubscription: Subscription;
   itinDateRange = [];
 
+  currentUserSubscription: Subscription;
+  currentUser;
+  sameUser;
+
   constructor(
     private formBuilder: FormBuilder,
+    private userService: UserService,
     private itineraryEventService: ItineraryEventService,
     private flashMessageService: FlashMessageService,
     private itineraryService: ItineraryService) {
@@ -53,14 +59,28 @@ export class ActivityComponent implements OnInit {
                                         let updatedItinDate = Object.keys(result).map(key => result[key]);
                                         this.itinDateRange = updatedItinDate;
                                     })
+
+    this.currentUserSubscription = this.userService.updateCurrentUser
+                                       .subscribe(
+                                         result => {
+                                           this.currentUser = result;
+                                           this.checkSameUser();
+                                         }
+                                       )
+  }
+
+  checkSameUser() {
+    if(this.currentUser['id'] === this.activity['user']['_id']) {
+      this.sameUser = true;
+    }
   }
 
   initCategoryArray() {
     this.categories = this.formBuilder.array([
-      this.formBuilder.group({ value:'sight-seeing', icon: 'eye', checked: false }),
-      this.formBuilder.group({ value: 'food/drink', icon: 'cutlery', checked: false }),
       this.formBuilder.group({ value: 'adventure', icon: 'hand-peace-o', checked: false }),
-      this.formBuilder.group({ value: 'shopping', icon: 'shopping-bag', checked: false })
+      this.formBuilder.group({ value: 'food/drink', icon: 'cutlery', checked: false }),
+      this.formBuilder.group({ value: 'sight-seeing', icon: 'eye', checked: false }),
+      this.formBuilder.group({ value: 'shopping', icon: 'shopping-bag', checked: false }),
     ])
     return this.categories;
   }
@@ -79,10 +99,10 @@ export class ActivityComponent implements OnInit {
 
   onUpdateActivity()  {
     let categoryArray = [
-      { value:'sight-seeing', icon: 'eye' },
-      { value: 'food/drink', icon: 'cutlery' },
       { value: 'adventure', icon: 'hand-peace-o' },
-      { value: 'shopping', icon: 'shopping-bag'}
+      { value: 'food/drink', icon: 'cutlery' },
+      { value: 'shopping', icon: 'shopping-bag'},
+      { value: 'sight-seeing', icon: 'eye' },
     ]
 
     let editedActivity = this.editCustomActivityForm.value;

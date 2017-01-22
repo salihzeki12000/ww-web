@@ -1,30 +1,35 @@
-<div class="detailsCard">
+<div class="details-card">
 
   <!-- accommodation details view -->
-  <div class="inline-block update">
+  <div class="edit-delete" *ngIf="sameUser">
     <a (click)="editAccommodation()"><i class="fa fa-pencil" aria-hidden="true"></i></a>
     <a (click)="confirmDeleteAccommodation()"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
   </div>
 
-  <h4 class="dateHeader">{{ event?.checkInDate | date: 'dd MMM yyyy' }}</h4>
+  <h4 class="date-header">{{ event?.checkInDate | date: 'dd MMM yyyy' }}</h4>
 
-  <h4 class="accommodationHeader">{{ event?.name | uppercase }}</h4>
+  <h4 class="accommodation-header">{{ event?.name | uppercase }}</h4>
 
-  <div class="accommodationDetails">
-    <div class="departureDetails">
-      <h5>Check in: {{ event?.checkInDate | date:'dd MMM yyyy' }}</h5>
+  <div class="accommodation-details">
+
+    <div class="check-in-out-header">
+      <h5 class="departure-details">Check in:</h5>
+      <h5 class="arrival-details">Check out:</h5>
     </div>
 
-    <div class="arrivalDetails">
-      <h5>Check out: {{ event?.checkOutDate | date:'dd MMM yyyy' }}</h5>
+    <div class="check-in-out-dates">
+      <h5 class="departure-details">{{ event?.checkInDate | date:'dd MMM yyyy' }}</h5>
+      <h5 class="arrival-details">{{ event?.checkOutDate | date:'dd MMM yyyy' }}</h5>
     </div>
 
     <div class="address">
-      <h5><i class="fa fa-map-marker inline-block" aria-hidden="true"></i>{{ event?.formatted_address }}</h5>
+      <i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>
+      <h5>{{ event?.formatted_address }}</h5>
     </div>
 
-    <div class="contactNumber">
-      <h5><i class="fa fa-phone inline-block" aria-hidden="true"></i>{{ event?.international_phone_number }}</h5>
+    <div class="contact-number">
+      <i class="fa fa-phone fa-fw" aria-hidden="true"></i>
+      <h5>{{ event?.international_phone_number }}</h5>
     </div>
 
     <div class="website">
@@ -48,69 +53,66 @@
 <!-- accommodation edit modal -->
 <div *ngIf="editing">
   <div class="custom-modal">
-    <div class="formCard">
+    <div class="form-card">
 
-      <div class="edit-header">
-        <h4>Editing accommodation {{ event?.name }}</h4>
-        <span class="x-close" (click)="cancelEditAccommodation()">&times;</span>
+      <div class="form-header">
+        <h3>Editing accommodation {{ event?.name }}</h3>
+        <a (click)="cancelEditAccommodation()">x</a>
       </div>
 
       <form [formGroup]="editAccommodationForm" (ngSubmit)="onEditAccommodation()">
-        <div class="form-group">
-          <label for="name">Name of accommodation</label>
-          <input type="text" id="name" formControlName="name" class="form-control" [value]="event.name">
-        </div>
 
-        <div class="form-group">
-          <label for="formatted_address">Address</label>
-          <input type="text" id="formatted_address" formControlName="formatted_address" class="form-control" [value]="event.formatted_address">
-        </div>
+        <div class="accommodation-form-details">
 
-        <div class="form-group">
-          <label for="international_phone_number">Contact number</label>
-          <input type="text" id="international_phone_number" formControlName="international_phone_number" class="form-control" [value]="event.international_phone_number">
-        </div>
+          <label>Name of accommodation <span class="required"> - required</span></label>
+          <input type="text" formControlName="name" [value]="event.name">
 
-        <div class="form-group">
-          <label for="website">Website</label>
-          <input type="text" id="website" formControlName="website" class="form-control" [value]="event.website">
-        </div>
+          <label>Address</label>
+          <input type="text" formControlName="formatted_address" [value]="event.formatted_address">
 
-        <div class="form-group inline-block">
-          <label for="checkInDate">Check in date</label>
-          <select name="checkInDate" class="form-control" formControlName="checkInDate" [value]="event.checkInDate">
-            <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
-              <div *ngIf="itinDate === 'any day'">
-                <h5>{{ itinDate }}</h5>
-              </div>
-              <div *ngIf="itinDate !== 'any day'">
-                <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
-              </div>
-            </option>
-          </select>
-        </div>
+          <label>Contact number</label>
+          <input type="text" formControlName="international_phone_number" [value]="event.international_phone_number" class="contact-number-input">
 
-        <div class="form-group inline-block">
-          <label for="checkOutDate">Check out date</label>
-          <select name="checkOutDate" class="form-control" formControlName="checkOutDate" [value]="event.checkOutDate">
-            <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
-              <div *ngIf="itinDate === 'any day'">
-                <h5>{{ itinDate }}</h5>
-              </div>
-              <div *ngIf="itinDate !== 'any day'">
-                <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
-              </div>
-            </option>
-          </select>
-        </div>
+          <label>Website</label>
+          <input type="url" formControlName="website" [value]="event.website">
 
-        <div class="form-group">
-          <label for="note">Note</label>
-          <textarea name="name" rows="3" cols="80" formControlName="note" class="form-control" [value]="event.note"></textarea>
-        </div>
+          <div class="check-in">
+            <label>Check in date <span class="required"> - required</span></label>
+            <select name="checkInDate" formControlName="checkInDate" [value]="event.checkInDate">
+              <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
+                <div *ngIf="itinDate === 'any day'">
+                  <h5>{{ itinDate }}</h5>
+                </div>
+                <div *ngIf="itinDate !== 'any day'">
+                  <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+                </div>
+              </option>
+            </select>
+          </div>
 
-        <button type="button" class="deleteButton" (click)="cancelEditAccommodation()">Cancel edit</button>
-        <button type="submit" class="primaryButton" [disabled]="!editAccommodationForm.valid"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save changes</button>
+          <div class="check-out">
+            <label>Check out date <span class="required"> - required</span></label>
+            <select name="checkOutDate" formControlName="checkOutDate" [value]="event.checkOutDate">
+              <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
+                <div *ngIf="itinDate === 'any day'">
+                  <h5>{{ itinDate }}</h5>
+                </div>
+                <div *ngIf="itinDate !== 'any day'">
+                  <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+                </div>
+              </option>
+            </select>
+          </div>
+
+          <div class="accommodation-note">
+            <label>Note</label>
+            <textarea rows="3" formControlName="note" [value]="event.note"></textarea>
+          </div>
+
+          <button type="button" class="deleteButton" (click)="cancelEditAccommodation()">Cancel edit</button>
+          <button type="submit" class="primaryButton" [disabled]="!editAccommodationForm.valid"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save changes</button>
+
+        </div>
 
       </form>
     </div>

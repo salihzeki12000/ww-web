@@ -1,25 +1,21 @@
 <form [formGroup]="addAccommodationForm" (ngSubmit)="onSubmitNewAccommodation()">
 
-    <div class="formCard">
+    <div class="form-card">
 
-      <div class="subHeading">
-        <h5 class="inline-block">Add new accommodation arrangement</h5>
-        <a class="delete" (click)="cancelForm()">x</a>
+      <div class="form-header">
+        <h3>New accommodation arrangement</h3>
+        <a (click)="cancelForm()">x</a>
       </div>
 
-      <div class="placeSearch">
-        <div class="form-group">
-          <label>Search for your accommodation (Google magic will do the rest)</label>
-        </div>
+      <div class="place-search">
+        <label>Search for your accommodation (Google will do the rest)</label>
         <ww-google-place-search (placeDetail)="getAccommodationDetails($event)"></ww-google-place-search>
       </div>
 
-      <div class="checkInOut">
-        <h6>Check in and check out dates are required.</h6>
-
-        <div class="form-group inline-block">
-          <label for="checkInDate">Check in date</label>
-          <select name="checkInDate" class="form-control" formControlName="checkInDate">
+      <div class="check-in-out">
+        <div class="check-in">
+          <label>Check in date <span class="required"> - required</span></label>
+          <select name="checkInDate" formControlName="checkInDate">
             <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
               <div *ngIf="itinDate === 'any day'">
                 <h5>{{ itinDate }}</h5>
@@ -31,9 +27,9 @@
           </select>
         </div>
 
-        <div class="form-group inline-block">
-          <label for="checkOutDate">Check out date</label>
-          <select name="checkOutDate" class="form-control" formControlName="checkOutDate">
+        <div class="check-out">
+          <label>Check out date <span class="required"> - required</span></label>
+          <select name="checkOutDate" formControlName="checkOutDate">
             <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
               <div *ngIf="itinDate === 'any day'">
                 <h5>{{ itinDate }}</h5>
@@ -47,36 +43,26 @@
 
       </div>
 
-      <div class="accommodationFormDetails">
+      <div class="accommodation-form-details">
 
-        <div class="form-group">
-          <label for="name">Name of accommodation</label>
-          <input type="text" id="name" formControlName="name" class="form-control" value="{{ googleAccommodationDetail?.name }}">
-        </div>
+        <label>Name of accommodation <span class="required"> - required</span></label>
+        <input type="text" formControlName="name" value="{{ googleAccommodationDetail?.name }}">
 
-        <div class="form-group">
-          <label for="formatted_address">Address</label>
-          <input type="text" id="formatted_address" formControlName="formatted_address" class="form-control" value="{{ googleAccommodationDetail?.formatted_address }}">
-        </div>
+        <label>Address</label>
+        <input type="text" formControlName="formatted_address" value="{{ googleAccommodationDetail?.formatted_address }}">
 
-        <div class="form-group">
-          <label for="website">Website</label>
-          <input type="text" id="website" formControlName="website" class="form-control" value="{{ googleAccommodationDetail?.website }}">
-        </div>
+        <label>Website</label>
+        <input type="url" formControlName="website" value="{{ googleAccommodationDetail?.website }}">
 
-        <div class="form-group">
-          <label for="international_phone_number">Contact Number</label>
-          <input type="text" id="international_phone_number" formControlName="international_phone_number" class="form-control" value="{{ googleAccommodationDetail?.international_phone_number }}">
-        </div>
+        <label>Contact Number</label>
+        <input type="text" formControlName="international_phone_number" value="{{ googleAccommodationDetail?.international_phone_number }}" class="contact-number-input">
 
-        <div class="form-group inline-block">
-          <label for="note">Note</label>
-          <textarea name="name" rows="4" cols="80" formControlName="note" class="form-control"></textarea>
-        </div>
+        <label>Note</label>
+        <textarea rows="3" formControlName="note"></textarea>
 
       </div>
 
-      <div class="saveOption">
+      <div class="save-option">
         <button type="submit" class="primaryButton" [disabled]="!addAccommodationForm.valid"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save new accommodation</button>
       </div>
 

@@ -13,11 +13,14 @@ import { FlashMessageService } from '../../../../flash-message';
 export class TransportComponent implements OnInit {
   @Input() event: ItineraryEvent;
   @Input() itinDateRange;
+  @Input() currentUser;
 
   editTransportForm: FormGroup;
   editing = false;
 
   deleteTransport = false;
+
+  sameUser;
 
   constructor(
     private itineraryEventService: ItineraryEventService,
@@ -43,6 +46,13 @@ export class TransportComponent implements OnInit {
     }
 
   ngOnInit()  {
+    this.checkSameUser();
+  }
+
+  checkSameUser() {
+    if(this.currentUser['id'] === this.event['user']['_id']) {
+      this.sameUser = true;
+    }
   }
 
   editTransport()  {
@@ -68,8 +78,8 @@ export class TransportComponent implements OnInit {
 
     this.itineraryEventService.editEvent(originalTransport)
         .subscribe(
-          data => {
-            this.flashMessageService.handleFlashMessage(data.message);
+          result => {
+            this.flashMessageService.handleFlashMessage(result.message);
           })
 
     this.editing = false;
@@ -105,8 +115,8 @@ export class TransportComponent implements OnInit {
   onDeleteTransport()  {
     this.itineraryEventService.deleteEvent(this.event)
         .subscribe(
-          data => {
-            this.flashMessageService.handleFlashMessage(data.message);
+          result => {
+            this.flashMessageService.handleFlashMessage(result.message);
           })
     this.deleteTransport = false;
   }

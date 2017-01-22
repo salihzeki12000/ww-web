@@ -21,6 +21,7 @@ export class UserService  {
     return this.http.get(this.url + '/users/currentUser' + token, { headers: headers })
                     .map((response: Response) => {
                       this.currentUser = response.json().user;
+                      console.log(this.currentUser);
                       this.updateCurrentUser.next(this.currentUser);
                       return this.currentUser;
                     })
@@ -37,6 +38,16 @@ export class UserService  {
                     .catch((error: Response) => Observable.throw(error.json()));
   }
 
+  editUser(user: User)  {
+    const body = JSON.stringify(user);
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
+
+    return this.http.patch( this.url + '/users/currentUser' + token, body, { headers: headers})
+                    .map((response: Response) => response.json())
+                    .catch((error: Response) => Observable.throw(error.json()));
+  }
+
   deleteUser()  {
     const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
     return this.http.delete( this.url + '/users/currentUser' + token)
@@ -44,12 +55,3 @@ export class UserService  {
                     .catch((error: Response) => Observable.throw(error.json()));
   }
 }
-
-
-  // getUserItinerariesList()  {
-  //   const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
-  //   const headers = new Headers({ 'Content-Type': 'application/json' });
-  //   return this.http.get(this.url + '/users/userItinerariesList/' + token, { headers: headers })
-  //                   .map((response: Response) => response.json().user)
-  //                   .catch((error: Response) => Observable.throw(error.json()));
-  // }

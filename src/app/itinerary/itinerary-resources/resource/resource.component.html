@@ -1,9 +1,9 @@
-<div class="resourceCard">
+<div class="details-card">
 
   <div [class.editing]="editing">
     <div class="view">
 
-      <div class="update">
+      <div class="edit-delete" *ngIf="sameUser">
         <a (click)="onEdit()"><i class="fa fa-pencil" aria-hidden="true"></i></a>
         <a (click)="confirmDelete()"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
       </div>
@@ -26,15 +26,11 @@
 
     <form [formGroup]="editResourceForm" (ngSubmit)="onUpdateResource()">
 
-      <div class="form-group">
-        <label for="description">Description</label>
-        <input type="text" id="description" formControlName="description" class="form-control" [value]="resource.description">
-      </div>
+      <label>Description</label>
+      <input type="text" formControlName="description" [value]="resource.description">
 
-      <div class="form-group">
-        <label for="link">Link</label>
-        <input type="text" id="link" formControlName="link" class="form-control" [value]="resource.link">
-      </div>
+      <label>Link</label>
+      <input type="text" formControlName="link" [value]="resource.link">
 
       <div class="buttons">
         <button type="button" class="deleteButton" (click)="cancelEditResource()">Cancel edit</button>

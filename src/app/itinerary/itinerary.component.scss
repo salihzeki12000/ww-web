@@ -1,26 +1,51 @@
+.itinerary  {
+  @media only screen and (max-width: 680px) {
+    width: calc((100vw -14px) * 0.9);
+    margin-left: calc((100vw -14px) * 0.05);
+  }
+  @media only screen and (min-width: 680px) and (max-width: 880px) {
+    width: 628px;
+    margin-left: calc((100vw - 628px) / 2 );
+  }
+  @media only screen and (min-width: 880px) and (max-width: 1000px) {
+    width: 628px;
+    margin-left: calc((100vw - 428px) / 2 );
+  }
+  @media only screen and (min-width: 1000px) and (max-width: 1200px) {
+    width: 628px;
+    margin-left: calc((100vw - 942px) / 2 );
+  }
+  @media only screen and (min-width: 1200px) and (max-width: 1350px) {
+    width: 628px;
+    margin-left: calc((100vw - 760px) / 2 );
+  }
+  @media only screen and (min-width: 1350px) and (max-width: 1550px) {
+    width: 942px;
+    margin-left: calc((100vw - 1274px) / 2);
+  }
+  @media only screen and (min-width: 1550px) {
+    width: 942px;
+    margin-left: calc((100vw - 1074px) / 2);
+  }
+}
+
 .heading  {
   padding: 10px;
 }
 
-.itin-name {
+.itinearary-name {
+  display: inline-block;
   margin-bottom: 5px;
 }
 
-a {
-  margin-left: 10px;
+
+.itinerary-date,
+.itinerary-edit {
+  display: inline-block;
 }
 
-.buttons  {
-  margin: 10px 0;
-  padding-top: 10px;
-}
-
-.edit-form  {
-  margin-bottom: 20px;
-  padding: 10px;
-  -webkit-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
-  -moz-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
-  box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+.save-option  {
+  display: block;
 }
 
 .delete-itin-button  {
@@ -30,17 +55,20 @@ a {
   background-color: #ffefef;
 }
 
+
+/* members list */
 img.user-profile-thumbnail  {
   margin-right: 5px;
 }
 
-.members  {
-  padding-bottom: 10px;
-}
-
 .members-count  {
+  display: inline-block;
   padding: 5px 5px 9px 5px;
   border-right: 1px solid #C0C0C0;
+}
+
+.member {
+  display: inline-block;
 }
 
 .fa-user-plus {
@@ -85,8 +113,56 @@ img.user-profile-thumbnail  {
     visibility: visible;
 }
 /*************************
- add members modal-footer
+ add members modal
  *************************/
 .x-close  {
   top: 5%;
+}
+
+.user-profile-thumbnail {
+  display: inline-block;
+}
+
+input.add-member  {
+  display: inline-block;
+  width: auto;
+  float: right;
+}
+
+/*************************
+ activity collapse list
+ *************************/
+.activity-collapse-list {
+  position: fixed;
+  top: 60px;
+  right: 0;
+  width: 318px;
+  height: calc(100vh - 60px);
+  background-color: white;
+  overflow: auto;
+
+  @media only screen and (max-width: 1000px) {
+    display: none;
+    height: 0;
+    z-index: 1001;
+  }
+}
+
+.activity-collapse-dropdown {
+  display: none;
+
+  @media only screen and (max-width: 1000px) {
+    display: block;
+    position: fixed;
+    padding: 15px;
+    top: 0;
+    right: 0;
+    color: white;
+    z-index: 700;
+  }
+}
+
+.show-collapse-activities {
+  display: block;
+  height: calc(100vh - 60px);
 }

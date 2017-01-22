@@ -113,69 +113,246 @@ button[disabled]  {
   }
 }
 
-.form-control {
-  padding: 4px 12px;
-  height: 24px;
+/**************************************************
+  FORM STYLES
+***************************************************/
+label {
+  margin-bottom: 0;
+  padding-left: 3px;
   font-size: 12px;
 }
 
-
-/***************
-  forms style
-***************/
-label {
-  font-size: 11px;
-  margin-bottom: 3px;
-  padding-left: 2px;
+input,
+select,
+textarea {
+  display: block;
+  margin-top: 3px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #555;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  &:focus {
+    border: 2px solid #6494ed;
+    outline: 0;
+  }
 }
 
-input[type=text]  {
-  max-width: 400px;
+input,
+select {
+  width: 100%;
+  height: 34px;
+  padding: 4px 12px;
+}
+
+textarea  {
+  max-width: 600px;
+  width: 100%;
+  padding: 4px 12px;
+}
+
+input[type=text],
+input[type=url]  {
+  max-width: 600px;
+}
+
+input[type=radio],
+input[type=checkbox] {
+  height: 15px;
 }
 
 input[type=date],
 input[type=time],
-#depTerminal,
-#arrTerminal,
-#referenceNumber,
-#contactNumber  {
-  max-width: 175px;
+input.transport-terminal {
+  max-width: 190px;
 }
 
-.form-group {
-  margin-bottom: 5px;
+.reference-number  {
+  width: 90px;
 }
 
-.inline-block {
-  display: inline-block;
-}
-
-.block  {
-  display: block;
+input.contact-number-input  {
+  max-width: 200px;
 }
 
 a {
   cursor: pointer;
 }
 
-.float-right  {
-  float: right;
+
+/* form display */
+.form-card {
+  width: 650px;
+  margin: 60px auto 0 auto;
+  padding: 10px 20px 20px 20px;
+  background-color: white;
+  -webkit-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+  border-radius: 5px;
+  border: 2px solid #099FFF;
+
+  @media only screen and (max-width: 700px) {
+    width: 94%;
+    margin-left: 3%;
+    padding: 5px;
+  }
 }
 
-/**********************
-  user thumbnail image
-***********************/
+/* show editing view for post and resource */
+.editing > .view{
+  display: none;
+}
+
+/* indicate required for form input */
+span.required {
+  color: gray;
+  font-weight: normal;
+  font-style: italic;
+}
+
+/* save button */
+.save-option {
+  display: inline-block;
+  margin: 10px 0 0 10px;
+}
+
+/* form & edit header for form and edit modal display*/
+.form-header,
+.edit-header {
+  width: 100%;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+}
+
+.form-header > h3,
+.edit-header > h3 {
+  display: inline-block;
+
+  @media only screen and (max-width: 700px) {
+    font-size: 1em;
+  }
+}
+
+.form-header > a,
+.edit-header > a {
+  float: right;
+  color: #ccc;
+  &:hover {
+    text-decoration: none;
+    color: $crimsonRed;
+  }
+
+  @media only screen and (max-width: 700px) {
+    margin-right: 10px;
+  }
+}
+
+.place-search,
+.flight-search {
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+  background-color: aliceblue;
+}
+
+.accommodation-form-details {
+  padding: 10px;
+}
+
+/* display check in/check out date for accommodation form */
+.check-in-out {
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+  background-color: #ffe5e5;
+}
+
+.check-in,
+.check-out  {
+  display: inline-block;
+}
+
+/* transport departure and arrival details for form and edit */
+.transport-details  {
+  border-bottom: 1px solid #ccc;
+}
+
+.departure-arrival-details {
+  padding: 0 10px;
+}
+
+.departure  {
+  display: inline-block;
+  width: 50%;
+  border-right: 1px solid #ccc;
+
+  @media only screen and (max-width: 700px) {
+    width: 100%;
+    border-right: none;
+
+  }
+}
+
+.departure > h4 {
+  padding: 5px 0;
+  color: #262626;
+  text-align: center;
+  background-color: lightblue;
+  border-radius: 0 0 0 10px;
+
+  @media only screen and (max-width: 700px) {
+    border-radius: 0;
+  }
+}
+
+.arrival  {
+  display: inline-block;
+  margin-left: -4px;
+  width: 50%;
+  vertical-align: top;
+
+  @media only screen and (max-width: 700px) {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+.arrival > h4 {
+  padding: 5px 0;
+  color: #262626;
+  text-align: center;
+  background-color: pink;
+  border-radius: 0 0 10px 0;
+
+  @media only screen and (max-width: 700px) {
+    border-radius: 0;
+  }
+}
+
+/************************************
+  USER THUMBNAIL IMAGE
+*************************************/
 .user-profile-thumbnail  {
   height: 30px;
   width: 30px;
   background-color: #AEAFAF;
-  border-radius: 5px;
+  border-radius: 50%;
+  overflow: hidden;
 }
 
-/**********************
- for edit/delete icons
- *********************/
-.update {
+/***************************************************************
+ ACCOMMODATION / TRANSPORT / ACTIVITY / RESOURCE CARDS DISPLAY
+ **************************************************************/
+.truncate {
+ white-space: nowrap;
+ overflow: hidden;
+ text-overflow: ellipsis;
+}
+
+/* edit/delete icons */
+.edit-delete {
   float: right;
 }
 
@@ -187,154 +364,146 @@ a {
   }
 }
 
-/* trash-o is for deleting existing record, a.delete is to delete form */
-a.delete  {
-  color: #ccc;
-  &:hover {
-    text-decoration: none;
-    color: $crimsonRed;
-  }
-}
-
-/****************
- for editing view
- ****************/
-.editing > .view{
-  display: none;
-}
-
-// .linkDetails.editing,
-// .detailsCard.editing,
-// .activityCard.editing  {
-//   border: 2px solid lightcoral;
-// }
-
-/*****************
- for form display
- *****************/
-.formCard {
-  padding: 10px 20px 20px 20px;
-  -webkit-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
-  -moz-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
-  box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
-  border-radius: 5px;
-  border: 2px solid #099FFF;
-}
-
-.formCard:last-child  {
-  margin-bottom: 10px;
-}
-
-/** add and save buttons **/
-.addOption,
-.saveOption {
+/* accommodation/transport/activity display */
+.details-card {
+  position: relative;
   display: inline-block;
-  margin-top: 10px;
-}
-
-/***************
-  sub headings
-***************/
-.subHeading {
-  width: 100%;
-  padding-bottom: 10px;
-  font-size: 1.6rem;
-  border-bottom: 1px solid #ccc;
-}
-
-.subHeading > a {
-  float: right;
-}
-
-.truncate {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.placeSearch,
-.flightSearch {
-  border-bottom: 1px solid #ccc;
-  padding: 10px;
-  background-color: aliceblue;
-}
-
-.checkInOut {
-  border-bottom: 1px solid #ccc;
-  padding: 10px;
-  background-color: #ffe5e5;
-}
-
-.checkInOut > h6  {
-  padding-left: 2px;
-}
-
-/***********************
-  activityCard display
-***********************/
-.activityCard {
-  margin: 0 5px 5px 0;
-  width: 300px;
+  margin: 0.5%;
+  padding: 10px 20px 20px 20px;
+  width: 48.5%;
   vertical-align: text-top;
-  -webkit-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
-  -moz-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
-  box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
-  border-radius: 5px;
-}
+  -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
 
-.activityDetails  {
-  padding: 10px 20px;
-}
-
-.img {
-  padding-top: 60px;
-  width: 300px;
-  height: 200px;
-  background-color: #f5f5fd;
-  text-align: center;
-}
-
-.activityCheckIn  {
-  float: right;
-  min-width: 36px;
-  padding: 5px;
-  color: #c39d63;
-  text-align: center;
-  border: 2px solid #c39d63;
-  border-radius: 5px;
-  &:hover {
-    color: white;
-    background-color: #c39d63;
-    cursor: pointer;
+  @media only screen and (max-width: 680px) {
+   width: 90%;
+   margin-left: 5%;
   }
 }
 
-.activityTitle,
-.activityDescription,  {
-  padding: 4px 0;
-  text-align: justify;
+.date-header {
+ color: #3A4A4D;
+ min-height: 16px;
 }
 
-.activityTitle  {
-  width: 85%;
-  text-transform: capitalize;
+.accommodation-header,
+.transport-header,
+.activity-header {
+  margin: 10px 0;
+  padding: 5px 10px;
+  background-color: rgba(100,148,237, 0.4);
 }
 
-.activitySmall {
-  padding-bottom: 5px;
+.departure-details {
+  margin-bottom: 5px;
+  color: darkred;
 }
 
-.activitySubDescription {
-  color: grey;
+.arrival-details {
+  margin-bottom: 5px;
+  color: darkblue;
+}
+
+.accommodation-details,
+.transport-details {
+  padding: 0 10px;
 }
 
 .note{
+  padding-left: 10px;
   color: grey;
 }
 
-/*****************************************************
-  display username for created post/activity/resource
-******************************************************/
+/* accommodation display */
+.address  {
+  margin: 10px 0;
+}
+
+.contact-number,
+.website  {
+  margin-bottom: 10px;
+}
+
+/* transport display */
+.departure-section {
+  padding-bottom: 10px;
+  border-bottom: 1px dotted grey;
+}
+
+.arrival-section {
+  padding: 10px 0;
+}
+
+span.city-highlight  {
+  font-size: 1.3em;
+}
+
+.rental-company,
+.rental-contact {
+  display: inline-block;
+  margin-right: 30px;
+  margin-bottom: 20px;
+}
+
+/*********************************
+ ACTIVITY DISPLAY
+*********************************/
+.activity-details  {
+  padding: 10px 20px;
+}
+
+.activity-opening-hours > i,
+.activity-fee > i,
+.activity-address > i,
+.activity-contact-number > i {
+  vertical-align: top;
+}
+
+.activity-opening-hours > h6,
+.activity-fee > h6,
+.activity-address > h6,
+.activity-contact-number > h6 {
+  display: inline-block;
+  width: 90%;
+  margin-bottom: 10px;
+  vertical-align: top;
+}
+
+.activity-tags {
+  position: absolute;
+  bottom: 30px;
+}
+
+.activity-category  {
+  display: inline-block;
+}
+
+/********************************
+  RESOURCE DISPLAY
+ *******************************/
+.description,
+.link  {
+  margin-bottom: 10px;
+}
+
+.description{
+  padding: 3px;
+  border-bottom: 2px solid purple;
+}
+
+.linkDetails  {
+  width: 90%;
+}
+
+/************************************************************************
+  POSTBY DISPLAY FOR ACCOMMODATION/TRANSPORT/ACTIVITY/RESOURCE
+************************************************************************/
+.postby {
+  position: absolute;
+  bottom: 10px;
+}
+
 .postby > h6,
 .postby > p {
   display: inline-block;
@@ -345,9 +514,9 @@ a.delete  {
   font-size: 0.5em;
 }
 
-/************
-   all modal
-*************/
+/******************
+   ALL MODALS
+*******************/
 .modal-footer {
   border-top: none;
 }
@@ -364,6 +533,45 @@ a.delete  {
   z-index: 1000;
 }
 
+/*************************
+ add members/find user modal
+ *************************/
+.show-users  {
+ min-width: 400px;
+ position: fixed;
+ top: 25%;
+ left: 30%;
+ background-color: white;
+ border-radius: 5px;
+}
+
+.show-users-header  {
+ padding: 10px;
+ background-color: #fae6f0;
+ border-bottom: 1px solid lightgray;
+ border-radius: 5px 5px 0 0;
+}
+
+.user-card  {
+ padding: 10px;
+ border-bottom: 1px solid #C0C0C0;
+}
+
+.user-details {
+  display: inline-block;
+  margin-left: 5px;
+  vertical-align: top;
+}
+
+.user-search-description {
+  margin-top: 3px;
+  color: gray;
+}
+
+.show-users-footer  {
+ padding: 15px;
+}
+
 /****************
   delete modal
 ****************/
@@ -378,12 +586,17 @@ a.delete  {
 }
 
 .confirm-delete {
-  min-width: 600px;
+  width: 600px;
   position: fixed;
   top: 25%;
-  left: 30%;
+  left: calc((100vw - 600px) / 2);
   background-color: white;
   border-radius: 5px;
+
+  @media only screen and (max-width: 680px) {
+   width: 90%;
+   left: 5%;
+  }
 }
 
 .confirm-delete-header  {
@@ -417,92 +630,4 @@ a.delete  {
 span.confirm-delete-name {
   color: red;
   font-size: 1.2em;
-}
-
-/*************************
- add members modal-footer
- *************************/
-.show-users  {
-  min-width: 400px;
-  position: fixed;
-  top: 25%;
-  left: 30%;
-  background-color: white;
-  border-radius: 5px;
-}
-
-.show-users-header  {
-  padding: 10px;
-  background-color: #fae6f0;
-  border-bottom: 1px solid lightgray;
-  border-radius: 5px 5px 0 0;
-}
-
-.show-users-footer  {
-  padding: 15px;
-}
-
-.user-card  {
-  padding: 10px;
-  border-bottom: 1px solid #C0C0C0;
-}
-
-/********************************
- accommodation/transport display
- *******************************/
- .detailsCard {
-   margin: 0.5%;
-   display: inline-block;
-   width: 48.5%;
-   padding: 10px 20px 20px 20px;
-   vertical-align: text-top;
-   border-bottom: 1px solid #ccc;
-   -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
-   -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
-   box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
- }
-
-.accommodationHeader,
-.transportHeader {
-  margin: 10px 0;
-  padding: 5px;
-  border-bottom: 1px solid black;
-  border-top: 1px solid black;
-}
-
-.dateHeader {
-  color: #3A4A4D;
-}
-
-.note{
-  padding-left: 10px;
-  color: grey;
-}
-/********************************
-  resource display
- *******************************/
-.resourceCard {
-  display: inline-block;
-  padding: 10px 20px 10px 20px;
-  width: 49.5%;
-  vertical-align: text-top;
-  border-bottom: 1px solid #ccc;
-  -webkit-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
-  -moz-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
-  box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
-  border-radius: 5px;
-}
-
-.description,
-.link  {
-  margin-bottom: 10px;
-}
-
-.description{
-  padding: 3px;
-  border-bottom: 2px solid purple;
-}
-
-.linkDetails  {
-  width: 90%;
 }

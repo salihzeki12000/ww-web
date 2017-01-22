@@ -25,6 +25,8 @@ export class ItineraryComponent implements OnInit {
   members = [];
   validAddUser = false;
 
+  showActivities = false;
+
   constructor(
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
@@ -68,6 +70,7 @@ export class ItineraryComponent implements OnInit {
         .subscribe(
           result => {
             this.users = result.users;
+            console.log(this.users);
           }
         )
   }
@@ -163,6 +166,10 @@ export class ItineraryComponent implements OnInit {
           }
         )
     this.showUsers = false;
+  }
+
+  showCollapseActivities()  {
+    this.showActivities = !this.showActivities;
   }
 
 }

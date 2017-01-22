@@ -4,7 +4,6 @@
 
 .options  {
   width: 100%;
-  // padding: 10px;
   border-bottom: 1px solid grey;
 }
 
@@ -30,20 +29,26 @@
   margin-top: 20px;
 }
 
-.sectionHeader  {
+.transport-section,
+.accommodation-section,
+.activity-section,
+.resource-section {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.section-header  {
   margin: 10px 0;
   padding: 10px 20px;
   border-bottom: 4px solid #6494ED;
   border-top: 2px solid #6494ed;
 }
 
-/********************
- transport section
-*******************/
-.space  {
-  margin-right: 40px;
+.note {
+  margin-bottom: 10px;
 }
 
+/* transport section */
 h5, h6  {
   line-height: 1.5;
 }
@@ -52,49 +57,60 @@ h5, h6  {
   margin-right: 5px;
 }
 
-.transportDetails {
-  padding: 10px 10px 0 10px;
-}
-
-.departureSection {
-  padding-bottom: 10px;
-  border-bottom: 1px dotted grey;
-}
-
-.departureDetails {
-  margin-bottom: 5px;
-  color: darkred;
-}
-
-.arrivalSection {
-  padding: 10px 0;
-}
-
-.arrivalDetails {
-  margin-bottom: 5px;
-  color: darkblue;
-}
-
-span.city-highlight  {
-  font-size: 1.3em;
-}
-/*******************
-  activity section
-********************/
-.activityTitle  {
+/* accommodation section */
+.check-in-out-header,
+.check-in-out-dates {
   display: inline-block;
-  margin: 10px 0;
-  padding: 5px;
-  border-bottom: 1px solid black;
-  border-top: 1px solid black;
 }
 
-.img-thumbnail {
+.check-in-out-header  {
+  text-align: right;
+}
+
+.address > i,
+.contact-number > i  {
+  vertical-align: top;
+}
+
+.address > h5,
+.contact-number > h5  {
+  vertical-align: top;
   display: inline-block;
-  padding: 0;
+  width: 90%;
 }
 
-.img-thumbnail > img  {
-  height: 30px;
-  width: 30px;
+/* activity section */
+.activity-details  {
+  padding: 0 10px;
+}
+
+.opening-hours > i,
+.fee > i,
+.activity-address > i,
+.activity-contact-number > i {
+  vertical-align: top;
+}
+
+.opening-hours > h6,
+.fee > h6,
+.activity-address > h6,
+.activity-contact-number > h6 {
+  display: inline-block;
+  width: 90%;
+  margin-bottom: 10px;
+  vertical-align: top;
+}
+
+.activity-note {
+  margin: 10px 0 35px 0;
+  padding-left: 0;
+}
+
+.category  {
+  display: inline-block;
+}
+
+.tags {
+  position: absolute;
+  bottom: 30px;
 }

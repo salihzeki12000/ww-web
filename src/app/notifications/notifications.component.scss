@@ -1,0 +1,12 @@
+i{
+  position: fixed;
+  top: 0;
+  right: 100px;
+  padding: 23px 15px;
+  color: white;
+  z-index: 700;
+  &:hover {
+    color: lightgray;
+    cursor: pointer;
+  }
+}

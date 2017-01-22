@@ -1,0 +1,80 @@
+.profile  {
+  position: relative;
+  min-height: calc( 100vh - 100px );
+  width: 700px;
+  margin-left: 300px;
+  -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+
+  @media only screen and (max-width: 700px) {
+    width: 90%;
+    margin-left: 5%;
+  }
+
+  @media only screen and (min-width: 700px) and (max-width: 1500px) {
+    margin-left: calc((100vw - 700px) /2);
+  }
+}
+
+.profile-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 100%;
+  padding: 20px 10px;
+  text-align: center;
+  border-right: 1px solid #CCC;
+
+  @media only screen and (max-width: 700px) {
+    height: 220px;
+    width: 100%;
+    background-color: #6494ED;
+    border: none;
+  }
+}
+
+.profile-menu > h6  {
+  @media only screen and (max-width: 700px) {
+    color: lightgray;
+  }
+}
+
+.profile-details  {
+  position: absolute;
+  top: 0;
+  left: 200px;
+  width: 500px;
+  height: 100%;
+  padding: 20px;
+
+  @media only screen and (max-width: 700px) {
+    top: 230px;
+    left: 0;
+    height: calc(100% - 230px);
+    width: 100%;
+  }
+}
+
+img {
+  margin-bottom: 10px;
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  vertical-align: sub;
+}
+
+button {
+  position: absolute;
+  left: 32px;
+  bottom: 20px;
+}
+
+span  {
+  display: block;
+  padding-left: 3px;
+  font-size: 0.7em;
+  color: grey;
+}

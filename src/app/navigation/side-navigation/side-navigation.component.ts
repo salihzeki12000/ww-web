@@ -26,6 +26,11 @@ export class SideNavigationComponent implements OnInit {
   followings = [];
   requests = [];
 
+  connectionsSection = true;
+  itinerariesSection = true;
+  settingsSection = false;
+  showMenu = false;
+
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
@@ -63,6 +68,7 @@ export class SideNavigationComponent implements OnInit {
             this.users = data.users;
           }
         )
+
   }
 
   getFollowings() {
@@ -156,9 +162,7 @@ export class SideNavigationComponent implements OnInit {
         .subscribe(
           data => {
             this.router.navigate(['/me/itinerary', data.itinerary._id]);
-          },
-          error => console.error(error)
-        );
+          });
   }
 
   getUsers()  {
@@ -187,6 +191,27 @@ export class SideNavigationComponent implements OnInit {
   }
 
   logout()  {
-    this.authService.logout()
+    this.authService.logout();
+    this.showMenu = false;
+  }
+
+  toggleConnectionsSection() {
+    this.connectionsSection = !this.connectionsSection;
+  }
+
+  toggleItinerariesSection() {
+    this.itinerariesSection = !this.itinerariesSection;
+  }
+
+  toggleSettingsSection() {
+    this.settingsSection = !this.settingsSection;
+  }
+
+  showSideMenu()  {
+    this.showMenu = !this.showMenu;
+  }
+
+  exitMenu()  {
+    this.showMenu = false;
   }
 }
