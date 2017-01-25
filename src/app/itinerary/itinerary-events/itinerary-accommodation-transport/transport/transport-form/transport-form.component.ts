@@ -331,8 +331,8 @@ export class TransportFormComponent implements OnInit {
       newTransport['transportType'] = 'flight'
     }
 
-    console.log(newTransport['depDate'])
-    newTransport['date'] = newTransport['depDate']
+    newTransport['date'] = newTransport['depDate'];
+    newTransport['time'] = newTransport['depTime']
     newTransport['type'] = 'transport';
     newTransport['user'] =  {
       _Id: this.currentUser['id'],
@@ -340,7 +340,7 @@ export class TransportFormComponent implements OnInit {
     }
     newTransport['created_at'] = new Date();
 
-    this.itineraryEventService.addEvent(newTransport, this.itinerary['_id'])
+    this.itineraryEventService.addEvent(newTransport, this.itinerary)
         .subscribe(
           result => {
             this.flashMessageService.handleFlashMessage(result.message);

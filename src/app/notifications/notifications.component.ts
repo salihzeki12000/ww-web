@@ -14,6 +14,10 @@ export class NotificationsComponent implements OnInit {
   }
 
   showNotificationsList() {
-    this.showNotification = !this.showNotification;
+    this.showNotification = true;
+  }
+
+  closeNotificationsList()  {
+    this.showNotification = false;
   }
 }

@@ -26,12 +26,14 @@ export class ItineraryPrintComponent implements OnInit {
   eventSubscription: Subscription;
   resourceSubscription: Subscription;
 
+  category = false;
+  date = true;
+  
   constructor(
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
     private resourceService: ResourceService,
-    private router: Router
-  ) { }
+    private router: Router) { }
 
   ngOnInit() {
     this.itinerarySubscription = this.itineraryService.currentItinerary
@@ -54,7 +56,6 @@ export class ItineraryPrintComponent implements OnInit {
                                     this.filterEvents(result);
                                   }
                                 )
-
   }
 
   filterEvents(events)  {
@@ -74,8 +75,13 @@ export class ItineraryPrintComponent implements OnInit {
     }
   }
 
-  save() {
-    this.router.navigateByUrl('/print-itinerary');
+  showCategory()  {
+    this.category = true;
+    this.date = false;
   }
 
+  showDate()  {
+    this.date = true;
+    this.category = false;
+  }
 }

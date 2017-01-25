@@ -27,3 +27,16 @@
 .accommodation-note {
   display: block;
 }
+
+.anytime-input  {
+  display: inline-block;
+}
+
+.anytime-input > label > input  {
+  display: inline-block;
+  width: 15px;
+}
+
+.marginBottom {
+  margin-bottom: 10px;
+}

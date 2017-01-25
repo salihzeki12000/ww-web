@@ -4,7 +4,8 @@ import { Http, Headers, Response } from '@angular/http';
 import 'rxjs/Rx';
 import { Observable, ReplaySubject } from 'rxjs';
 
-import { ItineraryEvent } from './itinerary-event';
+import { ItineraryEvent }      from './itinerary-event';
+import { NotificationService } from '../../notifications';
 
 @Injectable()
 export class ItineraryEventService  {
@@ -18,7 +19,10 @@ export class ItineraryEventService  {
   private flightStatsUrl = "https://api.flightstats.com/flex/schedules/rest/v1/json/"
   // flight/SQ/346/departing/2017/2/12?appId=8d4596b2&appKey=ab8b1a3b2f1f66e0db7be662f41425cc
 
-  constructor( private http: Http, private route: ActivatedRoute)  {}
+  constructor(
+    private http: Http,
+    private route: ActivatedRoute,
+    private notificationService: NotificationService)  {}
 
   getFlightDetails(criteria)  {
     const id = '?appId=8d4596b2&appKey=ab8b1a3b2f1f66e0db7be662f41425cc';
@@ -44,12 +48,21 @@ export class ItineraryEventService  {
                     .catch((error: Response) => Observable.throw(error.json()));
   }
 
-  addEvent(event: ItineraryEvent, itineraryId) {
+  addEvent(event: ItineraryEvent, itinerary) {
     const body = JSON.stringify(event);
     const headers = new Headers({ 'Content-Type': 'application/json' });
     const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
+    let messageBody;
 
-    return this.http.post( this.url + "/event/new/" + itineraryId + token, body, { headers: headers })
+    if(event['type'] === 'activity') {
+      messageBody = 'activity - ' + event['name'];
+    } else if (event['type'] === 'accommodation')  {
+      messageBody = 'accommodation - ' + event['name'];
+    } else if (event['type'] === 'transport')  {
+      messageBody = 'transport - ' + event['transportType'] + ' from ' + event['depCity'] + ' to ' + event['arrCity'];
+    }
+
+    return this.http.post( this.url + "/event/new/" + itinerary['_id'] + token, body, { headers: headers })
                     .map((response: Response) => {
                       let newEvent = response.json().eventItem;
                       newEvent.user = {
@@ -58,6 +71,15 @@ export class ItineraryEventService  {
                       }
                       this.events.push(newEvent);
                       this.sortEventByDate(this.events);
+
+                      for (let i = 0; i < itinerary['members'].length; i++) {
+                        this.notificationService.newNotification({
+                          recipient: itinerary['members'][i]['_id'],
+                          originator: event['user']._Id,
+                          message: event['user'].username + " has added a new " + messageBody + ' to the itinerary ' + itinerary['name'],
+                          read: false
+                        }).subscribe(date => {});
+                      }
 
                       return response.json();
                     })

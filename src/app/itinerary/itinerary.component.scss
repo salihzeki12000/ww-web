@@ -140,6 +140,9 @@ input.add-member  {
   height: calc(100vh - 60px);
   background-color: white;
   overflow: auto;
+  -webkit-box-shadow: inset 5px 0 10px -7px rgba(0,0,0,0.2);
+  -moz-box-shadow: inset 5px 0 10px -7px rgba(0,0,0,0.2);
+  box-shadow: inset 5px 0 10px -7px rgba(0, 0, 0, 0.2);
 
   @media only screen and (max-width: 1000px) {
     display: none;

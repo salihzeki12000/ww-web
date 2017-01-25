@@ -70,7 +70,6 @@ export class ItineraryComponent implements OnInit {
         .subscribe(
           result => {
             this.users = result.users;
-            console.log(this.users);
           }
         )
   }

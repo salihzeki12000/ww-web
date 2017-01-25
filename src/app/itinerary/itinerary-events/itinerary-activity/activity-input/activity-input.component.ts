@@ -22,10 +22,11 @@ export class ActivityInputComponent implements OnInit {
 
   currentUserSubscription: Subscription;
   currentUser;
-  itineraryId;
+
+  currentItinerarySubscription: Subscription;
+  currentItinerary;
 
   activityDetail;
-  anytime = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -58,7 +59,13 @@ export class ActivityInputComponent implements OnInit {
                                            this.currentUser = result;
                                          }
                                        )
-    this.itineraryId = this.itineraryService.itineraryId;
+
+    this.currentItinerarySubscription = this.itineraryService.currentItinerary
+                                            .subscribe(
+                                              result => {
+                                                this.currentItinerary = result;
+                                              }
+                                            )
   }
 
   initCategoryArray() {
@@ -112,7 +119,7 @@ export class ActivityInputComponent implements OnInit {
       activityForm['lng'] = lng;
     } // end of data adjustment if details pre-populated by Google
 
-    if(activityForm['time'] === '' || this.anytime)  {
+    if(activityForm['time'] === '')  {
       activityForm['time'] = 'anytime';
     }
 
@@ -125,7 +132,7 @@ export class ActivityInputComponent implements OnInit {
 
     activityForm['type'] = 'activity';
 
-    this.itineraryEventService.addEvent(activityForm, this.itineraryId)
+    this.itineraryEventService.addEvent(activityForm, this.currentItinerary)
         .subscribe(
           result => {
             this.flashMessageService.handleFlashMessage(result.message);
@@ -195,10 +202,6 @@ export class ActivityInputComponent implements OnInit {
       output += hours.weekday_text[i] + " \n";
     }
     return output;
-  }
-
-  toggleAnytime() {
-    this.anytime = !this.anytime;
   }
 
   resetActivityForm() {

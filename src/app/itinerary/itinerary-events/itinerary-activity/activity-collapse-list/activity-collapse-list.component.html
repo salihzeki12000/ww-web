@@ -22,6 +22,7 @@
 
 <div class="activity-collapse">
   <div *ngFor="let date of itinDateRange; let i = index">
+    
     <div class="itin-date">
       <div *ngIf="date === 'any day'">
         <h5 *ngIf="collapseDate[i]" (click)="toggleCollapse(i)" class="date-header">Any day <i class="fa fa-plus" aria-hidden="true"></i></h5>

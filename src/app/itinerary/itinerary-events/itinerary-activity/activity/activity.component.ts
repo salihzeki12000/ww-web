@@ -56,8 +56,7 @@ export class ActivityComponent implements OnInit {
     this.itinDateSubscription = this.itineraryService.updateDate
                                     .subscribe(
                                       result => {
-                                        let updatedItinDate = Object.keys(result).map(key => result[key]);
-                                        this.itinDateRange = updatedItinDate;
+                                        this.itinDateRange = Object.keys(result).map(key => result[key]);
                                     })
 
     this.currentUserSubscription = this.userService.updateCurrentUser
@@ -86,7 +85,6 @@ export class ActivityComponent implements OnInit {
   }
 
   onEdit()  {
-    console.log(this.activity);
     this.editing = true;
     if(this.activity['time'] === 'anytime') {
       this.anytime = true;

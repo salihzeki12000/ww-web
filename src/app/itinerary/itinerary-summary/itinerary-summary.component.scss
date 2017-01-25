@@ -1,0 +1,65 @@
+.date-row {
+  display: flex;
+  overflow: auto;
+  box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+}
+
+.date-column  {
+  display: inline-block;
+  min-width: 120px;
+  vertical-align: top;
+  border-right: 1px solid lightgray;
+}
+
+.date {
+  text-align: center;
+  padding: 5px;
+  height: 40px;
+  color: white;
+  background-color: #6494ED;
+}
+
+.event-time  {
+  padding: 10px 0 0 10px;
+  color: grey;
+}
+
+.event-name  {
+  padding: 2px 5px 10px 15px;
+  overflow-wrap: break-word;
+  border-bottom: 1px dotted lightgray;
+}
+
+.accommodation-event-name  {
+  padding: 10px 5px 10px 15px;
+  overflow-wrap: break-word;
+  border-bottom: 1px dotted lightgray;
+}
+
+.accommodation-indicator  {
+  background-color: rgba(100,235,219,0.1);
+}
+
+.transport-indicator  {
+  background-color: rgba(237,100,148,0.1);
+}
+
+.activity-indicator {
+  background-color: rgba(237,189,100,0.1);
+}
+
+/* to display horizontal scrollbar */
+.date-row::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+.date-row::-webkit-scrollbar:horizontal {
+    height: 5px;
+}
+.date-row::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, .5);
+}
+.date-row::-webkit-scrollbar-track {
+    background-color: #fff;
+    border-radius: 8px;
+}

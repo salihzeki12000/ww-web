@@ -26,8 +26,8 @@
 
         <div class="activity-details">
 
-          <h4 class="date-header" *ngIf="event?.date === 'any day'">{{ event?.date }} - {{ event?.time }}</h4>
-          <h4 class="date-header" *ngIf="event?.date !== 'any day'">{{ event?.date | date: 'EEE, dd MMM yyyy' }} - {{ event?.time }}</h4>
+          <h4 class="date-header" *ngIf="event?.date === 'any day'" (click)="toggleCollapse()">{{ event?.date }} - {{ event?.time }}</h4>
+          <h4 class="date-header" *ngIf="event?.date !== 'any day'" (click)="toggleCollapse()">{{ event?.date | date: 'EEE, dd MMM yyyy' }} - {{ event?.time }}</h4>
 
           <div (click)="toggleCollapse()">
             <h4 class="activity-header">{{ event?.name }}</h4>

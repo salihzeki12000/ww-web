@@ -16,7 +16,7 @@ import { PostsComponent, PostComponent, PostInputComponent, PostListComponent, P
 
 import { GooglePlaceSearchComponent, GoogleCheckinComponent } from './google-api';
 
-import { ItineraryComponent, ItineraryAccommodationTransportComponent, ItineraryEventsComponent, ItineraryService, ItineraryActivityComponent, ItineraryResourcesComponent, ResourceInputComponent, ResourceService, ResourceListComponent, ResourceComponent, ItineraryMapComponent, AccommodationFormComponent, TransportFormComponent, ItineraryEventService, ActivityComponent, ActivityListComponent, ActivityInputComponent, ActivityCollapseComponent, ActivityCollapseListComponent, AccommodationComponent, TransportComponent, ItineraryPrintComponent, ItineraryPrintPreviewComponent } from './itinerary';
+import { ItineraryComponent, ItineraryAccommodationTransportComponent, ItineraryEventsComponent, ItineraryService, ItineraryActivityComponent, ItineraryResourcesComponent, ResourceInputComponent, ResourceService, ResourceListComponent, ResourceComponent, ItineraryMapComponent, AccommodationFormComponent, TransportFormComponent, ItineraryEventService, ActivityComponent, ActivityListComponent, ActivityInputComponent, ActivityCollapseComponent, ActivityCollapseListComponent, AccommodationComponent, TransportComponent, ItineraryPrintComponent, ItineraryPrintDatePreviewComponent, ItineraryPrintCategoryPreviewComponent, ItinerarySummaryComponent, ItineraryPrintCategoryComponent, ItineraryPrintDateComponent } from './itinerary';
 
 import { FlashMessageComponent, FlashMessageService } from './flash-message';
 
@@ -57,7 +57,10 @@ import { AuthGuard } from './_guards/auth.guard';
     GooglePlaceSearchComponent,
     GoogleCheckinComponent,
     ItineraryPrintComponent,
-    ItineraryPrintPreviewComponent,
+    ItineraryPrintDatePreviewComponent,
+    ItineraryPrintCategoryPreviewComponent,
+    ItineraryPrintCategoryComponent,
+    ItineraryPrintDateComponent,
     ItineraryResourcesComponent,
     ResourceInputComponent,
     ResourceListComponent,
@@ -67,6 +70,7 @@ import { AuthGuard } from './_guards/auth.guard';
     NotificationComponent,
     NotificationsComponent,
     NotificationListComponent,
+    ItinerarySummaryComponent,
   ],
   imports: [
     BrowserModule,

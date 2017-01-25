@@ -9,14 +9,31 @@ import { ItineraryEventService } from '../itinerary-events/itinerary-event.servi
 @Component({
   selector: 'ww-itinerary-map',
   template:`
+    <div *ngIf="showLegend" [class.hide-legend]="showLegend" (click)="hideLegend()">x</div>
+    
     <div #map id="map"></div>
+
+    <div class="map-legend" [class.show-legend]="showLegend">
+      <div *ngFor="let event of events; let i = index" class="map-event" (click)="changeCenter(event)">
+        <i class="fa fa-map-marker fa-2x" aria-hidden="true"></i>
+        <h5 class="marker-index">{{ i+1 }}</h5>
+        <h5 class="marker-name">{{ event.name }}</h5>
+      </div>
+    </div>
+
+    <button type="button" class="reverseButton show-legend-button" (click)="showMapLegend()">Show markers list</button>
   `,
   styleUrls: ['./itinerary-map.component.scss']
 })
 export class ItineraryMapComponent implements OnInit {
   @ViewChild('map') map: ElementRef;
+  itinMap;
+
   events: ItineraryEvent[] = [];
   eventSubscription: Subscription;
+  eventList;
+
+  showLegend = false;
 
   constructor(
     private itineraryEventService: ItineraryEventService,
@@ -26,10 +43,19 @@ export class ItineraryMapComponent implements OnInit {
     this.eventSubscription = this.itineraryEventService.updateEvent
                                 .subscribe(
                                   result => {
-                                    this.events = Object.keys(result).map(key => result[key]);
+                                    this.filterEvents(result);
                                     this.initMap()
                                   }
                                 )
+  }
+
+  filterEvents(events)  {
+    this.events = [];
+    for (let i = 0; i < events.length; i++) {
+      if(events[i]['type'] !== 'transport')  {
+        this.events.push(events[i])
+      }
+    }
   }
 
   initMap() {
@@ -47,12 +73,12 @@ export class ItineraryMapComponent implements OnInit {
       zoom = 1
     }
 
-    let map = new google.maps.Map(mapDiv, {
+    this.itinMap = new google.maps.Map(mapDiv, {
       center: center,
       zoom: zoom
     });
 
-    this.setMarkers(map);
+    this.setMarkers(this.itinMap);
   }
 
   getCenter(event) {
@@ -69,6 +95,8 @@ export class ItineraryMapComponent implements OnInit {
         )
       }
     }
+
+    this.eventList = eventMarker;
 
     for (let i = 0; i < eventMarker.length; i++) {
         let event = eventMarker[i];
@@ -90,5 +118,21 @@ export class ItineraryMapComponent implements OnInit {
     }
 
   }
+
+  changeCenter(event)  {
+    let center = new google.maps.LatLng(event['lat'], event['lng']);
+
+    this.itinMap.panTo(center);
+  }
+
+  showMapLegend() {
+    this.showLegend = !this.showLegend;
+  }
+
+  hideLegend()  {
+    this.showLegend = false;
+  }
+
+
 
 }

@@ -17,6 +17,8 @@ export class AccommodationComponent implements OnInit {
 
   editAccommodationForm: FormGroup;
   editing = false;
+  anyCheckInTime;
+  anyCheckOutTime;
 
   deleteAccommodation = false;
 
@@ -33,6 +35,8 @@ export class AccommodationComponent implements OnInit {
         'international_phone_number': '',
         'checkInDate': '',
         'checkOutDate': '',
+        'checkInTime': '',
+        'checkOutTime': '',
         'note': '',
       })
     }
@@ -50,6 +54,12 @@ export class AccommodationComponent implements OnInit {
   // to show/hide edit form
   editAccommodation()  {
     this.editing = true;
+    if(this.event['checkInTime'] === 'anytime') {
+      this.anyCheckInTime = true;
+    }
+    if(this.event['checkOutTime'] === 'anytime') {
+      this.anyCheckOutTime = true;
+    }
   }
 
   cancelEditAccommodation()  {
@@ -70,6 +80,18 @@ export class AccommodationComponent implements OnInit {
       }
     }
 
+    if(editedAccommodation['checkInTime'] === '' || this.anyCheckInTime)  {
+      originalAccommodation['checkInTime'] = 'anytime';
+    }
+
+    if(editedAccommodation['checkOutTime'] === '' || this.anyCheckOutTime)  {
+      originalAccommodation['checkOutTime'] = 'anytime';
+    }
+
+    originalAccommodation['date'] = originalAccommodation['checkInDate'];
+    originalAccommodation['time'] = originalAccommodation['checkInTime'];
+
+
     this.itineraryEventService.editEvent(originalAccommodation)
         .subscribe(
           result => {
@@ -85,6 +107,8 @@ export class AccommodationComponent implements OnInit {
       'international_phone_number': '',
       'checkInDate': '',
       'checkOutDate': '',
+      'checkInTime': '',
+      'checkOutTime': '',
       'note': '',
     })
   }
@@ -105,5 +129,13 @@ export class AccommodationComponent implements OnInit {
             this.flashMessageService.handleFlashMessage(result.message);
           })
     this.deleteAccommodation = false;
+  }
+
+  toggleCheckInTime() {
+    this.anyCheckInTime = !this.anyCheckInTime;
+  }
+
+  toggleCheckOutTime() {
+    this.anyCheckOutTime = !this.anyCheckOutTime;
   }
 }

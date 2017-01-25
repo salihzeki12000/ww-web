@@ -18,6 +18,8 @@ export class ItineraryEvent {
     date: string,
     checkInDate: string,
     checkOutDate: string,
+    checkInTime: string,
+    checkOutTime: string,
     time: string,
     url: string,
     place_id: string,

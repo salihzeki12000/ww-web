@@ -76,6 +76,9 @@ export class TransportComponent implements OnInit {
       }
     }
 
+    originalTransport['date'] = originalTransport['depDate'];
+    originalTransport['time'] = originalTransport['depTime'];
+
     this.itineraryEventService.editEvent(originalTransport)
         .subscribe(
           result => {

@@ -1,3 +1,4 @@
-<p>
-  notification works!
-</p>
+<div class="notification">
+  <h5>{{ notification?.message }}</h5>
+  <h6 class="created-at">{{ notification?.created_at | date: 'medium'}}</h6>
+</div>

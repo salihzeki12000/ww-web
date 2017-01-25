@@ -43,6 +43,8 @@ export class AccommodationFormComponent implements OnInit {
         'international_phone_number': '',
         'checkInDate': '',
         'checkOutDate': '',
+        'checkInTime': '',
+        'checkOutTime': '',
         'note': '',
       })
     }
@@ -88,7 +90,16 @@ export class AccommodationFormComponent implements OnInit {
       newAccommodation['lng'] = lng;
     }
 
+    if(newAccommodation['checkInTime'] === '')  {
+      newAccommodation['checkInTime'] = 'anytime';
+    }
+
+    if(newAccommodation['checkOutTime'] === '')  {
+      newAccommodation['checkOutTime'] = 'anytime';
+    }
+
     newAccommodation['date'] = newAccommodation['checkInDate'];
+    newAccommodation['time'] = newAccommodation['checkInTime'];
     newAccommodation['type'] = 'accommodation';
     newAccommodation['user'] =  {
       _Id: this.currentUser['id'],
@@ -96,7 +107,7 @@ export class AccommodationFormComponent implements OnInit {
     }
     newAccommodation['created_at'] = new Date();
 
-    this.itineraryEventService.addEvent(newAccommodation, this.itinerary['_id'])
+    this.itineraryEventService.addEvent(newAccommodation, this.itinerary)
         .subscribe(
           result => {
             this.flashMessageService.handleFlashMessage(result.message);

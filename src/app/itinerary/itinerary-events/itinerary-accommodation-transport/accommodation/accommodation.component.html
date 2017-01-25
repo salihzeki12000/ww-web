@@ -18,8 +18,8 @@
     </div>
 
     <div class="check-in-out-dates">
-      <h5 class="departure-details">{{ event?.checkInDate | date:'dd MMM yyyy' }}</h5>
-      <h5 class="arrival-details">{{ event?.checkOutDate | date:'dd MMM yyyy' }}</h5>
+      <h5 class="departure-details">{{ event?.checkInDate | date:'dd MMM yyyy' }} - {{ event.checkInTime }}</h5>
+      <h5 class="arrival-details">{{ event?.checkOutDate | date:'dd MMM yyyy' }} - {{ event.checkOutTime }}</h5>
     </div>
 
     <div class="address">
@@ -88,6 +88,20 @@
                 </div>
               </option>
             </select>
+
+            <div class="time" [class.marginBottom]="anytime">
+              <label>Check in time (
+
+                <div class="anytime-input">
+                  <label>Any time
+                    <input type="checkbox" (click)="toggleCheckInTime()" formControlName="checkInTime" [ngModel]="event.checkInTime === 'anytime'">
+                  </label>
+                </div>
+                )
+              </label>
+              <input type="time" formControlName="checkInTime" [value]="event.checkInTime" *ngIf="!anyCheckInTime">
+            </div>
+
           </div>
 
           <div class="check-out">
@@ -102,6 +116,19 @@
                 </div>
               </option>
             </select>
+
+            <div class="time" [class.marginBottom]="anytime">
+              <label>Check out time (
+
+                <div class="anytime-input">
+                  <label>Any time
+                    <input type="checkbox" (click)="toggleCheckOutTime()" formControlName="checkOutTime" [ngModel]="event.checkOutTime === 'anytime'">
+                  </label>
+                </div>
+                )
+              </label>
+              <input type="time" formControlName="checkOutTime" [value]="event.checkOutTime" *ngIf="!anyCheckOutTime">
+            </div>
           </div>
 
           <div class="accommodation-note">

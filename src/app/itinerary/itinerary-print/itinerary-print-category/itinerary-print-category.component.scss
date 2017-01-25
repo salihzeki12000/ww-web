@@ -1,0 +1,116 @@
+.itinerary-print  {
+  border-top: 2px solid #6494ed;
+}
+
+.options  {
+  width: 100%;
+  border-bottom: 1px solid grey;
+}
+
+.print,
+.pdf  {
+  padding: 10px;
+  display: inline-block;
+  margin-left: 10px;
+  &:hover {
+    color: white;
+    background-color: #6494ED;
+    cursor: pointer;
+  }
+}
+
+.itinerary-header {
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid grey;
+}
+
+.itinerary-date {
+  margin-top: 20px;
+}
+
+.transport-section,
+.accommodation-section,
+.activity-section,
+.resource-section {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.section-header  {
+  margin: 10px 0;
+  padding: 10px 20px;
+  border-bottom: 4px solid #6494ED;
+  border-top: 2px solid #6494ed;
+}
+
+.note {
+  margin-bottom: 10px;
+}
+
+/* transport section */
+h5, h6  {
+  line-height: 1.5;
+}
+
+.fa::before {
+  margin-right: 5px;
+}
+
+/* accommodation section */
+.check-in-out-header,
+.check-in-out-dates {
+  display: inline-block;
+}
+
+.check-in-out-header  {
+  text-align: right;
+}
+
+.address > i,
+.contact-number > i  {
+  vertical-align: top;
+}
+
+.address > h5,
+.contact-number > h5  {
+  vertical-align: top;
+  display: inline-block;
+  width: 90%;
+}
+
+/* activity section */
+.activity-details  {
+  padding: 0 10px;
+}
+
+.opening-hours > i,
+.fee > i,
+.activity-address > i,
+.activity-contact-number > i {
+  vertical-align: top;
+}
+
+.opening-hours > h6,
+.fee > h6,
+.activity-address > h6,
+.activity-contact-number > h6 {
+  display: inline-block;
+  width: 90%;
+  margin-bottom: 10px;
+  vertical-align: top;
+}
+
+.activity-note {
+  margin: 10px 0 35px 0;
+  padding-left: 0;
+}
+
+.category  {
+  display: inline-block;
+}
+
+.tags {
+  position: absolute;
+  bottom: 30px;
+}

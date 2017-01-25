@@ -1,0 +1,75 @@
+h6  {
+  line-height: 2;
+}
+
+.itinerary-print  {
+  border-top: 2px solid #6494ed;
+}
+
+.options  {
+  width: 100%;
+  border-bottom: 1px solid grey;
+}
+
+.print,
+.pdf  {
+  padding: 10px;
+  display: inline-block;
+  margin-left: 10px;
+  &:hover {
+    color: white;
+    background-color: #6494ED;
+    cursor: pointer;
+  }
+}
+
+.fa::before {
+  margin-right: 5px;
+}
+
+.itinerary-header {
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid grey;
+}
+
+.itinerary-date {
+  margin-top: 20px;
+}
+
+.date-card  {
+  margin: 10px 0;
+}
+
+.date-header  {
+  padding: 10px;
+  border-bottom: 4px solid #6494ED;
+  border-top: 2px solid #6494ed;
+}
+
+.print-event  {
+  padding: 10px;
+  border-bottom: 1px dotted grey;
+}
+
+.event-time {
+  display: inline-block;
+  color: grey;
+}
+
+.event-name {
+  display: inline-block;
+}
+
+.event-details  {
+  padding-left: 10px;
+}
+
+.event-contacts > h6 {
+  display: inline-block;
+}
+
+.event-note  {
+  padding-top: 2px;
+  color: grey;
+}

@@ -1,3 +1,10 @@
 <i class="fa fa-bell-o fa-lg" aria-hidden="true" (click)="showNotificationsList()"></i>
 
-<ww-notification-list *ngIf="showNotifications"></ww-notification-list>
+<div *ngIf="showNotification">
+  <div class="notification-header">
+    <h6>Notifications</h6>
+    <h6 class="close-notification" (click)="closeNotificationsList()">close</h6>
+  </div>
+  
+  <ww-notification-list></ww-notification-list>
+</div>

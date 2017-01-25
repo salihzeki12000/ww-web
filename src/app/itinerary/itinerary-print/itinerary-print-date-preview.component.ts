@@ -8,11 +8,11 @@ import { ItineraryService } from '../itinerary.service';
   template: `
     <button type="button" class="primaryButton"(click)="back()" style="margin:10px 340px">Back to itinerary</button>
     <div style="width: 800px">
-      <ww-itinerary-print></ww-itinerary-print>
+      <ww-itinerary-print-date></ww-itinerary-print-date>
     </div>
   `,
 })
-export class ItineraryPrintPreviewComponent implements OnInit {
+export class ItineraryPrintDatePreviewComponent implements OnInit {
   itineraryId;
 
   constructor(

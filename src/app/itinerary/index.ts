@@ -4,7 +4,8 @@ export * from './itinerary.service';
 export * from './itinerary.component';
 // export * from './itinerary.resolver';
 
-// exports from itinerary-events
+export * from './itinerary-summary/itinerary-summary.component';
+
 export * from './itinerary-events/itinerary-events.component';
 export * from './itinerary-events/itinerary-event.service';
 export * from './itinerary-events/itinerary-event';
@@ -27,7 +28,10 @@ export * from './itinerary-events/itinerary-activity/activity-collapse/activity-
 export * from './itinerary-map/itinerary-map.component';
 
 export * from './itinerary-print/itinerary-print.component';
-export * from './itinerary-print/itinerary-print-preview.component';
+export * from './itinerary-print/itinerary-print-date/itinerary-print-date.component';
+export * from './itinerary-print/itinerary-print-category/itinerary-print-category.component';
+export * from './itinerary-print/itinerary-print-date-preview.component';
+export * from './itinerary-print/itinerary-print-category-preview.component';
 
 export * from './itinerary-resources/itinerary-resources.component';
 export * from './itinerary-resources/resource';

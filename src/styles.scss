@@ -272,6 +272,7 @@ span.required {
 .check-in,
 .check-out  {
   display: inline-block;
+  vertical-align: top;
 }
 
 /* transport departure and arrival details for form and edit */
@@ -630,4 +631,11 @@ span.city-highlight  {
 span.confirm-delete-name {
   color: red;
   font-size: 1.2em;
+}
+
+/*********************
+  ITINERARY MAP VIEW
+*********************/
+ww-itinerary-map  {
+  position: relative;
 }

@@ -31,16 +31,8 @@
           </select>
 
           <div class="time" [class.marginBottom]="anytime">
-            <label>Time to visit (
-
-              <div class="anytime-input">
-                <label>Any time
-                  <input type="checkbox" (click)="toggleAnytime()">
-                </label>
-              </div>
-              )
-            </label>
-            <input type="time" formControlName="time" *ngIf="!anytime">
+            <label>Time to visit (Default: any time)</label>
+            <input type="time" formControlName="time">
           </div>
         </div>
 

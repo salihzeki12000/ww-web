@@ -1,0 +1,56 @@
+<div class="date-row">
+  <div *ngFor="let date of itinDateRange; let i = index" class="date-column">
+    <div *ngIf="date === 'any day'">
+      <h5 class="date">Any day</h5>
+    </div>
+
+    <div *ngIf="date !== 'any day'">
+      <div class="date">
+        <h5>Day {{ i }}</h5>
+        <h5>{{ date | date: "dd MMM (EEE)" }}</h5>
+      </div>
+    </div>
+
+    <div *ngFor="let event of events">
+      <div *ngIf="event.date === date">
+
+        <div *ngIf="event.type === 'accommodation'" class="accommodation-indicator">
+          <div *ngIf="event.inOut === 'checkout'">
+            <h6 class="event-time">{{ event.time }}</h6>
+            <div class="event-name">
+              <h5>Check Out</h5>
+              <h5>{{ event.name }}</h5>
+            </div>
+          </div>
+
+          <div *ngIf="event.inOut === 'checkin'">
+            <h6 class="event-time">{{ event.time }}</h6>
+            <div class="event-name">
+              <h5>Check In</h5>
+              <h5>{{ event.name }}</h5>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="event.type === 'activity'" class="activity-indicator">
+          <h6 class="event-time">{{ event.time }}</h6>
+          <h5 class="event-name">{{ event.name }}</h5>
+        </div>
+
+        <div *ngIf="event.type === 'transport'" class="transport-indicator">
+          <h6 class="event-time">{{ event.time }}</h6>
+
+          <div *ngIf="event.approach === 'departure'">
+            <h5 class="event-name">{{ event.transportType }} {{ event.referenceNumber }} departs {{ event.depCity }} for {{ event.arrCity}}</h5>
+          </div>
+
+          <div *ngIf="event.approach === 'arrival'">
+            <h5 class="event-name">{{ event.transportType }} {{ event.referenceNumber }} arrives {{ event.arrCity}}</h5>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
