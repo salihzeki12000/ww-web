@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpModule, JsonpModule } from '@angular/http';
 import { routing } from './app.routing';
 
 import { AppComponent } from './app.component';
@@ -77,6 +77,7 @@ import { AuthGuard } from './_guards/auth.guard';
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
+    JsonpModule,
     routing,
   ],
   providers: [ AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, FollowingService, NotificationService, AuthGuard ],

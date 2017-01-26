@@ -102,7 +102,6 @@ export class TransportFormComponent implements OnInit {
     this.itineraryEventService.getFlightDetails(criteria)
         .subscribe(
           data => {
-            console.log(data);
             let scheduledFlights = data['scheduledFlights'];
             let appendix = data['appendix'];
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Http, Headers, Response } from '@angular/http';
+import { Http, Headers, Response, RequestOptions, Jsonp } from '@angular/http';
 import 'rxjs/Rx';
 import { Observable, ReplaySubject } from 'rxjs';
 
@@ -16,25 +16,39 @@ export class ItineraryEventService  {
   // private url = 'http://localhost:9000';
   private url = 'https://vast-island-87972.herokuapp.com';
 
-  private flightStatsUrl = "https://api.flightstats.com/flex/schedules/rest/v1/json/"
+  private flightStatsUrl = "https://api.flightstats.com/flex/schedules/rest/v1/jsonp/"
   // flight/SQ/346/departing/2017/2/12?appId=8d4596b2&appKey=ab8b1a3b2f1f66e0db7be662f41425cc
 
   constructor(
     private http: Http,
+    private jsonp: Jsonp,
     private route: ActivatedRoute,
     private notificationService: NotificationService)  {}
 
+  // getFlightDetails(criteria)  {
+  //   const id = '?appId=8d4596b2&appKey=ab8b1a3b2f1f66e0db7be662f41425cc';
+  //   let opt: RequestOptions;
+  //   let myHeaders: Headers = new Headers
+  //   myHeaders.append('Accept', 'application/json')
+  //   myHeaders.append('Access-Control-Allow-Origin', '*')
+  //   myHeaders.append('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token')
+  //   myHeaders.append('Access-Control-Allow-Methods', 'GET')
+  //
+  //   opt = new RequestOptions({
+  //     headers: myHeaders,
+  //   })
+  //
+  //   return this.http.get(this.flightStatsUrl + criteria + id, opt)
+  //                   .map((response: Response) => response.json())
+  //                   // .catch((error: Response) => console.log(error));
+  // }
   getFlightDetails(criteria)  {
-    const id = '?appId=8d4596b2&appKey=ab8b1a3b2f1f66e0db7be662f41425cc';
-    let myHeaders: Headers = new Headers
-    myHeaders.append('Accept', 'application/json')
-    myHeaders.append('Access-Control-Allow-Origin', '*')
-    myHeaders.append('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token')
-    myHeaders.append('Access-Control-Allow-Methods', 'GET')
+    const id = '?appId=8d4596b2&appKey=ab8b1a3b2f1f66e0db7be662f41425cc&callback=JSONP_CALLBACK';
 
-    return this.http.get(this.flightStatsUrl + criteria + id, { headers: myHeaders })
-                    .map((response: Response) => response.json())
-                    // .catch((error: Response) => console.log(error));
+    return this.jsonp.get(this.flightStatsUrl + criteria + id)
+                     .map((response: Response) => {
+                       return response['_body'];
+                     })
   }
 
   getEvents(itineraryId) {
