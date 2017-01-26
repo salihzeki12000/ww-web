@@ -1,0 +1,33 @@
+<div *ngIf="showLegend" [class.hide-legend]="showLegend" (click)="hideLegend()">x</div>
+
+<div #map id="map"></div>
+
+<div class="legend-section">
+  <h5>Filter map by date</h5>
+  <div class="date-filer">
+    <select name="date" [(ngModel)]="selectedDate" (ngModelChange)="filterMarkers($event)">
+      <option *ngFor="let date of dates" [value]="date">
+        <h5>{{ date }}</h5>
+      </option>
+    </select>
+  </div>
+
+  <div class="map-legend" [class.show-legend]="showLegend">
+    <div *ngFor="let event of events; let i = index" class="map-event" (click)="changeCenter(event)">
+      <i class="fa fa-map-marker fa-3x" aria-hidden="true"></i>
+      <h5 class="marker-index">{{ i+1 }}</h5>
+      <h5 class="marker-name">{{ event.name }}</h5>
+      <div class="marker-date" *ngIf="event.date !== 'any day'">
+        <h6>{{ event.date | date: 'dd MMM'}} - {{ event.time }}</h6>
+      </div>
+
+      <div class="marker-date" *ngIf="event.date === 'any day'">
+        <h6>Any day - {{ event.time }}</h6>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<button type="button" class="reverseButton show-legend-button" (click)="showMapLegend()">Show markers list</button>

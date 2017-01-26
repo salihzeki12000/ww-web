@@ -8,21 +8,7 @@ import { ItineraryEventService } from '../itinerary-events/itinerary-event.servi
 
 @Component({
   selector: 'ww-itinerary-map',
-  template:`
-    <div *ngIf="showLegend" [class.hide-legend]="showLegend" (click)="hideLegend()">x</div>
-    
-    <div #map id="map"></div>
-
-    <div class="map-legend" [class.show-legend]="showLegend">
-      <div *ngFor="let event of events; let i = index" class="map-event" (click)="changeCenter(event)">
-        <i class="fa fa-map-marker fa-2x" aria-hidden="true"></i>
-        <h5 class="marker-index">{{ i+1 }}</h5>
-        <h5 class="marker-name">{{ event.name }}</h5>
-      </div>
-    </div>
-
-    <button type="button" class="reverseButton show-legend-button" (click)="showMapLegend()">Show markers list</button>
-  `,
+  templateUrl:'./itinerary-map.component.html',
   styleUrls: ['./itinerary-map.component.scss']
 })
 export class ItineraryMapComponent implements OnInit {
@@ -31,7 +17,12 @@ export class ItineraryMapComponent implements OnInit {
 
   events: ItineraryEvent[] = [];
   eventSubscription: Subscription;
-  eventList;
+
+  mapMarkers = [];
+
+  month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  dates = [];
+  selectedDate;
 
   showLegend = false;
 
@@ -87,42 +78,75 @@ export class ItineraryMapComponent implements OnInit {
 
   setMarkers(map) {
     let eventMarker = [];
+    this.mapMarkers = [];
 
     for (let i = 0; i < this.events.length; i++) {
       if(this.events[i]['type'] !== 'transport')  {
+        let date;
+        let eventDate;
+
+        if(this.events[i]['date'] !== 'any day')  {
+          date = new Date(this.events[i]['date'])
+          eventDate = date.getDate() + " " + this.month[date.getMonth()];
+        } else if(this.events[i]['date'] === 'any day') {
+          eventDate = 'any day';
+        }
+
         eventMarker.push(
-          [this.events[i]['name'], this.events[i]['lat'], this.events[i]['lng']]
+          [this.events[i]['name'], this.events[i]['lat'], this.events[i]['lng'], eventDate, this.events[i]['time']]
         )
       }
     }
-
-    this.eventList = eventMarker;
+    this.setDate(eventMarker);
 
     for (let i = 0; i < eventMarker.length; i++) {
-        let event = eventMarker[i];
-        let marker = new google.maps.Marker({
-          position: { lat: event[1], lng: event[2] },
-          map: map,
-          title: event[0],
-          label: '' + (i + 1),
-          zIndex: i
-        })
+      let event = eventMarker[i];
+      let marker = new google.maps.Marker({
+        position: { lat: event[1], lng: event[2] },
+        map: map,
+        title: event[0],
+        label: '' + (i + 1),
+        date: event[3],
+        zIndex: i
+      })
 
-        let infoWindow = new google.maps.InfoWindow({
-          content: '<p>' + event[0] + '</p>'
-        })
+      this.mapMarkers.push(marker);
 
-        marker.addListener('click', ()  =>  {
-          infoWindow.open(map, marker)
-        })
+      let infoWindow = new google.maps.InfoWindow({
+        content: '<p>' + event[0] + '</p><br/><p>' + event[3] + " - " + event[4]
+      })
+
+      marker.addListener('click', ()  =>  {
+        infoWindow.open(map, marker)
+      })
     }
-
   }
 
   changeCenter(event)  {
     let center = new google.maps.LatLng(event['lat'], event['lng']);
 
     this.itinMap.panTo(center);
+  }
+
+  setDate(events) {
+    this.dates = [];
+    for (let i = 0; i < events.length; i++) {
+      if(this.dates.indexOf(events[i][3]) < 0) {
+        this.dates.push(events[i][3])
+      }
+    }
+    this.dates.unshift("All dates");
+    this.selectedDate = this.dates[0];
+  }
+
+  filterMarkers(date) {
+    for (let i = 0; i < this.mapMarkers.length; i++) {
+      if(this.mapMarkers[i]['date'] === date || date === "All dates")  {
+        this.mapMarkers[i].setVisible(true);
+      } else  {
+        this.mapMarkers[i].setVisible(false);
+      }
+    }
   }
 
   showMapLegend() {
@@ -132,7 +156,4 @@ export class ItineraryMapComponent implements OnInit {
   hideLegend()  {
     this.showLegend = false;
   }
-
-
-
 }

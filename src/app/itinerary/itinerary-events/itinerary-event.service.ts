@@ -13,7 +13,6 @@ export class ItineraryEventService  {
 
   updateEvent = new ReplaySubject();
 
-  // private url = 'http://localhost:9000';
   private url = 'https://vast-island-87972.herokuapp.com';
 
   private flightStatsUrl = "https://api.flightstats.com/flex/schedules/rest/v1/jsonp/"

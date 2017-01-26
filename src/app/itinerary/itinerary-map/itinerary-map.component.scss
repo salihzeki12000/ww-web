@@ -9,10 +9,27 @@
   }
 }
 
-.map-legend {
+.legend-section {
   display: inline-block;
+}
+
+.legend-section > h5  {
+  text-align: center;
+}
+
+.date-filer {
   width: 120px;
-  max-height: 600px;
+}
+
+select {
+  height: auto;
+  font-size: 0.83em;
+}
+
+.map-legend {
+  // display: inline-block;
+  width: 120px;
+  max-height: 555px;
   vertical-align: top;
   border: 2px solid #6494ED;
   border-bottom: none;
@@ -27,7 +44,7 @@
   @media only screen and (max-width: 680px) {
     display: block;
     position: absolute;
-    top: 0;
+    top: -595px;
     left: 0;
     height: auto;
     max-height: calc(100vh * 0.8);
@@ -52,13 +69,13 @@
 
 .fa-map-marker {
   display: inline-block;
-  width: 15%;
+  width: 20%;
   color: #6494ED;
 }
 
 .marker-name  {
   display: inline-block;
-  width: 80%;
+  width: 70%;
   padding-left: 5px;
   vertical-align: top;
   overflow-wrap: break-word;
@@ -66,12 +83,22 @@
 
 .marker-index {
   position: absolute;
-  top: 8px;
-  left: 7.5px;
+  top: 12px;
+  left: 8px;
+  height: 17px;
+  width: 17px;
   padding: 0 2px;
   color: white;
+  text-align: center;
   background-color: #6494ED;
   border-radius: 50%;
+}
+
+.marker-date {
+  margin-top: 3px;
+  text-align: center;
+  background-color: #FFC65C;
+  border-radius: 5px;
 }
 
 .show-legend-button {
