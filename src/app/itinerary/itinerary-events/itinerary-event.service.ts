@@ -34,7 +34,7 @@ export class ItineraryEventService  {
 
     return this.http.get(this.flightStatsUrl + criteria + id, { headers: myHeaders })
                     .map((response: Response) => response.json())
-                    // .catch((error: Response) => Observable.throw(error.json()));
+                    .catch((error: Response) => console.log(error);
   }
 
   getEvents(itineraryId) {
@@ -45,7 +45,7 @@ export class ItineraryEventService  {
                       this.updateEvent.next(this.events);
                       return this.events;
                     })
-                    // .catch((error: Response) => Observable.throw(error.json()));
+                    .catch((error: Response) => console.log(error);
   }
 
   addEvent(event: ItineraryEvent, itinerary) {
@@ -83,7 +83,7 @@ export class ItineraryEventService  {
 
                       return response.json();
                     })
-                    // .catch((error: Response) => Observable.throw(error.json()));
+                    .catch((error: Response) => console.log(error);
   }
 
   editEvent(event: ItineraryEvent)  {
@@ -112,7 +112,7 @@ export class ItineraryEventService  {
 
                       return response.json()
                     })
-                    // .catch((error: Response) => Observable.throw(error.json()));
+                    .catch((error: Response) => console.log(error);
   }
 
   sortEventByDate(events) {
