@@ -14,4 +14,4 @@ const APP_ROUTES: Routes = [
   { path: 'print-category', component: ItineraryPrintCategoryPreviewComponent, canActivate: [AuthGuard] },
 ]
 
-export const routing = RouterModule.forRoot(APP_ROUTES)
+export const routing = RouterModule.forRoot(APP_ROUTES, { useHash: true })
