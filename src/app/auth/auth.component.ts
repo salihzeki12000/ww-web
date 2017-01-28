@@ -20,7 +20,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
     private _zone: NgZone,
     private router: Router)  {
       FB.init({
-            appId      : '1751163758480192',
+            appId      : '1751057965157438', //1751057965157438 - 1751163758480192
             cookie     : false,  // enable cookies to allow the server to access the session
             xfbml      : true,  // parse social plugins on this page
             version    : 'v2.5' // use graph api version 2.5
