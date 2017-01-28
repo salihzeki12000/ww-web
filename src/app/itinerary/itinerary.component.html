@@ -1,21 +1,17 @@
 <div class="itinerary">
 
-  <div [class.editing]="editing">
-    <div class="view">
-      <div class="heading">
+  <div class="heading">
 
-        <h3 class="itinearary-name">{{ itinerary?.name }}   |   </h3>
+    <h3 class="itinearary-name">{{ itinerary?.name }}   |   </h3>
 
-        <div class="itinerary-date">
-          <h5><i class="fa fa-calendar" aria-hidden="true"></i> {{ itinerary?.dateFrom | date:'dd MMM yyyy' }} to {{ itinerary?.dateTo | date:'dd MMM yyyy' }}</h5>
-        </div>
-
-        <div class="itinerary-edit">
-          <a (click)="editDetails()"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-        </div>
-
-      </div>
+    <div class="itinerary-date">
+      <h5><i class="fa fa-calendar" aria-hidden="true"></i> {{ itinerary?.dateFrom | date:'dd MMM yyyy' }} to {{ itinerary?.dateTo | date:'dd MMM yyyy' }}</h5>
     </div>
+
+    <div class="itinerary-edit">
+      <a (click)="editDetails()"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+    </div>
+
   </div>
 
   <div class="members">
@@ -82,14 +78,13 @@
   </div>
 </div>
 
-
 <!-- delete itinerary modal -->
 <div class="custom-modal" *ngIf="deleteItinerary">
   <div class="confirm-delete">
 
     <div class="confirm-delete-header">
       <h4>Delete itinerary {{ itinerary?.name }}</h4>
-      <span class="x-close" (click)="cancelDelete()">&times;</span>
+      <a (click)="cancelDelete()">x</a>
     </div>
 
     <h4 class="confirm-delete-content">Deleting itinerary <span class="confirm-delete-name">{{ itinerary?.name }}</span> will permanently remove it from your list of itineraries.</h4>
@@ -108,7 +103,7 @@
 
     <div class="show-users-header">
       <h4>Add members to the itinerary</h4>
-      <span class="x-close" (click)="cancelShowUsers()">&times;</span>
+      <a (click)="cancelShowUsers()">x</a>
     </div>
 
     <div *ngFor="let user of users" class="user-card">

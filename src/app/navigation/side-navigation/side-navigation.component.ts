@@ -16,6 +16,7 @@ export class SideNavigationComponent implements OnInit {
   currentUser: User;
   currentUserSubscription: Subscription;
 
+  showItineraryForm = false;
   itineraryForm: FormGroup;
   itinerariesSubscription: Subscription;
 
@@ -50,8 +51,9 @@ export class SideNavigationComponent implements OnInit {
   ngOnInit() {
     this.currentUserSubscription = this.userService.updateCurrentUser
                                        .subscribe(
-                                         data => {
-                                           this.currentUser = data;
+                                         result => {
+                                           console.log(result);
+                                           this.currentUser = result;
                                            this.getFollowings();
                                          }
                                        )
@@ -59,13 +61,15 @@ export class SideNavigationComponent implements OnInit {
     this.itinerariesSubscription = this.itineraryService.updateItineraries
                                     .subscribe(
                                       result => {
+                                        console.log(result)
                                         this.handleItinChange(result)
                                       })
 
     this.userService.getAllUsers()
         .subscribe(
-          data => {
-            this.users = data.users;
+          result => {
+            console.log(result)
+            this.users = result.users;
           }
         )
 
@@ -74,8 +78,9 @@ export class SideNavigationComponent implements OnInit {
   getFollowings() {
     this.followingService.getRelationships()
         .subscribe(
-          data => {
-            this.filterFollowers(data.followings);
+          result => {
+            console.log(result)
+            this.filterFollowers(result.followings);
           }
         )
   }
@@ -153,6 +158,15 @@ export class SideNavigationComponent implements OnInit {
     }
   }
 
+  cancelItineraryForm() {
+    this.showItineraryForm = false;
+  }
+
+  createItinerary() {
+    this.showItineraryForm = true;
+    this.showMenu = false;
+  }
+
   onSubmit()  {
     let itinerary = this.itineraryForm.value;
 
@@ -163,6 +177,8 @@ export class SideNavigationComponent implements OnInit {
           data => {
             this.router.navigate(['/me/itinerary', data.itinerary._id]);
           });
+
+    this.showItineraryForm = false;
   }
 
   getUsers()  {

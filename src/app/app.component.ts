@@ -12,8 +12,8 @@ export class AppComponent implements OnInit {
   constructor(private userService: UserService) {}
 
   ngOnInit()  {
+    console.log("app component init");
     if(localStorage.getItem('token')) {
-      console.log("Initialise get user details from app component");
       this.userService.getCurrentUserDetails()
           .subscribe(
             data => {

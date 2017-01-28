@@ -57,12 +57,11 @@ export class AuthService  {
 
   loginFacebook(user) {
     const body = JSON.stringify(user);
-    const headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+    const headers = new Headers({ 'Content-Type': 'application/json' });
 
     return this.http.post(this.url + '/users/social-login/', body, { headers: headers })
                     .map((response: Response) => {
                       this.loginType = 'facebook';
-                      console.log("facebook sign in")
                       localStorage.setItem('token', response.json()['token']);
                       return response.json();
                     })
@@ -70,13 +69,13 @@ export class AuthService  {
   }
 
   loginGoogle(user) {
+    console.log(user);
     const body = JSON.stringify(user);
-    const headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+    const headers = new Headers({ 'Content-Type': 'application/json' });
 
     return this.http.post(this.url + '/users/social-login/', body, { headers: headers })
                     .map((response: Response) => {
                       this.loginType = 'google';
-                      console.log("google sign in")
                       localStorage.setItem('token', response.json()['token']);
                       return response.json();
                     })
@@ -93,7 +92,6 @@ export class AuthService  {
           setTimeout(() =>  {
             this.router.navigateByUrl('/signin');
           },1000)
-          console.log("logout of facebook");
         })
       }
     });
@@ -107,7 +105,6 @@ export class AuthService  {
       setTimeout(() =>  {
         this.router.navigateByUrl('/signin');
       },1000)
-      console.log('google user sign out');
     });
   }
 

@@ -21,7 +21,6 @@ export class UserService  {
     return this.http.get(this.url + '/users/currentUser' + token, { headers: headers })
                     .map((response: Response) => {
                       this.currentUser = response.json().user;
-                      console.log(this.currentUser);
                       this.updateCurrentUser.next(this.currentUser);
                       return this.currentUser;
                     })

@@ -126,6 +126,7 @@ export class ItineraryMapComponent implements OnInit {
     let center = new google.maps.LatLng(event['lat'], event['lng']);
 
     this.itinMap.panTo(center);
+    this.showLegend = false;
   }
 
   setDate(events) {

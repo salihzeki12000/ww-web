@@ -47,7 +47,7 @@
   <div class="confirm-delete">
     <div class="confirm-delete-header">
       <h4>Delete resource {{ resource?.name }}</h4>
-      <span class="x-close" (click)="cancelDelete()">&times;</span>
+      <a (click)="cancelDelete()">x</a>
     </div>
     <h4 class="confirm-delete-content">Deleting resource <span class="confirm-delete-name">{{ resource?.name }}</span> will permanently remove it from your itinerary.</h4>
     <div class="confirm-delete-footer">

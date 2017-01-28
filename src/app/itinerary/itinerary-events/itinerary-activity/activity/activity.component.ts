@@ -30,6 +30,8 @@ export class ActivityComponent implements OnInit {
   currentUser;
   sameUser;
 
+  eventSubscription: Subscription;
+
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
@@ -66,6 +68,11 @@ export class ActivityComponent implements OnInit {
                                            this.checkSameUser();
                                          }
                                        )
+    this.eventSubscription = this.itineraryEventService.updateEvent
+                                 .subscribe(
+                                  result => {
+                                    this.checkSameUser();
+                                  })
   }
 
   checkSameUser() {

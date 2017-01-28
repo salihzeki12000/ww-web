@@ -31,11 +31,7 @@ export class SigninComponent implements OnInit {
     this.authService.signin(this.signinForm.value)
         .subscribe(
           data => {
-            this.userService.getCurrentUserDetails()
-                .subscribe( data => {
-                  console.log("redirect to /me");
-                  this.router.navigateByUrl('/me');
-                });
+            this.router.navigateByUrl('/me');
           },
           error => console.error(error)
         )

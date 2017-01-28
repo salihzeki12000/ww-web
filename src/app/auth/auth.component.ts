@@ -57,14 +57,11 @@ export class AuthComponent implements OnInit, AfterViewInit {
           this.authService.loginFacebook(result)
               .subscribe(
                 data => {
-                  this.userService.getCurrentUserDetails()
-                      .subscribe( result => {
-                        console.log("redirect to /me");
-                        // this.router.navigateByUrl('/me');
-                        setTimeout(() =>  {
-                          this.router.navigateByUrl('/me');
-                        }, 1000)
-                      } );
+                  this.router.navigateByUrl('/me');
+
+                  // setTimeout(() =>  {
+                  //   this.router.navigateByUrl('/me');
+                  // }, 1000)
                 }
               )
         } else {
@@ -87,28 +84,21 @@ export class AuthComponent implements OnInit, AfterViewInit {
 
   // http://stackoverflow.com/questions/35530483/google-sign-in-for-websites-and-angular-2-using-typescript
   loginGoogle(user) {
-    // this._zone.run(() =>  {
-      let profile = user.getBasicProfile();
-      let email = profile.getEmail();
-      let username = profile.getName();
-      let displayPic = profile.getImageUrl();
-
-      this.authService.loginGoogle({
-        username: username,
-        email: email,
-        displayPic: displayPic,
-      }).subscribe( data => {
-        this.userService.getCurrentUserDetails()
-            .subscribe( result => {
-              console.log("redirect to /me");
-              // this.router.navigateByUrl('/me');
-              setTimeout(() =>  {
-                this.router.navigateByUrl('/me');
-              }, 1000)
-            } );
-      });
-
-    // })
+    let profile = user.getBasicProfile();
+    let email = profile.getEmail();
+    let username = profile.getName();
+    let displayPic = profile.getImageUrl();
+    console.log("log in google")
+    this.authService.loginGoogle({
+      username: username,
+      email: email,
+      displayPic: displayPic,
+    }).subscribe( data => {
+      console.log("log in google ok")
+      setTimeout(() =>  {
+        this.router.navigateByUrl('/me');
+      }, 1000)
+    });
   }
 
   showSigninForm() {

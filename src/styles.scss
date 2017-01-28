@@ -47,7 +47,7 @@ a  { font-size: 0.83em }
     background-color: white;
   };
   &[disabled] {
-    background-color: #ccc;
+    background-color: #CCC;
     color: white;
   }
 }
@@ -104,11 +104,11 @@ button  {
 }
 
 button[disabled]  {
-  color: #ccc;
-  border: 1px solid #ccc;
+  color: #CCC;
+  border: 1px solid #CCC;
   &:hover {
-    color: #ccc;
-    border: 1px solid #ccc;
+    color: #CCC;
+    border: 1px solid #CCC;
     background-color: white;
   }
 }
@@ -131,7 +131,7 @@ textarea {
   font-size: 14px;
   color: #555;
   background-color: #fff;
-  border: 1px solid #ccc;
+  border: 1px solid #CCC;
   border-radius: 4px;
   &:focus {
     border: 2px solid #6494ed;
@@ -223,9 +223,9 @@ span.required {
 .edit-header {
   width: 100%;
   margin-bottom: 10px;
-  padding-bottom: 5px;
+  padding: 5px;
   text-align: center;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #CCC;
 }
 
 .form-header > h3,
@@ -240,20 +240,21 @@ span.required {
 .form-header > a,
 .edit-header > a {
   float: right;
-  color: #ccc;
+  width: 17px;
+  height: 17px;
+  text-align: center;
+  color: #CCC;
+  border-radius: 50%;
   &:hover {
+    color: white;
     text-decoration: none;
-    color: $crimsonRed;
-  }
-
-  @media only screen and (max-width: 700px) {
-    margin-right: 10px;
+    background-color: #CCC;
   }
 }
 
 .place-search,
 .flight-search {
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #CCC;
   padding: 10px;
   background-color: aliceblue;
 }
@@ -264,9 +265,9 @@ span.required {
 
 /* display check in/check out date for accommodation form */
 .check-in-out {
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #CCC;
   padding: 10px;
-  background-color: #ffe5e5;
+  background-color: #FFE5E5;
 }
 
 .check-in,
@@ -277,7 +278,7 @@ span.required {
 
 /* transport departure and arrival details for form and edit */
 .transport-details  {
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #CCC;
 }
 
 .departure-arrival-details {
@@ -287,7 +288,7 @@ span.required {
 .departure  {
   display: inline-block;
   width: 50%;
-  border-right: 1px solid #ccc;
+  border-right: 1px solid #CCC;
 
   @media only screen and (max-width: 700px) {
     width: 100%;
@@ -359,7 +360,7 @@ span.required {
 
 .fa-trash-o,
 .fa-pencil {
-  color: #ccc;
+  color: #CCC;
   &:hover {
     color: #666;
   }
@@ -534,23 +535,40 @@ span.city-highlight  {
   z-index: 1000;
 }
 
-/*************************
+/***************************
  add members/find user modal
- *************************/
+ ***************************/
 .show-users  {
  min-width: 400px;
  position: fixed;
  top: 25%;
- left: 30%;
+ left: calc((100vw - 400px)/2);
  background-color: white;
  border-radius: 5px;
 }
 
 .show-users-header  {
  padding: 10px;
- background-color: #fae6f0;
- border-bottom: 1px solid lightgray;
+ color: white;
+ background-color: #6494ED;
  border-radius: 5px 5px 0 0;
+}
+
+.show-users-header > h4 {
+  display: inline-block;
+}
+
+.show-users-header > a  {
+  float: right;
+  width: 17px;
+  height: 17px;
+  text-align: center;
+  color: white;
+  border-radius: 50%;
+  &:hover {
+    text-decoration: none;
+    background-color: #3C588E;
+  }
 }
 
 .user-card  {
@@ -601,8 +619,9 @@ span.city-highlight  {
 }
 
 .confirm-delete-header  {
-  padding: 20px 40px 10px 40px;
-  background-color: #fae6f0;
+  padding: 10px 40px;
+  color: white;
+  background-color: #EE5951;
   border-bottom: 1px solid lightgray;
   border-radius: 5px 5px 0 0;
 }
@@ -615,17 +634,22 @@ span.city-highlight  {
   display: inline-block;
 }
 
+.confirm-delete-header > a  {
+  float: right;
+  width: 17px;
+  height: 17px;
+  color: white;
+  text-align: center;
+  border-radius: 50%;
+  &:hover {
+    text-decoration: none;
+    background-color: #772C28;
+  }
+}
+
 .confirm-delete-footer  {
   padding-left: 40px;
   padding-bottom: 20px;
-}
-
-.x-close  {
-  position: absolute;
-  top: 8%;
-  right: 5%;
-  cursor: pointer;
-  color: grey;
 }
 
 span.confirm-delete-name {

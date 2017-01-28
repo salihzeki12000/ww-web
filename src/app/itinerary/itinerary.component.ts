@@ -111,6 +111,7 @@ export class ItineraryComponent implements OnInit {
 
   confirmDelete() {
     this.deleteItinerary = true;
+    this.editing = false;
   }
 
   cancelDelete()  {

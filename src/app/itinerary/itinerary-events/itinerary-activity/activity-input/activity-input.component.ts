@@ -119,6 +119,10 @@ export class ActivityInputComponent implements OnInit {
       activityForm['lng'] = lng;
     } // end of data adjustment if details pre-populated by Google
 
+    if(activityForm['date'] === '')  {
+      activityForm['date'] = 'any day';
+    }
+
     if(activityForm['time'] === '')  {
       activityForm['time'] = 'anytime';
     }

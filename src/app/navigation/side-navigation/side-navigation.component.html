@@ -51,7 +51,7 @@
 
       <div *ngIf="itinerariesSection">
         <div class="category-item">
-          <h5 data-toggle="modal" data-target="#new-itin-form" class="new-itinerary" (click)="exitMenu()"><i class="fa fa-plus" aria-hidden="true"></i> Create a new itinerary</h5>
+          <h5 class="new-itinerary" (click)="createItinerary()"><i class="fa fa-plus" aria-hidden="true"></i> Create a new itinerary</h5>
         </div>
         <div>
           <div *ngFor="let itinerary of currentUser?.itineraries" class="category-item">
@@ -81,41 +81,30 @@
 
 
 <!-- new itin form -->
-<div class="modal fade" id="new-itin-form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <!-- Modal Header -->
-      <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">
-            <span aria-hidden="true">&times;</span>
-            <!-- <span class="sr-only">Close</span> -->
-          </button>
+<div class="custom-modal" *ngIf="showItineraryForm">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>Create a new itinerary</h3>
+      <a (click)="cancelItineraryForm()">x</a>
+    </div>
 
-          <h3 class="modal-title" id="myModalLabel">Create a new itinerary</h3>
+    <form [formGroup]="itineraryForm" (ngSubmit)="onSubmit()">
+
+      <label>Itinerary name</label>
+      <input type="text" formControlName="name">
+
+      <label>Travel date from (dd/mm/yyyy)</label>
+      <input type="date" formControlName="dateFrom" max="2050-12-31">
+
+      <label>Travel date to (dd/mm/yyyy)</label>
+      <input type="date" formControlName="dateTo" max="2050-12-31">
+
+      <div class="save-option">
+        <button type="submit" class="primaryButton" (click)="onSubmit()" [disabled]="!itineraryForm.valid"><i class="fa fa-floppy-o" aria-hidden="true"></i> Create itinerary</button>
       </div>
+    </form>
 
-      <!-- Modal Body -->
-      <div class="modal-body">
-        <form [formGroup]="itineraryForm" (ngSubmit)="onSubmit()">
-
-          <label>Itinerary name</label>
-          <input type="text" formControlName="name">
-
-          <label>Travel date from (dd/mm/yyyy)</label>
-          <input type="date" formControlName="dateFrom" max="2050-12-31">
-
-          <label>Travel date to (dd/mm/yyyy)</label>
-          <input type="date" formControlName="dateTo" max="2050-12-31">
-
-          <div class="modal-footer">
-              <button type="submit" (click)="onSubmit()" data-dismiss="modal" [disabled]="!itineraryForm.valid">Create itinerary</button>
-          </div>
-        </form>
-
-      </div>
-
-    </div><!-- end of modal content -->
-  </div><!-- end of modal dialog -->
+  </div>
 </div>
 
 
@@ -124,29 +113,25 @@
 
     <div class="show-users-header">
       <h4>Find a friend</h4>
-      <span class="x-close" (click)="cancelShowUsers()">&times;</span>
+      <a (click)="cancelShowUsers()">x</a>
     </div>
 
-    <!-- <form [formGroup]="addUsersForm" (ngSubmit)="addMembers()"> -->
-      <div *ngFor="let user of users" class="user-card">
-        <img src="{{ user.displayPic }}" alt="" class="user-profile-thumbnail">
-        <div class="user-details">
-          <h5 class="user-username">{{ user.username }}</h5>
-          <h6 class="user-search-description">{{ user.description }}</h6>
-        </div>
-
-        <div class="follow-button">
-          <div *ngIf="user.status === 'requested'">
-            <button type="button" class="follow" (click)="cancelRequest(user)">Requested</button>
-          </div>
-          <div *ngIf="user.status === ''">
-            <button type="button" class="follow" (click)="follow(user)">Follow</button>
-          </div>
-        </div>
-
+    <div *ngFor="let user of users" class="user-card">
+      <img src="{{ user.displayPic }}" alt="" class="user-profile-thumbnail">
+      <div class="user-details">
+        <h5 class="user-username">{{ user.username }}</h5>
+        <h6 class="user-search-description">{{ user.description }}</h6>
       </div>
-    <!-- </form> -->
 
+      <div class="follow-button">
+        <div *ngIf="user.status === 'requested'">
+          <button type="button" class="follow" (click)="cancelRequest(user)">Requested</button>
+        </div>
+        <div *ngIf="user.status === ''">
+          <button type="button" class="follow" (click)="follow(user)">Follow</button>
+        </div>
+      </div>
+    </div>
 
     <div class="show-users-footer">
       <button type="button" class="primaryButton"(click)="cancelShowUsers()">Done</button>

@@ -152,7 +152,7 @@
   <div class="confirm-delete">
     <div class="confirm-delete-header">
       <h4>Delete accommodation {{ event?.name }}</h4>
-      <span class="x-close" (click)="cancelDeleteAccommodation()">&times;</span>
+      <a (click)="cancelDeleteAccommodation()">x</a>
     </div>
     <h4 class="confirm-delete-content">Deleting accommodation <span class="confirm-delete-name">{{ event?.name }}</span> will permanently remove it from your itinerary.</h4>
     <div class="confirm-delete-footer">

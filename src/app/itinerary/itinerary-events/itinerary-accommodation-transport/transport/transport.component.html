@@ -274,7 +274,7 @@
   <div class="confirm-delete">
     <div class="confirm-delete-header">
       <h4>Delete transport arrangement - {{ event?.transportType }} from {{ event?.depCity }} to {{ event?.arrCity }}</h4>
-      <span class="x-close" (click)="cancelDeleteTransport()">&times;</span>
+      <a (click)="cancelDeleteTransport()">x</a>
     </div>
     <h4 class="confirm-delete-content">Deleting transport arrangement - <span class="confirm-delete-name">{{ event?.transportType }} from {{ event?.depCity }} to {{ event?.arrCity }}</span> - will permanently remove it from your itinerary.</h4>
     <div class="confirm-delete-footer">
