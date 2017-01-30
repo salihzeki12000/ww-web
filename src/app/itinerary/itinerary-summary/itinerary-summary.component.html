@@ -28,6 +28,7 @@
             <div class="event-name">
               <h5>Check in</h5>
               <h5>{{ event.name }}</h5>
+              <h6 class="check-out-on">stay till {{ event.checkOutDate | date: 'dd MMM (EEE)' }}</h6>
             </div>
           </div>
         </div>

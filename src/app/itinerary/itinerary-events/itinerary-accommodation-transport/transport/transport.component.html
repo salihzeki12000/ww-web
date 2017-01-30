@@ -25,13 +25,15 @@
 
       <div class="departure-section">
         <h5>Departs <span class="city-highlight">{{ event.depCity | uppercase }}</span></h5>
-        <h5>{{ event.depStation | uppercase }} / terminal {{ event.depTerminal | uppercase }}</h5>
+        <h5>{{ event.depStation | uppercase }}</h5>
+        <h5>terminal {{ event.depTerminal | uppercase }}</h5>
         <h5>{{ event?.depDate | date:'dd MMM yy' }} - {{ event.depTime }}</h5>
       </div>
 
       <div class="arrival-section">
         <h5>Arrives <span class="city-highlight">{{ event.arrCity | uppercase }}</span></h5>
-        <h5>{{ event.arrStation | uppercase }} / terminal {{ event.arrTerminal | uppercase }}</h5>
+        <h5>{{ event.arrStation | uppercase }}</h5>
+        <h5>terminal {{ event.arrTerminal | uppercase }}</h5>
         <h5>{{ event?.arrDate | date:'dd MMM yy' }} - {{ event.arrTime }}</h5>
       </div>
 
