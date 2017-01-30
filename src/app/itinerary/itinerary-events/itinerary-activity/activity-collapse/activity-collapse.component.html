@@ -80,23 +80,23 @@
       </div>
 
       <div *ngSwitchCase="'train'">
-        <i class="fa fa-train fa-lg" aria-hidden="true">Train details</i>
+        <h4 class="truncate"><span>{{ event?.depTime }}</span> <i class="fa fa-train fa-lg" aria-hidden="true"></i> {{ event?.depCity }} to {{ event?.arrCity }}</h4>
       </div>
 
       <div *ngSwitchCase="'bus'">
-        <i class="fa fa-bus fa-lg" aria-hidden="true">Bus details</i>
+        <h4 class="truncate"><span>{{ event?.depTime }}</span> <i class="fa fa-bus fa-lg" aria-hidden="true"></i> {{ event?.depCity }} to {{ event?.arrCity }}</h4>
       </div>
 
       <div *ngSwitchCase="'cruise'">
-        <i class="fa fa-ship fa-lg" aria-hidden="true">Cruise details</i>
+        <h4 class="truncate"><span>{{ event?.depTime }}</span> <i class="fa fa-ship fa-lg" aria-hidden="true"></i> {{ event?.depCity }} to {{ event?.arrCity }}</h4>
       </div>
 
       <div *ngSwitchCase="'vehicle rental'">
-        <i class="fa fa-car fa-lg" aria-hidden="true">Vehicle rental details</i>
+        <h4 class="truncate"><span>{{ event?.depTime }}</span> <i class="fa fa-car fa-lg" aria-hidden="true"></i> Pick up rental car at {{ event?.depCity }}</h4>
       </div>
 
       <div *ngSwitchCase="'others'">
-        <i class="fa fa-rocket fa-lg" aria-hidden="true">Other transport details</i>
+        <h4 class="truncate"><span>{{ event?.depTime }}</span> Transport from {{ event?.depCity }} to {{ event?.arrCity }}</h4>
       </div>
 
     </div>
@@ -112,23 +112,23 @@
       </div>
 
       <div *ngSwitchCase="'train'">
-        <i class="fa fa-train fa-lg" aria-hidden="true">Train details</i>
+        <h4 class="truncate arrival-highlight"><span>{{ event?.arrTime }}</span> <i class="fa fa-arrow-right fa-lg" aria-hidden="true"></i> Train arrives {{ event?.arrCity }}</h4>
       </div>
 
       <div *ngSwitchCase="'bus'">
-        <i class="fa fa-bus fa-lg" aria-hidden="true">Bus details</i>
+        <h4 class="truncate arrival-highlight"><span>{{ event?.arrTime }}</span> <i class="fa fa-arrow-right fa-lg" aria-hidden="true"></i> Bus arrives {{ event?.arrCity }}</h4>
       </div>
 
       <div *ngSwitchCase="'cruise'">
-        <i class="fa fa-ship fa-lg" aria-hidden="true">Cruise details</i>
+        <h4 class="truncate arrival-highlight"><span>{{ event?.arrTime }}</span> <i class="fa fa-arrow-right fa-lg" aria-hidden="true"></i> Cruise arrives {{ event?.arrCity }}</h4>
       </div>
 
       <div *ngSwitchCase="'vehicle rental'">
-        <i class="fa fa-car fa-lg" aria-hidden="true">Vehicle rental details</i>
+        <h4 class="truncate arrival-highlight"><span>{{ event?.arrTime }}</span> <i class="fa fa-arrow-right fa-lg" aria-hidden="true"></i> Return rental car at {{ event?.arrCity }}</h4>
       </div>
 
       <div *ngSwitchCase="'others'">
-        <i class="fa fa-rocket fa-lg" aria-hidden="true">Other transport details</i>
+        <h4 class="truncate arrival-highlight"><span>{{ event?.arrTime }}</span> Transport arrives {{ event?.arrCity }}</h4>
       </div>
 
     </div>

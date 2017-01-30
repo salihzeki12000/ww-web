@@ -6,7 +6,6 @@ import { ItineraryService }      from '../../../itinerary.service';
 import { ItineraryEvent }        from '../../itinerary-event';
 import { ItineraryEventService } from '../../itinerary-event.service';
 import { FlashMessageService }   from '../../../../flash-message';
-import { UserService }           from '../../../../user';
 
 @Component({
   selector: 'ww-activity',
@@ -26,15 +25,8 @@ export class ActivityComponent implements OnInit {
   itinDateSubscription: Subscription;
   itinDateRange = [];
 
-  currentUserSubscription: Subscription;
-  currentUser;
-  sameUser;
-
-  eventSubscription: Subscription;
-
   constructor(
     private formBuilder: FormBuilder,
-    private userService: UserService,
     private itineraryEventService: ItineraryEventService,
     private flashMessageService: FlashMessageService,
     private itineraryService: ItineraryService) {
@@ -60,25 +52,6 @@ export class ActivityComponent implements OnInit {
                                       result => {
                                         this.itinDateRange = Object.keys(result).map(key => result[key]);
                                     })
-
-    this.currentUserSubscription = this.userService.updateCurrentUser
-                                       .subscribe(
-                                         result => {
-                                           this.currentUser = result;
-                                           this.checkSameUser();
-                                         }
-                                       )
-    this.eventSubscription = this.itineraryEventService.updateEvent
-                                 .subscribe(
-                                  result => {
-                                    this.checkSameUser();
-                                  })
-  }
-
-  checkSameUser() {
-    if(this.currentUser['id'] === this.activity['user']['_id']) {
-      this.sameUser = true;
-    }
   }
 
   initCategoryArray() {

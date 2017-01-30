@@ -82,6 +82,7 @@ export class ItineraryEventService  {
                         _Id: event['user']._Id,
                         username: event['user'].username
                       }
+                      newEvent.sameUser = true;
                       this.events.push(newEvent);
                       this.sortEventByDate(this.events);
 

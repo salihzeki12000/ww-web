@@ -21,7 +21,9 @@
     </div>
 
     <!-- iterate through existing list of accommodations -->
-    <ww-accommodation *ngFor="let event of accommodations" [event]="event"  [itinDateRange]="itinDateRange" [currentUser]="currentUser"></ww-accommodation>
+    <div class="accommodation-list">
+      <ww-accommodation *ngFor="let event of accommodations" [event]="event"  [itinDateRange]="itinDateRange" [currentUser]="currentUser"></ww-accommodation>
+    </div>
 
   </div><!-- end of accommodation section -->
 </div>
@@ -49,7 +51,9 @@
     </div><!-- end of add new transport -->
 
     <!-- iterate through existing list of transports -->
-    <ww-transport *ngFor="let event of transports" [event]="event"  [itinDateRange]="itinDateRange" [currentUser]="currentUser"></ww-transport>
+    <div class="transport-list">
+      <ww-transport *ngFor="let event of transports" [event]="event"  [itinDateRange]="itinDateRange" [currentUser]="currentUser"></ww-transport>
+    </div>
 
   </div><!-- end of transport section -->
 

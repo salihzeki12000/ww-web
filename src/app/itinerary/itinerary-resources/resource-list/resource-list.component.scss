@@ -1,3 +1,9 @@
 .resourceList {
+  display: flex;
+  flex-wrap: wrap;
   padding-top: 5px;
+}
+
+ww-resource {
+  display: flex;
 }

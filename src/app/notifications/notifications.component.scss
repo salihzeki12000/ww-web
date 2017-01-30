@@ -1,3 +1,10 @@
+ww-notification-list  {
+  display: block;
+  position: fixed;
+  right: 0;
+  z-index: 1400;
+}
+
 i {
   position: fixed;
   top: 0;
@@ -13,7 +20,7 @@ i {
 
 .notification-header  {
   display: block;
-  position: absolute;
+  position: fixed;
   top: 60px;
   right: 0;
   width: 330px;
@@ -32,8 +39,8 @@ i {
 
 .close-notification {
   float: right;
-  margin-top: 6px;
-  margin-right: 5px;
+  padding-top: 6px;
+  padding-right: 5px;
   cursor: pointer;
   &:hover {
     color: grey;

@@ -1,7 +1,9 @@
 .itinerary  {
   @media only screen and (max-width: 680px) {
-    width: calc((100vw -14px) * 0.9);
-    margin-left: calc((100vw -14px) * 0.05);
+    min-width: 310px;
+    width: auto;
+    margin-left: calc((100vw -14px) * 0.02);
+    margin-right: calc((100vw -14px) * 0.02);
   }
   @media only screen and (min-width: 680px) and (max-width: 880px) {
     width: 628px;

@@ -1,22 +1,25 @@
-.check-in-out-header,
-.check-in-out-dates {
+.departure-details,
+.arrival-details  {
   display: inline-block;
+  width: 49%;
+  text-align: center;
 }
 
-.check-in-out-header  {
-  text-align: right;
+.departure-details > *,
+.arrival-details > *  {
+  padding-bottom: 3px;
 }
 
-.address > i,
-.contact-number > i  {
-  vertical-align: top;
-}
-
-.address > h5,
-.contact-number > h5  {
+.address > h6,
+.contact-number > h6  {
   vertical-align: top;
   display: inline-block;
   width: 90%;
+}
+
+.address > h6:first-child,
+.contact-number > h6:first-child  {
+  width: 5%;
 }
 
 .note{

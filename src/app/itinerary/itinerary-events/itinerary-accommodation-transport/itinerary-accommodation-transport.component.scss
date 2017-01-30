@@ -1,6 +1,22 @@
 /*********************************
   accommodation/transport section
 *********************************/
+.accommodation-list,
+.transport-list  {
+  display: flex;
+  flex-wrap: wrap;
+
+  @media only screen and (max-width: 700px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+ww-accommodation,
+ww-transport  {
+  display: flex;
+}
+
 .section  {
   margin-bottom: 15px;
 }
@@ -37,7 +53,7 @@
     background-color: white;
   }
 
-  @media only screen and (max-width: 680px) {
+  @media only screen and (max-width: 700px) {
     display: none;
     float: none;
   }
@@ -46,7 +62,7 @@
 .new-mobile {
   display: none;
 
-  @media only screen and (max-width: 680px) {
+  @media only screen and (max-width: 700px) {
     display: block;
     margin: 5px 0;
     width: 100%;

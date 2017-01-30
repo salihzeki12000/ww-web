@@ -12,28 +12,32 @@
 
   <div class="accommodation-details">
 
-    <div class="check-in-out-header">
-      <h5 class="departure-details">Check in:</h5>
-      <h5 class="arrival-details">Check out:</h5>
+    <div class="departure-details">
+      <h5>Check in</h5>
+      <h2>{{ event?.checkInDate | date:'dd MMM yy' }}</h2>
+      <h5>{{ event?.checkInDate | date: 'EEEE'}}</h5>
+      <h6>{{ event.checkInTime }}</h6>
     </div>
 
-    <div class="check-in-out-dates">
-      <h5 class="departure-details">{{ event?.checkInDate | date:'dd MMM yyyy' }} - {{ event.checkInTime }}</h5>
-      <h5 class="arrival-details">{{ event?.checkOutDate | date:'dd MMM yyyy' }} - {{ event.checkOutTime }}</h5>
+    <div class="arrival-details">
+      <h5>Check out</h5>
+      <h2>{{ event?.checkOutDate | date:'dd MMM yy' }}</h2>
+      <h5>{{ event?.checkOutDate | date: 'EEEE'}}</h5>
+      <h6>{{ event.checkOutTime }}</h6>
     </div>
 
     <div class="address">
-      <i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>
-      <h5>{{ event?.formatted_address }}</h5>
+      <h6><i class="fa fa-map-marker fa-fw" aria-hidden="true"></i></h6>
+      <h6>{{ event?.formatted_address }}</h6>
     </div>
 
     <div class="contact-number">
-      <i class="fa fa-phone fa-fw" aria-hidden="true"></i>
-      <h5>{{ event?.international_phone_number }}</h5>
+      <h6><i class="fa fa-phone fa-fw" aria-hidden="true"></i></h6>
+      <h6>{{ event?.international_phone_number }}</h6>
     </div>
 
     <div class="website">
-      <a href="{{ event?.website }}" target="_blank"><h5 class="truncate">{{ event?.website }}</h5></a>
+      <a href="{{ event?.website }}" target="_blank"><h6 class="truncate">{{ event?.website }}</h6></a>
     </div>
 
   </div>

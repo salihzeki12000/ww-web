@@ -53,7 +53,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
           // if no email, to open up a modal notice and to sign up or sign in
           result['username'] = result['name'];
           result['displayPic'] = result['picture']['data']['url'];
-
+          console.log(result);
           this.authService.loginFacebook(result)
               .subscribe(
                 data => {

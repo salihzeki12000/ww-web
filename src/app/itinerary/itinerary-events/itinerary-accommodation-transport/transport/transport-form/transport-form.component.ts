@@ -330,6 +330,14 @@ export class TransportFormComponent implements OnInit {
       newTransport['transportType'] = 'flight'
     }
 
+    if(newTransport['depTime'] === '')  {
+      newTransport['depTime'] = 'anytime';
+    }
+
+    if(newTransport['arrTime'] === '')  {
+      newTransport['arrTime'] = 'anytime';
+    }
+
     newTransport['date'] = newTransport['depDate'];
     newTransport['time'] = newTransport['depTime']
     newTransport['type'] = 'transport';

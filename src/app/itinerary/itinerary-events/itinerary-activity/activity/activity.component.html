@@ -13,7 +13,7 @@
 
   <div class="activity-details">
 
-    <div class="edit-delete" *ngIf="sameUser">
+    <div class="edit-delete" *ngIf="activity.sameUser">
       <a (click)="onEdit()"><i class="fa fa-pencil" aria-hidden="true"></i></a>
       <a (click)="confirmDelete()"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
     </div>
