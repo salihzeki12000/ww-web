@@ -1,12 +1,22 @@
-.departure-details,
-.arrival-details  {
+.check-in-details {
   display: inline-block;
   width: 49%;
+  padding: 10px 0;
   text-align: center;
+  background-color: rgba(237, 100, 148, 0.2);
 }
 
-.departure-details > *,
-.arrival-details > *  {
+.check-out-details  {
+  display: inline-block;
+  width: 49%;
+  margin-left: -4px;
+  padding: 10px 0;
+  text-align: center;
+  background-color: rgba(100, 148, 237, 0.2);
+}
+
+.check-in-details > *,
+.check-out-details > *  {
   padding-bottom: 3px;
 }
 

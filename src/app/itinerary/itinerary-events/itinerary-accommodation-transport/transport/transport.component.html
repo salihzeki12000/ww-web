@@ -24,13 +24,13 @@
     <div class="departure-arrival-details">
 
       <div class="departure-section">
-        <h5 class="departure-details">Departs <span class="city-highlight">{{ event.depCity | uppercase }}</span></h5>
+        <h5>Departs <span class="city-highlight">{{ event.depCity | uppercase }}</span></h5>
         <h5>{{ event.depStation | uppercase }} / terminal {{ event.depTerminal | uppercase }}</h5>
         <h5>{{ event?.depDate | date:'dd MMM yy' }} - {{ event.depTime }}</h5>
       </div>
 
       <div class="arrival-section">
-        <h5 class="arrival-details">Arrives <span class="city-highlight">{{ event.arrCity | uppercase }}</span></h5>
+        <h5>Arrives <span class="city-highlight">{{ event.arrCity | uppercase }}</span></h5>
         <h5>{{ event.arrStation | uppercase }} / terminal {{ event.arrTerminal | uppercase }}</h5>
         <h5>{{ event?.arrDate | date:'dd MMM yy' }} - {{ event.arrTime }}</h5>
       </div>
@@ -46,13 +46,13 @@
       <div *ngIf="event.transportType !== 'vehicle rental'">
 
         <div class="departure-section">
-          <h5 class="departure-details">Departs <span class="city-highlight">{{ event.depCity | uppercase }}</span></h5>
+          <h5>Departs <span class="city-highlight">{{ event.depCity | uppercase }}</span></h5>
           <h5>{{ event.depStation | uppercase }}</h5>
           <h5>{{ event?.depDate | date:'dd MMM yy' }} - {{ event.depTime }}</h5>
         </div>
 
         <div class="arrival-section">
-          <h5 class="arrival-details">Arrives <span class="city-highlight">{{ event.arrCity | uppercase }}</span></h5>
+          <h5>Arrives <span class="city-highlight">{{ event.arrCity | uppercase }}</span></h5>
           <h5>{{ event.arrStation | uppercase }}</h5>
           <h5>{{ event?.arrDate | date:'dd MMM yy' }} - {{ event.arrTime }}</h5>
         </div>
@@ -72,12 +72,12 @@
         </div>
 
         <div class="departure-section">
-          <h5 class="departure-details">Departs <span class="city-highlight">{{ event.depCity | uppercase }}</span></h5>
+          <h5>Departs <span class="city-highlight">{{ event.depCity | uppercase }}</span></h5>
           <h5>Pick up {{ event?.depDate | date:'dd MMM yy' }} - {{ event.depTime }}</h5>
         </div>
 
         <div class="arrival-section">
-          <h5 class="arrival-details">Arrives <span class="city-highlight">{{ event.arrCity | uppercase }}</span></h5>
+          <h5>Arrives <span class="city-highlight">{{ event.arrCity | uppercase }}</span></h5>
           <h5>Return {{ event?.arrDate | date:'dd MMM yy' }} - {{ event.arrTime }}</h5>
         </div>
 

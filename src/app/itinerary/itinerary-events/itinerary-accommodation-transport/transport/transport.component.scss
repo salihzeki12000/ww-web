@@ -7,7 +7,20 @@ h5, h6  {
 }
 
 .note {
-  margin-bottom: 15px;
+  margin: 10px 0 15px 0;
+  padding-left: 0;
+}
+
+.departure-section  {
+  padding: 10px 5px;
+  text-align: center;
+  background-color: rgba(237, 100, 148, 0.2);
+}
+
+.arrival-section  {
+  padding: 10px 5px;
+  text-align: center;
+  background-color: rgba(100, 148, 237, 0.2);
 }
 
 /******************************
