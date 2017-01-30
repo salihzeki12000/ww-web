@@ -50,6 +50,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
     FB.api('/me?fields=id,name,gender,picture.width(150).height(150),email',
       (result) => {
         if (result && !result.error) {
+          console.log(result)
           // if no email, to open up a modal notice and to sign up or sign in
           result['username'] = result['name'];
           result['displayPic'] = result['picture']['data']['url'];
