@@ -37,6 +37,7 @@ export class AccommodationComponent implements OnInit {
         'checkOutDate': '',
         'checkInTime': '',
         'checkOutTime': '',
+        'stayCity':'',
         'note': '',
       })
     }
@@ -70,6 +71,14 @@ export class AccommodationComponent implements OnInit {
   onEditAccommodation() {
     let editedAccommodation = this.editAccommodationForm.value;
     let originalAccommodation = this.event;
+
+    if(!editedAccommodation['checkInTime']) {
+      editedAccommodation['checkInTime'] = originalAccommodation['checkInTime'];
+    }
+
+    if(!editedAccommodation['checkOutTime']) {
+      editedAccommodation['checkOutTime'] = originalAccommodation['checkOutTime'];
+    }
 
     for (var value in editedAccommodation)  {
       if(editedAccommodation[value] === null) {
@@ -109,6 +118,7 @@ export class AccommodationComponent implements OnInit {
       'checkOutDate': '',
       'checkInTime': '',
       'checkOutTime': '',
+      'stayCity':'',
       'note': '',
     })
   }

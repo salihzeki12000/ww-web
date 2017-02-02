@@ -54,6 +54,7 @@ export class ItinerarySummaryComponent implements OnInit {
           checkOutDate: events[i]['checkOutDate'],
           name: events[i]['name'],
           formatted_address: events[i]['formatted_address'],
+          stayCity: events[i]['stayCity'],
           international_phone_number: events[i]['international_phone_number'],
           website: events[i]['website'],
           note: events[i]['note'],

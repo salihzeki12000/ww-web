@@ -393,9 +393,19 @@ span.required {
  min-height: 16px;
 }
 
-.accommodation-header,
+.accommodation-city {
+  margin-top: 10px;
+  color: #6494ED;
+  text-align: center;
+}
+
+.accommodation-header {
+  margin: 5px 0;
+  text-align: center;
+}
+
 .transport-header {
-  margin: 15px 10px 5px 10px;
+  margin: 15px 0 5px 0;
   text-align: center;
 }
 

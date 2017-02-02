@@ -52,7 +52,6 @@ export class SideNavigationComponent implements OnInit {
     this.currentUserSubscription = this.userService.updateCurrentUser
                                        .subscribe(
                                          result => {
-                                           console.log(result);
                                            this.currentUser = result;
                                            this.getFollowings();
                                          }
@@ -61,14 +60,12 @@ export class SideNavigationComponent implements OnInit {
     this.itinerariesSubscription = this.itineraryService.updateItineraries
                                     .subscribe(
                                       result => {
-                                        console.log(result)
                                         this.handleItinChange(result)
                                       })
 
     this.userService.getAllUsers()
         .subscribe(
           result => {
-            console.log(result)
             this.users = result.users;
           }
         )
@@ -79,7 +76,6 @@ export class SideNavigationComponent implements OnInit {
     this.followingService.getRelationships()
         .subscribe(
           result => {
-            console.log(result)
             this.filterFollowers(result.followings);
           }
         )

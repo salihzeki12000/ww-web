@@ -25,6 +25,7 @@
 
           <div *ngIf="event.inOut === 'checkin'">
             <h6 class="event-time">{{ event.time }}</h6>
+            <h5 class="event-stay-city"><i class="fa fa-bed" aria-hidden="true"></i> {{ event.stayCity | uppercase }}</h5>
             <div class="event-name">
               <h5>Check in</h5>
               <h5>{{ event.name }}</h5>

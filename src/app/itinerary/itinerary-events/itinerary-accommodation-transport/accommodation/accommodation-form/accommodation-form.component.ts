@@ -45,6 +45,7 @@ export class AccommodationFormComponent implements OnInit {
         'checkOutDate': '',
         'checkInTime': '',
         'checkOutTime': '',
+        'stayCity':'',
         'note': '',
       })
     }
@@ -66,7 +67,17 @@ export class AccommodationFormComponent implements OnInit {
 
   // get place details form Google API
   getAccommodationDetails(value)  {
+    console.log(value);
     this.googleAccommodationDetail = value;
+    let address_components = value['address_components'];
+
+    for (let i = 0; i < address_components.length; i++) {
+      if(address_components[i]['types'][0] === 'locality')  {
+        this.googleAccommodationDetail['stayCity'] = address_components[i]['long_name'];
+      } else if(address_components[i]['types'][0] === 'administrative_area_level_1') {
+        this.googleAccommodationDetail['stayCity'] += ', ' + address_components[i]['long_name'];
+      }
+    }
   }
 
   // to submit new accommodation/transport form

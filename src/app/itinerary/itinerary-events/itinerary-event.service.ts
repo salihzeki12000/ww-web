@@ -79,7 +79,7 @@ export class ItineraryEventService  {
                     .map((response: Response) => {
                       let newEvent = response.json().eventItem;
                       newEvent.user = {
-                        _Id: event['user']._Id,
+                        _id: event['user']._Id,
                         username: event['user'].username
                       }
                       newEvent.sameUser = true;
@@ -113,7 +113,7 @@ export class ItineraryEventService  {
 
                       return response.json()
                     })
-                    .catch((error: Response) => Observable.throw(error.json()));
+                    // .catch((error: Response) => Observable.throw(error.json()));
   }
 
   deleteEvent(event: ItineraryEvent)  {
