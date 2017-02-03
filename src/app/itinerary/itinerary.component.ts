@@ -22,7 +22,7 @@ export class ItineraryComponent implements OnInit {
 
   users: User[] = [];
   showUsers = false;
-  members = [];
+  newMembers = [];
   validAddUser = false;
 
   showActivities = false;
@@ -69,9 +69,20 @@ export class ItineraryComponent implements OnInit {
     this.userService.getAllUsers()
         .subscribe(
           result => {
-            this.users = result.users;
+            this.filterUsers(result.users);
           }
         )
+  }
+
+  filterUsers(users)  {
+    this.users = users;
+    for (let i = 0; i < users.length; i++) {
+      for (let j = 0; j < this.itinerary['members'].length; j++) {
+        if(users[i]['_id'] === this.itinerary['members'][j]['_id']) {
+          this.users.splice(i,1);
+        }
+      }
+    }
   }
 
   editDetails() {
@@ -137,27 +148,27 @@ export class ItineraryComponent implements OnInit {
   }
 
   toggleAdd(user) {
-    let index = this.members.indexOf(user);
+    let index = this.newMembers.indexOf(user);
     if(index > -1 ) {
-      this.members.splice(index, 1);
+      this.newMembers.splice(index, 1);
     }
 
     if(index < 0 )  {
-      this.members.push(user);
+      this.newMembers.push(user);
     }
 
-    if(this.members.length > 0) {
+    if(this.newMembers.length > 0) {
       this.validAddUser = true;
     }
 
-    if(this.members.length < 1) {
+    if(this.newMembers.length < 1) {
       this.validAddUser = false;
     }
   }
 
   addMembers()  {
-    for (let i = 0; i < this.members.length; i++) {
-      this.itinerary['members'].push(this.members[i]);
+    for (let i = 0; i < this.newMembers.length; i++) {
+      this.itinerary['members'].push(this.newMembers[i]);
     }
     this.itineraryService.editItin(this.itinerary)
         .subscribe(

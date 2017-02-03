@@ -66,7 +66,8 @@ export class ItineraryMapComponent implements OnInit {
 
     this.itinMap = new google.maps.Map(mapDiv, {
       center: center,
-      zoom: zoom
+      zoom: zoom,
+      styles: [{"stylers": [{ "saturation": -20 }]}]
     });
 
     this.setMarkers(this.itinMap);
@@ -105,7 +106,10 @@ export class ItineraryMapComponent implements OnInit {
         position: { lat: event[1], lng: event[2] },
         map: map,
         title: event[0],
-        label: '' + (i + 1),
+        label: {
+          text: '' + (i + 1),
+          color: 'black',
+        },
         date: event[3],
         zIndex: i
       })

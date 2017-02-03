@@ -79,6 +79,7 @@ export class TransportComponent implements OnInit {
     originalTransport['date'] = originalTransport['depDate'];
     originalTransport['time'] = originalTransport['depTime'];
 
+    // originalTransport['note'] = originalTransport['note'].replace(/\r?\n/g, '\n');
     this.itineraryEventService.editEvent(originalTransport)
         .subscribe(
           result => {

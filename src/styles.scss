@@ -437,6 +437,10 @@ span.required {
   overflow-wrap: break-word;
 }
 
+.note > h6  {
+  white-space: pre-line;
+}
+
 /* accommodation display */
 .address  {
   margin: 5px 0;
