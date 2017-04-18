@@ -1,0 +1,147 @@
+/*********************************
+  transport summary section
+*********************************/
+.transport-summary  {
+  position: fixed;
+  margin-top: 35px;
+  margin-left: 10px;
+  width: 200px;
+  height: calc(100vh - 140px);
+  overflow: auto;
+
+  @media only screen and (max-width: 890px) {
+    display: none;
+  }
+}
+
+.show-summary {
+  display: block;
+  width: 100%;
+  height: calc(100vh - 144px);
+  margin-top: -6px;
+  z-index: 999;
+  background-color: #F9FBFB;
+}
+
+.transport-summary-length {
+  margin-bottom: 1px;
+  padding: 7px 0;
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: .5px;
+  background-color: rgba(237, 100, 148, 0.5);
+  box-shadow: inset 0px 1px 1px 1.5px rgba(0, 0, 0, 0.2);
+
+  @media only screen and (max-width: 890px) {
+    font-size: 120%;
+    border-right: none;
+  }
+}
+
+.transport-summary-item {
+  margin-bottom: 2px;
+  padding: 10px;
+  box-shadow: inset 0px 0px 1px 1.5px rgba(0, 0, 0, 0.2);
+  &:hover {
+    background-color: #F6F6F6;
+    cursor: pointer;
+  }
+
+  @media only screen and (max-width: 890px) {
+    background-color: #F9FBFB;
+    font-size: 120%;
+    border: none;
+    border-bottom: 1px solid lightgrey;
+  }
+}
+
+.transport-summary-item:last-child  {
+  margin-bottom: 0;
+}
+
+.transport-summary-item > * {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.transport-summary-item > .date {
+  margin-bottom: 5px;
+  color: grey;
+  font-weight: 500;
+}
+
+.transport-summary-header {
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.transport-summary-popup  {
+  display: none;
+
+  @media only screen and (max-width: 890px) {
+    display: block;
+    position: fixed;
+    top: calc(100vh - 110px);
+    right: 10px;
+    padding: 15px;
+    background-color: lightgray;
+    border: 1px solid lightgray;
+    border-radius: 50%;
+    opacity: .5;
+    z-index: 1000;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+/*********************************
+  transport list section
+*********************************/
+.transport-list  {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 220px;
+  padding-top: 20px;
+
+  @media only screen and (max-width: 890px) {
+    margin-left: calc((100vw - 628px)/2);
+  }
+
+  @media only screen and (max-width: 690px) {
+    flex-direction: column;
+    align-items: center;
+    margin-left: 0;
+  }
+}
+
+ww-transport  {
+  display: flex;
+}
+
+.section  {
+  margin-bottom: 15px;
+}
+
+.sectionHeader  {
+  padding: 10px 20px;
+  border-bottom: 4px solid #6494ED;
+  border-top: 2px solid #6494ed;
+}
+
+.sectionHeader > h4,
+.sectionHeader > a  {
+  display: inline-block;
+}
+
+.sectionHeader > a  {
+  float: right;
+}
+
+/******************************
+  transport form
+******************************/
+.custom-modal {
+  background-color: rgba(0,0,0,0.6);
+}

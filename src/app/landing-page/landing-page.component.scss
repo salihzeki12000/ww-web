@@ -1,0 +1,56 @@
+.landing-page-container {
+  width: 100vw;
+  height: 100vh;
+  background-image: url(assets/mt_fuji.jpg);
+  background-size: cover;
+}
+
+.landing-page-main {
+  width: 100vw;
+  height: 40vh;
+}
+
+.landing-page-logo {
+  width: 100px;
+  padding-top: 10px;
+  margin-left: calc((100vw - 100px) / 2);
+  font-family: 'Roboto Condensed', sans-serif;
+  text-align: center;
+}
+
+h1  {
+  font-size: 3em;
+  color: #F9FBFB;
+}
+
+h2  {
+  line-height: 0.85;
+  color: #F9FBFB;
+}
+
+h1, .sub-title {
+  display: inline-block;
+}
+
+.sub-title  {
+  margin-left: -3px;
+}
+
+.landing-page-tagline {
+  padding: 50px 0;
+  color: #F9FBFB;
+  font-size: 30px;
+  font-family: 'Fira Sans', sans-serif;
+  text-align: center;
+}
+
+.value-add  {
+  padding: 10px;
+  // box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+}
+
+.explore input  {
+  margin: 0 auto;
+  text-align: center;
+  border-radius: 50px;
+}

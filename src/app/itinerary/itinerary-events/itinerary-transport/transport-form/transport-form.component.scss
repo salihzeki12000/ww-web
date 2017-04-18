@@ -1,0 +1,118 @@
+.progress-tracker li {
+  width: 50%;
+}
+
+.flight-search-active li {
+  width: 33.333%;
+}
+
+.choose-airport-option li {
+  width: 25%;
+}
+
+.transport-mode > label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.transport-mode-options {
+  display: inline-block;
+  margin: 10px;
+  width: 50px;
+  vertical-align: text-top;
+  text-align: center;
+}
+
+.transport-mode-options > label {
+  &:hover {
+    color: #6494ED;
+    cursor: pointer;
+  }
+}
+
+.transport-mode-options > label > input {
+  visibility: hidden;
+  position: absolute;
+}
+
+.transport-mode-options > label > i {
+  display: block;
+  text-align: center;
+}
+
+.transport-type-header  {
+  margin-bottom: 20px;
+}
+
+.transport-type-header > h4 {
+  letter-spacing: .5px;
+  font-weight: bold;
+}
+
+
+/* to search for flight from flight stats */
+#search-airline-code,
+.example-airline-code  {
+  width: 90px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+#search-flight-number,
+.example-flight-number {
+  width: 100px;
+  text-align: center;
+}
+
+.search-airline-code,
+.search-flight-number,
+.flight-example,
+.flight-example > div {
+  display: inline-block;
+}
+
+.flight-example  {
+  position: relative;
+  left: 30px;
+  margin-top: 15px;
+  padding: 10px;
+  border: 1px solid lightgray;
+}
+
+.example-airline-code,
+.example-flight-number  {
+  padding: 9px 12px;
+  height: 34px;
+  text-align: center;
+  color: grey;
+  background-color: #F6F6F6;
+}
+
+.search-dep-date  {
+  display: block;
+}
+
+/* if stopover is true */
+.stop-over> h5.form-section-header  {
+  letter-spacing: 0;
+}
+
+.stop-over-airport  {
+  padding: 10px 10px 0 10px;
+}
+
+.select-airport {
+  margin: 5px 0;
+}
+
+.select-airport > input {
+  display: inline-block;
+  margin-left: 10px;
+  width: auto;
+}
+
+.select-airport > label {
+  vertical-align: text-top;
+}
+
+/* details display */

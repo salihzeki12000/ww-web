@@ -1,0 +1,16 @@
+<div class="activity-summary" [class.show-summary]="showActivitySummary">
+  <h5 class="activity-summary-length">ACTIVITY LIST ({{ activities.length }})</h5>
+  <div *ngFor="let activity of activities" class="activity-summary-item" (click)="centerItem(activity)">
+    <h5 class="date" *ngIf="activity?.date === 'any day'">{{ activity?.date }} - {{ activity?.time }}</h5>
+    <h5 class="date" *ngIf="activity?.date !== 'any day'">{{ activity?.date | date: 'dd MMM yyyy' }} - {{ activity?.time }}</h5>
+    <h5>{{ activity?.name }}</h5>
+  </div>
+</div>
+
+<div class="activity-list">
+  <ww-activity [activity]="activity" *ngFor="let activity of activities" [class.highlighted-event]="highlightedEvent === activity"></ww-activity>
+</div>
+
+<div class="activity-summary-popup" (click)="showSummary()">
+  <i class="fa fa-list" aria-hidden="true"></i>
+</div>

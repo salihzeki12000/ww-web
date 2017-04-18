@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
 import { ItineraryService } from '../../itinerary.service';
@@ -13,6 +14,7 @@ import { UserService } from '../../../user';
   styleUrls: ['./resource-input.component.scss']
 })
 export class ResourceInputComponent implements OnInit {
+  @Output() hideResourceForm = new EventEmitter();
   resourceForm: FormGroup;
   currentUserSubscription: Subscription;
 
@@ -24,7 +26,9 @@ export class ResourceInputComponent implements OnInit {
     private resourceService: ResourceService,
     private userService: UserService,
     private flashMessageService: FlashMessageService,
-    private itineraryService: ItineraryService) {
+    private itineraryService: ItineraryService,
+    private route: ActivatedRoute,
+    private router: Router) {
       this.resourceForm = formBuilder.group({
         link: ['', Validators.required],
         description: '',
@@ -36,8 +40,8 @@ export class ResourceInputComponent implements OnInit {
                                        .subscribe(
                                          result => {
                                            this.currentUser = result;
-                                         }
-                                       )
+                                         })
+
     this.itineraryId = this.itineraryService.itineraryId;
   }
 
@@ -54,16 +58,19 @@ export class ResourceInputComponent implements OnInit {
     })
     .subscribe(
       result => {
+        if(this.route.snapshot['_urlSegment'].segments[3].path !== 'resources') {
+          let id = this.route.snapshot['_urlSegment'].segments[2].path;
+          this.router.navigateByUrl('/me/itinerary/' + id + '/resources');
+        }
         this.flashMessageService.handleFlashMessage(result.message);
       }
     )
 
-    this.resourceForm.reset({
-      link: '',
-      description: '',
-    })
+    this.hideResourceForm.emit(false)
   }
 
-
+  cancelForm()  {
+    this.hideResourceForm.emit(false)
+  }
 
 }

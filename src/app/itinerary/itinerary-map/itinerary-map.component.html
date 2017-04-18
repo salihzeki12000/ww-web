@@ -1,32 +1,39 @@
-<div *ngIf="showLegend" [class.hide-legend]="showLegend" (click)="hideLegend()">x</div>
-
-<button type="button" class="reverseButton show-legend-button" (click)="showMapLegend()">Show markers list</button>
-
-<div #map id="map"></div>
-
-<div class="legend-section" [class.show-legend]="showLegend">
-  <h5>Filter map by date</h5>
-  <div class="date-filer">
+<div class="legend-section" [class.show-legend]="showMapLegend">
+  <div class="date-filter">
     <select name="date" [(ngModel)]="selectedDate" (ngModelChange)="filterMarkers($event)">
       <option *ngFor="let date of dates" [value]="date">
         <h5>{{ date }}</h5>
       </option>
     </select>
   </div>
+  <i class="fa fa-filter fa-lg" aria-hidden="true"></i>
 
   <div class="map-legend">
     <div *ngFor="let event of events; let i = index" class="map-event" (click)="changeCenter(event)">
-      <i class="fa fa-map-marker fa-3x" aria-hidden="true"></i>
-      <h5 class="marker-index">{{ i+1 }}</h5>
-      <h5 class="marker-name">{{ event.name }}</h5>
-      <div class="marker-date" *ngIf="event.date !== 'any day'">
-        <h6>{{ event.date | date: 'dd MMM'}} - {{ event.time }}</h6>
+
+      <div class="marker">
+        <i class="fa fa-map-marker fa-3x" aria-hidden="true"></i>
+        <h5 class="marker-index">{{ i+1 }}</h5>
       </div>
 
-      <div class="marker-date" *ngIf="event.date === 'any day'">
-        <h6>Any day - {{ event.time }}</h6>
+      <div class="marker-details">
+        <div *ngIf="event.date !== 'any day'">
+          <h5 class="marker-date">{{ event.date | date: 'dd MMM'}} - {{ event.time }}</h5>
+        </div>
+
+        <div *ngIf="event.date === 'any day'">
+          <h5 class="marker-date">Any day - {{ event.time }}</h5>
+        </div>
+
+        <h5 class="marker-name">{{ event.name }}</h5>
       </div>
 
     </div>
   </div>
 </div>
+
+<div class="map-legend-popup" (click)="showLegend()">
+  <i class="fa fa-list" aria-hidden="true"></i>
+</div>
+
+<div #map id="map"></div>

@@ -1,0 +1,24 @@
+<div class="transport-summary" [class.show-summary]="showTransportSummary">
+  <h5 class="transport-summary-length">TRANSPORT LIST ({{ transports.length }})</h5>
+  <div *ngFor="let event of transports" class="transport-summary-item" (click)="centerItem(event)">
+    <h5 class="date">{{ event?.depDate | date: 'dd MMM yyyy' }} - {{ event?.depTime }}</h5>
+
+    <div [ngSwitch]="event.transportType">
+      <h5 class="transport-summary-header" *ngSwitchCase="'flight'"><i class="fa fa-plane" aria-hidden="true"></i> {{ event.referenceNumber | uppercase }}</h5>
+      <h5 class="transport-summary-header" *ngSwitchCase="'train'"><i class="fa fa-train" aria-hidden="true"></i> Train</h5>
+      <h5 class="transport-summary-header" *ngSwitchCase="'bus'"><i class="fa fa-bus" aria-hidden="true"></i> Bus {{ event.referenceNumber | uppercase }}</h5>
+      <h5 class="transport-summary-header" *ngSwitchCase="'cruise'"><i class="fa fa-ship" aria-hidden="true"></i> Cruise</h5>
+      <h5 class="transport-summary-header" *ngSwitchCase="'vehicle rental'"><i class="fa fa-car" aria-hidden="true"></i> Vehicle rental</h5>
+      <h5 class="transport-summary-header" *ngSwitchCase="'others'"><i class="fa fa-rocket" aria-hidden="true"></i> Transport</h5>
+    </div>
+    <h5>from {{ event.depCity | uppercase }} to {{ event.arrCity | uppercase }}</h5>
+  </div>
+</div>
+
+<div class="transport-list">
+  <ww-transport *ngFor="let event of transports" [event]="event" [class.highlighted-event]="highlightedEvent === event" [itinDateRange]="itinDateRange" [currentUser]="currentUser"></ww-transport>
+</div>
+
+<div class="transport-summary-popup" (click)="showSummary()">
+  <i class="fa fa-list" aria-hidden="true"></i>
+</div>

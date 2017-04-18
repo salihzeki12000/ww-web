@@ -1,0 +1,94 @@
+<form [formGroup]="addAccommodationForm" (ngSubmit)="onSubmitNewAccommodation()">
+
+    <div class="form-card">
+
+      <div class="form-header">
+        <h3>New accommodation arrangement</h3>
+        <a (click)="cancelForm()">x</a>
+      </div>
+
+      <div>
+        <ul class="progress-tracker">
+          <li class="progress-title" (click)="backToSearch()" [class.progress-done]="searchDone">SEARCH ACCOMMODATION</li><li class="progress-title">CONFIRM CHECK IN/OUT DETAILS</li>
+        </ul>
+      </div>
+
+      <div *ngIf="!searchDone">
+        <label>SEARCH ACCOMMODATION BY NAME OR ADDRESS</label>
+        <ww-google-place-search (placeDetail)="getAccommodationDetails($event)"></ww-google-place-search>
+        <h6 class="cannot-find" (click)="skipSearch()">Cannot find your accommodation? Proceed to key in details ></h6>
+      </div>
+
+      <div class="accommodation-search-details" *ngIf="searchDone">
+        <h5 class="form-section-header">CHECK IN/OUT DETAILS</h5>
+        <div class="check-in-out">
+
+          <div class="check-in">
+            <label>CHECK IN DATE <span class="required"> - required</span></label>
+            <select name="checkInDate" formControlName="checkInDate">
+              <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
+                <div *ngIf="itinDate === 'any day'">
+                  <h5>{{ itinDate }}</h5>
+                </div>
+                <div *ngIf="itinDate !== 'any day'">
+                  <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+                </div>
+              </option>
+            </select>
+
+            <label>CHECK IN TIME</label>
+            <input type="time" formControlName="checkInTime">
+          </div><!-- end of check in -->
+
+          <div class="check-out">
+            <label>CHECK OUT DATE <span class="required"> - required</span></label>
+            <select name="checkOutDate" formControlName="checkOutDate">
+              <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
+                <div *ngIf="itinDate === 'any day'">
+                  <h5>{{ itinDate }}</h5>
+                </div>
+                <div *ngIf="itinDate !== 'any day'">
+                  <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+                </div>
+              </option>
+            </select>
+
+            <label>CHECK OUT TIME</label>
+            <input type="time" formControlName="checkOutTime">
+          </div><!-- end of check out -->
+
+        </div>
+
+        <h5 class="form-section-header">ACCOMMODATION DETAILS</h5>
+        <div class="accommodation-form-details">
+
+          <label>NAME OF ACCOMMODATION <span class="required"> - required</span></label>
+          <input type="text" formControlName="name" value="{{ googleAccommodationDetail?.name }}">
+
+          <label>ADDRESS</label>
+          <input type="text" formControlName="formatted_address" value="{{ googleAccommodationDetail?.formatted_address }}">
+
+          <label>STAYING IN (CITY/TOWN)</label>
+          <input type="text" formControlName="stayCity" value="{{ googleAccommodationDetail?.stayCity }}">
+
+          <label>WEBSITE</label>
+          <input type="url" formControlName="website" value="{{ googleAccommodationDetail?.website }}">
+
+          <label>CONTACT NUMBER</label>
+          <input type="text" formControlName="international_phone_number" value="{{ googleAccommodationDetail?.international_phone_number }}" class="contact-number-input">
+
+          <label>NOTE</label>
+          <textarea rows="3" formControlName="note"></textarea>
+
+        </div>
+
+        <div class="save-option">
+          <h4 (click)="cancelForm()">CANCEL</h4>
+          <button type="submit" class="save-button" [disabled]="!addAccommodationForm.valid"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
+        </div>
+
+      </div>
+
+    </div><!-- end of formCard -->
+
+</form>

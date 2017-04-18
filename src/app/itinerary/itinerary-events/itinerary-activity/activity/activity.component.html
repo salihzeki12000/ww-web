@@ -13,39 +13,65 @@
 
   <div class="activity-details">
 
-    <div class="edit-delete" *ngIf="activity.sameUser">
-      <a (click)="onEdit()"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-      <a (click)="confirmDelete()"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+    <div class="dots-menu" (mouseover)="showMenuOptions()">
+      <div class="item-menu" *ngIf="showMenu">
+        <ul>
+          <!-- <li>
+            <h5>Recommend</h5>
+            <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+          </li> -->
+          <li (click)="onEdit()" *ngIf="activity.sameUser">
+            <h5>Edit</h5>
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          </li>
+          <li (click)="confirmDelete()" *ngIf="activity.sameUser">
+            <h5>Delete</h5>
+            <i class="fa fa-trash-o" aria-hidden="true"></i>
+          </li>
+        </ul>
+      </div>
     </div>
 
-    <h4 class="date-header" *ngIf="activity?.date === 'any day'">{{ activity?.date }} - {{ activity?.time }}</h4>
-    <h4 class="date-header" *ngIf="activity?.date !== 'any day'">{{ activity?.date | date: 'EEE, dd MMM yyyy' }} - {{ activity?.time }}</h4>
+    <h5 class="date-header" *ngIf="activity?.date === 'any day'">{{ activity?.date }} - {{ activity?.time }}</h5>
+    <h5 class="date-header" *ngIf="activity?.date !== 'any day'">{{ activity?.date | date: 'EEE, dd MMM yyyy' }} - {{ activity?.time }}</h5>
 
     <h4 class="activity-header">{{ activity?.name }}</h4>
 
-    <div class="activity-address">
-      <i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>
-      <h6> {{ activity?.formatted_address }}</h6>
+    <div class="activity-contact-details" (click)="toggleContactDetails()">
+      <h5>Address and contact number</h5>
+      <h5><i class="fa fa-angle-down" aria-hidden="true"></i></h5>
     </div>
 
-    <div class="activity-contact-number">
-      <i class="fa fa-phone fa-fw" aria-hidden="true"></i>
-      <h6>{{ activity?.international_phone_number }}</h6>
+    <div *ngIf="showContactDetails">
+      <div class="activity-address">
+        <i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>
+        <h5> {{ activity?.formatted_address }}</h5>
+      </div>
+
+      <div class="activity-contact-number">
+        <i class="fa fa-phone fa-fw" aria-hidden="true"></i>
+        <h5>{{ activity?.international_phone_number }}</h5>
+      </div>
     </div>
 
     <div class="activity-opening-hours">
       <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>
-      <h6>{{ activity?.opening_hours }}</h6>
+      <h5>{{ activity?.opening_hours }}</h5>
     </div>
 
     <div class="activity-fee">
       <i class="fa fa-money fa-fw" aria-hidden="true"></i>
-      <h6>{{ activity?.entryFee }}</h6>
+      <h5>{{ activity?.entryFee }}</h5>
     </div>
 
-    <a href="{{activity?.website}}" target="_blank"><h5 class="truncate">{{ activity?.website }}</h5></a>
+    <div class="activity-website">
+      <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+      <h5 class="truncate">
+        <a href="{{activity?.website}}" target="_blank" class="website-link">{{ activity?.website }}</a>
+      </h5>
+    </div>
 
-    <h6 class="note">{{ activity?.note }}</h6>
+    <h5 class="note">{{ activity?.note }}</h5>
 
     <div class="activity-tags">
       <i class="fa fa-tags" aria-hidden="true"></i>
@@ -57,8 +83,11 @@
   </div>
 
   <div class="postby">
-    <h6>added by <a routerLink="/users/{{activity.user['_Id']}}">{{ activity?.user.username }}</a></h6>
-    <p>{{ activity?.created_at | date: 'medium' }}</p>
+    <h5><a routerLink="/users/{{activity.user['_Id']}}">{{ activity?.user.username }}</a></h5>
+    <div class="time-ago">
+      <p>{{ activity?.time_ago }}</p>
+      <span class="show-time">{{ activity?.created_at | date: 'EEE, dd MMM yyyy - HH:mm' }}</span>
+    </div>
   </div>
 
 </div>
@@ -70,77 +99,85 @@
     <div class="form-card">
 
       <div class="form-header">
-        <h3>Editing activity {{ activity?.name }}</h3>
+        <h3>Edit activity - {{ activity?.name }}</h3>
         <a (click)="cancelEditActivity()">x</a>
       </div>
 
-      <form [formGroup]="editCustomActivityForm" (ngSubmit)="onUpdateActivity()">
+      <form [formGroup]="editCustomActivityForm" (ngSubmit)="onUpdateActivity()" class="activity-form-details">
 
-        <label>Name</label>
-        <input type="text" formControlName="name" [value]="activity.name">
+        <h5 class="form-section-header">VISIT DATE &amp; TIME DETAILS</h5>
+        <div class="date-time-visit">
 
-        <label>Address</label>
-        <input type="text" formControlName="formatted_address" [value]="activity.formatted_address">
+          <label>DATE TO VISIT</label>
+          <select name="date" formControlName="date" [value]="activity.date">
+            <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
+              <div *ngIf="itinDate === 'any day'">
+                <h5>{{ itinDate }}</h5>
+              </div>
+              <div *ngIf="itinDate !== 'any day'">
+                <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+              </div>
+            </option>
+          </select>
 
-        <label>Contact Number</label>
-        <input type="text" formControlName="international_phone_number" [value]="activity.international_phone_number" class="contact-number-input">
+          <div class="time" [class.any-time-true]="anytime">
+            <label>TIME TO VISIT (
 
-        <label>Website</label>
-        <input type="url" formControlName="website" [value]="activity.website">
-
-        <label>Opening hours</label>
-        <textarea rows="2" formControlName="opening_hours" [value]="activity.opening_hours"></textarea>
-
-        <label>Cost / Entry fee</label>
-        <input type="text" formControlName="entryFee" [value]="activity.entryFee">
-
-        <label>Date to visit</label>
-        <select name="date" formControlName="date" [value]="activity.date">
-          <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
-            <div *ngIf="itinDate === 'any day'">
-              <h5>{{ itinDate }}</h5>
-            </div>
-            <div *ngIf="itinDate !== 'any day'">
-              <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
-            </div>
-          </option>
-        </select>
-
-        <div class="time" [class.marginBottom]="anytime">
-          <label>Time to visit (
-
-            <div class="anytime-input">
-              <label>Any time
-                <input type="checkbox" (click)="toggleAnytime()" formControlName="time" [ngModel]="activity.time === 'anytime'">
-              </label>
-            </div>
-            )
-          </label>
-          <input type="time" formControlName="time" [value]="activity.time" *ngIf="!anytime">
-        </div>
-
-        <label>Note</label>
-        <textarea rows="2" formControlName="note" [value]="activity.note"></textarea>
-
-        <div formArrayName="categories">
-          <label>Category</label>
-
-          <div *ngFor="let category of categories.controls; let j = index" [formGroupName]="j">
-
-              <div class="category-input">
-                <input type="checkbox" formControlName="checked" [ngModel]="activity.categories[j].checked">
-                <label>
-                  <i class="fa fa-{{ category?.value.icon }} fa-fw" aria-hidden="true"></i>
-                  {{ category?.value.value }}
+              <div class="anytime-input">
+                <label>ANY TIME
+                  <input type="checkbox" (click)="toggleAnytime()" formControlName="time" [ngModel]="activity.time === 'anytime'">
                 </label>
               </div>
+              )
+            </label>
+            <input type="time" formControlName="time" [value]="activity.time" *ngIf="!anytime">
+          </div>
+        </div>
 
+        <h5 class="form-section-header">ACTIVITY DETAILS</h5>
+        <div class="activity-form-details">
+
+          <label>NAME</label>
+          <input type="text" formControlName="name" [value]="activity.name">
+
+          <label>ADDRESS</label>
+          <input type="text" formControlName="formatted_address" [value]="activity.formatted_address">
+
+          <label>CONTACT NUMBER</label>
+          <input type="text" formControlName="international_phone_number" [value]="activity.international_phone_number" class="contact-number-input">
+
+          <label>WEBSITE</label>
+          <input type="url" formControlName="website" [value]="activity.website">
+
+          <label>OPENING HOURS</label>
+          <textarea rows="2" formControlName="opening_hours" [value]="activity.opening_hours"></textarea>
+
+          <label>COST / ENTRY FEE</label>
+          <input type="text" formControlName="entryFee" [value]="activity.entryFee">
+
+          <label>NOTE</label>
+          <textarea rows="2" formControlName="note" [value]="activity.note"></textarea>
+
+          <div formArrayName="categories">
+            <label>CATEGORY</label>
+
+            <div *ngFor="let category of categories.controls; let j = index" [formGroupName]="j">
+
+                <div class="category-input">
+                  <input type="checkbox" formControlName="checked" [ngModel]="activity.categories[j].checked">
+                  <label>
+                    <i class="fa fa-{{ category?.value.icon }} fa-fw" aria-hidden="true"></i>
+                    {{ category?.value.value }}
+                  </label>
+                </div>
+
+            </div>
           </div>
         </div>
 
         <div class="save-option">
-          <button type="button" class="deleteButton" (click)="cancelEditActivity()">Cancel edit</button>
-          <button type="submit" class="primaryButton"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save changes</button>
+          <h4 (click)="cancelEditActivity()">CANCEL</h4>
+          <button type="submit" class="save-button"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
         </div>
 
       </form>
@@ -155,13 +192,17 @@
 <div class="custom-modal" *ngIf="deleteActivity">
   <div class="confirm-delete">
     <div class="confirm-delete-header">
-      <h4>Delete activity {{ activity?.name }}</h4>
-      <a (click)="cancelDelete()">x</a>
+      <h3>Delete activity - {{ activity?.name }}?</h3>
     </div>
-    <h4 class="confirm-delete-content">Deleting activity <span class="confirm-delete-name">{{ activity?.name }}</span> will permanently remove it from your itinerary.</h4>
+
+    <div class="confirm-delete-content">
+      <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
+      <h4>Deleting activity {{ activity?.name }} will permanently remove it from your itinerary.</h4>
+    </div>
+
     <div class="confirm-delete-footer">
-      <button type="button" (click)="cancelDelete()">Cancel delete</button>
-      <button type="button" class="deleteButton" (click)="onDeleteActivity()">Yes, delete {{ activity?.name }}</button>
+      <h4 (click)="cancelDelete()">CANCEL</h4>
+      <h4 (click)="onDeleteActivity()">DELETE</h4>
     </div>
   </div>
 </div>

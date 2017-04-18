@@ -1,0 +1,16 @@
+<div class="accommodation-summary" [class.show-summary]="showAccommodationSummary">
+  <h5 class="accommodation-summary-length">ACCOMMODATION LIST ({{ accommodations.length }})</h5>
+  <div *ngFor="let event of accommodations" class="accommodation-summary-item" (click)="centerItem(event)">
+    <h5 class="date">{{ event?.checkInDate | date:'dd MMM yy' }}</h5>
+    <h5 class="accommodation-summary-header"><i class="fa fa-bed" aria-hidden="true"></i> in {{ event?.stayCity | uppercase }}</h5>
+    <h5>{{ event?.name }}</h5>
+  </div>
+</div>
+
+<div class="accommodation-list">
+  <ww-accommodation *ngFor="let event of accommodations" [event]="event"  [class.highlighted-event]="highlightedEvent === event" [itinDateRange]="itinDateRange" [currentUser]="currentUser"></ww-accommodation>
+</div>
+
+<div class="accommodation-summary-popup" (click)="showSummary()">
+  <i class="fa fa-list" aria-hidden="true"></i>
+</div>

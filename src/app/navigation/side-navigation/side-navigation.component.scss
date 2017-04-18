@@ -3,37 +3,17 @@
 }
 
 /***************************
-  Side navigation pull down
+  Side navigation bars
 ****************************/
-.side-navigation-pulldown {
-  display: none;
+.side-navigation-bars {
+  position: fixed;
+  top: 16px;
+  left: 5%;
+  display: block;
+  color: white;
+  z-index: 900;
   &:hover {
     cursor: pointer;
-  }
-
-  @media only screen and (min-width: 1350px) and (max-width: 1550px) {
-    position: fixed;
-    top: 16px;
-    left: 16px;
-    display: block;
-    color: white;
-    z-index: 900;
-  }
-  @media only screen and (min-width: 1000px) and (max-width: 1200px) {
-    position: fixed;
-    top: 16px;
-    left: 16px;
-    display: block;
-    color: white;
-    z-index: 900;
-  }
-  @media only screen and (max-width: 880px) {
-    position: fixed;
-    top: 16px;
-    left: 16px;
-    display: block;
-    color: white;
-    z-index: 900;
   }
 }
 
@@ -41,31 +21,12 @@
   Side navigation
 ******************/
 .side-navigation {
-  @media only screen and (min-width: 1350px) and (max-width: 1550px) {
-    display: none;
-    height: 0;
-  }
-  @media only screen and (min-width: 1000px) and (max-width: 1200px) {
-    display: none;
-    height: 0;
-  }
-  @media only screen and (max-width: 880px) {
-    display: none;
-    height: 0;
-  }
+  display: none;
+  height: 0;
 }
 
 .show-side-menu {
   display: block;
-  @media only screen and (min-width: 1350px) and (max-width: 1550px) {
-    display: block;
-  }
-  @media only screen and (min-width: 1000px) and (max-width: 1200px) {
-    display: block;
-  }
-  @media only screen and (max-width: 880px) {
-    display: block;
-  }
 }
 
 /* profile */

@@ -7,11 +7,7 @@ import { UserService }           from '../../../../user';
 
 @Component({
   selector: 'ww-activity-list',
-  template: `
-    <div class="activity-list">
-      <ww-activity [activity]="activity" *ngFor="let activity of activities"></ww-activity>
-    </div>
-  `,
+  templateUrl: './activity-list.component.html',
   styleUrls: ['./activity-list.component.scss']
 })
 export class ActivityListComponent implements OnInit {
@@ -21,6 +17,9 @@ export class ActivityListComponent implements OnInit {
   currentUserSubscription: Subscription;
   currentUser;
 
+  showActivitySummary = false;
+  highlightedEvent;
+  
   constructor(
     private itineraryEventService: ItineraryEventService,
     private userService: UserService) { }
@@ -55,6 +54,14 @@ export class ActivityListComponent implements OnInit {
         this.activities.push(events[i]);
       }
     }
+  }
+
+  showSummary() {
+    this.showActivitySummary = !this.showActivitySummary;
+  }
+
+  centerItem(activity)  {
+    this.highlightedEvent = activity;
   }
 
 }

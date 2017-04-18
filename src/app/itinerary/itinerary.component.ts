@@ -24,8 +24,15 @@ export class ItineraryComponent implements OnInit {
   showUsers = false;
   newMembers = [];
   validAddUser = false;
+  showCurrentMembers = false;
 
-  showActivities = false;
+  showAddNew = false;
+  addAccommodation = false;
+  addTransport = false;
+  addActivity = false;
+  addResource = false;
+
+  showMenu = false;
 
   constructor(
     private itineraryService: ItineraryService,
@@ -50,28 +57,19 @@ export class ItineraryComponent implements OnInit {
       .subscribe(
         result => {
           this.itinerary = result.itinerary;
-
           this.itineraryEventService.getEvents(id)
-              .subscribe(
-                result => {}
-              )
+              .subscribe( eventResult => {} )
 
           this.resourceService.getResources(id)
+              .subscribe( resourceResult => {} )
+
+          this.userService.getAllUsers()
               .subscribe(
-                result => {}
+                userResult => { this.filterUsers(userResult.users);}
               )
         }
       );
     })
-
-
-
-    this.userService.getAllUsers()
-        .subscribe(
-          result => {
-            this.filterUsers(result.users);
-          }
-        )
   }
 
   filterUsers(users)  {
@@ -141,6 +139,8 @@ export class ItineraryComponent implements OnInit {
 
   getUsers()  {
     this.showUsers = true;
+    this.showAddNew = false;
+    this.showCurrentMembers = false;
   }
 
   cancelShowUsers() {
@@ -179,8 +179,60 @@ export class ItineraryComponent implements OnInit {
     this.showUsers = false;
   }
 
-  showCollapseActivities()  {
-    this.showActivities = !this.showActivities;
+  showMembers() {
+    this.showCurrentMembers = !this.showCurrentMembers;
+    this.showAddNew = false;
+  }
+
+  showAddNewOptions() {
+    this.showAddNew = true;
+    this.showCurrentMembers = false;
+  }
+
+  newAccommodation()  {
+    this.showAddNew = false;
+    this.addAccommodation = true;
+  }
+
+  newTransport()  {
+    this.showAddNew = false;
+    this.addTransport = true;
+  }
+
+  newActivity()  {
+    this.showAddNew = false;
+    this.addActivity = true;
+  }
+
+  newResource()  {
+    this.showAddNew = false;
+    this.addResource = true;
+  }
+
+  hideAccommodationForm(hide)  {
+    this.addAccommodation = false;
+  }
+
+  hideTransportForm(hide)  {
+    this.addTransport = false;
+  }
+
+  hideActivityForm(hide)  {
+    this.addActivity = false;
+  }
+
+  hideResourceForm(hide)  {
+    this.addResource = false;
+  }
+
+  activateTab() {
+    this.showAddNew = false;
+    this.showCurrentMembers = false;
+    this.showUsers = false;
+  }
+
+  showMenuOptions() {
+    this.showMenu = true;
   }
 
 }

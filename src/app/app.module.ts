@@ -16,13 +16,18 @@ import { PostsComponent, PostComponent, PostInputComponent, PostListComponent, P
 
 import { GooglePlaceSearchComponent, GoogleCheckinComponent } from './google-api';
 
-import { ItineraryComponent, ItineraryAccommodationTransportComponent, ItineraryEventsComponent, ItineraryService, ItineraryActivityComponent, ItineraryResourcesComponent, ResourceInputComponent, ResourceService, ResourceListComponent, ResourceComponent, ItineraryMapComponent, AccommodationFormComponent, TransportFormComponent, ItineraryEventService, ActivityComponent, ActivityListComponent, ActivityInputComponent, ActivityCollapseComponent, ActivityCollapseListComponent, AccommodationComponent, TransportComponent, ItineraryPrintComponent, ItineraryPrintDatePreviewComponent, ItineraryPrintCategoryPreviewComponent, ItinerarySummaryComponent, ItineraryPrintCategoryComponent, ItineraryPrintDateComponent } from './itinerary';
+import { ItineraryComponent, ItineraryAccommodationComponent, ItineraryTransportComponent, ItineraryService, ItineraryActivityComponent, ItineraryResourcesComponent, ResourceInputComponent, ResourceService, ResourceListComponent, ResourceComponent, ItineraryMapComponent, AccommodationFormComponent, TransportFormComponent, ItineraryEventService, ActivityComponent, ActivityListComponent, ActivityInputComponent, ActivityCollapseComponent, ActivityCollapseListComponent, AccommodationComponent, TransportComponent, ItineraryPrintComponent, ItineraryPrintDatePreviewComponent, ItineraryPrintCategoryPreviewComponent, ItinerarySummaryComponent, ItineraryPrintCategoryComponent, ItineraryPrintDateComponent } from './itinerary';
 
 import { FlashMessageComponent, FlashMessageService } from './flash-message';
 
 import { NotificationComponent, NotificationsComponent, NotificationListComponent, NotificationService } from './notifications';
 
 import { AuthGuard } from './_guards/auth.guard';
+import { LandingPageComponent } from './landing-page';
+
+import { AdminComponent } from './admin';
+import { AttractionsComponent } from './attractions/attractions.component';
+import { AdminAttractionComponent,AdminAttractionFormComponent } from './admin/admin-attraction';
 
 @NgModule({
   declarations: [
@@ -42,8 +47,8 @@ import { AuthGuard } from './_guards/auth.guard';
     PostListComponent,
     PostComponent,
     ItineraryComponent,
-    ItineraryEventsComponent,
-    ItineraryAccommodationTransportComponent,
+    ItineraryAccommodationComponent,
+    ItineraryTransportComponent,
     AccommodationComponent,
     AccommodationFormComponent,
     TransportComponent,
@@ -71,6 +76,11 @@ import { AuthGuard } from './_guards/auth.guard';
     NotificationsComponent,
     NotificationListComponent,
     ItinerarySummaryComponent,
+    LandingPageComponent,
+    AttractionsComponent,
+    AdminComponent,
+    AdminAttractionComponent,
+    AdminAttractionFormComponent,
   ],
   imports: [
     BrowserModule,

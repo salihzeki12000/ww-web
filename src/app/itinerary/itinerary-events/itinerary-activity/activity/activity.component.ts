@@ -21,9 +21,12 @@ export class ActivityComponent implements OnInit {
   editCustomActivityForm: FormGroup;
   categories;
   anytime;
+  showContactDetails = false;
 
   itinDateSubscription: Subscription;
   itinDateRange = [];
+
+  showMenu = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -52,6 +55,8 @@ export class ActivityComponent implements OnInit {
                                       result => {
                                         this.itinDateRange = Object.keys(result).map(key => result[key]);
                                     })
+
+    // this.activity['formatted_hours'] = this.activity['opening_hours'].replace(/\r?\n/g, '<br/> ');
   }
 
   initCategoryArray() {
@@ -82,7 +87,6 @@ export class ActivityComponent implements OnInit {
       { value: 'shopping', icon: 'shopping-bag'},
       { value: 'sight-seeing', icon: 'eye' },
     ]
-
     let editedActivity = this.editCustomActivityForm.value;
 
     for (let i = 0; i < this.activity['categories'].length; i++) {
@@ -147,5 +151,13 @@ export class ActivityComponent implements OnInit {
 
   toggleAnytime() {
     this.anytime = !this.anytime;
+  }
+
+  toggleContactDetails()  {
+    this.showContactDetails = !this.showContactDetails;
+  }
+
+  showMenuOptions() {
+    this.showMenu = true;
   }
 }

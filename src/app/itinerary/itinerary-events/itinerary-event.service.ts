@@ -55,7 +55,8 @@ export class ItineraryEventService  {
     return this.http.get( this.url + "/event" + itinId)
                     .map((response: Response) => {
                       this.events = response.json().events;
-                      this.updateEvent.next(this.events);
+                      this.timeAgo(this.events);
+                      // this.updateEvent.next(this.events);
                       return this.events;
                     })
                     // .catch((error: Response) => console.log(error));
@@ -130,9 +131,46 @@ export class ItineraryEventService  {
   }
 
   sortEventByDate(events) {
+    // events.sort((a,b) =>  {
+    //   let aTime = a['time'].slice(0,2) + a['time'].slice(3);
+    //   let bTime = b['time'].slice(0,2) + b['time'].slice(3);
+    //
+    //   return new Date(a['date']).getTime() - new Date(b['date']).getTime() || aTime - bTime;
+    // })
+
     events.sort((a,b) =>  {
-      return new Date(a['date']).getTime() - new Date(b['date']).getTime()
+      return new Date(a['date']).getTime() - new Date(b['date']).getTime();
     })
+    this.timeAgo(events);
+    // this.updateEvent.next(events);
+  }
+
+  timeAgo(events) {
+    for (let i = 0; i < events.length; i++) {
+      let timePosted = new Date(events[i]['created_at']).getTime();
+      let timeDiff = (Date.now() - timePosted) / 1000;
+
+      let units = [
+        { name: "MINUTE", in_seconds: 60, limit: 3600 },
+        { name: "HOUR", in_seconds: 3600, limit: 86400 },
+        { name: "DAY", in_seconds: 86400, limit: 604800 },
+        { name: "WEEK", in_seconds: 604800, limit: 2629743 },
+        { name: "MONTH", in_seconds: 2629743, limit: 31556926 },
+        { name: "YEAR", in_seconds: 31556926, limit: null }
+      ];
+
+      if(timeDiff < 60) {
+        events[i]['time_ago'] = "LESS THAN A MINUTE AGO"
+      } else {
+        for (let j = 0; j < units.length; j++) {
+          if(timeDiff < units[j]['limit'] || !units[j]['limit'])  {
+            let timeAgo =  Math.floor(timeDiff / units[j].in_seconds);
+            events[i]['time_ago'] = timeAgo + " " + units[j].name + (timeAgo > 1 ? "S" : "") + " AGO";
+            j = units.length;
+          };
+        }
+      }
+    }
     this.updateEvent.next(events);
   }
 

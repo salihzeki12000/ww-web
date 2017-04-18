@@ -1,14 +1,21 @@
+<form [formGroup]="resourceForm" (ngSubmit)="onSubmit()">
+  <div class="form-card">
 
-<div class="resourceForm">
-  <form [formGroup]="resourceForm" (ngSubmit)="onSubmit()">
+    <div class="form-header">
+      <h3>New resource link</h3>
+      <a (click)="cancelForm()">x</a>
+    </div>
 
-    <label>Title</label>
-    <input type="text" formControlName="description" placeholder="what's the link about?">
+    <label>TITLE <span class="required"> - what is the link about?</span></label>
+    <input type="text" formControlName="description">
 
-    <label>Link</label>
-    <input type="url" formControlName="link" placeholder="add a link here...">
+    <label>LINK</label>
+    <input type="url" formControlName="link">
 
-    <button type="submit" class="primaryButton" [disabled]="!resourceForm.valid"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save new resource</button>
-    <div style="clear: both;"></div>
-  </form>
-</div>
+    <div class="save-option">
+      <h4 (click)="cancelForm()">CANCEL</h4>
+      <button type="submit" class="save-button" [disabled]="!resourceForm.valid"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
+    </div>
+
+  </div>
+</form>

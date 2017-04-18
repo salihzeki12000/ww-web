@@ -1,38 +1,78 @@
+.legend {
+  display: inline-block;
+  position: fixed;
+  width: 100%;
+  padding-top: 6px;
+  padding-left: 10px;
+  background-color: white;
+  border-bottom: 1px solid lightgray;
+}
+
+.legend > * {
+  display: inline-block;
+  padding: 3px;
+  width: auto;
+  margin-bottom: 5px;
+  text-align: center;
+  letter-spacing: 1px;
+  background-color: transparent;
+  box-shadow: none;
+}
+
 .date-row {
   display: flex;
   overflow: auto;
-  box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+  padding-left: 10px;
 }
 
 .date-column  {
   display: inline-block;
-  min-width: 120px;
+  min-width: 220px;
+  min-height: calc(100vh - 150px);
+  margin-top: 40px;
+  padding-bottom: 10px;
   vertical-align: top;
-  border-right: 1px solid lightgray;
+  border-right: 1px solid lightgrey;
+  border-bottom: 1px solid lightgray;
+  background-color: white;
 }
 
 .date {
-  text-align: center;
-  padding: 5px;
-  height: 40px;
-  color: white;
-  background-color: #6494ED;
+  text-align: left;
+  padding: 15px 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: bold;
 }
 
+// .date-end {
+//   position: absolute;
+//   bottom: 50px;
+// }
+
+// .event-time  {
+//   display: inline-block;
+//   width: 55px;
+//   padding: 30px 0 0 10px;
+//   color: grey;
+//   vertical-align: top;
+//   text-align: right;
+// }
+
 .event-time  {
-  padding: 10px 0 0 10px;
+  padding-left: 3px;
   color: grey;
 }
 
 .event-stay-city  {
-  padding: 0 5px 0 10px;
+  padding: 10px 5px 0 10px;
   color: #6494ED;
 }
 
 .event-name  {
-  padding: 2px 5px 10px 15px;
+  padding: 10px;
   overflow-wrap: break-word;
-  border-bottom: 1px dotted lightgray;
+  border-bottom: 3px solid white;
 }
 
 .check-out-on {
@@ -43,19 +83,56 @@
 .accommodation-event-name  {
   padding: 10px 5px 10px 15px;
   overflow-wrap: break-word;
-  border-bottom: 1px dotted lightgray;
+  border-bottom: 5px solid white;
 }
 
 .accommodation-indicator  {
-  background-color: rgba(100,235,219,0.1);
+  display: inline-block;
+  margin: 5px 10px 10px 10px;
+  width: 200px;
+  background-color: #FFF;
+  border-top: 10px solid rgba(100,235,219,0.5);
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .transport-indicator  {
-  background-color: rgba(237,100,148,0.1);
+  display: inline-block;
+  width: 200px;
+  margin: 5px 10px 10px 10px;
+  background-color: #FFF;
+  border-top: 10px solid rgba(237,100,148,0.5);
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .activity-indicator {
-  background-color: rgba(237,189,100,0.1);
+  display: inline-block;
+  margin: 5px 10px 10px 10px;
+  width: 200px;
+  background-color: #FFF;
+  border-top: 10px solid rgba(237,189,100,0.5);
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.activity-indicator > img {
+  width: 36px;
+  height: 36px;
+}
+
+.activity-indicator > .event-name {
+  display: inline-block;
+  width: 160px;
+  vertical-align: top;
+  padding-left: 0;
+  padding-bottom: 0;
 }
 
 /* to display horizontal scrollbar */
@@ -72,4 +149,41 @@
 .date-row::-webkit-scrollbar-track {
     background-color: #fff;
     border-radius: 8px;
+}
+
+.slide-back > i {
+
+}
+
+.show-details-in-summary-true {
+  width: calc(100% - 300px)
+}
+
+.slide-back {
+  position: fixed;
+  top: 68px;
+  right: 260px;
+  color: lightgray;
+  z-index: 1002;
+  &:hover {
+    color: grey;
+    cursor: pointer;
+  }
+}
+
+.show-details-in-summary {
+  position: fixed;
+  top: 60px;
+  right: 0;
+  height: calc(100vh - 60px);
+  width: 300px;
+  background-color: white;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1001;
+}
+
+.details-in-summary {
+  position: fixed;
+  top: 92.5px;
+  right: -15px;
 }

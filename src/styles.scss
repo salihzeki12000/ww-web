@@ -1,15 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
 
 // http://paletton.com/#uid=73I2a0kkvUghaSyiTTim6VonEWB
-// #6494ED - blue
+// #6494ED - blue (100,148,237)
+// #567FCC - darker blue
 // #FFC65C - accent color
-// #56EEAD - green
+// #19CC72 - green
 // #FF8A5C - orange
 // #DC143C - crimson(red)
 // #3A4A4D - dark grey
 // #C0C0C0 - light grey
+// #F9FBFB - off white
 
-@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700);
+@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700); //font-family: 'Roboto Condensed', sans-serif;
+@import url(https://fonts.googleapis.com/css?family=Fira+Sans:400,600); //font-family: 'Fira Sans', sans-serif;
+@import url(https://fonts.googleapis.com/css?family=Tangerine); //font-family: 'Tangerine', cursive;
 
 $primaryColor: #6495ED;
 $accentColor: #FF8A5C;
@@ -26,14 +30,21 @@ h1, h2, h3, h4, h5, h6, p  {
   margin: 0;
   padding: 0;
   line-height: 1.2;
+  color: #3A4A4D;
 }
 
 h1  { font-size: 2em }
 h2  { font-size: 1.5em }
 h3  { font-size: 1.17em }
 h4  { font-size: 1em }
-h5  { font-size: 0.83em }
-h6  { font-size: 0.67em }
+h5  {
+  font-size: 0.83em;
+  font-weight: 400;
+}
+h6  {
+  font-size: 0.67em;
+  font-weight: 400;
+}
 a  { font-size: 0.83em }
 
 @mixin primaryButton  {
@@ -86,31 +97,96 @@ a  { font-size: 0.83em }
   }
 }
 
-button.primaryButton  {
-  @include primaryButton;
-}
-
-button.reverseButton  {
-  @include reverseButton;
-}
-
-button.deleteButton {
-  @include deleteButton;
-}
-
-button  {
-  @include button;
-  font-size: $buttonFontSize
-}
-
 button[disabled]  {
   color: #CCC;
-  border: 1px solid #CCC;
+}
+
+/* save button */
+.save-option  {
+  text-align: right;
+}
+
+.save-option > *  {
+  display: inline-block;
+  padding: 5px 10px;
+  color: lightgrey;
+  letter-spacing: .5px;
   &:hover {
-    color: #CCC;
-    border: 1px solid #CCC;
-    background-color: white;
+    cursor: pointer;
+    color: grey;
   }
+}
+
+.save-button  {
+  background-color: transparent;
+  border: none;
+}
+
+.save-button > h4 {
+  color: #6494ED;
+  letter-spacing: .5px;
+  &:hover {
+    cursor: pointer;
+    color: grey;
+  }
+}
+
+/* dots menu */
+.dots-menu:after {
+  content: '\2807';
+  margin-top: -5px;
+  width: 15px;
+  font-size: 18px;
+  color: #CCC;
+  text-align: center;
+  float: right;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.dots-menu:hover .item-menu {
+  display: block;
+}
+
+.item-menu  {
+  display: none;
+  position: absolute;
+  top: 30px;
+  right: 25px;
+  width: 150px;
+  background-color: white;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+}
+
+.item-menu > ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item-menu > ul > li  {
+  width: 100%;
+  padding: 10px 20px;
+  &:hover {
+    cursor: pointer;
+    background-color: #F6F6F6;
+  }
+}
+
+.item-menu > ul > li:hover *  {
+  color: grey;
+}
+
+.item-menu > ul > li > h5  {
+  display: inline-block;
+  letter-spacing: .5px;
+}
+
+.item-menu > ul > li > i  {
+  display: inline-block;
+  margin-top: 3px;
+  float: right;
 }
 
 /**************************************************
@@ -119,22 +195,21 @@ button[disabled]  {
 label {
   margin-bottom: 0;
   padding-left: 3px;
-  font-size: 12px;
+  color: grey;
+  font-size: 10px;
+  letter-spacing: .5px;
 }
 
 input,
 select,
 textarea {
   display: block;
-  margin-top: 3px;
   margin-bottom: 10px;
   font-size: 14px;
   color: #555;
   background-color: #fff;
-  border: 1px solid #CCC;
-  border-radius: 4px;
   &:focus {
-    border: 2px solid #6494ed;
+    border-bottom: 2px solid #6494ed;
     outline: 0;
   }
 }
@@ -142,14 +217,18 @@ textarea {
 input,
 select {
   width: 100%;
-  height: 34px;
-  padding: 4px 12px;
+  height: 30px;
+  padding: 4px 8px;
+  border: none;
+  background-color: #F6F6F6;
 }
 
 textarea  {
   max-width: 600px;
   width: 100%;
   padding: 4px 12px;
+  border: none;
+  background-color: #F6F6F6;
 }
 
 input[type=text],
@@ -173,7 +252,7 @@ input.transport-terminal {
 }
 
 input.contact-number-input  {
-  max-width: 200px;
+  max-width: 190px;
 }
 
 a {
@@ -184,14 +263,12 @@ a {
 /* form display */
 .form-card {
   width: 650px;
-  margin: 60px auto 0 auto;
+  margin: 60px auto;
   padding: 10px 20px 20px 20px;
   background-color: white;
   -webkit-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
   -moz-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
   box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
-  border-radius: 5px;
-  border: 2px solid #099FFF;
 
   @media only screen and (max-width: 700px) {
     width: 94%;
@@ -212,10 +289,74 @@ span.required {
   font-style: italic;
 }
 
-/* save button */
-.save-option {
+/* progress tracker */
+.progress-tracker  {
+  margin-bottom: 20px;
+  padding-left: 0;
+}
+
+.progress-tracker li {
   display: inline-block;
-  margin: 10px 0 0 10px;
+  margin-top: 10px;
+  padding-top: 10px;
+  height: 45px;
+  color: lightgrey;
+  font-size: 12px;
+  text-align: center;
+  text-indent: -19px;
+  letter-spacing: .5px;
+  vertical-align: text-bottom;
+  border-top: 4px solid lightgrey;
+}
+
+.progress-tracker li::before  {
+  position: relative;
+  float: left;
+  text-indent: 0;
+  left: -webkit-calc(50% - 9.5px);
+  left: -moz-calc(50% - 9.5px);
+  left: -ms-calc(50% - 9.5px);
+  left: -o-calc(50% - 9.5px);
+  left: calc(50% - 9.5px);
+}
+
+.progress-title::before {
+  content: "\2B24";
+  bottom: 20.5px;
+  color: lightgrey;
+  font-size: 10px;
+  line-height: 18px;
+}
+
+.progress-done::before  {
+  content: "\2713";
+  height: 19px;
+  width: 19px;
+  line-height: 22px;
+  bottom: 20.5px;
+  border: none;
+  border-radius: 19px;
+  color: white;
+  background-color: #19CC72;
+}
+
+.progress-tracker li.progress-done  {
+  color: black;
+  font-weight: 500;
+  border-top: 4px solid #19CC72;
+  &:hover {
+    cursor: pointer;
+    color: grey;
+  }
+}
+.cannot-find  {
+  color: gray;
+  font-style: italic;
+  text-align: right;
+  &:hover {
+    cursor: pointer;
+    color: #6494ED;
+  }
 }
 
 /* form & edit header for form and edit modal display*/
@@ -224,7 +365,6 @@ span.required {
   width: 100%;
   margin-bottom: 10px;
   padding: 5px;
-  text-align: center;
   border-bottom: 1px solid #CCC;
 }
 
@@ -252,22 +392,23 @@ span.required {
   }
 }
 
-.place-search,
-.flight-search {
-  border-bottom: 1px solid #CCC;
-  padding: 10px;
-  background-color: aliceblue;
+.form-section-header  {
+  padding-bottom: 2px;
+  font-weight: bold;
+  letter-spacing: .5px;
+  border-bottom: 1px solid lightgrey;
 }
 
-.accommodation-form-details {
+.accommodation-form-details,
+.activity-form-details {
   padding: 10px;
 }
 
-/* display check in/check out date for accommodation form */
-.check-in-out {
-  border-bottom: 1px solid #CCC;
+/* display check in/check out date for accommodation form & date/time to visit activity form */
+.check-in-out,
+.date-time-visit {
+  margin-bottom: 10px;
   padding: 10px;
-  background-color: #FFE5E5;
 }
 
 .check-in,
@@ -277,56 +418,23 @@ span.required {
 }
 
 /* transport departure and arrival details for form and edit */
-.transport-details  {
-  border-bottom: 1px solid #CCC;
-}
-
 .departure-arrival-details {
-  padding: 0 10px;
-}
-
-.departure  {
-  display: inline-block;
-  width: 50%;
-  border-right: 1px solid #CCC;
-
-  @media only screen and (max-width: 700px) {
-    width: 100%;
-    border-right: none;
-
-  }
+  margin-bottom: 10px;
+  padding: 10px;
 }
 
 .departure > h4 {
   padding: 5px 0;
   color: #262626;
-  text-align: center;
-  background-color: lightblue;
-  border-radius: 0 0 0 10px;
 
   @media only screen and (max-width: 700px) {
     border-radius: 0;
   }
 }
 
-.arrival  {
-  display: inline-block;
-  margin-left: -4px;
-  width: 50%;
-  vertical-align: top;
-
-  @media only screen and (max-width: 700px) {
-    margin-left: 0;
-    width: 100%;
-  }
-}
-
 .arrival > h4 {
   padding: 5px 0;
   color: #262626;
-  text-align: center;
-  background-color: pink;
-  border-radius: 0 0 10px 0;
 
   @media only screen and (max-width: 700px) {
     border-radius: 0;
@@ -347,6 +455,11 @@ span.required {
 /***************************************************************
  ACCOMMODATION / TRANSPORT / ACTIVITY / RESOURCE CARDS DISPLAY
  **************************************************************/
+.highlighted-event  {
+  border-radius: 5px;
+  background-color: rgba(100,148,237,.5);
+}
+
 .truncate {
  white-space: nowrap;
  overflow: hidden;
@@ -358,39 +471,28 @@ span.required {
   float: right;
 }
 
-.fa-trash-o,
-.fa-pencil {
-  color: #CCC;
-  &:hover {
-    color: #666;
-  }
-}
-
 /* accommodation/transport/activity display */
 .details-card {
   position: relative;
   display: inline-block;
-  margin: 7px;
+  margin: 15px;
   padding: 10px 20px 20px 20px;
   width: 300px;
   vertical-align: text-top;
-  -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
-  -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
-  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+  background-color: white;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
 
-  @media only screen and (max-width: 700px) {
-    min-width: 310px;
-    width: calc(100vw * 0.9);
-  }
-
-  @media only screen and (min-width: 700px) and (max-width: 1350px) {
-    width: 310px;
+  @media only screen and (max-width: 400px) {
+    width: calc(100vw * 0.95);
+    min-width: 300px;
   }
 }
 
 .date-header {
- color: #3A4A4D;
- min-height: 16px;
+ color: grey;
+ // min-height: 16px;
 }
 
 .accommodation-city {
@@ -400,7 +502,7 @@ span.required {
 }
 
 .accommodation-header {
-  margin: 5px 0;
+  margin: 10px 0;
   text-align: center;
 }
 
@@ -411,9 +513,7 @@ span.required {
 
 .activity-header {
   margin: 10px 0;
-  padding: 5px 10px;
-  text-align: center;
-  background-color: rgba(100,148,237, 0.5);
+  font-weight: bold;
 }
 
 .departure-details {
@@ -431,6 +531,15 @@ span.required {
   padding: 0 10px;
 }
 
+.website-link {
+  text-decoration: underline;
+  color: #6494ED;
+  margin-bottom: 10px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 .note{
   padding-left: 10px;
   color: grey;
@@ -439,16 +548,6 @@ span.required {
 
 .note > h6  {
   white-space: pre-line;
-}
-
-/* accommodation display */
-.address  {
-  margin: 5px 0;
-}
-
-.contact-number,
-.website  {
-  margin-bottom: 10px;
 }
 
 /* transport display */
@@ -478,26 +577,66 @@ span.city-highlight  {
   padding: 10px 20px;
 }
 
+.accommodation-contact-details,
+.activity-contact-details {
+  margin-bottom: 5px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+.accommodation-contact-details > h5 > i,
+.activity-contact-details > h5 > i {
+  text-align: right;
+}
+
+.accommodation-contact-details > *,
+.activity-contact-details > * {
+  display: inline-block;
+  font-weight: 500;
+}
+
+
+.accommodation-address,
+.accommodation-contact-number,
+.accommodation-website,
+.activity-opening-hours,
+.activity-fee,
+.activity-address,
+.activity-contact-number,
+.activity-website  {
+  margin-bottom: 10px;
+}
+
+.accommodation-address > i,
+.accommodation-contact-number > i,
+.accommodation-website > i,
 .activity-opening-hours > i,
 .activity-fee > i,
 .activity-address > i,
-.activity-contact-number > i {
+.activity-contact-number > i,
+.activity-website > i {
   vertical-align: top;
+  color: grey;
 }
 
-.activity-opening-hours > h6,
-.activity-fee > h6,
-.activity-address > h6,
-.activity-contact-number > h6 {
+.accommodation-address > h5,
+.accommodation-contact-number > h5,
+.accommodation-website > h5,
+.activity-opening-hours > h5,
+.activity-fee > h5,
+.activity-address > h5,
+.activity-contact-number > h5,
+.activity-website > h5 {
   display: inline-block;
   width: 90%;
-  margin-bottom: 10px;
   vertical-align: top;
+  color: grey;
 }
 
 .activity-tags {
   position: absolute;
   bottom: 30px;
+  color: grey;
 }
 
 .activity-category  {
@@ -507,18 +646,8 @@ span.city-highlight  {
 /********************************
   RESOURCE DISPLAY
  *******************************/
-.description,
-.link  {
-  margin-bottom: 10px;
-}
-
 .description{
-  padding: 3px;
-  border-bottom: 2px solid purple;
-}
-
-.linkDetails  {
-  width: 90%;
+  margin-bottom: 10px;
 }
 
 /************************************************************************
@@ -529,14 +658,36 @@ span.city-highlight  {
   bottom: 10px;
 }
 
+.postby > h5,
 .postby > h6,
-.postby > p {
+.postby > .time-ago,
+.postby > .time-ago > p {
   display: inline-block;
 }
 
-.postby > p {
+.postby > h5 > a  {
+  color: #567FCC;
+}
+
+.postby > .time-ago > p {
   color: grey;
   font-size: 0.5em;
+  letter-spacing: .3px;
+  &:hover {
+    cursor: default;
+  }
+}
+
+.time-ago:hover .show-time  {
+  display: inline-block;
+}
+
+.show-time  {
+  display: none;
+  font-size: 0.6em;
+  padding: 0 5px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
 }
 
 /******************
@@ -567,14 +718,10 @@ span.city-highlight  {
  top: 25%;
  left: calc((100vw - 400px)/2);
  background-color: white;
- border-radius: 5px;
 }
 
 .show-users-header  {
  padding: 10px;
- color: white;
- background-color: #6494ED;
- border-radius: 5px 5px 0 0;
 }
 
 .show-users-header > h4 {
@@ -633,7 +780,6 @@ span.city-highlight  {
   top: 25%;
   left: calc((100vw - 600px) / 2);
   background-color: white;
-  border-radius: 5px;
 
   @media only screen and (max-width: 680px) {
    width: 90%;
@@ -642,42 +788,39 @@ span.city-highlight  {
 }
 
 .confirm-delete-header  {
-  padding: 10px 40px;
-  color: white;
-  background-color: #EE5951;
+  padding: 20px 40px 10px 40px;
   border-bottom: 1px solid lightgray;
-  border-radius: 5px 5px 0 0;
 }
 
 .confirm-delete-content {
-  padding: 40px 60px;
+  padding: 40px;
 }
 
-.confirm-delete-header > h4 {
+.confirm-delete-content > h4 {
   display: inline-block;
+  width: 90%;
+  padding-left: 10px;
+  vertical-align: -webkit-baseline-middle;
 }
 
-.confirm-delete-header > a  {
-  float: right;
-  width: 17px;
-  height: 17px;
-  color: white;
-  text-align: center;
-  border-radius: 50%;
-  &:hover {
-    text-decoration: none;
-    background-color: #772C28;
-  }
+.fa-exclamation-triangle {
+  color: red;
+  vertical-align: -webkit-baseline-middle;
 }
 
 .confirm-delete-footer  {
-  padding-left: 40px;
-  padding-bottom: 20px;
+  padding: 0 40px 20px 40px;
+  text-align: right;
 }
 
-span.confirm-delete-name {
-  color: red;
-  font-size: 1.2em;
+.confirm-delete-footer > *  {
+  display: inline-block;
+  padding-left: 20px;
+  color: #6494ED;
+  letter-spacing: .5px;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 /*********************

@@ -1,0 +1,254 @@
+<form [formGroup]="addTransportForm" (ngSubmit)="onSubmitNewTransports()">
+
+  <div class="form-card">
+
+    <div class="form-header">
+      <h3>New transport arrangement</h3>
+      <a (click)="cancelForm()">x</a>
+    </div>
+
+    <div>
+      <ul class="progress-tracker" [class.flight-search-active]="transportOption === 'FLIGHT'" [class.choose-airport-option]="airportsToChoose">
+        <li class="progress-title" (click)="backToSelectTransport()" [class.progress-done]="transportOption !== ''">SELECT TRANSPORT MODE</li><li class="progress-title" *ngIf="transportOption === 'FLIGHT'" (click)="backToFlightSearch()" [class.progress-done]="populateFlightDetails">SEARCH FLIGHT</li><li class="progress-title" *ngIf="airportsToChoose" (click)="backToSelectAirport()" [class.progress-done]="airportsChoosen">SELECT AIRPORT</li><li class="progress-title">CONFIRM {{ transportOption }} DETAILS</li>
+      </ul>
+    </div>
+
+    <div class="transport-mode" *ngIf="transportOption === ''">
+      <label>SELECT YOUR MODE OF TRANSPORT</label>
+      <div *ngFor="let transport of transportType" class="transport-mode-options">
+        <label (click)="onSelectTransportType(transport.name)">
+          <input type="radio" formControlName="transportType" [value]="transport.name">
+          <i class="fa fa-{{ transport.icon }} fa-3x" aria-hidden="true"></i>
+          {{ transport.name }}
+        </label>
+      </div>
+    </div>
+
+    <div *ngIf="transportOption === 'FLIGHT'">
+      <form [formGroup]="searchFlightForm" class="flight-search" *ngIf="!populateFlightDetails">
+        <h5 class="form-section-header">SEARCH FOR YOUR FLIGHT</h5>
+
+        <div class="search-airline-code">
+          <label>AIRLINE CODE</label>
+          <input type="text" id="search-airline-code" formControlName="searchAirlineCode" maxlength="2" autofocus>
+        </div>
+
+        <div class="search-flight-number">
+          <label>FLIGHT NUMBER</label>
+          <input type="number" id="search-flight-number" formControlName="searchFlightNumber" min="1" max="9999" required>
+        </div>
+
+        <div class="flight-example">
+          <h6>EXAMPLE</h6>
+
+          <div>
+            <label>AIRLINE CODE</label>
+            <h4 class="example-airline-code">SQ</h4>
+          </div>
+
+          <div>
+            <label>FLIGHT NUMBER</label>
+            <h4 class="example-flight-number">123</h4>
+          </div>
+        </div>
+
+        <div class="search-dep-date">
+          <label>DATE OF DEPARTURE (DD/MM/YYYY)</label>
+          <input type="date" formControlName="searchDepDate" min="2017-01-01" max="2050-12-31">
+        </div>
+
+        <div class="save-option">
+          <button type="submit" (click)="searchFlightSubmit()" class="save-button" [disabled]="!searchFlightForm.valid"><h4>SEARCH FLIGHT</h4></button>
+        </div>
+
+      </form>
+
+      <div *ngIf="stopOver" class="stop-over">
+        <h5 class="form-section-header">Your selected flight travels from and to multiple airports. Please select your departure and arrival airports.</h5>
+
+        <h5 class="stop-over-airport">DEPARTURE AIRPORT</h5>
+        <div class="select-airport" *ngFor="let airport of depAirports">
+          <input name="depAirport" type="radio" (click)="selectDepAirport(airport?.airportCode)">
+          <label for="depAirport">{{ airport?.city }} ({{ airport?.airportName }})</label>
+        </div>
+
+        <h5 class="stop-over-airport">ARRIVAL AIRPORT</h5>
+        <div class="select-airport" *ngFor="let airport of arrAirports">
+          <input name="arrAirport" type="radio" (click)="selectArrAirport(airport?.airportCode)">
+          <label for="arrAirport">{{ airport?.city }} ({{ airport?.airportName }})</label>
+        </div>
+
+        <div class="save-option">
+          <h4 (click)="getFlightDetails()">GET FLIGHT DETAILS</h4>
+        </div>
+      </div>
+
+      <div *ngIf="!stopOver">
+        <div *ngIf="populateFlightDetails" class="transport-details">
+          <h4 class="transport-type-header"><i class="fa fa-plane fa-lg" aria-hidden="true"></i> CONFIRM FLIGHT DETAILS</h4>
+
+          <div class="departure">
+            <h5 class="form-section-header">DEPARTURE DETAILS</h5>
+
+            <div class="departure-arrival-details">
+              <label>DEPART FROM (CITY) <span class="required"> - required</span></label>
+              <input type="text" formControlName="depCity" value="{{ flightSearchDetail?.depCity }}">
+
+              <label>DEPARTURE AIRPORT</label>
+              <input type="text" formControlName="depStation" value="{{ flightSearchDetail?.depStation }}">
+
+              <label>TERMINAL</label>
+              <input type="text" class="transport-terminal" formControlName="depTerminal" value="{{ flightSearchDetail?.depTerminal }}">
+
+              <label>DEPARTURE DATE (DD/MM/YYYY) <span class="required"> - required</span></label>
+              <input type="date" formControlName="depDate" value="{{ flightSearchDetail?.depDate | date: 'yyyy-MM-dd' }}" max="2050-12-31">
+
+              <label>DEPARTURE TIME</label>
+              <input type="time" formControlName="depTime" value="{{ flightSearchDetail?.depTime }}">
+
+              <label>FLIGHT NUMBER</label>
+              <input type="text" class="reference-number" formControlName="referenceNumber" value="{{ flightSearchDetail?.carrierCode }}{{ flightSearchDetail?.referenceNumber }}">
+            </div><!-- end of departure-arrival-details -->
+          </div><!-- end of departure details for flight -->
+
+          <div class="arrival">
+            <h5 class="form-section-header">ARRIVAL DETAILS</h5>
+
+            <div class="departure-arrival-details">
+              <label>GOING TO (CITY) <span class="required"> - required</span></label>
+              <input type="text" formControlName="arrCity" value="{{ flightSearchDetail?.arrCity }}">
+
+              <label>ARRIVAL AIRPORT</label>
+              <input type="text" formControlName="arrStation" value="{{ flightSearchDetail?.arrStation }}">
+
+              <label>TERMINAL</label>
+              <input type="text" class="transport-terminal" formControlName="arrTerminal">
+
+              <label>ARRIVAL DATE (DD/MM/YYYY)</label>
+              <input type="date" formControlName="arrDate" value="{{ flightSearchDetail?.arrDate | date: 'yyyy-MM-dd' }}" max="2050-12-31">
+
+              <label>ARRIVAL TIME</label>
+              <input type="time" formControlName="arrTime" value="{{ flightSearchDetail?.arrTime }}">
+            </div><!-- end of departure-arrival-details -->
+          </div><!-- end of arrival details for flight -->
+
+          <div class="departure-arrival-details">
+            <label>NOTE</label>
+            <textarea name="name" rows="3" formControlName="note"></textarea>
+          </div>
+
+          <div class="save-option">
+            <h4 (click)="cancelForm()">CANCEL</h4>
+            <button type="submit" class="save-button" [disabled]="!addTransportForm.valid"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end of flight -->
+
+
+    <div *ngIf="transportOption !== ''">
+
+      <div [ngSwitch]="transportOption" class="transport-type-header">
+        <h4 *ngSwitchCase="'TRAIN'"><i class="fa fa-train fa-lg" aria-hidden="true"></i> CONFIRM TRAIN DETAILS</h4>
+        <h4 *ngSwitchCase="'BUS'"><i class="fa fa-bus fa-lg" aria-hidden="true"></i> CONFIRM BUS DETAILS</h4>
+        <h4 *ngSwitchCase="'CRUISE'"><i class="fa fa-ship fa-lg" aria-hidden="true"></i> CONFIRM CRUISE DETAILS</h4>
+        <h4 *ngSwitchCase="'VEHICLE RENTAL'"><i class="fa fa-car fa-lg" aria-hidden="true"></i> CONFIRM VEHICLE RENTAL DETAILS</h4>
+        <h4 *ngSwitchCase="'OTHERS'"><i class="fa fa-rocket fa-lg" aria-hidden="true"></i> CONFIRM OTHER TRANSPORT TYPE DETAILS</h4>
+      </div>
+
+      <div *ngIf="transportOption !== 'FLIGHT'" class="transport-details">
+        <!-- exclude flight, left train, bus, cruise, rental & others -->
+        <div class="departure">
+          <h5 class="form-section-header">DEPARTURE DETAILS</h5>
+
+          <div class="departure-arrival-details">
+            <label>DEPART FROM (CITY) <span class="required"> - required</span></label>
+            <input type="text" formControlName="depCity">
+
+            <!-- departure details for all other transport type except vehicle rental-->
+            <div *ngIf="transportOption !== 'VEHICLE RENTAL'">
+              <label>DEPARTURE STATION / TERMINAL</label>
+              <input type="text" formControlName="depStation">
+
+              <label>DEPARTURE DATE (DD/MM/YYYY) <span class="required"> - required</span></label>
+              <input type="date" formControlName="depDate" max="2050-12-31">
+
+              <label>DEPARTURE TIME</label>
+              <input type="time" formControlName="depTime">
+            </div>
+
+            <div *ngIf="transportOption === 'VEHICLE RENTAL'">
+              <label>PICK UP DATE (DD/MM/YYYY) <span class="required"> - required</span></label>
+              <input type="date" formControlName="depDate" max="2050-12-31">
+
+              <label>PICK UP TIME</label>
+              <input type="time" formControlName="depTime">
+            </div>
+
+            <div *ngIf="transportOption === 'BUS'">
+              <label>BUS NUMBER</label>
+              <input type="text" class="reference-number" formControlName="referenceNumber">
+            </div>
+
+          </div><!-- end of departure details -->
+        </div><!-- end of departure -->
+
+        <div class="arrival">
+          <h5 class="form-section-header">ARRIVAL DETAILS</h5>
+
+          <div class="departure-arrival-details">
+            <label>GOING TO (CITY) <span class="required"> - required</span></label>
+            <input type="text" formControlName="arrCity">
+
+            <!-- arrival details for all transport type except vehicle rental-->
+            <div *ngIf="transportOption !== 'VEHICLE RENTAL'">
+              <label>ARRIVAL STATION / TERMINAL</label>
+              <input type="text" formControlName="arrStation">
+
+              <label>ARRIVAL DATE (DD/MM/YYYY)</label>
+              <input type="date" formControlName="arrDate" max="2050-12-31">
+
+              <label>ARRIVAL TIME</label>
+              <input type="time" formControlName="arrTime">
+            </div>
+
+            <div *ngIf="transportOption === 'VEHICLE RENTAL'">
+              <label>RETURN DATE (DD/MM/YYYY)</label>
+              <input type="date" formControlName="arrDate" max="2050-12-31">
+
+              <label>RETURN TIME</label>
+              <input type="time" formControlName="arrTime">
+            </div>
+
+          </div><!-- end of arrival details -->
+        </div><!-- end of arrival -->
+
+        <!-- template for vehicle rental -->
+        <div *ngIf="transportOption === 'VEHICLE RENTAL'">
+          <h5 class="form-section-header">RENTAL COMPANY DETAILS</h5>
+          <div class="departure-arrival-details">
+            <label>RENTAL COMPANY</label>
+            <input type="text" formControlName="transportCompany">
+
+            <label>CONTACT NUMBER</label>
+            <input type="text" class="contact-number-input" formControlName="contactNumber">
+          </div>
+        </div>
+        
+        <div class="departure-arrival-details">
+          <label>NOTE</label>
+          <textarea name="name" rows="3" formControlName="note"></textarea>
+        </div>
+
+        <div class="save-option">
+          <h4 (click)="cancelForm()">CANCEL</h4>
+          <button type="submit" class="save-button" [disabled]="!addTransportForm.valid"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
+        </div>
+      </div><!-- end of details for transport exclude flight -->
+
+    </div>
+
+  </div><!-- end of formCard -->
+
+</form>

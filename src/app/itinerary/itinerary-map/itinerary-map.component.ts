@@ -24,7 +24,7 @@ export class ItineraryMapComponent implements OnInit {
   dates = [];
   selectedDate;
 
-  showLegend = false;
+  showMapLegend = false;
 
   constructor(
     private itineraryEventService: ItineraryEventService,
@@ -54,11 +54,11 @@ export class ItineraryMapComponent implements OnInit {
     let center;
     let zoom;
 
-    let centerEvent = this.events.find(this.getCenter)
-
+    let centerEvent = this.events.find(this.getCenter);
+    
     if (centerEvent !== undefined) {
       center = {lat: centerEvent['lat'], lng: centerEvent['lng'] },
-      zoom = 12
+      zoom = 13
     } else if (centerEvent === undefined) {
       center = {lat: 0, lng: 0},
       zoom = 1
@@ -130,7 +130,7 @@ export class ItineraryMapComponent implements OnInit {
     let center = new google.maps.LatLng(event['lat'], event['lng']);
 
     this.itinMap.panTo(center);
-    this.showLegend = false;
+    this.showMapLegend = false;
   }
 
   setDate(events) {
@@ -154,11 +154,7 @@ export class ItineraryMapComponent implements OnInit {
     }
   }
 
-  showMapLegend() {
-    this.showLegend = !this.showLegend;
-  }
-
-  hideLegend()  {
-    this.showLegend = false;
+  showLegend() {
+    this.showMapLegend = !this.showMapLegend;
   }
 }

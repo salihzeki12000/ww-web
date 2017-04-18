@@ -1,11 +1,3 @@
-<div class="activityMenu">
-  <button class="reverseButton new-mobile" (click)="addCustomActivity()">Add activity</button>
-</div>
-
-<div *ngIf="addActivity" class="custom-modal">
-  <ww-activity-input (hideForm)="hideForm($event)" [itinDateRange]="itinDateRange"></ww-activity-input>
-</div>
-
 <ww-activity-list></ww-activity-list>
 
 

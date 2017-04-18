@@ -1,58 +1,117 @@
-<div class="date-row">
+<div class="legend">
+  <div class="accommodation-indicator">
+    <h6>ACCOMMODATION</h6>
+  </div>
+
+  <div class="activity-indicator">
+    <h6>ACTIVITY</h6>
+  </div>
+
+  <div class="transport-indicator">
+    <h6>TRANSPORT</h6>
+  </div>
+</div>
+
+<div class="date-row" [class.show-details-in-summary-true]="showDetailsInSummary">
   <div *ngFor="let date of itinDateRange; let i = index" class="date-column">
     <div *ngIf="date === 'any day'">
       <h5 class="date">Any day</h5>
     </div>
 
     <div *ngIf="date !== 'any day'">
-      <div class="date">
-        <h5>Day {{ i }}</h5>
-        <h5>{{ date | date: "dd MMM (EEE)" }}</h5>
+      <div>
+        <h5 class="date">Day {{ i }} - {{ date | date: "dd MMM (EEE)" }}</h5>
       </div>
     </div>
 
     <div *ngFor="let event of events">
-      <div *ngIf="event.date === date">
+      <div *ngIf="event?.summary_date === date">
+        <h5 class="event-time">{{ event?.summary_time }}</h5>
 
-        <div *ngIf="event.type === 'accommodation'" class="accommodation-indicator">
-          <div *ngIf="event.inOut === 'checkout'">
-            <h6 class="event-time">{{ event.time }}</h6>
+        <div *ngIf="event?.type === 'accommodation'" class="accommodation-indicator" (click)="showDetails(event)">
+          <div *ngIf="event?.inOut === 'checkout'">
             <div class="event-name">
               <h5>Check out</h5>
-              <h5>{{ event.name }}</h5>
+              <h5>{{ event?.name }}</h5>
             </div>
           </div>
 
-          <div *ngIf="event.inOut === 'checkin'">
-            <h6 class="event-time">{{ event.time }}</h6>
-            <h5 class="event-stay-city"><i class="fa fa-bed" aria-hidden="true"></i> {{ event.stayCity | uppercase }}</h5>
+          <div *ngIf="event?.inOut === 'checkin'">
+            <h5 class="event-stay-city"><i class="fa fa-bed" aria-hidden="true"></i> {{ event?.stayCity | uppercase }} ( {{ event?.numDays }} )</h5>
             <div class="event-name">
               <h5>Check in</h5>
-              <h5>{{ event.name }}</h5>
-              <h6 class="check-out-on">stay till {{ event.checkOutDate | date: 'dd MMM (EEE)' }}</h6>
+              <h5>{{ event?.name }}</h5>
+              <h5 class="check-out-on">stay till {{ event?.checkOutDate | date: 'dd MMM (EEE)' }}</h5>
             </div>
           </div>
         </div>
 
-        <div *ngIf="event.type === 'activity'" class="activity-indicator">
-          <h6 class="event-time">{{ event.time }}</h6>
-          <h5 class="event-name">{{ event.name }}</h5>
+        <div *ngIf="event?.type === 'activity'" class="activity-indicator" (click)="showDetails(event)">
+          <img src="{{event?.photo}}" alt="picture of {{ event?.name}}">
+          <h5 class="event-name">{{ event?.name }}</h5>
         </div>
 
-        <div *ngIf="event.type === 'transport'" class="transport-indicator">
-          <h6 class="event-time">{{ event.time }}</h6>
+        <div *ngIf="event?.type === 'transport'" class="transport-indicator" (click)="showDetails(event)">
+          <div *ngIf="event?.approach === 'departure'" class="event-name">
 
-          <div *ngIf="event.approach === 'departure'">
-            <h5 class="event-name">{{ event.transportType }} {{ event.referenceNumber }} departs {{ event.depCity }} for {{ event.arrCity}}</h5>
+            <div [ngSwitch]="event?.transportType">
+              <h5 *ngSwitchCase="'flight'"><i class="fa fa-plane" aria-hidden="true"></i> {{ event?.referenceNumber | uppercase }}</h5>
+              <h5 *ngSwitchCase="'train'"><i class="fa fa-train" aria-hidden="true"></i> Train</h5>
+              <h5 *ngSwitchCase="'bus'"><i class="fa fa-bus" aria-hidden="true"></i> Bus {{ event?.referenceNumber | uppercase }}</h5>
+              <h5 *ngSwitchCase="'cruise'"><i class="fa fa-ship" aria-hidden="true"></i> Cruise</h5>
+              <h5 *ngSwitchCase="'vehicle rental'"><i class="fa fa-car" aria-hidden="true"></i> Vehicle rental</h5>
+              <h5 *ngSwitchCase="'others'"><i class="fa fa-rocket" aria-hidden="true"></i> Transport</h5>
+            </div>
+
+            <h5>departs {{ event?.depCity }} for {{ event?.arrCity}}</h5>
           </div>
 
-          <div *ngIf="event.approach === 'arrival'">
-            <h5 class="event-name">{{ event.transportType }} {{ event.referenceNumber }} arrives {{ event.arrCity}}</h5>
+          <div *ngIf="event?.approach === 'arrival'" class="event-name">
+
+            <div [ngSwitch]="event?.transportType">
+              <h5 *ngSwitchCase="'flight'"><i class="fa fa-plane" aria-hidden="true"></i> {{ event?.referenceNumber | uppercase }} arrives {{ event?.arrCity}}</h5>
+              <h5 *ngSwitchCase="'train'"><i class="fa fa-train" aria-hidden="true"></i> Train arrives {{ event?.arrCity}}</h5>
+              <h5 *ngSwitchCase="'bus'"><i class="fa fa-bus" aria-hidden="true"></i> Bus {{ event?.referenceNumber | uppercase }} arrives {{ event?.arrCity}}</h5>
+              <h5 *ngSwitchCase="'cruise'"><i class="fa fa-ship" aria-hidden="true"></i> Cruise arrives {{ event?.arrCity}}</h5>
+              <h5 *ngSwitchCase="'vehicle rental'"><i class="fa fa-car" aria-hidden="true"></i> Vehicle rental arrives {{ event?.arrCity}}</h5>
+              <h5 *ngSwitchCase="'others'"><i class="fa fa-rocket" aria-hidden="true"></i> Transport arrives {{ event?.arrCity}}</h5>
+            </div>
+
           </div>
         </div>
 
       </div>
     </div>
 
+    <!-- <div *ngIf="date === 'any day'">
+      <h5 class="date date-end">Any day</h5>
+    </div>
+
+    <div *ngIf="date !== 'any day'">
+      <div class="date date-end">
+        <h5>Day {{ i }} - {{ date | date: "dd MMM (EEE)" }}</h5>
+      </div>
+    </div> -->
+
+  </div>
+</div>
+
+<!-- [@slideInOut]="detailsInSummary" -->
+<div *ngIf="showDetailsInSummary">
+  <div class="slide-back" (click)="hideDetailsInSummary()">
+    <i class="fa fa-arrow-right fa-2x" aria-hidden="true"></i>
+  </div>
+  <div class="show-details-in-summary">
+    <div *ngIf="chosenEvent?.type === 'transport'" class="details-in-summary">
+      <ww-transport [event]="chosenEvent"></ww-transport>
+    </div>
+
+    <div *ngIf="chosenEvent?.type === 'activity'" class="details-in-summary">
+      <ww-activity [activity]="chosenEvent"></ww-activity>
+    </div>
+
+    <div *ngIf="chosenEvent?.type === 'accommodation'" class="details-in-summary">
+      <ww-accommodation [event]="chosenEvent"></ww-accommodation>
+    </div>
   </div>
 </div>

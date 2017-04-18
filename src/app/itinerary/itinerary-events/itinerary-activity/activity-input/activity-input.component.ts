@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
 import { UserService }           from '../../../../user';
@@ -14,8 +14,7 @@ import { FlashMessageService }   from '../../../../flash-message';
   styleUrls: ['./activity-input.component.scss']
 })
 export class ActivityInputComponent implements OnInit {
-  @Input() itinDateRange;
-  @Output() hideForm = new EventEmitter<boolean>();
+  @Output() hideActivityForm = new EventEmitter<boolean>();
 
   customActivityForm: FormGroup;
   categories;
@@ -26,7 +25,12 @@ export class ActivityInputComponent implements OnInit {
   currentItinerarySubscription: Subscription;
   currentItinerary;
 
+  itinDateSubscription: Subscription;
+  itinDateRange = [];
+
   activityDetail;
+
+  searchDone = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,7 +38,8 @@ export class ActivityInputComponent implements OnInit {
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
     private flashMessageService: FlashMessageService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private router: Router) {
     this.customActivityForm = this.formBuilder.group({
       'categories': this.initCategoryArray(),
       'name': '',
@@ -57,15 +62,19 @@ export class ActivityInputComponent implements OnInit {
                                        .subscribe(
                                          result => {
                                            this.currentUser = result;
-                                         }
-                                       )
+                                       })
 
     this.currentItinerarySubscription = this.itineraryService.currentItinerary
                                             .subscribe(
                                               result => {
                                                 this.currentItinerary = result;
-                                              }
-                                            )
+                                            })
+
+    this.itinDateSubscription = this.itineraryService.updateDate
+                                    .subscribe(
+                                      result => {
+                                        this.itinDateRange = Object.keys(result).map(key => result[key]);
+                                    })
   }
 
   initCategoryArray() {
@@ -139,16 +148,20 @@ export class ActivityInputComponent implements OnInit {
     this.itineraryEventService.addEvent(activityForm, this.currentItinerary)
         .subscribe(
           result => {
+            if(this.route.snapshot['_urlSegment'].segments[3].path !== 'activities') {
+              let id = this.route.snapshot['_urlSegment'].segments[2].path;
+              this.router.navigateByUrl('/me/itinerary/' + id + '/activities');
+            }
             this.flashMessageService.handleFlashMessage(result.message);
           }
         );
 
-    this.hideForm.emit(false);
+    this.hideActivityForm.emit(false);
     this.resetActivityForm();
   }
 
   cancelForm()  {
-    this.hideForm.emit(false);
+    this.hideActivityForm.emit(false);
   }
 
   //date retreived from google
@@ -161,6 +174,8 @@ export class ActivityInputComponent implements OnInit {
       this.activityDetail.photo = this.activityDetail.photos[0].getUrl({'maxWidth': 300, 'maxHeight': 250});
     }
     this.activityDetail.opening_hours = this.getOpeningHours(this.activityDetail.opening_hours);
+
+    this.searchDone = true;
   }
 
   getOpeningHours(hours)  {
@@ -225,5 +240,11 @@ export class ActivityInputComponent implements OnInit {
       'locationCheckedIn': '',
     }])
   }
+  skipSearch()  {
+    this.searchDone = true;
+  }
 
+  backToSearch() {
+    this.searchDone = false;
+  }
 }

@@ -21,7 +21,8 @@ export class ResourceService  {
     return this.http.get( this.url + "/resource" + itinId)
                     .map((response: Response) => {
                       this.resources = response.json().resources;
-                      this.updateResources.next(this.resources);
+                      this.timeAgo(this.resources);
+                      // this.updateResources.next(this.resources);
                       return this.resources;
                     })
                     .catch((error: Response) => Observable.throw(error.json()));
@@ -40,7 +41,8 @@ export class ResourceService  {
                         username: resource['user'].username
                       }
                       this.resources.push(newResource);
-                      this.updateResources.next(this.resources);
+                      this.timeAgo(this.resources);
+                      // this.updateResources.next(this.resources);
                       return response.json();
                     })
                     .catch((error: Response) => Observable.throw(error.json()));
@@ -72,4 +74,34 @@ export class ResourceService  {
                     })
                     .catch((error: Response) => Observable.throw(error.json()));
   }
+
+  timeAgo(resources) {
+    for (let i = 0; i < resources.length; i++) {
+      let timePosted = new Date(resources[i]['created_at']).getTime();
+      let timeDiff = (Date.now() - timePosted) / 1000;
+
+      let units = [
+        { name: "MINUTE", in_seconds: 60, limit: 3600 },
+        { name: "HOUR", in_seconds: 3600, limit: 86400 },
+        { name: "DAY", in_seconds: 86400, limit: 604800 },
+        { name: "WEEK", in_seconds: 604800, limit: 2629743 },
+        { name: "MONTH", in_seconds: 2629743, limit: 31556926 },
+        { name: "YEAR", in_seconds: 31556926, limit: null }
+      ];
+
+      if(timeDiff < 60) {
+        resources[i]['time_ago'] = "LESS THAN A MINUTE AGO"
+      } else {
+        for (let j = 0; j < units.length; j++) {
+          if(timeDiff < units[j]['limit'] || !units[j]['limit'])  {
+            let timeAgo =  Math.floor(timeDiff / units[j].in_seconds);
+            resources[i]['time_ago'] = timeAgo + " " + units[j].name + (timeAgo > 1 ? "S" : "") + " AGO";
+            j = units.length;
+          };
+        }
+      }
+    }
+    this.updateResources.next(resources);
+  }
+
 }

@@ -21,7 +21,8 @@ export class ResourceComponent implements OnInit {
 
   currentUserSubscription: Subscription;
   currentUser;
-  sameUser;
+  sameUser = true;
+  showMenu = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -45,9 +46,9 @@ export class ResourceComponent implements OnInit {
   }
 
   checkSameUser() {
-    if(this.currentUser['id'] === this.resource['user']['_id']) {
-      this.sameUser = true;
-    }
+    // if(this.currentUser['id'] === this.resource['user']['_id']) {
+    //   this.sameUser = true;
+    // }
   }
 
   onEdit()  {
@@ -95,4 +96,7 @@ export class ResourceComponent implements OnInit {
     this.deleteResource = false;
   }
 
+  showMenuOptions() {
+    this.showMenu = true;
+  }
 }

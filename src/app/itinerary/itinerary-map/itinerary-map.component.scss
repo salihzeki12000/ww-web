@@ -1,30 +1,51 @@
 #map  {
   display: inline-block;
-  height: 600px;
-  width: calc(100% - 130px);
-  @media only screen and (max-width: 680px) {
+  height: 100vh;
+  width: calc(100% - 230px);
+  @media only screen and (max-width: 890px) {
     display: block;
     width: 100%;
-    // height: calc(100vh * 0.8);
-    height: 600px;
+    height: calc(100vh - 150px);
   }
 }
 
 .legend-section {
   display: inline-block;
-  @media only screen and (max-width: 680px) {
+  margin: 10px 10px 0 10px;
+  vertical-align: top;
+  @media only screen and (max-width: 890px) {
     display: none;
     height: 0;
   }
 }
 
-.legend-section > h5  {
-  text-align: center;
+.show-legend  {
+  @media only screen and (max-width: 890px) {
+    display: block;
+    position: fixed;
+    left: 0;
+    margin-top: -6px;
+    height: calc(100vh - 144px);
+    width: 100%;
+    vertical-align: top;
+    background-color: rgba(255,255,255,0.9);
+    border-top: 1px solid lightgray;
+    overflow: auto;
+    z-index: 999;
+  }
 }
 
-.date-filer {
-  width: 120px;
-  @media only screen and (max-width: 680px) {
+.fa-filter  {
+  display: inline-block;
+  color: grey;
+  vertical-align: middle;
+}
+
+.date-filter {
+  display: inline-block;
+  width: 90%;
+  padding: 5px;
+  @media only screen and (max-width: 890px) {
     width: 100%;
   }
 }
@@ -32,43 +53,55 @@
 select {
   height: auto;
   font-size: 0.83em;
-}
-
-.map-legend {
-  width: 120px;
-  max-height: 555px;
-  vertical-align: top;
-  border: 2px solid #6494ED;
-  border-bottom: none;
-  overflow: auto;
-  @media only screen and (max-width: 680px) {
-    width: 100%;
+  margin-bottom: 4px;
+  @media only screen and (max-width: 890px) {
+    margin-bottom: 15px;
   }
 }
 
-.show-legend  {
-  @media only screen and (max-width: 680px) {
-    display: block;
-    position: absolute;
-    top: -600px;
-    left: 0;
-    height: auto;
-    max-height: calc(100vh * 0.8);
-    width: 200px;
-    vertical-align: top;
-    background-color: rgba(255,255,255,0.8);
-    border-bottom: none;
-    overflow: auto;
+.map-legend {
+  width: 200px;
+  max-height: calc(100vh - 130px);
+  vertical-align: top;
+  border-right: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+  overflow: auto;
+  @media only screen and (max-width: 890px) {
+    width: 100%;
+    max-height: calc(100vh - 150px);
+    border-right: none;
   }
 }
 
 .map-event  {
   position: relative;
+  margin-bottom: 2px;
   padding: 5px;
-  border-bottom: 2px solid #6494ED;
+  box-shadow: inset 0px 0px 1px 1.5px rgba(0, 0, 0, 0.2);
   &:hover{
-    background-color: rgba(100,148,237,0.2);
+    background-color: #F6F6F6;
     cursor: pointer;
+  }
+  @media only screen and (max-width: 890px) {
+    border-right: none;
+  }
+}
+
+.map-event:last-child {
+  margin-bottom: 0;
+}
+
+.marker,
+.marker-details {
+  display: inline-block;
+  vertical-align: text-top;
+}
+
+.marker-details {
+  width: 80%;
+  @media only screen and (max-width: 890px) {
+    width: 90%;
+    font-size: 120%;
   }
 }
 
@@ -80,7 +113,7 @@ select {
 
 .marker-name  {
   display: inline-block;
-  width: 70%;
+  width: 100%;
   padding-left: 5px;
   vertical-align: top;
   overflow-wrap: break-word;
@@ -97,37 +130,32 @@ select {
   text-align: center;
   background-color: #6494ED;
   border-radius: 50%;
-}
-
-.marker-date {
-  margin-top: 3px;
-  text-align: center;
-  background-color: #FFC65C;
-  border-radius: 5px;
-}
-
-.show-legend-button {
-  display: none;
-  @media only screen and (max-width: 680px) {
-    display: block;
-    width: 100%;
-    margin: 10px 0;
+  @media only screen and (max-width: 890px) {
+    top: 15px;
   }
 }
 
-.hide-legend  {
-  @media only screen and (max-width: 680px) {
+.marker-date {
+  margin-bottom: 5px;
+  padding-left: 5px;
+  color: grey;
+  font-weight: 500;
+}
+
+.map-legend-popup  {
+  display: none;
+
+  @media only screen and (max-width: 890px) {
     display: block;
-    position: absolute;
-    top: 35px;
-    left: 188px;
-    height: 20px;
-    width: 20px;
-    text-align: center;
-    color: white;
-    background-color: #6494ED;
+    position: fixed;
+    top: calc(100vh - 115px);
+    right: 50px;
+    padding: 15px;
+    background-color: lightgray;
+    border: 1px solid lightgray;
     border-radius: 50%;
-    z-index: 500;
+    opacity: .7;
+    z-index: 1000;
     &:hover {
       cursor: pointer;
     }

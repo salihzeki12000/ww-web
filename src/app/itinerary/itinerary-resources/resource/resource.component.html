@@ -3,19 +3,36 @@
   <div [class.editing]="editing">
     <div class="view">
 
-      <div class="edit-delete" *ngIf="sameUser">
-        <a (click)="onEdit()"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-        <a (click)="confirmDelete()"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+      <div class="dots-menu" (mouseover)="showMenuOptions()">
+        <div class="item-menu" *ngIf="showMenu">
+          <ul>
+            <!-- <li>
+              <h5>Recommend</h5>
+              <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+            </li> -->
+            <li (click)="onEdit()" *ngIf="sameUser">
+              <h5>Edit</h5>
+              <i class="fa fa-pencil" aria-hidden="true"></i>
+            </li>
+            <li (click)="confirmDelete()" *ngIf="sameUser">
+              <h5>Delete</h5>
+              <i class="fa fa-trash-o" aria-hidden="true"></i>
+            </li>
+          </ul>
+        </div>
       </div>
 
-      <div class="linkDetails">
+      <div class="link-details">
 
         <h4 class="description">{{ resource?.description }}</h4>
-        <a href="{{resource?.link}}" target="_blank"><h5 class="truncate link">{{ resource?.link }}</h5></a>
+        <a href="{{resource?.link}}" target="_blank"><h5 class="truncate website-link">{{ resource?.link }}</h5></a>
 
         <div class="postby">
-          <h6>added by <a routerLink="/users/{{resource?.user['_Id']}}">{{ resource?.user.username }}</a></h6>
-          <p>{{ resource?.created_at | date: 'medium' }}</p>
+          <h5><a routerLink="/users/{{resource?.user['_Id']}}">{{ resource?.user.username }}</a></h5>
+          <div class="time-ago">
+            <p>{{ resource?.time_ago }}</p>
+            <span class="show-time">{{ resource?.created_at | date: 'EEE, dd MMM yyyy - HH:mm' }}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -26,15 +43,15 @@
 
     <form [formGroup]="editResourceForm" (ngSubmit)="onUpdateResource()">
 
-      <label>Description</label>
+      <label>DESCRIPTION</label>
       <input type="text" formControlName="description" [value]="resource.description">
 
-      <label>Link</label>
+      <label>LINK</label>
       <input type="text" formControlName="link" [value]="resource.link">
 
-      <div class="buttons">
-        <button type="button" class="deleteButton" (click)="cancelEditResource()">Cancel edit</button>
-        <button type="submit" class="primaryButton"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save changes</button>
+      <div class="save-option">
+        <h4 (click)="cancelEditResource()">CANCEL</h4>
+        <button type="submit" class="save-button"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
       </div>
 
     </form>
@@ -46,13 +63,17 @@
 <div class="delete-modal" *ngIf="deleteResource">
   <div class="confirm-delete">
     <div class="confirm-delete-header">
-      <h4>Delete resource {{ resource?.name }}</h4>
-      <a (click)="cancelDelete()">x</a>
+      <h3>Delete resource - {{ resource?.description }}?</h3>
     </div>
-    <h4 class="confirm-delete-content">Deleting resource <span class="confirm-delete-name">{{ resource?.name }}</span> will permanently remove it from your itinerary.</h4>
+
+    <div class="confirm-delete-content">
+      <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
+      <h4>Deleting resource {{ resource?.description }} will permanently remove it from your itinerary.</h4>
+    </div>
+
     <div class="confirm-delete-footer">
-      <button type="button" (click)="cancelDelete()">Cancel delete</button>
-      <button type="button" class="deleteButton" (click)="onDeleteResource()">Yes, delete {{ resource?.name }}</button>
+      <h4 (click)="cancelDelete()">CANCEL</h4>
+      <h4 (click)="onDeleteResource()">DELETE</h4>
     </div>
   </div>
 </div>

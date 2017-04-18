@@ -1,43 +1,105 @@
 <div class="itinerary">
 
   <div class="heading">
-
-    <h3 class="itinearary-name">{{ itinerary?.name }}   |   </h3>
+    <h2 class="itinerary-name">{{ itinerary?.name }}   |   </h2>
 
     <div class="itinerary-date">
-      <h5><i class="fa fa-calendar" aria-hidden="true"></i> {{ itinerary?.dateFrom | date:'dd MMM yyyy' }} to {{ itinerary?.dateTo | date:'dd MMM yyyy' }}</h5>
+      <h4><i class="fa fa-calendar" aria-hidden="true"></i> {{ itinerary?.dateFrom | date:'dd MMM yyyy' }} to {{ itinerary?.dateTo | date:'dd MMM yyyy' }}</h4>
     </div>
 
-    <div class="itinerary-edit">
-      <a (click)="editDetails()"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+    <div class="itinerary-edit" (mouseover)="showMenuOptions()">
+      <i class="fa fa-cog" aria-hidden="true"></i>
+      <div class="item-menu" *ngIf="showMenu">
+        <ul>
+          <li (click)="editDetails()">
+            <h5>Edit</h5>
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          </li>
+          <li (click)="confirmDelete()">
+            <h5>Delete</h5>
+            <i class="fa fa-trash-o" aria-hidden="true"></i>
+          </li>
+        </ul>
+      </div>
     </div>
-
   </div>
 
   <div class="members">
-    <div class="members-count">
-      <h4><i class="fa fa-user-plus" aria-hidden="true" (click)="getUsers()"></i> {{ itinerary?.members.length }}</h4>
-    </div>
+    <h6 (click)="getUsers()" class="invite-members">INVITE MEMBERS</h6>
+
     <div *ngFor="let member of itinerary?.members" class="member">
       <div class="tool-tip">
         <img src="{{ member.displayPic }}" alt="display picture for {{ member.username }}" class="user-profile-thumbnail">
         <span class="tool-tiptext">{{ member.username }}</span>
       </div>
     </div>
+    <div class="show-more-members" *ngIf="itinerary?.members.length > 5">
+      <h6>show more</h6>
+    </div>
   </div>
 
-  <ww-itinerary-events></ww-itinerary-events>
+  <!-- show members list in small screen -->
+  <div *ngIf="showCurrentMembers" class="show-current-members">
+    <div class="members-header-mobile">
+      <h4> MEMBERS ({{ itinerary?.members.length }})</h4>
+      <h5 (click)="getUsers()">ADD NEW MEMBERS <i class="fa fa-user-plus" aria-hidden="true"></i></h5>
+    </div>
+    <div *ngFor="let member of itinerary?.members" class="member-mobile">
+      <img src="{{ member.displayPic }}" alt="display picture for {{ member.username }}" class="user-profile-thumbnail">
+      <h4>{{ member.username }}</h4>
+    </div>
+  </div>
 
-</div>
+  <div class="members-icon-mobile" (click)="showMembers()" [class.show-current-members-active]="showCurrentMembers">
+    <i class="fa fa-users fa-lg" aria-hidden="true"></i>
+  </div>
+  <!-- end of show members list in small screen -->
 
-<div class="custom-modal" *ngIf="showActivities" (click)="showCollapseActivities()"></div>
+  <header>
+    <nav>
+      <ul class="itinerary-nav-tabs">
+        <li [class.add-new-active]="showAddNew" (mouseover)="showAddNewOptions()" class="add-new">
+          <a (mouseover)="showAddNewOptions()">ADD NEW <i class="fa fa-caret-down fa-lg" aria-hidden="true"></i></a>
+          <div class="show-add-new" *ngIf="showAddNew">
+            <ul>
+              <li (click)="newAccommodation()">NEW ACCOMMODATION</li>
+              <li (click)="newTransport()">NEW TRANSPORT</li>
+              <li (click)="newActivity()">NEW ACTIVITY</li>
+              <li (click)="newResource()">NEW RESOURCE</li>
+            </ul>
+          </div>
+        </li>
+        <li (click)="activateTab()" routerLinkActive="active"><a [routerLink]="['summary']">SUMMARY</a></li>
+        <li (click)="activateTab()" routerLinkActive="active"><a [routerLink]="['accommodation']">ACCOMMODATION</a></li>
+        <li (click)="activateTab()" routerLinkActive="active"><a [routerLink]="['transport']">TRANSPORT</a></li>
+        <li (click)="activateTab()" routerLinkActive="active"><a [routerLink]="['activities']">ACTIVITY</a></li>
+        <li (click)="activateTab()" routerLinkActive="active"><a [routerLink]="['resources']">RESOURCE</a></li>
+        <li (click)="activateTab()" routerLinkActive="active"><a [routerLink]="['map']">MAP VIEW</a></li>
+        <li (click)="activateTab()" routerLinkActive="active"><a [routerLink]="['print']">PRINTABLE VERSION</a></li>
 
-<div class="activity-collapse-dropdown">
-  <i class="fa fa-list fa-2x" aria-hidden="true" (click)="showCollapseActivities()"></i>
-</div>
+        <!-- <li><a>Others</a></li> -->
+      </ul>
+    </nav>
+  </header>
 
-<div class="activity-collapse-list" [class.show-collapse-activities]="showActivities">
-  <ww-activity-collapse-list></ww-activity-collapse-list>
+  <router-outlet></router-outlet>
+
+  <div *ngIf="addAccommodation" class="custom-modal">
+    <ww-accommodation-form (hideAccommodationForm)="hideAccommodationForm($event)"></ww-accommodation-form>
+  </div>
+
+  <div *ngIf="addTransport" class="custom-modal">
+    <ww-transport-form (hideTransportForm)="hideTransportForm($event)"></ww-transport-form>
+  </div>
+
+  <div *ngIf="addActivity" class="custom-modal">
+    <ww-activity-input (hideActivityForm)="hideActivityForm($event)"></ww-activity-input>
+  </div>
+
+  <div *ngIf="addResource" class="custom-modal">
+    <ww-resource-input (hideResourceForm)="hideResourceForm($event)"></ww-resource-input>
+  </div>
+
 </div>
 
 <!-- edit itinerary form modal -->
@@ -51,22 +113,22 @@
       </div>
 
       <form [formGroup]="basicDetailsForm" (ngSubmit)="saveDetails()">
-        <label>Itinerary Name</label>
+        <label>ITINERARY NAME</label>
         <input type="text" formControlName="name" [value]="itinerary.name">
 
         <div class="itinerary-date">
-          <label>Travel Date From</label>
+          <label>TRAVEL DATE FROM</label>
           <input type="date" formControlName="dateFrom" [value]="itinerary?.dateFrom | date: 'yyyy-MM-dd'">
         </div>
 
         <div class="itinerary-date">
-          <label>Travel Date To</label>
+          <label>TRAVEL DATE TO</label>
           <input type="date" formControlName="dateTo" [value]="itinerary?.dateTo | date: 'yyyy-MM-dd'">
         </div>
 
         <div class="save-option">
-          <button type="button" class="deleteButton" (click)="cancelEdit()">Cancel edit</button>
-          <button type="submit" class="primaryButton" [disabled]="!basicDetailsForm.valid"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save changes</button>
+          <h4 (click)="cancelEdit()">CANCEL</h4>
+          <button type="submit" class="save-button" [disabled]="!basicDetailsForm.valid"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
         </div>
       </form>
 
@@ -81,17 +143,18 @@
 <!-- delete itinerary modal -->
 <div class="custom-modal" *ngIf="deleteItinerary">
   <div class="confirm-delete">
-
     <div class="confirm-delete-header">
-      <h4>Delete itinerary {{ itinerary?.name }}</h4>
-      <a (click)="cancelDelete()">x</a>
+      <h3>Delete itinerary - {{ itinerary?.name }}?</h3>
     </div>
 
-    <h4 class="confirm-delete-content">Deleting itinerary <span class="confirm-delete-name">{{ itinerary?.name }}</span> will permanently remove it from your list of itineraries.</h4>
+    <div class="confirm-delete-content">
+      <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
+      <h4>Deleting itinerary {{ itinerary?.name }} will permanently remove it from your list of itineraries.</h4>
+    </div>
 
     <div class="confirm-delete-footer">
-      <button type="button" (click)="cancelDelete()">Cancel delete</button>
-      <button type="button" class="deleteButton" (click)="onDeleteItinerary()">Yes, delete {{ itinerary?.name }}</button>
+      <h4 (click)="cancelDelete()">CANCEL</h4>
+      <h4 (click)="onDeleteItinerary()">DELETE</h4>
     </div>
 
   </div>

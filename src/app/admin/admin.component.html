@@ -1,0 +1,25 @@
+<header>
+  <nav>
+    <ul class="admin-nav-tabs">
+      <li [class.add-new-active]="showAddNew" (mouseover)="showAddNewOptions()" class="add-new">
+        <a (mouseover)="showAddNewOptions()">ADD NEW <i class="fa fa-caret-down fa-lg" aria-hidden="true"></i></a>
+        <div class="show-add-new" *ngIf="showAddNew">
+          <ul>
+            <li [routerLink]="['attraction-new']">NEW ATTRACTION</li>
+            <!-- <li (click)="newTransport()">NEW TRANSPORT</li>
+            <li (click)="newActivity()">NEW ACTIVITY</li>
+            <li (click)="newResource()">NEW RESOURCE</li> -->
+          </ul>
+        </div>
+      </li>
+      <li routerLinkActive="active"><a [routerLink]="['attraction']">ATTRACTION</a></li>
+      <li routerLinkActive="active"><a [routerLink]="['attraction']">LOCAL DELICACIES</a></li>
+      <li routerLinkActive="active"><a [routerLink]="['attraction']">LANGUAGE</a></li>
+      <li routerLinkActive="active"><a [routerLink]="['attraction']">FESTIVALS &amp; EVENTS</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="admin-main">
+  <router-outlet></router-outlet>
+</div>

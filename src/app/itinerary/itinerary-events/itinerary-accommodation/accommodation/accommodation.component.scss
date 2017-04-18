@@ -1,0 +1,51 @@
+.check-in-details {
+  display: inline-block;
+  width: 49%;
+  margin-bottom: 10px;
+  padding: 10px 0;
+  text-align: center;
+  background-color: rgba(237, 100, 148, 0.2);
+}
+
+.check-out-details  {
+  display: inline-block;
+  width: 49%;
+  margin-bottom: 10px;
+  margin-left: -4px;
+  padding: 10px 0;
+  text-align: center;
+  background-color: rgba(100, 148, 237, 0.2);
+}
+
+.check-in-details > *,
+.check-out-details > *  {
+  padding-bottom: 3px;
+}
+
+.accommodation-address > h5:first-child,
+.accommodation-contact-number > h5:first-child,
+.accommodation-website > h5:first-child  {
+  width: 10%;
+}
+
+.note{
+  margin-bottom: 15px;
+}
+
+/* edit form */
+.accommodation-note {
+  display: block;
+}
+
+.anytime-input  {
+  display: inline-block;
+}
+
+.anytime-input > label > input  {
+  display: inline-block;
+  width: 15px;
+}
+
+.any-time-true {
+  margin-bottom: 10px;
+}

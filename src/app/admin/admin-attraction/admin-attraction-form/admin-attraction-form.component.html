@@ -1,0 +1,149 @@
+<div class="new-attraction-form">
+  <div class="attraction-google-search">
+    <label>SEARCH ATTRACTION BY NAME OR ADDRESS <span class="required"> - local name or address may be required</span></label>
+    <ww-google-place-search (placeDetail)="getAttractionDetails($event)"></ww-google-place-search>
+  </div>
+
+  <form [formGroup]="newAttractionForm" (ngSubmit)="onSubmit()">
+
+    <div class="details-section-container">
+      <h5 class="form-section-header">BASIC DETAILS</h5>
+      <div class="details-section-container">
+
+        <label>NAME</label>
+        <input type="text" formControlName="name" value="{{ attractionDetail?.name}}" #name>
+
+        <label>DESCRIPTION ({{description.value.length}} characters)</label>
+        <textarea rows="5" formControlName="description" value="{{ attractionDetail?.description}}" #description></textarea>
+
+        <label>SUB-DESCRIPTION ({{sub_description.value.length}} characters)</label>
+        <textarea rows="5" formControlName="sub_description" value="{{ attractionDetail?.sub_description}}" #sub_description></textarea>
+      </div>
+
+      <h5 class="form-section-header">LOCATION DETAILS</h5>
+      <div class="details-section-container">
+
+        <label>ADDRESS</label>
+        <textarea rows="3" formControlName="formatted_address" value="{{ attractionDetail?.formatted_address}}" #formatted_address></textarea>
+
+        <label>LATITUDE <span class="required"> - for internal use</span></label>
+        <input type="text" formControlName="lat" value="{{ attractionDetail?.lat}}">
+
+        <label>LONGITUDE <span class="required"> - for internal use</span></label>
+        <input type="text" formControlName="lng" value="{{ attractionDetail?.lng}}">
+
+        <label>COUNTRY <span class="required"> - for internal use</span></label>
+        <input type="text" formControlName="country" value="{{ attractionDetail?.country}}">
+
+        <label>CITY <span class="required"> - for internal use</span></label>
+        <input type="text" formControlName="city" value="{{ attractionDetail?.city}}">
+
+      </div>
+
+      <h5 class="form-section-header">CONTACT DETAILS</h5>
+      <div class="details-section-container">
+
+        <label>CONTACT NUMBER</label>
+        <input type="text" formControlName="international_phone_number" value="{{ attractionDetail?.international_phone_number}}" class="contact-number-input" #international_phone_number>
+
+        <label>WEBSITE</label>
+        <input type="url" id="website" formControlName="website" value="{{ attractionDetail?.website}}" #website>
+
+      </div>
+
+      <h5 class="form-section-header">OTHER DETAILS</h5>
+      <div class="details-section-container">
+
+        <label>OPENING HOURS</label>
+        <textarea rows="3" formControlName="opening_hours" value="{{ attractionDetail?.opening_hours}}" #opening_hours></textarea>
+
+        <label>COST / ENTRY FEE</label>
+        <input type="text" formControlName="entryFee" #entryFee>
+      </div>
+    </div>
+
+    <div class="save-option">
+      <button type="submit" class="save-button" [disabled]="!newAttractionForm.valid"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
+    </div>
+
+  </form>
+
+</div>
+
+<div class="attraction-display-card">
+
+  <div class="img">
+    <i class="fa fa-camera fa-4x" aria-hidden="true"></i>
+    <h5>Photo</h5>
+  </div>
+
+  <div class="activity-details">
+
+    <div class="dots-menu" (mouseover)="showMenuOptions()">
+      <div class="item-menu" *ngIf="showMenu">
+        <ul>
+          <li>
+            <h5>Recommend</h5>
+            <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+          </li>
+          <li>
+            <h5>Edit</h5>
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          </li>
+          <li>
+            <h5>Delete</h5>
+            <i class="fa fa-trash-o" aria-hidden="true"></i>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <h4 class="activity-header">{{ name.value }}</h4>
+
+    <div class="attraction-description">
+      <h5>{{ description.value }}</h5>
+    </div>
+
+    <div class="attraction-sub-description">
+      <h5>{{ sub_description.value }}</h5>
+    </div>
+
+    <div class="activity-contact-details" (click)="toggleContactDetails()">
+      <h5>Address and contact number</h5>
+      <h5><i class="fa fa-angle-down" aria-hidden="true"></i></h5>
+    </div>
+
+    <div *ngIf="showContactDetails">
+      <div class="activity-address">
+        <i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>
+        <h5> {{ formatted_address.value }}</h5>
+      </div>
+
+      <div class="activity-contact-number">
+        <i class="fa fa-phone fa-fw" aria-hidden="true"></i>
+        <h5>{{ international_phone_number.value }}</h5>
+      </div>
+    </div>
+
+    <div class="activity-opening-hours">
+      <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>
+      <h5>{{ opening_hours.value }}</h5>
+    </div>
+
+    <div class="activity-fee">
+      <i class="fa fa-money fa-fw" aria-hidden="true"></i>
+      <h5>{{ entryFee.value }}</h5>
+    </div>
+
+    <div class="activity-website">
+      <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+      <h5 class="truncate">
+        <a href="{{website.value}}" target="_blank" class="website-link">{{ website.value }}</a>
+      </h5>
+    </div>
+
+  </div>
+
+</div>
+
+<div #map id="attraction-map"></div>

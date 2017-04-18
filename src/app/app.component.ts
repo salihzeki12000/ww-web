@@ -44,7 +44,6 @@ export class AppComponent implements OnInit {
    }
 
   ngOnInit()  {
-    console.log("app component init");
     if(localStorage.getItem('token')) {
       this.userService.getCurrentUserDetails()
           .subscribe(
