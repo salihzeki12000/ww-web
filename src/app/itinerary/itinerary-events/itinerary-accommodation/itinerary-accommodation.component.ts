@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
 
@@ -31,6 +31,7 @@ export class ItineraryAccommodationComponent implements OnInit {
   highlightedEvent;
 
   constructor(
+    private renderer: Renderer,
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
     private userService: UserService) { }
@@ -47,6 +48,7 @@ export class ItineraryAccommodationComponent implements OnInit {
                                     .subscribe(
                                       result => {
                                         this.itinDateRange = Object.keys(result).map(key => result[key]);
+                                        this.itinDateRange.splice(0,1);
                                     })
 
     this.eventSubscription = this.itineraryEventService.updateEvent
@@ -74,9 +76,17 @@ export class ItineraryAccommodationComponent implements OnInit {
 
   showSummary() {
     this.showAccommodationSummary = !this.showAccommodationSummary;
+    this.togglePreventScroll(this.showAccommodationSummary);
+  }
+
+  togglePreventScroll(value)  {
+    this.renderer.setElementClass(document.body, 'prevent-scroll', value);
   }
 
   centerItem(event)  {
+    this.showAccommodationSummary = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+
     this.highlightedEvent = event;
   }
 }

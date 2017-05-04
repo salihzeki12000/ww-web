@@ -7,87 +7,106 @@
         <a (click)="cancelForm()">x</a>
       </div>
 
-      <div>
-        <ul class="progress-tracker">
-          <li class="progress-title" (click)="backToSearch()" [class.progress-done]="searchDone">SEARCH ACTIVITY</li><li class="progress-title">CONFIRM VISIT DATE &amp; TIME DETAILS</li>
-        </ul>
-      </div>
+      <div class="textless-header"></div>
 
-      <div *ngIf="!searchDone">
-        <label>SEARCH ACTIVITY BY NAME OR ADDRESS <span class="required"> - local name or address may be required</span></label>
-        <ww-google-place-search (placeDetail)="getActivityDetails($event)"></ww-google-place-search>
-        <h6 class="cannot-find" (click)="skipSearch()">Have a custom activity? Proceed to key in details ></h6>
-      </div>
-
-      <div class="activity-search-details" *ngIf="searchDone">
-        <h5 class="form-section-header">VISIT DATE &amp; TIME DETAILS</h5>
-        <div class="date-time-visit">
-
-          <!-- <h5 style="padding-left:2px;color:brown">When do you plan to visit this place?</h5> -->
-
-          <label>DATE TO VISIT <span class="required"> - required</span></label>
-          <select name="date" formControlName="date">
-            <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
-              <div *ngIf="itinDate === 'any day'">
-                <h5>{{ itinDate }}</h5>
-              </div>
-              <div *ngIf="itinDate !== 'any day'">
-                <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
-              </div>
-            </option>
-          </select>
-
-          <div class="time" [class.any-time-true]="anytime">
-            <label>TIME TO VISIT <span class="required"> - Default: any time</span></label>
-            <input type="time" formControlName="time">
-          </div>
+      <div class="form-housing">
+        <div class="progress-tracker-section">
+          <ul class="progress-tracker">
+            <li class="progress-title" (click)="backToSearch()" [class.progress-done]="searchDone">SEARCH ACTIVITY</li><li class="progress-title">CONFIRM VISIT DATE &amp; TIME DETAILS</li>
+          </ul>
         </div>
 
-        <h5 class="form-section-header">ACTIVITY DETAILS</h5>
-        <div class="activity-form-details">
-          <label>NAME <span class="required"> - required</span></label>
-          <input type="text" formControlName="name" value="{{ activityDetail?.name}}">
+        <div *ngIf="!searchDone">
+          <label>SEARCH ACTIVITY BY NAME OR ADDRESS <span class="required"> - local name or address may be required</span></label>
+          <ww-google-place-search (placeDetail)="getActivityDetails($event)"></ww-google-place-search>
+          <h6 class="cannot-find" (click)="skipSearch()">Unable to find by name or address? Proceed to key in details ></h6>
+        </div>
 
-          <label>ADDRESS</label>
-          <input type="text" formControlName="formatted_address" value="{{ activityDetail?.formatted_address}}">
+        <div *ngIf="searchDone">
+          <h5 class="form-section-header">VISIT DATE &amp; TIME DETAILS</h5>
+          <div class="form-section-details">
 
-          <label>CONTACT NUMBER</label>
-          <input type="text" formControlName="international_phone_number" value="{{ activityDetail?.international_phone_number}}" class="contact-number-input">
+            <div class="date-to-visit">
+              <label>DATE TO VISIT <span class="required"> - required</span></label>
+              <select class="select-date" name="date" formControlName="date">
+                <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
+                  <div *ngIf="itinDate === 'any day'">
+                    <h5>{{ itinDate }}</h5>
+                  </div>
+                  <div *ngIf="itinDate !== 'any day'">
+                    <h5>Day {{ i }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+                  </div>
+                </option>
+              </select>
+            </div>
 
-          <label>WEBSITE</label>
-          <input type="url" id="website" formControlName="website" value="{{ activityDetail?.website}}">
+            <div class="time-to-visit" [class.any-time-true]="anytime">
+              <label>TIME TO VISIT <span class="required"> - Default: any time</span></label>
+              <input type="time" formControlName="time">
+            </div>
+          </div>
 
-          <label>OPENING HOURS</label>
-          <textarea rows="3" formControlName="opening_hours" value="{{ activityDetail?.opening_hours}}"></textarea>
+          <h5 class="form-section-header">ACTIVITY DETAILS</h5>
+          <div class="form-section-details">
 
-          <label>COST / ENTRY FEE</label>
-          <input type="text" formControlName="entryFee">
+            <label>SELECT AN IMAGE AS THE DISPLAY PICTURE</label>
 
-          <label>NOTE</label>
-          <textarea rows="2" formControlName="note"></textarea>
-
-          <div formArrayName="categories">
-            <label>CATEGORY</label>
-
-            <div *ngFor="let category of categories.controls; let j = index" [formGroupName]="j">
-
-              <div class="category-input">
-                <input type="checkbox" formControlName="checked">
-                <label>
-                  <i class="fa fa-{{ category?.value.icon }} fa-fw" aria-hidden="true"></i>
-                  {{ category.value.value }}
+            <div class="slider">
+              <div class="slider-images" *ngFor="let image of activityDetail?.pictures; let i = index">
+                <input type="radio" name="slide_switch" id="image-{{i}}" (click)="selectPic(image)" checked>
+                <label for="image-{{i}}">
+                  <img src="{{ image }}" alt="">
                 </label>
+                <img src="{{ image }}" alt="">
+              </div>
+            </div>
+
+            <label>NAME <span class="required"> - required</span></label>
+            <input type="text" formControlName="name" value="{{ activityDetail?.name}}">
+
+            <label>ADDRESS</label>
+            <input type="text" formControlName="formatted_address" value="{{ activityDetail?.formatted_address}}">
+
+            <label>CONTACT NUMBER</label>
+            <input type="text" formControlName="international_phone_number" value="{{ activityDetail?.international_phone_number}}" class="contact-number-input">
+
+            <label>WEBSITE</label>
+            <input type="url" id="website" formControlName="website" value="{{ activityDetail?.website}}">
+
+            <label>OPENING HOURS</label>
+            <textarea rows="3" formControlName="opening_hours" value="{{ activityDetail?.opening_hours}}"></textarea>
+
+            <label>COST / ENTRY FEE</label>
+            <input type="text" formControlName="entry_fee">
+
+            <div formArrayName="categories">
+              <label>CATEGORY</label>
+
+              <div *ngFor="let category of categories.controls; let j = index" [formGroupName]="j">
+                <div class="category-input">
+                  <input type="checkbox" formControlName="checked">
+                  <label>
+                    <i class="fa fa-{{ category?.value.icon }} fa-fw" aria-hidden="true"></i>
+                    {{ category.value.value }}
+                  </label>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="save-option">
-          <h4 (click)="cancelForm()">CANCEL</h4>
-          <button type="submit" class="save-button" [disabled]="!customActivityForm.valid"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
-        </div>
+          <h5 class="form-section-header">NOTE</h5>
+          <div class="form-section-details">
+            <textarea rows="2" formControlName="note"></textarea>
+          </div>
 
+          <div class="action-response">
+            <h4 class="action-response-secondary" (click)="cancelForm()">CANCEL</h4>
+            <button type="submit" class="action-response-primary" [disabled]="!customActivityForm.valid"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
+          </div>
+
+        </div>
       </div>
+
 
     </div><!-- end of formCard -->
 

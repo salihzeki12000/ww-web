@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Renderer } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 declare var google:any;
@@ -27,6 +27,7 @@ export class ItineraryMapComponent implements OnInit {
   showMapLegend = false;
 
   constructor(
+    private renderer: Renderer,
     private itineraryEventService: ItineraryEventService,
     private route: ActivatedRoute) { }
 
@@ -55,7 +56,7 @@ export class ItineraryMapComponent implements OnInit {
     let zoom;
 
     let centerEvent = this.events.find(this.getCenter);
-    
+
     if (centerEvent !== undefined) {
       center = {lat: centerEvent['lat'], lng: centerEvent['lng'] },
       zoom = 13
@@ -131,6 +132,7 @@ export class ItineraryMapComponent implements OnInit {
 
     this.itinMap.panTo(center);
     this.showMapLegend = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
   setDate(events) {
@@ -156,5 +158,10 @@ export class ItineraryMapComponent implements OnInit {
 
   showLegend() {
     this.showMapLegend = !this.showMapLegend;
+    this.togglePreventScroll(this.showMapLegend);
+  }
+
+  togglePreventScroll(value)  {
+    this.renderer.setElementClass(document.body, 'prevent-scroll', value);
   }
 }

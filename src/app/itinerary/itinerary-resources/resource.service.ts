@@ -3,7 +3,8 @@ import { Http, Headers, Response } from '@angular/http';
 import 'rxjs/Rx';
 import { Observable, ReplaySubject } from 'rxjs';
 
-import { Resource } from './resource';
+import { Resource }            from './resource';
+import { NotificationService } from '../../notifications';
 
 @Injectable()
 export class ResourceService  {
@@ -11,10 +12,11 @@ export class ResourceService  {
 
   updateResources = new ReplaySubject();
 
-  // private url = 'http://localhost:9000';
   private url = 'https://vast-island-87972.herokuapp.com';
 
-  constructor( private http: Http)  {}
+  constructor(
+    private http: Http,
+    private notificationService: NotificationService)  {}
 
   getResources(itineraryId)  {
     const itinId = '?itinId=' + itineraryId;
@@ -22,7 +24,6 @@ export class ResourceService  {
                     .map((response: Response) => {
                       this.resources = response.json().resources;
                       this.timeAgo(this.resources);
-                      // this.updateResources.next(this.resources);
                       return this.resources;
                     })
                     .catch((error: Response) => Observable.throw(error.json()));
@@ -40,9 +41,24 @@ export class ResourceService  {
                         _Id: resource['user']._Id,
                         username: resource['user'].username
                       }
+
                       this.resources.push(newResource);
                       this.timeAgo(this.resources);
-                      // this.updateResources.next(this.resources);
+
+                      let itinerary = resource['itinerary'];
+
+                      for (let i = 0; i < itinerary['members'].length; i++) {
+                        if(itinerary['members'][i]['_id'] !== resource['user']._Id)  {
+                          this.notificationService.newNotification({
+                            recipient: itinerary['members'][i]['_id'],
+                            originator: resource['user']._Id,
+                            message: " has added a new resource " + resource['title'] + " to the itinerary " + itinerary['name'],
+                            link: "/me/itinerary/" + itinerary['_id'] + "/resource",
+                            read: false
+                          }).subscribe(date => {});
+                        }
+                      }
+
                       return response.json();
                     })
                     .catch((error: Response) => Observable.throw(error.json()));

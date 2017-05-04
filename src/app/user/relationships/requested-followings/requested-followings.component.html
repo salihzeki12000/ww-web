@@ -1,0 +1,7 @@
+<div *ngIf="requestedFollowings.length === 0">
+  <h4 class="nil-message-main">You do not have any pending following request at the moment</h4>
+</div>
+
+<div *ngIf="requestedFollowings.length > 0">
+  <ww-requested-following *ngFor="let requestedFollowing of requestedFollowings" [requestedFollowing]="requestedFollowing"></ww-requested-following>
+</div>

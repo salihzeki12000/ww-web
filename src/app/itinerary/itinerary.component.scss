@@ -1,70 +1,74 @@
 .itinerary  {
-  @media only screen and (max-width: 890px) {
-    margin-top: 110px;
-    background-color: pink;
-    // margin-left: calc((100vw -14px) * 0.02);
-    // margin-right: calc((100vw -14px) * 0.02);
-  }
-  @media only screen and (min-width: 890px) and (max-width: 1090px) {
-    margin-top: 110px;
-    background-color: lightblue;
-  }
+  margin-top: 90px;
+
+  // @media only screen and (max-width: 690px) {
+  // }
+  // @media only screen and (min-width: 690px) and (max-width: 890px) {
+  // }
+  // @media only screen and (min-width: 890px) and (max-width: 1090px) {
+  // }
   @media only screen and (min-width: 1090px)  {
     width: calc(100vw - 210px);
     margin-left: 200px;
-    margin-top: 110px;
   }
 }
 
-.heading  {
+.itinerary-header  {
   position: fixed;
-  top: 60px;
+  top: 40px;
   width: calc(100vw - 200px);
   padding: 10px 10px 10px 30px;
-  background-color: white;
-  z-index: 500;
-  box-shadow: inset -1px -1px 1px 1px rgba(0, 0, 0, 0.2);
+  height: 50px;
+  overflow: auto;
+  background-color: #FAFAFA;
+  z-index: 3;
+  box-shadow: 0 3px 2px -2px rgba(0, 0, 0, 0.2);
+
+  @media only screen and (max-width: 690px) {
+    width: 100%;
+    padding: 10px;
+  }
+
   @media only screen and (max-width: 1090px) {
     width: 100%;
+    padding: 10px;
   }
+}
+
+.itinerary-header::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+.itinerary-header::-webkit-scrollbar:horizontal {
+    height: 1px;
 }
 
 .itinerary-name {
   display: inline-block;
   margin-bottom: 5px;
-}
-
-.itinerary-date,
-.itinerary-edit {
-  display: inline-block;
-}
-
-.itinerary-edit > i {
-  &:hover {
-    color: grey;
-    cursor: pointer;
+  @media only screen and (max-width: 690px) {
+    font-size: 1.2em;
+    vertical-align: -webkit-baseline-middle;
+    overflow: auto;
+    white-space: nowrap;
   }
 }
 
-.itinerary-edit:hover .item-menu {
-  display: block;
-}
-
-.item-menu  {
-  top: 35px;
-  right: 0;
+.itinerary-date {
+  padding-left: 15px;
+  font-size: .8em;
 }
 
 /* members */
 .members  {
   position: fixed;
   left: 0;
-  top: 60px;
+  top: 40px;
   padding: 10px;
   height: 80px;
   width: 200px;
   text-align: right;
-  background-color: #F6F6F6;
+  background-color: white;
   @media only screen and (max-width: 1090px) {
     display: none;
   }
@@ -110,10 +114,7 @@
     border-radius: 6px;
     padding: 5px 0;
     position: absolute;
-    z-index: 1;
     bottom: 110%;
-    // left: 50%;
-    // margin-left: -60px;
 }
 
 .members .member:first-of-type .tool-tip .tool-tiptext  {
@@ -149,30 +150,6 @@ img.user-profile-thumbnail  {
 }
 
 /* members @ less than 680px */
-.show-current-members {
-  display: block;
-  position: fixed;
-  top: 104px;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  background-color: #F9FBFB;
-  z-index: 999;
-}
-
-.members-header-mobile > h4 {
-  padding: 10px;
-  letter-spacing: 1px;
-  border-top: 5px solid lightgrey;
-}
-
-.members-header-mobile > h5 {
-  padding: 15px;
-  color: #F9FBFB;
-  background-color: #6494ED;
-  letter-spacing: 1px;
-}
-
 .member-mobile  {
   padding: 10px;
   text-align: left;
@@ -185,18 +162,28 @@ img.user-profile-thumbnail  {
   display: inline-block;
 }
 
+.add-member-footer  {
+  padding: 10px 10px 0 0;
+}
+
 .members-icon-mobile {
   display: none;
   @media only screen and (max-width: 1090px) {
     position: fixed;
     display: block;
-    top: calc(100vh - 46px);
-    padding: 10px;
-    height: 39px;
-    width: 10%;
-    color: white;
-    background-color: #6494ED;
-    z-index: 9999;
+    top: calc(100vh - 40px);
+    // top: calc(100vh - 21px);
+    padding: 10.5px 20px;
+    height: 40px;
+    width: 59px;
+    background-color: white;
+    box-shadow: 0px -3px 2px -2px rgba(0, 0, 0, 0.2);
+    z-index: 500;
+    &:hover {
+      cursor: pointer;
+      color: white;
+      background-color: #567fcc;
+    }
   }
 }
 
@@ -209,79 +196,86 @@ img.user-profile-thumbnail  {
 nav {
   @media only screen and (max-width: 1090px) {
     position: fixed;
-    z-index: 9999;
+    z-index: 500;
   }
 }
 
 .itinerary-nav-tabs {
   position: fixed;
   left: 0;
-  top: 140px;
+  top: 120px;
   padding: 0;
-  height: calc(100vh - 140px);
+  height: calc(100vh - 120px);
   width: 200px;
   letter-spacing: 1px;
-  background-color: #F6F6F6;
+  background-color: white;
+
   @media only screen and (max-width: 1090px) {
     position: fixed;
-    top: calc(100vh - 46px);
-    left: 10%;
+    top: calc(100vh - 40px);
+    // top: calc(100vh - 21px);
+    left: 55px;
     height: auto;
-    width: 90%;
+    width: calc(100vw - 50px);
     margin-bottom: 0;
     padding: 0;
     list-style: none;
     overflow: auto;
     white-space: nowrap;
-    background-color: #6494ED;
     border: none;
+    box-shadow: 0px -3px 2px -2px rgba(0, 0, 0, 0.2);
   }
 }
 
-.itinerary-nav-tabs>li  {
+.itinerary-nav-tabs > li  {
   padding: 10px 0 10px 10px;
   text-align: right;
+
   @media only screen and (max-width: 1090px) {
-    display:inline-block;
+    display: inline-block;
+    padding: 10px;
   }
 }
 
-.itinerary-nav-tabs>li>a {
+.itinerary-nav-tabs > li > a {
   padding: 10px;
   color: #3A4A4D;
   border-radius: 0;
   text-decoration: none;
   &:hover {
-    color: #FFF;
-    background-color: rgba(100,148,237,0.5);
+    color: white;
+    background-color: #6494ED;
   }
 
   @media only screen and (max-width: 1090px) {
-    color: #F9FBFB;
+    &:hover {
+      color: white;
+      background-color: #6494ED;
+      border-top: 5px solid #6494ED;
+    }
   }
 }
 
 .itinerary-nav-tabs .add-new > a  {
   &:hover {
     padding-bottom: 13px;
-    border-radius: 0;
+    color: white;
     background-color: #567FCC;
+    border-top: 5px solid #567FCC;
   }
-
-  // @media only screen and (max-width: 1090px) {
-  //   &:hover {
-  //     background-color: #567FCC;
-  //   }
-  // }
 }
 
-.itinerary-nav-tabs>li.active>a {
+.itinerary-nav-tabs > li.active > a {
   color: #6494ED;
   font-weight: bold;
   border-right: 5px solid #6494ED;
+  &:hover {
+    background-color: white;
+  }
+
   @media only screen and (max-width: 1090px) {
-    background-color: #F9FBFB;
-    border-radius: 50px;
+    border-top: 5px solid #6494ED;
+    border-right: none;
   }
 }
 
@@ -289,18 +283,17 @@ nav {
 .itinerary-nav-tabs::-webkit-scrollbar {
     -webkit-appearance: none;
 }
-.itinerary-nav-tabs::-webkit-scrollbar:horizontal {
-    height: 8px;
-}
-.itinerary-nav-tabs::-webkit-scrollbar-thumb {
-    border-radius: 8px;
-    background-color: rgba(0, 0, 0, .5);
-}
-.itinerary-nav-tabs::-webkit-scrollbar-track {
-    background-color: #fff;
-    border-radius: 8px;
-}
-
+// .itinerary-nav-tabs::-webkit-scrollbar:horizontal {
+//     height: 8px;
+// }
+// .itinerary-nav-tabs::-webkit-scrollbar-thumb {
+//     border-radius: 8px;
+//     background-color: rgba(0, 0, 0, .5);
+// }
+// .itinerary-nav-tabs::-webkit-scrollbar-track {
+//     background-color: #fff;
+//     border-radius: 8px;
+// }
 
 /* show options to add new item */
 .add-new:hover .show-add-new  {
@@ -315,7 +308,7 @@ nav {
   width: 180px;
   @media only screen and (max-width: 1090px) {
     position: fixed;
-    top: calc(100vh - 242px);
+    top: calc(100vh - 230px);
     left: 0;
     width: 100%;
     text-align: center;
@@ -351,10 +344,6 @@ nav {
   }
 }
 
-.save-option  {
-  display: block;
-}
-
 .delete-itin-button  {
   text-align: center;
   margin-top: 40px;
@@ -367,4 +356,8 @@ input.add-member  {
   display: inline-block;
   width: auto;
   float: right;
+}
+
+.search-result-card:last-child  {
+  border-bottom: none;
 }

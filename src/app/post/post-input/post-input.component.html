@@ -1,10 +1,35 @@
-
 <div class="post-form">
-  <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+  <div class="post-input-box" (click)="showTextArea()" *ngIf="!textArea">
+    <h4><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i> been wondering wandering?</h4>
+  </div>
 
-    <textarea rows="4" formControlName="content" placeholder="been wondering wandering?"></textarea>
+  <form [formGroup]="postForm" (ngSubmit)="onSubmit()" *ngIf="textArea">
 
-    <button type="submit" class="primaryButton" [disabled]="!postForm.valid">Post</button>
+    <div class="user-postby">
+      <div>
+        <img src="{{ currentUser.display_picture }}" class="user-profile-thumbnail">
+      </div>
+      <div class="user-details">
+        <h5>{{ currentUser.username}}</h5>
+        <p class="post-thoughts">in deep thoughts...</p>
+      </div>
+    </div>
+
+    <textarea rows="4" formControlName="content" placeholder="been wondering wandering?" #text (keyup)="checkLink(text.value)" autofocus></textarea>
+
+    <div class="link-preview" *ngIf="linkExist">
+      <h4 class="delete-link" (click)="deleteLink()">X</h4>
+      <a href="{{ link_url }}" target="_blank">
+        <img class="link-img" src="{{ link_img }}" alt="">
+        <h3 class="link-title">{{ link_title }}</h3>
+        <h5 class="link-url">{{ link_url }}</h5>
+      </a>
+    </div>
+
+    <div class="action-response">
+      <h4 class="action-response-secondary" (click)="cancelPost()">CANCEL</h4>
+      <button type="submit" class="action-response-primary" [disabled]="!postForm.valid"><h4>POST</h4></button>
+    </div>
 
   </form>
 

@@ -1,0 +1,7 @@
+<div *ngIf="followings.length === 0">
+  <h4 class="nil-message-main">You do not have any following at the moment</h4>
+</div>
+
+<div *ngIf="followings.length > 0">
+  <ww-following *ngFor="let following of followings" [following]="following"></ww-following>
+</div>

@@ -1,4 +1,4 @@
-<h5>New to wonderer wanderer? Sign up with us now!</h5>
+<h3 class="sign-up-header">Sign up with us now!</h3>
 
 <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
 
@@ -16,6 +16,10 @@
   <input type="password" #passwordConfirmation formControlName="passwordConfirmation">
   <span *ngIf="!passwordConfirmation.pristine && passwordConfirmation.errors != null && passwordConfirmation.errors['passwordsNotMatch']">Passwords do not match</span>
 
-  <button type="submit" [disabled]="!signupForm.valid">Sign Up Now</button>
+  <button type="submit" class="signup-button" [disabled]="!signupForm.valid">Sign Up Now</button>
+
+  <h5 class="sign-in-message" (click)="getSigninForm()">Have an account? Sign in now!</h5>
+  <h5 class="back-to-signin-message" (click)="backToAuth()">Back to sign in home</h5>
+
 
 </form>

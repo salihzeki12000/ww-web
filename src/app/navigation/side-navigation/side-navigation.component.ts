@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
-import { User, UserService, FollowingService } from '../../user';
+import { User, UserService, RelationshipService } from '../../user';
 import { ItineraryService, ItineraryEventService } from '../../itinerary';
 import { AuthService } from '../../auth';
 
@@ -12,117 +12,178 @@ import { AuthService } from '../../auth';
   templateUrl: './side-navigation.component.html',
   styleUrls: ['./side-navigation.component.scss']
 })
-export class SideNavigationComponent implements OnInit {
+export class SideNavigationComponent implements OnInit, OnDestroy {
   currentUser: User;
   currentUserSubscription: Subscription;
+  relationshipSubscription: Subscription;
 
   showItineraryForm = false;
-  itineraryForm: FormGroup;
   itinerariesSubscription: Subscription;
 
   users: User[] = [];
   showUsers = false;
 
-  followers = [];
+  socialRelationships = [];
+
   followings = [];
-  requests = [];
+  followers = [];
+  pendingFollowers = [];
+  requestedFollowings = [];
 
   connectionsSection = true;
   itinerariesSection = true;
   settingsSection = false;
   showMenu = false;
 
+  showItineraries = false;
+  searchOptions = false;
+  filteredResult;
+  showFollowerRequests = false;
+  showNotification = false;
+  profileOptions = false;
+
+  notificationsLimit = true;
+
   constructor(
     private router: Router,
+    private renderer: Renderer,
     private formBuilder: FormBuilder,
     private userService: UserService,
     private authService: AuthService,
     private itineraryEventService: ItineraryEventService,
-    private followingService: FollowingService,
-    private itineraryService: ItineraryService
-  ) {
-      this.itineraryForm = this.formBuilder.group({
-        'name': ['', Validators.required],
-        'dateFrom': ['', Validators.required],
-        'dateTo': ['', Validators.required]
-      });
-    }
+    private relationshipService: RelationshipService,
+    private itineraryService: ItineraryService ) { }
 
   ngOnInit() {
     this.currentUserSubscription = this.userService.updateCurrentUser
                                        .subscribe(
                                          result => {
                                            this.currentUser = result;
-                                           this.getFollowings();
+                                           this.getFollowings(this.currentUser);
                                          }
                                        )
 
     this.itinerariesSubscription = this.itineraryService.updateItineraries
-                                    .subscribe(
-                                      result => {
-                                        this.handleItinChange(result)
-                                      })
+                                       .subscribe(
+                                         result => {
+                                           this.handleItinChange(result)
+                                         })
+
+    this.relationshipSubscription = this.relationshipService.updateRelationships
+                                     .subscribe(
+                                       result => {
+                                         this.socialRelationships = Object.keys(result['relationships']).map(key => result['relationships'][key]);;
+                                         this.followers = Object.keys(result['followers']).map(key => result['followers'][key]);;
+                                         this.followings = Object.keys(result['followings']).map(key => result['followings'][key]);;
+                                         this.pendingFollowers = Object.keys(result['pendingFollowers']).map(key => result['pendingFollowers'][key]);;
+                                         this.requestedFollowings = Object.keys(result['requestedFollowings']).map(key => result['requestedFollowings'][key]);;
+                                         this.groupUsers();
+                                       }
+                                     )
 
     this.userService.getAllUsers()
         .subscribe(
           result => {
-            this.users = result.users;
+            this.users = result;
           }
         )
-
   }
 
-  getFollowings() {
-    this.followingService.getRelationships()
+  ngOnDestroy() {
+    this.currentUserSubscription.unsubscribe();
+    this.itinerariesSubscription.unsubscribe();
+    this.relationshipSubscription.unsubscribe();
+  }
+
+  getFollowings(currentUser) {
+    this.relationshipService.getRelationships(currentUser)
         .subscribe(
-          result => {
-            this.filterFollowers(result.followings);
-          }
+          result => {}
         )
-  }
-
-  filterFollowers(relationship) {
-    this.followings = [];
-    this.followers = [];
-    this.requests = [];
-
-    for (let i = 0; i < relationship.length; i++) {
-      if(relationship[i]['user'] === this.currentUser['id']) {
-        this.followings.push(relationship[i]);
-      }
-      if(relationship[i]['following'] === this.currentUser['id']) {
-        if(relationship[i]['status'] === 'requested')  {
-          this.requests.push(relationship[i])
-        } else  {
-          this.followers.push(relationship[i]);
-        }
-      }
-    }
-    this.groupUsers();
   }
 
   groupUsers()  {
-    if(this.followings.length === 0) {
-      for (let i = 0; i < this.users.length; i++) {
-        this.users[i]['status'] = '';
-      }
-    }
-    if(this.followings.length > 0 )  {
-      for (let i = 0; i < this.users.length; i++) {
-        for (let j = 0; j < this.followings.length; j++) {
-          if(this.users[i]['_id'] !== this.followings[j]['following']) {
-            this.users[i]['status'] = '';
+    for (let i = 0; i < this.users.length; i++) {
+      this.users[i]['follower_status'] = '';
+      this.users[i]['following_status'] = '';
+
+      if(this.socialRelationships.length > 0) {
+        for (let j = 0; j < this.socialRelationships.length; j++) {
+          let follower_id = this.socialRelationships[j]['user']['_id'];
+          let following_id = this.socialRelationships[j]['following']['_id'];
+
+          if(this.users[i]['_id'] === follower_id) {
+            this.users[i]['follower_status'] = this.socialRelationships[j]['relative_status'];
           }
-          if(this.users[i]['_id'] === this.followings[j]['following'])  {
-            if(this.followings[j]['status'] === 'requested') {
-              this.users[i]['status'] = 'requested';
-            } else  {
-              this.users[i]['status'] = 'following';
-            }
+
+          if(this.users[i]['_id'] === following_id) {
+            this.users[i]['following_status'] = this.socialRelationships[j]['relative_status'];
           }
         }
       }
     }
+  }
+
+  follow(user)  {
+    this.relationshipService.requestFollow({
+      user: this.currentUser,
+      following: user,
+    }).subscribe( result => {} )
+  }
+
+  unfollow(user)  {
+    let relationship;
+    let status;
+
+    if(user.following_status === 'following')  {
+      for (let i = 0; i < this.followings.length; i++) {
+        if(this.followings[i]['following']['_id'] === user["_id"]) {
+          relationship = this.followings[i];
+          status = "following";
+        }
+      }
+    }
+
+    if(user.following_status === 'requestedFollowing')  {
+      for (let i = 0; i < this.requestedFollowings.length; i++) {
+        if(this.requestedFollowings[i]['following']['_id'] === user["_id"]) {
+          relationship = this.requestedFollowings[i];
+          status = "requestedFollowing";
+        }
+      }
+    }
+
+    this.relationshipService.deleteFollow(relationship, status)
+        .subscribe( result => {} )
+  }
+
+  acceptRequest(following) {
+    following['status'] = 'accepted';
+    following['responded'] = true;
+    following['request_accepted'] = true;
+
+    this.relationshipService.acceptFollow(following)
+        .subscribe( result => {} )
+  }
+
+  ignoreRequest(following) {
+    following['responded'] = true;
+    following['request_ignored'] = true;
+
+    this.relationshipService.deleteFollow(following, "pendingFollower")
+        .subscribe( result => {} )
+  }
+
+  getUsers()  {
+    this.showUsers = true;
+    this.showMenu = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', true);
+  }
+
+  cancelShowUsers() {
+    this.showUsers = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+    this.filteredResult = [];
   }
 
   handleItinChange(result)  {
@@ -154,57 +215,21 @@ export class SideNavigationComponent implements OnInit {
     }
   }
 
-  cancelItineraryForm() {
-    this.showItineraryForm = false;
-  }
-
   createItinerary() {
     this.showItineraryForm = true;
     this.showMenu = false;
   }
 
-  onSubmit()  {
-    let itinerary = this.itineraryForm.value;
-
-    itinerary.members = [this.currentUser['id']];
-
-    this.itineraryService.addItin(itinerary)
-        .subscribe(
-          data => {
-            this.router.navigate(['/me/itinerary', data.itinerary._id]);
-          });
-
+  hideItineraryForm(hide) {
     this.showItineraryForm = false;
-  }
-
-  getUsers()  {
-    this.showUsers = true;
-  }
-
-  cancelShowUsers() {
-    this.showUsers = false;
-  }
-
-  follow(user)  {
-    user.status = 'requested';
-    this.followingService.requestFollow({
-      user: this.currentUser['id'],
-      following: user['_id'],
-      status: 'requested'
-    }).subscribe(
-      data => {
-        console.log(data);
-      }
-    )
-  }
-
-  cancelRequest(user) {
-    user.status = '';
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
   logout()  {
     this.authService.logout();
     this.showMenu = false;
+    this.profileOptions = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
   toggleConnectionsSection() {
@@ -221,9 +246,86 @@ export class SideNavigationComponent implements OnInit {
 
   showSideMenu()  {
     this.showMenu = !this.showMenu;
+    this.togglePreventScroll(this.showMenu);
+  }
+
+  togglePreventScroll(value)  {
+    this.renderer.setElementClass(document.body, 'prevent-scroll', value);
   }
 
   exitMenu()  {
     this.showMenu = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+  }
+
+  // top navigation
+  showSearchOptions() {
+    this.searchOptions = true;
+  }
+
+  filterSearch(text)  {
+    if(!text)   {
+      this.filteredResult = [];
+    } else  {
+      this.filteredResult = Object.assign([], this.users).filter(
+        user => user.username.toLowerCase().indexOf(text.toLowerCase()) > -1
+      )
+    }
+  }
+
+  exitSearch()  {
+    this.filteredResult = [];
+  }
+
+  showItineraryList() {
+    this.showItineraries = true;
+  }
+
+  hideItineraryList() {
+    this.showItineraries = false;
+  }
+
+  showFollowerRequestsList() {
+    this.showFollowerRequests = true;
+  }
+
+  hideFollowerRequestsList() {
+    this.showFollowerRequests = false;
+  }
+
+  showNotificationsList() {
+    this.showNotification = true;
+  }
+
+  hideNotificationList()  {
+    this.showNotification = false;
+  }
+
+  showProfileOptions()  {
+    this.profileOptions = true;
+  }
+
+  hideProfileOptions()  {
+    this.profileOptions = false;
+  }
+
+  routeToFollowers() {
+    this.showMenu = false;
+    this.router.navigateByUrl('/me/relationships/followers');
+  }
+
+  routeToFollowings() {
+    this.showMenu = false;
+    this.router.navigateByUrl('/me/relationships/following');
+  }
+
+  routeToPendingFollowers() {
+    this.showMenu = false;
+    this.router.navigateByUrl('/me/relationships/follow-request');
+  }
+
+  routeToNotifications()  {
+    this.showNotification = false;
+    this.router.navigateByUrl('/me/notifications');
   }
 }

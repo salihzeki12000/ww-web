@@ -1,0 +1,14 @@
+<div class="search-result-card">
+  <img src="{{ requestedFollowing.following.display_picture }}" alt="" class="user-profile-thumbnail">
+  <div class="user-details">
+    <h4 class="user-username">{{ requestedFollowing.following.username }}</h4>
+    <h5 class="user-search-description">{{ requestedFollowing.following.description }}</h5>
+  </div>
+
+  <div class="follow-button">
+    <div class="following-response">
+      <h5 class="requested-following">Requested</h5>
+      <h5 class="unfollow" (click)="unfollow()">Cancel request</h5>
+    </div>
+  </div>
+</div>

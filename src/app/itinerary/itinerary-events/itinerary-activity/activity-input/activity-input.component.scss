@@ -1,9 +1,9 @@
 .progress-tracker li {
   width: 50%;
-}
 
-select  {
-  width: 190px;
+  @media only screen and (max-width: 500px) {
+    width: 100%;
+  }
 }
 
 .anytime-input  {

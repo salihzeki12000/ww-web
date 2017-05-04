@@ -1,12 +1,15 @@
+<div class="custom-modal" *ngIf="showMapLegend" (click)="showLegend()"></div>
+
 <div class="legend-section" [class.show-legend]="showMapLegend">
-  <div class="date-filter">
+  <!-- <div class="date-filter">
     <select name="date" [(ngModel)]="selectedDate" (ngModelChange)="filterMarkers($event)">
       <option *ngFor="let date of dates" [value]="date">
         <h5>{{ date }}</h5>
       </option>
     </select>
   </div>
-  <i class="fa fa-filter fa-lg" aria-hidden="true"></i>
+  <i class="fa fa-filter fa-lg" aria-hidden="true"></i> -->
+  <h5 class="map-summary-length">MAP LIST ({{ events.length }})</h5>
 
   <div class="map-legend">
     <div *ngFor="let event of events; let i = index" class="map-event" (click)="changeCenter(event)">
@@ -23,6 +26,10 @@
 
         <div *ngIf="event.date === 'any day'">
           <h5 class="marker-date">Any day - {{ event.time }}</h5>
+        </div>
+
+        <div *ngIf="event.type === 'accommodation'">
+          <h5 class="accommodation-summary-header"><i class="fa fa-bed" aria-hidden="true"></i> in {{ event.stay_city | uppercase }}</h5>
         </div>
 
         <h5 class="marker-name">{{ event.name }}</h5>

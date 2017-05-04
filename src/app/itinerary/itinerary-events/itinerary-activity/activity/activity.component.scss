@@ -1,42 +1,5 @@
-.activity-card {
-  position: relative;
-  margin: 15px;
-  width: 300px;
-  vertical-align: text-top;
-  background-color: white;
-  -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
-  -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
-  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
-
-  @media only screen and (max-width: 400px) {
-    width: calc(100vw * 0.95);
-    min-width: 300px;
-  }
-}
-
-img {
-  width: 300px;
-  height: 200px;
-  overflow: hidden;
-
-  @media only screen and (max-width: 400px) {
-    width: calc(100vw * 0.95);
-    height: calc(100vw * 0.66);
-    min-width: 300px;
-    min-height: 200px;
-  }
-}
-
-.img {
-  padding-top: 60px;
-  width: 300px;
-  height: 200px;
-  background-color: #f5f5fd;
-  text-align: center;
-}
-
 .item-menu  {
-  top: 230px;
+  top: 225px;
 }
 
 .activity-contact-details {
@@ -65,10 +28,6 @@ img {
 }
 
 /* edit view */
-select  {
-  width: 190px;
-}
-
 .anytime-input  {
   display: inline-block;
 }

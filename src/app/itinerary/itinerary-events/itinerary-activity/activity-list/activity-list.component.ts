@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 
 import { ItineraryEvent } from '../../itinerary-event';
@@ -19,8 +19,9 @@ export class ActivityListComponent implements OnInit {
 
   showActivitySummary = false;
   highlightedEvent;
-  
+
   constructor(
+    private renderer: Renderer,
     private itineraryEventService: ItineraryEventService,
     private userService: UserService) { }
 
@@ -58,9 +59,17 @@ export class ActivityListComponent implements OnInit {
 
   showSummary() {
     this.showActivitySummary = !this.showActivitySummary;
+    this.togglePreventScroll(this.showActivitySummary);
+  }
+
+  togglePreventScroll(value)  {
+    this.renderer.setElementClass(document.body, 'prevent-scroll', value);
   }
 
   centerItem(activity)  {
+    this.showActivitySummary = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+
     this.highlightedEvent = activity;
   }
 

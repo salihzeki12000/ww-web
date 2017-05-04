@@ -1,25 +1,75 @@
 <div class="landing-page-container">
-  <!-- <div class="landing-page-logo">
-    <h1>W</h1>
-    <div class="sub-title">
-      <h2>onderer</h2>
-      <h2>anderer</h2>
-    </div>
-  </div> -->
-  <div class="landing-page-main">
-    <h3 class="landing-page-tagline">Discover the ease of travel itinerary planning</h3>
+  <div class="landing-page-logo">
 
-    <div class="value-add">
-      <h3>Online platform for you to access your plans any time, any where</h3>
-      <h3>Traveling in a group? Everyone can now contribute to the plan!</h3>
+    <h2>wondererwanderer</h2>
+
+    <div class="custom-modal" *ngIf="showSignin" (click)="hideSignin()"></div>
+    <div class="landing-page-sign-in" [class.show-sign-in]="showSignin">
+
+      <h3 class="sign-in-header" *ngIf="showSignin">Please enter your email and password to sign in.</h3>
+
+      <form [formGroup]="signinForm" (ngSubmit)="onSubmit()">
+
+        <div class="sign-in-input">
+          <label>Email</label>
+          <input type="text" #email formControlName="email">
+          <span *ngIf="!email.pristine && email.errors != null && email.errors['invalidEmail']">Invalid email address</span>
+        </div>
+
+        <div class="sign-in-input">
+          <label>Password<span class="form-validator-message"> (at least 6 characters)</span></label>
+          <input type="password" formControlName="password">
+        </div>
+
+        <button type="submit" class="signin-button" [disabled]="!signinForm.valid">SIGN IN</button>
+
+      </form>
+    </div>
+
+    <h5 class="get-sign-in" (click)="getSignin()" *ngIf="!showSignin">SIGN IN</h5>
+
+  </div>
+
+  <div class="landing-page-main">
+    <img class="landing-page-image" src="assets/mt_fuji.jpeg" alt="">
+
+    <div class="landing-page-tagline">
+      <h3>Are you ready to experience a new way of planning for your trip?</h3>
+      <h4>That is simple and that gets you excited</h4>
+    </div>
+
+    <div class="landing-page-value-add">
+      <div class="travel-inspiration">
+        <h3>NEVER LOSE TRACK OF YOUR TRAVEL INSPIRATIONS</h3>
+        <img src="assets/idea.png" alt="">
+      </div>
+      <div class="organise-information">
+        <h3>WE HELP YOU ORGANISE YOUR RESEARCH</h3>
+        <img src="assets/checklist.png" alt="">
+      </div>
+      <div class="group-planning">
+        <h3>TIRED OF PLANNING ALONE? YOU DON'T HAVE TO, REALLY</h3>
+        <img src="assets/group.png" alt="">
+      </div>
+    </div>
+
+    <div class="sign-up-call-to-action" (click)="getAuth()">
+      <h3>SIGN ME UP NOW!</h3>
     </div>
   </div>
 
+  <div class="landing-page-teaser">
+    <h2>And this is just the beginning</h2>
+  </div>
+
+  <div class="company-information">
+    <h6>ABOUT US</h6>
+    <h6>CONTACT US</h6>
+  </div>
+
+  <h6 class="copyright">@2017 WONDERERWANDERER. ALL RIGHTS RESERVED</h6>
+
+  <div class="custom-modal" *ngIf="showAuth" (click)="exitAuth()"></div>
+  <ww-auth *ngIf="showAuth"></ww-auth>
+
 </div>
-
-
-<!-- <h3 class="landing-page-tagline">We are right by you as you wonder and wander</h3>
-
-<div class="explore">
-  <input type="text" placeholder="where do you want to wander to? ">
-</div> -->

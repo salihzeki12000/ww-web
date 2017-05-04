@@ -1,15 +1,48 @@
+.post-input-box > h4 {
+  padding-left: 20px;
+  color: grey;
+  text-align: left;
+}
+
 .post-form  {
-  padding: 20px;
+  padding: 20px 0;
   text-align: center;
+  background-color: white;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
+}
+
+.user-postby  {
+  height: 35px;
+  margin-bottom: 5px;
+  padding: 0 30px;
+  text-align: left;
+}
+
+.user-postby > div,
+.user-postby > .user-details {
+  display: inline-block;
+}
+
+.user-details  {
+  margin-left: 5px;
+  vertical-align: top;
+}
+
+.user-details > h5  {
+  margin-top: 2px;
+  font-weight: 600;
+}
+
+.post-thoughts  {
+  margin-top: 3px;
+  font-size: .7em;
+  color: grey;
+  font-style: italic;
 }
 
 textarea {
-  resize: none;
-  width: 90%;
+  padding: 0 30px;
+  resize: vertical;
   margin: auto;
-}
-
-button  {
-  padding: 8px 40px;
-  margin-top: 10px;
+  border: none;
 }

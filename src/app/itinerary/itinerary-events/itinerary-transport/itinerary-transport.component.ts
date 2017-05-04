@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
 
@@ -30,6 +30,7 @@ export class ItineraryTransportComponent implements OnInit {
   highlightedEvent;
 
   constructor(
+    private renderer: Renderer,
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
     private userService: UserService) { }
@@ -73,9 +74,17 @@ export class ItineraryTransportComponent implements OnInit {
 
   showSummary() {
     this.showTransportSummary = !this.showTransportSummary;
+    this.togglePreventScroll(this.showTransportSummary);
+  }
+
+  togglePreventScroll(value)  {
+    this.renderer.setElementClass(document.body, 'prevent-scroll', value);
   }
 
   centerItem(event)  {
+    this.showTransportSummary = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+
     this.highlightedEvent = event;
   }
 }

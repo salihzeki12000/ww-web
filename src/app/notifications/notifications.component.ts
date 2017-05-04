@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./notifications.component.scss']
 })
 export class NotificationsComponent implements OnInit {
+  notificationLimit = false;
+
   showNotification = false;
 
   constructor() { }
@@ -17,7 +19,7 @@ export class NotificationsComponent implements OnInit {
     this.showNotification = true;
   }
 
-  closeNotificationsList()  {
+  hideNotificationList()  {
     this.showNotification = false;
   }
 }

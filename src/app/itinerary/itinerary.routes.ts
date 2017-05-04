@@ -7,6 +7,7 @@ import { ItineraryActivityComponent }               from './itinerary-events/iti
 import { ItineraryResourcesComponent }              from './itinerary-resources/itinerary-resources.component';
 import { ItineraryMapComponent }                    from './itinerary-map/itinerary-map.component';
 import { ItineraryPrintComponent }                  from './itinerary-print/itinerary-print.component';
+import { ItinerarySettingsComponent }               from './itinerary-settings/itinerary-settings.component';
 
 // import { ItineraryResolver } from './itinerary.resolver';
 
@@ -15,8 +16,9 @@ export const ITINERARY_ROUTES: Routes = [
   { path: 'summary', component: ItinerarySummaryComponent },
   { path: 'accommodation', component: ItineraryAccommodationComponent },
   { path: 'transport', component: ItineraryTransportComponent },
-  { path: 'activities', component: ItineraryActivityComponent },
-  { path: 'resources', component: ItineraryResourcesComponent },
+  { path: 'activity', component: ItineraryActivityComponent },
+  { path: 'resource', component: ItineraryResourcesComponent },
   { path: 'map', component: ItineraryMapComponent },
   { path: 'print', component: ItineraryPrintComponent },
+  { path: 'settings', component: ItinerarySettingsComponent },
 ]

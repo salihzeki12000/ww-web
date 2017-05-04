@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Renderer } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 import { ItineraryEvent } from '../../itinerary-event';
@@ -27,6 +27,7 @@ export class AccommodationComponent implements OnInit {
   sameUser = true;
 
   constructor(
+    private renderer: Renderer,
     private itineraryEventService: ItineraryEventService,
     private flashMessageService: FlashMessageService,
     private formBuilder: FormBuilder) {
@@ -35,11 +36,11 @@ export class AccommodationComponent implements OnInit {
         'formatted_address': '',
         'website': '',
         'international_phone_number': '',
-        'checkInDate': '',
-        'checkOutDate': '',
-        'checkInTime': '',
-        'checkOutTime': '',
-        'stayCity':'',
+        'check_in_date': '',
+        'check_out_date': '',
+        'check_in_time': '',
+        'check_out_time': '',
+        'stay_city':'',
         'note': '',
       })
     }
@@ -57,16 +58,19 @@ export class AccommodationComponent implements OnInit {
   // to show/hide edit form
   editAccommodation()  {
     this.editing = true;
-    if(this.event['checkInTime'] === 'anytime') {
+    this.renderer.setElementClass(document.body, 'prevent-scroll', true);
+
+    if(this.event['check_in_time'] === 'anytime') {
       this.anyCheckInTime = true;
     }
-    if(this.event['checkOutTime'] === 'anytime') {
+    if(this.event['check_out_time'] === 'anytime') {
       this.anyCheckOutTime = true;
     }
   }
 
   cancelEditAccommodation()  {
     this.editing = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
   // to submit edit form
@@ -74,12 +78,12 @@ export class AccommodationComponent implements OnInit {
     let editedAccommodation = this.editAccommodationForm.value;
     let originalAccommodation = this.event;
 
-    if(!editedAccommodation['checkInTime']) {
-      editedAccommodation['checkInTime'] = originalAccommodation['checkInTime'];
+    if(!editedAccommodation['check_in_time']) {
+      editedAccommodation['check_in_time'] = originalAccommodation['check_in_time'];
     }
 
-    if(!editedAccommodation['checkOutTime']) {
-      editedAccommodation['checkOutTime'] = originalAccommodation['checkOutTime'];
+    if(!editedAccommodation['check_out_time']) {
+      editedAccommodation['check_out_time'] = originalAccommodation['check_out_time'];
     }
 
     for (var value in editedAccommodation)  {
@@ -91,16 +95,16 @@ export class AccommodationComponent implements OnInit {
       }
     }
 
-    if(editedAccommodation['checkInTime'] === '' || this.anyCheckInTime)  {
-      originalAccommodation['checkInTime'] = 'anytime';
+    if(editedAccommodation['check_in_time'] === '' || this.anyCheckInTime)  {
+      originalAccommodation['check_in_time'] = 'anytime';
     }
 
-    if(editedAccommodation['checkOutTime'] === '' || this.anyCheckOutTime)  {
-      originalAccommodation['checkOutTime'] = 'anytime';
+    if(editedAccommodation['check_out_time'] === '' || this.anyCheckOutTime)  {
+      originalAccommodation['check_out_time'] = 'anytime';
     }
 
-    originalAccommodation['date'] = originalAccommodation['checkInDate'];
-    originalAccommodation['time'] = originalAccommodation['checkInTime'];
+    originalAccommodation['date'] = originalAccommodation['check_in_date'];
+    originalAccommodation['time'] = originalAccommodation['check_in_time'];
 
 
     this.itineraryEventService.editEvent(originalAccommodation)
@@ -110,17 +114,18 @@ export class AccommodationComponent implements OnInit {
           })
 
     this.editing = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
 
     this.editAccommodationForm.reset({
       'name': '',
       'formatted_address': '',
       'website': '',
       'international_phone_number': '',
-      'checkInDate': '',
-      'checkOutDate': '',
-      'checkInTime': '',
-      'checkOutTime': '',
-      'stayCity':'',
+      'check_in_date': '',
+      'check_out_date': '',
+      'check_in_time': '',
+      'check_out_time': '',
+      'stay_city':'',
       'note': '',
     })
   }
@@ -128,10 +133,12 @@ export class AccommodationComponent implements OnInit {
   // TO DELETE EXISTING ACCOMMODATION/TRANSPORT
   confirmDeleteAccommodation() {
     this.deleteAccommodation = true;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', true);
   }
 
   cancelDeleteAccommodation()  {
     this.deleteAccommodation = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
   onDeleteAccommodation() {
@@ -141,6 +148,7 @@ export class AccommodationComponent implements OnInit {
             this.flashMessageService.handleFlashMessage(result.message);
           })
     this.deleteAccommodation = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
   toggleCheckInTime() {

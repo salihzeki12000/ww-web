@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, Output, EventEmitter, Renderer } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, ElementRef, ViewChild, Output, EventEmitter, Renderer } from '@angular/core';
 declare var google:any;
 
 @Component({
@@ -11,7 +11,7 @@ declare var google:any;
 export class GooglePlaceSearchComponent implements OnInit, AfterViewInit {
   @ViewChild('ggPlaceSearch') ggPlaceSearch: ElementRef;
   place;
-
+  @Input() options;
   @Output() placeDetail = new EventEmitter();
 
   constructor(private renderer: Renderer) { }
@@ -21,7 +21,14 @@ export class GooglePlaceSearchComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     let search = this.ggPlaceSearch.nativeElement;
-    let autocomplete = new google.maps.places.Autocomplete(search);
+    let autocomplete;
+
+    if(!this.options) {
+      autocomplete = new google.maps.places.Autocomplete(search);
+    } else if(this.options)  {
+      autocomplete = new google.maps.places.Autocomplete(search, this.options);
+    }
+    
     let event = new MouseEvent('dblclick');
 
     autocomplete.addListener('place_changed', () => {

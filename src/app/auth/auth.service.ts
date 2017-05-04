@@ -116,7 +116,7 @@ export class AuthService  {
     } else if(this.loginType === 'google')  {
       this.signoutGoogle();
     } else  {
-      this.router.navigateByUrl('/signin');
+      this.router.navigateByUrl('/');
     }
 
   }

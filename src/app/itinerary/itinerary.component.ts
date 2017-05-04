@@ -1,6 +1,6 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Renderer } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { Subscription } from 'rxjs/Rx';
 
 import { Itinerary }             from './itinerary';
 import { ItineraryService }      from './itinerary.service';
@@ -8,6 +8,7 @@ import { ItineraryEventService } from './itinerary-events/itinerary-event.servic
 import { FlashMessageService }   from '../flash-message';
 import { User, UserService }     from '../user';
 import { ResourceService }       from './itinerary-resources/resource.service';
+import { NotificationService }   from '../notifications';
 
 @Component({
   selector: 'ww-itinerary',
@@ -16,9 +17,11 @@ import { ResourceService }       from './itinerary-resources/resource.service';
 })
 export class ItineraryComponent implements OnInit {
   itinerary: Itinerary;
-  basicDetailsForm: FormGroup;
   editing = false;
   deleteItinerary = false;
+
+  currentUser: User;
+  currentUserSubscription: Subscription;
 
   users: User[] = [];
   showUsers = false;
@@ -35,20 +38,15 @@ export class ItineraryComponent implements OnInit {
   showMenu = false;
 
   constructor(
+    private renderer: Renderer,
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
     private resourceService: ResourceService,
     private flashMessageService: FlashMessageService,
+    private notificationService: NotificationService,
     private userService: UserService,
     private route: ActivatedRoute,
-    private router: Router,
-    private formBuilder: FormBuilder) {
-      this.basicDetailsForm = this.formBuilder.group({
-        'name': '',
-        'dateFrom': '',
-        'dateTo': ''
-      })
-    }
+    private router: Router) {}
 
   ngOnInit() {
     this.route.params.forEach((params: Params) => {
@@ -65,11 +63,20 @@ export class ItineraryComponent implements OnInit {
 
           this.userService.getAllUsers()
               .subscribe(
-                userResult => { this.filterUsers(userResult.users);}
+                userResult => {
+                  this.filterUsers(userResult);
+                }
               )
         }
       );
     })
+
+    this.currentUserSubscription = this.userService.updateCurrentUser
+                                       .subscribe(
+                                         result => {
+                                           this.currentUser = result;
+                                         }
+                                       )
   }
 
   filterUsers(users)  {
@@ -83,68 +90,16 @@ export class ItineraryComponent implements OnInit {
     }
   }
 
-  editDetails() {
-    this.editing = true;
-  }
-  cancelEdit()  {
-    this.editing = false;
-  }
-
-  saveDetails() {
-    let editedDetails = this.basicDetailsForm.value;
-
-    for (let value in editedDetails)  {
-      if(editedDetails[value] === null)  {
-        editedDetails[value] = '';
-      }
-      if(editedDetails[value] !== '') {
-        this.itinerary[value] = editedDetails[value];
-      }
-    }
-
-    this.editing = false;
-
-    this.basicDetailsForm.reset({
-      'name': '',
-      'dateFrom': '',
-      'dateTo': ''
-    })
-
-    this.itineraryService.editItin(this.itinerary)
-        .subscribe(
-          data => {
-            this.flashMessageService.handleFlashMessage(data.message);
-          }
-        )
-  }
-
-  confirmDelete() {
-    this.deleteItinerary = true;
-    this.editing = false;
-  }
-
-  cancelDelete()  {
-    this.deleteItinerary = false;
-  }
-
-  onDeleteItinerary()  {
-    this.itineraryService.deleteItin(this.itinerary)
-        .subscribe(
-          data => {
-            this.router.navigateByUrl('/me');
-            this.flashMessageService.handleFlashMessage(data.message);
-        })
-    this.deleteItinerary = false;
-  }
-
   getUsers()  {
     this.showUsers = true;
     this.showAddNew = false;
     this.showCurrentMembers = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', true);
   }
 
   cancelShowUsers() {
     this.showUsers = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
   toggleAdd(user) {
@@ -170,65 +125,107 @@ export class ItineraryComponent implements OnInit {
     for (let i = 0; i < this.newMembers.length; i++) {
       this.itinerary['members'].push(this.newMembers[i]);
     }
+
     this.itineraryService.editItin(this.itinerary)
         .subscribe(
           data => {
-            console.log(data);
+            for (let i = 0; i < this.newMembers.length; i++) {
+              this.notificationService.newNotification({
+                recipient: this.newMembers[i],
+                originator: this.currentUser,
+                message: " has included you to the itinerary" + this.itinerary['name'],
+                link: "/me/itinerary/" + this.itinerary['_id'],
+                read: false
+              })
+            }
           }
         )
     this.showUsers = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
   showMembers() {
     this.showCurrentMembers = !this.showCurrentMembers;
     this.showAddNew = false;
+    this.togglePreventScroll(this.showCurrentMembers);
+  }
+
+  hideMembers() {
+    this.showCurrentMembers = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+  }
+
+  togglePreventScroll(value)  {
+    this.renderer.setElementClass(document.body, 'prevent-scroll', value);
   }
 
   showAddNewOptions() {
     this.showAddNew = true;
     this.showCurrentMembers = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', true);
   }
 
   newAccommodation()  {
     this.showAddNew = false;
     this.addAccommodation = true;
+    this.addTransport = false;
+    this.addActivity = false;
+    this.addResource = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', true);
   }
 
   newTransport()  {
     this.showAddNew = false;
+    this.addAccommodation = false;
     this.addTransport = true;
+    this.addActivity = false;
+    this.addResource = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', true);
   }
 
   newActivity()  {
     this.showAddNew = false;
+    this.addAccommodation = false;
+    this.addTransport = false;
     this.addActivity = true;
+    this.addResource = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', true);
   }
 
   newResource()  {
     this.showAddNew = false;
+    this.addAccommodation = false;
+    this.addTransport = false;
+    this.addActivity = false;
     this.addResource = true;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', true);
   }
 
   hideAccommodationForm(hide)  {
     this.addAccommodation = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
   hideTransportForm(hide)  {
     this.addTransport = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
   hideActivityForm(hide)  {
     this.addActivity = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
   hideResourceForm(hide)  {
     this.addResource = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
   activateTab() {
     this.showAddNew = false;
     this.showCurrentMembers = false;
     this.showUsers = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
   showMenuOptions() {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Renderer } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 import { ItineraryEvent } from '../../itinerary-event';
@@ -23,24 +23,25 @@ export class TransportComponent implements OnInit {
   sameUser = true;
 
   constructor(
+    private renderer: Renderer,
     private itineraryEventService: ItineraryEventService,
     private flashMessageService: FlashMessageService,
     private formBuilder: FormBuilder) {
       this.editTransportForm = this.formBuilder.group({
-        'transportType': '',
-        'referenceNumber': '',
-        'depTerminal': '',
-        'arrTerminal': '',
-        'depStation': '',
-        'arrStation': '',
-        'depCity': '',
-        'arrCity': '',
-        'depDate': '',
-        'depTime': '',
-        'arrDate': '',
-        'arrTime': '',
-        'transportCompany': '',
-        'contactNumber': '',
+        'transport_type': '',
+        'reference_number': '',
+        'dep_terminal': '',
+        'arr_terminal': '',
+        'dep_station': '',
+        'arr_station': '',
+        'dep_city': '',
+        'arr_city': '',
+        'dep_date': '',
+        'dep_time': '',
+        'arr_date': '',
+        'arr_time': '',
+        'transport_company': '',
+        'contact_number': '',
         'note': '',
       })
     }
@@ -57,10 +58,12 @@ export class TransportComponent implements OnInit {
 
   editTransport()  {
     this.editing = true;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', true);
   }
 
   cancelEditTransport()  {
     this.editing = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
   onEditTransport()  {
@@ -76,8 +79,8 @@ export class TransportComponent implements OnInit {
       }
     }
 
-    originalTransport['date'] = originalTransport['depDate'];
-    originalTransport['time'] = originalTransport['depTime'];
+    originalTransport['date'] = originalTransport['dep_date'];
+    originalTransport['time'] = originalTransport['dep_time'];
 
     this.itineraryEventService.editEvent(originalTransport)
         .subscribe(
@@ -86,22 +89,23 @@ export class TransportComponent implements OnInit {
           })
 
     this.editing = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
 
     this.editTransportForm.reset({
-      'transportType': '',
-      'referenceNumber': '',
-      'depTerminal': '',
-      'arrTerminal': '',
-      'depStation': '',
-      'arrStation': '',
-      'depCity': '',
-      'arrCity': '',
-      'depDate': '',
-      'depTime': '',
-      'arrDate': '',
-      'arrTime': '',
-      'transportCompany': '',
-      'contactNumber': '',
+      'transport_type': '',
+      'reference_number': '',
+      'dep_terminal': '',
+      'arr_terminal': '',
+      'dep_station': '',
+      'arr_station': '',
+      'dep_city': '',
+      'arr_city': '',
+      'dep_date': '',
+      'dep_time': '',
+      'arr_date': '',
+      'arr_time': '',
+      'transport_company': '',
+      'contact_number': '',
       'note': '',
     });
 
@@ -109,10 +113,12 @@ export class TransportComponent implements OnInit {
 
   confirmDeleteTransport() {
     this.deleteTransport = true;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', true);
   }
 
   cancelDeleteTransport()  {
     this.deleteTransport = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
   onDeleteTransport()  {
@@ -122,6 +128,7 @@ export class TransportComponent implements OnInit {
             this.flashMessageService.handleFlashMessage(result.message);
           })
     this.deleteTransport = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
   showMenuOptions() {

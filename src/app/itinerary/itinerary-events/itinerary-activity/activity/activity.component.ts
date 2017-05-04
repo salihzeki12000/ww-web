@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Renderer } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
 
@@ -30,6 +30,7 @@ export class ActivityComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private renderer: Renderer,
     private itineraryEventService: ItineraryEventService,
     private flashMessageService: FlashMessageService,
     private itineraryService: ItineraryService) {
@@ -39,7 +40,7 @@ export class ActivityComponent implements OnInit {
         'description': '',
         'subDescription': '',
         'opening_hours': '',
-        'entryFee': '',
+        'entry_fee': '',
         'website': '',
         'formatted_address': '',
         'international_phone_number':'',
@@ -71,6 +72,7 @@ export class ActivityComponent implements OnInit {
 
   onEdit()  {
     this.editing = true;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', true);
     if(this.activity['time'] === 'anytime') {
       this.anytime = true;
     }
@@ -78,6 +80,7 @@ export class ActivityComponent implements OnInit {
 
   cancelEditActivity()  {
     this.editing = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
   onUpdateActivity()  {
@@ -114,6 +117,7 @@ export class ActivityComponent implements OnInit {
         })
 
     this.editing = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
 
     this.editCustomActivityForm.reset([{
       'categories': this.initCategoryArray(),
@@ -121,7 +125,7 @@ export class ActivityComponent implements OnInit {
       'description': '',
       'subDescription': '',
       'opening_hours': '',
-      'entryFee': '',
+      'entry_fee': '',
       'website': '',
       'formatted_address': '',
       'international_phone_number':'',
@@ -134,10 +138,12 @@ export class ActivityComponent implements OnInit {
   // delete activity
   confirmDelete() {
     this.deleteActivity = true;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', true);
   }
 
   cancelDelete()  {
     this.deleteActivity = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
   onDeleteActivity()  {
@@ -147,7 +153,8 @@ export class ActivityComponent implements OnInit {
             this.flashMessageService.handleFlashMessage(result.message);
           })
     this.deleteActivity = false;
-  }
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+}
 
   toggleAnytime() {
     this.anytime = !this.anytime;

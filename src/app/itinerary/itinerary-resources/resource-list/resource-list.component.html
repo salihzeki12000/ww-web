@@ -1,3 +1,20 @@
+<div class="custom-modal" *ngIf="showResourceSummary" (click)="showSummary()"></div>
+
+<div class="resource-summary" [class.show-summary]="showResourceSummary">
+  <h5 class="resource-summary-length">RESOURCE LIST ({{ resources.length }})</h5>
+  <div *ngFor="let resource of resources; let i = index" class="resource-summary-item" (click)="centerItem(resource)" [class.highlighted-item]="highlightedEvent === resource">
+    <a href="#resource{{i}}">
+      <h5 class="resource-summary-title">{{ resource.title }}</h5>
+      <h5 class="resource-summary-content"> {{ resource.content }}</h5>
+      <h6 class="resource-summary-link truncate"><a class="website-link" href="{{ resource?.link_url }}" target="_blank">{{ resource.link_url }}</a></h6>
+    </a>
+  </div>
+</div>
+
 <div class="resource-list">
-  <ww-resource [resource]="resource" *ngFor="let resource of resources"></ww-resource>
+  <ww-resource [resource]="resource" *ngFor="let resource of resources; let i = index" id="resource{{i}}" [class.highlighted-event]="highlightedEvent === resource"></ww-resource>
+</div>
+
+<div class="resource-summary-popup" (click)="showSummary()">
+  <i class="fa fa-list" aria-hidden="true"></i>
 </div>

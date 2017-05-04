@@ -1,0 +1,143 @@
+.profile-edit-main  {
+  width: 600px;
+  margin-left: calc((100vw - 600px) / 2 );
+  padding-bottom: 20px;
+  background-color: white;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
+
+  @media only screen and (max-width: 610px) {
+    width: 100%;
+    min-width: 300px;
+    margin-left: 0;
+  }
+}
+
+.profile-edit-header  {
+  padding: 20px;
+  text-align: center;
+  background-color: #FAFAFA;
+}
+
+.profile-edit-header > img  {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+}
+
+.profile-date-join  {
+  text-align: left;
+  margin-bottom: 10px;
+  padding: 5px 10px;
+  font-style: italic;
+  color: #F9FBFB;
+  background-color: #6494ED;
+}
+
+// .edit-profile {
+//   padding-right: 10px;
+//   color: grey;
+//   letter-spacing: .5px;
+//   text-align: right;
+//   &:hover {
+//     cursor: pointer;
+//     color: #3A4A4D;
+//   }
+// }
+
+.profile-edit-section-header  {
+  padding: 10px 0 0 20px;
+  @media only screen and (max-width: 450px) {
+    padding: 10px 0 0 5px;
+  }
+}
+
+.profile-edit-section-details {
+  padding: 5px 10px 5px 35px;
+  @media only screen and (max-width: 450px) {
+    padding: 5px 10px;
+  }
+}
+
+.profile-edit-item  {
+  height: 40px;
+  @media only screen and (max-width: 610px) {
+    margin-bottom: 20px;
+    height: auto;
+  }
+}
+
+.profile-edit-item > * {
+  display: inline-block;
+  @media only screen and (max-width: 610px) {
+    display: block;
+  }
+}
+
+.profile-edit-item > h5 {
+  width: 130px;
+  color: grey;
+  letter-spacing: .5px;
+  @media only screen and (max-width: 610px) {
+    padding-bottom: 3px;
+  }
+}
+
+// .profile-edit-item > h4 {
+//   padding-left: 15px;
+// }
+
+.profile-edit-item > input,
+ww-google-place-search  {
+  width: 400px;
+  margin-bottom: 0;
+  @media only screen and (max-width: 450px) {
+    width: 100%;
+  }
+}
+
+.profile-preview  {
+  margin: 10px auto 0 auto;
+  padding: 10px;
+  max-width: 300px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
+  @media only screen and (max-width: 610px) {
+    margin: 10px 0 0 0;
+  }
+}
+
+select.profile-gender-select  {
+  width: 100px;
+  margin-bottom: 0;
+}
+
+.new-city-search  {
+  display: block !important;
+  margin: 10px 0 0 135px;
+  @media only screen and (max-width: 610px) {
+    margin: 10px 0 0 0;
+  }
+}
+
+.shift-city-search  {
+  margin: 5px 0 0 135px;
+  @media only screen and (max-width: 610px) {
+    margin: 5px 0 0 0;
+  }
+}
+
+.city-exist {
+  margin-top: 50px;
+  @media only screen and (max-width: 610px) {
+    margin-top: 20px;
+  }
+}
+
+.deactivate-account  {
+  padding: 10px 0 0 20px;
+  font-weight: 400;
+  color: grey;
+  &:hover {
+    cursor: pointer;
+    color: red;
+  }
+}

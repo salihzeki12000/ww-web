@@ -24,23 +24,6 @@ export class ItineraryEventService  {
     private route: ActivatedRoute,
     private notificationService: NotificationService)  {}
 
-  // getFlightDetails(criteria)  {
-  //   const id = '?appId=8d4596b2&appKey=ab8b1a3b2f1f66e0db7be662f41425cc';
-  //   let opt: RequestOptions;
-  //   let myHeaders: Headers = new Headers
-  //   myHeaders.append('Accept', 'application/json')
-  //   myHeaders.append('Access-Control-Allow-Origin', '*')
-  //   myHeaders.append('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token')
-  //   myHeaders.append('Access-Control-Allow-Methods', 'GET')
-  //
-  //   opt = new RequestOptions({
-  //     headers: myHeaders,
-  //   })
-  //
-  //   return this.http.get(this.flightStatsUrl + criteria + id, opt)
-  //                   .map((response: Response) => response.json())
-  //                   // .catch((error: Response) => console.log(error));
-  // }
   getFlightDetails(criteria)  {
     const id = '?appId=8d4596b2&appKey=ab8b1a3b2f1f66e0db7be662f41425cc&callback=JSONP_CALLBACK';
 
@@ -56,7 +39,6 @@ export class ItineraryEventService  {
                     .map((response: Response) => {
                       this.events = response.json().events;
                       this.timeAgo(this.events);
-                      // this.updateEvent.next(this.events);
                       return this.events;
                     })
                     // .catch((error: Response) => console.log(error));
@@ -88,12 +70,15 @@ export class ItineraryEventService  {
                       this.sortEventByDate(this.events);
 
                       for (let i = 0; i < itinerary['members'].length; i++) {
-                        this.notificationService.newNotification({
-                          recipient: itinerary['members'][i]['_id'],
-                          originator: event['user']._Id,
-                          message: event['user'].username + " has added a new " + messageBody + ' to the itinerary ' + itinerary['name'],
-                          read: false
-                        }).subscribe(date => {});
+                        if(itinerary['members'][i]['_id'] !== event['user']._Id)  {
+                          this.notificationService.newNotification({
+                            recipient: itinerary['members'][i]['_id'],
+                            originator: event['user']._Id,
+                            message: " has added a new " + messageBody + ' to the itinerary ' + itinerary['name'],
+                            link: "/me/itinerary/" + itinerary['_id'] + "/" + event['type'],
+                            read: false
+                          }).subscribe(date => {});
+                        }
                       }
 
                       return response.json();
@@ -131,18 +116,10 @@ export class ItineraryEventService  {
   }
 
   sortEventByDate(events) {
-    // events.sort((a,b) =>  {
-    //   let aTime = a['time'].slice(0,2) + a['time'].slice(3);
-    //   let bTime = b['time'].slice(0,2) + b['time'].slice(3);
-    //
-    //   return new Date(a['date']).getTime() - new Date(b['date']).getTime() || aTime - bTime;
-    // })
-
     events.sort((a,b) =>  {
       return new Date(a['date']).getTime() - new Date(b['date']).getTime();
     })
     this.timeAgo(events);
-    // this.updateEvent.next(events);
   }
 
   timeAgo(events) {
@@ -173,5 +150,22 @@ export class ItineraryEventService  {
     }
     this.updateEvent.next(events);
   }
-
 }
+
+// getFlightDetails(criteria)  {
+//   const id = '?appId=8d4596b2&appKey=ab8b1a3b2f1f66e0db7be662f41425cc';
+//   let opt: RequestOptions;
+//   let myHeaders: Headers = new Headers
+//   myHeaders.append('Accept', 'application/json')
+//   myHeaders.append('Access-Control-Allow-Origin', '*')
+//   myHeaders.append('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token')
+//   myHeaders.append('Access-Control-Allow-Methods', 'GET')
+//
+//   opt = new RequestOptions({
+//     headers: myHeaders,
+//   })
+//
+//   return this.http.get(this.flightStatsUrl + criteria + id, opt)
+//                   .map((response: Response) => response.json())
+//                   // .catch((error: Response) => console.log(error));
+// }

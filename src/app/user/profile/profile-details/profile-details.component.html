@@ -1,29 +1,48 @@
 <div class="profile">
-
-  <div class="profile-menu">
-    <img src="{{ user?.displayPic }}" alt="">
-    <h6>a wonderer wanderer</h6>
-    <h6>since {{ user?.created_at | date:'dd MMMM y' }}</h6>
+  <div class="profile-header">
+    <img src="{{ user?.display_picture }}" alt="">
+    <!-- <h5>{{ user?.description }}</h5> -->
   </div>
 
-  <div class="profile-details">
-    <form [formGroup]="profileUpdateForm" (ngSubmit)="onSubmit()">
-      <label>Username</label>
-      <input type="text" formControlName="username" [value]="user?.username">
+  <div class="profile-center-bar"></div>
 
-      <label>Describe yourself in 50 characters or less</label>
-      <span>Characters: {{ profileUpdateForm?.value.description.length }}</span>
-      <input type="text" formControlName="description" [value]="user?.description" maxlength="50">
+  <div class="profile-main">
+    <div class="profile-connections">
+      <div class="follower-following">
+        <div class="follower-counter" (click)="routeToFollowers()">
+          <h4>{{ followers.length }}</h4>
+          <h5>FOLLOWERS</h5>
+        </div>
+        <div class="following-counter" (click)="routeToFollowings()">
+          <h4>{{ followings.length }}</h4>
+          <h5>FOLLOWING</h5>
+        </div>
+      </div>
+    </div>
 
-      <label>Email</label>
-      <input type="text" formControlName="email" [value]="user?.email">
+    <div class="profile-itineraries">
+      <div class="profile-itineraries-length">
+        <h5>YOUR ITINERARY ({{ user?.itineraries.length }})</h5>
+      </div>
+      <h5 class="profile-new-itinerary" (click)="createItinerary()"><i class="fa fa-plus" aria-hidden="true"></i> Plan a new itinerary</h5>
+      <div class="profile-itineraries-list" *ngFor="let itinerary of user?.itineraries | slice:0:5 "  (click)="routeToItin(itinerary._id)">
+        <h5>{{ itinerary.name }}</h5>
+        <h6>( {{ itinerary.date_from | date:'dd MMM yy' }} to {{ itinerary.date_to | date:'dd MMM yy' }} )</h6>
+      </div>
+    </div>
 
-      <button type="submit" class="primaryButton"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save changes</button>
-
-    </form>
-
+    <div class="profile-posts">
+      <ww-post-input></ww-post-input>
+      <div class="profile-posts-list">
+        <ww-post-list [posts]="posts"></ww-post-list>
+      </div>
+    </div>
   </div>
+</div>
 
 
-  <!-- <button type="button" (click)="onDelete()">Delete my account</button> -->
+
+<!-- new itin form -->
+<div class="custom-modal" *ngIf="showItineraryForm">
+  <ww-itinerary-form (hideItineraryForm)="hideItineraryForm($event)"></ww-itinerary-form>
 </div>

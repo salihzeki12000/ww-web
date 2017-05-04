@@ -1,13 +1,25 @@
 .progress-tracker li {
   width: 50%;
+
+  @media only screen and (max-width: 500px) {
+    width: 100%;
+  }
 }
 
 .flight-search-active li {
   width: 33.333%;
+
+  @media only screen and (max-width: 500px) {
+    width: 100%;
+  }
 }
 
 .choose-airport-option li {
   width: 25%;
+
+  @media only screen and (max-width: 500px) {
+    width: 100%;
+  }
 }
 
 .transport-mode > label {
@@ -74,9 +86,15 @@
 .flight-example  {
   position: relative;
   left: 30px;
-  margin-top: 15px;
   padding: 10px;
+  vertical-align: top;
   border: 1px solid lightgray;
+
+  @media only screen and (max-width: 500px) {
+    position: static;
+    left: 0;
+    margin-bottom: 15px;
+  }
 }
 
 .example-airline-code,
@@ -99,6 +117,8 @@
 
 .stop-over-airport  {
   padding: 10px 10px 0 10px;
+  font-weight: 500;
+  letter-spacing: .5px;
 }
 
 .select-airport {

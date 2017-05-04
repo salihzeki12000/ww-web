@@ -3,24 +3,34 @@
 *********************************/
 .activity-summary  {
   position: fixed;
-  margin-top: 35px;
-  margin-left: 10px;
+  margin: 15px 0 0 10px;
   width: 200px;
-  height: calc(100vh - 140px);
+  max-height: calc(100vh - 150px);
+  border-bottom: 1px solid lightgray;
   overflow: auto;
 
   @media only screen and (max-width: 890px) {
     display: none;
   }
+
+  @media only screen and (min-width: 890px) and (max-width: 1090px) {
+    height: calc(100vh - 190px);
+  }
 }
 
 .show-summary {
+  position: fixed;
   display: block;
-  width: 100%;
-  height: calc(100vh - 144px);
-  margin-top: -6px;
-  z-index: 999;
+  top: 0;
+  left: 0;
+  width: 380px;
+  height: calc(100vh - 90px);
+  z-index: 1001;
   background-color: #F9FBFB;
+  @media only screen and (max-width: 400px) {
+    width: 100%;
+    margin-left: 0;
+  }
 }
 
 .activity-summary-length {
@@ -40,7 +50,7 @@
 
 .activity-summary-item {
   margin-bottom: 2px;
-  padding: 10px;
+  background-color: white;
   box-shadow: inset 0px 0px 1px 1.5px rgba(0, 0, 0, 0.2);
   &:hover {
     background-color: #F6F6F6;
@@ -59,16 +69,25 @@
   margin-bottom: 0;
 }
 
-.activity-summary-item > * {
+.activity-summary-item > a {
   &:hover {
-    cursor: pointer;
+    text-decoration: none;
   }
 }
 
-.activity-summary-item > .date {
+.activity-summary-item > a > * {
+  font-size: 11.62px;
+}
+
+.activity-summary-item .date {
   margin-bottom: 5px;
+  padding: 10px 10px 0 10px;
   color: grey;
   font-weight: 500;
+}
+
+.activity-summary-name  {
+  padding: 0 10px 10px 10px;
 }
 
 .activity-summary-popup  {
@@ -84,7 +103,7 @@
     border: 1px solid lightgray;
     border-radius: 50%;
     opacity: .5;
-    z-index: 1000;
+    z-index: 999;
     &:hover {
       cursor: pointer;
     }
@@ -97,11 +116,10 @@
 .activity-list {
   display: flex;
   flex-wrap: wrap;
-  margin-left: 220px;
-  padding-top: 20px;
+  margin-left: 215px;
 
   @media only screen and (max-width: 890px) {
-    margin-left: calc((100vw - 628px)/2);
+    margin-left: calc((100vw - 660px)/2);
   }
 
   @media only screen and (max-width: 690px) {
@@ -113,4 +131,6 @@
 
 ww-activity {
   display: flex;
+  margin-top: -90px;
+  padding-top: 90px;
 }

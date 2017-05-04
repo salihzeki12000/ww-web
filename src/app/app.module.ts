@@ -4,30 +4,37 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { routing } from './app.routing';
 
+import { Cloudinary } from 'cloudinary-core';
+import { CloudinaryModule } from '@cloudinary/angular';
+
 import { AppComponent } from './app.component';
-
+import { LandingPageComponent } from './landing-page';
 import { AuthComponent, AuthService, SignupComponent, SigninComponent } from './auth';
-import { UserComponent, UserService, ProfileComponent, ProfileDetailsComponent, FollowingComponent, FollowingService } from './user';
+import { AuthGuard } from './_guards/auth.guard';
 
+import { HomeComponent } from './home';
 import { MeComponent } from './me';
+
 import { MainNavigationComponent, SideNavigationComponent } from './navigation';
+
+import { UserComponent, UserService, ProfileComponent, ProfileDetailsComponent, ProfileEditComponent, RelationshipService, RelationshipsComponent, FollowingsComponent, FollowingComponent, FollowersComponent, FollowerComponent, RequestedFollowingsComponent, RequestedFollowingComponent, PendingFollowerComponent, PendingFollowersComponent } from './user';
 
 import { PostsComponent, PostComponent, PostInputComponent, PostListComponent, PostService } from './post';
 
+import { ItineraryComponent, ItineraryFormComponent, ItineraryAccommodationComponent, ItineraryTransportComponent, ItineraryService, ItineraryActivityComponent, ItineraryResourcesComponent, ResourceInputComponent, ResourceService, ResourceListComponent, ResourceComponent, ItineraryMapComponent, AccommodationFormComponent, TransportFormComponent, ItineraryEventService, ActivityComponent, ActivityListComponent, ActivityInputComponent, AccommodationComponent, TransportComponent, ItineraryPrintComponent, ItineraryPrintDatePreviewComponent, ItineraryPrintCategoryPreviewComponent, ItinerarySummaryComponent, ItineraryPrintCategoryComponent, ItineraryPrintDateComponent, ItinerarySettingsComponent } from './itinerary';
+
 import { GooglePlaceSearchComponent, GoogleCheckinComponent } from './google-api';
 
-import { ItineraryComponent, ItineraryAccommodationComponent, ItineraryTransportComponent, ItineraryService, ItineraryActivityComponent, ItineraryResourcesComponent, ResourceInputComponent, ResourceService, ResourceListComponent, ResourceComponent, ItineraryMapComponent, AccommodationFormComponent, TransportFormComponent, ItineraryEventService, ActivityComponent, ActivityListComponent, ActivityInputComponent, ActivityCollapseComponent, ActivityCollapseListComponent, AccommodationComponent, TransportComponent, ItineraryPrintComponent, ItineraryPrintDatePreviewComponent, ItineraryPrintCategoryPreviewComponent, ItinerarySummaryComponent, ItineraryPrintCategoryComponent, ItineraryPrintDateComponent } from './itinerary';
-
 import { FlashMessageComponent, FlashMessageService } from './flash-message';
-
 import { NotificationComponent, NotificationsComponent, NotificationListComponent, NotificationService } from './notifications';
-
-import { AuthGuard } from './_guards/auth.guard';
-import { LandingPageComponent } from './landing-page';
 
 import { AdminComponent } from './admin';
 import { AttractionsComponent } from './attractions/attractions.component';
 import { AdminAttractionComponent,AdminAttractionFormComponent } from './admin/admin-attraction';
+
+export const cloudinaryLib = {
+  Cloudinary: Cloudinary
+};
 
 @NgModule({
   declarations: [
@@ -47,6 +54,7 @@ import { AdminAttractionComponent,AdminAttractionFormComponent } from './admin/a
     PostListComponent,
     PostComponent,
     ItineraryComponent,
+    ItineraryFormComponent,
     ItineraryAccommodationComponent,
     ItineraryTransportComponent,
     AccommodationComponent,
@@ -57,8 +65,6 @@ import { AdminAttractionComponent,AdminAttractionFormComponent } from './admin/a
     ActivityComponent,
     ActivityListComponent,
     ActivityInputComponent,
-    ActivityCollapseComponent,
-    ActivityCollapseListComponent,
     GooglePlaceSearchComponent,
     GoogleCheckinComponent,
     ItineraryPrintComponent,
@@ -81,6 +87,17 @@ import { AdminAttractionComponent,AdminAttractionFormComponent } from './admin/a
     AdminComponent,
     AdminAttractionComponent,
     AdminAttractionFormComponent,
+    HomeComponent,
+    ProfileEditComponent,
+    ItinerarySettingsComponent,
+    RelationshipsComponent,
+    FollowingsComponent,
+    FollowersComponent,
+    FollowerComponent,
+    RequestedFollowingsComponent,
+    RequestedFollowingComponent,
+    PendingFollowerComponent,
+    PendingFollowersComponent,
   ],
   imports: [
     BrowserModule,
@@ -89,8 +106,9 @@ import { AdminAttractionComponent,AdminAttractionFormComponent } from './admin/a
     HttpModule,
     JsonpModule,
     routing,
+    CloudinaryModule.forRoot(cloudinaryLib, { cloud_name: 'wwfileupload'}),
   ],
-  providers: [ AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, FollowingService, NotificationService, AuthGuard ],
+  providers: [ AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, AuthGuard ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

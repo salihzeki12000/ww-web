@@ -1,0 +1,83 @@
+.itinerary-edit-main  {
+  width: 600px;
+  margin-top: 110px;
+  margin-left: calc((100vw - 800px) / 2 );
+  padding-bottom: 20px;
+  background-color: white;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
+
+  @media only screen and (max-width: 610px) {
+    width: 100%;
+    min-width: 300px;
+    margin-left: 0;
+  }
+
+  @media only screen and (min-width: 610px) and (max-width: 1090px) {
+    margin-left: calc((100vw - 600px) / 2 );
+  }
+}
+
+.itinerary-edit-section-header  {
+  padding: 10px 0 0 20px;
+  @media only screen and (max-width: 450px) {
+    padding: 10px 0 0 5px;
+  }
+}
+
+.itinerary-edit-section-details {
+  padding: 5px 10px 5px 35px;
+  @media only screen and (max-width: 450px) {
+    padding: 5px 10px;
+  }
+}
+
+.itinerary-edit-item  {
+  height: 40px;
+  @media only screen and (max-width: 610px) {
+    margin-bottom: 20px;
+    height: auto;
+  }
+}
+
+.itinerary-edit-item > * {
+  display: inline-block;
+  @media only screen and (max-width: 610px) {
+    display: block;
+  }
+}
+
+.itinerary-edit-item > h5 {
+  width: 130px;
+  color: grey;
+  letter-spacing: .5px;
+  @media only screen and (max-width: 610px) {
+    padding-bottom: 3px;
+  }
+}
+
+.itinerary-edit-item > input  {
+  width: 400px;
+  margin-bottom: 0;
+  @media only screen and (max-width: 450px) {
+    width: 100%;
+  }
+}
+
+.created-details  {
+  padding-top: 6px;
+}
+
+.itinerary-member-list  {
+  padding: 10px;
+}
+
+.delete-itinerary-button  {
+  display: inline-block;
+  padding: 10px 20px;
+  font-weight: 400;
+  color: grey;
+  &:hover {
+    cursor: pointer;
+    color: red;
+  }
+}

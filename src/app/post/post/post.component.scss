@@ -1,39 +1,78 @@
 .user-posts {
-  padding: 20px;
-  border-bottom: 1px solid lightgrey;
+  position: relative;
+  margin-bottom: 10px;
+  padding: 20px 20px 12px 20px;
+  background-color: white;
+  -webkit-box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
+  -moz-box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
 }
 
-h6  {
-  padding-top: 5px;
-  padding-bottom: 5px;
-  font-size: 0.8rem;
-  color: #ccc;
+.item-menu  {
+  top: 35px;
 }
 
-.fa-user {
-  padding-left: 9.5px;
-  padding-top: 10px;
-}
-
-.user-detail  {
+.user-postby  {
   height: 35px;
 }
 
-.user-detail > div,
-.user-detail > .name-time {
+.user-postby > div,
+.user-postby > .user-details {
   display: inline-block;
 }
 
-.name-time  {
+.user-details  {
   margin-left: 5px;
   vertical-align: top;
 }
 
+.user-details > h5  {
+  margin-top: 2px;
+  font-weight: 600;
+}
+
+.time-ago > p {
+  margin-top: 3px;
+  vertical-align: text-top;
+}
+
 .content  {
-  margin: 10px 40px;
+  margin: 10px 0;
 }
 
 textarea  {
   width: 100%;
   resize: none;
+}
+
+.link-preview {
+  margin: 0;
+}
+
+.post-reaction  {
+  padding: 5px 0 0 5px;
+  border-top: 1px solid lightgray;
+}
+
+.post-reaction > *  {
+  display: inline-block;
+  margin-right: 10px;
+  font-weight: 600;
+  color: grey;
+  vertical-align: bottom;
+}
+
+.post-reaction > .fa-heart-o  {
+  &:hover {
+    color: red;
+    cursor: pointer;
+  }
+}
+
+.post-reaction > .fa-comment-o  {
+  vertical-align: text-bottom;
+  &:hover {
+    color: #3A4A4D;
+    cursor: pointer;
+  }
 }

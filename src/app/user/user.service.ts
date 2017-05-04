@@ -10,6 +10,9 @@ export class UserService  {
   currentUser: User;
   updateCurrentUser = new ReplaySubject();
 
+  users: User[] = [];
+  updateAllUsers = new ReplaySubject();
+
   // private url = 'http://localhost:9000';
   private url = 'https://vast-island-87972.herokuapp.com';
 
@@ -32,7 +35,9 @@ export class UserService  {
     const headers = new Headers({ 'Content-Type': 'application/json' });
     return this.http.get(this.url + '/users' + token, { headers: headers })
                     .map((response: Response) => {
-                       return response.json();
+                      this.users = response.json().users;
+                      this.updateAllUsers.next(this.users);
+                      return this.users;
                     })
                     .catch((error: Response) => Observable.throw(error.json()));
   }

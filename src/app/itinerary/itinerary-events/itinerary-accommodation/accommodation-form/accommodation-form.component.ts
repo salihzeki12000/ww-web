@@ -24,6 +24,10 @@ export class AccommodationFormComponent implements OnInit {
 
   itinDateSubscription: Subscription;
   itinDateRange = [];
+  firstDay;
+  lastDay;
+  timeCheckIn = "15:00";
+  timeCheckOut = "12:00";
 
   currentUserSubscription: Subscription;
   currentUser;
@@ -32,6 +36,7 @@ export class AccommodationFormComponent implements OnInit {
   currentItinerary;
 
   searchDone = false;
+  displayPic;
 
   constructor(
     private itineraryService: ItineraryService,
@@ -46,11 +51,11 @@ export class AccommodationFormComponent implements OnInit {
         'formatted_address': '',
         'website': '',
         'international_phone_number': '',
-        'checkInDate': '',
-        'checkOutDate': '',
-        'checkInTime': '',
-        'checkOutTime': '',
-        'stayCity':'',
+        'check_in_date': '',
+        'check_out_date': '',
+        'check_in_time': '',
+        'check_out_time': '',
+        'stay_city':'',
         'note': '',
       })
     }
@@ -72,19 +77,37 @@ export class AccommodationFormComponent implements OnInit {
                                     .subscribe(
                                       result => {
                                         this.itinDateRange  = Object.keys(result).map(key => result[key]);
+                                        this.itinDateRange.splice(0,1)
+                                        this.firstDay = this.itinDateRange[0];
+                                        this.lastDay = this.itinDateRange[this.itinDateRange.length - 1];
                                     })
   }
 
   // get place details form Google API
   getAccommodationDetails(value)  {
+    let index = 0;
     this.googleAccommodationDetail = value;
+
+    if(this.googleAccommodationDetail.photos) {
+      this.displayPic = value.photos[0].getUrl({'maxWidth': 300, 'maxHeight': 250});
+      if(this.googleAccommodationDetail.photos.length > 5)  {
+        index = 5;
+      } else  {
+        index = this.googleAccommodationDetail.photos.length
+      }
+      this.googleAccommodationDetail['pictures'] = [];
+      for (let i = 0; i < index; i++) {
+        this.googleAccommodationDetail['pictures'].unshift(value.photos[i].getUrl({'maxWidth': 300, 'maxHeight': 250}));
+      }
+    }
+
     let address_components = value['address_components'];
 
     for (let i = 0; i < address_components.length; i++) {
       if(address_components[i]['types'][0] === 'locality')  {
-        this.googleAccommodationDetail['stayCity'] = address_components[i]['long_name'];
+        this.googleAccommodationDetail['stay_city'] = address_components[i]['long_name'];
       } else if(address_components[i]['types'][0] === 'administrative_area_level_1') {
-        this.googleAccommodationDetail['stayCity'] += ', ' + address_components[i]['long_name'];
+        this.googleAccommodationDetail['stay_city'] += ', ' + address_components[i]['long_name'];
       }
     }
 
@@ -94,7 +117,6 @@ export class AccommodationFormComponent implements OnInit {
   // to submit new accommodation/transport form
   onSubmitNewAccommodation()  {
     let newAccommodation = this.addAccommodationForm.value;
-
     if(this.googleAccommodationDetail)  {
       for (var value in newAccommodation)  {
         if (newAccommodation[value] === '' && this.googleAccommodationDetail[value]) {
@@ -112,16 +134,28 @@ export class AccommodationFormComponent implements OnInit {
       newAccommodation['lng'] = lng;
     }
 
-    if(newAccommodation['checkInTime'] === '')  {
-      newAccommodation['checkInTime'] = 'anytime';
+    if(newAccommodation['check_in_date'] === '')  {
+      newAccommodation['check_in_date'] = this.firstDay;
     }
 
-    if(newAccommodation['checkOutTime'] === '')  {
-      newAccommodation['checkOutTime'] = 'anytime';
+    if(newAccommodation['check_out_date'] === '')  {
+      newAccommodation['check_out_date'] = this.lastDay;
     }
 
-    newAccommodation['date'] = newAccommodation['checkInDate'];
-    newAccommodation['time'] = newAccommodation['checkInTime'];
+    if(newAccommodation['check_in_time'] === '')  {
+      newAccommodation['check_in_time'] = '15:00';
+    }
+
+    if(newAccommodation['check_out_time'] === '')  {
+      newAccommodation['check_out_time'] = '12:00';
+    }
+
+    if(this.displayPic)  {
+      newAccommodation['photo'] = this.displayPic;
+    }
+
+    newAccommodation['date'] = newAccommodation['check_in_date'];
+    newAccommodation['time'] = newAccommodation['check_in_time'];
     newAccommodation['type'] = 'accommodation';
     newAccommodation['user'] =  {
       _Id: this.currentUser['id'],
@@ -152,5 +186,9 @@ export class AccommodationFormComponent implements OnInit {
 
   backToSearch() {
     this.searchDone = false;
+  }
+
+  selectPic(image)  {
+    this.displayPic = image;
   }
 }

@@ -4,6 +4,8 @@ export class User {
     username: string,
     email: string,
     description: string,
+    gender: string,
+    birth_date: string,
     password: string,
-    displayPic: string) {}
+    display_picture: string) {}
 }

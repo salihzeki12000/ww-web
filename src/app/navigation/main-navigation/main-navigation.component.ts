@@ -5,11 +5,7 @@ import { Component, OnInit } from '@angular/core';
   template: `
     <nav>
       <div class="logo" [routerLink]="['/me']">
-        <h1>W</h1>
-        <div class="sub-title">
-          <h2>onderer</h2>
-          <h2>anderer</h2>
-        </div>
+        <h2>wondererwanderer</h2>
       </div>
     </nav>
   `,

@@ -1,10 +1,9 @@
 .legend {
-  display: inline-block;
   position: fixed;
   width: 100%;
   padding-top: 6px;
   padding-left: 10px;
-  background-color: white;
+  background-color: #F6F6F6;
   border-bottom: 1px solid lightgray;
 }
 
@@ -22,7 +21,6 @@
 .date-row {
   display: flex;
   overflow: auto;
-  padding-left: 10px;
 }
 
 .date-column  {
@@ -34,15 +32,20 @@
   vertical-align: top;
   border-right: 1px solid lightgrey;
   border-bottom: 1px solid lightgray;
-  background-color: white;
+  background-color: #F6F6F6;
+  &:hover {
+    background-color: rgba(100,148,237,.1);
+  }
 }
 
 .date {
   text-align: left;
-  padding: 15px 10px;
+  margin-bottom: 10px;
+  padding: 15px 10px 10px 10px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  font-weight: bold;
+  color: #F9FBFB;
+  background-color: #567FCC;
 }
 
 // .date-end {
@@ -60,7 +63,7 @@
 // }
 
 .event-time  {
-  padding-left: 3px;
+  padding-left: 5px;
   color: grey;
 }
 
@@ -92,7 +95,7 @@
   width: 200px;
   background-color: #FFF;
   border-top: 10px solid rgba(100,235,219,0.5);
-  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
   &:hover {
     cursor: pointer;
   }
@@ -104,7 +107,7 @@
   margin: 5px 10px 10px 10px;
   background-color: #FFF;
   border-top: 10px solid rgba(237,100,148,0.5);
-  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
   &:hover {
     cursor: pointer;
   }
@@ -116,7 +119,7 @@
   width: 200px;
   background-color: #FFF;
   border-top: 10px solid rgba(237,189,100,0.5);
-  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
   &:hover {
     cursor: pointer;
   }
@@ -151,39 +154,48 @@
     border-radius: 8px;
 }
 
-.slide-back > i {
-
-}
-
 .show-details-in-summary-true {
   width: calc(100% - 300px)
 }
 
 .slide-back {
   position: fixed;
-  top: 68px;
+  top: 50px;
   right: 260px;
   color: lightgray;
-  z-index: 1002;
   &:hover {
     color: grey;
     cursor: pointer;
+  }
+
+  @media only screen and (max-width: 400px) {
+    left: 20px;
+    right: 0;
   }
 }
 
 .show-details-in-summary {
   position: fixed;
-  top: 60px;
+  top: 40px;
   right: 0;
-  height: calc(100vh - 60px);
+  height: calc(100vh - 40px);
   width: 300px;
-  background-color: white;
+  background-color: #F5F5F5;
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1001;
+  z-index: 3;
+
+  @media only screen and (max-width: 400px) {
+    width: 100vw;
+    min-width: 300px;
+  }
 }
 
 .details-in-summary {
   position: fixed;
-  top: 92.5px;
+  top: 73.63px;
   right: -15px;
+
+  @media only screen and (max-width: 400px) {
+    right: 0;
+  }
 }

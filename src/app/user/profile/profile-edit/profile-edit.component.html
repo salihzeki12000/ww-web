@@ -1,0 +1,124 @@
+<!-- <div class="profile-edit-main" *ngIf="!profileEdit">
+  <div class="profile-edit-header">
+    <img src="{{ currentUser?.display_picture }}" alt="">
+  </div>
+
+  <h5 class="profile-date-join">A wonderer wanderer since {{ currentUser?.created_at | date:'dd MMMM y'}}</h5>
+  <h5 (click)="editProfile()" class="edit-profile">EDIT PROFILE</h5>
+
+  <h4 class="profile-edit-section-header">PUBLIC DETAILS</h4>
+  <div class="profile-edit-section-details">
+    <div class="profile-edit-item">
+      <h5>USERNAME</h5>
+      <h4>{{ currentUser?.username }}</h4>
+    </div>
+
+    <div class="profile-edit-item">
+      <h5>DESCRIPTION</h5>
+      <h4>{{ currentUser?.description }}</h4>
+    </div>
+  </div>
+
+  <h4 class="profile-edit-section-header">PRIVATE DETAILS</h4>
+  <div class="profile-edit-section-details">
+    <div class="profile-edit-item">
+      <h5>EMAIL</h5>
+      <h4>{{ currentUser?.email }}</h4>
+    </div>
+
+    <div class="profile-edit-item">
+      <h5>CITY OF RESIDENCE</h5>
+      <h4>{{ currentUser?.city.name }}</h4>
+    </div>
+
+    <div class="profile-edit-item">
+      <h5>DATE OF BIRTH</h5>
+      <h4>{{ currentUser?.birth_date | date: 'dd MMM y'}}</h4>
+    </div>
+
+    <div class="profile-edit-item">
+      <h5>GENDER</h5>
+      <h4>{{ currentUser?.gender }}</h4>
+    </div>
+
+  </div>
+
+</div> -->
+
+
+<div class="profile-edit-main">
+  <form [formGroup]="editProfileForm" (ngSubmit)="saveProfile()">
+
+    <div class="profile-edit-header">
+      <img src="{{ currentUser?.display_picture }}" alt="">
+    </div>
+
+    <input type="file" (change)="fileUploaded($event)">
+    <button type="button" (click)="upload()">Upload</button>
+
+    <h5 class="profile-date-join">A wonderer wanderer since {{ currentUser?.created_at | date:'dd MMMM y'}}</h5>
+
+    <h4 class="profile-edit-section-header">PUBLIC DETAILS</h4>
+    <div class="profile-edit-section-details">
+      <div class="profile-edit-item">
+        <h5>USERNAME</h5>
+        <input type="text" formControlName="username" [value]="currentUser?.username" #username>
+      </div>
+
+      <div class="profile-edit-item">
+        <h5>DESCRIPTION</h5>
+        <input type="text" formControlName="description" [value]="currentUser?.description" #description>
+      </div>
+
+      <div class="profile-preview">
+        <img src="{{ currentUser?.display_picture }}" alt="" class="user-profile-thumbnail">
+        <div class="user-details">
+          <h4 class="user-username">{{ username.value }}</h4>
+          <h5 class="user-search-description">{{ description.value }}</h5>
+        </div>
+      </div>
+    </div>
+
+    <h4 class="profile-edit-section-header">PRIVATE DETAILS</h4>
+    <div class="profile-edit-section-details">
+      <div class="profile-edit-item">
+        <h5>EMAIL</h5>
+        <input type="text" formControlName="email" [value]="currentUser?.email">
+      </div>
+
+      <div class="profile-edit-item">
+        <h5>CITY OF RESIDENCE</h5>
+        <h4 *ngIf="currentUser?.city.name">{{ currentUser?.city.name }}</h4>
+
+        <h6 *ngIf="currentUser?.city.name" [class.new-city-search]="currentUser?.city.name">Search below to amend your city of residence</h6>
+        <ww-google-place-search [class.shift-city-search]="currentUser?.city.name" [options]="options" (placeDetail)="setCity($event)"></ww-google-place-search>
+        <!-- <input type="text" formControlName="city" [value]="currentUser?.city"> -->
+      </div>
+
+      <div [class.city-exist]="currentUser?.city.name">
+        <div class="profile-edit-item">
+          <h5>DATE OF BIRTH</h5>
+          <input type="date" formControlName="birth_date" [value]="currentUser?.birth_date | date: 'yyyy-MM-dd'">
+        </div>
+
+        <div class="profile-edit-item">
+          <h5>GENDER</h5>
+          <select class="profile-gender-select" name="gender" formControlName="gender" [value]="currentUser?.gender">
+            <option *ngFor="let gender of genders" [value]="gender">
+              <h5>{{ gender }}</h5>
+            </option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+
+    <h4 class="deactivate-account" (click)="confirmDelete()">Deactivate your account</h4>
+
+    <div class="action-response">
+      <!-- <h4 (click)="cancelEdit()">CANCEL</h4> -->
+      <button type="submit" class="action-response-primary" [disabled]="!editProfileForm.valid"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE PROFILE</h4></button>
+    </div>
+  </form>
+
+</div>

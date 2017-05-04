@@ -1,0 +1,39 @@
+.search-result-card {
+  padding: 20px;
+}
+
+.user-details {
+  width: 78%;
+  @media only screen and (max-width: 670px) {
+    width: calc(100vw - 160px);
+  }
+}
+
+.follow-button  {
+  display: inline-block;
+}
+
+.confirm-remove-follower  {
+  position: absolute;
+  top: 130px;
+  right: calc((100vw - 400px)/2);
+  width: 400px;
+  padding: 20px;
+  text-align: center;
+  background-color: white;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
+
+  @media only screen and (max-width: 400px) {
+    width: 100%;
+    min-width: 300px;
+    right: 0;
+  }
+}
+
+.remove-follower-message  {
+  padding: 10px 0 20px 0;
+}
+
+span.follower-username  {
+  font-weight: 600;
+}

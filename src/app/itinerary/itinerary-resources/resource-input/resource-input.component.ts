@@ -7,6 +7,7 @@ import { ItineraryService } from '../../itinerary.service';
 import { ResourceService } from '../resource.service';
 import { FlashMessageService } from '../../../flash-message';
 import { UserService } from '../../../user';
+import { PostService } from '../../../post';
 
 @Component({
   selector: 'ww-resource-input',
@@ -16,22 +17,32 @@ import { UserService } from '../../../user';
 export class ResourceInputComponent implements OnInit {
   @Output() hideResourceForm = new EventEmitter();
   resourceForm: FormGroup;
-  currentUserSubscription: Subscription;
 
+  currentUserSubscription: Subscription;
   currentUser;
-  itineraryId;
+
+  itinerarySubscription: Subscription;
+  itinerary;
+
+  textArea = false;
+  linkExist = false;
+  link_url;
+  link_title;
+  link_description;
+  link_img;
 
   constructor(
     private formBuilder: FormBuilder,
     private resourceService: ResourceService,
     private userService: UserService,
+    private postService: PostService,
     private flashMessageService: FlashMessageService,
     private itineraryService: ItineraryService,
     private route: ActivatedRoute,
     private router: Router) {
       this.resourceForm = formBuilder.group({
-        link: ['', Validators.required],
-        description: '',
+        content: ['', Validators.required],
+        title: '',
       })
   }
 
@@ -42,14 +53,30 @@ export class ResourceInputComponent implements OnInit {
                                            this.currentUser = result;
                                          })
 
-    this.itineraryId = this.itineraryService.itineraryId;
+    this.itinerarySubscription = this.itineraryService.currentItinerary
+                                     .subscribe(
+                                       result =>  {
+                                         this.itinerary = result;
+                                       }
+                                     )
   }
 
   onSubmit()  {
+    let resourceTitle;
+    if(this.link_title && this.resourceForm.value.title === "") {
+      resourceTitle = this.link_title;
+    }
+    if(this.resourceForm.value.title !== "")  {
+      resourceTitle = this.resourceForm.value.title;
+    }
     this.resourceService.addResource({
-      link: this.resourceForm.value.link,
-      description: this.resourceForm.value.description,
-      itineraryId: this.itineraryId,
+      content: this.resourceForm.value.content,
+      title: resourceTitle,
+      link_url: this.link_url,
+      link_title: this.link_title,
+      link_description: this.link_description,
+      link_img: this.link_img,
+      itinerary: this.itinerary,
       user: {
         _Id: this.currentUser['id'],
         username: this.currentUser['username'],
@@ -60,17 +87,63 @@ export class ResourceInputComponent implements OnInit {
       result => {
         if(this.route.snapshot['_urlSegment'].segments[3].path !== 'resources') {
           let id = this.route.snapshot['_urlSegment'].segments[2].path;
-          this.router.navigateByUrl('/me/itinerary/' + id + '/resources');
+          this.router.navigateByUrl('/me/itinerary/' + id + '/resource');
         }
         this.flashMessageService.handleFlashMessage(result.message);
       }
     )
 
-    this.hideResourceForm.emit(false)
+    this.hideResourceForm.emit(false);
+    this.linkExist = false;
+    this.link_url = '';
+    this.link_title = '';
+    this.link_description = '';
+    this.link_img = '';
   }
 
   cancelForm()  {
-    this.hideResourceForm.emit(false)
+    this.hideResourceForm.emit(false);
+    this.linkExist = false;
+    this.link_url = '';
+    this.link_title = '';
+    this.link_description = '';
+    this.link_img = '';
+  }
+
+  checkLink(content) {
+    let texts = content.split(" ");
+
+    for (let i = 0; i < texts.length; i++) {
+      if(texts[i].match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g)) {
+        this.postService.getPreview({link:texts[i]})
+                        .subscribe(
+                          result => {
+                            this.linkExist = true;
+                            this.link_url = texts[i];
+                            if(result.title)  {
+                              this.link_title = result.title.trim();
+                            }
+
+                            if(result.description)  {
+                              this.link_description = result.description.trim();
+                            }
+
+                            if(result.meta_img) {
+                              this.link_img = result.meta_img.trim();
+                            }
+                          }
+                        );
+      }
+    }
+
+  }
+
+  deleteLink()  {
+    this.linkExist = false;
+    this.link_url = '';
+    this.link_title = '';
+    this.link_description = '';
+    this.link_img = '';
   }
 
 }

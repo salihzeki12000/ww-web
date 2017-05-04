@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { Subscription } from 'rxjs/Rx';
+
 import { Router } from '@angular/router';
 
-import { User } from '../../user';
-import { UserService } from '../../user.service';
+import { User }                from '../../user';
+import { UserService }         from '../../user.service';
+import { RelationshipService } from '../../relationships/relationship.service';
 import { FlashMessageService } from '../../../flash-message';
+import { Post, PostService }   from '../../../post';
 
 @Component({
   selector: 'ww-profile-details',
@@ -13,28 +17,53 @@ import { FlashMessageService } from '../../../flash-message';
 })
 export class ProfileDetailsComponent implements OnInit {
   user: User;
-  profileUpdateForm: FormGroup;
+
+  posts: Post[] = [];
+  postsSubscription: Subscription;
+
+  relationshipSubscription: Subscription;
+  followings = [];
+  followers = [];
+
+  showItineraryForm = false;
 
   constructor(
+    private renderer: Renderer,
     private formBuilder: FormBuilder,
     private userService: UserService,
+    private postService: PostService,
+    private relationshipService: RelationshipService,
     private flashMessageService: FlashMessageService,
-    private router: Router) {
-      this.profileUpdateForm = this.formBuilder.group({
-        'username': '',
-        'email': '',
-        'description': '',
-      })
-    }
+    private router: Router) {}
 
   ngOnInit() {
     this.userService.getCurrentUserDetails()
         .subscribe(
           data => {
             this.user = data;
-        },
-          error => console.error(error)
-      );
+          }
+        )
+
+    this.postService.getPosts()
+        .subscribe(
+          result => {
+            this.postsSubscription = this.postService.updatePost
+                                         .subscribe(
+                                           result =>  {
+                                             this.posts = Object.keys(result).map(key => result[key]);
+                                           }
+                                         )
+          }
+        )
+
+    this.relationshipSubscription = this.relationshipService.updateRelationships
+                                     .subscribe(
+                                       result => {
+                                         this.followers = Object.keys(result['followers']).map(key => result['followers'][key]);;
+                                         this.followings = Object.keys(result['followings']).map(key => result['followings'][key]);;
+                                       }
+                                     )
+
   }
 
   onDelete()  {
@@ -46,25 +75,30 @@ export class ProfileDetailsComponent implements OnInit {
     //     });
   }
 
-  onSubmit()  {
-    let editedProfile = this.profileUpdateForm.value;
+  createItinerary() {
+    this.showItineraryForm = true;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', true);
+  }
 
-    for (let value in editedProfile)  {
-      if(editedProfile[value] === null) {
-        editedProfile[value] = '';
-      }
-      if(editedProfile[value] !== '') {
-        this.user[value] = editedProfile[value]
-      }
-    }
+  hideItineraryForm(hide) {
+    this.showItineraryForm = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+  }
 
-    this.userService.editUser(this.user)
-        .subscribe(
-          result => {
-            this.flashMessageService.handleFlashMessage(result.message);
-            this.router.navigateByUrl('/me')
-          }
-        )
+  routeToItin(id) {
+    this.router.navigateByUrl('/me/itinerary/' + id);
+  }
+
+  viewProfile()  {
+    this.router.navigateByUrl('/me/profile-edit');
+  }
+
+  routeToFollowers() {
+    this.router.navigateByUrl('/me/relationships/followers');
+  }
+
+  routeToFollowings() {
+    this.router.navigateByUrl('/me/relationships/following');
   }
 
 }

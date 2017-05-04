@@ -29,6 +29,7 @@ export class ActivityInputComponent implements OnInit {
   itinDateRange = [];
 
   activityDetail;
+  displayPic;
 
   searchDone = false;
 
@@ -46,7 +47,7 @@ export class ActivityInputComponent implements OnInit {
       'description': '',
       'subDescription': '',
       'opening_hours': '',
-      'entryFee': '',
+      'entry_fee': '',
       'website': '',
       'formatted_address': '',
       'international_phone_number':'',
@@ -136,6 +137,10 @@ export class ActivityInputComponent implements OnInit {
       activityForm['time'] = 'anytime';
     }
 
+    if(this.displayPic)  {
+      activityForm['photo'] = this.displayPic;
+    }
+
     activityForm['user'] = {
       _Id: this.currentUser['id'],
       username: this.currentUser['username'],
@@ -150,7 +155,7 @@ export class ActivityInputComponent implements OnInit {
           result => {
             if(this.route.snapshot['_urlSegment'].segments[3].path !== 'activities') {
               let id = this.route.snapshot['_urlSegment'].segments[2].path;
-              this.router.navigateByUrl('/me/itinerary/' + id + '/activities');
+              this.router.navigateByUrl('/me/itinerary/' + id + '/activity');
             }
             this.flashMessageService.handleFlashMessage(result.message);
           }
@@ -167,12 +172,23 @@ export class ActivityInputComponent implements OnInit {
   //date retreived from google
   getActivityDetails(value)  {
     this.resetActivityForm();
+    let index = 0;
 
     this.activityDetail = value;
 
-    if(this.activityDetail.photos)  {
-      this.activityDetail.photo = this.activityDetail.photos[0].getUrl({'maxWidth': 300, 'maxHeight': 250});
+    if(this.activityDetail.photos) {
+      this.displayPic = value.photos[0].getUrl({'maxWidth': 300, 'maxHeight': 250});
+      if(this.activityDetail.photos.length > 5)  {
+        index = 5;
+      } else  {
+        index = this.activityDetail.photos.length
+      }
+      this.activityDetail['pictures'] = [];
+      for (let i = 0; i < index; i++) {
+        this.activityDetail['pictures'].unshift(value.photos[i].getUrl({'maxWidth': 300, 'maxHeight': 250}));
+      }
     }
+
     this.activityDetail.opening_hours = this.getOpeningHours(this.activityDetail.opening_hours);
 
     this.searchDone = true;
@@ -230,7 +246,7 @@ export class ActivityInputComponent implements OnInit {
       'description': '',
       'subDescription': '',
       'opening_hours': '',
-      'entryFee': '',
+      'entry_fee': '',
       'website': '',
       'formatted_address': '',
       'international_phone_number':'',
@@ -246,5 +262,9 @@ export class ActivityInputComponent implements OnInit {
 
   backToSearch() {
     this.searchDone = false;
+  }
+
+  selectPic(image)  {
+    this.displayPic = image;
   }
 }

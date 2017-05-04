@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Renderer } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
 
@@ -25,13 +25,14 @@ export class ResourceComponent implements OnInit {
   showMenu = false;
 
   constructor(
+    private renderer: Renderer,
     private formBuilder: FormBuilder,
     private userService: UserService,
     private flashMessageService: FlashMessageService,
     private resourceService: ResourceService) {
       this.editResourceForm = this.formBuilder.group({
-        'link': '',
-        'description': ''
+        'title': '',
+        'content': '',
       })
     }
 
@@ -53,20 +54,22 @@ export class ResourceComponent implements OnInit {
 
   onEdit()  {
     this.editing = true;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', true);
   }
 
   cancelEditResource()  {
     this.editing = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
   onUpdateResource()  {
     let editedResource = this.editResourceForm.value;
-
+    console.log(editedResource);
     for (let value in editedResource) {
       if(editedResource[value] === null)  {
         editedResource[value] = '';
       }
-      if(editedResource[value] === '')  {
+      if(editedResource[value] !== '')  {
         this.resource[value] = editedResource[value];
       }
     }
@@ -77,14 +80,17 @@ export class ResourceComponent implements OnInit {
             this.flashMessageService.handleFlashMessage(result.message);
           })
     this.editing = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
   confirmDelete() {
     this.deleteResource = true;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', true);
   }
 
   cancelDelete()  {
     this.deleteResource = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
   onDeleteResource()  {
@@ -94,6 +100,7 @@ export class ResourceComponent implements OnInit {
             this.flashMessageService.handleFlashMessage(result.message);
           })
     this.deleteResource = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
   showMenuOptions() {

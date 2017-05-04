@@ -12,7 +12,9 @@ import { UserService } from '../user';
   styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent implements OnInit, AfterViewInit {
-  private signinForm = false;
+  signinHome = true;
+  signinForm = false;
+  signupForm = false;
 
   constructor(
     private authService: AuthService,
@@ -53,7 +55,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
           console.log(result)
           // if no email, to open up a modal notice and to sign up or sign in
           result['username'] = result['name'];
-          result['displayPic'] = result['picture']['data']['url'];
+          result['display_picture'] = result['picture']['data']['url'];
           console.log(result);
           this.authService.loginFacebook(result)
               .subscribe(
@@ -88,12 +90,12 @@ export class AuthComponent implements OnInit, AfterViewInit {
     let profile = user.getBasicProfile();
     let email = profile.getEmail();
     let username = profile.getName();
-    let displayPic = profile.getImageUrl();
+    let display_picture = profile.getImageUrl();
     console.log("log in google")
     this.authService.loginGoogle({
       username: username,
       email: email,
-      displayPic: displayPic,
+      display_picture: display_picture,
     }).subscribe( data => {
       console.log("log in google ok")
       setTimeout(() =>  {
@@ -104,5 +106,19 @@ export class AuthComponent implements OnInit, AfterViewInit {
 
   showSigninForm() {
     this.signinForm = true;
+    this.signinHome = false;
+    this.signupForm = false;
+  }
+
+  showSignupForm()  {
+    this.signupForm = true;
+    this.signinForm = false;
+    this.signinHome = false;
+  }
+
+  showAuth()  {
+    this.signinHome = true;
+    this.signupForm = false;
+    this.signinForm = false;
   }
 }

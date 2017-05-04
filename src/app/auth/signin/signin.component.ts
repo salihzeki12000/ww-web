@@ -13,7 +13,8 @@ import { AuthService } from '../auth.service';
 export class SigninComponent implements OnInit {
   signinForm: FormGroup;
   //emits to auth.component.html
-  @Output() hideSigninForm = new EventEmitter();
+  @Output() showSignupForm = new EventEmitter();
+  @Output() backAuth = new EventEmitter();
   userId;
 
   constructor(
@@ -43,11 +44,15 @@ export class SigninComponent implements OnInit {
       }
   }
 
-  showSigninForm() {
-    this.hideSigninForm.emit()
+  ngOnInit() {
   }
 
-  ngOnInit() {
+  backToAuth() {
+    this.backAuth.emit()
+  }
+
+  getSignupForm() {
+    this.showSignupForm.emit()
   }
 
 }

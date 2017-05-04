@@ -1,17 +1,17 @@
-<div class="activity-card">
+<div class="display-photo-card">
 
   <div *ngIf="activity?.photo">
-    <img src="{{activity?.photo}}" alt="picture of {{ activity?.name}}">
+    <img class="display-card-image" src="{{activity?.photo}}" alt="picture of {{ activity?.name}}">
   </div>
 
   <div *ngIf="!activity?.photo">
-    <div class="img">
+    <div class="display-card-image-placeholder">
       <i class="fa fa-camera fa-4x" aria-hidden="true"></i>
       <h5>add a photo</h5>
     </div>
   </div>
 
-  <div class="activity-details">
+  <div class="display-photo-housing">
 
     <div class="dots-menu" (mouseover)="showMenuOptions()">
       <div class="item-menu" *ngIf="showMenu">
@@ -20,11 +20,11 @@
             <h5>Recommend</h5>
             <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
           </li> -->
-          <li (click)="onEdit()" *ngIf="activity.sameUser">
+          <li (click)="onEdit()">
             <h5>Edit</h5>
             <i class="fa fa-pencil" aria-hidden="true"></i>
           </li>
-          <li (click)="confirmDelete()" *ngIf="activity.sameUser">
+          <li (click)="confirmDelete()">
             <h5>Delete</h5>
             <i class="fa fa-trash-o" aria-hidden="true"></i>
           </li>
@@ -61,7 +61,7 @@
 
     <div class="activity-fee">
       <i class="fa fa-money fa-fw" aria-hidden="true"></i>
-      <h5>{{ activity?.entryFee }}</h5>
+      <h5>{{ activity?.entry_fee }}</h5>
     </div>
 
     <div class="activity-website">
@@ -99,28 +99,34 @@
     <div class="form-card">
 
       <div class="form-header">
-        <h3>Edit activity - {{ activity?.name }}</h3>
+        <h3>Edit activity</h3>
         <a (click)="cancelEditActivity()">x</a>
       </div>
 
-      <form [formGroup]="editCustomActivityForm" (ngSubmit)="onUpdateActivity()" class="activity-form-details">
+      <div class="form-header-name">
+        <h4>{{ activity?.name }}</h4>
+      </div>
+
+      <form [formGroup]="editCustomActivityForm" (ngSubmit)="onUpdateActivity()" class="form-housing">
 
         <h5 class="form-section-header">VISIT DATE &amp; TIME DETAILS</h5>
-        <div class="date-time-visit">
+        <div class="form-section-details">
 
-          <label>DATE TO VISIT</label>
-          <select name="date" formControlName="date" [value]="activity.date">
-            <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
-              <div *ngIf="itinDate === 'any day'">
-                <h5>{{ itinDate }}</h5>
-              </div>
-              <div *ngIf="itinDate !== 'any day'">
-                <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
-              </div>
-            </option>
-          </select>
+          <div class="date-to-visit">
+            <label>DATE TO VISIT</label>
+            <select class="select-date" name="date" formControlName="date" [value]="activity.date">
+              <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
+                <div *ngIf="itinDate === 'any day'">
+                  <h5>{{ itinDate }}</h5>
+                </div>
+                <div *ngIf="itinDate !== 'any day'">
+                  <h5>Day {{ i }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+                </div>
+              </option>
+            </select>
+          </div>
 
-          <div class="time" [class.any-time-true]="anytime">
+          <div class="time-to-visit" [class.any-time-true]="anytime">
             <label>TIME TO VISIT (
 
               <div class="anytime-input">
@@ -135,7 +141,7 @@
         </div>
 
         <h5 class="form-section-header">ACTIVITY DETAILS</h5>
-        <div class="activity-form-details">
+        <div class="form-section-details">
 
           <label>NAME</label>
           <input type="text" formControlName="name" [value]="activity.name">
@@ -153,10 +159,7 @@
           <textarea rows="2" formControlName="opening_hours" [value]="activity.opening_hours"></textarea>
 
           <label>COST / ENTRY FEE</label>
-          <input type="text" formControlName="entryFee" [value]="activity.entryFee">
-
-          <label>NOTE</label>
-          <textarea rows="2" formControlName="note" [value]="activity.note"></textarea>
+          <input type="text" formControlName="entry_fee" [value]="activity.entry_fee">
 
           <div formArrayName="categories">
             <label>CATEGORY</label>
@@ -175,9 +178,14 @@
           </div>
         </div>
 
-        <div class="save-option">
-          <h4 (click)="cancelEditActivity()">CANCEL</h4>
-          <button type="submit" class="save-button"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
+        <h5 class="form-section-header">NOTE</h5>
+        <div class="form-section-details">
+          <textarea rows="2" formControlName="note" [value]="activity.note"></textarea>
+        </div>
+
+        <div class="action-response">
+          <h4 class="action-response-secondary" (click)="cancelEditActivity()">CANCEL</h4>
+          <button type="submit" class="action-response-primary"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
         </div>
 
       </form>
@@ -190,9 +198,14 @@
 
 
 <div class="custom-modal" *ngIf="deleteActivity">
-  <div class="confirm-delete">
-    <div class="confirm-delete-header">
-      <h3>Delete activity - {{ activity?.name }}?</h3>
+  <div class="form-card">
+    <div class="form-header">
+      <h3>Delete activity?</h3>
+      <a (click)="cancelDelete()">x</a>
+    </div>
+
+    <div class="form-header-name-delete">
+      <h4>{{ activity?.name }}</h4>
     </div>
 
     <div class="confirm-delete-content">
@@ -201,8 +214,10 @@
     </div>
 
     <div class="confirm-delete-footer">
-      <h4 (click)="cancelDelete()">CANCEL</h4>
-      <h4 (click)="onDeleteActivity()">DELETE</h4>
+      <div class="action-response">
+        <h4 class="action-response-primary" (click)="cancelDelete()">CANCEL</h4>
+        <h4 class="action-response-warning" (click)="onDeleteActivity()">DELETE</h4>
+      </div>
     </div>
   </div>
 </div>

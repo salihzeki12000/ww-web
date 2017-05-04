@@ -1,0 +1,18 @@
+<div class="search-result-card">
+  <img src="{{ pendingFollower.user.display_picture }}" alt="" class="user-profile-thumbnail">
+  <div class="user-details">
+    <h4 class="user-username">{{ pendingFollower.user.username }}</h4>
+    <h5 class="user-search-description">{{ pendingFollower.user.description }}</h5>
+  </div>
+
+  <div class="follow-button">
+    <div class="action-response" *ngIf="!pendingFollower.responded">
+      <h5 class="action-response-secondary" (click)="ignoreRequest()">IGNORE</h5>
+      <h5 class="action-response-primary" (click)="acceptRequest()">ACCEPT</h5>
+    </div>
+    <div class="response-status" *ngIf="pendingFollower.responded">
+      <h5 *ngIf="pendingFollower.request_accepted">Request Accepted</h5>
+      <h5 *ngIf="pendingFollower.request_ignored">Request Ignored</h5>
+    </div>
+  </div>
+</div>

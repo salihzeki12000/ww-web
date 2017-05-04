@@ -1,10 +1,33 @@
 .notification {
   padding: 10px;
-  border-bottom: 1px solid lightgray;
-  background-color: rgba(237, 189, 100, 0.1); 
+  border-top: 1px solid lightgray;
 }
 
-.created-at {
-  padding-top: 5px;
+.notification > img {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.notification-message  {
+  display: inline-block;
+  width: 90%;
+  padding-left: 10px;
+
+  @media only screen and (max-width: 400px) {
+    width: 80%;
+  }
+}
+
+.time-ago {
+  display: inline-block;
+}
+
+.time-ago > p {
+  display: inline-block;
+  padding-top: 10px;
+  font-size: .6em;
   color: grey;
+  &:hover {
+    cursor: default;
+  }
 }

@@ -1,4 +1,11 @@
-<div class="notification">
-  <h5>{{ notification?.message }}</h5>
-  <h6 class="created-at">{{ notification?.created_at | date: 'medium'}}</h6>
+<div class="notification" (click)="navigate()">
+  <img src="{{ notification.originator.display_picture }}" alt="" class="user-profile-thumbnail">
+  <div class="notification-message">
+    <h5><span class="username-bold">{{ notification.originator.username }}</span> {{ notification?.message }}</h5>
+    <div class="time-ago">
+      <p>{{ notification?.time_ago }}</p>
+      <span class="show-time">{{ notification?.created_at | date: 'EEE, dd MMM yyyy - HH:mm' }}</span>
+    </div>
+  </div>
+
 </div>

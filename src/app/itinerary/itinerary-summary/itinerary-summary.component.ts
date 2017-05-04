@@ -62,15 +62,15 @@ export class ItinerarySummaryComponent implements OnInit {
     for (let i = 0; i < events.length; i++) {
       if(events[i]['type'] === 'accommodation') {
         let oneDay = 24*60*60*1000;
-        let inDate = new Date(events[i]['checkInDate']);
-        let outDate = new Date(events[i]['checkOutDate']);
+        let inDate = new Date(events[i]['check_in_date']);
+        let outDate = new Date(events[i]['check_out_date']);
         let numDaysDiff = Math.round(Math.abs((inDate.getTime() - outDate.getTime())/oneDay));
         let numDays = numDaysDiff + " night" + (numDaysDiff > 1 ? "s" : "");
         accommodations.push({
-          checkInDate: events[i]['checkInDate'],
-          checkInTime: events[i]['checkInTime'],
-          checkOutDate: events[i]['checkOutDate'],
-          checkOutTime: events[i]['checkOutTime'],
+          check_in_date: events[i]['check_in_date'],
+          check_in_time: events[i]['check_in_time'],
+          check_out_date: events[i]['check_out_date'],
+          check_out_time: events[i]['check_out_time'],
           created_at: events[i]['created_at'],
           date: events[i]['date'],
           formatted_address: events[i]['formatted_address'],
@@ -78,7 +78,7 @@ export class ItinerarySummaryComponent implements OnInit {
           itinerary: events[i]['itinerary'],
           name: events[i]['name'],
           note: events[i]['note'],
-          stayCity: events[i]['stayCity'],
+          stay_city: events[i]['stay_city'],
           time: events[i]['time'],
           time_ago: events[i]['time_ago'],
           type: events[i]['type'],
@@ -87,14 +87,14 @@ export class ItinerarySummaryComponent implements OnInit {
           _id: events[i]['_id'],
           inOut: "checkin",
           numDays: numDays,
-          summary_date: events[i]['checkInDate'],
-          summary_time: events[i]['checkInTime']
+          summary_date: events[i]['check_in_date'],
+          summary_time: events[i]['check_in_time']
         });
         accommodations.push({
-          checkInDate: events[i]['checkInDate'],
-          checkInTime: events[i]['checkInTime'],
-          checkOutDate: events[i]['checkOutDate'],
-          checkOutTime: events[i]['checkOutTime'],
+          check_in_date: events[i]['check_in_date'],
+          check_in_time: events[i]['check_in_time'],
+          check_out_date: events[i]['check_out_date'],
+          check_out_time: events[i]['check_out_time'],
           created_at: events[i]['created_at'],
           date: events[i]['date'],
           formatted_address: events[i]['formatted_address'],
@@ -102,7 +102,7 @@ export class ItinerarySummaryComponent implements OnInit {
           itinerary: events[i]['itinerary'],
           name: events[i]['name'],
           note: events[i]['note'],
-          stayCity: events[i]['stayCity'],
+          stay_city: events[i]['stay_city'],
           time: events[i]['time'],
           time_ago: events[i]['time_ago'],
           type: events[i]['type'],
@@ -110,8 +110,8 @@ export class ItinerarySummaryComponent implements OnInit {
           website: events[i]['website'],
           _id: events[i]['_id'],
           inOut: "checkout",
-          summary_date: events[i]['checkOutDate'],
-          summary_time: events[i]['checkOutTime']
+          summary_date: events[i]['check_out_date'],
+          summary_time: events[i]['check_out_time']
         })
       }
       if(events[i]['type'] === 'activity') {
@@ -131,60 +131,60 @@ export class ItinerarySummaryComponent implements OnInit {
       }
       if(events[i]['type'] === 'transport') {
         datedEvents.push({
-          arrCity: events[i]['arrCity'],
-          arrDate: events[i]['arrDate'],
-          arrStation: events[i]['arrStation'],
-          arrTerminal: events[i]['arrTerminal'],
-          arrTime: events[i]['arrTime'],
-          contactNumber: events[i]['contactNumber'],
+          arr_city: events[i]['arr_city'],
+          arr_date: events[i]['arr_date'],
+          arr_station: events[i]['arr_station'],
+          arr_terminal: events[i]['arr_terminal'],
+          arr_time: events[i]['arr_time'],
+          contact_number: events[i]['contact_number'],
           created_at: events[i]['created_at'],
           date: events[i]['date'],
-          depCity: events[i]['depCity'],
-          depDate: events[i]['depDate'],
-          depStation: events[i]['depStation'],
-          depTerminal: events[i]['depTerminal'],
-          depTime: events[i]['depTime'],
+          dep_city: events[i]['dep_city'],
+          dep_date: events[i]['dep_date'],
+          dep_station: events[i]['dep_station'],
+          dep_terminal: events[i]['dep_terminal'],
+          dep_time: events[i]['dep_time'],
           itinerary: events[i]['itinerary'],
           note: events[i]['note'],
-          referenceNumber: events[i]['referenceNumber'],
+          reference_number: events[i]['reference_number'],
           time: events[i]['time'],
           time_ago: events[i]['time_ago'],
-          transportCompany: events[i]['transportCompany'],
-          transportType: events[i]['transportType'],
+          transport_company: events[i]['transport_company'],
+          transport_type: events[i]['transport_type'],
           type: events[i]['type'],
           user: events[i]['user'],
           _id: events[i]['_id'],
           approach: 'departure',
-          summary_date: events[i]['depDate'],
-          summary_time: events[i]['depTime']
+          summary_date: events[i]['dep_date'],
+          summary_time: events[i]['dep_time']
         });
         datedEvents.push({
-          arrCity: events[i]['arrCity'],
-          arrDate: events[i]['arrDate'],
-          arrStation: events[i]['arrStation'],
-          arrTerminal: events[i]['arrTerminal'],
-          arrTime: events[i]['arrTime'],
-          contactNumber: events[i]['contactNumber'],
+          arr_city: events[i]['arr_city'],
+          arr_date: events[i]['arr_date'],
+          arr_station: events[i]['arr_station'],
+          arr_terminal: events[i]['arr_terminal'],
+          arr_time: events[i]['arr_time'],
+          contact_number: events[i]['contact_number'],
           created_at: events[i]['created_at'],
           date: events[i]['date'],
-          depCity: events[i]['depCity'],
-          depDate: events[i]['depDate'],
-          depStation: events[i]['depStation'],
-          depTerminal: events[i]['depTerminal'],
-          depTime: events[i]['depTime'],
+          dep_city: events[i]['dep_city'],
+          dep_date: events[i]['dep_date'],
+          dep_station: events[i]['dep_station'],
+          dep_terminal: events[i]['dep_terminal'],
+          dep_time: events[i]['dep_time'],
           itinerary: events[i]['itinerary'],
           note: events[i]['note'],
-          referenceNumber: events[i]['referenceNumber'],
+          reference_number: events[i]['reference_number'],
           time: events[i]['time'],
           time_ago: events[i]['time_ago'],
-          transportCompany: events[i]['transportCompany'],
-          transportType: events[i]['transportType'],
+          transport_company: events[i]['transport_company'],
+          transport_type: events[i]['transport_type'],
           type: events[i]['type'],
           user: events[i]['user'],
           _id: events[i]['_id'],
           approach: 'arrival',
-          summary_date: events[i]['arrDate'],
-          summary_time: events[i]['arrTime']
+          summary_date: events[i]['arr_date'],
+          summary_time: events[i]['arr_time']
         })
       }
     }

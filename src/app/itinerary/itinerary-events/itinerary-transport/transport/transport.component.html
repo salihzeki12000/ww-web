@@ -1,4 +1,4 @@
-<div class="details-card">
+<div class="display-card">
 
   <div class="dots-menu" (mouseover)="showMenuOptions()">
     <div class="item-menu" *ngIf="showMenu">
@@ -19,82 +19,82 @@
     </div>
   </div>
 
-  <h5 class="date-header">{{ event?.depDate | date: 'EEE, dd MMM yyyy' }} - {{ event?.depTime }}</h5>
+  <h5 class="date-header">{{ event?.dep_date | date: 'EEE, dd MMM yyyy' }} - {{ event?.dep_time }}</h5>
 
   <div class="transport-header">
-    <div [ngSwitch]="event.transportType">
-      <h2 *ngSwitchCase="'flight'"><i class="fa fa-plane" aria-hidden="true"></i> {{ event.referenceNumber | uppercase }}</h2>
+    <div [ngSwitch]="event.transport_type">
+      <h2 *ngSwitchCase="'flight'"><i class="fa fa-plane" aria-hidden="true"></i> {{ event.reference_number | uppercase }}</h2>
       <h2 *ngSwitchCase="'train'"><i class="fa fa-train" aria-hidden="true"></i> Train</h2>
-      <h2 *ngSwitchCase="'bus'"><i class="fa fa-bus" aria-hidden="true"></i> Bus {{ event.referenceNumber | uppercase }}</h2>
+      <h2 *ngSwitchCase="'bus'"><i class="fa fa-bus" aria-hidden="true"></i> Bus {{ event.reference_number | uppercase }}</h2>
       <h2 *ngSwitchCase="'cruise'"><i class="fa fa-ship" aria-hidden="true"></i> Cruise</h2>
       <h2 *ngSwitchCase="'vehicle rental'"><i class="fa fa-car" aria-hidden="true"></i> Vehicle rental</h2>
       <h2 *ngSwitchCase="'others'"><i class="fa fa-rocket" aria-hidden="true"></i> Transport</h2>
     </div>
-    <h4>from {{ event.depCity | uppercase }} to {{ event.arrCity | uppercase }}</h4>
+    <h4>from {{ event.dep_city | uppercase }} to {{ event.arr_city | uppercase }}</h4>
   </div>
 
-  <div *ngIf="event.transportType === 'flight'">
+  <div *ngIf="event.transport_type === 'flight'">
 
     <div class="departure-arrival-details">
 
       <div class="departure-section">
-        <h5>Departs <span class="city-highlight">{{ event.depCity | uppercase }}</span></h5>
-        <h5>{{ event.depStation | uppercase }}</h5>
-        <h5>terminal {{ event.depTerminal | uppercase }}</h5>
-        <h5>{{ event?.depDate | date:'dd MMM yy' }} - {{ event.depTime }}</h5>
+        <h5>Departs <span class="city-highlight">{{ event.dep_city | uppercase }}</span></h5>
+        <h5>{{ event.dep_station | uppercase }}</h5>
+        <h5>{{ event.dep_terminal | uppercase }}</h5>
+        <h5>{{ event?.dep_date | date:'dd MMM yy' }} - {{ event.dep_time }}</h5>
       </div>
 
       <div class="arrival-section">
-        <h5>Arrives <span class="city-highlight">{{ event.arrCity | uppercase }}</span></h5>
-        <h5>{{ event.arrStation | uppercase }}</h5>
-        <h5>terminal {{ event.arrTerminal | uppercase }}</h5>
-        <h5>{{ event?.arrDate | date:'dd MMM yy' }} - {{ event.arrTime }}</h5>
+        <h5>Arrives <span class="city-highlight">{{ event.arr_city | uppercase }}</span></h5>
+        <h5>{{ event.arr_station | uppercase }}</h5>
+        <h5>{{ event.arr_terminal | uppercase }}</h5>
+        <h5>{{ event?.arr_date | date:'dd MMM yy' }} - {{ event.arr_time }}</h5>
       </div>
 
     </div>
 
   </div><!-- end of flight -->
 
-  <div *ngIf="event.transportType !== 'flight'">
+  <div *ngIf="event.transport_type !== 'flight'">
 
     <div class="departure-arrival-details">
 
-      <div *ngIf="event.transportType !== 'vehicle rental'">
+      <div *ngIf="event.transport_type !== 'vehicle rental'">
 
         <div class="departure-section">
-          <h5>Departs <span class="city-highlight">{{ event.depCity | uppercase }}</span></h5>
-          <h5>{{ event.depStation | uppercase }}</h5>
-          <h5>{{ event?.depDate | date:'dd MMM yy' }} - {{ event.depTime }}</h5>
+          <h5>Departs <span class="city-highlight">{{ event.dep_city | uppercase }}</span></h5>
+          <h5>{{ event.dep_station | uppercase }}</h5>
+          <h5>{{ event?.dep_date | date:'dd MMM yy' }} - {{ event.dep_time }}</h5>
         </div>
 
         <div class="arrival-section">
-          <h5>Arrives <span class="city-highlight">{{ event.arrCity | uppercase }}</span></h5>
-          <h5>{{ event.arrStation | uppercase }}</h5>
-          <h5>{{ event?.arrDate | date:'dd MMM yy' }} - {{ event.arrTime }}</h5>
+          <h5>Arrives <span class="city-highlight">{{ event.arr_city | uppercase }}</span></h5>
+          <h5>{{ event.arr_station | uppercase }}</h5>
+          <h5>{{ event?.arr_date | date:'dd MMM yy' }} - {{ event.arr_time }}</h5>
         </div>
 
       </div>
 
-      <div *ngIf="event.transportType === 'vehicle rental'">
+      <div *ngIf="event.transport_type === 'vehicle rental'">
 
         <div class="rental-company">
           <h6>Rental company</h6>
-          <h4>{{ event.transportCompany }}</h4>
+          <h4>{{ event.transport_company }}</h4>
         </div>
 
         <div class="rental-contact">
           <h6>Contact number</h6>
-          <h4>{{ event.contactNumber }}</h4>
+          <h4>{{ event.contact_number }}</h4>
         </div>
 
         <div class="departure-section">
-          <h5>Departs <span class="city-highlight">{{ event.depCity | uppercase }}</span></h5>
-          <h5>Pick up {{ event?.depDate | date:'dd MMM yy' }} - {{ event.depTime }}</h5>
+          <h5>Departs <span class="city-highlight">{{ event.dep_city | uppercase }}</span></h5>
+          <h5>Pick up {{ event?.dep_date | date:'dd MMM yy' }} - {{ event.dep_time }}</h5>
         </div>
 
         <div class="arrival-section">
-          <h5>Arrives <span class="city-highlight">{{ event.arrCity | uppercase }}</span></h5>
-          <h5>Return {{ event?.arrDate | date:'dd MMM yy' }} - {{ event.arrTime }}</h5>
+          <h5>Arrives <span class="city-highlight">{{ event.arr_city | uppercase }}</span></h5>
+          <h5>Return {{ event?.arr_date | date:'dd MMM yy' }} - {{ event.arr_time }}</h5>
         </div>
 
       </div><!-- end of vehicle rental -->
@@ -120,76 +120,82 @@
     <div class="form-card">
 
       <div class="form-header">
-        <h3>Edit transport arrangement - {{ event?.transportType }} from {{ event?.depCity }} to {{ event?.arrCity }}</h3>
+        <h3>Edit transport arrangement</h3>
         <a (click)="cancelEditTransport()">x</a>
+      </div>
+
+      <div class="form-header-name">
+        <h4>{{ event?.transport_type }} from {{ event?.dep_city }} to {{ event?.arr_city }}</h4>
       </div>
 
       <form [formGroup]="editTransportForm" (ngSubmit)="onEditTransport()">
 
-        <div class="edit-transport-header">
-          <div [ngSwitch]="event.transportType" class="transport-type">
-            <h4 *ngSwitchCase="'flight'"><i class="fa fa-plane" aria-hidden="true"></i> Flight</h4>
-            <h4 *ngSwitchCase="'train'"><i class="fa fa-train" aria-hidden="true"></i> Train</h4>
-            <h4 *ngSwitchCase="'bus'"><i class="fa fa-bus" aria-hidden="true"></i> Bus</h4>
-            <h4 *ngSwitchCase="'cruise'"><i class="fa fa-ship" aria-hidden="true"></i> Cruise</h4>
-            <h4 *ngSwitchCase="'vehicle rental'"><i class="fa fa-car" aria-hidden="true"></i> Vehicle rental</h4>
-            <h4 *ngSwitchCase="'others'"><i class="fa fa-rocket" aria-hidden="true"></i> Transport</h4>
-          </div>
-          <h4> from {{ event.depCity | uppercase }} to {{ event.arrCity | uppercase }} ( {{ event?.depDate | date: 'dd MMM yy' }} )</h4>
-        </div>
-
-        <div class="transport-details">
+        <div class="form-housing">
 
           <div class="departure">
             <h5 class="form-section-header">DEPARTURE DETAILS</h5>
+            <div class="form-section-details">
 
-            <div class="departure-arrival-details">
+              <div *ngIf="event.transport_type === 'flight'">
+                <label>FLIGHT NUMBER</label>
+                <input type="text" class="reference-number" formControlName="reference_number" [value]="event.reference_number">
+              </div>
+
+              <div *ngIf="event.transport_type === 'bus'">
+                <label>BUS NUMBER</label>
+                <input type="text" class="reference-number" formControlName="reference_number" [value]="event.reference_number">
+              </div>
 
               <label>DEPART FROM (CITY) <span class="required"> - required</span></label>
-              <input type="text" formControlName="depCity" [value]="event.depCity">
+              <input type="text" formControlName="dep_city" [value]="event.dep_city">
 
               <!-- departure template for flight -->
-              <div *ngIf="event.transportType === 'flight'">
+              <div *ngIf="event.transport_type === 'flight'">
                 <label>DEPARTURE AIRPORT</label>
-                <input type="text" formControlName="depStation" [value]="event.depStation">
+                <input type="text" formControlName="dep_station" [value]="event.dep_station">
 
                 <label>TERMINAL</label>
-                <input type="text" class="transport-terminal" formControlName="depTerminal" [value]="event.depTerminal">
+                <input type="text" class="transport-terminal" formControlName="dep_terminal" [value]="event.dep_terminal">
               </div>
 
               <!-- departure details for all other transport type except vehicle rental-->
-              <div *ngIf="event.transportType !== 'flight'">
-                <div *ngIf="event.transportType !== 'vehicle rental'">
+              <div *ngIf="event.transport_type !== 'flight'">
+                <div *ngIf="event.transport_type !== 'vehicle rental'">
                   <label>DEPARTURE STATION / TERMINAL</label>
-                  <input type="text" formControlName="depStation" [value]="event.depStation">
+                  <input type="text" formControlName="dep_station" [value]="event.dep_station">
                 </div>
               </div>
 
               <!-- departure date & time for all transport type except vehicel rental-->
-              <div *ngIf="event.transportType !== 'vehicle rental'">
+              <div *ngIf="event.transport_type !== 'vehicle rental'">
                 <label>DEPARTURE DATE (DD/MM/YYYY) <span class="required"> - required</span></label>
-                <input type="date" formControlName="depDate" [value]="event?.depDate | date: 'yyyy-MM-dd'" max="2050-12-31">
+                <select class="select-date" name="dep_date" formControlName="dep_date" [value]="event?.dep_date">
+                  <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
+                    <div *ngIf="itinDate === 'any day'">
+                      <h5>{{ itinDate }}</h5>
+                    </div>
+                    <div *ngIf="itinDate !== 'any day'">
+                      <h5>Day {{ i }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+                    </div>
+                  </option>
+                </select>
 
                 <label>DEPARTURE TIME</label>
-                <input type="time" formControlName="depTime" [value]="event.depTime">
+                <input type="time" formControlName="dep_time" [value]="event.dep_time">
               </div>
 
-              <div *ngIf="event.transportType === 'vehicle rental'">
+              <div *ngIf="event.transport_type === 'vehicle rental'">
                 <label>PICK UP DATE (DD/MM/YYYY) <span class="required"> - required</span></label>
-                <input type="date" formControlName="depDate" [value]="event?.depDate | date: 'yyyy-MM-dd'" max="2050-12-31">
+                <select class="select-date" name="dep_date" formControlName="dep_date" [value]="event?.dep_date">
+                  <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
+                    <div *ngIf="itinDate !== 'any day'">
+                      <h5>Day {{ i }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+                    </div>
+                  </option>
+                </select>
 
                 <label>PICK UP TIME</label>
-                <input type="time" formControlName="depTime" [value]="event.depTime">
-              </div>
-
-              <div *ngIf="event.transportType === 'flight'">
-                <label>FLIGHT NUMBER</label>
-                <input type="text" class="reference-number" formControlName="referenceNumber" [value]="event.referenceNumber">
-              </div>
-
-              <div *ngIf="event.transportType === 'bus'">
-                <label>BUS NUMBER</label>
-                <input type="text" class="reference-number" formControlName="referenceNumber" [value]="event.referenceNumber">
+                <input type="time" formControlName="dep_time" [value]="event.dep_time">
               </div>
 
             </div><!-- end of departure details -->
@@ -198,69 +204,81 @@
           <div class="arrival">
             <h5 class="form-section-header">ARRIVAL DETAILS</h5>
 
-            <div class="departure-arrival-details">
+            <div class="form-section-details">
 
               <label>GOING TO (CITY) <span class="required"> - required</span></label>
-              <input type="text" formControlName="arrCity" [value]="event.arrCity">
+              <input type="text" formControlName="arr_city" [value]="event.arr_city">
 
               <!-- arrival template for flight -->
-              <div *ngIf="event.transportType === 'flight'">
+              <div *ngIf="event.transport_type === 'flight'">
                 <label>ARRIVAL AIRPORT</label>
-                <input type="text" formControlName="arrStation" [value]="event.arrStation">
+                <input type="text" formControlName="arr_station" [value]="event.arr_station">
 
                 <label>TERMINAL</label>
-                <input type="text" class="transport-terminal" formControlName="arrTerminal" [value]="event.arrTerminal">
+                <input type="text" class="transport-terminal" formControlName="arr_terminal" [value]="event.arr_terminal">
               </div>
 
               <!-- arrival details for all other transport type except vehicle rental-->
-              <div *ngIf="event.transportType !== 'flight'">
-                <div *ngIf="event.transportType !== 'vehicle rental'">
+              <div *ngIf="event.transport_type !== 'flight'">
+                <div *ngIf="event.transport_type !== 'vehicle rental'">
                   <label>ARRIVAL STATION / TERMINAL</label>
-                  <input type="text" formControlName="arrStation" [value]="event.arrStation">
+                  <input type="text" formControlName="arr_station" [value]="event.arr_station">
                 </div>
               </div>
 
               <!-- arrival date & time for all transport type except vehicle rental-->
-              <div *ngIf="event.transportType !== 'vehicle rental'">
+              <div *ngIf="event.transport_type !== 'vehicle rental'">
                 <label>ARRIVAL DATE (DD/MM/YYYY) <span class="required"> - required</span></label>
-                <input type="date" formControlName="arrDate" [value]="event?.arrDate | date: 'yyyy-MM-dd'" max="2050-12-31">
+                <select class="select-date" name="arr_date" formControlName="arr_date" [value]="event?.arr_date">
+                  <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
+                    <div *ngIf="itinDate !== 'any day'">
+                      <h5>Day {{ i }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+                    </div>
+                  </option>
+                </select>
 
                 <label>ARRIVAL TIME</label>
-                <input type="time" formControlName="arrTime" [value]="event.arrTime">
+                <input type="time" formControlName="arr_time" [value]="event.arr_time">
               </div>
 
-              <div *ngIf="event.transportType === 'vehicle rental'">
+              <div *ngIf="event.transport_type === 'vehicle rental'">
                 <label>RETURN DATE (DD/MM/YYYY) <span class="required"> - required</span></label>
-                <input type="date" formControlName="arrDate" [value]="event?.arrDate | date: 'yyyy-MM-dd'" max="2050-12-31">
+                <select class="select-date" name="arr_date" formControlName="arr_date" [value]="event?.arr_date">
+                  <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
+                    <div *ngIf="itinDate !== 'any day'">
+                      <h5>Day {{ i }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+                    </div>
+                  </option>
+                </select>
 
                 <label>RETURN TIME</label>
-                <input type="time" formControlName="arrTime" [value]="event.arrTime">
+                <input type="time" formControlName="arr_time" [value]="event.arr_time">
               </div>
 
             </div><!-- end of arrival details-->
           </div><!-- end of arrival -->
 
-        </div>
-        <!-- template for vehicle rental -->
-        <div *ngIf="event.transportType === 'vehicle rental'">
-          <h5 class="form-section-header">RENTAL COMPANY DETAILS</h5>
-          <div class="departure-arrival-details">
-            <label>RENTAL COMPANY</label>
-            <input type="text" formControlName="transportCompany" [value]="event.transportCompany">
+          <!-- template for vehicle rental -->
+          <div *ngIf="event.transport_type === 'vehicle rental'">
+            <h5 class="form-section-header">RENTAL COMPANY DETAILS</h5>
+            <div class="form-section-details">
+              <label>RENTAL COMPANY</label>
+              <input type="text" formControlName="transport_company" [value]="event.transport_company">
 
-            <label>CONTACT NUMBER</label>
-            <input type="text" class="contact-number-input" formControlName="contactNumber" [value]="event.contactNumber">
+              <label>CONTACT NUMBER</label>
+              <input type="text" class="contact-number-input" formControlName="contact_number" [value]="event.contact_number">
+            </div>
           </div>
-        </div>
 
-        <div class="departure-arrival-details">
-          <label>NOTE</label>
-          <textarea rows="3" formControlName="note" [value]="event.note"></textarea>
-        </div>
+          <h5 class="form-section-header">NOTE</h5>
+          <div class="form-section-details">
+            <textarea rows="3" formControlName="note" [value]="event.note"></textarea>
+          </div>
 
-        <div class="save-option">
-          <h4 (click)="cancelEditTransport()">CANCEL</h4>
-          <button type="submit" class="save-button" [disabled]="!editTransportForm.valid"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
+          <div class="action-response">
+            <h4 class="action-response-secondary" (click)="cancelEditTransport()">CANCEL</h4>
+            <button type="submit" class="action-response-primary" [disabled]="!editTransportForm.valid"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
+          </div>
         </div>
 
       </form>
@@ -270,20 +288,27 @@
 </div>
 <!-- end of transport edit modal -->
 
-<div class="delete-modal" *ngIf="deleteTransport">
-  <div class="confirm-delete">
-    <div class="confirm-delete-header">
-      <h3>Delete transport arrangement - {{ event?.transportType }} from {{ event?.depCity }} to {{ event?.arrCity }}?</h3>
+<div class="custom-modal" *ngIf="deleteTransport">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>Delete transport arrangement?</h3>
+      <a (click)="cancelDeleteTransport()">x</a>
+    </div>
+
+    <div class="form-header-name-delete">
+      <h4>{{ event?.transport_type }} {{ event?.reference_number }} from {{ event?.dep_city }} to {{ event?.arr_city }}</h4>
     </div>
 
     <div class="confirm-delete-content">
       <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
-      <h4>Deleting transport arrangement {{ event?.transportType }} from {{ event?.depCity }} to {{ event?.arrCity }} will permanently remove it from your itinerary.</h4>
+      <h4>Deleting transport arrangement {{ event?.transport_type }} {{ event?.reference_number }} from {{ event?.dep_city }} to {{ event?.arr_city }} will permanently remove it from your itinerary.</h4>
     </div>
 
     <div class="confirm-delete-footer">
-      <h4 (click)="cancelDeleteTransport()">CANCEL</h4>
-      <h4 (click)="onDeleteTransport()">DELETE</h4>
+      <div class="action-response">
+        <h4 class="action-response-primary" (click)="cancelDeleteTransport()">CANCEL</h4>
+        <h4 class="action-response-warning" (click)="onDeleteTransport()">DELETE</h4>
+      </div>
     </div>
   </div>
 </div>

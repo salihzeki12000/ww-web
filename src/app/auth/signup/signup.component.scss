@@ -1,10 +1,10 @@
-input {
-  width: 100%;
+.sign-up-header {
+  margin-bottom: 10px;
+  text-align: center;
 }
 
-h5  {
-  text-align: center;
-  margin-bottom: 10px;
+input {
+  width: 100%;
 }
 
 span  {
@@ -13,10 +13,26 @@ span  {
   font-style: italic;
 }
 
-button  {
-  margin-top: 20px;
+.signup-button  {
+  width: 100%;
   margin-bottom: 10px;
-  @media only screen and (max-width: 700px) {
-    width: 300px;
+  padding: 5px;
+  color: #6494ED;
+  background-color: transparent;
+  border: none;
+  &:hover {
+    cursor: pointer;
+    color: #F9FBFB;
+    background-color: #6494ED;
+  }
+}
+
+.sign-in-message,
+.back-to-signin-message {
+  text-align: left;
+  font-style: italic;
+  &:hover {
+    cursor: pointer;
+    color: #6494ED;
   }
 }

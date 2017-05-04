@@ -1,0 +1,14 @@
+.search-result-card {
+  padding: 20px;
+}
+
+.user-details {
+  width: 70%;
+  @media only screen and (max-width: 670px) {
+    width: calc(100vw - 250px);
+  }
+}
+
+.follow-button  {
+  display: inline-block;
+}

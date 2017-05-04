@@ -1,0 +1,85 @@
+<!-- edit itinerary form modal -->
+<div class="itinerary-edit-main">
+
+  <div class="textless-header"></div>
+
+  <form [formGroup]="editItineraryForm" (ngSubmit)="saveDetails()">
+
+    <h4 class="itinerary-edit-section-header">BASIC DETAILS</h4>
+    <div class="itinerary-edit-section-details">
+      <div class="itinerary-edit-item">
+        <h5>ITINERARY NAME</h5>
+        <input type="text" formControlName="name" [value]="itinerary?.name">
+      </div>
+
+      <div class="itinerary-edit-item">
+        <h5>TRAVEL DATE FROM</h5>
+        <input type="date" formControlName="date_from" [value]="itinerary?.date_from | date: 'yyyy-MM-dd'">
+      </div>
+
+      <div class="itinerary-edit-item">
+        <h5>TRAVEL DATE TO</h5>
+        <input type="date" formControlName="date_to" [value]="itinerary?.date_to | date: 'yyyy-MM-dd'">
+      </div>
+
+      <div class="created-details">
+        <div class="itinerary-edit-item">
+          <h5>CREATED ON</h5>
+          <h4>{{ itinerary?.created_at | date: 'dd MMM y' }}</h4>
+        </div>
+
+        <div class="itinerary-edit-item">
+          <h5>CREATED BY</h5>
+          <h4>{{ itinerary?.created_by.username }}</h4>
+        </div>
+      </div>
+
+    </div>
+
+    <h4 class="itinerary-edit-section-header">MEMBERS DETAILS</h4>
+    <div class="itinerary-edit-section-details">
+      <div *ngFor="let member of itinerary?.members" class="itinerary-member-list">
+        <img src="{{ member.display_picture }}" alt="" class="user-profile-thumbnail">
+        <div class="user-details">
+          <h4 class="user-username">{{ member.username }}</h4>
+        </div>
+      </div>
+    </div>
+
+
+    <h4 class="delete-itinerary-button" (click)="confirmDelete()">Delete this itinerary</h4>
+
+    <div class="action-response">
+      <!-- <h4 (click)="undoEdit()">UNDO</h4> -->
+      <button type="submit" class="action-response-primary" [disabled]="!editItineraryForm.valid"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
+    </div>
+  </form>
+
+</div>
+
+<!-- delete itinerary modal -->
+<div class="custom-modal" *ngIf="deleteItinerary">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>Delete itinerary?</h3>
+      <a (click)="cancelDelete()">x</a>
+    </div>
+
+    <div class="form-header-name-delete">
+      <h4>{{ itinerary?.name }}</h4>
+    </div>
+
+    <div class="confirm-delete-content">
+      <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
+      <h4>Deleting itinerary {{ itinerary?.name }} will permanently remove it from your list of itineraries.  You will lose all information associated with the itinerary.</h4>
+    </div>
+
+    <div class="confirm-delete-footer">
+      <div class="action-response">
+        <h4 class="action-response-primary" (click)="cancelDelete()">CANCEL</h4>
+        <h4 class="action-response-warning" (click)="onDeleteItinerary()">DELETE</h4>
+      </div>
+    </div>
+
+  </div>
+</div>

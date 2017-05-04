@@ -1,79 +1,91 @@
-<div class="details-card">
+<div class="display-photo-card">
 
-  <!-- accommodation details view -->
-  <div class="dots-menu" (mouseover)="showMenuOptions()">
-    <div class="item-menu" *ngIf="showMenu">
-      <ul>
-        <!-- <li>
-          <h5>Recommend</h5>
-          <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-        </li> -->
-        <li (click)="editAccommodation()" *ngIf="sameUser">
-          <h5>Edit</h5>
-          <i class="fa fa-pencil" aria-hidden="true"></i>
-        </li>
-        <li (click)="confirmDeleteAccommodation()" *ngIf="sameUser">
-          <h5>Delete</h5>
-          <i class="fa fa-trash-o" aria-hidden="true"></i>
-        </li>
-      </ul>
+  <div *ngIf="event?.photo">
+    <img class="display-card-image" src="{{ event?.photo }}" alt="picture of {{ event?.name}}">
+  </div>
+
+  <div *ngIf="!event?.photo">
+    <div class="display-card-image-placeholder">
+      <i class="fa fa-camera fa-4x" aria-hidden="true"></i>
+      <h5>add a photo</h5>
     </div>
   </div>
 
-  <h5 class="date-header">{{ event?.checkInDate | date: 'EEE, dd MMM yyyy' }} - {{ event?.checkInTime }}</h5>
-
-  <h4 class="accommodation-city"><i class="fa fa-bed" aria-hidden="true"></i> in {{ event?.stayCity | uppercase }}</h4>
-  <h4 class="accommodation-header">{{ event?.name | uppercase }}</h4>
-
-  <div class="accommodation-details">
-
-    <div class="check-in-details">
-      <h5>Check in</h5>
-      <h2>{{ event?.checkInDate | date:'dd MMM yy' }}</h2>
-      <h5>{{ event?.checkInDate | date: 'EEEE'}}</h5>
-      <h5>{{ event.checkInTime }}</h5>
-    </div>
-
-    <div class="check-out-details">
-      <h5>Check out</h5>
-      <h2>{{ event?.checkOutDate | date:'dd MMM yy' }}</h2>
-      <h5>{{ event?.checkOutDate | date: 'EEEE'}}</h5>
-      <h5>{{ event.checkOutTime }}</h5>
-    </div>
-
-    <div class="accommodation-contact-details" (click)="toggleContactDetails()">
-      <h5>Address and contact number</h5>
-      <h5><i class="fa fa-angle-down" aria-hidden="true"></i></h5>
-    </div>
-
-    <div *ngIf="showContactDetails">
-      <div class="accommodation-address">
-        <i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>
-        <h5>{{ event?.formatted_address }}</h5>
-      </div>
-
-      <div class="accommodation-contact-number">
-        <i class="fa fa-phone fa-fw" aria-hidden="true"></i>
-        <h5>{{ event?.international_phone_number }}</h5>
+  <div class="display-photo-housing">
+    <div class="dots-menu" (mouseover)="showMenuOptions()">
+      <div class="item-menu" *ngIf="showMenu">
+        <ul>
+          <!-- <li>
+            <h5>Recommend</h5>
+            <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+          </li> -->
+          <li (click)="editAccommodation()" *ngIf="sameUser">
+            <h5>Edit</h5>
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          </li>
+          <li (click)="confirmDeleteAccommodation()" *ngIf="sameUser">
+            <h5>Delete</h5>
+            <i class="fa fa-trash-o" aria-hidden="true"></i>
+          </li>
+        </ul>
       </div>
     </div>
 
-    <div class="accommodation-website">
-      <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
-      <h5 class="truncate">
-        <a href="{{ event?.website }}" target="_blank" class="website-link">{{ event?.website }}</a>
-      </h5>
+    <h5 class="date-header">{{ event?.check_in_date | date: 'EEE, dd MMM yyyy' }} - {{ event?.check_in_time }}</h5>
+
+    <h4 class="accommodation-city"><i class="fa fa-bed" aria-hidden="true"></i> in {{ event?.stay_city | uppercase }}</h4>
+    <h4 class="accommodation-header">{{ event?.name | uppercase }}</h4>
+
+    <div class="accommodation-details">
+
+      <div class="check-in-details">
+        <h5>Check in</h5>
+        <h2>{{ event?.check_in_date | date:'dd MMM yy' }}</h2>
+        <h5>{{ event?.check_in_date | date: 'EEEE'}}</h5>
+        <h5>{{ event.check_in_time }}</h5>
+      </div>
+
+      <div class="check-out-details">
+        <h5>Check out</h5>
+        <h2>{{ event?.check_out_date | date:'dd MMM yy' }}</h2>
+        <h5>{{ event?.check_out_date | date: 'EEEE'}}</h5>
+        <h5>{{ event.check_out_time }}</h5>
+      </div>
+
+      <div class="accommodation-contact-details" (click)="toggleContactDetails()">
+        <h5>Address and contact number</h5>
+        <h5><i class="fa fa-angle-down" aria-hidden="true"></i></h5>
+      </div>
+
+      <div *ngIf="showContactDetails">
+        <div class="accommodation-address">
+          <i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>
+          <h5>{{ event?.formatted_address }}</h5>
+        </div>
+
+        <div class="accommodation-contact-number">
+          <i class="fa fa-phone fa-fw" aria-hidden="true"></i>
+          <h5>{{ event?.international_phone_number }}</h5>
+        </div>
+      </div>
+
+      <div class="accommodation-website">
+        <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+        <h5 class="truncate">
+          <a href="{{ event?.website }}" target="_blank" class="website-link">{{ event?.website }}</a>
+        </h5>
+      </div>
+
     </div>
 
-  </div>
+    <h5 class="note">{{ event?.note }}</h5>
 
-  <h5 class="note">{{ event?.note }}</h5>
-
-  <div class="postby">
-    <h5><a routerLink="/users/{{event?.user['_Id']}}">{{ event?.user.username }}</a></h5>
-    <div class="time-ago">
-      <p>{{ event?.time_ago }}</p>
-      <span class="show-time">{{ event?.created_at | date: 'EEE, dd MMM yyyy - HH:mm' }}</span>
+    <div class="postby">
+      <h5><a routerLink="/users/{{event?.user['_Id']}}">{{ event?.user.username }}</a></h5>
+      <div class="time-ago">
+        <p>{{ event?.time_ago }}</p>
+        <span class="show-time">{{ event?.created_at | date: 'EEE, dd MMM yyyy - HH:mm' }}</span>
+      </div>
     </div>
   </div>
 
@@ -86,75 +98,77 @@
     <div class="form-card">
 
       <div class="form-header">
-        <h3>Edit accommodation - {{ event?.name }}</h3>
+        <h3>Edit accommodation</h3>
         <a (click)="cancelEditAccommodation()">x</a>
+      </div>
+
+      <div class="form-header-name">
+        <h4>{{ event?.name }}</h4>
       </div>
 
       <form [formGroup]="editAccommodationForm" (ngSubmit)="onEditAccommodation()">
 
-        <div class="accommodation-form-details">
+        <div class="form-housing">
 
           <h5 class="form-section-header">CHECK IN/OUT DETAILS</h5>
-          <div class="check-in-out">
+          <div class="form-section-details">
 
             <div class="check-in">
-              <label>CHECK IN DATE <span class="required"> - required</span></label>
-              <select name="checkInDate" formControlName="checkInDate" [value]="event.checkInDate">
-                <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
-                  <div *ngIf="itinDate === 'any day'">
-                    <h5>{{ itinDate }}</h5>
-                  </div>
-                  <div *ngIf="itinDate !== 'any day'">
-                    <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
-                  </div>
-                </option>
-              </select>
+              <div class="date-to-visit">
+                <label>CHECK IN DATE <span class="required"> - required</span></label>
+                <select class="select-date" name="check_in_date" formControlName="check_in_date" [value]="event.check_in_date">
+                  <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
+                    <div *ngIf="itinDate !== 'any day'">
+                      <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+                    </div>
+                  </option>
+                </select>
+              </div>
 
-              <div class="time" [class.any-time-true]="anytime">
+              <div class="time-to-visit" [class.any-time-true]="anytime">
                 <label>CHECK IN TIME (
 
                   <div class="anytime-input">
                     <label>ANY TIME
-                      <input type="checkbox" (click)="toggleCheckInTime()" formControlName="checkInTime" [ngModel]="event.checkInTime === 'anytime'">
+                      <input type="checkbox" (click)="toggleCheckInTime()" formControlName="check_in_time" [ngModel]="event.check_in_time === 'anytime'">
                     </label>
                   </div>
                   )
                 </label>
-                <input type="time" formControlName="checkInTime" [value]="event.checkInTime" *ngIf="!anyCheckInTime">
+                <input type="time" formControlName="check_in_time" [value]="event.check_in_time" *ngIf="!anyCheckInTime">
               </div>
             </div>
 
             <div class="check-out">
-              <label>CHECK OUT DATE <span class="required"> - required</span></label>
-              <select name="checkOutDate" formControlName="checkOutDate" [value]="event.checkOutDate">
-                <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
-                  <div *ngIf="itinDate === 'any day'">
-                    <h5>{{ itinDate }}</h5>
-                  </div>
-                  <div *ngIf="itinDate !== 'any day'">
-                    <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
-                  </div>
-                </option>
-              </select>
+              <div class="date-to-visit">
+                <label>CHECK OUT DATE <span class="required"> - required</span></label>
+                <select class="select-date" name="check_out_date" formControlName="check_out_date" [value]="event.check_out_date">
+                  <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
+                    <div *ngIf="itinDate !== 'any day'">
+                      <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+                    </div>
+                  </option>
+                </select>
+              </div>
 
-              <div class="time" [class.any-time-true]="anytime">
+              <div class="time-to-visit" [class.any-time-true]="anytime">
                 <label>CHECK OUT TIME (
 
                   <div class="anytime-input">
                     <label>ANY TIME
-                      <input type="checkbox" (click)="toggleCheckOutTime()" formControlName="checkOutTime" [ngModel]="event.checkOutTime === 'anytime'">
+                      <input type="checkbox" (click)="toggleCheckOutTime()" formControlName="check_out_time" [ngModel]="event.check_out_time === 'anytime'">
                     </label>
                   </div>
                   )
                 </label>
-                <input type="time" formControlName="checkOutTime" [value]="event.checkOutTime" *ngIf="!anyCheckOutTime">
+                <input type="time" formControlName="check_out_time" [value]="event.check_out_time" *ngIf="!anyCheckOutTime">
               </div>
             </div>
 
           </div>
 
           <h5 class="form-section-header">ACCOMMODATION DETAILS</h5>
-          <div class="accommodation-form-details">
+          <div class="form-section-details">
 
             <label>NAME OF ACCOMMODATION <span class="required"> - required</span></label>
             <input type="text" formControlName="name" [value]="event.name">
@@ -163,7 +177,7 @@
             <input type="text" formControlName="formatted_address" [value]="event.formatted_address">
 
             <label>STAYING IN (CITY / TOWN)</label>
-            <input type="text" formControlName="stayCity" [value]="event?.stayCity">
+            <input type="text" formControlName="stay_city" [value]="event?.stay_city">
 
             <label>CONTACT NUMBER</label>
             <input type="text" formControlName="international_phone_number" [value]="event.international_phone_number" class="contact-number-input">
@@ -171,16 +185,18 @@
             <label>WEBSITE</label>
             <input type="url" formControlName="website" [value]="event.website">
 
-            <div class="accommodation-note">
-              <label>NOTE</label>
-              <textarea rows="3" formControlName="note" [value]="event.note"></textarea>
-            </div>
-
           </div>
 
-          <div class="save-option">
-            <h4 (click)="cancelEditAccommodation()">CANCEL</h4>
-            <button type="submit" class="save-button" [disabled]="!editAccommodationForm.valid"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
+          <h5 class="form-section-header">NOTE</h5>
+          <div class="form-section-details">
+            <div class="accommodation-note">
+              <textarea rows="3" formControlName="note" [value]="event.note"></textarea>
+            </div>
+          </div>
+
+          <div class="action-response">
+            <h4 class="action-response-secondary" (click)="cancelEditAccommodation()">CANCEL</h4>
+            <button type="submit" class="action-response-primary" [disabled]="!editAccommodationForm.valid"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
           </div>
 
         </div>
@@ -193,9 +209,14 @@
 
 
 <div class="custom-modal" *ngIf="deleteAccommodation">
-  <div class="confirm-delete">
-    <div class="confirm-delete-header">
-      <h3>Delete accommodation - {{ event?.name }}?</h3>
+  <div class="form-card">
+    <div class="form-header">
+      <h3>Delete accommodation?</h3>
+      <a (click)="cancelDeleteAccommodation()">x</a>
+    </div>
+
+    <div class="form-header-name-delete">
+      <h4>{{ event?.name }}</h4>
     </div>
 
     <div class="confirm-delete-content">
@@ -204,8 +225,11 @@
     </div>
 
     <div class="confirm-delete-footer">
-      <h4 (click)="cancelDeleteAccommodation()">CANCEL</h4>
-      <h4 (click)="onDeleteAccommodation()">DELETE</h4>
+      <div class="action-response">
+        <h4 class="action-response-primary" (click)="cancelDeleteAccommodation()">CANCEL</h4>
+        <h4 class="action-response-warning" (click)="onDeleteAccommodation()">DELETE</h4>
+      </div>
     </div>
+
   </div>
 </div>

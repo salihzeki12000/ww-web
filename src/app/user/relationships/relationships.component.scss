@@ -1,0 +1,79 @@
+.relationships-container  {
+  position: absolute;
+  right: calc((100vw - 600px)/2);
+  width: 600px;
+  background-color: white;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
+
+  @media only screen and (max-width: 670px) {
+    width: 100%;
+    min-width: 300px;
+    right: 0;
+  }
+
+  @media only screen and (min-width: 670px) and (max-width: 1090px) {
+    right: calc((100vw - 600px)/2);
+  }
+}
+
+.relationships-header {
+  padding-bottom: 3px;
+}
+
+.relationships-header > h3  {
+  padding: 20px;
+  font-weight: 400;
+  color: #F9FBFB;
+  background-color: #6494ED;
+}
+
+.relationships-nav-tabs {
+  margin: 0;
+  padding: 5px 0 3px 10px;
+  height: 47px;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.relationships-nav-tabs > li  {
+  display: inline-block;
+}
+
+.relationships-nav-tabs > li > a {
+  padding: 5px 10px;
+  color: #3A4A4D;
+  text-decoration: none;
+  letter-spacing: .5px;
+  border-radius: 0;
+  &:hover {
+    color: #6494ED;
+  }
+}
+
+.relationships-nav-tabs > li.active > a {
+  color: #6494ED;
+  font-weight: bold;
+  border-bottom: 3px solid #6494ED;
+}
+
+span.relationship-count {
+  padding-left: 5px;
+  color: grey;
+  font-weight: 400;
+}
+
+/* to display horizontal scrollbar */
+.relationships-nav-tabs::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+// .relationships-nav-tabs::-webkit-scrollbar:horizontal {
+//     height: 8px;
+// }
+// .relationships-nav-tabs::-webkit-scrollbar-thumb {
+//     border-radius: 8px;
+//     background-color: rgba(0, 0, 0, .5);
+// }
+// .relationships-nav-tabs::-webkit-scrollbar-track {
+//     background-color: #fff;
+//     border-radius: 8px;
+// }

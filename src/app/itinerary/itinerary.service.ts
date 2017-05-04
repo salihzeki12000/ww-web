@@ -9,7 +9,7 @@ import { Itinerary } from './itinerary';
 export class ItineraryService {
   itinerary: Itinerary;
   itineraryId;
-  private itineraries: Itinerary[] = [];
+  itineraries: Itinerary[] = [];
 
   updateDate = new ReplaySubject();
   updateItineraries = new ReplaySubject();
@@ -32,12 +32,12 @@ export class ItineraryService {
   }
 
   setDateRange(itinerary)  {
-    let startDate = new Date(itinerary['dateFrom']);
-    let endDate = new Date(itinerary['dateTo']);
+    let startDate = new Date(itinerary['date_from']);
+    let endDate = new Date(itinerary['date_to']);
     let dateRange = [];
 
     dateRange.push('any day');
-    dateRange.push((new Date(itinerary['dateFrom'])).toISOString());
+    dateRange.push((new Date(itinerary['date_from'])).toISOString());
 
     while(startDate < endDate){
       let addDate = startDate.setDate(startDate.getDate() + 1);

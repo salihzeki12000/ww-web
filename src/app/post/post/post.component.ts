@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs/Rx';
 import { Post }                from '../post';
 import { PostService }         from '../post.service';
 import { FlashMessageService } from '../../flash-message';
-import { UserService }         from '../../user';
+import { UserService }         from '../../user/user.service';
 
 @Component({
   selector: 'ww-post',
@@ -18,6 +18,8 @@ export class PostComponent implements OnInit {
   currentUserSubscription: Subscription;
   currentUser;
   sameUser;
+
+  showMenu = false;
 
   constructor(
     private userService: UserService,
@@ -62,5 +64,9 @@ export class PostComponent implements OnInit {
             this.flashMessageService.handleFlashMessage(data.message);
           }
         )
+  }
+
+  showMenuOptions() {
+    this.showMenu = true;
   }
 }

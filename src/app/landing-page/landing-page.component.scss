@@ -1,56 +1,375 @@
 .landing-page-container {
   width: 100vw;
   height: 100vh;
-  background-image: url(assets/mt_fuji.jpg);
   background-size: cover;
 }
 
-.landing-page-main {
+.landing-page-image {
+  height: 665px;
   width: 100vw;
-  height: 40vh;
 }
 
 .landing-page-logo {
-  width: 100px;
-  padding-top: 10px;
-  margin-left: calc((100vw - 100px) / 2);
+  position: absolute;
+  width: 70%;
+  margin-left: 15%;
   font-family: 'Roboto Condensed', sans-serif;
+  z-index: 1;
+
+  @media only screen and (max-width: 500px) {
+    width: 90%;
+    margin-left: 5%;
+  }
+}
+
+.landing-page-logo  > h2  {
+  padding: 18px 0 0 40px;
+  color: #F9FBFB;
+
+  @media only screen and (max-width: 450px) {
+    padding-left: 0;
+    border-bottom: 1px solid rgba(255,255,255,.2);
+  }
+
+  @media only screen and (min-width: 450px) and (max-width: 850px) {
+    padding: 18px 0 3px 0;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,.2);
+  }
+}
+
+.landing-page-sign-in {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  @media only screen and (max-width: 450px) {
+    display: none;
+  }
+
+  @media only screen and (min-width: 450px) and (max-width: 850px) {
+    position: relative;
+    top: 15px;
+    text-align: center;
+  }
+}
+
+.show-sign-in {
+  display: block;
+  right: calc(((100vw * .9) - 300px) / 2);
+  margin-top: 100px;
+  padding: 20px;
+  width: 300px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+  z-index: 1001;
+}
+
+.sign-in-header {
+  margin-bottom: 15px;
   text-align: center;
 }
 
-h1  {
-  font-size: 3em;
-  color: #F9FBFB;
-}
-
-h2  {
-  line-height: 0.85;
-  color: #F9FBFB;
-}
-
-h1, .sub-title {
+.sign-in-input  {
   display: inline-block;
+
+  @media only screen and (max-width: 450px) {
+    display: block;
+  }
 }
 
-.sub-title  {
-  margin-left: -3px;
+.sign-in-input > input  {
+  width: 160px;
+  margin-bottom: 3px;
+  height: 25px;
+  color: #F9FBFB;
+  font-size: 13px;
+  background-color: transparent;
+  border: 1px solid rgba(255,255,255,.3);
+  border-radius: 0;
+  &:focus {
+    background-color: rgba(0,0,0,.2);
+  }
+
+  @media only screen and (max-width: 450px) {
+    margin-bottom: 15px;
+    width: 260px;
+    height: 30px;
+    font-size: 14px;
+    color: #555;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    background-color: white;
+    &:focus {
+      background-color: white;
+      border-bottom: 3px solid #6494ed;
+      outline: 0;
+    }
+  }
+}
+
+.sign-in-input > label  {
+  margin-bottom: 0;
+  color: #F9FBFB;
+  font-size: 10px;
+
+  @media only screen and (max-width: 450px) {
+    margin-bottom: 3px;
+    color: grey;
+    font-size: 11px;
+  }
+}
+
+span.form-validator-message {
+  color: #F9FBFB;
+  font-size: 9px;
+  @media only screen and (max-width: 450px) {
+    font-size: 10px;
+    color: #333;
+  }
+}
+
+.signin-button  {
+  color: #F9FBFB;
+  font-size: 11px;
+  background-color: transparent;
+  border: none;
+  &:hover {
+    cursor: pointer;
+  }
+
+  @media only screen and (max-width: 450px) {
+    display: block;
+    width: 100%;
+    margin: 10px auto;
+    padding: 5px;
+    color: #6494ED;
+    font-size: 14px;
+    letter-spacing: .5px;
+    &:hover {
+      color: #F9FBFB;
+      background-color: #6494ED;
+    }
+  }
+
+  @media only screen and (min-width: 450px) and (max-width: 500px) {
+    display: block;
+    width: 100px;
+    margin-left: calc(((100vw * .9) - 100px) / 2);
+    padding-top: 5px;
+  }
+
+  @media only screen and (min-width: 500px) and (max-width: 850px) {
+    display: block;
+    width: 100px;
+    margin-left: calc(((100vw * .7) - 100px) / 2);
+    padding-top: 5px;
+  }
+}
+
+.get-sign-in  {
+  display: none;
+  @media only screen and (max-width: 450px) {
+    display: block;
+    position: absolute;
+    top: 28px;
+    right: 0;
+    color: #F9FBFB;
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 .landing-page-tagline {
-  padding: 50px 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 665px;
   color: #F9FBFB;
-  font-size: 30px;
   font-family: 'Fira Sans', sans-serif;
   text-align: center;
+  background-color: rgba(0,0,0,.5);
 }
 
-.value-add  {
-  padding: 10px;
-  // box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+.landing-page-tagline > h3  {
+  margin-top: 150px;
+  padding: 0 10px;
+  font-size: 25px;
+  font-weight: 300;
+  color: #F9FBFB;
+
+  @media only screen and (max-width: 450px) {
+    margin-top: 120px;
+    font-size: 22px;
+  }
 }
 
-.explore input  {
-  margin: 0 auto;
+.landing-page-tagline > h4  {
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: 300;
+  color: #F9FBFB;
+
+  @media only screen and (max-width: 450px) {
+    padding: 0 5px;
+    font-size: 17px;
+  }
+}
+
+.landing-page-value-add  {
+  position: absolute;
+  top: 275px;
+  margin-left: calc((100vw - 720px) / 2);
+  color: #F9FBFB;
+
+  @media only screen and (max-width: 600px) {
+    margin-left: 0;
+  }
+
+  @media only screen and (min-width: 600px) and (max-width: 850px) {
+    margin-left: calc(((100vw - 570px) / 2) - 10px);
+  }
+}
+
+.travel-inspiration,
+.organise-information,
+.group-planning  {
+  display: inline-block;
+  width: 220px;
+  height: 220px;
+  margin-right: 30px;
+  padding: 20px;
+  vertical-align: bottom;
+  background-color: rgba(100,148,237, 0.2);
+  border-radius: 10px;
   text-align: center;
-  border-radius: 50px;
+
+  @media only screen and (max-width: 600px) {
+    display: block;
+    margin: 0 0 10px 0;
+    padding: 10px;
+    height: 80px;
+    width: 100vw;
+    text-align: left;
+    border-radius: 0;
+  }
+
+  @media only screen and (min-width: 600px) and (max-width: 850px) {
+    display: block;
+    margin: 0 0 10px 0;
+    padding: 10px;
+    height: 80px;
+    width: 570px;
+    text-align: left;
+    border-radius: 0;
+  }
+}
+
+.travel-inspiration > h3,
+.organise-information > h3,
+.group-planning > h3  {
+  margin-bottom: 20px;
+  color: #f9fbfb;
+  letter-spacing: 1px;
+  font-weight: 300;
+
+  @media only screen and (max-width: 450px) {
+    display: inline-block;
+    margin: 15px 0 0 80px;
+    padding-left: 20px;
+    font-size: 13px;
+    width: calc(100vw - 130px);
+  }
+
+  @media only screen and (min-width: 450px) and (max-width: 600px) {
+    display: inline-block;
+    margin: 25px 0 0 80px;
+    padding-left: 20px;
+    font-size: 14px;
+    width: calc(100vw - 130px);
+  }
+
+  @media only screen and (min-width: 600px) and (max-width: 850px) {
+    display: inline-block;
+    margin: 25px 0 0 80px;
+    padding-left: 20px;
+    font-size: 14px;
+  }
+}
+
+.travel-inspiration  > img,
+.organise-information > img,
+.group-planning > img {
+  width: 100px;
+  height: 100px;
+
+  @media only screen and (max-width: 850px) {
+    position: absolute;
+    left: 20px;
+    width: 60px;
+    height: 60px;
+  }
+}
+
+.sign-up-call-to-action {
+  position: absolute;
+  top: 550px;
+  margin-left: calc((100vw - 200px)/2);
+  width: 200px;
+  text-align: center;
+  background-color: #6494ED;
+  border: 3px solid #6494ED;
+  border-radius: 10px;
+  &:hover {
+    cursor: pointer;
+    background-color: #F9FBFB;
+    border: 3px solid #F9FBFB;
+  }
+
+  @media only screen and (max-width: 850px) {
+    top: 570px;
+  }
+}
+
+.sign-up-call-to-action > h3  {
+  padding: 20px;
+  color: #F9FBFB;
+  letter-spacing: .5px;
+  &:hover {
+    color: #6494ED;
+  }
+}
+
+.landing-page-teaser  {
+  padding: 50px 0;
+  text-align: center;
+  font-family: 'Fira Sans', sans-serif;
+  background-color: white;
+}
+
+.company-information  {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.company-information > *  {
+  display: inline-block;
+  padding: 0 20px;
+  letter-spacing: .5px;
+  &:hover {
+    cursor: pointer;
+    color: #6494ED;
+  }
+}
+
+.copyright  {
+  margin: 20px 0 10px 50px;
+  color: grey;
+
+  @media only screen and (max-width: 850px) {
+    margin: 20px 0 10px 0;
+    text-align: center;
+  }
 }

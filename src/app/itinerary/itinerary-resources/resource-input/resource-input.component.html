@@ -2,19 +2,33 @@
   <div class="form-card">
 
     <div class="form-header">
-      <h3>New resource link</h3>
+      <h3>New resource</h3>
       <a (click)="cancelForm()">x</a>
     </div>
 
-    <label>TITLE <span class="required"> - what is the link about?</span></label>
-    <input type="text" formControlName="description">
+    <div class="textless-header"></div>
 
-    <label>LINK</label>
-    <input type="url" formControlName="link">
+    <div class="form-housing">
 
-    <div class="save-option">
-      <h4 (click)="cancelForm()">CANCEL</h4>
-      <button type="submit" class="save-button" [disabled]="!resourceForm.valid"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
+      <textarea rows="4" formControlName="content" placeholder="add a link or type in a note" #text (keyup)="checkLink(text.value)" autofocus></textarea>
+
+      <div class="resource-link-preview" *ngIf="linkExist">
+        <h4 class="delete-link" (click)="deleteLink()">X</h4>
+        <a href="{{ link_url }}" target="_blank">
+          <img class="resource-link-img" src="{{ link_img }}" alt="">
+          <h3 class="resource-link-title">{{ link_title }}</h3>
+          <h4 class="resource-link-description">{{ link_description }}</h4>
+          <h5 class="resource-link-url">{{ link_url }}</h5>
+        </a>
+      </div>
+
+      <label>TITLE</label>
+      <input type="text" formControlName="title" value="{{ link_title }}">
+
+      <div class="action-response">
+        <h4 class="action-response-secondary" (click)="cancelForm()">CANCEL</h4>
+        <button type="submit" class="action-response-primary" [disabled]="!resourceForm.valid"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
+      </div>
     </div>
 
   </div>

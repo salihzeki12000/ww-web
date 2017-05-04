@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 
 import { Resource } from '../resource';
@@ -13,7 +13,12 @@ export class ResourceListComponent implements OnInit {
   resources: Resource[] = [];
   updateResourcesSubscription: Subscription;
 
-  constructor(private resourceService: ResourceService) { }
+  showResourceSummary = false;
+  highlightedEvent;
+
+  constructor(
+    private renderer: Renderer,
+    private resourceService: ResourceService) { }
 
   ngOnInit() {
     this.updateResourcesSubscription = this.resourceService.updateResources
@@ -22,6 +27,22 @@ export class ResourceListComponent implements OnInit {
                                                this.resources = Object.keys(result).map(key => result[key]);
                                              }
                                            )
+  }
+
+  showSummary() {
+    this.showResourceSummary = !this.showResourceSummary;
+    this.togglePreventScroll(this.showResourceSummary);
+  }
+
+  togglePreventScroll(value)  {
+    this.renderer.setElementClass(document.body, 'prevent-scroll', value);
+  }
+
+  centerItem(resource)  {
+    this.showResourceSummary = false;
+    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+
+    this.highlightedEvent = resource;
   }
 
 }

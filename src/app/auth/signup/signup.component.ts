@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -12,6 +12,9 @@ import { AuthService }  from '../auth.service';
 })
 export class SignupComponent implements OnInit {
   signupForm: FormGroup;
+
+  @Output() showSigninForm = new EventEmitter();
+  @Output() backAuth = new EventEmitter();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -52,6 +55,14 @@ export class SignupComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  backToAuth() {
+    this.backAuth.emit()
+  }
+
+  getSigninForm() {
+    this.showSigninForm.emit()
   }
 
 }

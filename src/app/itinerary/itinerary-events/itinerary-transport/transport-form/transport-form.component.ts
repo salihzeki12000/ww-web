@@ -30,12 +30,12 @@ export class TransportFormComponent implements OnInit {
 
   addTransportForm: FormGroup;
   transportType = [
-    { name:'FLIGHT', icon: 'plane' },
-    { name:'TRAIN', icon: 'train' },
-    { name:'BUS', icon: 'bus' },
-    { name:'CRUISE', icon: 'ship'},
-    { name:'VEHICLE RENTAL', icon: 'car'},
-    { name:'OTHERS', icon: 'rocket'} ];
+    { name:'flight', icon: 'plane' },
+    { name:'train', icon: 'train' },
+    { name:'bus', icon: 'bus' },
+    { name:'cruise', icon: 'ship'},
+    { name:'vehicle rental', icon: 'car'},
+    { name:'others', icon: 'rocket'} ];
   transportOption = '';
 
   searchFlightForm: FormGroup;
@@ -56,20 +56,20 @@ export class TransportFormComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder) {
       this.addTransportForm = this.formBuilder.group({
-        'transportType': '',
-        'referenceNumber': '',
-        'depTerminal': '',
-        'arrTerminal': '',
-        'depStation': '',
-        'arrStation': '',
-        'depCity': '',
-        'arrCity': '',
-        'depDate': '',
-        'depTime': '',
-        'arrDate': '',
-        'arrTime': '',
-        'transportCompany': '',
-        'contactNumber': '',
+        'transport_type': '',
+        'reference_number': '',
+        'dep_terminal': '',
+        'arr_terminal': '',
+        'dep_station': '',
+        'arr_station': '',
+        'dep_city': '',
+        'arr_city': '',
+        'dep_date': '',
+        'dep_time': '',
+        'arr_date': '',
+        'arr_time': '',
+        'transport_company': '',
+        'contact_number': '',
         'note': '',
       }),
       this.searchFlightForm = this.formBuilder.group({
@@ -96,6 +96,7 @@ export class TransportFormComponent implements OnInit {
                                     .subscribe(
                                       result => {
                                         this.itinDateRange = Object.keys(result).map(key => result[key]);
+                                        this.itinDateRange.splice(0,1);
                                     })
   }
 
@@ -108,16 +109,17 @@ export class TransportFormComponent implements OnInit {
     let airlineCode = (this.searchFlightForm.value.searchAirlineCode).toUpperCase();
     let flightNumber = this.searchFlightForm.value.searchFlightNumber;
 
-    let depDate = new Date(this.searchFlightForm.value.searchDepDate);
-    let year = depDate.getFullYear();
-    let month = depDate.getMonth() + 1;
-    let day = depDate.getDate();
+    let dep_date = new Date(this.searchFlightForm.value.searchDepDate);
+    let year = dep_date.getFullYear();
+    let month = dep_date.getMonth() + 1;
+    let day = dep_date.getDate();
 
     let criteria = 'flight/' + airlineCode + '/' + flightNumber + '/departing/' + year + '/' + month + '/' + day;
 
     this.itineraryEventService.getFlightDetails(criteria)
         .subscribe(
           data => {
+            console.log(data);
             let scheduledFlights = data['scheduledFlights'];
             let appendix = data['appendix'];
 
@@ -134,31 +136,36 @@ export class TransportFormComponent implements OnInit {
             if(scheduledFlights.length === 1) {
               let departureAirportCode = scheduledFlights[0].departureAirportFsCode;
               let arrivalAirportCode = scheduledFlights[0].arrivalAirportFsCode;
-              let departureTerminal = scheduledFlights[0].departureTerminal;
+              let departureTerminal;
+
+              if(scheduledFlights[0].departureTerminal !== '')  {
+                departureTerminal = "Terminal " + scheduledFlights[0].departureTerminal;
+              }
+
               let departureTime = scheduledFlights[0].departureTime.slice(11,16);
               let arrivalTime = scheduledFlights[0].arrivalTime.slice(11,16);
 
               let departureYear = scheduledFlights[0].departureTime.slice(0,4);
               let departureMonth = scheduledFlights[0].departureTime.slice(5,7);
               let departureDay = scheduledFlights[0].departureTime.slice(8,10);
-              let departureDate = "'" + departureYear + "-" + departureMonth + "-" + departureDay + "'";
+              let departureDate = departureYear + "-" + departureMonth + "-" + departureDay + "T00:00:00.000Z";
 
               let arrivalYear = scheduledFlights[0].arrivalTime.slice(0,4);
               let arrivalMonth = scheduledFlights[0].arrivalTime.slice(5,7);
               let arrivalDay = scheduledFlights[0].arrivalTime.slice(8,10);
-              let arrivalDate = "'" + arrivalYear + "-" + arrivalMonth + "-" + arrivalDay + "'";
+              let arrivalDate = arrivalYear + "-" + arrivalMonth + "-" + arrivalDay + "T00:00:00.000Z";
 
               let departureAirport;
               let departureCity;
               let departureCountry;
-              let departureAirportLocation;
+              let departureStationLocation;
 
               for (let i = 0; i < appendix.airports.length; i++) {
                 if (appendix.airports[i].fs === departureAirportCode) {
                   departureAirport = appendix.airports[i].name;
                   departureCity = appendix.airports[i].city;
                   departureCountry = appendix.airports[i].countryName;
-                  departureAirportLocation = {
+                  departureStationLocation = {
                     lat: appendix.airports[i].latitude,
                     lng: appendix.airports[i].longitude,
                   }
@@ -168,14 +175,14 @@ export class TransportFormComponent implements OnInit {
               let arrivalAirport;
               let arrivalCity;
               let arrivalCountry;
-              let arrivalAirportLocation;
+              let arrivalStationLocation;
 
               for (let i = 0; i < appendix.airports.length; i++) {
                 if (appendix.airports[i].fs === arrivalAirportCode) {
                   arrivalAirport = appendix.airports[i].name;
                   arrivalCity = appendix.airports[i].city;
                   arrivalCountry = appendix.airports[i].countryName;
-                  arrivalAirportLocation = {
+                  arrivalStationLocation = {
                     lat: appendix.airports[i].latitude,
                     lng: appendix.airports[i].longitude,
                   }
@@ -183,24 +190,24 @@ export class TransportFormComponent implements OnInit {
               }
 
               this.flightSearchDetail = {
-                carrier: carrier,
+                transport_company: carrier,
                 carrierCode: carrierCode,
-                referenceNumber: flightNumber,
-                depStation: departureAirport,
+                reference_number: flightNumber,
+                dep_station: departureAirport,
                 depAirportCode: departureAirportCode,
-                depCity: departureCity,
+                dep_city: departureCity,
                 depCountry: departureCountry,
-                depTerminal: departureTerminal,
-                depDate: departureDate,
-                depTime: departureTime,
-                depAirportLocation: departureAirportLocation,
-                arrStation: arrivalAirport,
+                dep_terminal: departureTerminal,
+                dep_date: departureDate,
+                dep_time: departureTime,
+                dep_station_location: departureStationLocation,
+                arr_station: arrivalAirport,
                 arrAirportCode: arrivalAirportCode,
-                arrCity: arrivalCity,
+                arr_city: arrivalCity,
                 arrCountry: arrivalCountry,
-                arrDate: arrivalDate,
-                arrTime: arrivalTime,
-                arrAirportLocation: arrivalAirportLocation
+                arr_date: arrivalDate,
+                arr_time: arrivalTime,
+                arr_station_location: arrivalStationLocation
               };
               this.populateFlightDetails = true;
             }//end of section where there is only 01 flight
@@ -219,9 +226,9 @@ export class TransportFormComponent implements OnInit {
               })
 
               this.flightSearchDetail = data;
-              this.flightSearchDetail['carrier'] = carrier;
+              this.flightSearchDetail['transport_company'] = carrier;
               this.flightSearchDetail['carrierCode'] = carrierCode;
-              this.flightSearchDetail['referenceNumber'] = flightNumber;
+              this.flightSearchDetail['reference_number'] = flightNumber;
 
               //create list of airports for user to choose
               let airportBySchedule = [];
@@ -276,22 +283,26 @@ export class TransportFormComponent implements OnInit {
     for (let i = 0; i < scheduledFlights.length; i++) {
       if(scheduledFlights[i]['departureAirportFsCode'] === airportCode) {
         currentFlightSearch['depAirportCode'] = scheduledFlights[i].departureAirportFsCode;
-        currentFlightSearch['depTerminal'] = scheduledFlights[i].departureTerminal;
-        currentFlightSearch['depTime'] = scheduledFlights[i].departureTime.slice(11,16);
+
+        if(scheduledFlights[i].departureTerminal !== '')  {
+          currentFlightSearch['dep_terminal'] = "Terminal " + scheduledFlights[i].departureTerminal;
+        }
+
+        currentFlightSearch['dep_time'] = scheduledFlights[i].departureTime.slice(11,16);
 
         let departureYear = scheduledFlights[i].departureTime.slice(0,4);
         let departureMonth = scheduledFlights[i].departureTime.slice(5,7);
         let departureDay = scheduledFlights[i].departureTime.slice(8,10);
-        currentFlightSearch['depDate'] = "'" + departureYear + "-" + departureMonth + "-" + departureDay + "'";
+        currentFlightSearch['dep_date'] = departureYear + "-" + departureMonth + "-" + departureDay + "T00:00:00.000Z";
       }
     }
 
     for (let i = 0; i < appendix.airports.length; i++) {
       if (appendix.airports[i].fs === airportCode) {
-        currentFlightSearch['depStation'] = appendix.airports[i].name;
-        currentFlightSearch['depCity'] = appendix.airports[i].city;
+        currentFlightSearch['dep_station'] = appendix.airports[i].name;
+        currentFlightSearch['dep_city'] = appendix.airports[i].city;
         currentFlightSearch['depCountry'] = appendix.airports[i].countryName;
-        currentFlightSearch['depAirportLocation'] = {
+        currentFlightSearch['dep_station_location'] = {
           lat: appendix.airports[i].latitude,
           lng: appendix.airports[i].longitude,
         }
@@ -307,21 +318,21 @@ export class TransportFormComponent implements OnInit {
     for (let i = 0; i < scheduledFlights.length; i++) {
       if(scheduledFlights[i]['arrivalAirportFsCode'] === airportCode) {
         currentFlightSearch['arrAirportCode'] = scheduledFlights[i].arrivalAirportFsCode;
-        currentFlightSearch['arrTime'] = scheduledFlights[i].arrivalTime.slice(11,16);
+        currentFlightSearch['arr_time'] = scheduledFlights[i].arrivalTime.slice(11,16);
 
         let arrivalYear = scheduledFlights[i].arrivalTime.slice(0,4);
         let arrivalMonth = scheduledFlights[i].arrivalTime.slice(5,7);
         let arrivalDay = scheduledFlights[i].arrivalTime.slice(8,10);
-        currentFlightSearch['arrDate'] = "'" + arrivalYear + "-" + arrivalMonth + "-" + arrivalDay + "'";
+        currentFlightSearch['arr_date'] = arrivalYear + "-" + arrivalMonth + "-" + arrivalDay + "T00:00:00.000Z";
       }
     }
 
     for (let i = 0; i < appendix.airports.length; i++) {
       if (appendix.airports[i].fs === airportCode) {
-        currentFlightSearch['arrStation'] = appendix.airports[i].name;
-        currentFlightSearch['arrCity'] = appendix.airports[i].city;
+        currentFlightSearch['arr_station'] = appendix.airports[i].name;
+        currentFlightSearch['arr_city'] = appendix.airports[i].city;
         currentFlightSearch['arrCountry'] = appendix.airports[i].countryName;
-        currentFlightSearch['arrAirportLocation'] = {
+        currentFlightSearch['arr_station_location'] = {
           lat: appendix.airports[i].latitude,
           lng: appendix.airports[i].longitude,
         }
@@ -338,33 +349,31 @@ export class TransportFormComponent implements OnInit {
           newTransport[value] = this.flightSearchDetail[value];
         }
       }
-      newTransport['depAirportLocation'] = this.flightSearchDetail['depAirportLocation'];
-      newTransport['arrAirportLocation'] = this.flightSearchDetail['arrAirportLocation'];
-      newTransport['referenceNumber'] = this.flightSearchDetail['carrierCode'] + this.flightSearchDetail['referenceNumber'];
+      newTransport['dep_station_location'] = this.flightSearchDetail['dep_station_location'];
+      newTransport['arr_station_location'] = this.flightSearchDetail['arr_station_location'];
+      newTransport['reference_number'] = this.flightSearchDetail['carrierCode'] + this.flightSearchDetail['reference_number'];
     }
 
-    if(newTransport['transportType'] === '') {
-      newTransport['transportType'] = 'flight'
+    if(newTransport['dep_time'] === '')  {
+      newTransport['dep_time'] = 'anytime';
     }
 
-    if(newTransport['depTime'] === '')  {
-      newTransport['depTime'] = 'anytime';
+    if(newTransport['arr_time'] === '')  {
+      newTransport['arr_time'] = 'anytime';
     }
 
-    if(newTransport['arrTime'] === '')  {
-      newTransport['arrTime'] = 'anytime';
-    }
+    let depYear = newTransport['dep_date'].slice(1,5);
+    let depMonth = newTransport['dep_date'].slice(6,8);
+    let depDay = newTransport['dep_date'].slice(9,11);
+    let time = 'T00:00:00.000Z';
 
-    let depYear = newTransport['depDate'].slice(1,5);
-    let depMonth = newTransport['depDate'].slice(6,8);
-    let depDay = newTransport['depDate'].slice(9,11);
-    let time = 'T00:00:00'
-
-    let date = new Date(depYear + "-" + depMonth + "-" + depDay + time).toISOString();
+    // let date = new Date(depYear + "-" + depMonth + "-" + depDay + "T00:00:00.000Z").toISOString();
+    let date = new Date(newTransport['dep_date']).toISOString();
 
     newTransport['date'] = date;
-    newTransport['time'] = newTransport['depTime']
+    newTransport['time'] = newTransport['dep_time'];
     newTransport['type'] = 'transport';
+    newTransport['transport_type'] = this.transportOption;
     newTransport['user'] =  {
       _Id: this.currentUser['id'],
       username: this.currentUser['username'],

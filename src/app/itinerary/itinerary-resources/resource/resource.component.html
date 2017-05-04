@@ -1,79 +1,112 @@
-<div class="details-card">
+<div class="display-card">
 
-  <div [class.editing]="editing">
-    <div class="view">
-
-      <div class="dots-menu" (mouseover)="showMenuOptions()">
-        <div class="item-menu" *ngIf="showMenu">
-          <ul>
-            <!-- <li>
-              <h5>Recommend</h5>
-              <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-            </li> -->
-            <li (click)="onEdit()" *ngIf="sameUser">
-              <h5>Edit</h5>
-              <i class="fa fa-pencil" aria-hidden="true"></i>
-            </li>
-            <li (click)="confirmDelete()" *ngIf="sameUser">
-              <h5>Delete</h5>
-              <i class="fa fa-trash-o" aria-hidden="true"></i>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="link-details">
-
-        <h4 class="description">{{ resource?.description }}</h4>
-        <a href="{{resource?.link}}" target="_blank"><h5 class="truncate website-link">{{ resource?.link }}</h5></a>
-
-        <div class="postby">
-          <h5><a routerLink="/users/{{resource?.user['_Id']}}">{{ resource?.user.username }}</a></h5>
-          <div class="time-ago">
-            <p>{{ resource?.time_ago }}</p>
-            <span class="show-time">{{ resource?.created_at | date: 'EEE, dd MMM yyyy - HH:mm' }}</span>
-          </div>
-        </div>
-      </div>
+  <div class="dots-menu" (mouseover)="showMenuOptions()">
+    <div class="item-menu" *ngIf="showMenu">
+      <ul>
+        <!-- <li>
+          <h5>Recommend</h5>
+          <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+        </li> -->
+        <li (click)="onEdit()" *ngIf="sameUser">
+          <h5>Edit</h5>
+          <i class="fa fa-pencil" aria-hidden="true"></i>
+        </li>
+        <li (click)="confirmDelete()" *ngIf="sameUser">
+          <h5>Delete</h5>
+          <i class="fa fa-trash-o" aria-hidden="true"></i>
+        </li>
+      </ul>
     </div>
-
   </div>
 
-  <div *ngIf="editing">
+  <div class="resource-details">
 
-    <form [formGroup]="editResourceForm" (ngSubmit)="onUpdateResource()">
+    <h4 class="resource-title">{{ resource?.title }}</h4>
+    <h5 class="resource-content">{{ resource?.content }}</h5>
 
-      <label>DESCRIPTION</label>
-      <input type="text" formControlName="description" [value]="resource.description">
+    <div class="resource-link-preview" *ngIf="resource?.link_url">
+      <a href="{{ resource?.link_url }}" target="_blank">
+        <img class="resource-link-img" src="{{ resource?.link_img }}" alt="">
+        <h3 class="resource-link-title">{{ resource?.link_title }}</h3>
+        <h4 class="resource-link-description">{{ resource?.link_description }}</h4>
+        <h5 class="resource-link-url truncate">{{ resource?.link_url }}</h5>
+      </a>
+    </div>
 
-      <label>LINK</label>
-      <input type="text" formControlName="link" [value]="resource.link">
-
-      <div class="save-option">
-        <h4 (click)="cancelEditResource()">CANCEL</h4>
-        <button type="submit" class="save-button"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
+    <div class="postby">
+      <h5><a routerLink="/users/{{resource?.user['_Id']}}">{{ resource?.user.username }}</a></h5>
+      <div class="time-ago">
+        <p>{{ resource?.time_ago }}</p>
+        <span class="show-time">{{ resource?.created_at | date: 'EEE, dd MMM yyyy - HH:mm' }}</span>
       </div>
-
-    </form>
-
+    </div>
   </div>
 
 </div>
 
-<div class="delete-modal" *ngIf="deleteResource">
-  <div class="confirm-delete">
-    <div class="confirm-delete-header">
-      <h3>Delete resource - {{ resource?.description }}?</h3>
+<div *ngIf="editing">
+  <div class="custom-modal">
+    <div class="form-card">
+
+      <div class="form-header">
+        <h3>Edit resource</h3>
+        <a (click)="cancelEditResource()">x</a>
+      </div>
+
+      <div class="form-header-name">
+        <h4>{{ resource?.title }}</h4>
+      </div>
+
+      <form [formGroup]="editResourceForm" (ngSubmit)="onUpdateResource()">
+
+        <div class="form-housing">
+          <label>TITLE</label>
+          <input type="text" formControlName="title" [value]="resource.title" autofocus>
+
+          <label>CONTENT</label>
+          <textarea rows="4" formControlName="content" [value]="resource.content"></textarea>
+
+          <div class="resource-link-preview" *ngIf="resource?.link_url">
+            <a href="{{ resource?.link_url }}" target="_blank">
+              <img class="resource-link-img" src="{{ resource?.link_img }}" alt="">
+              <h3 class="resource-link-title">{{ resource?.link_title }}</h3>
+              <h4 class="resource-link-description">{{ resource?.link_description }}</h4>
+              <h5 class="resource-link-url truncate">{{ resource?.link_url }}</h5>
+            </a>
+          </div>
+
+          <div class="action-response">
+            <h4 class="action-response-secondary" (click)="cancelEditResource()">CANCEL</h4>
+            <button type="submit" class="action-response-primary" [disabled]="!editResourceForm.valid"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="custom-modal" *ngIf="deleteResource">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>Delete resource?</h3>
+      <a (click)="cancelDelete()">x</a>
+    </div>
+
+    <div class="form-header-name-delete">
+      <h4>{{ resource?.title }}</h4>
     </div>
 
     <div class="confirm-delete-content">
       <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
-      <h4>Deleting resource {{ resource?.description }} will permanently remove it from your itinerary.</h4>
+      <h4>Deleting resource {{ resource?.title }} will permanently remove it from your itinerary.</h4>
     </div>
 
     <div class="confirm-delete-footer">
-      <h4 (click)="cancelDelete()">CANCEL</h4>
-      <h4 (click)="onDeleteResource()">DELETE</h4>
+      <div class="action-response">
+        <h4 class="action-response-primary" (click)="cancelDelete()">CANCEL</h4>
+        <h4 class="action-response-warning" (click)="onDeleteResource()">DELETE</h4>
+      </div>
     </div>
   </div>
 </div>

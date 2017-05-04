@@ -1,23 +1,36 @@
+.sign-in-header  {
+  width: 80%;
+  margin-bottom: 10px;
+  margin-left: 10%;
+  text-align: center;
+}
+
 span  {
   margin-left: 10px;
   font-size: 1rem;
   font-style: italic;
 }
 
-h5  {
-  text-align: center;
+.signin-button  {
+  width: 100%;
   margin-bottom: 10px;
+  padding: 5px;
+  color: #6494ED;
+  background-color: transparent;
+  border: none;
+  &:hover {
+    cursor: pointer;
+    color: #F9FBFB;
+    background-color: #6494ED;
+  }
 }
 
-a {
-  margin-top: 5px;
-  font-size: 1rem;
-}
-
-button  {
-  margin-top: 20px;
-  margin-bottom: 10px;
-  @media only screen and (max-width: 700px) {
-    width: 300px;
+.sign-up-message,
+.back-to-signin-message  {
+  text-align: left;
+  font-style: italic;
+  &:hover {
+    cursor: pointer;
+    color: #6494ED;
   }
 }

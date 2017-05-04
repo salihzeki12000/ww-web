@@ -1,0 +1,63 @@
+.home-itineraries  {
+  position: absolute;
+  right: calc(((100vw - 600px)/2) + 620px);
+  width: 250px;
+  background-color: white;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
+  @media only screen and (max-width: 880px) {
+    display: none;
+  }
+  @media only screen and (min-width: 880px) and (max-width: 1090px) {
+    right: calc(((100vw - 890px)/2) + 620px);
+  }
+}
+
+.home-itineraries-length > h5  {
+  padding: 5px 0 1px 10px;
+  text-align: left;
+  letter-spacing: .5px;
+  border-bottom: 2px solid lightgray;
+}
+
+.home-new-itinerary  {
+  padding: 10px;
+  text-align: center;
+  &:hover {
+    cursor: pointer;
+    color: #6494ED;
+  }
+}
+
+.home-itineraries-list {
+  padding: 10px;
+  text-align: center;
+  border-top: 1px solid lightgray;
+  &:hover {
+    cursor: pointer;
+    background-color: #F6F6F6;
+  }
+}
+
+
+.home-posts  {
+  position: absolute;
+  right: calc((100vw - 600px)/2);
+  width: 600px;
+  @media only screen and (max-width: 670px) {
+    width: 100%;
+    min-width: 300px;
+    right: 0;
+  }
+  @media only screen and (min-width: 670px) and (max-width: 880px) {
+    right: calc((100vw - 600px)/2);
+  }
+  @media only screen and (min-width: 880px) and (max-width: 1090px) {
+    right: calc((100vw - 890px)/2);
+  }
+}
+
+.home-posts-list  {
+  display: flex;
+  flex-direction: column-reverse;
+  text-align: left;
+}
