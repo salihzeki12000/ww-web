@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { User } from '../../user';
 import { UserService } from '../../user.service';
 import { FlashMessageService } from '../../../flash-message';
+import { FileuploadService } from '../../../shared';
 
 @Component({
   selector: 'ww-profile-edit',
@@ -17,12 +18,16 @@ export class ProfileEditComponent implements OnInit {
   currentUserSubscription: Subscription;
 
   editProfileForm: FormGroup;
-  profileEdit = false;
+
+  thumbnailImage;
+  inputValue = '';
 
   genders = ['Not specified', 'male', 'female'];
-  options = {
-    types: ['(cities)'],
-  };
+  options = { types: ['(cities)']};
+
+  fileTypeError = false;
+  newProfilePic;
+  newImageFile;
 
   city;
 
@@ -30,6 +35,7 @@ export class ProfileEditComponent implements OnInit {
     private formBuilder: FormBuilder,
     private userService: UserService,
     private flashMessageService: FlashMessageService,
+    private fileuploadService: FileuploadService,
     private router: Router) {
       this.editProfileForm = this.formBuilder.group({
         'username': '',
@@ -46,17 +52,9 @@ export class ProfileEditComponent implements OnInit {
                                        .subscribe(
                                          result =>  {
                                            this.currentUser = result;
+                                           this.thumbnailImage = this.currentUser['display_picture']
                                          }
                                        )
-
-  }
-
-  editProfile() {
-    this.profileEdit = true;
-  }
-
-  cancelEdit()  {
-    this.profileEdit = false;
   }
 
   saveProfile() {
@@ -75,14 +73,24 @@ export class ProfileEditComponent implements OnInit {
       this.currentUser['city'] = this.city;
     }
 
-    this.userService.editUser(this.currentUser)
-                    .subscribe(
-                      result => {
-                        this.flashMessageService.handleFlashMessage(result.message);
-                      }
-                    )
+    this.fileuploadService.uploadFile(this.newImageFile)
+        .subscribe(
+          result => {
+            this.currentUser['display_picture'] = result.secure_url;
 
-    this.profileEdit = false;
+            this.userService.editUser(this.currentUser)
+                            .subscribe(
+                              result => {
+                                this.flashMessageService.handleFlashMessage(result.message);
+                              }
+                            )
+
+            this.inputValue = null;
+            this.newProfilePic = '';
+            this.newImageFile = '';
+            this.thumbnailImage = this.currentUser['display_picture'];
+          }
+        )
   }
 
   setCity(data) {
@@ -94,11 +102,35 @@ export class ProfileEditComponent implements OnInit {
   }
 
   fileUploaded(event) {
-    console.log(event);
-    console.log(event.target.files)
+    let file = event.target.files[0];
+    let type = file['type'].split('/')[0]
+
+    if (type !== 'image') {
+      this.fileTypeError = true;
+    } else  {
+      if(event.target.files[0]) {
+        this.newImageFile = event.target.files[0];
+        let reader = new FileReader();
+
+        reader.onload = (event) =>  {
+          this.newProfilePic = event['target']['result'];
+          this.thumbnailImage = event['target']['result'];
+        }
+
+        reader.readAsDataURL(event.target.files[0]);
+        return;
+      }
+    }
   }
 
-  upload()  {
-    
+  keepOriginal()  {
+    this.inputValue = null;
+    this.newProfilePic = '';
+    this.newImageFile = '';
+    this.thumbnailImage = this.currentUser['display_picture'];
+  }
+
+  exitError() {
+    this.fileTypeError = false;
   }
 }

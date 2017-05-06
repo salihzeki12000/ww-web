@@ -1,60 +1,19 @@
-<!-- <div class="profile-edit-main" *ngIf="!profileEdit">
-  <div class="profile-edit-header">
-    <img src="{{ currentUser?.display_picture }}" alt="">
-  </div>
-
-  <h5 class="profile-date-join">A wonderer wanderer since {{ currentUser?.created_at | date:'dd MMMM y'}}</h5>
-  <h5 (click)="editProfile()" class="edit-profile">EDIT PROFILE</h5>
-
-  <h4 class="profile-edit-section-header">PUBLIC DETAILS</h4>
-  <div class="profile-edit-section-details">
-    <div class="profile-edit-item">
-      <h5>USERNAME</h5>
-      <h4>{{ currentUser?.username }}</h4>
-    </div>
-
-    <div class="profile-edit-item">
-      <h5>DESCRIPTION</h5>
-      <h4>{{ currentUser?.description }}</h4>
-    </div>
-  </div>
-
-  <h4 class="profile-edit-section-header">PRIVATE DETAILS</h4>
-  <div class="profile-edit-section-details">
-    <div class="profile-edit-item">
-      <h5>EMAIL</h5>
-      <h4>{{ currentUser?.email }}</h4>
-    </div>
-
-    <div class="profile-edit-item">
-      <h5>CITY OF RESIDENCE</h5>
-      <h4>{{ currentUser?.city.name }}</h4>
-    </div>
-
-    <div class="profile-edit-item">
-      <h5>DATE OF BIRTH</h5>
-      <h4>{{ currentUser?.birth_date | date: 'dd MMM y'}}</h4>
-    </div>
-
-    <div class="profile-edit-item">
-      <h5>GENDER</h5>
-      <h4>{{ currentUser?.gender }}</h4>
-    </div>
-
-  </div>
-
-</div> -->
-
-
 <div class="profile-edit-main">
   <form [formGroup]="editProfileForm" (ngSubmit)="saveProfile()">
 
-    <div class="profile-edit-header">
+    <div class="profile-edit-header" [class.change-profile-picture]="newProfilePic">
       <img src="{{ currentUser?.display_picture }}" alt="">
+      <h5 class="keep-original" *ngIf="newProfilePic" (click)="keepOriginal()">Keep original</h5>
+      <label class="fileUpload">
+        Change profile picture
+        <input type="file" (change)="fileUploaded($event)" [value]="inputValue">
+      </label>
     </div>
 
-    <input type="file" (change)="fileUploaded($event)">
-    <button type="button" (click)="upload()">Upload</button>
+    <div class="new-profile-picture" *ngIf="newProfilePic">
+      <img [src]="newProfilePic">
+      <h5>New profile picture</h5>
+    </div>
 
     <h5 class="profile-date-join">A wonderer wanderer since {{ currentUser?.created_at | date:'dd MMMM y'}}</h5>
 
@@ -71,7 +30,7 @@
       </div>
 
       <div class="profile-preview">
-        <img src="{{ currentUser?.display_picture }}" alt="" class="user-profile-thumbnail">
+        <img src="{{ thumbnailImage }}" alt="" class="user-profile-thumbnail">
         <div class="user-details">
           <h4 class="user-username">{{ username.value }}</h4>
           <h5 class="user-search-description">{{ description.value }}</h5>
@@ -122,3 +81,69 @@
   </form>
 
 </div>
+
+<div class="custom-modal" *ngIf="fileTypeError" (click)="exitError()">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>File type error</h3>
+      <a (click)="exitError()">x</a>
+    </div>
+
+    <div class="confirm-delete-content">
+      <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
+      <h4>The file you selected is not an image. Please try again.</h4>
+    </div>
+
+    <div class="confirm-delete-footer">
+      <div class="action-response">
+        <h4 class="action-response-primary" (click)="exitError()">OK</h4>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div class="profile-edit-main" *ngIf="!profileEdit">
+  <div class="profile-edit-header">
+    <img src="{{ currentUser?.display_picture }}" alt="">
+  </div>
+
+  <h5 class="profile-date-join">A wonderer wanderer since {{ currentUser?.created_at | date:'dd MMMM y'}}</h5>
+  <h5 (click)="editProfile()" class="edit-profile">EDIT PROFILE</h5>
+
+  <h4 class="profile-edit-section-header">PUBLIC DETAILS</h4>
+  <div class="profile-edit-section-details">
+    <div class="profile-edit-item">
+      <h5>USERNAME</h5>
+      <h4>{{ currentUser?.username }}</h4>
+    </div>
+
+    <div class="profile-edit-item">
+      <h5>DESCRIPTION</h5>
+      <h4>{{ currentUser?.description }}</h4>
+    </div>
+  </div>
+
+  <h4 class="profile-edit-section-header">PRIVATE DETAILS</h4>
+  <div class="profile-edit-section-details">
+    <div class="profile-edit-item">
+      <h5>EMAIL</h5>
+      <h4>{{ currentUser?.email }}</h4>
+    </div>
+
+    <div class="profile-edit-item">
+      <h5>CITY OF RESIDENCE</h5>
+      <h4>{{ currentUser?.city.name }}</h4>
+    </div>
+
+    <div class="profile-edit-item">
+      <h5>DATE OF BIRTH</h5>
+      <h4>{{ currentUser?.birth_date | date: 'dd MMM y'}}</h4>
+    </div>
+
+    <div class="profile-edit-item">
+      <h5>GENDER</h5>
+      <h4>{{ currentUser?.gender }}</h4>
+    </div>
+
+  </div>
+
+</div> -->

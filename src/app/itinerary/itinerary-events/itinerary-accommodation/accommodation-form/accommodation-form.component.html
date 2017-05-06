@@ -68,16 +68,30 @@
           <h5 class="form-section-header">ACCOMMODATION DETAILS</h5>
           <div class="form-section-details">
 
-            <label>SELECT AN IMAGE AS THE DISPLAY PICTURE</label>
+            <div class="form-select-image" *ngIf="!uploadPic">
+              <label>SELECT AN IMAGE AS THE DISPLAY PICTURE</label>
 
-            <div class="slider">
-              <div class="slider-images" *ngFor="let image of googleAccommodationDetail?.pictures; let i = index">
-                <input type="radio" name="slide_switch" id="image-{{i}}" (click)="selectPic(image)" checked>
-                <label for="image-{{i}}">
+              <div class="slider">
+                <div class="slider-images" *ngFor="let image of googleAccommodationDetail?.pictures; let i = index">
+                  <input type="radio" name="slide_switch" id="image-{{i}}" (click)="selectPic(image)" checked>
+                  <label for="image-{{i}}">
+                    <img src="{{ image }}" alt="">
+                  </label>
                   <img src="{{ image }}" alt="">
-                </label>
-                <img src="{{ image }}" alt="">
+                </div>
               </div>
+            </div>
+
+            <div class="uploaded-picture" *ngIf="uploadPic">
+              <h4 class="delete-picture" (click)="deletePicture()">X</h4>
+              <img [src]="uploadPic">
+            </div>
+
+            <div class="upload-picture">
+              <label class="file-upload">
+                UPLOAD IMAGE FROM MY LIBRARY
+                <input type="file" (change)="fileUploaded($event)" [value]="inputValue">
+              </label>
             </div>
 
             <label>NAME OF ACCOMMODATION <span class="required"> - required</span></label>

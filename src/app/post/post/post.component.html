@@ -39,7 +39,11 @@
       </div>
     </div>
 
-    <textarea rows="4" *ngIf="editing" [value]="post.content" class="edit" (keyup.enter)="updatePost(post, editedPost.value)" (blur)="updatePost(post, editedPost.value)" #editedPost autofocus></textarea>
+    <textarea rows="4" *ngIf="editing" [value]="post.content" class="edit" (keyup.enter)="updatePost(editedPost.value)" (blur)="updatePost(editedPost.value)" #editedPost autofocus></textarea>
+  </div>
+
+  <div *ngIf="post.img">
+    <img class="post-img" src="{{ post.img }}" alt="">
   </div>
 
   <div *ngIf="post.link_url">
@@ -53,8 +57,31 @@
   </div>
 
   <div class="post-reaction">
-    <i class="fa fa-heart-o fa-lg" aria-hidden="true"></i>
+    <i class="fa fa-heart fa-lg" aria-hidden="true" (click)="likePost()" *ngIf="userLike"></i>
+    <i class="fa fa-heart-o fa-lg" aria-hidden="true" (click)="likePost()" *ngIf="!userLike"></i>
+    <p class="post-reaction-stats" *ngIf="post.likes.length > 0" (click)="showLikes()">{{ post.likes.length }} {{ likeCount }}</p>
     <i class="fa fa-comment-o fa-lg" aria-hidden="true"></i>
+    <p class="post-reaction-stats" *ngIf="post.comments.length > 0" (click)="showComments()">{{ post.comments.length }} {{ commentCount }}</p>
+  </div>
+
+  <div class="post-comments">
+    <form [formGroup]="commentForm">
+      <img src="{{ post?.user.display_picture }}" alt="display picture for {{ post?.user.username }}" class="user-profile-thumbnail">
+      <textarea rows="1" placeholder="comment..." formControlName="comment" #comment (keyup.enter)="commentPost(comment.value)"></textarea>
+    </form>
+
+    <div *ngIf="seeComments" class="post-comments-section">
+      <div *ngFor="let comment of post.comments" class="post-comments-item">
+        <img src="{{ comment.user.display_picture }}" class="user-profile-thumbnail">
+        <div class="post-comments-details">
+          <h5><span class="username-bold">{{ comment.user.username}}</span> {{ comment.comment }}</h5>
+          <div class="time-ago">
+            <p>{{ comment?.time_ago }}</p>
+            <span class="show-time">{{ comment?.created_at | date: 'EEE, dd MMM yyyy - HH:mm' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>

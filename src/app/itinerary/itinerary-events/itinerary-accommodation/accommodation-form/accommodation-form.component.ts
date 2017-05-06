@@ -3,13 +3,14 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
 
-import { Itinerary } from '../../../itinerary';
-import { ItineraryService } from '../../../itinerary.service';
-import { ItineraryEvent } from '../../itinerary-event';
+import { Itinerary }             from '../../../itinerary';
+import { ItineraryService }      from '../../../itinerary.service';
+import { ItineraryEvent }        from '../../itinerary-event';
 import { ItineraryEventService } from '../../itinerary-event.service';
 
-import { UserService } from '../../../../user';
+import { UserService }         from '../../../../user';
 import { FlashMessageService } from '../../../../flash-message';
+import { FileuploadService }   from '../../../../shared';
 
 @Component({
   selector: 'ww-accommodation-form',
@@ -38,11 +39,17 @@ export class AccommodationFormComponent implements OnInit {
   searchDone = false;
   displayPic;
 
+  inputValue = '';
+  fileTypeError = false;
+  uploadPic;
+  newImageFile;
+
   constructor(
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
     private userService: UserService,
     private flashMessageService: FlashMessageService,
+    private fileuploadService: FileuploadService,
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder) {
@@ -163,15 +170,25 @@ export class AccommodationFormComponent implements OnInit {
     }
     newAccommodation['created_at'] = new Date();
 
-    this.itineraryEventService.addEvent(newAccommodation, this.currentItinerary)
+    this.fileuploadService.uploadFile(this.newImageFile)
         .subscribe(
           result => {
-            if(this.route.snapshot['_urlSegment'].segments[3].path !== 'accommodation') {
-              let id = this.route.snapshot['_urlSegment'].segments[2].path;
-              this.router.navigateByUrl('/me/itinerary/' + id + '/accommodation');
-            }
-            this.flashMessageService.handleFlashMessage(result.message);
+            newAccommodation['photo'] = result.secure_url;
+
+            this.itineraryEventService.addEvent(newAccommodation, this.currentItinerary)
+                .subscribe(
+                  result => {
+                    if(this.route.snapshot['_urlSegment'].segments[3].path !== 'accommodation') {
+                      let id = this.route.snapshot['_urlSegment'].segments[2].path;
+                      this.router.navigateByUrl('/me/itinerary/' + id + '/accommodation');
+                    }
+                    this.flashMessageService.handleFlashMessage(result.message);
+                    this.inputValue = null;
+                    this.uploadPic = '';
+                    this.newImageFile = '';
+                  })
           })
+
 
     this.hideAccommodationForm.emit(false)
   }
@@ -190,5 +207,32 @@ export class AccommodationFormComponent implements OnInit {
 
   selectPic(image)  {
     this.displayPic = image;
+  }
+
+  fileUploaded(event) {
+    let file = event.target.files[0];
+    let type = file['type'].split('/')[0]
+
+    if (type !== 'image') {
+      this.fileTypeError = true;
+    } else  {
+      if(event.target.files[0]) {
+        this.newImageFile = event.target.files[0];
+        let reader = new FileReader();
+
+        reader.onload = (event) =>  {
+          this.uploadPic = event['target']['result'];
+        }
+
+        reader.readAsDataURL(event.target.files[0]);
+        return;
+      }
+    }
+  }
+
+  deletePicture() {
+    this.inputValue = null;
+    this.uploadPic = '';
+    this.newImageFile = '';
   }
 }

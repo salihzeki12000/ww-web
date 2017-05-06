@@ -32,6 +32,8 @@ import { AdminComponent } from './admin';
 import { AttractionsComponent } from './attractions/attractions.component';
 import { AdminAttractionComponent,AdminAttractionFormComponent } from './admin/admin-attraction';
 
+import { FileuploadService, CommentService } from './shared';
+
 export const cloudinaryLib = {
   Cloudinary: Cloudinary
 };
@@ -108,7 +110,7 @@ export const cloudinaryLib = {
     routing,
     CloudinaryModule.forRoot(cloudinaryLib, { cloud_name: 'wwfileupload'}),
   ],
-  providers: [ AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, AuthGuard ],
+  providers: [ AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, FileuploadService, CommentService, AuthGuard ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

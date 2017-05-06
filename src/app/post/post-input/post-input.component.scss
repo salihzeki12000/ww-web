@@ -5,8 +5,10 @@
 }
 
 .post-form  {
+  position: relative;
   padding: 20px 0;
-  text-align: center;
+  min-height: 80px;
+  text-align: left;
   background-color: white;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
 }
@@ -45,4 +47,56 @@ textarea {
   resize: vertical;
   margin: auto;
   border: none;
+}
+
+.file-upload {
+  overflow: hidden;
+  position: absolute;
+  bottom: 10px;
+  left: 20px;
+  padding: 0;
+  color: lightgrey;
+  &:hover {
+    cursor: pointer;
+    color: grey;
+  }
+}
+
+.file-upload-textarea {
+  bottom: 25px;
+}
+
+.file-upload [type=file] {
+  display: block;
+  position: absolute;
+  top: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.post-picture  {
+  position: relative;
+  margin: 0 20px;
+}
+
+.post-picture > img  {
+  width: 560px;
+  height: 373px;
+}
+
+.action-response  {
+  padding: 10px 10px 0 0;
+}
+
+.delete-picture  {
+  position: absolute;
+  top:0;
+  right:0;
+  padding: 3px 4px 3px 5px;
+  color: grey;
+  background-color: lightgray;
+  &:hover {
+    cursor: default;
+    opacity: .5;
+  }
 }

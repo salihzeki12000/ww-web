@@ -1,6 +1,6 @@
 <div class="post-form">
   <div class="post-input-box" (click)="showTextArea()" *ngIf="!textArea">
-    <h4><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i> been wondering wandering?</h4>
+    <h4><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i> {{ placeholder }}</h4>
   </div>
 
   <form [formGroup]="postForm" (ngSubmit)="onSubmit()" *ngIf="textArea">
@@ -15,7 +15,12 @@
       </div>
     </div>
 
-    <textarea rows="4" formControlName="content" placeholder="been wondering wandering?" #text (keyup)="checkLink(text.value)" autofocus></textarea>
+    <textarea rows="4" formControlName="content" placeholder="{{ placeholder }}" #text (keyup)="checkLink(text.value)" autofocus></textarea>
+
+    <div class="post-picture" *ngIf="postPic">
+      <h4 class="delete-picture" (click)="deletePicture()">X</h4>
+      <img [src]="postPic">
+    </div>
 
     <div class="link-preview" *ngIf="linkExist">
       <h4 class="delete-link" (click)="deleteLink()">X</h4>
@@ -32,5 +37,13 @@
     </div>
 
   </form>
+
+  <div class="upload-picture">
+    <label class="file-upload" [class.file-upload-textarea]="textArea">
+      <i class="fa fa-camera" aria-hidden="true"></i>
+      Add a photo
+      <input type="file" (change)="fileUploaded($event)" [value]="inputValue">
+    </label>
+  </div>
 
 </div>

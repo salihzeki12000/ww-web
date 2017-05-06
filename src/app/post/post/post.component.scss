@@ -1,7 +1,7 @@
 .user-posts {
   position: relative;
   margin-bottom: 10px;
-  padding: 20px 20px 12px 20px;
+  padding-top: 20px;
   background-color: white;
   -webkit-box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
   -moz-box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
@@ -13,6 +13,7 @@
 }
 
 .user-postby  {
+  padding: 0 20px;
   height: 35px;
 }
 
@@ -38,6 +39,7 @@
 
 .content  {
   margin: 10px 0;
+  padding: 0 20px;
 }
 
 textarea  {
@@ -46,33 +48,106 @@ textarea  {
 }
 
 .link-preview {
-  margin: 0;
+  margin: 0 20px;
 }
 
 .post-reaction  {
-  padding: 5px 0 0 5px;
-  border-top: 1px solid lightgray;
+  margin: 0 25px 10px 0;
+  padding-top: 10px;
+  height: 35px;
 }
 
 .post-reaction > *  {
   display: inline-block;
-  margin-right: 10px;
   font-weight: 600;
-  color: grey;
   vertical-align: bottom;
 }
 
 .post-reaction > .fa-heart-o  {
+  margin-left: 20px;
+  color: grey;
   &:hover {
     color: red;
     cursor: pointer;
   }
 }
 
-.post-reaction > .fa-comment-o  {
-  vertical-align: text-bottom;
+.fa-heart  {
+  margin-left: 20px;
+  color: red !important;
   &:hover {
-    color: #3A4A4D;
+    color: grey !important;
     cursor: pointer;
   }
+}
+
+.post-reaction > .fa-comment-o  {
+  margin-left: 20px;
+  color: grey;
+  vertical-align: text-bottom;
+}
+
+.post-reaction > p  {
+  padding-left: 3px;
+  font-size: 11px;
+  font-weight: 400;
+  color: #808080;
+  letter-spacing: .5px;
+  vertical-align: bottom;
+  &:hover {
+    color: #3A4A4D;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
+.post-img {
+  margin: 0 20px;
+  width: 560px;
+  height: 373px;
+}
+
+.post-comments  {
+  padding: 10px 20px;
+  background-color: #F6F6F6;
+}
+
+.post-comments textarea  {
+  margin-bottom: 0;
+  width: 525px;
+  border-radius: 0;
+}
+
+.post-comments > form > *  {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.dots-menu:after {
+  margin-right: 20px;
+}
+
+.post-comments-section  {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.post-comments-item  {
+  padding-top: 10px;
+}
+
+.post-comments img,
+.post-comments-details  {
+  display: inline-block;
+  vertical-align: text-top;
+}
+
+.post-comments-details  {
+  width: 520px;
+  padding-left: 5px;
+}
+
+.post-comments-details > h5,
+.post-comments-details .time-ago{
+  display: block;
 }

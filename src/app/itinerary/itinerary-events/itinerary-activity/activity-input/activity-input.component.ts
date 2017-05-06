@@ -7,6 +7,7 @@ import { UserService }           from '../../../../user';
 import { ItineraryService }      from '../../../itinerary.service';
 import { ItineraryEventService } from '../../itinerary-event.service';
 import { FlashMessageService }   from '../../../../flash-message';
+import { FileuploadService }     from '../../../../shared';
 
 @Component({
   selector: 'ww-activity-input',
@@ -33,12 +34,18 @@ export class ActivityInputComponent implements OnInit {
 
   searchDone = false;
 
+  inputValue = '';
+  fileTypeError = false;
+  uploadPic;
+  newImageFile;
+
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
     private flashMessageService: FlashMessageService,
+    private fileuploadService: FileuploadService,
     private route: ActivatedRoute,
     private router: Router) {
     this.customActivityForm = this.formBuilder.group({
@@ -150,16 +157,25 @@ export class ActivityInputComponent implements OnInit {
 
     activityForm['type'] = 'activity';
 
-    this.itineraryEventService.addEvent(activityForm, this.currentItinerary)
+    this.fileuploadService.uploadFile(this.newImageFile)
         .subscribe(
           result => {
-            if(this.route.snapshot['_urlSegment'].segments[3].path !== 'activities') {
-              let id = this.route.snapshot['_urlSegment'].segments[2].path;
-              this.router.navigateByUrl('/me/itinerary/' + id + '/activity');
-            }
-            this.flashMessageService.handleFlashMessage(result.message);
-          }
-        );
+            activityForm['photo'] = result.secure_url;
+
+            this.itineraryEventService.addEvent(activityForm, this.currentItinerary)
+                .subscribe(
+                  result => {
+                    if(this.route.snapshot['_urlSegment'].segments[3].path !== 'activities') {
+                      let id = this.route.snapshot['_urlSegment'].segments[2].path;
+                      this.router.navigateByUrl('/me/itinerary/' + id + '/activity');
+                    }
+                    this.flashMessageService.handleFlashMessage(result.message);
+                    this.inputValue = null;
+                    this.uploadPic = '';
+                    this.newImageFile = '';
+                  }
+                );
+        })
 
     this.hideActivityForm.emit(false);
     this.resetActivityForm();
@@ -266,5 +282,32 @@ export class ActivityInputComponent implements OnInit {
 
   selectPic(image)  {
     this.displayPic = image;
+  }
+
+  fileUploaded(event) {
+    let file = event.target.files[0];
+    let type = file['type'].split('/')[0]
+
+    if (type !== 'image') {
+      this.fileTypeError = true;
+    } else  {
+      if(event.target.files[0]) {
+        this.newImageFile = event.target.files[0];
+        let reader = new FileReader();
+
+        reader.onload = (event) =>  {
+          this.uploadPic = event['target']['result'];
+        }
+
+        reader.readAsDataURL(event.target.files[0]);
+        return;
+      }
+    }
+  }
+
+  deletePicture() {
+    this.inputValue = null;
+    this.uploadPic = '';
+    this.newImageFile = '';
   }
 }

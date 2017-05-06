@@ -14,6 +14,7 @@
 
 .profile-edit-header  {
   padding: 20px;
+  height: 210px;
   text-align: center;
   background-color: #FAFAFA;
 }
@@ -22,6 +23,65 @@
   height: 150px;
   width: 150px;
   border-radius: 50%;
+}
+
+.new-profile-picture  {
+  position: absolute;
+  top: 90px;
+  left: calc(((100vw - 600px) / 2) + 400px);
+}
+
+.new-profile-picture > img  {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+}
+
+.new-profile-picture > h5 {
+  margin-top: 9px;
+  width: 150px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.change-profile-picture {
+  text-align: left;
+}
+
+.keep-original  {
+  margin-top: 5px;
+  width: 150px;
+  padding: 1.5px 10px;
+  border-radius: 25px;
+  border: 2px solid;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 500;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.fileUpload {
+  overflow: hidden;
+  position: absolute;
+  top: 245px;
+  left: calc(((100vw - 600px) / 2) + 226px);
+  padding: 0 10px;
+  color: #567FCC;
+  border-radius: 25px;
+  border: 2px solid #567FCC;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.fileUpload [type=file] {
+  display: block;
+  position: absolute;
+  top: 0;
+  opacity: 0;
+  cursor: pointer;
 }
 
 .profile-date-join  {

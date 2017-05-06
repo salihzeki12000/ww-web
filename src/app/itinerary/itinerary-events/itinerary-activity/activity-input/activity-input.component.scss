@@ -27,3 +27,50 @@
 .category-input > label {
   display: inline-block;
 }
+
+.file-upload {
+  overflow: hidden;
+  position: relative;
+  padding: 1px 10px;
+  color: lightgrey;
+  border: 2px solid lightgrey;
+  border-radius: 25px;
+  &:hover {
+    cursor: pointer;
+    color: grey;
+    border: 2px solid grey;
+  }
+}
+
+.file-upload [type=file] {
+  display: block;
+  position: absolute;
+  top: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.uploaded-picture  {
+  position: relative;
+  width: 300px;
+  left: calc((650px - 340px)/2);
+  margin-bottom: 10px;
+}
+
+.uploaded-picture > img  {
+  width: 300px;
+  height: 200px;
+}
+
+.delete-picture  {
+  position: absolute;
+  top:0;
+  right:0;
+  padding: 3px 4px 3px 5px;
+  color: grey;
+  background-color: lightgray;
+  &:hover {
+    cursor: default;
+    opacity: .5;
+  }
+}
