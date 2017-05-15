@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { UserService } from '../user';
+
 @Component({
   selector: 'ww-me',
   templateUrl: './me.component.html',
@@ -7,8 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
+    this.userService.getCurrentUser()
+        .subscribe(
+          data => {
+          }
+        );
   }
 }

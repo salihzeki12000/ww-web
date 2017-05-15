@@ -11,11 +11,10 @@
 
 .legend-section {
   display: inline-block;
-  margin: 10px 10px 0 10px;
-  max-height: calc(100vh - 150px);
+  max-height: calc(100vh - 110px);
+  width: 220px;
   vertical-align: top;
   border-bottom: 1px solid lightgray;
-  overflow: auto;
 
   @media only screen and (max-width: 890px) {
     display: none;
@@ -82,7 +81,6 @@ select {
 }
 
 .map-legend {
-  width: 200px;
   max-height: calc(100vh - 130px);
   vertical-align: top;
   border-right: 1px solid lightgray;

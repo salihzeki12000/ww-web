@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 
 import { Router } from '@angular/router';
@@ -10,10 +10,11 @@ import { Post, PostService } from '../post';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   user: User;
   feed: Post[] = [];
 
+  currentUserSubscription: Subscription;
   feedSubscription: Subscription;
 
   constructor(
@@ -22,12 +23,12 @@ export class HomeComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    this.userService.getCurrentUserDetails()
-        .subscribe(
-          result => {
-            this.user = result;
-          }
-        )
+    this.currentUserSubscription = this.userService.updateCurrentUser
+                                       .subscribe(
+                                         result => {
+                                           this.user = result;
+                                         }
+                                       )
 
     this.postService.getFeed()
         .subscribe(
@@ -40,6 +41,11 @@ export class HomeComponent implements OnInit {
                                         )
           }
         )
+  }
+
+  ngOnDestroy() {
+    this.feedSubscription.unsubscribe();
+    this.currentUserSubscription.unsubscribe();
   }
 
   routeToItin(id) {

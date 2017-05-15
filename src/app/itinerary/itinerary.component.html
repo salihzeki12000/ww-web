@@ -4,10 +4,10 @@
     <h2 class="itinerary-name">{{ itinerary?.name }}<span class="itinerary-date">{{ itinerary?.date_from | date:'dd MMM yyyy' }} to {{ itinerary?.date_to | date:'dd MMM yyyy' }}</span></h2>
   </div>
 
-  <div class="members">
-    <h6 (click)="getUsers()" class="invite-members">INVITE MEMBERS</h6>
+  <div class="members-section">
+    <h6 (click)="getUsers()" class="invite-members-header">INVITE MEMBERS</h6>
 
-    <div *ngFor="let member of itinerary?.members" class="member">
+    <div *ngFor="let member of itinerary?.members | slice:0:5" class="member">
       <div class="tool-tip">
         <img src="{{ member.display_picture }}" alt="display picture for {{ member.username }}" class="user-profile-thumbnail">
         <span class="tool-tiptext">{{ member.username }}</span>
@@ -18,11 +18,11 @@
     </div>
   </div>
 
-  <!-- show members list in small screen -->
   <div class="members-icon-mobile" (click)="showMembers()" [class.show-current-members-active]="showCurrentMembers">
     <i class="fa fa-users fa-lg" aria-hidden="true"></i>
   </div>
 
+  <!-- show members list in media screen max-width: 1090px-->
   <div class="custom-modal" *ngIf="showCurrentMembers">
     <div class="form-card">
       <div class="form-header">
@@ -44,16 +44,14 @@
       </div>
 
     </div>
-  </div>
-
-  <!-- end of show members list in small screen -->
+  </div><!-- end of show members list in small screen -->
 
   <header>
     <nav>
       <ul class="itinerary-nav-tabs">
         <li [class.add-new-active]="showAddNew" (mouseover)="showAddNewOptions()" class="add-new">
           <a (mouseover)="showAddNewOptions()">ADD NEW <i class="fa fa-caret-down fa-lg" aria-hidden="true"></i></a>
-          <div class="show-add-new" *ngIf="showAddNew">
+          <div class="add-new-options" *ngIf="showAddNew">
             <ul>
               <li (click)="newAccommodation()">NEW ACCOMMODATION</li>
               <li (click)="newTransport()">NEW TRANSPORT</li>
@@ -95,25 +93,38 @@
 </div>
 
 <!-- show users to add members modal -->
-<div class="custom-modal" *ngIf="showUsers">
-  <div class="form-card">
+<div class="custom-modal" *ngIf="showUsersSearchModal">
+  <div class="users-search">
 
     <div class="form-header">
       <h3>Invite members to itinerary</h3>
     </div>
 
-    <div *ngFor="let user of users" class="search-result-card">
+    <input type="text" placeholder="Search for people..." #text (keyup)="filterSearch(text.value)">
+
+    <div *ngIf="validAddUser">
+      <div *ngFor="let user of newMembers" class="search-result-card selected-user">
+        <img src="{{ user.display_picture }}" alt="" class="user-profile-thumbnail">
+        <div class="user-details">
+          <h4 class="user-username">{{ user.username }}</h4>
+          <h5 class="user-search-description">{{ user.description }}</h5>
+        </div>
+        <h5 class="toggle-remove-member" (click)="toggleAdd(user)">Selected</h5>
+      </div>
+    </div>
+
+    <div *ngFor="let user of filteredResult" class="search-result-card">
       <img src="{{ user.display_picture }}" alt="" class="user-profile-thumbnail">
       <div class="user-details">
         <h4 class="user-username">{{ user.username }}</h4>
-        <h6 class="user-search-description">{{ user.description }}</h6>
+        <h5 class="user-search-description">{{ user.description }}</h5>
       </div>
-      <input class="add-member" type="checkbox" (click)="toggleAdd(user)">
+      <h5 class="toggle-invite-member" (click)="toggleAdd(user)">Invite</h5>
     </div>
 
     <div class="action-response">
       <h4 class="action-response-secondary" (click)="cancelShowUsers()">CANCEL</h4>
-      <button type="button" class="action-response-primary" (click)="addMembers()" [disabled]="!validAddUser"><h4>INVITE MEMBER(S)</h4></button>
+      <button type="button" class="action-response-primary" (click)="addMembers()" *ngIf="validAddUser"><h4>INVITE SELECTED</h4></button>
     </div>
   </div>
 </div>

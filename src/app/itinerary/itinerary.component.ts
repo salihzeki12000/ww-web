@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Renderer } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter, Renderer } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
@@ -15,18 +15,19 @@ import { NotificationService }   from '../notifications';
   templateUrl: './itinerary.component.html',
   styleUrls: ['./itinerary.component.scss']
 })
-export class ItineraryComponent implements OnInit {
+export class ItineraryComponent implements OnInit, OnDestroy {
+  currentItinerarySubscription: Subscription;
   itinerary: Itinerary;
-  editing = false;
-  deleteItinerary = false;
 
-  currentUser: User;
   currentUserSubscription: Subscription;
+  currentUser: User;
 
+  showUsersSearchModal = false;
   users: User[] = [];
-  showUsers = false;
+  filteredResult;
   newMembers = [];
   validAddUser = false;
+
   showCurrentMembers = false;
 
   showAddNew = false;
@@ -34,8 +35,6 @@ export class ItineraryComponent implements OnInit {
   addTransport = false;
   addActivity = false;
   addResource = false;
-
-  showMenu = false;
 
   constructor(
     private renderer: Renderer,
@@ -51,65 +50,96 @@ export class ItineraryComponent implements OnInit {
   ngOnInit() {
     this.route.params.forEach((params: Params) => {
       let id = params['id'];
+
       this.itineraryService.getItin(id)
       .subscribe(
         result => {
-          this.itinerary = result.itinerary;
-          this.itineraryEventService.getEvents(id)
-              .subscribe( eventResult => {} )
+          this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
+                                             result =>  {
+                                               this.itinerary = result;
+                                               this.getAllUsers();
+                                             })
 
-          this.resourceService.getResources(id)
-              .subscribe( resourceResult => {} )
+          this.itineraryEventService.getEvents(id).subscribe(
+               eventResult => {})
 
-          this.userService.getAllUsers()
-              .subscribe(
-                userResult => {
-                  this.filterUsers(userResult);
-                }
-              )
+          this.resourceService.getResources(id).subscribe(
+               resourceResult => {})
         }
-      );
+      )
     })
 
-    this.currentUserSubscription = this.userService.updateCurrentUser
-                                       .subscribe(
-                                         result => {
-                                           this.currentUser = result;
-                                         }
-                                       )
+    this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
+                                         result => { this.currentUser = result; })
+  }
+
+  ngOnDestroy() {
+    this.currentItinerarySubscription.unsubscribe();
+    this.currentUserSubscription.unsubscribe();
+  }
+
+  getAllUsers() {
+    this.userService.getAllUsers()
+        .subscribe(
+          userResult => {
+            this.filterUsers(userResult.users);
+          }
+        )
   }
 
   filterUsers(users)  {
     this.users = users;
-    for (let i = 0; i < users.length; i++) {
-      for (let j = 0; j < this.itinerary['members'].length; j++) {
-        if(users[i]['_id'] === this.itinerary['members'][j]['_id']) {
-          this.users.splice(i,1);
+
+    for (let i = 0; i < this.itinerary['members'].length; i++) {
+      for (let j = 0; j < this.users.length; j++) {
+        if(this.itinerary['members'][i]['_id'] === this.users[j]['_id']) {
+          this.users.splice(j,1);
+          j--
         }
       }
     }
   }
 
+  // show add members modal
   getUsers()  {
-    this.showUsers = true;
+    this.showUsersSearchModal = true;
     this.showAddNew = false;
     this.showCurrentMembers = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', true);
+    this.preventScroll(true);
+  }
+
+  // add members modal
+  filterSearch(text)  {
+    if(!text)   {
+      this.filteredResult = [];
+    } else  {
+      this.filteredResult = Object.assign([], this.users).filter(
+        user => user.username.toLowerCase().indexOf(text.toLowerCase()) > -1
+      )
+    }
   }
 
   cancelShowUsers() {
-    this.showUsers = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+    this.showUsersSearchModal = false;
+    this.preventScroll(false);
+    this.filteredResult = [];
+    this.users.push.apply(this.users, this.newMembers);
+
+    this.newMembers = [];
   }
 
   toggleAdd(user) {
     let index = this.newMembers.indexOf(user);
     if(index > -1 ) {
       this.newMembers.splice(index, 1);
+      this.users.push(user);
+      this.filteredResult.push(user);
     }
 
     if(index < 0 )  {
       this.newMembers.push(user);
+      this.users.splice(this.users.indexOf(user), 1);
+      this.filteredResult.splice(this.filteredResult.indexOf(user),1)
     }
 
     if(this.newMembers.length > 0) {
@@ -126,7 +156,7 @@ export class ItineraryComponent implements OnInit {
       this.itinerary['members'].push(this.newMembers[i]);
     }
 
-    this.itineraryService.editItin(this.itinerary)
+    this.itineraryService.editItin(this.itinerary, 'edit')
         .subscribe(
           data => {
             for (let i = 0; i < this.newMembers.length; i++) {
@@ -140,29 +170,29 @@ export class ItineraryComponent implements OnInit {
             }
           }
         )
-    this.showUsers = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+    this.showUsersSearchModal = false;
+    this.preventScroll(false);
+    this.newMembers = [];
+    this.filteredResult = [];
   }
 
+  // show and hide current members in small screen
   showMembers() {
     this.showCurrentMembers = !this.showCurrentMembers;
     this.showAddNew = false;
-    this.togglePreventScroll(this.showCurrentMembers);
+    this.preventScroll(this.showCurrentMembers);
   }
 
   hideMembers() {
     this.showCurrentMembers = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+    this.preventScroll(false);
   }
 
-  togglePreventScroll(value)  {
-    this.renderer.setElementClass(document.body, 'prevent-scroll', value);
-  }
-
+  // itinerary nav tabs to access forms
   showAddNewOptions() {
     this.showAddNew = true;
     this.showCurrentMembers = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', true);
+    this.preventScroll(true);
   }
 
   newAccommodation()  {
@@ -171,7 +201,7 @@ export class ItineraryComponent implements OnInit {
     this.addTransport = false;
     this.addActivity = false;
     this.addResource = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', true);
+    this.preventScroll(true);
   }
 
   newTransport()  {
@@ -180,7 +210,7 @@ export class ItineraryComponent implements OnInit {
     this.addTransport = true;
     this.addActivity = false;
     this.addResource = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', true);
+    this.preventScroll(true);
   }
 
   newActivity()  {
@@ -189,7 +219,7 @@ export class ItineraryComponent implements OnInit {
     this.addTransport = false;
     this.addActivity = true;
     this.addResource = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', true);
+    this.preventScroll(true);
   }
 
   newResource()  {
@@ -198,38 +228,40 @@ export class ItineraryComponent implements OnInit {
     this.addTransport = false;
     this.addActivity = false;
     this.addResource = true;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', true);
+    this.preventScroll(true);
   }
 
   hideAccommodationForm(hide)  {
     this.addAccommodation = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+    this.preventScroll(false);
   }
 
   hideTransportForm(hide)  {
     this.addTransport = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+    this.preventScroll(false);
   }
 
   hideActivityForm(hide)  {
     this.addActivity = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+    this.preventScroll(false);
   }
 
   hideResourceForm(hide)  {
     this.addResource = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+    this.preventScroll(false);
   }
 
+  // to close any open modal when navigate to child routes
   activateTab() {
     this.showAddNew = false;
     this.showCurrentMembers = false;
-    this.showUsers = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+    this.showUsersSearchModal = false;
+    this.preventScroll(false);
   }
 
-  showMenuOptions() {
-    this.showMenu = true;
+  // others
+  preventScroll(value)  {
+    this.renderer.setElementClass(document.body, 'prevent-scroll', value);
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone, Renderer, ElementRef, ViewChild } from '@angular/core';
 import {
     Router,
     Event as RouterEvent,
@@ -8,8 +8,6 @@ import {
     NavigationError
 } from '@angular/router';
 
-import { UserService } from './user';
-
 @Component({
   selector: 'ww-root',
   templateUrl: './app.component.html',
@@ -17,21 +15,26 @@ import { UserService } from './user';
 })
 export class AppComponent implements OnInit {
   loading: boolean = true;
+  @ViewChild('spinnerElement') spinnerElement: ElementRef;
 
   constructor(
-    private userService: UserService,
-    private router: Router) {
+    private router: Router,
+    private ngZone: NgZone,
+    private renderer: Renderer) {
       router.events.subscribe((event: RouterEvent) => {
         this.navigationInterceptor(event);
       });
     }
+
   // http://stackoverflow.com/questions/37069609/show-loading-screen-when-navigating-between-routes-in-angular-2
   navigationInterceptor(event: RouterEvent): void {
     if (event instanceof NavigationStart) {
       this.loading = true;
+      console.log(this.loading);
     }
     if (event instanceof NavigationEnd) {
       this.loading = false;
+      console.log(this.loading);
     }
 
     // Set loading state to false in both of the below events to hide the spinner in case a request fails
@@ -41,15 +44,61 @@ export class AppComponent implements OnInit {
     if (event instanceof NavigationError) {
       this.loading = false;
     }
-   }
+  }
 
   ngOnInit()  {
-    if(localStorage.getItem('token')) {
-      this.userService.getCurrentUserDetails()
-          .subscribe(
-            data => {
-            }
-          );
-    }
   }
 }
+
+
+
+// // Shows and hides the loading spinner during RouterEvent changes
+//   private navigationInterceptor(event: RouterEvent): void {
+//
+//       if (event instanceof NavigationStart) {
+//
+//           // We wanna run this function outside of Angular's zone to
+//           // bypass change detection
+//           this.ngZone.runOutsideAngular(() => {
+//
+//               // For simplicity we are going to turn opacity on / off
+//               // you could add/remove a class for more advanced styling
+//               // and enter/leave animation of the spinner
+//               this.renderer.setElementStyle(
+//                   this.spinnerElement.nativeElement,
+//                   'opacity',
+//                   '1'
+//               );
+//           });
+//       }
+//       if (event instanceof NavigationEnd) {
+//           this._hideSpinner();
+//       }
+//
+//       // Set loading state to false in both of the below events to
+//       // hide the spinner in case a request fails
+//       if (event instanceof NavigationCancel) {
+//           this._hideSpinner
+//       }
+//       if (event instanceof NavigationError) {
+//           this._hideSpinner();
+//       }
+//   }
+//
+//
+//   private _hideSpinner(): void {
+//
+//       // We wanna run this function outside of Angular's zone to
+//       // bypass change detection,
+//       this.ngZone.runOutsideAngular(() => {
+//
+//           // For simplicity we are going to turn opacity on / off
+//           // you could add/remove a class for more advanced styling
+//           // and enter/leave animation of the spinner
+//           this.renderer.setElementStyle(
+//               this.spinnerElement.nativeElement,
+//               'opacity',
+//               '0'
+//           );
+//       });
+//   }

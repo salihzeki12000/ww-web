@@ -3,8 +3,8 @@
   <div class="notification-message">
     <h5><span class="username-bold">{{ notification.originator.username }}</span> {{ notification?.message }}</h5>
     <div class="time-ago">
-      <p>{{ notification?.time_ago }}</p>
-      <span class="show-time">{{ notification?.created_at | date: 'EEE, dd MMM yyyy - HH:mm' }}</span>
+      <p *ngIf="notification?.time_ago !== ''">{{ notification?.time_ago }}</p>
+      <p *ngIf="notification?.time_ago === ''">{{ notification?.created_at | date: 'dd MMM yyyy (EEE)' }}</p>
     </div>
   </div>
 

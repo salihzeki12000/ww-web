@@ -4,6 +4,8 @@ export * from './itinerary.service';
 export * from './itinerary.component';
 // export * from './itinerary.resolver';
 
+export * from './itinerary-list/itinerary-list.component';
+
 export * from './itinerary-form/itinerary-form.component';
 
 export * from './itinerary-summary/itinerary-summary.component';

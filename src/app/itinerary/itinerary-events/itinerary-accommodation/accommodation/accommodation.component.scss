@@ -1,7 +1,8 @@
 .item-menu  {
-  top: 225px;
+  @media only screen and (max-width: 650px) {
+    top: 225px;
+  }
 }
-
 .check-in-details {
   display: inline-block;
   width: 49%;

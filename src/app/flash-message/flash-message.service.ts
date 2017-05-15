@@ -6,6 +6,6 @@ export class FlashMessageService {
   flashMessageActivated = new EventEmitter<Error>();
 
   handleFlashMessage(message: any) {
-      this.flashMessageActivated.emit(message);
+    this.flashMessageActivated.emit(message);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, Renderer } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild, Renderer } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 declare var google:any;
@@ -11,12 +11,12 @@ import { ItineraryEventService } from '../itinerary-events/itinerary-event.servi
   templateUrl:'./itinerary-map.component.html',
   styleUrls: ['./itinerary-map.component.scss']
 })
-export class ItineraryMapComponent implements OnInit {
+export class ItineraryMapComponent implements OnInit, OnDestroy {
   @ViewChild('map') map: ElementRef;
   itinMap;
 
-  events: ItineraryEvent[] = [];
   eventSubscription: Subscription;
+  events: ItineraryEvent[] = [];
 
   mapMarkers = [];
 
@@ -32,13 +32,15 @@ export class ItineraryMapComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.eventSubscription = this.itineraryEventService.updateEvent
-                                .subscribe(
+    this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
                                   result => {
                                     this.filterEvents(result);
                                     this.initMap()
-                                  }
-                                )
+                                  })
+  }
+
+  ngOnDestroy() {
+    this.eventSubscription.unsubscribe();
   }
 
   filterEvents(events)  {

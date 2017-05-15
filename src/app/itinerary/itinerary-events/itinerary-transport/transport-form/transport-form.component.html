@@ -1,4 +1,4 @@
-<form [formGroup]="addTransportForm" (ngSubmit)="onSubmitNewTransports()">
+<form [formGroup]="addTransportForm" (ngSubmit)="saveNew()">
 
   <div class="form-card">
 
@@ -12,15 +12,15 @@
     <div class="form-housing">
 
       <div class="progress-tracker-section">
-        <ul class="progress-tracker" [class.flight-search-active]="transportOption === 'flight'" [class.choose-airport-option]="airportsToChoose">
-          <li class="progress-title" (click)="backToSelectTransport()" [class.progress-done]="transportOption !== ''">SELECT TRANSPORT MODE</li><li class="progress-title" *ngIf="transportOption === 'flight'" (click)="backToFlightSearch()" [class.progress-done]="populateFlightDetails">SEARCH FLIGHT</li><li class="progress-title" *ngIf="airportsToChoose" (click)="backToSelectAirport()" [class.progress-done]="airportsChoosen">SELECT AIRPORT</li><li class="progress-title">CONFIRM {{ transportOption | uppercase }} DETAILS</li>
+        <ul class="progress-tracker" [class.flight-search-active]="transportOption === 'flight'" [class.choose-airport-option]="chooseAirport">
+          <li class="progress-title" (click)="selectTransport()" [class.progress-done]="transportOption !== ''">SELECT TRANSPORT MODE</li><li class="progress-title" *ngIf="transportOption === 'flight'" (click)="flightSearch()" [class.progress-done]="populateFlightDetails">SEARCH FLIGHT</li><li class="progress-title" *ngIf="chooseAirport" (click)="selectAirport()" [class.progress-done]="airportsChoosen">SELECT AIRPORT</li><li class="progress-title">CONFIRM {{ transportOption | uppercase }} DETAILS</li>
         </ul>
       </div>
 
       <div class="transport-mode" *ngIf="transportOption === ''">
         <label>SELECT YOUR MODE OF TRANSPORT</label>
         <div *ngFor="let transport of transportType" class="transport-mode-options">
-          <label (click)="onSelectTransportType(transport.name)">
+          <label (click)="selectTransportType(transport.name)">
             <input type="radio" formControlName="transport_type" [value]="transport.name">
             <i class="fa fa-{{ transport.icon }} fa-3x" aria-hidden="true"></i>
             {{ transport.name }}
@@ -70,9 +70,8 @@
           </div>
 
           <div class="action-response">
-            <button type="submit" (click)="searchFlightSubmit()" class="action-response-primary" [disabled]="!searchFlightForm.valid"><h4>SEARCH FLIGHT</h4></button>
+            <button type="submit" (click)="searchFlightDetails()" class="action-response-primary" [disabled]="!searchFlightForm.valid"><h4>SEARCH FLIGHT</h4></button>
           </div>
-
         </form>
 
         <div *ngIf="stopOver" class="stop-over">
@@ -80,13 +79,13 @@
 
           <h5 class="stop-over-airport">DEPARTURE AIRPORT</h5>
           <div class="select-airport" *ngFor="let airport of depAirports">
-            <input name="depAirport" type="radio" (click)="selectDepAirport(airport?.airportCode)">
+            <input name="depAirport" type="radio" (click)="selectedDepAirport(airport?.airportCode)">
             <label for="depAirport">{{ airport?.city }} ({{ airport?.airportName }})</label>
           </div>
 
           <h5 class="stop-over-airport">ARRIVAL AIRPORT</h5>
           <div class="select-airport" *ngFor="let airport of arrAirports">
-            <input name="arrAirport" type="radio" (click)="selectArrAirport(airport?.airportCode)">
+            <input name="arrAirport" type="radio" (click)="selectedArrAirport(airport?.airportCode)">
             <label for="arrAirport">{{ airport?.city }} ({{ airport?.airportName }})</label>
           </div>
 
@@ -101,56 +100,74 @@
 
             <h5 class="form-section-header">DEPARTURE DETAILS</h5>
             <div class="form-section-details">
-              <label>FLIGHT NUMBER</label>
-              <input type="text" class="reference-number" formControlName="reference_number" value="{{ flightSearchDetail?.carrierCode }}{{ flightSearchDetail?.reference_number }}">
 
-              <label>DEPART FROM (CITY) <span class="required"> - required</span></label>
-              <input type="text" formControlName="dep_city" value="{{ flightSearchDetail?.dep_city }}">
+              <div class="operating-message" *ngIf="codeshare">
+                <h5>*This flight is operated by {{ flightSearchDetail?.operating_carrier }} ({{ flightSearchDetail?.operating_flight }}).</h5>
+              </div>
 
-              <label>DEPARTURE AIRPORT</label>
-              <input type="text" formControlName="dep_station" value="{{ flightSearchDetail?.dep_station }}">
+              <div class="flight-details">
+                <h5>FLIGHT NUMBER</h5>
+                <h4>{{ flightSearchDetail?.carrierCode }}{{ flightSearchDetail?.reference_number }}</h4>
+              </div>
 
-              <label>TERMINAL</label>
-              <input type="text" class="transport-terminal" formControlName="dep_terminal" value="{{ flightSearchDetail?.dep_terminal }}">
+              <div class="flight-details">
+                <h5>AIRLINE</h5>
+                <h4>{{ flightSearchDetail?.transport_company }}</h4>
+              </div>
 
-              <label>DEPARTURE DATE</label>
-              <select class="select-date" name="dep_date" formControlName="dep_date" [value]="flightSearchDetail?.dep_date">
-                <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
-                  <div *ngIf="itinDate !== 'any day'">
-                    <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
-                  </div>
-                </option>
-              </select>
+              <div class="flight-details">
+                <h5>DEPART FROM (CITY)</h5>
+                <h4>{{ flightSearchDetail?.dep_city }}</h4>
+              </div>
 
-              <label>DEPARTURE TIME</label>
-              <input type="time" formControlName="dep_time" value="{{ flightSearchDetail?.dep_time }}">
+              <div class="flight-details">
+                <h5>DEPARTURE AIRPORT</h5>
+                <h4>{{ flightSearchDetail?.dep_station }}</h4>
+              </div>
+
+              <div class="flight-details">
+                <h5>DEPARTURE TERMINAL</h5>
+                <h4>{{ flightSearchDetail?.dep_terminal }}</h4>
+              </div>
+
+              <div class="flight-details">
+                <h5>DEPARTURE DATE</h5>
+                <h4>{{ flightSearchDetail?.dep_date | date: "dd MMM yyyy (EEEE)" }}</h4>
+              </div>
+
+              <div class="flight-details">
+                <h5>DEPARTURE TIME</h5>
+                <h4>{{ flightSearchDetail?.dep_time }}</h4>
+              </div>
             </div><!-- end of departure-details -->
-
 
             <h5 class="form-section-header">ARRIVAL DETAILS</h5>
             <div class="form-section-details">
-              <label>GOING TO (CITY) <span class="required"> - required</span></label>
-              <input type="text" formControlName="arr_city" value="{{ flightSearchDetail?.arr_city }}">
+              <div class="flight-details">
+                <h5>GOING TO (CITY)</h5>
+                <h4>{{ flightSearchDetail?.arr_city }}</h4>
+              </div>
 
-              <label>ARRIVAL AIRPORT</label>
-              <input type="text" formControlName="arr_station" value="{{ flightSearchDetail?.arr_station }}">
+              <div class="flight-details">
+                <h5>ARRIVAL AIRPORT</h5>
+                <h4>{{ flightSearchDetail?.arr_station }}</h4>
+              </div>
 
-              <label>TERMINAL</label>
-              <input type="text" class="transport-terminal" formControlName="arr_terminal">
+              <div class="flight-details">
+                <h5>ARRIVAL TERMINAL</h5>
+                <input type="text" class="transport-terminal" formControlName="arr_terminal">
+              </div>
 
-              <label>ARRIVAL DATE</label>
-              <select class="select-date" name="arr_date" formControlName="arr_date" [value]="flightSearchDetail?.arr_date">
-                <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
-                  <div *ngIf="itinDate !== 'any day'">
-                    <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
-                  </div>
-                </option>
-              </select>
+              <div class="flight-details">
+                <h5>ARRIVAL DATE</h5>
+                <h4>{{ flightSearchDetail?.arr_date | date: "dd MMM yyyy (EEEE)" }}</h4>
+              </div>
 
-              <label>ARRIVAL TIME</label>
-              <input type="time" formControlName="arr_time" value="{{ flightSearchDetail?.arr_time }}">
+              <div class="flight-details">
+                <h5>ARRIVAL TIME</h5>
+                <h4>{{ flightSearchDetail?.arr_time }}</h4>
+              </div>
             </div><!-- end of arrival-details -->
-
 
             <h5 class="form-section-header">NOTE</h5>
             <div class="form-section-details">

@@ -1,4 +1,4 @@
-<form [formGroup]="addAccommodationForm" (ngSubmit)="onSubmitNewAccommodation()">
+<form [formGroup]="addAccommodationForm" (ngSubmit)="saveNew()">
 
     <div class="form-card">
 
@@ -83,7 +83,7 @@
             </div>
 
             <div class="uploaded-picture" *ngIf="uploadPic">
-              <h4 class="delete-picture" (click)="deletePicture()">X</h4>
+              <h4 class="delete-picture" (click)="deleteUpload()">X</h4>
               <img [src]="uploadPic">
             </div>
 
@@ -127,3 +127,23 @@
     </div><!-- end of formCard -->
 
 </form>
+
+<div class="custom-modal" *ngIf="fileTypeError" (click)="exitError()">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>File type error</h3>
+      <a (click)="exitError()">x</a>
+    </div>
+
+    <div class="confirm-delete-content">
+      <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
+      <h4>The file you selected is not an image. Please try again.</h4>
+    </div>
+
+    <div class="confirm-delete-footer">
+      <div class="action-response">
+        <h4 class="action-response-primary" (click)="exitError()">OK</h4>
+      </div>
+    </div>
+  </div>
+</div>

@@ -14,19 +14,20 @@ import { FlashMessageService }   from '../../../../flash-message';
 })
 export class ActivityComponent implements OnInit {
   @Input() activity: ItineraryEvent;
+  @Input() itinDateRange;
+  @Input() currentItinerary;
+  @Input() currentUser;
+  sameUser = true;
 
+  showContactDetails = false;
+
+  showMenu = false;
   editing = false;
   deleteActivity = false;
 
   editCustomActivityForm: FormGroup;
   categories;
   anytime;
-  showContactDetails = false;
-
-  itinDateSubscription: Subscription;
-  itinDateRange = [];
-
-  showMenu = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -51,13 +52,22 @@ export class ActivityComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.itinDateSubscription = this.itineraryService.updateDate
-                                    .subscribe(
-                                      result => {
-                                        this.itinDateRange = Object.keys(result).map(key => result[key]);
-                                    })
-
+    // this.checkSameUser();
     // this.activity['formatted_hours'] = this.activity['opening_hours'].replace(/\r?\n/g, '<br/> ');
+  }
+
+  checkSameUser() {
+    if(this.currentUser['id'] === this.activity['user']['_id']) {
+      this.sameUser = true;
+    } else  {
+      let admin = this.currentItinerary['admin'];
+      for (let i = 0; i < admin.length; i++) {
+        if(this.currentUser['id'] === admin[i]) {
+          this.sameUser = true;
+          i = admin.length;
+        }
+      }
+    }
   }
 
   initCategoryArray() {
@@ -70,7 +80,12 @@ export class ActivityComponent implements OnInit {
     return this.categories;
   }
 
-  onEdit()  {
+  showMenuOptions() {
+    this.showMenu = true;
+  }
+
+  // edit section
+  edit()  {
     this.editing = true;
     this.renderer.setElementClass(document.body, 'prevent-scroll', true);
     if(this.activity['time'] === 'anytime') {
@@ -78,12 +93,12 @@ export class ActivityComponent implements OnInit {
     }
   }
 
-  cancelEditActivity()  {
+  cancelEdit()  {
     this.editing = false;
     this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
-  onUpdateActivity()  {
+  saveEdit()  {
     let categoryArray = [
       { value: 'adventure', icon: 'hand-peace-o' },
       { value: 'food/drink', icon: 'cutlery' },
@@ -118,25 +133,10 @@ export class ActivityComponent implements OnInit {
 
     this.editing = false;
     this.renderer.setElementClass(document.body, 'prevent-scroll', false);
-
-    this.editCustomActivityForm.reset([{
-      'categories': this.initCategoryArray(),
-      'name': '',
-      'description': '',
-      'subDescription': '',
-      'opening_hours': '',
-      'entry_fee': '',
-      'website': '',
-      'formatted_address': '',
-      'international_phone_number':'',
-      'date': '',
-      'time': '',
-      'note': '',
-    }])
   }
 
-  // delete activity
-  confirmDelete() {
+  // delete section
+  delete() {
     this.deleteActivity = true;
     this.renderer.setElementClass(document.body, 'prevent-scroll', true);
   }
@@ -146,7 +146,7 @@ export class ActivityComponent implements OnInit {
     this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
-  onDeleteActivity()  {
+  confirmDelete()  {
     this.itineraryEventService.deleteEvent(this.activity)
         .subscribe(
           result => {
@@ -164,7 +164,4 @@ export class ActivityComponent implements OnInit {
     this.showContactDetails = !this.showContactDetails;
   }
 
-  showMenuOptions() {
-    this.showMenu = true;
-  }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
 
@@ -13,10 +13,10 @@ import { CommentService }      from '../../shared';
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.scss']
 })
-export class PostComponent implements OnInit {
+export class PostComponent implements OnInit, OnDestroy {
   @Input() post: Post;
   editing = false;
-
+  deletePost = false;
   currentUserSubscription: Subscription;
   currentUser;
   sameUser;
@@ -27,6 +27,7 @@ export class PostComponent implements OnInit {
 
   commentCount;
   commentForm: FormGroup;
+  deleteComment = -1;
 
   seeLikes;
   seeComments;
@@ -50,8 +51,13 @@ export class PostComponent implements OnInit {
                                            this.currentUser = result;
                                            this.checkSameUser();
                                            this.checkLikePost();
+                                           this.checkCommentSameUser();
                                          }
                                        )
+  }
+
+  ngOnDestroy() {
+    this.currentUserSubscription.unsubscribe();
   }
 
   checkSameUser() {
@@ -68,21 +74,20 @@ export class PostComponent implements OnInit {
       }
     }
 
-    if(this.post['likes'].length > 1) {
-      this.likeCount = 'Likes'
-    } else  {
-      this.likeCount = 'Like'
-    }
-
-    if(this.post['comments'].length > 1) {
-      this.commentCount = 'Comments'
-    } else  {
-      this.commentCount = 'Comment'
-    }
+    this.likeCount = "Like" + (this.post['likes'].length > 1 ? "s" : "")
+    this.commentCount = "Comment" + (this.post['comments'].length > 1 ? "s" : "")
   }
 
   onEdit()  {
     this.editing = true;
+  }
+
+  checkCommentSameUser()  {
+    for (let i = 0; i < this.post['comments'].length; i++) {
+      if(this.post['comments'][i]['user']['_id'] === this.currentUser['id'])  {
+        this.post['comments'][i]['same_user'] = true;
+      }
+    }
   }
 
   updatePost(editedPost: string)  {
@@ -110,12 +115,7 @@ export class PostComponent implements OnInit {
     }
 
     this.userLike = !this.userLike;
-
-    if(this.post['likes'].length > 1) {
-      this.likeCount = 'Likes'
-    } else  {
-      this.likeCount = 'Like'
-    }
+    this.likeCount = "Like" + (this.post['likes'].length > 1 ? "s" : "")
 
     this.editPost();
   }
@@ -127,11 +127,8 @@ export class PostComponent implements OnInit {
       post: this.post['_id']
     }
 
-    if(this.post['comments'].length > 1) {
-      this.commentCount = 'Comments'
-    } else  {
-      this.commentCount = 'Comment'
-    }
+    this.commentCount = "Comment" + (this.post['comments'].length > 1 ? "s" : "")
+
     this.commentService.addComment(newComment)
         .subscribe(
           result => {
@@ -141,20 +138,19 @@ export class PostComponent implements OnInit {
               let units = [
                 { name: "MINUTE", in_seconds: 60, limit: 3600 },
                 { name: "HOUR", in_seconds: 3600, limit: 86400 },
-                { name: "DAY", in_seconds: 86400, limit: 604800 },
-                { name: "WEEK", in_seconds: 604800, limit: 2629743 },
-                { name: "MONTH", in_seconds: 2629743, limit: 31556926 },
-                { name: "YEAR", in_seconds: 31556926, limit: null }
+                { name: "DAY", in_seconds: 86400, limit: 604800 }
               ];
 
               let timePosted = new Date(this.post['comments'][i]['created_at']).getTime();
               let timeDiff = (Date.now() - timePosted) / 1000;
 
               if(timeDiff < 60) {
-                this.post['comments'][i]['time_ago'] = "Less than a minute ago";
+                this.post['comments'][i]['time_ago'] = "LESS THAN A MINUTE AGO";
+              } else if(timeDiff > 604800) {
+                this.post['comments'][i]['time_ago'] = "";
               } else  {
                 for (let j = 0; j < units.length; j++) {
-                  if(timeDiff < units[j]['limit'] || !units[j]['limit'])  {
+                  if(timeDiff < units[j]['limit'])  {
                     let timeAgo = Math.floor(timeDiff / units[j].in_seconds);
                     this.post['comments'][i]['time_ago'] = timeAgo + " " + units[j].name + (timeAgo > 1 ? "S" : "") + " AGO";
                     j = units.length;
@@ -176,6 +172,13 @@ export class PostComponent implements OnInit {
         )
   }
 
+  confirmDelete() {
+    this.deletePost = true;
+  }
+  cancelDelete()  {
+    this.deletePost = false;
+  }
+
   onDelete()  {
     this.postService.deletePost(this.post)
         .subscribe(
@@ -183,6 +186,7 @@ export class PostComponent implements OnInit {
             this.flashMessageService.handleFlashMessage(data.message);
           }
         )
+    this.deletePost = false;
   }
 
   showMenuOptions() {
@@ -195,5 +199,23 @@ export class PostComponent implements OnInit {
 
   showLikes()  {
     this.seeLikes = true;
+  }
+
+  confirmDeleteComment(i)  {
+    this.deleteComment = i;
+  }
+
+  cancelDeleteComment() {
+    this.deleteComment = -1;
+  }
+
+  onDeleteComment() {
+    this.post['comments'].splice(this.deleteComment, 1);
+    this.deleteComment = -1;
+
+    this.postService.editPost(this.post)
+        .subscribe(
+          data => {}
+        )
   }
 }

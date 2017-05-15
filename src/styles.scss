@@ -111,6 +111,21 @@ button[disabled]  {
   color: #CCC;
 }
 
+.view-all {
+  padding: 10px;
+  text-align: center;
+  border-top: 1px solid lightgray;
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+.view-all > h5  {
+  font-weight: 600;
+  color: #567FCC;
+}
+
 /********** USER THUMBNAIL IMAGE */
 .user-profile-thumbnail  {
   height: 30px;
@@ -754,8 +769,14 @@ span.form-validator-message {
 
 /* transport departure and arrival details for form and edit */
 .departure-arrival-details {
-  margin-bottom: 10px;
+  display: inline-block;
+  width: 380px;
   padding: 10px;
+  @media only screen and (max-width: 650px) {
+    display: block;
+    width: auto;
+    margin-bottom: 10px;
+  }
 }
 
 /***************************************************************
@@ -766,7 +787,7 @@ span.form-validator-message {
   display: inline-block;
   margin: 15px;
   padding: 10px 20px 20px 20px;
-  width: 300px;
+  width: 600px;
   vertical-align: text-top;
   background-color: white;
   -webkit-box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
@@ -775,16 +796,20 @@ span.form-validator-message {
   z-index: 2;
 
   @media only screen and (max-width: 400px) {
-    margin: 15px 0;
+    margin: 0 0 15px 0;
     width: 100vw;
     min-width: 300px;
+  }
+
+  @media only screen and (min-width: 400px) and (max-width: 650px) {
+    width: 300px;
   }
 }
 
 .display-photo-card {
   position: relative;
   margin: 15px;
-  width: 300px;
+  width: 600px;
   vertical-align: text-top;
   background-color: white;
   -webkit-box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
@@ -793,42 +818,88 @@ span.form-validator-message {
   z-index: 2;
 
   @media only screen and (max-width: 400px) {
-    margin: 15px 0;
+    margin: 0 0 15px 0;
     width: 100vw;
     min-width: 300px;
+  }
+
+  @media only screen and (min-width: 400px) and (max-width: 650px) {
+    width: 300px;
   }
 }
 
 .display-card-image {
-  width: 300px;
-  height: 200px;
+  display: inline-block;
+  vertical-align: top;
+
+  @media only screen and (max-width: 650px) {
+    display: block;
+  }
+}
+
+.display-card-image > img {
+  width: 180px;
+  height: 180px;
   overflow: hidden;
+  margin: 10px 0 10px 10px;
+  border: 3px solid white;
+  box-shadow: 0px 0px 8px rgba(0,0,0,.3);
 
   @media only screen and (max-width: 400px) {
     width: 100vw;
+    margin: 0;
     height: calc(100vw * 0.66);
     min-width: 300px;
     min-height: 200px;
+    border: none;
+    box-shadow: none;
+  }
+
+  @media only screen and (min-width: 400px) and (max-width: 650px) {
+    display: block;
+    margin: 0;
+    width: 300px;
+    height: 200px;
+    border: none;
+    box-shadow: none;
   }
 }
 
 .display-card-image-placeholder {
+  display: inline-block;
+  margin: 10px 0 10px 10px;
   padding-top: 60px;
-  width: 300px;
-  height: 200px;
-  background-color: #f5f5fd;
+  width: 180px;
+  height: 180px;
+  background-color: #F5F5FD;
   text-align: center;
+  vertical-align: top;
 
   @media only screen and (max-width: 400px) {
+    margin: 0;
     width: 100vw;
     height: calc(100vw * 0.66);
     min-width: 300px;
     min-height: 200px;
   }
+
+  @media only screen and (min-width: 400px) and (max-width: 650px) {
+    margin: 0;
+    display: block;
+    width: 300px;
+    height: 200px;
+  }
 }
 
 .display-photo-housing  {
+  display: inline-block;
   padding: 10px 20px;
+  width: 405px;
+
+  @media only screen and (max-width: 650px) {
+    display: block;
+    width: auto;
+  }
 }
 
 .highlighted-event  {
@@ -839,10 +910,14 @@ span.form-validator-message {
   position: absolute;
   content: '';
   height: 90px;
-  width: 330px;
+  width: 630px;
   margin-top: -90px;
   background-color: #F6F6F6;
   z-index: 1;
+
+  @media only screen and (max-width: 600px) {
+    width: 330px;
+  }
 }
 
 .highlighted-item {
@@ -855,11 +930,6 @@ span.form-validator-message {
  text-overflow: ellipsis;
 }
 
-// /* edit/delete icons */
-// .edit-delete {
-//   float: right;
-// }
-
 /* accommodation/transport/activity display */
 .date-header {
  color: grey;
@@ -868,17 +938,26 @@ span.form-validator-message {
 .accommodation-city {
   margin-top: 10px;
   color: #6494ED;
-  text-align: center;
 }
 
 .accommodation-header {
   margin: 10px 0;
-  text-align: center;
 }
 
 .transport-header {
-  margin: 15px 0 5px 0;
-  text-align: center;
+  display: inline-block;
+  margin-top: 15px;
+  padding-right: 10px;
+  width: 160px;
+  vertical-align: top;
+  text-align: right;
+
+  @media only screen and (max-width: 650px) {
+    display: block;
+    width: auto;
+    padding: 0;
+    text-align: center;
+  }
 }
 
 .activity-header {
@@ -938,7 +1017,6 @@ span.form-validator-message {
   font-weight: 500;
 }
 
-
 .accommodation-address,
 .accommodation-contact-number,
 .accommodation-website,
@@ -987,6 +1065,48 @@ span.form-validator-message {
 }
 
 /* transport display */
+
+/* flight details display */
+.flight-details {
+  height: 40px;
+  @media only screen and (max-width: 700px) {
+    margin-bottom: 20px;
+    height: auto;
+  }
+}
+
+.flight-details > * {
+  display: inline-block;
+  @media only screen and (max-width: 700px) {
+    display: block;
+  }
+}
+
+.flight-details > h5 {
+  width: 150px;
+  color: grey;
+  letter-spacing: .5px;
+  @media only screen and (max-width: 700px) {
+    padding-bottom: 3px;
+  }
+}
+
+.flight-details > input {
+  width: 400px;
+  margin-bottom: 0;
+  @media only screen and (max-width: 450px) {
+    width: 100%;
+  }
+}
+/* if codeshare is true */
+.operating-message  {
+  padding: 5px 0 10px 0;
+}
+
+.operating-message > h5 {
+  color: red;
+}
+
 .departure-section {
   padding-bottom: 10px;
 }
@@ -995,9 +1115,10 @@ span.form-validator-message {
   padding: 10px 0;
 }
 
-span.city-highlight  {
-  font-size: 1.3em;
-}
+// span.city-highlight  {
+//   font-size: 1.3em;
+//   font-weight: 500;
+// }
 
 .rental-company,
 .rental-contact {
@@ -1012,7 +1133,6 @@ span.city-highlight  {
 .resource-link-preview {
   position: relative;
   margin-bottom: 15px;
-  width: 260px;
   border: 1px solid lightgray;
   @media only screen and (max-width: 400px) {
     width: calc(100vw - 40px);
@@ -1030,6 +1150,7 @@ span.city-highlight  {
 .resource-title {
   width: 90%;
   margin-bottom: 10px;
+  word-wrap: break-word;
 }
 
 .resource-content  {
@@ -1051,9 +1172,9 @@ span.city-highlight  {
 .resource-link-title  {
   display: inline-block;
   padding: 10px;
-  width: 200px;
   text-align: left;
   vertical-align: top;
+  word-wrap: break-word;
 }
 
 .resource-link-description  {
@@ -1083,27 +1204,16 @@ span.city-highlight  {
 
 .postby > h5 > a  {
   color: #567FCC;
+  font-size: 0.9em;
 }
 
 .time-ago > p {
   color: grey;
-  font-size: 0.5em;
+  font-size: 0.7em;
   letter-spacing: .3px;
   &:hover {
     cursor: default;
   }
-}
-
-.time-ago:hover .show-time  {
-  display: inline-block;
-}
-
-.show-time  {
-  display: none;
-  font-size: 0.6em;
-  padding: 0 5px;
-  border: 1px solid lightgray;
-  border-radius: 5px;
 }
 
 /******************
@@ -1163,7 +1273,7 @@ span.city-highlight  {
   vertical-align: top;
 }
 
-.user-search-description {
+.user-description {
   margin-top: 3px;
   color: gray;
 }

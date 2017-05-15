@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
 
@@ -13,7 +13,7 @@ import { FlashMessageService } from '../../flash-message';
   templateUrl: './post-input.component.html',
   styleUrls: ['./post-input.component.scss']
 })
-export class PostInputComponent implements OnInit {
+export class PostInputComponent implements OnInit, OnDestroy {
   postForm: FormGroup;
   currentUser: User;
   currentUserSubscription: Subscription;
@@ -50,6 +50,10 @@ export class PostInputComponent implements OnInit {
                                            this.currentUser = data;
                                          }
                                        )
+  }
+
+  ngOnDestroy() {
+    this.currentUserSubscription.unsubscribe();
   }
 
   onSubmit()  {
@@ -100,6 +104,8 @@ export class PostInputComponent implements OnInit {
     this.link_title = '';
     this.link_img = '';
 
+    this.placeholder = "been wondering wandering?"
+
     this.postForm.reset();
   }
 
@@ -141,8 +147,6 @@ export class PostInputComponent implements OnInit {
     this.link_title = '';
     this.link_img = '';
 
-    this.placeholder = "and so... a picture is worth a thousand words?"
-
     let file = event.target.files[0];
     let type = file['type'].split('/')[0]
 
@@ -157,6 +161,8 @@ export class PostInputComponent implements OnInit {
           this.postPic = event['target']['result'];
         }
 
+        this.placeholder = "and so... a picture is worth a thousand words?"
+
         reader.readAsDataURL(event.target.files[0]);
         return;
       }
@@ -170,4 +176,7 @@ export class PostInputComponent implements OnInit {
     this.newImageFile = '';
   }
 
+  exitError() {
+    this.fileTypeError = false;
+  }
 }

@@ -1,14 +1,14 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
 
-import { ItineraryService } from '../../../itinerary.service';
-import { Itinerary } from '../../../itinerary';
-import { ItineraryEvent } from '../../itinerary-event';
+import { Itinerary }             from '../../../itinerary';
+import { ItineraryService }      from '../../../itinerary.service';
+import { ItineraryEvent }        from '../../itinerary-event';
 import { ItineraryEventService } from '../../itinerary-event.service';
 
-import { UserService } from '../../../../user';
+import { UserService }         from '../../../../user';
 import { FlashMessageService } from '../../../../flash-message';
 
 @Component({
@@ -16,17 +16,8 @@ import { FlashMessageService } from '../../../../flash-message';
   templateUrl: './transport-form.component.html',
   styleUrls: ['./transport-form.component.scss']
 })
-export class TransportFormComponent implements OnInit {
+export class TransportFormComponent implements OnInit, OnDestroy {
   @Output() hideTransportForm = new EventEmitter();
-
-  itinDateSubscription: Subscription;
-  itinDateRange = [];
-
-  currentUserSubscription: Subscription;
-  currentUser;
-
-  currentItinerarySubscription: Subscription;
-  currentItinerary;
 
   addTransportForm: FormGroup;
   transportType = [
@@ -38,14 +29,26 @@ export class TransportFormComponent implements OnInit {
     { name:'others', icon: 'rocket'} ];
   transportOption = '';
 
+  // to influence progress bar
+  populateFlightDetails = false;
+  chooseAirport = false;// for flights with multiple legs
+  airportsChoosen = false;
+
   searchFlightForm: FormGroup;
   flightSearchDetail;
-  stopOver = false; //to toggle view
+  codeshare = false;
+  stopOver = false;
   depAirports = [];
   arrAirports = [];
-  populateFlightDetails = false;
-  airportsToChoose = false;
-  airportsChoosen = false;
+
+  itinDateSubscription: Subscription;
+  itinDateRange = [];
+
+  currentUserSubscription: Subscription;
+  currentUser;
+
+  currentItinerarySubscription: Subscription;
+  currentItinerary;
 
   constructor(
     private itineraryService: ItineraryService,
@@ -69,6 +72,8 @@ export class TransportFormComponent implements OnInit {
         'arr_date': '',
         'arr_time': '',
         'transport_company': '',
+        'operating_carrier': '',
+        'operating_flight': '',
         'contact_number': '',
         'note': '',
       }),
@@ -80,32 +85,57 @@ export class TransportFormComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.currentUserSubscription = this.userService.updateCurrentUser
-                                       .subscribe(
-                                         result => {
-                                           this.currentUser = result;
-                                         })
+    this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
+                                        result => { this.currentUser = result; })
 
-    this.currentItinerarySubscription = this.itineraryService.currentItinerary
-                                            .subscribe(
-                                              result => {
-                                                this.currentItinerary = result;
-                                            })
+    this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
+                                             result => { this.currentItinerary = result; })
 
-    this.itinDateSubscription = this.itineraryService.updateDate
-                                    .subscribe(
+    this.itinDateSubscription = this.itineraryService.updateDate.subscribe(
                                       result => {
-                                        this.itinDateRange = Object.keys(result).map(key => result[key]);
-                                        this.itinDateRange.splice(0,1);
+                                        this.itinDateRange  = Object.keys(result).map(key => result[key]);
+                                        this.itinDateRange.splice(0,1)
                                     })
   }
 
-  onSelectTransportType(transport)  {
+  ngOnDestroy() {
+    this.currentItinerarySubscription.unsubscribe();
+    this.itinDateSubscription.unsubscribe();
+    this.currentUserSubscription.unsubscribe();
+  }
+  // progress bar
+  selectTransport() {
+    this.transportOption = '';
+    this.codeshare = false;
+    this.stopOver = false;
+    this.chooseAirport = false;
+    this.airportsChoosen = false;
+    this.populateFlightDetails = false;
+  }
+
+  flightSearch()  {
+    this.codeshare = false;
+    this.stopOver = false;
+    this.chooseAirport = false;
+    this.airportsChoosen = false;
+    this.populateFlightDetails = false;
+  }
+
+  selectAirport() {
+    this.stopOver = true;
+    this.airportsChoosen = false;
+  }
+
+  // skipSearch()  {
+  //   this.selectDone = true;
+  // }
+
+  selectTransportType(transport)  {
     this.transportOption = transport;
   }
 
   // get flight details from flightstats.com
-  searchFlightSubmit()  {
+  searchFlightDetails()  {
     let airlineCode = (this.searchFlightForm.value.searchAirlineCode).toUpperCase();
     let flightNumber = this.searchFlightForm.value.searchFlightNumber;
 
@@ -130,6 +160,22 @@ export class TransportFormComponent implements OnInit {
             for (let i = 0; i < appendix.airlines.length; i++) {
               if (appendix.airlines[i].fs === carrierCode)  {
                 carrier = appendix.airlines[i].name;
+              }
+            }
+
+            let operatingCarrier;
+            let operatingCarrierCode;
+            let operatingFlightNumber;
+
+            if(scheduledFlights[0].isCodeshare) {
+              this.codeshare = true;
+              operatingCarrierCode = scheduledFlights[0].operator.carrierFsCode;
+              operatingFlightNumber = scheduledFlights[0].operator.flightNumber;
+
+              for (let i = 0; i < appendix.airlines.length; i++) {
+                if (appendix.airlines[i].fs === operatingCarrierCode)  {
+                  operatingCarrier = appendix.airlines[i].name;
+                }
               }
             }
 
@@ -207,14 +253,16 @@ export class TransportFormComponent implements OnInit {
                 arrCountry: arrivalCountry,
                 arr_date: arrivalDate,
                 arr_time: arrivalTime,
-                arr_station_location: arrivalStationLocation
+                arr_station_location: arrivalStationLocation,
+                operating_carrier: operatingCarrier,
+                operating_flight: operatingCarrierCode + operatingFlightNumber
               };
               this.populateFlightDetails = true;
             }//end of section where there is only 01 flight
 
             if (scheduledFlights.length > 1)  {
               this.stopOver = true;
-              this.airportsToChoose = true;
+              this.chooseAirport = true;
 
               //convert departureTime to timestamp to sort by time
               for (let i = 0; i < scheduledFlights.length; i++) {
@@ -229,12 +277,14 @@ export class TransportFormComponent implements OnInit {
               this.flightSearchDetail['transport_company'] = carrier;
               this.flightSearchDetail['carrierCode'] = carrierCode;
               this.flightSearchDetail['reference_number'] = flightNumber;
+              this.flightSearchDetail['operating_carrier'] = operatingCarrier;
+              this.flightSearchDetail['operating_flight'] = operatingCarrierCode + operatingFlightNumber;
 
               //create list of airports for user to choose
               let airportBySchedule = [];
 
               for (let i = 0; i < scheduledFlights.length; i++) {
-                  airportBySchedule.push(scheduledFlights[i].departureAirportFsCode);
+                airportBySchedule.push(scheduledFlights[i].departureAirportFsCode);
               }
               airportBySchedule.push(scheduledFlights[scheduledFlights.length - 1].arrivalAirportFsCode);
 
@@ -275,7 +325,13 @@ export class TransportFormComponent implements OnInit {
     })
   }//end of flight search
 
-  selectDepAirport(airportCode)  {
+  // show flight details after selected airport
+  getFlightDetails()  {
+    this.airportsChoosen = true;
+    this.stopOver = false;
+  }
+
+  selectedDepAirport(airportCode)  {
     let currentFlightSearch = this.flightSearchDetail;
     let scheduledFlights = currentFlightSearch['scheduledFlights'];
     let appendix = currentFlightSearch['appendix'];
@@ -310,7 +366,7 @@ export class TransportFormComponent implements OnInit {
     }
   }
 
-  selectArrAirport(airportCode) {
+  selectedArrAirport(airportCode) {
     let currentFlightSearch = this.flightSearchDetail;
     let scheduledFlights = currentFlightSearch['scheduledFlights'];
     let appendix = currentFlightSearch['appendix'];
@@ -340,7 +396,7 @@ export class TransportFormComponent implements OnInit {
     }
   }
 
-  onSubmitNewTransports()  {
+  saveNew()  {
     let newTransport = this.addTransportForm.value;
 
     if(this.flightSearchDetail)  {
@@ -390,42 +446,10 @@ export class TransportFormComponent implements OnInit {
             this.flashMessageService.handleFlashMessage(result.message);
           })
 
-    this.transportOption = 'flight';
-    this.flightSearchDetail;
     this.hideTransportForm.emit(false)
   }
 
   cancelForm()  {
     this.hideTransportForm.emit(false)
   }
-
-  // skipSearch()  {
-  //   this.selectDone = true;
-  // }
-
-  backToSelectTransport() {
-    this.transportOption = '';
-    this.stopOver = false;
-    this.populateFlightDetails = false;
-    this.airportsChoosen = false;
-    this.airportsToChoose = false;
-  }
-
-  backToFlightSearch()  {
-    this.populateFlightDetails = false;
-    this.stopOver = false;
-    this.airportsChoosen = false;
-    this.airportsToChoose = false;
-  }
-
-  backToSelectAirport() {
-    this.airportsChoosen = false;
-    this.stopOver = true;
-  }
-
-  getFlightDetails()  {
-    this.airportsChoosen = true;
-    this.stopOver = false;
-  }
-
 }

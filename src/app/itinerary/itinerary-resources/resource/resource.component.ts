@@ -1,11 +1,9 @@
 import { Component, OnInit, Input, Renderer } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { Subscription } from 'rxjs/Rx';
 
 import { Resource }            from '../resource';
 import { ResourceService }     from '../resource.service';
 import { FlashMessageService } from '../../../flash-message';
-import { UserService }         from '../../../user';
 
 @Component({
   selector: 'ww-resource',
@@ -14,20 +12,19 @@ import { UserService }         from '../../../user';
 })
 export class ResourceComponent implements OnInit {
   @Input() resource: Resource;
+  @Input() currentItinerary;
+  @Input() currentUser;
+  sameUser = true;
+
+  showMenu = false;
   editing = false;
   deleteResource = false;
 
   editResourceForm: FormGroup;
 
-  currentUserSubscription: Subscription;
-  currentUser;
-  sameUser = true;
-  showMenu = false;
-
   constructor(
     private renderer: Renderer,
     private formBuilder: FormBuilder,
-    private userService: UserService,
     private flashMessageService: FlashMessageService,
     private resourceService: ResourceService) {
       this.editResourceForm = this.formBuilder.group({
@@ -37,32 +34,39 @@ export class ResourceComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.currentUserSubscription = this.userService.updateCurrentUser
-                                       .subscribe(
-                                         result => {
-                                           this.currentUser = result;
-                                           this.checkSameUser();
-                                         }
-                                       )
+    // this.checkSameUser();
   }
 
   checkSameUser() {
-    // if(this.currentUser['id'] === this.resource['user']['_id']) {
-    //   this.sameUser = true;
-    // }
+    if(this.currentUser['id'] === this.resource['user']['_id']) {
+      this.sameUser = true;
+    } else  {
+      let admin = this.currentItinerary['admin'];
+      for (let i = 0; i < admin.length; i++) {
+        if(this.currentUser['id'] === admin[i]) {
+          this.sameUser = true;
+          i = admin.length;
+        }
+      }
+    }
   }
 
-  onEdit()  {
+  showMenuOptions() {
+    this.showMenu = true;
+  }
+
+  // edit section
+  edit()  {
     this.editing = true;
     this.renderer.setElementClass(document.body, 'prevent-scroll', true);
   }
 
-  cancelEditResource()  {
+  cancelEdit()  {
     this.editing = false;
     this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
-  onUpdateResource()  {
+  saveEdit()  {
     let editedResource = this.editResourceForm.value;
     console.log(editedResource);
     for (let value in editedResource) {
@@ -83,7 +87,8 @@ export class ResourceComponent implements OnInit {
     this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
-  confirmDelete() {
+  // delete section
+  delete() {
     this.deleteResource = true;
     this.renderer.setElementClass(document.body, 'prevent-scroll', true);
   }
@@ -93,7 +98,7 @@ export class ResourceComponent implements OnInit {
     this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
-  onDeleteResource()  {
+  confirmDelete()  {
     this.resourceService.deleteResource(this.resource)
         .subscribe(
           result => {
@@ -103,7 +108,4 @@ export class ResourceComponent implements OnInit {
     this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
-  showMenuOptions() {
-    this.showMenu = true;
-  }
 }

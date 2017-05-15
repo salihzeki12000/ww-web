@@ -25,7 +25,7 @@
 }
 
 .itinerary-edit-section-details {
-  padding: 5px 10px 5px 35px;
+  padding: 5px 35px;
   @media only screen and (max-width: 450px) {
     padding: 5px 10px;
   }
@@ -55,8 +55,12 @@
   }
 }
 
+.itinerary-edit-item > h4 {
+  font-weight: 400;
+}
+
 .itinerary-edit-item > input  {
-  width: 400px;
+  width: 390px;
   margin-bottom: 0;
   @media only screen and (max-width: 450px) {
     width: 100%;
@@ -67,12 +71,129 @@
   padding-top: 6px;
 }
 
+
+/* member details section */
 .itinerary-member-list  {
+  position: relative;
   padding: 10px;
 }
 
-.delete-itinerary-button  {
+.user-profile-thumbnail {
+  vertical-align: top;
+}
+
+/* individual member hover options */
+.itinerary-member-option  {
+  position: relative;
   display: inline-block;
+  float: right;
+}
+
+.itinerary-member-option i  {
+  color: lightgray;
+  &:hover {
+    color: grey;
+    cursor: pointer;
+  }
+}
+
+.itinerary-member-option:hover .itinerary-member-option-menu  {
+  display: block;
+}
+
+.itinerary-member-option-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  width: 170px;
+  background-color: white;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
+  z-index: 2;
+}
+
+.itinerary-member-option-menu > ul  {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.itinerary-member-option-menu > ul > li  {
+  width: 100%;
+  padding: 10px 20px;
+  &:hover {
+    cursor: pointer;
+    background-color: #F6F6F6;
+  }
+}
+
+.itinerary-member-option-menu > ul > li.make-admin  {
+  &:hover {
+    cursor: default;
+  }
+}
+
+.make-admin > h5  {
+  &:hover {
+    cursor: pointer;
+    background-color: #F6F6F6;
+  }
+}
+
+.itinerary-member-option-menu > ul > li:hover *  {
+  color: grey;
+}
+
+.itinerary-member-option-menu > ul > li > h5  {
+  display: inline-block;
+  letter-spacing: .5px;
+}
+
+/* admin styles */
+.itinerary-admin  {
+  display: inline-block;
+  position: absolute;
+  right: 30px;
+}
+
+.itinerary-admin > h5 {
+  padding: 2px 5px;
+  color: #19CC72;
+  border: 2px solid #19CC72;
+  border-radius: 5px;
+}
+
+span.info {
+  float: right;
+  padding: 0 4px;
+  color: #A6A6A6;
+  font-size: 11px;
+  font-weight: 600;
+  border: 2px solid #A6A6A6;
+  border-radius: 50%;
+  &:hover {
+    cursor: pointer;
+    color: #808080;
+    border: 2px solid #808080;
+  }
+}
+
+/* save button */
+form > .action-response {
+  margin-right: 20px;
+}
+
+.share-itinerary  {
+  width: 160px;
+  padding: 10px 20px;
+  font-weight: 400;
+  &:hover {
+    cursor: pointer;
+    color: #6494ED;
+  }
+}
+
+.delete-itinerary  {
+  width: 160px;
   padding: 10px 20px;
   font-weight: 400;
   color: grey;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 
 import { ItineraryService } from '../../itinerary.service';
@@ -8,7 +8,7 @@ import { ItineraryService } from '../../itinerary.service';
   templateUrl: './itinerary-activity.component.html',
   styleUrls: ['./itinerary-activity.component.scss']
 })
-export class ItineraryActivityComponent implements OnInit {
+export class ItineraryActivityComponent implements OnInit, OnDestroy {
   addActivity = false;
   showCheckin = false;
   itinDateSubscription: Subscription;
@@ -23,6 +23,10 @@ export class ItineraryActivityComponent implements OnInit {
                                         let updatedItinDate = Object.keys(result).map(key => result[key]);
                                         this.itinDateRange = updatedItinDate;
                                     })
+  }
+
+  ngOnDestroy() {
+    this.itinDateSubscription.unsubscribe();
   }
 
   addCustomActivity() {

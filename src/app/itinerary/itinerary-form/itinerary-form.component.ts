@@ -1,22 +1,23 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
 import { User, UserService } from '../../user';
-import { ItineraryService } from '../itinerary.service';
+import { ItineraryService }  from '../itinerary.service';
 
 @Component({
   selector: 'ww-itinerary-form',
   templateUrl: './itinerary-form.component.html',
   styleUrls: ['./itinerary-form.component.scss']
 })
-export class ItineraryFormComponent implements OnInit {
-  currentUser: User;
-  currentUserSubscription: Subscription;
-
-  itineraryForm: FormGroup;
+export class ItineraryFormComponent implements OnInit, OnDestroy {
   @Output() hideItineraryForm = new EventEmitter();
+  itineraryForm: FormGroup;
+
+  currentUserSubscription: Subscription;
+  currentUser: User;
+
 
   constructor(
     private router: Router,
@@ -32,19 +33,19 @@ export class ItineraryFormComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.currentUserSubscription = this.userService.updateCurrentUser
-                                       .subscribe(
-                                         result => {
-                                           this.currentUser = result;
-                                         }
-                                       )
+    this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
+                                        result => { this.currentUser = result; })
   }
 
+  ngOnDestroy() {
+    this.currentUserSubscription.unsubscribe();
+  }
 
-  onSubmit()  {
+  saveNew()  {
     let itinerary = this.itineraryForm.value;
 
     itinerary.members = [this.currentUser['id']];
+    itinerary.admin = [this.currentUser['id']];
 
     this.itineraryService.addItin(itinerary)
         .subscribe(
@@ -55,7 +56,7 @@ export class ItineraryFormComponent implements OnInit {
     this.hideItineraryForm.emit(false);
   }
 
-  cancelItineraryForm() {
+  cancelForm() {
     this.hideItineraryForm.emit(false);
   }
 

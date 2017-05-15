@@ -7,7 +7,7 @@
   <div class="profile-center-bar"></div>
 
   <div class="profile-main">
-    <div class="profile-connections">
+    <div class="profile-connections" [class.fix-profile-connections]="fixed">
       <div class="follower-following">
         <div class="follower-counter" (click)="routeToFollowers()">
           <h4>{{ followers.length }}</h4>
@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <div class="profile-itineraries">
+    <div class="profile-itineraries" [class.fix-profile-itineraries]="fixed">
       <div class="profile-itineraries-length">
         <h5>YOUR ITINERARY ({{ user?.itineraries.length }})</h5>
       </div>
@@ -28,6 +28,9 @@
       <div class="profile-itineraries-list" *ngFor="let itinerary of user?.itineraries | slice:0:5 "  (click)="routeToItin(itinerary._id)">
         <h5>{{ itinerary.name }}</h5>
         <h6>( {{ itinerary.date_from | date:'dd MMM yy' }} to {{ itinerary.date_to | date:'dd MMM yy' }} )</h6>
+      </div>
+      <div *ngIf="user?.itineraries.length > 5" class="view-all" [routerLink]="['/me/itinerary']">
+        <h5>View all</h5>
       </div>
     </div>
 

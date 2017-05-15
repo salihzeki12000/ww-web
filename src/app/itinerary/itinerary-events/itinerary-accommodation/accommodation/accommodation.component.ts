@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, Renderer } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
-import { ItineraryEvent } from '../../itinerary-event';
+import { ItineraryEvent }        from '../../itinerary-event';
 import { ItineraryEventService } from '../../itinerary-event.service';
-import { FlashMessageService } from '../../../../flash-message';
+import { FlashMessageService }   from '../../../../flash-message';
 
 @Component({
   selector: 'ww-accommodation',
@@ -13,18 +13,19 @@ import { FlashMessageService } from '../../../../flash-message';
 export class AccommodationComponent implements OnInit {
   @Input() event: ItineraryEvent;
   @Input() itinDateRange;
+  @Input() currentItinerary;
   @Input() currentUser;
+  sameUser = true;
 
-  editAccommodationForm: FormGroup;
-  editing = false;
-  anyCheckInTime;
-  anyCheckOutTime;
   showContactDetails = false;
 
-  deleteAccommodation = false;
   showMenu = false;
+  editing = false;
+  deleteAccommodation = false;
 
-  sameUser = true;
+  editAccommodationForm: FormGroup;
+  anyCheckInTime;
+  anyCheckOutTime;
 
   constructor(
     private renderer: Renderer,
@@ -46,17 +47,28 @@ export class AccommodationComponent implements OnInit {
     }
 
   ngOnInit()  {
-    this.checkSameUser();
+    // this.checkSameUser()
   }
 
   checkSameUser() {
-    // if(this.currentUser['id'] === this.event['user']['_id']) {
-    //   this.sameUser = true;
-    // }
+    if(this.currentUser['id'] === this.event['user']['_id']) {
+      this.sameUser = true;
+    } else  {
+      let admin = this.currentItinerary['admin'];
+      for (let i = 0; i < admin.length; i++) {
+        if(this.currentUser['id'] === admin[i]) {
+          this.sameUser = true;
+          i = admin.length;
+        }
+      }
+    }  }
+
+  showMenuOptions() {
+    this.showMenu = true;
   }
 
-  // to show/hide edit form
-  editAccommodation()  {
+  // edit section
+  edit()  {
     this.editing = true;
     this.renderer.setElementClass(document.body, 'prevent-scroll', true);
 
@@ -68,13 +80,12 @@ export class AccommodationComponent implements OnInit {
     }
   }
 
-  cancelEditAccommodation()  {
+  cancelEdit()  {
     this.editing = false;
     this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
-  // to submit edit form
-  onEditAccommodation() {
+  saveEdit() {
     let editedAccommodation = this.editAccommodationForm.value;
     let originalAccommodation = this.event;
 
@@ -115,33 +126,20 @@ export class AccommodationComponent implements OnInit {
 
     this.editing = false;
     this.renderer.setElementClass(document.body, 'prevent-scroll', false);
-
-    this.editAccommodationForm.reset({
-      'name': '',
-      'formatted_address': '',
-      'website': '',
-      'international_phone_number': '',
-      'check_in_date': '',
-      'check_out_date': '',
-      'check_in_time': '',
-      'check_out_time': '',
-      'stay_city':'',
-      'note': '',
-    })
   }
 
-  // TO DELETE EXISTING ACCOMMODATION/TRANSPORT
-  confirmDeleteAccommodation() {
+  // delete section
+  delete() {
     this.deleteAccommodation = true;
     this.renderer.setElementClass(document.body, 'prevent-scroll', true);
   }
 
-  cancelDeleteAccommodation()  {
+  cancelDelete()  {
     this.deleteAccommodation = false;
     this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
-  onDeleteAccommodation() {
+  confirmDelete() {
     this.itineraryEventService.deleteEvent(this.event)
         .subscribe(
           result => {
@@ -161,9 +159,5 @@ export class AccommodationComponent implements OnInit {
 
   toggleContactDetails()  {
     this.showContactDetails = !this.showContactDetails;
-  }
-
-  showMenuOptions() {
-    this.showMenu = true;
   }
 }

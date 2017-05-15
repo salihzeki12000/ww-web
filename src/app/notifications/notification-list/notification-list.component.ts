@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 
 import { NotificationService } from '../notification.service';
@@ -11,7 +11,7 @@ import { UserService }         from '../../user/user.service';
   `,
   styleUrls: ['./notification-list.component.scss']
 })
-export class NotificationListComponent implements OnInit {
+export class NotificationListComponent implements OnInit, OnDestroy {
   @Input() notificationsLimit;
   currentUserSubscription: Subscription;
   currentUser;
@@ -45,6 +45,11 @@ export class NotificationListComponent implements OnInit {
 
                                           }
                                         )
+  }
+
+  ngOnDestroy() {
+    this.currentUserSubscription.unsubscribe();
+    this.notificationSubscription.unsubscribe();
   }
 
   getNotifications(id)  {

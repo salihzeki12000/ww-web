@@ -97,10 +97,7 @@ export class PostService  {
     let units = [
       { name: "MINUTE", in_seconds: 60, limit: 3600 },
       { name: "HOUR", in_seconds: 3600, limit: 86400 },
-      { name: "DAY", in_seconds: 86400, limit: 604800 },
-      { name: "WEEK", in_seconds: 604800, limit: 2629743 },
-      { name: "MONTH", in_seconds: 2629743, limit: 31556926 },
-      { name: "YEAR", in_seconds: 31556926, limit: null }
+      { name: "DAY", in_seconds: 86400, limit: 604800 }
     ];
 
     for (let i = 0; i < posts.length; i++) {
@@ -108,10 +105,12 @@ export class PostService  {
       let timeDiff = (Date.now() - timePosted) / 1000;
 
       if(timeDiff < 60) {
-        posts[i]['time_ago'] = "Less than a minute ago"
+        posts[i]['time_ago'] = "LESS THAN A MINUTE AGO"
+      } else if(timeDiff > 604800) {
+        posts[i]['time_ago'] = '';
       } else {
         for (let j = 0; j < units.length; j++) {
-          if(timeDiff < units[j]['limit'] || !units[j]['limit'])  {
+          if(timeDiff < units[j]['limit'])  {
             let timeAgo =  Math.floor(timeDiff / units[j].in_seconds);
             posts[i]['time_ago'] = timeAgo + " " + units[j].name + (timeAgo > 1 ? "S" : "") + " AGO";
             j = units.length;
@@ -125,10 +124,12 @@ export class PostService  {
         let commentTimeDiff = (Date.now() - commentTimePosted) / 1000;
 
         if(commentTimeDiff < 60)  {
-          comment['time_ago'] = "Less than a minute ago"
+          comment['time_ago'] = "LESS THAN A MINUTE AGO"
+        } else if(commentTimeDiff > 604800) {
+          comment['time_ago'] = '';
         } else  {
           for (let l = 0; l < units.length; l++) {
-            if(commentTimeDiff < units[l]['limit'] || !units[l]['limit']) {
+            if(commentTimeDiff < units[l]['limit']) {
               let commentTimeAgo = Math.floor(commentTimeDiff / units[l].in_seconds);
               comment['time_ago'] = commentTimeAgo + " " + units[l].name + (commentTimeAgo > 1 ? "S" : "") + " AGO";
               l = units.length;
@@ -145,10 +146,7 @@ export class PostService  {
     let units = [
       { name: "MINUTE", in_seconds: 60, limit: 3600 },
       { name: "HOUR", in_seconds: 3600, limit: 86400 },
-      { name: "DAY", in_seconds: 86400, limit: 604800 },
-      { name: "WEEK", in_seconds: 604800, limit: 2629743 },
-      { name: "MONTH", in_seconds: 2629743, limit: 31556926 },
-      { name: "YEAR", in_seconds: 31556926, limit: null }
+      { name: "DAY", in_seconds: 86400, limit: 604800 }
     ];
 
     for (let i = 0; i < feed.length; i++) {
@@ -157,9 +155,11 @@ export class PostService  {
 
       if(timeDiff < 60) {
         feed[i]['time_ago'] = "LESS THAN A MINUTE AGO"
+      } else if(timeDiff > 604800) {
+        feed[i]['time_ago'] = '';
       } else {
         for (let j = 0; j < units.length; j++) {
-          if(timeDiff < units[j]['limit'] || !units[j]['limit'])  {
+          if(timeDiff < units[j]['limit'])  {
             let timeAgo =  Math.floor(timeDiff / units[j].in_seconds);
             feed[i]['time_ago'] = timeAgo + " " + units[j].name + (timeAgo > 1 ? "S" : "") + " AGO";
             j = units.length;
@@ -173,10 +173,12 @@ export class PostService  {
         let commentTimeDiff = (Date.now() - commentTimePosted) / 1000;
 
         if(commentTimeDiff < 60)  {
-          comment['time_ago'] = "Less than a minute ago"
+          comment['time_ago'] = "LESS THAN A MINUTE AGO"
+        } else if(commentTimeDiff > 604800) {
+          comment['time_ago'] = '';
         } else  {
           for (let l = 0; l < units.length; l++) {
-            if(commentTimeDiff < units[l]['limit'] || !units[l]['limit']) {
+            if(commentTimeDiff < units[l]['limit']) {
               let commentTimeAgo = Math.floor(commentTimeDiff / units[l].in_seconds);
               comment['time_ago'] = commentTimeAgo + " " + units[l].name + (commentTimeAgo > 1 ? "S" : "") + " AGO";
               l = units.length;

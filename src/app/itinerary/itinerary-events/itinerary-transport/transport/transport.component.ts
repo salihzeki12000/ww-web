@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, Renderer } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
-import { ItineraryEvent } from '../../itinerary-event';
+import { ItineraryEvent }        from '../../itinerary-event';
 import { ItineraryEventService } from '../../itinerary-event.service';
-import { FlashMessageService } from '../../../../flash-message';
+import { FlashMessageService }   from '../../../../flash-message';
 
 @Component({
   selector: 'ww-transport',
@@ -13,14 +13,15 @@ import { FlashMessageService } from '../../../../flash-message';
 export class TransportComponent implements OnInit {
   @Input() event: ItineraryEvent;
   @Input() itinDateRange;
+  @Input() currentItinerary;
   @Input() currentUser;
+  sameUser = true;
+
+  showMenu = false;
+  editing = false;
+  deleteTransport = false;
 
   editTransportForm: FormGroup;
-  editing = false;
-
-  deleteTransport = false;
-  showMenu = false;
-  sameUser = true;
 
   constructor(
     private renderer: Renderer,
@@ -47,26 +48,38 @@ export class TransportComponent implements OnInit {
     }
 
   ngOnInit()  {
-    this.checkSameUser();
+    // this.checkSameUser();
   }
 
   checkSameUser() {
-    // if(this.currentUser['id'] === this.event['user']['_id']) {
-    //   this.sameUser = true;
-    // }
+    if(this.currentUser['id'] === this.event['user']['_id']) {
+      this.sameUser = true;
+    } else  {
+      let admin = this.currentItinerary['admin'];
+      for (let i = 0; i < admin.length; i++) {
+        if(this.currentUser['id'] === admin[i]) {
+          this.sameUser = true;
+          i = admin.length;
+        }
+      }
+    }  }
+
+  showMenuOptions() {
+    this.showMenu = true;
   }
 
-  editTransport()  {
+  // edit section
+  edit()  {
     this.editing = true;
     this.renderer.setElementClass(document.body, 'prevent-scroll', true);
   }
 
-  cancelEditTransport()  {
+  cancelEdit()  {
     this.editing = false;
     this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
-  onEditTransport()  {
+  saveEdit()  {
     let editedTransport = this.editTransportForm.value;
     let originalTransport = this.event;
 
@@ -90,38 +103,20 @@ export class TransportComponent implements OnInit {
 
     this.editing = false;
     this.renderer.setElementClass(document.body, 'prevent-scroll', false);
-
-    this.editTransportForm.reset({
-      'transport_type': '',
-      'reference_number': '',
-      'dep_terminal': '',
-      'arr_terminal': '',
-      'dep_station': '',
-      'arr_station': '',
-      'dep_city': '',
-      'arr_city': '',
-      'dep_date': '',
-      'dep_time': '',
-      'arr_date': '',
-      'arr_time': '',
-      'transport_company': '',
-      'contact_number': '',
-      'note': '',
-    });
-
   }
 
-  confirmDeleteTransport() {
+  // delete section
+  delete() {
     this.deleteTransport = true;
     this.renderer.setElementClass(document.body, 'prevent-scroll', true);
   }
 
-  cancelDeleteTransport()  {
+  cancelDelete()  {
     this.deleteTransport = false;
     this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
-  onDeleteTransport()  {
+  confirmDelete()  {
     this.itineraryEventService.deleteEvent(this.event)
         .subscribe(
           result => {
@@ -131,7 +126,4 @@ export class TransportComponent implements OnInit {
     this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
-  showMenuOptions() {
-    this.showMenu = true;
-  }
 }

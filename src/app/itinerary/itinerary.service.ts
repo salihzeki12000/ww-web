@@ -8,7 +8,6 @@ import { Itinerary } from './itinerary';
 @Injectable()
 export class ItineraryService {
   itinerary: Itinerary;
-  itineraryId;
   itineraries: Itinerary[] = [];
 
   updateDate = new ReplaySubject();
@@ -23,7 +22,6 @@ export class ItineraryService {
     return this.http.get( this.url + "/itinerary/" + itineraryId)
                     .map((response: Response) => {
                       this.itinerary = response.json().itinerary;
-                      this.itineraryId = this.itinerary['_id'];
                       this.updateDate.next(this.setDateRange(this.itinerary));
                       this.currentItinerary.next(this.itinerary);
                       return response.json();
@@ -48,10 +46,6 @@ export class ItineraryService {
    return dateRange;
   }
 
-  itin()  {
-    return this.itinerary;
-  }
-
   addItin(itinerary: Itinerary) {
     const body = JSON.stringify(itinerary);
     const headers = new Headers({ 'Content-Type': 'application/json' });
@@ -67,7 +61,7 @@ export class ItineraryService {
                     .catch((error: Response) => Observable.throw(error.json()));
   }
 
-  editItin(itinerary: Itinerary)  {
+  editItin(itinerary: Itinerary, method)  {
     const body = JSON.stringify(itinerary);
     const headers = new Headers({ 'Content-Type': 'application/json' });
     const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
@@ -76,7 +70,7 @@ export class ItineraryService {
                     .map((response: Response) => {
                       this.itinerary = response.json().itinerary;
                       this.updateDate.next(this.setDateRange(this.itinerary));
-                      this.itinerary['method'] = 'edit';
+                      this.itinerary['method'] = method;
                       this.updateItineraries.next(this.itinerary);
                       return response.json();
                     })

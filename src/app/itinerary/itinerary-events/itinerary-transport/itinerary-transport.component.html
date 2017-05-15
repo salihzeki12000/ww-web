@@ -20,7 +20,15 @@
 </div>
 
 <div class="transport-list">
-  <ww-transport *ngFor="let event of transports; let i = index" id="transport{{i}}" [event]="event" [class.highlighted-event]="highlightedEvent === event" [itinDateRange]="itinDateRange" [currentUser]="currentUser"></ww-transport>
+  <ww-transport
+    *ngFor="let event of transports; let i = index"
+    id="transport{{i}}"
+    [event]="event"
+    [class.highlighted-event]="highlightedEvent === event"
+    [itinDateRange]="itinDateRange"
+    [currentUser]="currentUser"
+    [currentItinerary]="currentItinerary">
+  </ww-transport>
 </div>
 
 <div class="transport-summary-popup" (click)="showSummary()">

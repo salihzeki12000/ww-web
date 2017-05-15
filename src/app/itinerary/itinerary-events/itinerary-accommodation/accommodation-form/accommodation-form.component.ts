@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
@@ -17,11 +17,13 @@ import { FileuploadService }   from '../../../../shared';
   templateUrl: './accommodation-form.component.html',
   styleUrls: ['./accommodation-form.component.scss']
 })
-export class AccommodationFormComponent implements OnInit {
+export class AccommodationFormComponent implements OnInit, OnDestroy {
   @Output() hideAccommodationForm = new EventEmitter();
 
   addAccommodationForm: FormGroup;
   googleAccommodationDetail;
+
+  searchDone = false;
 
   itinDateSubscription: Subscription;
   itinDateRange = [];
@@ -36,13 +38,12 @@ export class AccommodationFormComponent implements OnInit {
   currentItinerarySubscription: Subscription;
   currentItinerary;
 
-  searchDone = false;
   displayPic;
+  uploadPic;
+  newImageFile = '';
 
   inputValue = '';
   fileTypeError = false;
-  uploadPic;
-  newImageFile;
 
   constructor(
     private itineraryService: ItineraryService,
@@ -68,20 +69,13 @@ export class AccommodationFormComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.currentUserSubscription = this.userService.updateCurrentUser
-                                       .subscribe(
-                                         result => {
-                                           this.currentUser = result;
-                                         })
+    this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
+                                        result => { this.currentUser = result; })
 
-    this.currentItinerarySubscription = this.itineraryService.currentItinerary
-                                            .subscribe(
-                                              result => {
-                                                this.currentItinerary = result;
-                                            })
+    this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
+                                             result => { this.currentItinerary = result; })
 
-    this.itinDateSubscription = this.itineraryService.updateDate
-                                    .subscribe(
+    this.itinDateSubscription = this.itineraryService.updateDate.subscribe(
                                       result => {
                                         this.itinDateRange  = Object.keys(result).map(key => result[key]);
                                         this.itinDateRange.splice(0,1)
@@ -90,7 +84,22 @@ export class AccommodationFormComponent implements OnInit {
                                     })
   }
 
-  // get place details form Google API
+  ngOnDestroy() {
+    this.currentUserSubscription.unsubscribe();
+    this.currentItinerarySubscription.unsubscribe();
+    this.itinDateSubscription.unsubscribe();
+  }
+
+  // progress bar
+  skipSearch()  {
+    this.searchDone = true;
+  }
+
+  backToSearch() {
+    this.searchDone = false;
+  }
+
+  // get place details from Google
   getAccommodationDetails(value)  {
     let index = 0;
     this.googleAccommodationDetail = value;
@@ -121,8 +130,44 @@ export class AccommodationFormComponent implements OnInit {
     this.searchDone = true;
   }
 
-  // to submit new accommodation/transport form
-  onSubmitNewAccommodation()  {
+  // select picture as display pic
+  selectPic(image)  {
+    this.displayPic = image;
+  }
+
+  fileUploaded(event) {
+    let file = event.target.files[0];
+    let type = file['type'].split('/')[0]
+
+    if (type !== 'image') {
+      this.fileTypeError = true;
+    } else  {
+      if(event.target.files[0]) {
+        this.newImageFile = event.target.files[0];
+        let reader = new FileReader();
+
+        reader.onload = (event) =>  {
+          this.uploadPic = event['target']['result'];
+        }
+
+        reader.readAsDataURL(event.target.files[0]);
+        return;
+      }
+    }
+  }
+
+  exitError() {
+    this.fileTypeError = false;
+  }
+
+  deleteUpload() {
+    this.inputValue = null;
+    this.uploadPic = '';
+    this.newImageFile = '';
+  }
+
+  // save
+  saveNew()  {
     let newAccommodation = this.addAccommodationForm.value;
     if(this.googleAccommodationDetail)  {
       for (var value in newAccommodation)  {
@@ -170,69 +215,38 @@ export class AccommodationFormComponent implements OnInit {
     }
     newAccommodation['created_at'] = new Date();
 
-    this.fileuploadService.uploadFile(this.newImageFile)
-        .subscribe(
-          result => {
-            newAccommodation['photo'] = result.secure_url;
+    if(this.newImageFile !== '')  {
+      this.fileuploadService.uploadFile(this.newImageFile)
+          .subscribe(
+            result => {
+              newAccommodation['photo'] = result.secure_url;
 
-            this.itineraryEventService.addEvent(newAccommodation, this.currentItinerary)
-                .subscribe(
-                  result => {
-                    if(this.route.snapshot['_urlSegment'].segments[3].path !== 'accommodation') {
-                      let id = this.route.snapshot['_urlSegment'].segments[2].path;
-                      this.router.navigateByUrl('/me/itinerary/' + id + '/accommodation');
-                    }
-                    this.flashMessageService.handleFlashMessage(result.message);
-                    this.inputValue = null;
-                    this.uploadPic = '';
-                    this.newImageFile = '';
-                  })
-          })
-
+              this.addEvent(newAccommodation);
+            })
+    } else  {
+      this.addEvent(newAccommodation);
+    }
 
     this.hideAccommodationForm.emit(false)
+  }
+
+  addEvent(accommodation)  {
+    this.itineraryEventService.addEvent(accommodation, this.currentItinerary)
+        .subscribe(
+          result => {
+            if(this.route.snapshot['_urlSegment'].segments[3].path !== 'accommodation') {
+              let id = this.route.snapshot['_urlSegment'].segments[2].path;
+              this.router.navigateByUrl('/me/itinerary/' + id + '/accommodation');
+            }
+            this.flashMessageService.handleFlashMessage(result.message);
+            this.inputValue = null;
+            this.uploadPic = '';
+            this.newImageFile = '';
+          })
   }
 
   cancelForm()  {
     this.hideAccommodationForm.emit(false)
   }
 
-  skipSearch()  {
-    this.searchDone = true;
-  }
-
-  backToSearch() {
-    this.searchDone = false;
-  }
-
-  selectPic(image)  {
-    this.displayPic = image;
-  }
-
-  fileUploaded(event) {
-    let file = event.target.files[0];
-    let type = file['type'].split('/')[0]
-
-    if (type !== 'image') {
-      this.fileTypeError = true;
-    } else  {
-      if(event.target.files[0]) {
-        this.newImageFile = event.target.files[0];
-        let reader = new FileReader();
-
-        reader.onload = (event) =>  {
-          this.uploadPic = event['target']['result'];
-        }
-
-        reader.readAsDataURL(event.target.files[0]);
-        return;
-      }
-    }
-  }
-
-  deletePicture() {
-    this.inputValue = null;
-    this.uploadPic = '';
-    this.newImageFile = '';
-  }
 }

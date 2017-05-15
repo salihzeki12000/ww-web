@@ -1,4 +1,4 @@
-<form [formGroup]="resourceForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="resourceForm" (ngSubmit)="saveNew()">
   <div class="form-card">
 
     <div class="form-header">
@@ -15,7 +15,7 @@
       <div class="resource-link-preview" *ngIf="linkExist">
         <h4 class="delete-link" (click)="deleteLink()">X</h4>
         <a href="{{ link_url }}" target="_blank">
-          <img class="resource-link-img" src="{{ link_img }}" alt="">
+          <img class="resource-link-img" src="{{ link_img }}" alt="" *ngIf="link_img">
           <h3 class="resource-link-title">{{ link_title }}</h3>
           <h4 class="resource-link-description">{{ link_description }}</h4>
           <h5 class="resource-link-url">{{ link_url }}</h5>

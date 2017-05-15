@@ -3,9 +3,8 @@
 *********************************/
 .accommodation-summary  {
   position: fixed;
-  margin: 15px 0 0 10px;
-  width: 200px;
-  max-height: calc(100vh - 150px);
+  width: 210px;
+  max-height: calc(100vh - 110px);
   border-bottom: 1px solid lightgray;
   overflow: auto;
 
@@ -123,7 +122,7 @@
 *********************************/
 .accommodation-list {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   margin-left: 215px;
 
   @media only screen and (max-width: 890px) {

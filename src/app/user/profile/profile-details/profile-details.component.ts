@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer, ElementRef, HostListener } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
 
@@ -15,8 +15,9 @@ import { Post, PostService }   from '../../../post';
   templateUrl: './profile-details.component.html',
   styleUrls: ['./profile-details.component.scss']
 })
-export class ProfileDetailsComponent implements OnInit {
+export class ProfileDetailsComponent implements OnInit, OnDestroy {
   user: User;
+  currentUserSubscription: Subscription;
 
   posts: Post[] = [];
   postsSubscription: Subscription;
@@ -26,8 +27,10 @@ export class ProfileDetailsComponent implements OnInit {
   followers = [];
 
   showItineraryForm = false;
+  fixed = false;
 
   constructor(
+    private element: ElementRef,
     private renderer: Renderer,
     private formBuilder: FormBuilder,
     private userService: UserService,
@@ -37,12 +40,12 @@ export class ProfileDetailsComponent implements OnInit {
     private router: Router) {}
 
   ngOnInit() {
-    this.userService.getCurrentUserDetails()
-        .subscribe(
-          data => {
-            this.user = data;
-          }
-        )
+    this.currentUserSubscription = this.userService.updateCurrentUser
+                                       .subscribe(
+                                         result => {
+                                           this.user = result;
+                                         }
+                                       )
 
     this.postService.getPosts()
         .subscribe(
@@ -64,6 +67,21 @@ export class ProfileDetailsComponent implements OnInit {
                                        }
                                      )
 
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  checkScroll(event) {
+    let offset = this.element.nativeElement.offsetParent.scrollTop;
+    if(offset > 165)  {
+      this.fixed = true;
+    } else  {
+      this.fixed = false;
+    }
+  }
+
+  ngOnDestroy() {
+    this.relationshipSubscription.unsubscribe();
+    this.postsSubscription.unsubscribe();    this.currentUserSubscription.unsubscribe();
   }
 
   onDelete()  {

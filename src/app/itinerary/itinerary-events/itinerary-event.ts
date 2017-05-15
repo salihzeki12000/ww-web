@@ -42,6 +42,8 @@ export class ItineraryEvent {
     arr_date: string,
     arr_time: string,
     transport_company: string,
+    operating_carrier: string,
+    operating_flight: string,
     contact_number: string,
   ) {}
 }

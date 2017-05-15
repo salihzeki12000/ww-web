@@ -1,9 +1,7 @@
-import { Component, OnInit, trigger, state, style, transition, animate } from '@angular/core';
+import { Component, OnInit, OnDestroy, trigger, state, style, transition, animate } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 
-import { Itinerary } from '../itinerary';
-import { ItineraryService } from '../itinerary.service';
-
+import { ItineraryService }      from '../itinerary.service';
 import { ItineraryEventService } from '../itinerary-events/itinerary-event.service';
 
 @Component({
@@ -19,10 +17,9 @@ import { ItineraryEventService } from '../itinerary-events/itinerary-event.servi
     ])
   ]
 })
-export class ItinerarySummaryComponent implements OnInit {
-  events = [];
-
+export class ItinerarySummaryComponent implements OnInit, OnDestroy {
   eventSubscription: Subscription;
+  events = [];
 
   itinDateSubscription: Subscription;
   itinDateRange = [];
@@ -38,19 +35,22 @@ export class ItinerarySummaryComponent implements OnInit {
 
   ngOnInit() {
     this.events = [];
-    this.itinDateSubscription = this.itineraryService.updateDate
-                                    .subscribe(
+    this.itinDateSubscription = this.itineraryService.updateDate.subscribe(
                                       result => {
                                         this.itinDateRange = Object.keys(result).map(key => result[key]);
                                     })
 
-    this.eventSubscription = this.itineraryEventService.updateEvent
-                                .subscribe(
+    this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
                                   result => {
                                     this.showDetailsInSummary = false;
                                     this.filterEvents(result);
                                   }
                                 )
+  }
+
+  ngOnDestroy() {
+    this.itinDateSubscription.unsubscribe();
+    this.eventSubscription.unsubscribe();
   }
 
   filterEvents(events)  {

@@ -21,14 +21,14 @@ export class ItineraryPrintCategoryPreviewComponent implements OnInit {
   ) {}
 
   ngOnInit()  {
-    setTimeout(() =>  {
-      window.print();
-    }, 1500)
-
-    this.itineraryId = this.itineraryService.itineraryId;
+    // setTimeout(() =>  {
+    //   window.print();
+    // }, 1500)
+    //
+    // this.itineraryId = this.itineraryService.itineraryId;
   }
 
   back()  {
-    this.router.navigateByUrl('/me/itinerary/' + this.itineraryId);
+    // this.router.navigateByUrl('/me/itinerary/' + this.itineraryId);
   }
 }

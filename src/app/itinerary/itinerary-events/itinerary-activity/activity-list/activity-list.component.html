@@ -12,7 +12,15 @@
 </div>
 
 <div class="activity-list">
-  <ww-activity [activity]="activity" *ngFor="let activity of activities; let i = index" id="activity{{i}}" [class.highlighted-event]="highlightedEvent === activity"></ww-activity>
+  <ww-activity
+    *ngFor="let activity of activities; let i = index"
+    id="activity{{i}}"
+    [activity]="activity"
+    [class.highlighted-event]="highlightedEvent === activity" 
+    [itinDateRange]="itinDateRange"
+    [currentUser]="currentUser"
+    [currentItinerary]="currentItinerary">
+  </ww-activity>
 </div>
 
 <div class="activity-summary-popup" (click)="showSummary()">

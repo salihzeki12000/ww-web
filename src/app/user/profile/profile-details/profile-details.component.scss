@@ -1,4 +1,4 @@
-.profile  {
+.profile-header  {
   text-align: center;
 }
 
@@ -57,6 +57,7 @@
 
 .profile-new-itinerary  {
   padding: 10px;
+  text-align: center;
   &:hover {
     cursor: pointer;
     color: #6494ED;
@@ -71,6 +72,16 @@
     cursor: pointer;
     background-color: #F6F6F6;
   }
+}
+
+.fix-profile-connections {
+  position: fixed;
+  top: 70px;
+}
+
+.fix-profile-itineraries {
+  position: fixed;
+  top: 138px;
 }
 
 .profile-posts  {
@@ -96,5 +107,4 @@
 .profile-posts-list  {
   display: flex;
   flex-direction: column-reverse;
-  text-align: left;
 }

@@ -3,34 +3,29 @@
 
   <div class="textless-header"></div>
 
-  <form [formGroup]="editItineraryForm" (ngSubmit)="saveDetails()">
+  <form [formGroup]="editItineraryForm" (ngSubmit)="saveEdit()">
 
     <h4 class="itinerary-edit-section-header">BASIC DETAILS</h4>
     <div class="itinerary-edit-section-details">
       <div class="itinerary-edit-item">
         <h5>ITINERARY NAME</h5>
-        <input type="text" formControlName="name" [value]="itinerary?.name">
+        <input type="text" formControlName="name" [value]="currentItinerary?.name">
       </div>
 
       <div class="itinerary-edit-item">
         <h5>TRAVEL DATE FROM</h5>
-        <input type="date" formControlName="date_from" [value]="itinerary?.date_from | date: 'yyyy-MM-dd'">
+        <input type="date" formControlName="date_from" [value]="currentItinerary?.date_from | date: 'yyyy-MM-dd'">
       </div>
 
       <div class="itinerary-edit-item">
         <h5>TRAVEL DATE TO</h5>
-        <input type="date" formControlName="date_to" [value]="itinerary?.date_to | date: 'yyyy-MM-dd'">
+        <input type="date" formControlName="date_to" [value]="currentItinerary?.date_to | date: 'yyyy-MM-dd'">
       </div>
 
       <div class="created-details">
         <div class="itinerary-edit-item">
-          <h5>CREATED ON</h5>
-          <h4>{{ itinerary?.created_at | date: 'dd MMM y' }}</h4>
-        </div>
-
-        <div class="itinerary-edit-item">
           <h5>CREATED BY</h5>
-          <h4>{{ itinerary?.created_by.username }}</h4>
+          <h4>{{ currentItinerary?.created_by.username }} on {{ currentItinerary?.created_at | date: 'dd MMM y' }}</h4>
         </div>
       </div>
 
@@ -38,16 +33,34 @@
 
     <h4 class="itinerary-edit-section-header">MEMBERS DETAILS</h4>
     <div class="itinerary-edit-section-details">
-      <div *ngFor="let member of itinerary?.members" class="itinerary-member-list">
+      <div *ngFor="let member of currentItinerary?.members; let i = index" class="itinerary-member-list">
         <img src="{{ member.display_picture }}" alt="" class="user-profile-thumbnail">
         <div class="user-details">
           <h4 class="user-username">{{ member.username }}</h4>
+          <h5 class="user-description">{{ member.description }}</h5>
+        </div>
+
+        <div class="itinerary-member-option" (mouseover)="showMemberOption(i)" *ngIf="currentUserAdmin">
+          <div *ngIf="!member.hide_option">
+            <i class="fa fa-cog" aria-hidden="true"></i>
+              <div class="itinerary-member-option-menu" *ngIf="showOptions[i]">
+                <ul>
+                  <li class="make-admin" *ngIf="!member.admin">
+                    <h5 (click)="makeAdmin(member, i)">Make admin</h5>
+                    <span class="info" (click)="showAdminInfo()">?</span>
+                  </li>
+                  <li *ngIf="member.admin" (click)="removeAdmin(member, i)"><h5>Remove as admin</h5></li>
+                  <li (click)="removeFromItin(member, i)"><h5>Remove from itinerary</h5></li>
+                </ul>
+              </div>
+          </div>
+        </div>
+
+        <div *ngIf="member.admin" class="itinerary-admin">
+          <h5>Admin</h5>
         </div>
       </div>
     </div>
-
-
-    <h4 class="delete-itinerary-button" (click)="confirmDelete()">Delete this itinerary</h4>
 
     <div class="action-response">
       <!-- <h4 (click)="undoEdit()">UNDO</h4> -->
@@ -55,6 +68,37 @@
     </div>
   </form>
 
+  <h4 class="share-itinerary"  (click)="share()">Share this itinerary</h4>
+  <h4 *ngIf="creator" class="delete-itinerary" (click)="delete()">Delete this itinerary</h4>
+  <h4 *ngIf="!creator" class="delete-itinerary" (click)="leave()">Leave itinerary</h4>
+
+</div>
+
+<!-- delete itinerary modal -->
+<div class="custom-modal" *ngIf="leaveItinerary">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>Leave itinerary?</h3>
+      <a (click)="cancelLeave()">x</a>
+    </div>
+
+    <div class="form-header-name-delete">
+      <h4>{{ currentItinerary?.name }}</h4>
+    </div>
+
+    <div class="confirm-delete-content">
+      <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
+      <h4>Leaving itinerary {{ currentItinerary?.name }} will permanently remove it from your list of itineraries. You will not be able to participate in the itinerary further. You will also lose all information associated with the itinerary.</h4>
+    </div>
+
+    <div class="confirm-delete-footer">
+      <div class="action-response">
+        <h4 class="action-response-primary" (click)="cancelLeave()">CANCEL</h4>
+        <h4 class="action-response-warning" (click)="confirmLeave()">LEAVE</h4>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 <!-- delete itinerary modal -->
@@ -66,20 +110,47 @@
     </div>
 
     <div class="form-header-name-delete">
-      <h4>{{ itinerary?.name }}</h4>
+      <h4>{{ currentItinerary?.name }}</h4>
     </div>
 
     <div class="confirm-delete-content">
       <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
-      <h4>Deleting itinerary {{ itinerary?.name }} will permanently remove it from your list of itineraries.  You will lose all information associated with the itinerary.</h4>
+      <h4>Deleting itinerary {{ currentItinerary?.name }} will permanently remove it from your list of itineraries.  You will lose all information associated with the itinerary.</h4>
     </div>
 
     <div class="confirm-delete-footer">
       <div class="action-response">
         <h4 class="action-response-primary" (click)="cancelDelete()">CANCEL</h4>
-        <h4 class="action-response-warning" (click)="onDeleteItinerary()">DELETE</h4>
+        <h4 class="action-response-warning" (click)="confirmDelete()">DELETE</h4>
       </div>
     </div>
 
   </div>
+</div>
+
+<div class="custom-modal" *ngIf="showInfo">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>Info: Admin role</h3>
+      <a (click)="hideAdminInfo()">x</a>
+    </div>
+
+    <div class="textless-header"></div>
+
+    <div class="form-housing">
+      <h4>Admins for the itinerary are allowed to:</h4>
+      <ol>
+        <li>Add and remove all users except the creator of the itinerary</li>
+        <li>Edit and delete all accommodation items</li>
+        <li>Edit and delete all activity items</li>
+        <li>Edit and delete all transport items</li>
+        <li>Edit and delete all resource items</li>
+      </ol>
+
+      <div class="action-response">
+        <h4 class="action-response-primary" (click)="hideAdminInfo()">OK</h4>
+      </div>
+    </div>
+  </div>
+
 </div>

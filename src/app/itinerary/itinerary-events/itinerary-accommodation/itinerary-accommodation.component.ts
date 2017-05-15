@@ -1,31 +1,29 @@
-import { Component, OnInit, Renderer } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
 
-import { ItineraryService } from '../../itinerary.service';
-import { Itinerary } from '../../itinerary';
-import { ItineraryEvent } from '../itinerary-event';
+import { ItineraryService }      from '../../itinerary.service';
+import { ItineraryEvent }        from '../itinerary-event';
 import { ItineraryEventService } from '../itinerary-event.service';
-import { UserService } from '../../../user';
+import { UserService }           from '../../../user';
 
 @Component({
   selector: 'ww-itinerary-accommodation',
   templateUrl: './itinerary-accommodation.component.html',
   styleUrls: ['./itinerary-accommodation.component.scss']
 })
-export class ItineraryAccommodationComponent implements OnInit {
-  itinerary: Itinerary;
-  itinDateRange = [];
-
-  itinerarySubscription: Subscription;
-  itinDateSubscription: Subscription;
+export class ItineraryAccommodationComponent implements OnInit, OnDestroy {
   eventSubscription: Subscription;
+  accommodations: ItineraryEvent[] = [];
+
+  itinDateSubscription: Subscription;
+  itinDateRange = [];
 
   currentUserSubscription: Subscription;
   currentUser;
 
-  // array of accommodations to pass to respective views
-  accommodations: ItineraryEvent[] = [];
+  currentItinerarySubscription: Subscription;
+  currentItinerary;
 
   showAccommodationSummary = false;
   highlightedEvent;
@@ -37,32 +35,27 @@ export class ItineraryAccommodationComponent implements OnInit {
     private userService: UserService) { }
 
   ngOnInit() {
-    this.itinerarySubscription = this.itineraryService.currentItinerary
-                                     .subscribe(
-                                       result =>  {
-                                         this.itinerary = result;
-                                       }
-                                     )
+    this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
+                                 result => { this.filterEvent(result); })
 
-    this.itinDateSubscription = this.itineraryService.updateDate
-                                    .subscribe(
+    this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
+                                       result => { this.currentUser = result; })
+
+    this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
+                                            result => { this.currentItinerary = result; })
+
+    this.itinDateSubscription = this.itineraryService.updateDate.subscribe(
                                       result => {
                                         this.itinDateRange = Object.keys(result).map(key => result[key]);
                                         this.itinDateRange.splice(0,1);
                                     })
+  }
 
-    this.eventSubscription = this.itineraryEventService.updateEvent
-                                 .subscribe(
-                                    result => {
-                                      this.filterEvent(result);
-                                  })
-
-    this.currentUserSubscription = this.userService.updateCurrentUser
-                                       .subscribe(
-                                         result => {
-                                           this.currentUser = result;
-                                         }
-                                       )
+  ngOnDestroy() {
+    this.itinDateSubscription.unsubscribe();
+    this.eventSubscription.unsubscribe();
+    this.currentUserSubscription.unsubscribe();
+    this.currentItinerarySubscription.unsubscribe();
   }
 
   filterEvent(events) {

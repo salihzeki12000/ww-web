@@ -12,7 +12,14 @@
 </div>
 
 <div class="accommodation-list">
-  <ww-accommodation *ngFor="let event of accommodations; let i = index" id="accommodation{{i}}" [event]="event"  [class.highlighted-event]="highlightedEvent === event" [itinDateRange]="itinDateRange" [currentUser]="currentUser"></ww-accommodation>
+  <ww-accommodation
+    *ngFor="let event of accommodations; let i = index" id="accommodation{{i}}"
+    [event]="event"
+    [class.highlighted-event]="highlightedEvent === event"
+    [itinDateRange]="itinDateRange"
+    [currentUser]="currentUser"
+    [currentItinerary]="currentItinerary">
+  </ww-accommodation>
 </div>
 
 <div class="accommodation-summary-popup" (click)="showSummary()">

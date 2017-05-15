@@ -1,25 +1,29 @@
 <div class="form-card">
   <div class="form-header">
     <h3>Create a new itinerary</h3>
-    <a (click)="cancelItineraryForm()">x</a>
+    <a (click)="cancelForm()">x</a>
   </div>
 
   <div class="textless-header"></div>
 
-  <form [formGroup]="itineraryForm" (ngSubmit)="onSubmit()" class="form-housing">
+  <form [formGroup]="itineraryForm" (ngSubmit)="saveNew()">
 
-    <label>Itinerary name</label>
-    <input type="text" formControlName="name">
+    <div class="form-housing">
+      <label>Itinerary name</label>
+      <input type="text" formControlName="name">
 
-    <label>Travel date from (dd/mm/yyyy)</label>
-    <input type="date" formControlName="date_from" max="2050-12-31">
+      <label>Travel date from (dd/mm/yyyy)</label>
+      <input type="date" formControlName="date_from" max="2050-12-31">
 
-    <label>Travel date to (dd/mm/yyyy)</label>
-    <input type="date" formControlName="date_to" max="2050-12-31">
+      <label>Travel date to (dd/mm/yyyy)</label>
+      <input type="date" formControlName="date_to" max="2050-12-31">
 
-    <div class="action-response">
-      <button type="submit" class="action-response-primary" (click)="onSubmit()" [disabled]="!itineraryForm.valid"><i class="fa fa-floppy-o" aria-hidden="true"></i> CREATE ITINERARY</button>
+      <div class="action-response">
+        <h4 class="action-response-secondary" (click)="cancelForm()">CANCEL</h4>
+        <button type="submit" class="action-response-primary" [disabled]="!itineraryForm.valid"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> CREATE ITINERARY</h4></button>
+      </div>
     </div>
+
   </form>
 
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 
 import { RelationshipService } from '../relationship.service';
@@ -8,7 +8,7 @@ import { RelationshipService } from '../relationship.service';
   templateUrl: './followers.component.html',
   styleUrls: ['./followers.component.scss']
 })
-export class FollowersComponent implements OnInit {
+export class FollowersComponent implements OnInit, OnDestroy {
   relationshipSubscription: Subscription;
   followers = [];
 
@@ -21,6 +21,10 @@ export class FollowersComponent implements OnInit {
                                          this.followers = Object.keys(result['followers']).map(key => result['followers'][key]);
                                        }
                                      )
+  }
+
+  ngOnDestroy() {
+    this.relationshipSubscription.unsubscribe();
   }
 
 }

@@ -12,7 +12,14 @@
 </div>
 
 <div class="resource-list">
-  <ww-resource [resource]="resource" *ngFor="let resource of resources; let i = index" id="resource{{i}}" [class.highlighted-event]="highlightedEvent === resource"></ww-resource>
+  <ww-resource
+    *ngFor="let resource of resources; let i = index"
+    id="resource{{i}}"
+    [resource]="resource"
+    [class.highlighted-event]="highlightedEvent === resource" 
+    [currentUser]="currentUser"
+    [currentItinerary]="currentItinerary">
+  </ww-resource>
 </div>
 
 <div class="resource-summary-popup" (click)="showSummary()">

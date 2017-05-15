@@ -1,31 +1,48 @@
 .legend {
   position: fixed;
+  height: 40px;
   width: 100%;
   padding-top: 6px;
   padding-left: 10px;
   background-color: #F6F6F6;
   border-bottom: 1px solid lightgray;
+  @media only screen and (max-width: 400px) {
+    padding-left: 0;
+  }
 }
 
 .legend > * {
   display: inline-block;
   padding: 3px;
   width: auto;
-  margin-bottom: 5px;
+  margin: 5px 10px;
   text-align: center;
   letter-spacing: 1px;
   background-color: transparent;
   box-shadow: none;
+  @media only screen and (max-width: 400px) {
+    margin: 5px;
+    min-width: 0;
+  }
 }
 
 .date-row {
   display: flex;
   overflow: auto;
+  @media only screen and (max-width: 400px) {
+    flex-direction: column;
+  }
+}
+
+.date-row .date-column:first-child  {
+  @media only screen and (max-width: 400px) {
+    margin-top: 40px;
+  }
 }
 
 .date-column  {
   display: inline-block;
-  min-width: 220px;
+  min-width: 280px;
   min-height: calc(100vh - 150px);
   margin-top: 40px;
   padding-bottom: 10px;
@@ -35,6 +52,11 @@
   background-color: #F6F6F6;
   &:hover {
     background-color: rgba(100,148,237,.1);
+  }
+
+  @media only screen and (max-width: 400px) {
+    margin-top: 0;
+    min-height: 0;
   }
 }
 
@@ -91,37 +113,52 @@
 
 .accommodation-indicator  {
   display: inline-block;
-  margin: 5px 10px 10px 10px;
-  width: 200px;
+  margin: 5px 20px 10px 20px;
+  width: 240px;
   background-color: #FFF;
-  border-top: 10px solid rgba(100,235,219,0.5);
+  border-left: 10px solid rgba(100,235,219,0.5);
   box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
   &:hover {
     cursor: pointer;
+  }
+
+  @media only screen and (max-width: 400px) {
+    min-width: 240px;
+    width: calc(100vw - 40px)
   }
 }
 
 .transport-indicator  {
   display: inline-block;
-  width: 200px;
-  margin: 5px 10px 10px 10px;
+  margin: 5px 20px 10px 20px;
+  width: 240px;
   background-color: #FFF;
-  border-top: 10px solid rgba(237,100,148,0.5);
+  border-left: 10px solid rgba(237,100,148,0.5);
   box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
   &:hover {
     cursor: pointer;
+  }
+
+  @media only screen and (max-width: 400px) {
+    min-width: 240px;
+    width: calc(100vw - 40px)
   }
 }
 
 .activity-indicator {
   display: inline-block;
-  margin: 5px 10px 10px 10px;
-  width: 200px;
+  margin: 5px 20px 10px 20px;
+  width: 240px;
   background-color: #FFF;
-  border-top: 10px solid rgba(237,189,100,0.5);
+  border-left: 10px solid rgba(237,189,100,0.5);
   box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
   &:hover {
     cursor: pointer;
+  }
+
+  @media only screen and (max-width: 400px) {
+    min-width: 240px;
+    width: calc(100vw - 40px)
   }
 }
 
@@ -155,13 +192,16 @@
 }
 
 .show-details-in-summary-true {
-  width: calc(100% - 300px)
+  width: calc(100% - 50px)
 }
 
 .slide-back {
   position: fixed;
-  top: 50px;
-  right: 260px;
+  // top: 50px;
+  // right: 260px;
+  height: 50px;
+  width: 100vw;
+  padding: 17px 0 0 15px;
   color: lightgray;
   &:hover {
     color: grey;
@@ -169,8 +209,15 @@
   }
 
   @media only screen and (max-width: 400px) {
-    left: 20px;
-    right: 0;
+    // left: 20px;
+    // right: 0;
+  }
+}
+
+.slide-back > h4  {
+  &:hover {
+    color: grey;
+    cursor: pointer;
   }
 }
 
@@ -179,8 +226,8 @@
   top: 40px;
   right: 0;
   height: calc(100vh - 40px);
-  width: 300px;
-  background-color: #F5F5F5;
+  width: 60px;
+  background-color: #FFC65C;
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
   z-index: 3;
 
@@ -192,10 +239,17 @@
 
 .details-in-summary {
   position: fixed;
-  top: 73.63px;
-  right: -15px;
+  top: 90px;
+  right: 0;
+  background-color: #FFC65C;
 
   @media only screen and (max-width: 400px) {
-    right: 0;
+    max-height: calc(100vh - 130px);
+    margin-top: 0;
+    overflow: auto;
   }
+}
+
+.details-in-summary::-webkit-scrollbar  {
+  -webkit-appearance: none;
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
 import { Router } from '@angular/router';
@@ -13,7 +13,7 @@ import { FileuploadService } from '../../../shared';
   templateUrl: './profile-edit.component.html',
   styleUrls: ['./profile-edit.component.scss']
 })
-export class ProfileEditComponent implements OnInit {
+export class ProfileEditComponent implements OnInit, OnDestroy {
   currentUser: User;
   currentUserSubscription: Subscription;
 
@@ -55,6 +55,10 @@ export class ProfileEditComponent implements OnInit {
                                            this.thumbnailImage = this.currentUser['display_picture']
                                          }
                                        )
+  }
+
+  ngOnDestroy() {
+    this.currentUserSubscription.unsubscribe();
   }
 
   saveProfile() {

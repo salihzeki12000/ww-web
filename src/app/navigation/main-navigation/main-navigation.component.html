@@ -1,3 +1,11 @@
+<div class="main-nav">
+  <nav>
+    <div class="logo" [routerLink]="['/me']">
+      <h2>wondererwanderer</h2>
+    </div>
+  </nav>
+</div>
+
 <div class="top-nav-search">
   <div class="top-nav-link">
     <i class="fa fa-search fa-lg" aria-hidden="true" (mouseover)="showSearchOptions()"></i>
@@ -23,17 +31,20 @@
       <div class="top-nav-dropdown-header">
         <h6>YOUR ITINERARIES</h6>
       </div>
-      <h5 class="dropdown-new-itinerary" (click)="createItinerary()"><i class="fa fa-plus" aria-hidden="true"></i> Plan a new itinerary</h5>
+      <h5 class="dropdown-new-itinerary" (click)="newItinerary()"><i class="fa fa-plus" aria-hidden="true"></i> Plan a new itinerary</h5>
       <div class="itinerary-list">
         <div *ngIf="currentUser?.itineraries.length === 0">
           <h5 class="nil-dropdown-item">No itinerary at the moment</h5>
         </div>
-        <div *ngFor="let itinerary of currentUser?.itineraries" class="dropdown-item">
+        <div *ngFor="let itinerary of currentUser?.itineraries | slice:0:5" class="dropdown-item">
           <div [routerLink]="['itinerary/', itinerary._id]" (click)="hideItineraryList()">
             <h5>{{ itinerary.name }}</h5>
             <h6>( {{ itinerary.date_from | date:'dd MMM yy' }} to {{ itinerary.date_to | date:'dd MMM yy' }} )</h6>
           </div>
         </div>
+      </div>
+      <div *ngIf="currentUser?.itineraries.length > 5" class="view-all" [routerLink]="['/me/itinerary']">
+        <h5>View all</h5>
       </div>
     </div>
   </div>
@@ -74,14 +85,14 @@
 
 <div class="top-nav-notifications">
   <div class="top-nav-link">
-    <i class="fa fa-bell fa-lg" aria-hidden="true"  (mouseover)="showNotificationsList()"></i>
+    <i class="fa fa-bell fa-lg" aria-hidden="true" (mouseover)="showNotificationsList()"></i>
 
-    <div class="top-nav-link-dropdown" *ngIf="showNotification">
+    <div class="top-nav-link-dropdown" *ngIf="showNotifications">
       <div class="dropdown-arrow-up"></div>
       <div class="top-nav-dropdown-header">
         <h6>RECENT NOTIFICATIONS</h6>
         <p class="notifications-view-all" (click)="routeToNotifications()">view all</p>
-        <span class="exit-notification-list" (click)="hideNotificationList()">X</span>
+        <span class="exit-notification-list" (click)="hideNotificationsList()">X</span>
       </div>
 
       <ww-notification-list [notificationsLimit]="notificationsLimit"></ww-notification-list>
@@ -115,28 +126,27 @@
 </div>
 
 <div class="side-nav">
-  <div class="custom-modal" *ngIf="showMenu" (click)="showSideMenu()"></div>
+  <div class="custom-modal" *ngIf="sideNav" (click)="showSideNav()"></div>
 
-  <div class="side-nav-bars" (click)="showSideMenu()">
+  <div class="side-nav-bars" (click)="showSideNav()">
     <i class="fa fa-bars fa-2x" aria-hidden="true"></i>
   </div>
 
-  <div class="side-nav-panel" [class.show-side-menu]="showMenu">
+  <div class="side-nav-panel" [class.show-side-nav-menu]="sideNav">
 
-    <div class="profile">
-      <img src="{{ currentUser?.display_picture }}" alt="" [routerLink]="['profile']" (click)="exitMenu()">
-      <div class="edit-profile" [routerLink]="['profile-edit']" (click)="exitMenu()">
+    <div class="side-nav-profile">
+      <img src="{{ currentUser?.display_picture }}" alt="" [routerLink]="['profile']" (click)="exitSideNav()">
+      <div class="edit-profile" [routerLink]="['profile-edit']" (click)="exitSideNav()">
         <i class="fa fa-pencil" aria-hidden="true"></i>
       </div>
       <div class="username">
-        <h4 [routerLink]="['profile']" (click)="exitMenu()">{{ currentUser?.username }}</h4>
+        <h4 [routerLink]="['profile']" (click)="exitSideNav()">{{ currentUser?.username }}</h4>
       </div>
       <h5 class="user-description">{{ currentUser?.description }}</h5>
     </div>
 
-
-    <div class="side-menu">
-      <div class="side-menu-arrow-down"></div>
+    <div class="side-nav-menu">
+      <div class="side-nav-menu-arrow-down"></div>
       <div>
         <div class="category-header" (click)="toggleConnectionsSection()">
           <h4>Connections <i class="fa fa-caret-down" aria-hidden="true"></i>
@@ -174,18 +184,20 @@
 
         <div *ngIf="itinerariesSection">
           <div class="category-item">
-            <h5 class="new-itinerary" (click)="createItinerary()"><i class="fa fa-plus" aria-hidden="true"></i> Plan a new itinerary</h5>
+            <h5 class="new-itinerary" (click)="newItinerary()"><i class="fa fa-plus" aria-hidden="true"></i> Plan a new itinerary</h5>
           </div>
           <div class="itinerary-list">
-            <div *ngFor="let itinerary of currentUser?.itineraries" class="category-item">
-              <div [routerLink]="['itinerary/', itinerary._id]" routerLinkActive="active" (click)="exitMenu()">
+            <div *ngFor="let itinerary of currentUser?.itineraries | slice:0:5" class="category-item">
+              <div [routerLink]="['itinerary/', itinerary._id]" routerLinkActive="active" (click)="exitSideNav()">
                 <h5>{{ itinerary.name }}</h5>
                 <h6>( {{ itinerary.date_from | date:'dd MMM yy' }} to {{ itinerary.date_to | date:'dd MMM yy' }} )</h6>
               </div>
             </div>
           </div>
+          <div *ngIf="currentUser?.itineraries.length > 5" class="view-all" [routerLink]="['/me/itinerary']">
+            <h5>View all</h5>
+          </div>
         </div>
-
       </div>
 
       <div>
@@ -205,14 +217,13 @@
 </div>
 
 
-<!-- new itin form -->
-<div class="custom-modal" *ngIf="showItineraryForm">
-  <ww-itinerary-form (hideItineraryForm)="hideItineraryForm($event)"></ww-itinerary-form>
-</div>
-
-<!-- show users to add as friend -->
+<!-- user search -->
 <div class="custom-modal" *ngIf="showUsers" (click)="cancelShowUsers()"></div>
 <div class="users-search" *ngIf="showUsers">
+
+  <div class="form-header">
+    <h3>People search</h3>
+  </div>
 
   <input type="text" placeholder="Search for people..." #text (keyup)="filterSearch(text.value)">
 
@@ -241,4 +252,9 @@
       </div>
     </div>
   </div>
+</div>
+
+<!-- new itin form -->
+<div class="custom-modal" *ngIf="showItineraryForm">
+  <ww-itinerary-form (hideItineraryForm)="hideItineraryForm($event)"></ww-itinerary-form>
 </div>

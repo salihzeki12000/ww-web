@@ -1,14 +1,12 @@
 <div class="display-photo-card">
 
-  <div *ngIf="event?.photo">
-    <img class="display-card-image" src="{{ event?.photo }}" alt="picture of {{ event?.name}}">
+  <div *ngIf="event?.photo" class="display-card-image">
+    <img src="{{ event?.photo }}" alt="picture of {{ event?.name}}">
   </div>
 
-  <div *ngIf="!event?.photo">
-    <div class="display-card-image-placeholder">
-      <i class="fa fa-camera fa-4x" aria-hidden="true"></i>
-      <h5>add a photo</h5>
-    </div>
+  <div *ngIf="!event?.photo" class="display-card-image-placeholder">
+    <i class="fa fa-camera fa-4x" aria-hidden="true"></i>
+    <h5>add a photo</h5>
   </div>
 
   <div class="display-photo-housing">
@@ -19,11 +17,11 @@
             <h5>Recommend</h5>
             <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
           </li> -->
-          <li (click)="editAccommodation()" *ngIf="sameUser">
+          <li (click)="edit()" *ngIf="sameUser">
             <h5>Edit</h5>
             <i class="fa fa-pencil" aria-hidden="true"></i>
           </li>
-          <li (click)="confirmDeleteAccommodation()" *ngIf="sameUser">
+          <li (click)="delete()" *ngIf="sameUser">
             <h5>Delete</h5>
             <i class="fa fa-trash-o" aria-hidden="true"></i>
           </li>
@@ -31,7 +29,7 @@
       </div>
     </div>
 
-    <h5 class="date-header">{{ event?.check_in_date | date: 'EEE, dd MMM yyyy' }} - {{ event?.check_in_time }}</h5>
+    <h5 class="date-header">{{ event?.check_in_date | date: 'dd MMM yyyy (EEE)' }} - {{ event?.check_in_time }}</h5>
 
     <h4 class="accommodation-city"><i class="fa fa-bed" aria-hidden="true"></i> in {{ event?.stay_city | uppercase }}</h4>
     <h4 class="accommodation-header">{{ event?.name | uppercase }}</h4>
@@ -83,8 +81,8 @@
     <div class="postby">
       <h5><a routerLink="/users/{{event?.user['_Id']}}">{{ event?.user.username }}</a></h5>
       <div class="time-ago">
-        <p>{{ event?.time_ago }}</p>
-        <span class="show-time">{{ event?.created_at | date: 'EEE, dd MMM yyyy - HH:mm' }}</span>
+        <p *ngIf="event?.time_ago !== ''">{{ event?.time_ago }}</p>
+        <p *ngIf="event?.time_ago === ''">{{ event?.created_at | date: 'dd MMM yyyy (EEE)' }}</p>
       </div>
     </div>
   </div>
@@ -99,14 +97,14 @@
 
       <div class="form-header">
         <h3>Edit accommodation</h3>
-        <a (click)="cancelEditAccommodation()">x</a>
+        <a (click)="cancelEdit()">x</a>
       </div>
 
       <div class="form-header-name">
         <h4>{{ event?.name }}</h4>
       </div>
 
-      <form [formGroup]="editAccommodationForm" (ngSubmit)="onEditAccommodation()">
+      <form [formGroup]="editAccommodationForm" (ngSubmit)="saveEdit()">
 
         <div class="form-housing">
 
@@ -195,7 +193,7 @@
           </div>
 
           <div class="action-response">
-            <h4 class="action-response-secondary" (click)="cancelEditAccommodation()">CANCEL</h4>
+            <h4 class="action-response-secondary" (click)="cancelEdit()">CANCEL</h4>
             <button type="submit" class="action-response-primary" [disabled]="!editAccommodationForm.valid"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
           </div>
 
@@ -212,7 +210,7 @@
   <div class="form-card">
     <div class="form-header">
       <h3>Delete accommodation?</h3>
-      <a (click)="cancelDeleteAccommodation()">x</a>
+      <a (click)="cancelDelete()">x</a>
     </div>
 
     <div class="form-header-name-delete">
@@ -226,8 +224,8 @@
 
     <div class="confirm-delete-footer">
       <div class="action-response">
-        <h4 class="action-response-primary" (click)="cancelDeleteAccommodation()">CANCEL</h4>
-        <h4 class="action-response-warning" (click)="onDeleteAccommodation()">DELETE</h4>
+        <h4 class="action-response-primary" (click)="cancelDelete()">CANCEL</h4>
+        <h4 class="action-response-warning" (click)="confirmDelete()">DELETE</h4>
       </div>
     </div>
 

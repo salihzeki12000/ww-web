@@ -11,24 +11,10 @@ import { PostService } from '../post.service';
 })
 export class PostListComponent implements OnInit {
   @Input() posts: Post[] = [];
-  // posts: Post[] = [];
-  //
-  // postsSubscription: Subscription;
 
   constructor(private postService: PostService) { }
 
   ngOnInit() {
-    // this.postService.getPosts()
-    //     .subscribe(
-    //       result => {
-    //         this.postsSubscription = this.postService.updatePost
-    //                                      .subscribe(
-    //                                        result =>  {
-    //                                          this.posts = Object.keys(result).map(key => result[key]);
-    //                                        }
-    //                                      )
-    //       }
-    //     );
   }
 
 }

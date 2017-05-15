@@ -7,11 +7,11 @@
           <h5>Recommend</h5>
           <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
         </li> -->
-        <li (click)="onEdit()" *ngIf="sameUser">
+        <li (click)="edit()" *ngIf="sameUser">
           <h5>Edit</h5>
           <i class="fa fa-pencil" aria-hidden="true"></i>
         </li>
-        <li (click)="confirmDelete()" *ngIf="sameUser">
+        <li (click)="delete()" *ngIf="sameUser">
           <h5>Delete</h5>
           <i class="fa fa-trash-o" aria-hidden="true"></i>
         </li>
@@ -26,7 +26,7 @@
 
     <div class="resource-link-preview" *ngIf="resource?.link_url">
       <a href="{{ resource?.link_url }}" target="_blank">
-        <img class="resource-link-img" src="{{ resource?.link_img }}" alt="">
+        <img class="resource-link-img" src="{{ resource?.link_img }}" alt="" *ngIf="resource.link_img">
         <h3 class="resource-link-title">{{ resource?.link_title }}</h3>
         <h4 class="resource-link-description">{{ resource?.link_description }}</h4>
         <h5 class="resource-link-url truncate">{{ resource?.link_url }}</h5>
@@ -36,8 +36,8 @@
     <div class="postby">
       <h5><a routerLink="/users/{{resource?.user['_Id']}}">{{ resource?.user.username }}</a></h5>
       <div class="time-ago">
-        <p>{{ resource?.time_ago }}</p>
-        <span class="show-time">{{ resource?.created_at | date: 'EEE, dd MMM yyyy - HH:mm' }}</span>
+        <p *ngIf="resource?.time_ago !== ''">{{ resource?.time_ago }}</p>
+        <p *ngIf="resource?.time_ago === ''">{{ resource?.created_at | date: 'dd MMM yyyy (EEE)' }}</p>
       </div>
     </div>
   </div>
@@ -50,14 +50,14 @@
 
       <div class="form-header">
         <h3>Edit resource</h3>
-        <a (click)="cancelEditResource()">x</a>
+        <a (click)="cancelEdit()">x</a>
       </div>
 
       <div class="form-header-name">
         <h4>{{ resource?.title }}</h4>
       </div>
 
-      <form [formGroup]="editResourceForm" (ngSubmit)="onUpdateResource()">
+      <form [formGroup]="editResourceForm" (ngSubmit)="saveEdit()">
 
         <div class="form-housing">
           <label>TITLE</label>
@@ -76,7 +76,7 @@
           </div>
 
           <div class="action-response">
-            <h4 class="action-response-secondary" (click)="cancelEditResource()">CANCEL</h4>
+            <h4 class="action-response-secondary" (click)="cancelEdit()">CANCEL</h4>
             <button type="submit" class="action-response-primary" [disabled]="!editResourceForm.valid"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
           </div>
         </div>
@@ -105,7 +105,7 @@
     <div class="confirm-delete-footer">
       <div class="action-response">
         <h4 class="action-response-primary" (click)="cancelDelete()">CANCEL</h4>
-        <h4 class="action-response-warning" (click)="onDeleteResource()">DELETE</h4>
+        <h4 class="action-response-warning" (click)="confirmDelete()">DELETE</h4>
       </div>
     </div>
   </div>

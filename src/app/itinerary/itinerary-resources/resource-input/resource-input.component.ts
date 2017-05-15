@@ -1,35 +1,35 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
-import { ItineraryService } from '../../itinerary.service';
-import { ResourceService } from '../resource.service';
+import { ItineraryService }    from '../../itinerary.service';
+import { ResourceService }     from '../resource.service';
 import { FlashMessageService } from '../../../flash-message';
-import { UserService } from '../../../user';
-import { PostService } from '../../../post';
+import { UserService }         from '../../../user';
+import { PostService }         from '../../../post';
 
 @Component({
   selector: 'ww-resource-input',
   templateUrl: './resource-input.component.html',
   styleUrls: ['./resource-input.component.scss']
 })
-export class ResourceInputComponent implements OnInit {
+export class ResourceInputComponent implements OnInit, OnDestroy {
   @Output() hideResourceForm = new EventEmitter();
+
   resourceForm: FormGroup;
-
-  currentUserSubscription: Subscription;
-  currentUser;
-
-  itinerarySubscription: Subscription;
-  itinerary;
-
   textArea = false;
   linkExist = false;
   link_url;
   link_title;
   link_description;
   link_img;
+
+  currentUserSubscription: Subscription;
+  currentUser;
+
+  currentItinerarySubscription: Subscription;
+  currentItinerary;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -47,69 +47,19 @@ export class ResourceInputComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.currentUserSubscription = this.userService.updateCurrentUser
-                                       .subscribe(
-                                         result => {
-                                           this.currentUser = result;
-                                         })
+    this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
+                                        result => { this.currentUser = result; })
 
-    this.itinerarySubscription = this.itineraryService.currentItinerary
-                                     .subscribe(
-                                       result =>  {
-                                         this.itinerary = result;
-                                       }
-                                     )
+    this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
+                                             result => { this.currentItinerary = result; })
   }
 
-  onSubmit()  {
-    let resourceTitle;
-    if(this.link_title && this.resourceForm.value.title === "") {
-      resourceTitle = this.link_title;
-    }
-    if(this.resourceForm.value.title !== "")  {
-      resourceTitle = this.resourceForm.value.title;
-    }
-    this.resourceService.addResource({
-      content: this.resourceForm.value.content,
-      title: resourceTitle,
-      link_url: this.link_url,
-      link_title: this.link_title,
-      link_description: this.link_description,
-      link_img: this.link_img,
-      itinerary: this.itinerary,
-      user: {
-        _Id: this.currentUser['id'],
-        username: this.currentUser['username'],
-      },
-      created_at: Date.now()
-    })
-    .subscribe(
-      result => {
-        if(this.route.snapshot['_urlSegment'].segments[3].path !== 'resources') {
-          let id = this.route.snapshot['_urlSegment'].segments[2].path;
-          this.router.navigateByUrl('/me/itinerary/' + id + '/resource');
-        }
-        this.flashMessageService.handleFlashMessage(result.message);
-      }
-    )
-
-    this.hideResourceForm.emit(false);
-    this.linkExist = false;
-    this.link_url = '';
-    this.link_title = '';
-    this.link_description = '';
-    this.link_img = '';
+  ngOnDestroy() {
+    this.currentUserSubscription.unsubscribe();
+    this.currentItinerarySubscription.unsubscribe();
   }
 
-  cancelForm()  {
-    this.hideResourceForm.emit(false);
-    this.linkExist = false;
-    this.link_url = '';
-    this.link_title = '';
-    this.link_description = '';
-    this.link_img = '';
-  }
-
+  // link preview
   checkLink(content) {
     let texts = content.split(" ");
 
@@ -139,6 +89,56 @@ export class ResourceInputComponent implements OnInit {
   }
 
   deleteLink()  {
+    this.linkExist = false;
+    this.link_url = '';
+    this.link_title = '';
+    this.link_description = '';
+    this.link_img = '';
+  }
+
+  // save
+  saveNew()  {
+    let resourceTitle;
+    if(this.link_title && this.resourceForm.value.title === "") {
+      resourceTitle = this.link_title;
+    }
+    if(this.resourceForm.value.title !== "")  {
+      resourceTitle = this.resourceForm.value.title;
+    }
+    this.resourceService.addResource({
+      content: this.resourceForm.value.content,
+      title: resourceTitle,
+      link_url: this.link_url,
+      link_title: this.link_title,
+      link_description: this.link_description,
+      link_img: this.link_img,
+      itinerary: this.currentItinerary,
+      user: {
+        _Id: this.currentUser['id'],
+        username: this.currentUser['username'],
+      },
+      created_at: Date.now()
+    })
+    .subscribe(
+      result => {
+        if(this.route.snapshot['_urlSegment'].segments[3].path !== 'resources') {
+          let id = this.route.snapshot['_urlSegment'].segments[2].path;
+          this.router.navigateByUrl('/me/itinerary/' + id + '/resource');
+        }
+        this.flashMessageService.handleFlashMessage(result.message);
+      }
+    )
+
+    this.hideResourceForm.emit(false);
+    this.linkExist = false;
+    this.link_url = '';
+    this.link_title = '';
+    this.link_description = '';
+    this.link_img = '';
+  }
+
+  cancelForm()  {
+    this.hideResourceForm.emit(false);
     this.linkExist = false;
     this.link_url = '';
     this.link_title = '';

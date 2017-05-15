@@ -8,17 +8,15 @@ import { User } from '../user';
 @Injectable()
 export class UserService  {
   currentUser: User;
-  updateCurrentUser = new ReplaySubject();
 
-  users: User[] = [];
+  updateCurrentUser = new ReplaySubject();
   updateAllUsers = new ReplaySubject();
 
-  // private url = 'http://localhost:9000';
   private url = 'https://vast-island-87972.herokuapp.com';
 
   constructor( private http: Http)  {}
 
-  getCurrentUserDetails()  {
+  getCurrentUser()  {
     const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
     const headers = new Headers({ 'Content-Type': 'application/json' });
     return this.http.get(this.url + '/users/currentUser' + token, { headers: headers })
@@ -34,11 +32,7 @@ export class UserService  {
     const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
     const headers = new Headers({ 'Content-Type': 'application/json' });
     return this.http.get(this.url + '/users' + token, { headers: headers })
-                    .map((response: Response) => {
-                      this.users = response.json().users;
-                      this.updateAllUsers.next(this.users);
-                      return this.users;
-                    })
+                    .map((response: Response) => response.json())
                     .catch((error: Response) => Observable.throw(error.json()));
   }
 

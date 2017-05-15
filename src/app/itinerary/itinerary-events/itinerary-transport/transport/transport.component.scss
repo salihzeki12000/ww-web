@@ -1,16 +1,58 @@
+.transport-from-to  {
+  padding-top: 5px;
+}
+
+.operating-message-display {
+  padding: 5px 0 0 0;
+}
+
+.departure-section  {
+  padding: 5px 5px 5px 15px;
+  background-color: rgba(100,148,237,.3);
+  border: 3px solid #6494ED;
+  border-bottom: none;
+  border-radius: 5px 5px 0 0;
+}
+
+.arrival-section  {
+  padding: 5px 5px 5px 15px;
+  background-color: rgba(100,148,237,.1);
+  border: 3px solid #6494ED;
+  border-top: none;
+  border-radius: 0 0 5px 5px;
+}
+
+.departure-section > h4,
+.arrival-section > h4 {
+  padding-bottom: 10px;
+}
+
+.departure-section > h5,
+.arrival-section > h5 {
+  padding-bottom: 3px;
+}
+
+.departure-section > h5:first-of-type,
+.arrival-section > h5:first-of-type {
+  font-weight: 600;
+}
+
 .note {
   margin: 10px 0 15px 0;
   padding-left: 0;
 }
 
-.departure-section  {
-  padding: 10px 5px;
-  text-align: center;
-  background-color: rgba(237, 100, 148, 0.2);
-}
+.departure-arrival-details i  {
+  position: absolute;
+  margin-top: -13px;
+  padding: 2px 1.5px;
+  left: 184.3px;
+  color: #6494ED;
+  background-color: white;
+  border: 3px solid #6494ED;
+  border-radius: 50%;
 
-.arrival-section  {
-  padding: 10px 5px;
-  text-align: center;
-  background-color: rgba(100, 148, 237, 0.2);
+  @media only screen and (max-width: 650px) {
+    left: 20.3px;
+  }
 }
