@@ -5,8 +5,7 @@
   </div>
 
   <div *ngIf="!activity?.photo" class="display-card-image-placeholder">
-    <i class="fa fa-camera fa-4x" aria-hidden="true"></i>
-    <h5>add a photo</h5>
+    <i class="fa fa-bicycle fa-4x" aria-hidden="true"></i>
   </div>
 
   <div class="display-photo-housing">
@@ -107,11 +106,11 @@
       <form [formGroup]="editCustomActivityForm" (ngSubmit)="saveEdit()">
 
         <div class="form-housing">
-          <h5 class="form-section-header">VISIT DATE &amp; TIME DETAILS</h5>
+          <h4 class="form-section-header">Visit Date &amp; Time Details</h4>
           <div class="form-section-details">
 
             <div class="date-to-visit">
-              <label>DATE TO VISIT</label>
+              <label>Date To Visit</label>
               <select class="select-date" name="date" formControlName="date" [value]="activity.date">
                 <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
                   <div *ngIf="itinDate === 'any day'">
@@ -125,10 +124,10 @@
             </div>
 
             <div class="time-to-visit" [class.any-time-true]="anytime">
-              <label>TIME TO VISIT (
+              <label>Time To Visit (
 
                 <div class="anytime-input">
-                  <label>ANY TIME
+                  <label>Any Time
                     <input type="checkbox" (click)="toggleAnytime()" formControlName="time" [ngModel]="activity.time === 'anytime'">
                   </label>
                 </div>
@@ -138,29 +137,29 @@
             </div>
           </div>
 
-          <h5 class="form-section-header">ACTIVITY DETAILS</h5>
+          <h4 class="form-section-header">Activity Details</h4>
           <div class="form-section-details">
 
-            <label>NAME</label>
+            <label>Name</label>
             <input type="text" formControlName="name" [value]="activity.name">
 
-            <label>ADDRESS</label>
+            <label>Address</label>
             <input type="text" formControlName="formatted_address" [value]="activity.formatted_address">
 
-            <label>CONTACT NUMBER</label>
+            <label>Contact Number</label>
             <input type="text" formControlName="international_phone_number" [value]="activity.international_phone_number" class="contact-number-input">
 
-            <label>WEBSITE</label>
+            <label>Website</label>
             <input type="url" formControlName="website" [value]="activity.website">
 
-            <label>OPENING HOURS</label>
+            <label>Opening Hours</label>
             <textarea rows="2" formControlName="opening_hours" [value]="activity.opening_hours"></textarea>
 
-            <label>COST / ENTRY FEE</label>
+            <label>Cost / Entry Fee</label>
             <input type="text" formControlName="entry_fee" [value]="activity.entry_fee">
 
             <div formArrayName="categories">
-              <label>CATEGORY</label>
+              <label>Category</label>
 
               <div *ngFor="let category of categories.controls; let j = index" [formGroupName]="j">
 
@@ -176,7 +175,7 @@
             </div>
           </div>
 
-          <h5 class="form-section-header">NOTE</h5>
+          <h4 class="form-section-header">Note</h4>
           <div class="form-section-details">
             <textarea rows="2" formControlName="note" [value]="activity.note"></textarea>
           </div>

@@ -149,7 +149,6 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     this.itineraryEventService.getFlightDetails(criteria)
         .subscribe(
           data => {
-            console.log(data);
             let scheduledFlights = data['scheduledFlights'];
             let appendix = data['appendix'];
 
@@ -286,7 +285,13 @@ export class TransportFormComponent implements OnInit, OnDestroy {
               for (let i = 0; i < scheduledFlights.length; i++) {
                 airportBySchedule.push(scheduledFlights[i].departureAirportFsCode);
               }
-              airportBySchedule.push(scheduledFlights[scheduledFlights.length - 1].arrivalAirportFsCode);
+
+              for (let i = 0; i < scheduledFlights.length; i++) {
+                let arrivalAirport = scheduledFlights[i].arrivalAirportFsCode;
+                if(airportBySchedule.indexOf(arrivalAirport) < 0) {
+                  airportBySchedule.push(arrivalAirport);
+                }
+              }
 
               this.depAirports = [];
               for (let i = 0; i < airportBySchedule.length - 1; i++) {

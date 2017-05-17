@@ -146,19 +146,20 @@ button[disabled]  {
   letter-spacing: .5px;
 }
 
-.action-response-primary,
-.action-response-primary > h4  {
+.action-response-primary  {
   color: #6494ED;
   background-color: transparent;
-  border: 2px solid transparent;
-}
-
-.action-response-primary  {
+  border: 2px solid #6494ED;
+  border-radius: 2px;
   &:hover {
     cursor: pointer;
-    border: 2px solid #6494ED;
-    border-radius: 2px;
+    background-color: rgba(100,148,237,.1);
   }
+}
+
+.action-response-primary > h4  {
+  color: #6494ED;
+  border: 2px solid transparent;
 }
 
 .action-response-secondary  {
@@ -471,7 +472,7 @@ label {
   margin-bottom: 3px;
   padding-left: 1px;
   color: grey;
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 500;
   letter-spacing: .5px;
 }
@@ -737,7 +738,6 @@ span.form-validator-message {
   padding-bottom: 2px;
   font-weight: bold;
   letter-spacing: .5px;
-  color: #6494ED;
 }
 
 .form-section-details,
@@ -780,6 +780,144 @@ span.form-validator-message {
 }
 
 /***************************************************************
+ ACCOMMODATION / TRANSPORT / ACTIVITY / RESOURCE CARDS SUMMARY
+ **************************************************************/
+.summary-quick-reference {
+  padding: 10px 10px 5px 10px;
+  background-color: rgb(237, 189, 100);
+
+  @media only screen and (max-width: 890px) {
+    color: #F9FBFB;
+    background-color: #6494ED;
+  }
+}
+
+.accommodation-summary,
+.activity-summary,
+.transport-summary,
+.resource-summary  {
+  position: fixed;
+  width: 210px;
+  max-height: calc(100vh - 110px);
+  background-color: rgba(237, 189, 100, 0.3);
+  border: 1px solid lightgray;
+  overflow: auto;
+
+  @media only screen and (max-width: 890px) {
+    display: none;
+  }
+
+  @media only screen and (min-width: 890px) and (max-width: 1090px) {
+    height: calc(100vh - 190px);
+  }
+}
+
+.accommodation-summary::-webkit-scrollbar,
+.activity-summary::-webkit-scrollbar,
+.transport-summary::-webkit-scrollbar,
+.resource-summary::-webkit-scrollbar  {
+  background-color: rgba(237, 189, 100, 0.3);
+  width: 8px;
+}
+
+.accommodation-summary::-webkit-scrollbar-thumb,
+.activity-summary::-webkit-scrollbar-thumb,
+.transport-summary::-webkit-scrollbar-thumb,
+.resource-summary::-webkit-scrollbar-thumb  {
+  background-color: rgba(237, 189, 100, 0.9);
+}
+
+.show-summary {
+  position: fixed;
+  display: block;
+  top: 0;
+  left: 0;
+  width: 380px;
+  height: calc(100vh - 90px);
+  z-index: 1001;
+  background-color: white;
+  @media only screen and (max-width: 400px) {
+    width: 100%;
+    min-width: 300px;
+    margin-left: 0;
+  }
+}
+
+.accommodation-summary-item,
+.activity-summary-item,
+.transport-summary-item,
+.resource-summary-item {
+  text-align: right;
+  border-top: 1px solid lightgray;
+  // box-shadow: inset 0px 0px 1px 1.5px rgba(0, 0, 0, 0.2);
+  // background-color: white;
+  &:hover {
+    background-color: white;
+    cursor: pointer;
+  }
+
+  @media only screen and (max-width: 890px) {
+    font-size: 120%;
+    border: none;
+    border-bottom: 1px solid lightgrey;
+  }
+}
+
+.accommodation-summary-item > a,
+.activity-summary-item > a,
+.transport-summary-item > a,
+.resource-summary-item > a {
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.accommodation-summary-item > a > *,
+.activity-summary-item > a > *,
+.transport-summary-item > a > *,
+.resource-summary-item > a > * {
+  font-size: 11.62px;
+}
+
+.accommodation-summary-item .date,
+.activity-summary-item .date,
+.transport-summary-item .date,
+.resource-summary-item .date {
+  margin-bottom: 5px;
+  padding: 20px 10px 0 10px;
+  color: grey;
+  font-weight: 500;
+}
+
+.accommodation-summary-popup,
+.activity-summary-popup,
+.transport-summary-popup,
+.resource-summary-popup,  {
+  display: none;
+
+  @media only screen and (max-width: 890px) {
+    display: block;
+    position: fixed;
+    top: calc(100vh - 110px);
+    right: 10px;
+    padding: 15px;
+    background-color: lightgray;
+    border: 1px solid lightgray;
+    border-radius: 50%;
+    opacity: .5;
+    z-index: 999;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.highlighted-item {
+  // border-right: 8px solid rgb(237, 189, 100);
+  background-color: rgba(237, 189, 100, .5) !important;
+}
+
+/***************************************************************
  ACCOMMODATION / TRANSPORT / ACTIVITY / RESOURCE CARDS DISPLAY
  **************************************************************/
 .display-card {
@@ -796,7 +934,7 @@ span.form-validator-message {
   z-index: 2;
 
   @media only screen and (max-width: 400px) {
-    margin: 0 0 15px 0;
+    margin: 15px 0;
     width: 100vw;
     min-width: 300px;
   }
@@ -818,7 +956,7 @@ span.form-validator-message {
   z-index: 2;
 
   @media only screen and (max-width: 400px) {
-    margin: 0 0 15px 0;
+    margin: 15px 0;
     width: 100vw;
     min-width: 300px;
   }
@@ -915,13 +1053,13 @@ span.form-validator-message {
   background-color: #F6F6F6;
   z-index: 1;
 
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 400px) {
+    width: 100vw;
+  }
+
+  @media only screen and (min-width: 400px) and (max-width: 650px) {
     width: 330px;
   }
-}
-
-.highlighted-item {
-  border-right: 8px solid #6494ED;
 }
 
 .truncate {

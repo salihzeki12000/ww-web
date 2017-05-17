@@ -5,72 +5,94 @@
 
   <form [formGroup]="editItineraryForm" (ngSubmit)="saveEdit()">
 
-    <h4 class="itinerary-edit-section-header">BASIC DETAILS</h4>
+    <h4 class="itinerary-edit-section-header">Basic Details</h4>
     <div class="itinerary-edit-section-details">
       <div class="itinerary-edit-item">
-        <h5>ITINERARY NAME</h5>
+        <h5>Itinerary Name</h5>
         <input type="text" formControlName="name" [value]="currentItinerary?.name">
       </div>
 
       <div class="itinerary-edit-item">
-        <h5>TRAVEL DATE FROM</h5>
+        <h5>Travel Date From</h5>
         <input type="date" formControlName="date_from" [value]="currentItinerary?.date_from | date: 'yyyy-MM-dd'">
       </div>
 
       <div class="itinerary-edit-item">
-        <h5>TRAVEL DATE TO</h5>
+        <h5>Travel Date To</h5>
         <input type="date" formControlName="date_to" [value]="currentItinerary?.date_to | date: 'yyyy-MM-dd'">
       </div>
 
       <div class="created-details">
         <div class="itinerary-edit-item">
-          <h5>CREATED BY</h5>
-          <h4>{{ currentItinerary?.created_by.username }} on {{ currentItinerary?.created_at | date: 'dd MMM y' }}</h4>
+          <h5>Created By</h5>
+          <h4>{{ currentItinerary?.created_by.username }}</h4>
         </div>
       </div>
 
+      <div class="created-details">
+        <div class="itinerary-edit-item">
+          <h5>Master Admin</h5>
+          <h4>{{ currentItinerary?.members[0].username }}</h4>
+        </div>
+      </div>
+
+      <div class="action-response">
+        <!-- <h4 (click)="undoEdit()">UNDO</h4> -->
+        <button type="submit" class="action-response-primary" [disabled]="!editItineraryForm.valid"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE EDIT</h4></button>
+      </div>
     </div>
 
-    <h4 class="itinerary-edit-section-header">MEMBERS DETAILS</h4>
-    <div class="itinerary-edit-section-details">
-      <div *ngFor="let member of currentItinerary?.members; let i = index" class="itinerary-member-list">
-        <img src="{{ member.display_picture }}" alt="" class="user-profile-thumbnail">
-        <div class="user-details">
-          <h4 class="user-username">{{ member.username }}</h4>
-          <h5 class="user-description">{{ member.description }}</h5>
-        </div>
+  </form>
 
-        <div class="itinerary-member-option" (mouseover)="showMemberOption(i)" *ngIf="currentUserAdmin">
-          <div *ngIf="!member.hide_option">
-            <i class="fa fa-cog" aria-hidden="true"></i>
-              <div class="itinerary-member-option-menu" *ngIf="showOptions[i]">
-                <ul>
-                  <li class="make-admin" *ngIf="!member.admin">
-                    <h5 (click)="makeAdmin(member, i)">Make admin</h5>
-                    <span class="info" (click)="showAdminInfo()">?</span>
-                  </li>
-                  <li *ngIf="member.admin" (click)="removeAdmin(member, i)"><h5>Remove as admin</h5></li>
-                  <li (click)="removeFromItin(member, i)"><h5>Remove from itinerary</h5></li>
-                </ul>
-              </div>
-          </div>
-        </div>
+  <h4 class="itinerary-edit-section-header">Member Details</h4>
+  <div class="itinerary-edit-section-details">
+    <div *ngFor="let member of currentItinerary?.members; let i = index" class="itinerary-member-list">
+      <img src="{{ member.display_picture }}" alt="" class="user-profile-thumbnail">
+      <div class="user-details">
+        <h4 class="user-username">{{ member.username }}</h4>
+        <h5 class="user-description">{{ member.description }}</h5>
+      </div>
 
-        <div *ngIf="member.admin" class="itinerary-admin">
-          <h5>Admin</h5>
+      <div class="itinerary-member-option" (mouseover)="showMemberOption(i)" *ngIf="currentUserAdmin">
+        <div *ngIf="!member.hide_option">
+          <i class="fa fa-cog" aria-hidden="true"></i>
+            <div class="itinerary-member-option-menu" *ngIf="showOptions[i]">
+              <ul>
+                <li class="make-admin" *ngIf="!member.admin">
+                  <h5 (click)="makeAdmin(member, i)">Make admin</h5>
+                  <span class="info" (click)="showAdminInfo()">?</span>
+                </li>
+                <li *ngIf="member.admin" (click)="removeAdmin(member, i)"><h5>Remove as admin</h5></li>
+                <li (click)="removeFromItin(member, i)"><h5>Remove from itinerary</h5></li>
+              </ul>
+            </div>
         </div>
       </div>
+
+      <div *ngIf="member.admin" class="itinerary-admin">
+        <h5>Admin</h5>
+      </div>
+    </div>
+  </div>
+
+  <h4 class="itinerary-edit-section-header">Share Details</h4>
+  <div class="itinerary-edit-section-details">
+    <div *ngIf="!shared">
+      <h5 class="itinerary-edit-item">This itinerary has not been shared with anyone</h5>
+    </div>
+    <div *ngFor="let share of currentItinerary?.shares">
+      <h4 class="share-date">{{ share.shared_on | date: 'dd MMM yyyy'}}</h4>
+      <h4 class="share-details">{{ share.shared_by.username }} shared with {{ share.shared_with.username }}</h4>
     </div>
 
     <div class="action-response">
-      <!-- <h4 (click)="undoEdit()">UNDO</h4> -->
-      <button type="submit" class="action-response-primary" [disabled]="!editItineraryForm.valid"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
+      <h4 class="action-response-primary" (click)="share()">SHARE ITINERARY</h4>
     </div>
-  </form>
+  </div>
 
-  <h4 class="share-itinerary"  (click)="share()">Share this itinerary</h4>
-  <h4 *ngIf="creator" class="delete-itinerary" (click)="delete()">Delete this itinerary</h4>
-  <h4 *ngIf="!creator" class="delete-itinerary" (click)="leave()">Leave itinerary</h4>
+  <h4 class="itinerary-edit-section-header">Others</h4>
+  <h4 *ngIf="masterAdmin" class="delete-itinerary" (click)="delete()">Delete this itinerary</h4>
+  <h4 *ngIf="!masterAdmin" class="delete-itinerary" (click)="leave()">Leave itinerary</h4>
 
 </div>
 
@@ -152,5 +174,102 @@
       </div>
     </div>
   </div>
+</div>
 
+<div class="custom-modal" *ngIf="shareItin">
+  <div class="form-card">
+    <div class="form-header share-itineary-header">
+      <h3>Share itinerary</h3>
+      <a (click)="cancelShare()">x</a>
+    </div>
+
+    <div class="progress-tracker-section">
+      <ul class="progress-tracker">
+        <li class="progress-title" (click)="selectItems()" [class.progress-done]="itemsSelected">SELECT ITEMS TO SHARE</li><li class="progress-title">SELECT USERS TO SHARE WITH</li>
+      </ul>
+    </div>
+
+    <div *ngIf="!itemsSelected">
+      <div class="share-all">
+        <input type="checkbox" (click)="toggleShareAll()" checked>
+        <h4>Share all</h4>
+      </div>
+
+      <div class="category-header">
+        <h4>Accommodation</h4>
+      </div>
+      <div *ngFor="let event of events; let i = index" class="category-item">
+        <div *ngIf="event.type === 'accommodation'">
+          <input type="checkbox" (click)="toggleShare(i)" [checked]="shareIndex[i]">
+          <h5>{{ event.name }}</h5>
+        </div>
+      </div>
+
+      <div class="category-header">
+        <h4>Activity</h4>
+      </div>
+      <div *ngFor="let event of events; let i = index" class="category-item">
+        <div *ngIf="event.type === 'activity'">
+          <input type="checkbox" (click)="toggleShare(i)" [checked]="shareIndex[i]">
+          <h5>{{ event.name }}</h5>
+        </div>
+      </div>
+
+      <div class="category-header">
+        <h4>Transport</h4>
+      </div>
+      <div *ngFor="let event of events; let i = index" class="category-item">
+        <div *ngIf="event.type === 'transport'">
+          <input type="checkbox" (click)="toggleShare(i)" [checked]="shareIndex[i]">
+          <h5>{{ event.name }}</h5>
+        </div>
+      </div>
+
+      <div class="category-header">
+        <h4>Resource</h4>
+      </div>
+      <div *ngFor="let resource of resources; let i = index" class="category-item">
+        <input type="checkbox" (click)="toggleShareResource(i)" [checked]="shareIndexResource[i]">
+        <h5>{{ resource.title }}</h5>
+      </div>
+
+      <div class="action-response share-response">
+        <h4 class="action-response-secondary" (click)="cancelShare()">CANCEL</h4>
+        <h4 class="action-response-primary" (click)="selectUsers()">NEXT</h4>
+      </div>
+    </div>
+
+    <div *ngIf="itemsSelected">
+      <input class="share-users-search" type="text" placeholder="Search for people..." #text (keyup)="filterSearch(text.value)">
+
+      <div *ngIf="validAddUser">
+        <h5 class="user-search-header">Selected users ({{ selectedUsers.length }})</h5>
+        <div *ngFor="let user of selectedUsers" class="search-result-card selected-user">
+          <img src="{{ user.display_picture }}" alt="" class="user-profile-thumbnail">
+          <div class="user-details">
+            <h4 class="user-username">{{ user.username }}</h4>
+            <h5 class="user-search-description">{{ user.description }}</h5>
+          </div>
+          <h5 class="toggle-remove-member" (click)="toggleAdd(user)">Selected</h5>
+        </div>
+      </div>
+
+      <h5 class="user-search-header">Search result ({{ filteredResult.length }})</h5>
+      <div *ngFor="let user of filteredResult" class="search-result-card">
+        <img src="{{ user.display_picture }}" alt="" class="user-profile-thumbnail">
+        <div class="user-details">
+          <h4 class="user-username">{{ user.username }}</h4>
+          <h5 class="user-search-description">{{ user.description }}</h5>
+        </div>
+        <h5 class="toggle-invite-member" (click)="toggleAdd(user)">Select</h5>
+      </div>
+
+      <div class="action-response share-response">
+        <h4 class="action-response-secondary" (click)="cancelShare()">CANCEL</h4>
+        <button type="button" class="action-response-primary" (click)="shareItinerary()" *ngIf="validAddUser"><h4>SHARE ITINERARY</h4></button>
+      </div>
+    </div>
+
+
+  </div>
 </div>

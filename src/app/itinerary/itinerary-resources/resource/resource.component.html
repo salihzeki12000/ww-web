@@ -60,10 +60,10 @@
       <form [formGroup]="editResourceForm" (ngSubmit)="saveEdit()">
 
         <div class="form-housing">
-          <label>TITLE</label>
+          <label>Title</label>
           <input type="text" formControlName="title" [value]="resource.title" autofocus>
 
-          <label>CONTENT</label>
+          <label>Content</label>
           <textarea rows="4" formControlName="content" [value]="resource.content"></textarea>
 
           <div class="resource-link-preview" *ngIf="resource?.link_url">

@@ -1,7 +1,8 @@
 <div class="custom-modal" *ngIf="showActivitySummary" (click)="showSummary()"></div>
 
 <div class="activity-summary" [class.show-summary]="showActivitySummary">
-  <h5 class="activity-summary-length">ACTIVITY LIST ({{ activities.length }})</h5>
+  <h4 class="summary-quick-reference">Quick reference</h4>
+  <!-- <h5 class="activity-summary-length">ACTIVITY LIST ({{ activities.length }})</h5> -->
   <div *ngFor="let activity of activities; let i = index" class="activity-summary-item" (click)="centerItem(activity)" [class.highlighted-item]="highlightedEvent === activity">
     <a href="#activity{{ i }}">
       <h5 class="date" *ngIf="activity?.date === 'any day'">{{ activity?.date }} - {{ activity?.time }}</h5>
@@ -16,7 +17,7 @@
     *ngFor="let activity of activities; let i = index"
     id="activity{{i}}"
     [activity]="activity"
-    [class.highlighted-event]="highlightedEvent === activity" 
+    [class.highlighted-event]="highlightedEvent === activity"
     [itinDateRange]="itinDateRange"
     [currentUser]="currentUser"
     [currentItinerary]="currentItinerary">

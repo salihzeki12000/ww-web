@@ -17,17 +17,17 @@
         </div>
 
         <div *ngIf="!searchDone">
-          <label>SEARCH ACTIVITY BY NAME OR ADDRESS <span class="required"> - local name or address may be required</span></label>
+          <label>Search activity by name or adddress <span class="required"> - local name or address may be required</span></label>
           <ww-google-place-search (placeDetail)="getActivityDetails($event)"></ww-google-place-search>
           <h6 class="cannot-find" (click)="skipSearch()">Unable to find by name or address? Proceed to key in details ></h6>
         </div>
 
         <div *ngIf="searchDone">
-          <h5 class="form-section-header">VISIT DATE &amp; TIME DETAILS</h5>
+          <h4 class="form-section-header">Visit Date &amp; Time Details</h4>
           <div class="form-section-details">
 
             <div class="date-to-visit">
-              <label>DATE TO VISIT <span class="required"> - required</span></label>
+              <label>Date To Visit <span class="required"> - required</span></label>
               <select class="select-date" name="date" formControlName="date">
                 <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
                   <div *ngIf="itinDate === 'any day'">
@@ -41,16 +41,16 @@
             </div>
 
             <div class="time-to-visit" [class.any-time-true]="anytime">
-              <label>TIME TO VISIT <span class="required"> - Default: any time</span></label>
+              <label>Time To Visit <span class="required"> - Default: any time</span></label>
               <input type="time" formControlName="time">
             </div>
           </div>
 
-          <h5 class="form-section-header">ACTIVITY DETAILS</h5>
+          <h4 class="form-section-header">Activity Details</h4>
           <div class="form-section-details">
 
             <div class="form-select-image" *ngIf="!uploadPic">
-              <label>SELECT AN IMAGE AS THE DISPLAY PICTURE</label>
+              <label>Select an image as the display picture</label>
 
               <div class="slider">
                 <div class="slider-images" *ngFor="let image of activityDetail?.pictures; let i = index">
@@ -70,31 +70,31 @@
 
             <div class="upload-picture">
               <label class="file-upload">
-                UPLOAD IMAGE FROM MY LIBRARY
-                <input type="file" (change)="fileUploaded($event)" [value]="inputValue">
+                Upload Image From My Library
+                <input type="file" (change)="fileUploaded($event)" [value]="inputValue" accept="image/*">
               </label>
             </div>
 
-            <label>NAME <span class="required"> - required</span></label>
+            <label>Name <span class="required"> - required</span></label>
             <input type="text" formControlName="name" value="{{ activityDetail?.name}}">
 
-            <label>ADDRESS</label>
+            <label>Address</label>
             <input type="text" formControlName="formatted_address" value="{{ activityDetail?.formatted_address}}">
 
-            <label>CONTACT NUMBER</label>
+            <label>Contact Number</label>
             <input type="text" formControlName="international_phone_number" value="{{ activityDetail?.international_phone_number}}" class="contact-number-input">
 
-            <label>WEBSITE</label>
+            <label>Website</label>
             <input type="url" id="website" formControlName="website" value="{{ activityDetail?.website}}">
 
-            <label>OPENING HOURS</label>
+            <label>Opening Hours</label>
             <textarea rows="3" formControlName="opening_hours" value="{{ activityDetail?.opening_hours}}"></textarea>
 
-            <label>COST / ENTRY FEE</label>
+            <label>Cost / Entry Fee</label>
             <input type="text" formControlName="entry_fee">
 
             <div formArrayName="categories">
-              <label>CATEGORY</label>
+              <label>Category</label>
 
               <div *ngFor="let category of categories.controls; let j = index" [formGroupName]="j">
                 <div class="category-input">
@@ -108,7 +108,7 @@
             </div>
           </div>
 
-          <h5 class="form-section-header">NOTE</h5>
+          <h4 class="form-section-header">Note</h4>
           <div class="form-section-details">
             <textarea rows="2" formControlName="note"></textarea>
           </div>

@@ -18,7 +18,7 @@
       </div>
 
       <div class="transport-mode" *ngIf="transportOption === ''">
-        <label>SELECT YOUR MODE OF TRANSPORT</label>
+        <label>Select your mode of transport</label>
         <div *ngFor="let transport of transportType" class="transport-mode-options">
           <label (click)="selectTransportType(transport.name)">
             <input type="radio" formControlName="transport_type" [value]="transport.name">
@@ -30,35 +30,35 @@
 
       <div *ngIf="transportOption === 'flight'">
         <form [formGroup]="searchFlightForm" class="flight-search" *ngIf="!populateFlightDetails">
-          <h4 class="transport-type-header">SEARCH FOR YOUR FLIGHT</h4>
+          <h4 class="transport-type-header">Search For Your Flight</h4>
 
           <div class="form-section-details">
             <div class="search-airline-code">
-              <label>AIRLINE CODE</label>
+              <label>Airline Code</label>
               <input type="text" id="search-airline-code" formControlName="searchAirlineCode" maxlength="2" autofocus>
             </div>
 
             <div class="search-flight-number">
-              <label>FLIGHT NUMBER</label>
+              <label>Flight Number</label>
               <input type="number" id="search-flight-number" formControlName="searchFlightNumber" min="1" max="9999" required>
             </div>
 
             <div class="flight-example">
-              <h6>EXAMPLE</h6>
+              <h6>Example</h6>
 
               <div>
-                <label>AIRLINE CODE</label>
+                <label>Airline Code</label>
                 <h4 class="example-airline-code">SQ</h4>
               </div>
 
               <div>
-                <label>FLIGHT NUMBER</label>
+                <label>Flight Number</label>
                 <h4 class="example-flight-number">123</h4>
               </div>
             </div>
 
             <div class="search-dep-date">
-              <label>DATE OF DEPARTURE</label>
+              <label>Date of Departure</label>
               <select class="select-date" name="searchDepDate" formControlName="searchDepDate">
                 <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
                   <div *ngIf="itinDate !== 'any day'">
@@ -77,13 +77,13 @@
         <div *ngIf="stopOver" class="stop-over">
           <h5 class="form-section-header">Your selected flight travels from and to multiple airports. Please select your departure and arrival airports.</h5>
 
-          <h5 class="stop-over-airport">DEPARTURE AIRPORT</h5>
+          <h5 class="stop-over-airport">Departure Airport</h5>
           <div class="select-airport" *ngFor="let airport of depAirports">
             <input name="depAirport" type="radio" (click)="selectedDepAirport(airport?.airportCode)">
             <label for="depAirport">{{ airport?.city }} ({{ airport?.airportName }})</label>
           </div>
 
-          <h5 class="stop-over-airport">ARRIVAL AIRPORT</h5>
+          <h5 class="stop-over-airport">Arrival Airport</h5>
           <div class="select-airport" *ngFor="let airport of arrAirports">
             <input name="arrAirport" type="radio" (click)="selectedArrAirport(airport?.airportCode)">
             <label for="arrAirport">{{ airport?.city }} ({{ airport?.airportName }})</label>
@@ -96,9 +96,9 @@
 
         <div *ngIf="!stopOver">
           <div *ngIf="populateFlightDetails">
-            <h4 class="transport-type-header"><i class="fa fa-plane fa-lg" aria-hidden="true"></i> CONFIRM FLIGHT DETAILS</h4>
+            <h4 class="transport-type-header"><i class="fa fa-plane fa-lg" aria-hidden="true"></i> Confirm Flight Details</h4>
 
-            <h5 class="form-section-header">DEPARTURE DETAILS</h5>
+            <h4 class="form-section-header">Departure Details</h4>
             <div class="form-section-details">
 
               <div class="operating-message" *ngIf="codeshare">
@@ -106,70 +106,70 @@
               </div>
 
               <div class="flight-details">
-                <h5>FLIGHT NUMBER</h5>
+                <h5>Flight Number</h5>
                 <h4>{{ flightSearchDetail?.carrierCode }}{{ flightSearchDetail?.reference_number }}</h4>
               </div>
 
               <div class="flight-details">
-                <h5>AIRLINE</h5>
+                <h5>Airline</h5>
                 <h4>{{ flightSearchDetail?.transport_company }}</h4>
               </div>
 
               <div class="flight-details">
-                <h5>DEPART FROM (CITY)</h5>
+                <h5>Depart From (City)</h5>
                 <h4>{{ flightSearchDetail?.dep_city }}</h4>
               </div>
 
               <div class="flight-details">
-                <h5>DEPARTURE AIRPORT</h5>
+                <h5>Departure Airport</h5>
                 <h4>{{ flightSearchDetail?.dep_station }}</h4>
               </div>
 
               <div class="flight-details">
-                <h5>DEPARTURE TERMINAL</h5>
+                <h5>Departure Terminal</h5>
                 <h4>{{ flightSearchDetail?.dep_terminal }}</h4>
               </div>
 
               <div class="flight-details">
-                <h5>DEPARTURE DATE</h5>
+                <h5>Departure Date</h5>
                 <h4>{{ flightSearchDetail?.dep_date | date: "dd MMM yyyy (EEEE)" }}</h4>
               </div>
 
               <div class="flight-details">
-                <h5>DEPARTURE TIME</h5>
+                <h5>Departure Time</h5>
                 <h4>{{ flightSearchDetail?.dep_time }}</h4>
               </div>
             </div><!-- end of departure-details -->
 
-            <h5 class="form-section-header">ARRIVAL DETAILS</h5>
+            <h4 class="form-section-header">Arrival Details</h4>
             <div class="form-section-details">
               <div class="flight-details">
-                <h5>GOING TO (CITY)</h5>
+                <h5>Going To (City)</h5>
                 <h4>{{ flightSearchDetail?.arr_city }}</h4>
               </div>
 
               <div class="flight-details">
-                <h5>ARRIVAL AIRPORT</h5>
+                <h5>Arrival Airport</h5>
                 <h4>{{ flightSearchDetail?.arr_station }}</h4>
               </div>
 
               <div class="flight-details">
-                <h5>ARRIVAL TERMINAL</h5>
+                <h5>Arrival Terminal</h5>
                 <input type="text" class="transport-terminal" formControlName="arr_terminal">
               </div>
 
               <div class="flight-details">
-                <h5>ARRIVAL DATE</h5>
+                <h5>Arrival Date</h5>
                 <h4>{{ flightSearchDetail?.arr_date | date: "dd MMM yyyy (EEEE)" }}</h4>
               </div>
 
               <div class="flight-details">
-                <h5>ARRIVAL TIME</h5>
+                <h5>Arrival Time</h5>
                 <h4>{{ flightSearchDetail?.arr_time }}</h4>
               </div>
             </div><!-- end of arrival-details -->
 
-            <h5 class="form-section-header">NOTE</h5>
+            <h4 class="form-section-header">Note</h4>
             <div class="form-section-details">
               <textarea name="name" rows="3" formControlName="note"></textarea>
             </div>
@@ -187,31 +187,31 @@
       <div *ngIf="transportOption !== ''">
 
         <div [ngSwitch]="transportOption" class="transport-type-header">
-          <h4 *ngSwitchCase="'train'"><i class="fa fa-train fa-lg" aria-hidden="true"></i> CONFIRM TRAIN DETAILS</h4>
-          <h4 *ngSwitchCase="'bus'"><i class="fa fa-bus fa-lg" aria-hidden="true"></i> CONFIRM BUS DETAILS</h4>
-          <h4 *ngSwitchCase="'cruise'"><i class="fa fa-ship fa-lg" aria-hidden="true"></i> CONFIRM CRUISE DETAILS</h4>
-          <h4 *ngSwitchCase="'vehicle rental'"><i class="fa fa-car fa-lg" aria-hidden="true"></i> CONFIRM VEHICLE RENTAL DETAILS</h4>
-          <h4 *ngSwitchCase="'others'"><i class="fa fa-rocket fa-lg" aria-hidden="true"></i> CONFIRM OTHER TRANSPORT TYPE DETAILS</h4>
+          <h4 *ngSwitchCase="'train'"><i class="fa fa-train fa-lg" aria-hidden="true"></i> Confirm Train Details</h4>
+          <h4 *ngSwitchCase="'bus'"><i class="fa fa-bus fa-lg" aria-hidden="true"></i> Confirm Bus Details</h4>
+          <h4 *ngSwitchCase="'cruise'"><i class="fa fa-ship fa-lg" aria-hidden="true"></i> Confirm Cruise Details</h4>
+          <h4 *ngSwitchCase="'vehicle rental'"><i class="fa fa-car fa-lg" aria-hidden="true"></i> Confirm Vehicle Rental Details</h4>
+          <h4 *ngSwitchCase="'others'"><i class="fa fa-rocket fa-lg" aria-hidden="true"></i> Confirm Other Transport Type Details</h4>
         </div>
 
         <div *ngIf="transportOption !== 'flight'">
           <!-- exclude flight, left train, bus, cruise, rental & others -->
-          <h5 class="form-section-header">DEPARTURE DETAILS</h5>
+          <h4 class="form-section-header">Departure Details</h4>
           <div class="form-section-details">
             <div *ngIf="transportOption === 'bus'">
-              <label>BUS NUMBER</label>
+              <label>Bus Number</label>
               <input type="text" class="reference-number" formControlName="reference_number">
             </div>
 
-            <label>DEPART FROM (CITY) <span class="required"> - required</span></label>
+            <label>Depart from (City) <span class="required"> - required</span></label>
             <input type="text" formControlName="dep_city">
 
             <!-- departure details for all other transport type except vehicle rental-->
             <div *ngIf="transportOption !== 'vehicle rental'">
-              <label>DEPARTURE STATION / TERMINAL</label>
+              <label>Departure Station / Terminal</label>
               <input type="text" formControlName="dep_station">
 
-              <label>DEPARTURE DATE <span class="required"> - required</span></label>
+              <label>Departure Date <span class="required"> - required</span></label>
               <select class="select-date" name="dep_date" formControlName="dep_date">
                 <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
                   <div *ngIf="itinDate !== 'any day'">
@@ -220,12 +220,12 @@
                 </option>
               </select>
 
-              <label>DEPARTURE TIME</label>
+              <label>Departure Time</label>
               <input type="time" formControlName="dep_time">
             </div>
 
             <div *ngIf="transportOption === 'vehicle rental'">
-              <label>PICK UP DATE <span class="required"> - required</span></label>
+              <label>Pick Up Date <span class="required"> - required</span></label>
               <select class="select-date" name="dep_date" formControlName="dep_date">
                 <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
                   <div *ngIf="itinDate !== 'any day'">
@@ -234,22 +234,22 @@
                 </option>
               </select>
 
-              <label>PICK UP TIME</label>
+              <label>Pick Up Time</label>
               <input type="time" formControlName="dep_time">
             </div>
           </div><!-- end of departure details -->
 
-          <h5 class="form-section-header">ARRIVAL DETAILS</h5>
+          <h4 class="form-section-header">Arrival Details</h4>
           <div class="form-section-details">
-            <label>GOING TO (CITY) <span class="required"> - required</span></label>
+            <label>Going To (City) <span class="required"> - required</span></label>
             <input type="text" formControlName="arr_city">
 
             <!-- arrival details for all transport type except vehicle rental-->
             <div *ngIf="transportOption !== 'vehicle rental'">
-              <label>ARRIVAL STATION / TERMINAL</label>
+              <label>Arrival Station / Terminal</label>
               <input type="text" formControlName="arr_station">
 
-              <label>ARRIVAL DATE</label>
+              <label>Arrival Date</label>
               <select class="select-date" name="arr_date" formControlName="arr_date">
                 <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
                   <div *ngIf="itinDate !== 'any day'">
@@ -258,12 +258,12 @@
                 </option>
               </select>
 
-              <label>ARRIVAL TIME</label>
+              <label>Arrival Time</label>
               <input type="time" formControlName="arr_time">
             </div>
 
             <div *ngIf="transportOption === 'vehicle rental'">
-              <label>RETURN DATE</label>
+              <label>Return Date</label>
               <select class="select-date" name="arr_date" formControlName="arr_date">
                 <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
                   <div *ngIf="itinDate !== 'any day'">
@@ -272,7 +272,7 @@
                 </option>
               </select>
 
-              <label>RETURN TIME</label>
+              <label>Return Time</label>
               <input type="time" formControlName="arr_time">
             </div>
 
@@ -280,17 +280,17 @@
 
           <!-- template for vehicle rental -->
           <div *ngIf="transportOption === 'vehicle rental'">
-            <h5 class="form-section-header">RENTAL COMPANY DETAILS</h5>
+            <h4 class="form-section-header">Rental Company Details</h4>
             <div class="form-section-details">
-              <label>RENTAL COMPANY</label>
+              <label>Rental Company</label>
               <input type="text" formControlName="transport_company">
 
-              <label>CONTACT NUMBER</label>
+              <label>Contact Number</label>
               <input type="text" class="contact-number-input" formControlName="contact_number">
             </div>
           </div>
 
-          <h5 class="form-section-header">NOTE</h5>
+          <h4 class="form-section-header">Note</h4>
           <div class="form-section-details">
             <textarea name="name" rows="3" formControlName="note"></textarea>
           </div>

@@ -1,9 +1,11 @@
 <div class="custom-modal" *ngIf="showAccommodationSummary" (click)="showSummary()"></div>
 
 <div class="accommodation-summary" [class.show-summary]="showAccommodationSummary">
-  <h5 class="accommodation-summary-length">ACCOMMODATION LIST ({{ accommodations.length }})</h5>
+  <h4 class="summary-quick-reference">Quick reference</h4>
+  <!-- <h5 class="accommodation-summary-length">ACCOMMODATION LIST ({{ accommodations.length }})</h5> -->
   <div *ngFor="let event of accommodations; let i = index" class="accommodation-summary-item" (click)="centerItem(event)" [class.highlighted-item]="highlightedEvent === event">
     <a href="#accommodation{{i}}">
+      <!-- <h5 class="index">{{i+1}}</h5> -->
       <h5 class="date">{{ event?.check_in_date | date:'dd MMM yy' }} - {{ event?.check_out_date | date:'dd MMM yy' }}</h5>
       <h5 class="accommodation-summary-header"><i class="fa fa-bed" aria-hidden="true"></i> in {{ event?.stay_city | uppercase }}</h5>
       <h5 class="accommodation-summary-name">{{ event?.name }}</h5>

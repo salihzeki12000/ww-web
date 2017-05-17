@@ -18,18 +18,18 @@
         </div>
 
         <div *ngIf="!searchDone">
-          <label>SEARCH ACCOMMODATION BY NAME OR ADDRESS</label>
+          <label>Search accommodation by name or address <span class="required"> - local name or address may be required</span></label>
           <ww-google-place-search (placeDetail)="getAccommodationDetails($event)"></ww-google-place-search>
           <h6 class="cannot-find" (click)="skipSearch()">Cannot find your accommodation? Proceed to key in details ></h6>
         </div>
 
         <div *ngIf="searchDone">
-          <h5 class="form-section-header">CHECK IN/OUT DETAILS</h5>
+          <h4 class="form-section-header">Check In/Out Details</h4>
           <div class="form-section-details">
 
             <div class="check-in">
               <div class="date-to-visit">
-                <label>CHECK IN DATE <span class="required"> - required</span></label>
+                <label>Check In Date <span class="required"> - required</span></label>
                 <select class="select-date" name="check_in_date" formControlName="check_in_date" [value]="firstDay">
                   <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
                     <div *ngIf="itinDate !== 'any day'">
@@ -40,14 +40,14 @@
               </div>
 
               <div class="time-to-visit">
-                <label>CHECK IN TIME</label>
+                <label>Check In Time</label>
                 <input type="time" formControlName="check_in_time" [value]="timeCheckIn">
               </div>
             </div><!-- end of check in -->
 
             <div class="check-out">
               <div class="date-to-visit">
-                <label>CHECK OUT DATE <span class="required"> - required</span></label>
+                <label>Check Out Date <span class="required"> - required</span></label>
                 <select class="select-date" name="check_out_date" formControlName="check_out_date" [value]="lastDay">
                   <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
                     <div *ngIf="itinDate !== 'any day'">
@@ -58,18 +58,18 @@
               </div>
 
               <div class="time-to-visit">
-                <label>CHECK OUT TIME</label>
+                <label>Check Out Time</label>
                 <input type="time" formControlName="check_out_time" [value]="timeCheckOut">
               </div>
             </div><!-- end of check out -->
 
           </div>
 
-          <h5 class="form-section-header">ACCOMMODATION DETAILS</h5>
+          <h4 class="form-section-header">Accommodation Details</h4>
           <div class="form-section-details">
 
             <div class="form-select-image" *ngIf="!uploadPic">
-              <label>SELECT AN IMAGE AS THE DISPLAY PICTURE</label>
+              <label>Select an image as the display picture</label>
 
               <div class="slider">
                 <div class="slider-images" *ngFor="let image of googleAccommodationDetail?.pictures; let i = index">
@@ -89,29 +89,29 @@
 
             <div class="upload-picture">
               <label class="file-upload">
-                UPLOAD IMAGE FROM MY LIBRARY
-                <input type="file" (change)="fileUploaded($event)" [value]="inputValue">
+                Upload Image From My Library
+                <input type="file" (change)="fileUploaded($event)" [value]="inputValue" accept="image/*">
               </label>
             </div>
 
-            <label>NAME OF ACCOMMODATION <span class="required"> - required</span></label>
+            <label>Name of Accommodation <span class="required"> - required</span></label>
             <input type="text" formControlName="name" value="{{ googleAccommodationDetail?.name }}">
 
-            <label>ADDRESS</label>
+            <label>Address</label>
             <input type="text" formControlName="formatted_address" value="{{ googleAccommodationDetail?.formatted_address }}">
 
-            <label>STAYING IN (CITY/TOWN)</label>
+            <label>Staying in (City/Town)</label>
             <input type="text" formControlName="stay_city" value="{{ googleAccommodationDetail?.stay_city }}">
 
-            <label>WEBSITE</label>
+            <label>Website</label>
             <input type="url" formControlName="website" value="{{ googleAccommodationDetail?.website }}">
 
-            <label>CONTACT NUMBER</label>
+            <label>Contact Number</label>
             <input type="text" formControlName="international_phone_number" value="{{ googleAccommodationDetail?.international_phone_number }}" class="contact-number-input">
 
           </div>
 
-          <h5 class="form-section-header">NOTE</h5>
+          <h4 class="form-section-header">Note</h4>
           <div class="form-section-details">
             <textarea rows="3" formControlName="note"></textarea>
           </div>

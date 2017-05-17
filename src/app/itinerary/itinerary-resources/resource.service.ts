@@ -64,6 +64,16 @@ export class ResourceService  {
                     .catch((error: Response) => Observable.throw(error.json()));
   }
 
+  copyResource(resource: Resource) {
+    const body = JSON.stringify(resource);
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
+
+    return this.http.post(this.url + '/resource/new' + token, body, { headers: headers })
+                    .map((response: Response) => response.json())
+                    .catch((error: Response) => Observable.throw(error.json()));
+  }
+
   editResource(resource: Resource)  {
     const body = JSON.stringify(resource);
     const headers = new Headers({ 'Content-Type': 'application/json' });

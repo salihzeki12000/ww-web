@@ -1,7 +1,8 @@
 <div class="custom-modal" *ngIf="showTransportSummary" (click)="showSummary()"></div>
 
 <div class="transport-summary" [class.show-summary]="showTransportSummary">
-  <h5 class="transport-summary-length">TRANSPORT LIST ({{ transports.length }})</h5>
+  <h4 class="summary-quick-reference">Quick reference</h4>
+  <!-- <h5 class="transport-summary-length">TRANSPORT LIST ({{ transports.length }})</h5> -->
   <div *ngFor="let event of transports; let i = index" class="transport-summary-item" (click)="centerItem(event)" [class.highlighted-item]="highlightedEvent === event">
     <a href="#transport{{i}}">
       <h5 class="date">{{ event?.dep_date | date: 'dd MMM yyyy' }} - {{ event?.dep_time }}</h5>

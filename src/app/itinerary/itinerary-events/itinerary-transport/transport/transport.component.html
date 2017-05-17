@@ -135,7 +135,7 @@
         <div class="form-housing">
 
           <div class="departure">
-            <h5 class="form-section-header">DEPARTURE DETAILS</h5>
+            <h4 class="form-section-header">Departure Details</h4>
             <div class="form-section-details">
 
               <div *ngIf="event.transport_type === 'flight'">
@@ -145,37 +145,37 @@
                 </div>
 
                 <div class="flight-details">
-                  <h5>FLIGHT NUMBER</h5>
+                  <h5>Flight Number</h5>
                   <h4>{{ event.reference_number }}</h4>
                 </div>
 
                 <div class="flight-details">
-                  <h5>AIRLINE</h5>
+                  <h5>Airline</h5>
                   <h4>{{ event.transport_company }}</h4>
                 </div>
 
                 <div class="flight-details">
-                  <h5>DEPART FROM (CITY)</h5>
+                  <h5>Depart From (City)</h5>
                   <h4>{{ event.dep_city }}</h4>
                 </div>
 
                 <div class="flight-details">
-                  <h5>DEPARTURE AIRPORT</h5>
+                  <h5>Departure Airport</h5>
                   <h4>{{ event.dep_station }}</h4>
                 </div>
 
                 <div class="flight-details">
-                  <h5>DEPARTURE TERMINAL</h5>
+                  <h5>Departure TERMINAL</h5>
                   <h4>{{ event.dep_terminal }}</h4>
                 </div>
 
                 <div class="flight-details">
-                  <h5>DEPARTURE DATE</h5>
+                  <h5>Departure Date</h5>
                   <h4>{{ event.dep_date | date: "dd MMM yyyy (EEEE)" }}</h4>
                 </div>
 
                 <div class="flight-details">
-                  <h5>DEPARTURE TIME</h5>
+                  <h5>Departure Time</h5>
                   <h4>{{ event.dep_time }}</h4>
                 </div>
 
@@ -183,19 +183,19 @@
 
               <div *ngIf="event.transport_type !== 'flight'">
                 <div *ngIf="event.transport_type === 'bus'">
-                  <label>BUS NUMBER</label>
+                  <label>Bus Number</label>
                   <input type="text" class="reference-number" formControlName="reference_number" [value]="event.reference_number">
                 </div>
 
-                <label>DEPART FROM (CITY) <span class="required"> - required</span></label>
+                <label>Depart From (City) <span class="required"> - required</span></label>
                 <input type="text" formControlName="dep_city" [value]="event.dep_city">
 
                 <!-- departure details for all other transport type except vehicle rental-->
                 <div *ngIf="event.transport_type !== 'vehicle rental'">
-                  <label>DEPARTURE STATION / TERMINAL</label>
+                  <label>Departure Station / Terminal</label>
                   <input type="text" formControlName="dep_station" [value]="event.dep_station">
 
-                  <label>DEPARTURE DATE (DD/MM/YYYY) <span class="required"> - required</span></label>
+                  <label>Departure Date (DD/MM/YYYY) <span class="required"> - required</span></label>
                   <select class="select-date" name="dep_date" formControlName="dep_date" [value]="event?.dep_date">
                     <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
                       <div *ngIf="itinDate === 'any day'">
@@ -207,12 +207,12 @@
                     </option>
                   </select>
 
-                  <label>DEPARTURE TIME</label>
+                  <label>Departure Time</label>
                   <input type="time" formControlName="dep_time" [value]="event.dep_time">
                 </div>
 
                 <div *ngIf="event.transport_type === 'vehicle rental'">
-                  <label>PICK UP DATE (DD/MM/YYYY) <span class="required"> - required</span></label>
+                  <label>Pick Up Date (DD/MM/YYYY) <span class="required"> - required</span></label>
                   <select class="select-date" name="dep_date" formControlName="dep_date" [value]="event?.dep_date">
                     <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
                       <div *ngIf="itinDate !== 'any day'">
@@ -221,7 +221,7 @@
                     </option>
                   </select>
 
-                  <label>PICK UP TIME</label>
+                  <label>Pick Up Time</label>
                   <input type="time" formControlName="dep_time" [value]="event.dep_time">
                 </div>
               </div><!-- end of departure details except flights -->
@@ -230,47 +230,47 @@
           </div><!-- end of departure -->
 
           <div class="arrival">
-            <h5 class="form-section-header">ARRIVAL DETAILS</h5>
+            <h4 class="form-section-header">Arrival Details</h4>
             <div class="form-section-details">
 
               <div *ngIf="event.transport_type === 'flight'">
                 <div class="flight-details">
-                  <h5>GOING TO (CITY)</h5>
+                  <h5>Going To (City)</h5>
                   <h4>{{ event.arr_city }}</h4>
                 </div>
 
                 <div class="flight-details">
-                  <h5>ARRIVAL AIRPORT</h5>
+                  <h5>Arrival Airport</h5>
                   <h4>{{ event.arr_station }}</h4>
                 </div>
 
                 <div class="flight-details">
-                  <h5>ARRIVAL TERMINAL</h5>
+                  <h5>Arrival Terminal</h5>
                   <input type="text" class="transport-terminal" formControlName="arr_terminal" [value]="event.arr_terminal">
                 </div>
 
                 <div class="flight-details">
-                  <h5>ARRIVAL DATE</h5>
+                  <h5>Arrival Date</h5>
                   <h4>{{ event.arr_date | date: "dd MMM yyyy (EEEE)" }}</h4>
                 </div>
 
                 <div class="flight-details">
-                  <h5>ARRIVAL TIME</h5>
+                  <h5>Arrival Time</h5>
                   <h4>{{ event.arr_time }}</h4>
                 </div>
 
               </div><!-- end of arrival details for flights only -->
 
               <div *ngIf="event.transport_type !== 'flight'">
-                <label>GOING TO (CITY) <span class="required"> - required</span></label>
+                <label>Going To (City) <span class="required"> - required</span></label>
                 <input type="text" formControlName="arr_city" [value]="event.arr_city">
 
                 <!-- arrival details for all other transport type except vehicle rental-->
                 <div *ngIf="event.transport_type !== 'vehicle rental'">
-                  <label>ARRIVAL STATION / TERMINAL</label>
+                  <label>Arrival Station / Terminal</label>
                   <input type="text" formControlName="arr_station" [value]="event.arr_station">
 
-                  <label>ARRIVAL DATE (DD/MM/YYYY) <span class="required"> - required</span></label>
+                  <label>Arrival Date (DD/MM/YYYY) <span class="required"> - required</span></label>
                   <select class="select-date" name="arr_date" formControlName="arr_date" [value]="event?.arr_date">
                     <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
                       <div *ngIf="itinDate !== 'any day'">
@@ -279,12 +279,12 @@
                     </option>
                   </select>
 
-                  <label>ARRIVAL TIME</label>
+                  <label>Arrival Time</label>
                   <input type="time" formControlName="arr_time" [value]="event.arr_time">
                 </div>
 
                 <div *ngIf="event.transport_type === 'vehicle rental'">
-                  <label>RETURN DATE (DD/MM/YYYY) <span class="required"> - required</span></label>
+                  <label>Return Date (DD/MM/YYYY) <span class="required"> - required</span></label>
                   <select class="select-date" name="arr_date" formControlName="arr_date" [value]="event?.arr_date">
                     <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
                       <div *ngIf="itinDate !== 'any day'">
@@ -293,7 +293,7 @@
                     </option>
                   </select>
 
-                  <label>RETURN TIME</label>
+                  <label>Return Time</label>
                   <input type="time" formControlName="arr_time" [value]="event.arr_time">
                 </div>
               </div><!-- end of arrival details except flights -->
@@ -303,17 +303,17 @@
 
           <!-- template for vehicle rental -->
           <div *ngIf="event.transport_type === 'vehicle rental'">
-            <h5 class="form-section-header">RENTAL COMPANY DETAILS</h5>
+            <h4 class="form-section-header">Rental Company Details</h4>
             <div class="form-section-details">
-              <label>RENTAL COMPANY</label>
+              <label>Rental Company</label>
               <input type="text" formControlName="transport_company" [value]="event.transport_company">
 
-              <label>CONTACT NUMBER</label>
+              <label>Contact Number</label>
               <input type="text" class="contact-number-input" formControlName="contact_number" [value]="event.contact_number">
             </div>
           </div>
 
-          <h5 class="form-section-header">NOTE</h5>
+          <h4 class="form-section-header">Note</h4>
           <div class="form-section-details">
             <textarea rows="3" formControlName="note" [value]="event.note"></textarea>
           </div>

@@ -42,7 +42,7 @@
     <label class="file-upload" [class.file-upload-textarea]="textArea">
       <i class="fa fa-camera" aria-hidden="true"></i>
       Add a photo
-      <input type="file" (change)="fileUploaded($event)" [value]="inputValue">
+      <input type="file" (change)="fileUploaded($event)" [value]="inputValue" accept="image/*">
     </label>
   </div>
 

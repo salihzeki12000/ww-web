@@ -1,12 +1,13 @@
 <div class="custom-modal" *ngIf="showResourceSummary" (click)="showSummary()"></div>
 
 <div class="resource-summary" [class.show-summary]="showResourceSummary">
-  <h5 class="resource-summary-length">RESOURCE LIST ({{ resources.length }})</h5>
+  <h4 class="summary-quick-reference">Quick reference</h4>
+  <!-- <h5 class="resource-summary-length">RESOURCE LIST ({{ resources.length }})</h5> -->
   <div *ngFor="let resource of resources; let i = index" class="resource-summary-item" (click)="centerItem(resource)" [class.highlighted-item]="highlightedEvent === resource">
     <a href="#resource{{i}}">
       <h5 class="resource-summary-title">{{ resource.title }}</h5>
       <h5 class="resource-summary-content"> {{ resource.content }}</h5>
-      <h6 class="resource-summary-link truncate"><a class="website-link" href="{{ resource?.link_url }}" target="_blank">{{ resource.link_url }}</a></h6>
+      <h5 class="resource-summary-link truncate"><a class="website-link" href="{{ resource?.link_url }}" target="_blank">{{ resource.link_url }}</a></h5>
     </a>
   </div>
 </div>
@@ -16,7 +17,7 @@
     *ngFor="let resource of resources; let i = index"
     id="resource{{i}}"
     [resource]="resource"
-    [class.highlighted-event]="highlightedEvent === resource" 
+    [class.highlighted-event]="highlightedEvent === resource"
     [currentUser]="currentUser"
     [currentItinerary]="currentItinerary">
   </ww-resource>

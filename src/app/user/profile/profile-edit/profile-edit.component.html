@@ -6,7 +6,7 @@
       <h5 class="keep-original" *ngIf="newProfilePic" (click)="keepOriginal()">Keep original</h5>
       <label class="fileUpload">
         Change profile picture
-        <input type="file" (change)="fileUploaded($event)" [value]="inputValue">
+        <input type="file" (change)="fileUploaded($event)" [value]="inputValue" accept="image/*">
       </label>
     </div>
 
@@ -17,15 +17,15 @@
 
     <h5 class="profile-date-join">A wonderer wanderer since {{ currentUser?.created_at | date:'dd MMMM y'}}</h5>
 
-    <h4 class="profile-edit-section-header">PUBLIC DETAILS</h4>
+    <h4 class="profile-edit-section-header">Public Details</h4>
     <div class="profile-edit-section-details">
       <div class="profile-edit-item">
-        <h5>USERNAME</h5>
+        <h5>Username</h5>
         <input type="text" formControlName="username" [value]="currentUser?.username" #username>
       </div>
 
       <div class="profile-edit-item">
-        <h5>DESCRIPTION</h5>
+        <h5>Description</h5>
         <input type="text" formControlName="description" [value]="currentUser?.description" #description>
       </div>
 
@@ -38,15 +38,15 @@
       </div>
     </div>
 
-    <h4 class="profile-edit-section-header">PRIVATE DETAILS</h4>
+    <h4 class="profile-edit-section-header">Private Details</h4>
     <div class="profile-edit-section-details">
       <div class="profile-edit-item">
-        <h5>EMAIL</h5>
+        <h5>Email</h5>
         <input type="text" formControlName="email" [value]="currentUser?.email">
       </div>
 
       <div class="profile-edit-item">
-        <h5>CITY OF RESIDENCE</h5>
+        <h5>City of Residence</h5>
         <h4 *ngIf="currentUser?.city.name">{{ currentUser?.city.name }}</h4>
 
         <h6 *ngIf="currentUser?.city.name" [class.new-city-search]="currentUser?.city.name">Search below to amend your city of residence</h6>
@@ -56,12 +56,12 @@
 
       <div [class.city-exist]="currentUser?.city.name">
         <div class="profile-edit-item">
-          <h5>DATE OF BIRTH</h5>
+          <h5>Date of Birth</h5>
           <input type="date" formControlName="birth_date" [value]="currentUser?.birth_date | date: 'yyyy-MM-dd'">
         </div>
 
         <div class="profile-edit-item">
-          <h5>GENDER</h5>
+          <h5>Gender</h5>
           <select class="profile-gender-select" name="gender" formControlName="gender" [value]="currentUser?.gender">
             <option *ngFor="let gender of genders" [value]="gender">
               <h5>{{ gender }}</h5>
@@ -72,6 +72,7 @@
 
     </div>
 
+    <h4 class="profile-edit-section-header">Others</h4>
     <h4 class="deactivate-account" (click)="confirmDelete()">Deactivate your account</h4>
 
     <div class="action-response">

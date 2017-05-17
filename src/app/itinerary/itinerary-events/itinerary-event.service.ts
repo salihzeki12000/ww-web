@@ -86,6 +86,16 @@ export class ItineraryEventService  {
                     // .catch((error: Response) => console.log(error));
   }
 
+  copyEvent(event: ItineraryEvent, itinerary) {
+    const body = JSON.stringify(event);
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
+
+    return this.http.post( this.url + "/event/new/" + itinerary['_id'] + token, body, { headers: headers })
+                    .map((response: Response) => response.json())
+                    // .catch((error: Response) => console.log(error));
+  }
+
   editEvent(event: ItineraryEvent)  {
     const body = JSON.stringify(event);
     const headers = new Headers({ 'Content-Type': 'application/json' });

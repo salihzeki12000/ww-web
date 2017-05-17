@@ -61,6 +61,16 @@ export class ItineraryService {
                     .catch((error: Response) => Observable.throw(error.json()));
   }
 
+  copyItin(itinerary: Itinerary) {
+    const body = JSON.stringify(itinerary);
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
+
+    return this.http.post(this.url + '/itinerary/copy' + token, body, { headers: headers })
+                    .map((response: Response) => response.json())
+                    .catch((error: Response) => Observable.throw(error.json()));
+  }
+
   editItin(itinerary: Itinerary, method)  {
     const body = JSON.stringify(itinerary);
     const headers = new Headers({ 'Content-Type': 'application/json' });
