@@ -9,6 +9,7 @@ import { UserService }         from '../../user.service';
 import { RelationshipService } from '../../relationships/relationship.service';
 import { FlashMessageService } from '../../../flash-message';
 import { Post, PostService }   from '../../../post';
+import { LoadingService }      from '../../../loading';
 
 @Component({
   selector: 'ww-profile-details',
@@ -37,6 +38,7 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
     private postService: PostService,
     private relationshipService: RelationshipService,
     private flashMessageService: FlashMessageService,
+    private loadingService: LoadingService,
     private router: Router) {}
 
   ngOnInit() {
@@ -67,6 +69,7 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
                                        }
                                      )
 
+    this.loadingService.setLoader(false, "");
   }
 
   @HostListener('window:scroll', ['$event'])
@@ -81,7 +84,9 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.relationshipSubscription.unsubscribe();
-    this.postsSubscription.unsubscribe();    this.currentUserSubscription.unsubscribe();
+    this.postsSubscription.unsubscribe();
+    this.currentUserSubscription.unsubscribe();
+    this.loadingService.setLoader(true, "");
   }
 
   onDelete()  {

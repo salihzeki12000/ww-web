@@ -5,6 +5,8 @@ import { Observable, ReplaySubject } from 'rxjs';
 
 import { Post } from './post';
 
+import { ErrorMessageService } from '../error-message';
+
 @Injectable()
 export class PostService  {
   private posts: Post[] = [];
@@ -16,7 +18,9 @@ export class PostService  {
   // private url = 'http://localhost:9000';
   private url = 'https://vast-island-87972.herokuapp.com';
 
-  constructor( private http: Http)  {}
+  constructor(
+    private http: Http,
+    private errorMessageService: ErrorMessageService)  {}
 
   getPosts() {
     const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
@@ -26,7 +30,10 @@ export class PostService  {
                       this.timeAgo(this.posts);
                       return this.posts;
                     })
-                    // .catch((error: Response) => Observable.throw(error.json()));
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
   }
 
   getFeed() {
@@ -46,9 +53,11 @@ export class PostService  {
     const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
 
     return this.http.post( this.url + "/posts/linkpreview" + token, body, { headers: headers })
-                    .map((response: Response) =>  {
-                      return response.json();
-                    })
+                    .map((response: Response) => response.json())
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
   }
 
   addPost(post: Post) {
@@ -62,7 +71,10 @@ export class PostService  {
                       this.timeAgo(this.posts);
                       return response.json();
                     })
-                    // .catch((error: Response) => Observable.throw(error.json()));
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
   }
 
   editPost(post: Post)  {
@@ -77,7 +89,10 @@ export class PostService  {
                       this.updatePost.next(this.posts);
                       return response.json()
                     })
-                    // .catch((error: Response) => Observable.throw(error.json()));
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
   }
 
   deletePost(post: Post)  {
@@ -90,7 +105,10 @@ export class PostService  {
                       this.updatePost.next(this.posts);
                       return response.json()
                     })
-                    // .catch((error: Response) => Observable.throw(error.json()));
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
   }
 
   timeAgo(posts) {

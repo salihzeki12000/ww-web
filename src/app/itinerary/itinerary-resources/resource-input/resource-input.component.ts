@@ -18,7 +18,9 @@ export class ResourceInputComponent implements OnInit, OnDestroy {
   @Output() hideResourceForm = new EventEmitter();
 
   resourceForm: FormGroup;
+
   textArea = false;
+  fetchLink = false;
   linkExist = false;
   link_url;
   link_title;
@@ -65,6 +67,7 @@ export class ResourceInputComponent implements OnInit, OnDestroy {
 
     for (let i = 0; i < texts.length; i++) {
       if(texts[i].match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g)) {
+        this.fetchLink = true;
         this.postService.getPreview({link:texts[i]})
                         .subscribe(
                           result => {
@@ -81,6 +84,8 @@ export class ResourceInputComponent implements OnInit, OnDestroy {
                             if(result.meta_img) {
                               this.link_img = result.meta_img.trim();
                             }
+
+                            this.fetchLink = false;
                           }
                         );
       }

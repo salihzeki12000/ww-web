@@ -3,8 +3,9 @@ import { Router } from '@angular/router';
 declare const FB: any;
 declare const gapi: any;
 
-import { AuthService } from './auth.service';
-import { UserService } from '../user';
+import { AuthService }    from './auth.service';
+import { UserService }    from '../user';
+import { LoadingService } from '../loading';
 
 @Component({
   selector: 'ww-auth',
@@ -19,6 +20,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
   constructor(
     private authService: AuthService,
     private userService: UserService,
+    private loadingService: LoadingService,
     private _zone: NgZone,
     private router: Router)  {
       FB.init({
@@ -30,6 +32,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
     }
 
   ngOnInit()  {
+    this.loadingService.setLoader(false, "");
     // FB.getLoginStatus(response => {
     //   this.statusChangeCallback(response);
     // });
@@ -45,7 +48,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
   loginFacebook() {
     FB.login((response) =>  {
       this.getDetails();
-    }, {scope: 'email'});
+    }, {scope: 'email,user_location' });
   }
 
   getDetails() {
@@ -56,15 +59,16 @@ export class AuthComponent implements OnInit, AfterViewInit {
           // if no email, to open up a modal notice and to sign up or sign in
           result['username'] = result['name'];
           result['display_picture'] = result['picture']['data']['url'];
+
           console.log(result);
           this.authService.loginFacebook(result)
               .subscribe(
                 data => {
-                  this.router.navigateByUrl('/me');
+                  this.loadingService.setLoader(true, "get ready to wonder wander");
 
-                  // setTimeout(() =>  {
-                  //   this.router.navigateByUrl('/me');
-                  // }, 1000)
+                  setTimeout(() =>  {
+                    this.router.navigateByUrl('/me');
+                  }, 1000)
                 }
               )
         } else {
@@ -98,6 +102,8 @@ export class AuthComponent implements OnInit, AfterViewInit {
       display_picture: display_picture,
     }).subscribe( data => {
       console.log("log in google ok")
+      this.loadingService.setLoader(true, "get ready to wonder wander");
+
       setTimeout(() =>  {
         this.router.navigateByUrl('/me');
       }, 1000)

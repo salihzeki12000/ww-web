@@ -27,11 +27,6 @@ export class FlashMessageComponent implements OnInit {
 // [ngStyle]="{'display': display}"
   constructor(private flashMessageService: FlashMessageService) {}
 
-  onErrorHandled() {
-      // this.display = 'none';
-      this.messageState = 'out';
-  }
-
   ngOnInit() {
       this.flashMessageService.flashMessageActivated
           .subscribe(

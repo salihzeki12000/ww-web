@@ -10,7 +10,7 @@
 
   <div class="display-photo-housing">
 
-    <div class="dots-menu" (mouseover)="showMenuOptions()">
+    <div class="dots-menu" (click)="showMenuOptions()" (mouseover)="showMenuOptions()">
       <div class="item-menu" *ngIf="showMenu">
         <ul>
           <!-- <li>
@@ -29,10 +29,17 @@
       </div>
     </div>
 
-    <h5 class="date-header" *ngIf="activity?.date === 'any day'">{{ activity?.date }} - {{ activity?.time }}</h5>
-    <h5 class="date-header" *ngIf="activity?.date !== 'any day'">{{ activity?.date | date: 'dd MMM yyyy (EEE)' }} - {{ activity?.time }}</h5>
+    <div class="display-date-header" *ngIf="activity?.date === 'any day'">
+      <h5>{{ activity?.date }} - {{ activity?.time }}</h5>
+      <h5>{{ index + 1 }} of {{ totalActivities }}</h5>
+    </div>
 
-    <h4 class="activity-header">{{ activity?.name }}</h4>
+    <div class="display-date-header" *ngIf="activity?.date !== 'any day'">
+      <h5>{{ activity?.date | date: 'dd MMM yyyy (EEE)' }} - {{ activity?.time }}</h5>
+      <h5>{{ index + 1 }} of {{ totalActivities }}</h5>
+    </div>
+
+    <h3 class="activity-header">{{ activity?.name }}</h3>
 
     <div class="activity-contact-details" (click)="toggleContactDetails()">
       <h5>Address and contact number</h5>
@@ -181,8 +188,8 @@
           </div>
 
           <div class="action-response">
-            <h4 class="action-response-secondary" (click)="cancelEdit()">CANCEL</h4>
-            <button type="submit" class="action-response-primary"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
+            <h5 class="action-response-secondary" (click)="cancelEdit()">CANCEL</h5>
+            <button type="submit" class="action-response-primary"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
           </div>
 
         </div>
@@ -214,8 +221,8 @@
 
     <div class="confirm-delete-footer">
       <div class="action-response">
-        <h4 class="action-response-primary" (click)="cancelDelete()">CANCEL</h4>
-        <h4 class="action-response-warning" (click)="confirmDelete()">DELETE</h4>
+        <h5 class="action-response-primary" (click)="cancelDelete()">CANCEL</h5>
+        <h5 class="action-response-warning" (click)="confirmDelete()">DELETE</h5>
       </div>
     </div>
   </div>

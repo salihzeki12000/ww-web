@@ -32,12 +32,12 @@
         <h6>YOUR ITINERARIES</h6>
       </div>
       <h5 class="dropdown-new-itinerary" (click)="newItinerary()"><i class="fa fa-plus" aria-hidden="true"></i> Plan a new itinerary</h5>
-      <div class="itinerary-list">
+      <div>
         <div *ngIf="currentUser?.itineraries.length === 0">
           <h5 class="nil-dropdown-item">No itinerary at the moment</h5>
         </div>
         <div *ngFor="let itinerary of currentUser?.itineraries | slice:0:5" class="dropdown-item">
-          <div [routerLink]="['itinerary/', itinerary._id]" (click)="hideItineraryList()">
+          <div [routerLink]="['itinerary/', itinerary._id]" (click)="hideItineraryList(itinerary._id)">
             <h5>{{ itinerary.name }}</h5>
             <h6>( {{ itinerary.date_from | date:'dd MMM yy' }} to {{ itinerary.date_to | date:'dd MMM yy' }} )</h6>
           </div>
@@ -148,7 +148,7 @@
     <div class="side-nav-menu">
       <div class="side-nav-menu-arrow-down"></div>
       <div>
-        <div class="category-header" (click)="toggleConnectionsSection()">
+        <div class="category-header" (click)="connectionsSection = !connectionsSection">
           <h4>Connections <i class="fa fa-caret-down" aria-hidden="true"></i>
           </h4>
         </div>
@@ -178,7 +178,7 @@
       </div>
 
       <div>
-        <div class="category-header" (click)="toggleItinerariesSection()">
+        <div class="category-header" (click)="itinerariesSection = !itinerariesSection">
           <h4>Itineraries <i class="fa fa-caret-down" aria-hidden="true"></i></h4>
         </div>
 
@@ -186,7 +186,7 @@
           <div class="category-item">
             <h5 class="new-itinerary" (click)="newItinerary()"><i class="fa fa-plus" aria-hidden="true"></i> Plan a new itinerary</h5>
           </div>
-          <div class="itinerary-list">
+          <div>
             <div *ngFor="let itinerary of currentUser?.itineraries | slice:0:5" class="category-item">
               <div [routerLink]="['itinerary/', itinerary._id]" routerLinkActive="active" (click)="exitSideNav()">
                 <h5>{{ itinerary.name }}</h5>
@@ -201,7 +201,7 @@
       </div>
 
       <div>
-        <div class="category-header" (click)="toggleSettingsSection()">
+        <div class="category-header" (click)="settingsSection = !settingsSection">
           <h4>Settings <i class="fa fa-caret-down" aria-hidden="true"></i></h4>
         </div>
         <div *ngIf="settingsSection">

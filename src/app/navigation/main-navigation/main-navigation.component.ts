@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy, Renderer } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
 import { User, UserService, RelationshipService }  from '../../user';
 import { ItineraryService, ItineraryEventService } from '../../itinerary';
 import { AuthService }                             from '../../auth';
+import { LoadingService }                          from '../../loading';
 
 @Component({
   selector: 'ww-main-navigation',
@@ -47,13 +48,15 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private renderer: Renderer,
     private formBuilder: FormBuilder,
     private userService: UserService,
     private authService: AuthService,
     private itineraryEventService: ItineraryEventService,
     private relationshipService: RelationshipService,
-    private itineraryService: ItineraryService ) { }
+    private itineraryService: ItineraryService,
+    private loadingService: LoadingService) { }
 
   ngOnInit() {
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
@@ -154,8 +157,14 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     this.showItineraries = true;
   }
 
-  hideItineraryList() {
+  hideItineraryList(id) {
     this.showItineraries = false;
+
+    if(this.route.snapshot['_urlSegment'].segments[2]) {
+      if(this.route.snapshot['_urlSegment'].segments[2].path !== id)  {
+        this.loadingService.setLoader(true, "");
+      }
+    }
   }
 
   showFollowerRequestsList() {
@@ -188,19 +197,6 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     this.sideNav = false;
     this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
-
-  toggleConnectionsSection() {
-    this.connectionsSection = !this.connectionsSection;
-  }
-
-  toggleItinerariesSection() {
-    this.itinerariesSection = !this.itinerariesSection;
-  }
-
-  toggleSettingsSection() {
-    this.settingsSection = !this.settingsSection;
-  }
-
 
   // user search
   getUsers()  {

@@ -33,6 +33,12 @@
           <h4 class="transport-type-header">Search For Your Flight</h4>
 
           <div class="form-section-details">
+            <div class="loading-overlay" *ngIf="fetchFlightDetails">
+              <div class="loading-message">
+                <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+              </div>
+            </div>
+
             <div class="search-airline-code">
               <label>Airline Code</label>
               <input type="text" id="search-airline-code" formControlName="searchAirlineCode" maxlength="2" autofocus>
@@ -70,7 +76,7 @@
           </div>
 
           <div class="action-response">
-            <button type="submit" (click)="searchFlightDetails()" class="action-response-primary" [disabled]="!searchFlightForm.valid"><h4>SEARCH FLIGHT</h4></button>
+            <button type="submit" (click)="searchFlightDetails()" class="action-response-primary" [disabled]="!searchFlightForm.valid"><h5>SEARCH FLIGHT</h5></button>
           </div>
         </form>
 
@@ -90,7 +96,7 @@
           </div>
 
           <div class="action-response">
-            <h4 class="action-response-primary" (click)="getFlightDetails()">GET FLIGHT DETAILS</h4>
+            <h5 class="action-response-primary" (click)="getFlightDetails()">GET FLIGHT DETAILS</h5>
           </div>
         </div>
 
@@ -175,8 +181,8 @@
             </div>
 
             <div class="action-response">
-              <h4 class="action-response-secondary" (click)="cancelForm()">CANCEL</h4>
-              <button type="submit" class="action-response-primary" [disabled]="!addTransportForm.valid"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
+              <h5 class="action-response-secondary" (click)="cancelForm()">CANCEL</h5>
+              <button type="submit" class="action-response-primary" [disabled]="!addTransportForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
             </div>
           </div>
         </div>
@@ -296,8 +302,8 @@
           </div>
 
           <div class="action-response">
-            <h4 class="action-response-secondary" (click)="cancelForm()">CANCEL</h4>
-            <button type="submit" class="action-response-primary" [disabled]="!addTransportForm.valid"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
+            <h5 class="action-response-secondary" (click)="cancelForm()">CANCEL</h5>
+            <button type="submit" class="action-response-primary" [disabled]="!addTransportForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
           </div>
         </div><!-- end of details for transport exclude flight -->
 
@@ -307,3 +313,23 @@
   </div><!-- end of formCard -->
 
 </form>
+
+<div class="custom-modal" *ngIf="flightNotFound" (click)="exitError()">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>Flight not found</h3>
+      <a (click)="exitError()">x</a>
+    </div>
+
+    <div class="confirm-delete-content">
+      <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
+      <h4>Oops! Seems like your flight does not exist. Please check your flight number and date of departure again.</h4>
+    </div>
+
+    <div class="confirm-delete-footer">
+      <div class="action-response">
+        <h5 class="action-response-primary" (click)="exitError()">OK</h5>
+      </div>
+    </div>
+  </div>
+</div>

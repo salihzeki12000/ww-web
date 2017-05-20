@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Rx';
 import { ItineraryService }      from '../../itinerary.service';
 import { ItineraryEvent }        from '../itinerary-event';
 import { ItineraryEventService } from '../itinerary-event.service';
-import { UserService }           from '../../../user';
+import { LoadingService }        from '../../../loading';
 
 @Component({
   selector: 'ww-itinerary-accommodation',
@@ -15,12 +15,10 @@ import { UserService }           from '../../../user';
 export class ItineraryAccommodationComponent implements OnInit, OnDestroy {
   eventSubscription: Subscription;
   accommodations: ItineraryEvent[] = [];
+  totalAccommodations = 1;
 
   itinDateSubscription: Subscription;
   itinDateRange = [];
-
-  currentUserSubscription: Subscription;
-  currentUser;
 
   currentItinerarySubscription: Subscription;
   currentItinerary;
@@ -32,14 +30,11 @@ export class ItineraryAccommodationComponent implements OnInit, OnDestroy {
     private renderer: Renderer,
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
-    private userService: UserService) { }
+    private loadingService: LoadingService) { }
 
   ngOnInit() {
     this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
                                  result => { this.filterEvent(result); })
-
-    this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
-                                       result => { this.currentUser = result; })
 
     this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
                                             result => { this.currentItinerary = result; })
@@ -54,8 +49,8 @@ export class ItineraryAccommodationComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.itinDateSubscription.unsubscribe();
     this.eventSubscription.unsubscribe();
-    this.currentUserSubscription.unsubscribe();
     this.currentItinerarySubscription.unsubscribe();
+    this.loadingService.setLoader(true, "");
   }
 
   filterEvent(events) {
@@ -65,6 +60,8 @@ export class ItineraryAccommodationComponent implements OnInit, OnDestroy {
         this.accommodations.push(events[i])
       }
     }
+    this.totalAccommodations = this.accommodations.length;
+    this.loadingService.setLoader(false, "");
   }
 
   showSummary() {

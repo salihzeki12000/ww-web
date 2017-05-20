@@ -6,6 +6,15 @@
   }
 }
 
+.lat-lng div  {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.lat-lng input  {
+  width: 100px;
+}
+
 .file-upload {
   overflow: hidden;
   position: relative;

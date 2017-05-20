@@ -40,6 +40,14 @@
   }
 }
 
+// .date-display {
+//   position: fixed;
+// }
+//
+// .date-display > div {
+//   display: inline-block;
+// }
+
 .date-column  {
   display: inline-block;
   min-width: 280px;
@@ -61,6 +69,7 @@
 }
 
 .date {
+  width: 280px;
   text-align: left;
   margin-bottom: 10px;
   padding: 15px 10px 10px 10px;
@@ -68,21 +77,12 @@
   letter-spacing: 0.5px;
   color: #F9FBFB;
   background-color: #567FCC;
+  border-right: 1px solid lightgray;
+
+  @media only screen and (max-width: 400px) {
+    width: 100%;
+  }
 }
-
-// .date-end {
-//   position: absolute;
-//   bottom: 50px;
-// }
-
-// .event-time  {
-//   display: inline-block;
-//   width: 55px;
-//   padding: 30px 0 0 10px;
-//   color: grey;
-//   vertical-align: top;
-//   text-align: right;
-// }
 
 .event-time  {
   padding-left: 5px;
@@ -90,12 +90,11 @@
 }
 
 .event-stay-city  {
-  padding: 10px 5px 0 10px;
+  padding-bottom: 10px;
   color: #6494ED;
 }
 
 .event-name  {
-  padding: 10px;
   overflow-wrap: break-word;
   border-bottom: 3px solid white;
 }
@@ -114,6 +113,7 @@
 .accommodation-indicator  {
   display: inline-block;
   margin: 5px 20px 10px 20px;
+  padding: 10px;
   width: 240px;
   background-color: #FFF;
   border-left: 10px solid rgba(100,235,219,0.5);
@@ -131,6 +131,7 @@
 .transport-indicator  {
   display: inline-block;
   margin: 5px 20px 10px 20px;
+  padding: 10px;
   width: 240px;
   background-color: #FFF;
   border-left: 10px solid rgba(237,100,148,0.5);
@@ -148,6 +149,7 @@
 .activity-indicator {
   display: inline-block;
   margin: 5px 20px 10px 20px;
+  padding: 10px;
   width: 240px;
   background-color: #FFF;
   border-left: 10px solid rgba(237,189,100,0.5);
@@ -175,6 +177,12 @@
   padding-bottom: 0;
 }
 
+.activity-indicator h5,
+.accommodation-indicator h5,
+.transport-indicator h5 {
+  font-weight: 500;
+}
+
 /* to display horizontal scrollbar */
 .date-row::-webkit-scrollbar {
     -webkit-appearance: none;
@@ -199,9 +207,8 @@
   position: fixed;
   // top: 50px;
   // right: 260px;
-  height: 50px;
-  width: 100vw;
-  padding: 17px 0 0 15px;
+  height: 38px;
+  padding: 14px 0 0 13px;
   color: lightgray;
   &:hover {
     color: grey;
@@ -239,7 +246,7 @@
 
 .details-in-summary {
   position: fixed;
-  top: 90px;
+  top: 80px;
   right: 0;
   background-color: #FFC65C;
 
@@ -252,4 +259,8 @@
 
 .details-in-summary::-webkit-scrollbar  {
   -webkit-appearance: none;
+}
+
+.nil-event-message  {
+  margin-top: 100px;
 }

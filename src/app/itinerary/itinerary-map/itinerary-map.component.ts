@@ -3,8 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 declare var google:any;
 
-import { ItineraryEvent } from '../itinerary-events/itinerary-event';
+import { ItineraryEvent }        from '../itinerary-events/itinerary-event';
 import { ItineraryEventService } from '../itinerary-events/itinerary-event.service';
+import { LoadingService }        from '../../loading';
 
 @Component({
   selector: 'ww-itinerary-map',
@@ -29,7 +30,8 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
   constructor(
     private renderer: Renderer,
     private itineraryEventService: ItineraryEventService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private loadingService: LoadingService) { }
 
   ngOnInit() {
     this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
@@ -41,6 +43,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.eventSubscription.unsubscribe();
+    this.loadingService.setLoader(true, "");
   }
 
   filterEvents(events)  {
@@ -127,6 +130,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
         infoWindow.open(map, marker)
       })
     }
+    this.loadingService.setLoader(false, "");
   }
 
   changeCenter(event)  {

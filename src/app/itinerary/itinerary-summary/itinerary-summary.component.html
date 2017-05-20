@@ -12,7 +12,13 @@
   </div>
 </div>
 
+<div *ngIf="!totalEvents" class="nil-event-message">
+  <h4>You have not added any item to show on this summary</h4>
+  <h4>You can add a new item by selecting the "ADD NEW" tab and then the respective options for accommodation, activity or transport</h4>
+</div>
+
 <div class="date-row" [class.show-details-in-summary-true]="showDetailsInSummary">
+
   <div *ngFor="let date of itinDateRange; let i = index" class="date-column">
     <div *ngIf="date === 'any day'">
       <h5 class="date">Any day</h5>
@@ -52,8 +58,8 @@
         </div>
 
         <div *ngIf="event?.type === 'transport'" class="transport-indicator" (click)="showDetails(event)">
-          <div *ngIf="event?.approach === 'departure'" class="event-name">
 
+          <div *ngIf="event?.approach === 'departure'" class="event-name">
             <div [ngSwitch]="event?.transport_type">
               <h5 *ngSwitchCase="'flight'"><i class="fa fa-plane" aria-hidden="true"></i> {{ event?.reference_number | uppercase }}</h5>
               <h5 *ngSwitchCase="'train'"><i class="fa fa-train" aria-hidden="true"></i> Train</h5>
@@ -67,7 +73,6 @@
           </div>
 
           <div *ngIf="event?.approach === 'arrival'" class="event-name">
-
             <div [ngSwitch]="event?.transport_type">
               <h5 *ngSwitchCase="'flight'"><i class="fa fa-plane" aria-hidden="true"></i> {{ event?.reference_number | uppercase }} arrives {{ event?.arr_city}}</h5>
               <h5 *ngSwitchCase="'train'"><i class="fa fa-train" aria-hidden="true"></i> Train arrives {{ event?.arr_city}}</h5>
@@ -76,22 +81,11 @@
               <h5 *ngSwitchCase="'vehicle rental'"><i class="fa fa-car" aria-hidden="true"></i> Vehicle rental arrives {{ event?.arr_city}}</h5>
               <h5 *ngSwitchCase="'others'"><i class="fa fa-rocket" aria-hidden="true"></i> Transport arrives {{ event?.arr_city}}</h5>
             </div>
-
           </div>
         </div>
 
       </div>
     </div>
-
-    <!-- <div *ngIf="date === 'any day'">
-      <h5 class="date date-end">Any day</h5>
-    </div>
-
-    <div *ngIf="date !== 'any day'">
-      <div class="date date-end">
-        <h5>Day {{ i }} - {{ date | date: "dd MMM (EEE)" }}</h5>
-      </div>
-    </div> -->
 
   </div>
 </div>
@@ -105,15 +99,15 @@
     </div>
 
     <div *ngIf="chosenEvent?.type === 'transport'" class="details-in-summary">
-      <ww-transport [event]="chosenEvent"></ww-transport>
+      <ww-transport [event]="chosenEvent" [itinDateRange]="itinDateRange"></ww-transport>
     </div>
 
     <div *ngIf="chosenEvent?.type === 'activity'" class="details-in-summary">
-      <ww-activity [activity]="chosenEvent"></ww-activity>
+      <ww-activity [activity]="chosenEvent" [itinDateRange]="itinDateRange"></ww-activity>
     </div>
 
     <div *ngIf="chosenEvent?.type === 'accommodation'" class="details-in-summary">
-      <ww-accommodation [event]="chosenEvent"></ww-accommodation>
+      <ww-accommodation [event]="chosenEvent" [itinDateRange]="itinDateRange"></ww-accommodation>
     </div>
   </div>
 </div>

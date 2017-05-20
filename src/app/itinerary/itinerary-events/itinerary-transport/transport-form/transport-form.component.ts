@@ -35,6 +35,10 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   airportsChoosen = false;
 
   searchFlightForm: FormGroup;
+
+  fetchFlightDetails = false;
+  flightNotFound = false;
+
   flightSearchDetail;
   codeshare = false;
   stopOver = false;
@@ -136,6 +140,8 @@ export class TransportFormComponent implements OnInit, OnDestroy {
 
   // get flight details from flightstats.com
   searchFlightDetails()  {
+    this.fetchFlightDetails = true;
+
     let airlineCode = (this.searchFlightForm.value.searchAirlineCode).toUpperCase();
     let flightNumber = this.searchFlightForm.value.searchFlightNumber;
 
@@ -149,179 +155,186 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     this.itineraryEventService.getFlightDetails(criteria)
         .subscribe(
           data => {
-            let scheduledFlights = data['scheduledFlights'];
-            let appendix = data['appendix'];
+            if(data['scheduledFlights'].length === 0) {
+              this.flightNotFound = true;
+            } else  {
+              let scheduledFlights = data['scheduledFlights'];
+              let appendix = data['appendix'];
 
-            let flightNumber = scheduledFlights[0].flightNumber;
-            let carrierCode = scheduledFlights[0].carrierFsCode;
-            let carrier;
-
-            for (let i = 0; i < appendix.airlines.length; i++) {
-              if (appendix.airlines[i].fs === carrierCode)  {
-                carrier = appendix.airlines[i].name;
-              }
-            }
-
-            let operatingCarrier;
-            let operatingCarrierCode;
-            let operatingFlightNumber;
-
-            if(scheduledFlights[0].isCodeshare) {
-              this.codeshare = true;
-              operatingCarrierCode = scheduledFlights[0].operator.carrierFsCode;
-              operatingFlightNumber = scheduledFlights[0].operator.flightNumber;
+              let flightNumber = scheduledFlights[0].flightNumber;
+              let carrierCode = scheduledFlights[0].carrierFsCode;
+              let carrier;
 
               for (let i = 0; i < appendix.airlines.length; i++) {
-                if (appendix.airlines[i].fs === operatingCarrierCode)  {
-                  operatingCarrier = appendix.airlines[i].name;
+                if (appendix.airlines[i].fs === carrierCode)  {
+                  carrier = appendix.airlines[i].name;
                 }
               }
+
+              let operatingCarrier;
+              let operatingCarrierCode;
+              let operatingFlightNumber;
+
+              if(scheduledFlights[0].isCodeshare) {
+                this.codeshare = true;
+                operatingCarrierCode = scheduledFlights[0].operator.carrierFsCode;
+                operatingFlightNumber = scheduledFlights[0].operator.flightNumber;
+
+                for (let i = 0; i < appendix.airlines.length; i++) {
+                  if (appendix.airlines[i].fs === operatingCarrierCode)  {
+                    operatingCarrier = appendix.airlines[i].name;
+                  }
+                }
+              }
+
+              if(scheduledFlights.length === 1) {
+                let departureAirportCode = scheduledFlights[0].departureAirportFsCode;
+                let arrivalAirportCode = scheduledFlights[0].arrivalAirportFsCode;
+                let departureTerminal;
+
+                if(scheduledFlights[0].departureTerminal !== '')  {
+                  departureTerminal = "Terminal " + scheduledFlights[0].departureTerminal;
+                }
+
+                let departureTime = scheduledFlights[0].departureTime.slice(11,16);
+                let arrivalTime = scheduledFlights[0].arrivalTime.slice(11,16);
+
+                let departureYear = scheduledFlights[0].departureTime.slice(0,4);
+                let departureMonth = scheduledFlights[0].departureTime.slice(5,7);
+                let departureDay = scheduledFlights[0].departureTime.slice(8,10);
+                let departureDate = departureYear + "-" + departureMonth + "-" + departureDay + "T00:00:00.000Z";
+
+                let arrivalYear = scheduledFlights[0].arrivalTime.slice(0,4);
+                let arrivalMonth = scheduledFlights[0].arrivalTime.slice(5,7);
+                let arrivalDay = scheduledFlights[0].arrivalTime.slice(8,10);
+                let arrivalDate = arrivalYear + "-" + arrivalMonth + "-" + arrivalDay + "T00:00:00.000Z";
+
+                let departureAirport;
+                let departureCity;
+                let departureCountry;
+                let departureStationLocation;
+
+                for (let i = 0; i < appendix.airports.length; i++) {
+                  if (appendix.airports[i].fs === departureAirportCode) {
+                    departureAirport = appendix.airports[i].name;
+                    departureCity = appendix.airports[i].city;
+                    departureCountry = appendix.airports[i].countryName;
+                    departureStationLocation = {
+                      lat: appendix.airports[i].latitude,
+                      lng: appendix.airports[i].longitude,
+                    }
+                  }
+                }
+
+                let arrivalAirport;
+                let arrivalCity;
+                let arrivalCountry;
+                let arrivalStationLocation;
+
+                for (let i = 0; i < appendix.airports.length; i++) {
+                  if (appendix.airports[i].fs === arrivalAirportCode) {
+                    arrivalAirport = appendix.airports[i].name;
+                    arrivalCity = appendix.airports[i].city;
+                    arrivalCountry = appendix.airports[i].countryName;
+                    arrivalStationLocation = {
+                      lat: appendix.airports[i].latitude,
+                      lng: appendix.airports[i].longitude,
+                    }
+                  }
+                }
+
+                this.flightSearchDetail = {
+                  transport_company: carrier,
+                  carrierCode: carrierCode,
+                  reference_number: flightNumber,
+                  dep_station: departureAirport,
+                  depAirportCode: departureAirportCode,
+                  dep_city: departureCity,
+                  depCountry: departureCountry,
+                  dep_terminal: departureTerminal,
+                  dep_date: departureDate,
+                  dep_time: departureTime,
+                  dep_station_location: departureStationLocation,
+                  arr_station: arrivalAirport,
+                  arrAirportCode: arrivalAirportCode,
+                  arr_city: arrivalCity,
+                  arrCountry: arrivalCountry,
+                  arr_date: arrivalDate,
+                  arr_time: arrivalTime,
+                  arr_station_location: arrivalStationLocation,
+                  operating_carrier: operatingCarrier,
+                  operating_flight: operatingCarrierCode + operatingFlightNumber
+                };
+                this.populateFlightDetails = true;
+              }//end of section where there is only 01 flight
+
+              if (scheduledFlights.length > 1)  {
+                this.stopOver = true;
+                this.chooseAirport = true;
+
+                //convert departureTime to timestamp to sort by time
+                for (let i = 0; i < scheduledFlights.length; i++) {
+                  scheduledFlights[i]['convertedDepartureTime'] = (new Date(scheduledFlights[i].departureTime)).getTime();
+                }
+                //sort the scheduledFlights array by time
+                scheduledFlights.sort((a,b) =>  {
+                  return a['convertedDepartureTime'] - b['convertedDepartureTime'];
+                })
+
+                this.flightSearchDetail = data;
+                this.flightSearchDetail['transport_company'] = carrier;
+                this.flightSearchDetail['carrierCode'] = carrierCode;
+                this.flightSearchDetail['reference_number'] = flightNumber;
+                this.flightSearchDetail['operating_carrier'] = operatingCarrier;
+                this.flightSearchDetail['operating_flight'] = operatingCarrierCode + operatingFlightNumber;
+
+                //create list of airports for user to choose
+                let airportBySchedule = [];
+
+                for (let i = 0; i < scheduledFlights.length; i++) {
+                  airportBySchedule.push(scheduledFlights[i].departureAirportFsCode);
+                }
+
+                for (let i = 0; i < scheduledFlights.length; i++) {
+                  let arrivalAirport = scheduledFlights[i].arrivalAirportFsCode;
+                  if(airportBySchedule.indexOf(arrivalAirport) < 0) {
+                    airportBySchedule.push(arrivalAirport);
+                  }
+                }
+
+                this.depAirports = [];
+                for (let i = 0; i < airportBySchedule.length - 1; i++) {
+                  for (let j = 0; j < appendix.airports.length; j++) {
+                    if (airportBySchedule[i] === appendix.airports[j].fs) {
+                      this.depAirports.push({
+                        city: appendix.airports[j].city,
+                        airportName: appendix.airports[j].name,
+                        airportCode: appendix.airports[j].fs
+                      })
+                    }
+                  }
+                }
+
+                this.arrAirports = [];
+                for (let i = 1; i < airportBySchedule.length; i++) {
+                  for (let j = 0; j < appendix.airports.length; j++) {
+                    if (airportBySchedule[i] === appendix.airports[j].fs) {
+                      this.arrAirports.push({
+                        city: appendix.airports[j].city,
+                        airportName: appendix.airports[j].name,
+                        airportCode: appendix.airports[j].fs
+                      })
+                    }
+                  }
+                }
+                this.populateFlightDetails = true;
+              }//end of if more than 01 flight
+
             }
-
-            if(scheduledFlights.length === 1) {
-              let departureAirportCode = scheduledFlights[0].departureAirportFsCode;
-              let arrivalAirportCode = scheduledFlights[0].arrivalAirportFsCode;
-              let departureTerminal;
-
-              if(scheduledFlights[0].departureTerminal !== '')  {
-                departureTerminal = "Terminal " + scheduledFlights[0].departureTerminal;
-              }
-
-              let departureTime = scheduledFlights[0].departureTime.slice(11,16);
-              let arrivalTime = scheduledFlights[0].arrivalTime.slice(11,16);
-
-              let departureYear = scheduledFlights[0].departureTime.slice(0,4);
-              let departureMonth = scheduledFlights[0].departureTime.slice(5,7);
-              let departureDay = scheduledFlights[0].departureTime.slice(8,10);
-              let departureDate = departureYear + "-" + departureMonth + "-" + departureDay + "T00:00:00.000Z";
-
-              let arrivalYear = scheduledFlights[0].arrivalTime.slice(0,4);
-              let arrivalMonth = scheduledFlights[0].arrivalTime.slice(5,7);
-              let arrivalDay = scheduledFlights[0].arrivalTime.slice(8,10);
-              let arrivalDate = arrivalYear + "-" + arrivalMonth + "-" + arrivalDay + "T00:00:00.000Z";
-
-              let departureAirport;
-              let departureCity;
-              let departureCountry;
-              let departureStationLocation;
-
-              for (let i = 0; i < appendix.airports.length; i++) {
-                if (appendix.airports[i].fs === departureAirportCode) {
-                  departureAirport = appendix.airports[i].name;
-                  departureCity = appendix.airports[i].city;
-                  departureCountry = appendix.airports[i].countryName;
-                  departureStationLocation = {
-                    lat: appendix.airports[i].latitude,
-                    lng: appendix.airports[i].longitude,
-                  }
-                }
-              }
-
-              let arrivalAirport;
-              let arrivalCity;
-              let arrivalCountry;
-              let arrivalStationLocation;
-
-              for (let i = 0; i < appendix.airports.length; i++) {
-                if (appendix.airports[i].fs === arrivalAirportCode) {
-                  arrivalAirport = appendix.airports[i].name;
-                  arrivalCity = appendix.airports[i].city;
-                  arrivalCountry = appendix.airports[i].countryName;
-                  arrivalStationLocation = {
-                    lat: appendix.airports[i].latitude,
-                    lng: appendix.airports[i].longitude,
-                  }
-                }
-              }
-
-              this.flightSearchDetail = {
-                transport_company: carrier,
-                carrierCode: carrierCode,
-                reference_number: flightNumber,
-                dep_station: departureAirport,
-                depAirportCode: departureAirportCode,
-                dep_city: departureCity,
-                depCountry: departureCountry,
-                dep_terminal: departureTerminal,
-                dep_date: departureDate,
-                dep_time: departureTime,
-                dep_station_location: departureStationLocation,
-                arr_station: arrivalAirport,
-                arrAirportCode: arrivalAirportCode,
-                arr_city: arrivalCity,
-                arrCountry: arrivalCountry,
-                arr_date: arrivalDate,
-                arr_time: arrivalTime,
-                arr_station_location: arrivalStationLocation,
-                operating_carrier: operatingCarrier,
-                operating_flight: operatingCarrierCode + operatingFlightNumber
-              };
-              this.populateFlightDetails = true;
-            }//end of section where there is only 01 flight
-
-            if (scheduledFlights.length > 1)  {
-              this.stopOver = true;
-              this.chooseAirport = true;
-
-              //convert departureTime to timestamp to sort by time
-              for (let i = 0; i < scheduledFlights.length; i++) {
-                scheduledFlights[i]['convertedDepartureTime'] = (new Date(scheduledFlights[i].departureTime)).getTime();
-              }
-              //sort the scheduledFlights array by time
-              scheduledFlights.sort((a,b) =>  {
-                return a['convertedDepartureTime'] - b['convertedDepartureTime'];
-              })
-
-              this.flightSearchDetail = data;
-              this.flightSearchDetail['transport_company'] = carrier;
-              this.flightSearchDetail['carrierCode'] = carrierCode;
-              this.flightSearchDetail['reference_number'] = flightNumber;
-              this.flightSearchDetail['operating_carrier'] = operatingCarrier;
-              this.flightSearchDetail['operating_flight'] = operatingCarrierCode + operatingFlightNumber;
-
-              //create list of airports for user to choose
-              let airportBySchedule = [];
-
-              for (let i = 0; i < scheduledFlights.length; i++) {
-                airportBySchedule.push(scheduledFlights[i].departureAirportFsCode);
-              }
-
-              for (let i = 0; i < scheduledFlights.length; i++) {
-                let arrivalAirport = scheduledFlights[i].arrivalAirportFsCode;
-                if(airportBySchedule.indexOf(arrivalAirport) < 0) {
-                  airportBySchedule.push(arrivalAirport);
-                }
-              }
-
-              this.depAirports = [];
-              for (let i = 0; i < airportBySchedule.length - 1; i++) {
-                for (let j = 0; j < appendix.airports.length; j++) {
-                  if (airportBySchedule[i] === appendix.airports[j].fs) {
-                    this.depAirports.push({
-                      city: appendix.airports[j].city,
-                      airportName: appendix.airports[j].name,
-                      airportCode: appendix.airports[j].fs
-                    })
-                  }
-                }
-              }
-
-              this.arrAirports = [];
-              for (let i = 1; i < airportBySchedule.length; i++) {
-                for (let j = 0; j < appendix.airports.length; j++) {
-                  if (airportBySchedule[i] === appendix.airports[j].fs) {
-                    this.arrAirports.push({
-                      city: appendix.airports[j].city,
-                      airportName: appendix.airports[j].name,
-                      airportCode: appendix.airports[j].fs
-                    })
-                  }
-                }
-              }
-              this.populateFlightDetails = true;
-            }//end of if more than 01 flight
           }
         )//end of subscribe
+
+    this.fetchFlightDetails = false;
 
     this.searchFlightForm.reset({
       'searchAirlineCode': '',
@@ -329,6 +342,11 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       'searchDepDate': '',
     })
   }//end of flight search
+
+
+  exitError() {
+    this.flightNotFound = false;
+  }
 
   // show flight details after selected airport
   getFlightDetails()  {

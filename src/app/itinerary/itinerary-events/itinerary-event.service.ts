@@ -6,6 +6,7 @@ import { Observable, ReplaySubject } from 'rxjs';
 
 import { ItineraryEvent }      from './itinerary-event';
 import { NotificationService } from '../../notifications';
+import { ErrorMessageService } from '../../error-message';
 
 @Injectable()
 export class ItineraryEventService  {
@@ -22,7 +23,8 @@ export class ItineraryEventService  {
     private http: Http,
     private jsonp: Jsonp,
     private route: ActivatedRoute,
-    private notificationService: NotificationService)  {}
+    private notificationService: NotificationService,
+    private errorMessageService: ErrorMessageService )  {}
 
   getFlightDetails(criteria)  {
     const id = '?appId=8d4596b2&appKey=ab8b1a3b2f1f66e0db7be662f41425cc&callback=JSONP_CALLBACK';
@@ -41,7 +43,10 @@ export class ItineraryEventService  {
                       this.timeAgo(this.events);
                       return this.events;
                     })
-                    // .catch((error: Response) => console.log(error));
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
   }
 
   addEvent(event: ItineraryEvent, itinerary) {
@@ -83,7 +88,10 @@ export class ItineraryEventService  {
 
                       return response.json();
                     })
-                    // .catch((error: Response) => console.log(error));
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
   }
 
   copyEvent(event: ItineraryEvent, itinerary) {
@@ -93,7 +101,10 @@ export class ItineraryEventService  {
 
     return this.http.post( this.url + "/event/new/" + itinerary['_id'] + token, body, { headers: headers })
                     .map((response: Response) => response.json())
-                    // .catch((error: Response) => console.log(error));
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
   }
 
   editEvent(event: ItineraryEvent)  {
@@ -109,7 +120,10 @@ export class ItineraryEventService  {
 
                       return response.json()
                     })
-                    // .catch((error: Response) => Observable.throw(error.json()));
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
   }
 
   deleteEvent(event: ItineraryEvent)  {
@@ -122,7 +136,10 @@ export class ItineraryEventService  {
 
                       return response.json()
                     })
-                    // .catch((error: Response) => console.log(error));
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
   }
 
   sortEventByDate(events) {

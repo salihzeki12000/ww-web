@@ -1,6 +1,6 @@
 <div class="user-posts">
 
-  <div class="dots-menu" (mouseover)="showMenuOptions()">
+  <div class="dots-menu" (click)="showMenuOptions()" (mouseover)="showMenuOptions()">
     <div class="item-menu" *ngIf="showMenu">
       <ul>
         <!-- <li>
@@ -59,7 +59,15 @@
   <div class="post-reaction">
     <i class="fa fa-heart fa-lg" aria-hidden="true" (click)="likePost()" *ngIf="userLike"></i>
     <i class="fa fa-heart-o fa-lg" aria-hidden="true" (click)="likePost()" *ngIf="!userLike"></i>
-    <p class="post-reaction-stats" *ngIf="post.likes.length > 0" (click)="showLikes()">{{ post.likes.length }} {{ likeCount }}</p>
+    <div class="post-reaction-likes" *ngIf="post.likes.length > 0" (click)="showLikes()" (mouseover)="showLikes()">
+      <div class="like-user-list" *ngIf="seeLikes">
+        <div *ngFor="let user of post.likes">
+          <h5>{{ user.username }}</h5>
+        </div>
+      </div>
+      <p class="post-reaction-stats" >{{ post.likes.length }} {{ likeCount }}</p>
+    </div>
+
     <i class="fa fa-comment-o fa-lg" aria-hidden="true"></i>
     <p class="post-reaction-stats" *ngIf="post.comments.length > 0" (click)="showComments()">{{ post.comments.length }} {{ commentCount }}</p>
   </div>
@@ -103,8 +111,8 @@
 
     <div class="confirm-delete-footer">
       <div class="action-response">
-        <h4 class="action-response-primary" (click)="cancelDelete()">CANCEL</h4>
-        <h4 class="action-response-warning" (click)="onDelete()">DELETE</h4>
+        <h5 class="action-response-primary" (click)="cancelDelete()">CANCEL</h5>
+        <h5 class="action-response-warning" (click)="onDelete()">DELETE</h5>
       </div>
     </div>
   </div>
@@ -126,8 +134,8 @@
 
     <div class="confirm-delete-footer">
       <div class="action-response">
-        <h4 class="action-response-primary" (click)="cancelDeleteComment()">CANCEL</h4>
-        <h4 class="action-response-warning" (click)="onDeleteComment()">DELETE</h4>
+        <h5 class="action-response-primary" (click)="cancelDeleteComment()">CANCEL</h5>
+        <h5 class="action-response-warning" (click)="onDeleteComment()">DELETE</h5>
       </div>
     </div>
   </div>

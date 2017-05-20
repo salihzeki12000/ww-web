@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 
 import { User, UserService } from '../user';
 import { Post, PostService } from '../post';
+import { LoadingService }    from '../loading';
+
 @Component({
   selector: 'ww-home',
   templateUrl: './home.component.html',
@@ -20,6 +22,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(
     private userService: UserService,
     private postService: PostService,
+    private loadingService: LoadingService,
     private router: Router) { }
 
   ngOnInit() {
@@ -37,15 +40,16 @@ export class HomeComponent implements OnInit, OnDestroy {
                                         .subscribe(
                                           feedResult => {
                                             this.feed = Object.keys(feedResult).map(key => feedResult[key]);
-                                          }
-                                        )
-          }
-        )
+                                          })
+          })
+
+    this.loadingService.setLoader(false, "");
   }
 
   ngOnDestroy() {
     this.feedSubscription.unsubscribe();
     this.currentUserSubscription.unsubscribe();
+    this.loadingService.setLoader(true, "");
   }
 
   routeToItin(id) {

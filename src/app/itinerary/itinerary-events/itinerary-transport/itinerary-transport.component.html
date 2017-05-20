@@ -1,37 +1,50 @@
 <div class="custom-modal" *ngIf="showTransportSummary" (click)="showSummary()"></div>
 
-<div class="transport-summary" [class.show-summary]="showTransportSummary">
-  <h4 class="summary-quick-reference">Quick reference</h4>
-  <!-- <h5 class="transport-summary-length">TRANSPORT LIST ({{ transports.length }})</h5> -->
-  <div *ngFor="let event of transports; let i = index" class="transport-summary-item" (click)="centerItem(event)" [class.highlighted-item]="highlightedEvent === event">
-    <a href="#transport{{i}}">
-      <h5 class="date">{{ event?.dep_date | date: 'dd MMM yyyy' }} - {{ event?.dep_time }}</h5>
+<div class="event-summary-section" [class.show-summary]="showTransportSummary">
 
-      <div [ngSwitch]="event.transport_type">
-        <h5 class="transport-summary-header" *ngSwitchCase="'flight'"><i class="fa fa-plane" aria-hidden="true"></i> {{ event.reference_number | uppercase }}</h5>
-        <h5 class="transport-summary-header" *ngSwitchCase="'train'"><i class="fa fa-train" aria-hidden="true"></i> Train</h5>
-        <h5 class="transport-summary-header" *ngSwitchCase="'bus'"><i class="fa fa-bus" aria-hidden="true"></i> Bus {{ event.reference_number | uppercase }}</h5>
-        <h5 class="transport-summary-header" *ngSwitchCase="'cruise'"><i class="fa fa-ship" aria-hidden="true"></i> Cruise</h5>
-        <h5 class="transport-summary-header" *ngSwitchCase="'vehicle rental'"><i class="fa fa-car" aria-hidden="true"></i> Vehicle rental</h5>
-        <h5 class="transport-summary-header" *ngSwitchCase="'others'"><i class="fa fa-rocket" aria-hidden="true"></i> Transport</h5>
-      </div>
-      <h5 class="transport-summary-details">from {{ event.dep_city | uppercase }} to {{ event.arr_city | uppercase }}</h5>
-    </a>
+  <h4 class="event-summary-header">Quick reference - {{ totalTransports }}</h4>
+
+  <div class="event-summary">
+    <div *ngFor="let event of transports; let i = index" class="event-summary-item" (click)="centerItem(event)" [class.highlighted-item]="highlightedEvent === event">
+      <a href="#transport{{i}}">
+        <h5 class="index">{{i+1}}</h5>
+
+        <h5 class="date">{{ event?.dep_date | date: 'dd MMM yyyy' }} - {{ event?.dep_time }}</h5>
+
+        <div [ngSwitch]="event.transport_type">
+          <h5 class="transport-summary-header" *ngSwitchCase="'flight'"><i class="fa fa-plane" aria-hidden="true"></i> {{ event.reference_number | uppercase }}</h5>
+          <h5 class="transport-summary-header" *ngSwitchCase="'train'"><i class="fa fa-train" aria-hidden="true"></i> Train</h5>
+          <h5 class="transport-summary-header" *ngSwitchCase="'bus'"><i class="fa fa-bus" aria-hidden="true"></i> Bus {{ event.reference_number | uppercase }}</h5>
+          <h5 class="transport-summary-header" *ngSwitchCase="'cruise'"><i class="fa fa-ship" aria-hidden="true"></i> Cruise</h5>
+          <h5 class="transport-summary-header" *ngSwitchCase="'vehicle rental'"><i class="fa fa-car" aria-hidden="true"></i> Vehicle rental</h5>
+          <h5 class="transport-summary-header" *ngSwitchCase="'others'"><i class="fa fa-rocket" aria-hidden="true"></i> Transport</h5>
+        </div>
+        <h5 class="transport-summary-details">from {{ event.dep_city | uppercase }} to {{ event.arr_city | uppercase }}</h5>
+      </a>
+    </div>
   </div>
+
 </div>
 
-<div class="transport-list">
+<div *ngIf="!totalTransports" class="nil-event-message">
+  <h4>You have not added any transport arrangement</h4>
+  <h4>You can add a new arrangement by selecting the "ADD NEW" tab and then the "NEW TRANSPORT" option</h4>
+  <h4>You can complete the form in a few steps, depending on your selected mode of transport</h4>
+</div>
+
+<div class="event-list">
   <ww-transport
     *ngFor="let event of transports; let i = index"
     id="transport{{i}}"
+    [index]="i"
     [event]="event"
     [class.highlighted-event]="highlightedEvent === event"
     [itinDateRange]="itinDateRange"
-    [currentUser]="currentUser"
-    [currentItinerary]="currentItinerary">
+    [currentItinerary]="currentItinerary"
+    [totalTransports]="totalTransports">
   </ww-transport>
 </div>
 
-<div class="transport-summary-popup" (click)="showSummary()">
+<div class="event-summary-popup" (click)="showSummary()" *ngIf="totalTransports">
   <i class="fa fa-list" aria-hidden="true"></i>
 </div>

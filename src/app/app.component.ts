@@ -30,11 +30,11 @@ export class AppComponent implements OnInit {
   navigationInterceptor(event: RouterEvent): void {
     if (event instanceof NavigationStart) {
       this.loading = true;
-      console.log(this.loading);
     }
     if (event instanceof NavigationEnd) {
-      this.loading = false;
-      console.log(this.loading);
+      setTimeout(() => this.loading = false, 1500);
+      // this.loading = false;
+      // console.log(this.loading);
     }
 
     // Set loading state to false in both of the below events to hide the spinner in case a request fails

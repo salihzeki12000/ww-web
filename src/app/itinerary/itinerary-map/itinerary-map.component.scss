@@ -1,11 +1,19 @@
 #map  {
+  position: fixed !important;
+  top: 80px;
+  right: 0;
   display: inline-block;
-  height: calc(100vh - 90px);
-  width: calc(100% - 230px);
+  height: calc(100vh - 80px);
+  width: calc(100% - 430px);
+
   @media only screen and (max-width: 890px) {
     display: block;
     width: 100%;
-    height: calc(100vh - 150px);
+    height: calc(100vh - 130px);
+  }
+
+  @media only screen and (min-width: 890px) and (max-width: 1090px) {
+    width: calc(100% - 230px);
   }
 }
 
@@ -14,7 +22,6 @@
   max-height: calc(100vh - 110px);
   width: 220px;
   vertical-align: top;
-  border-bottom: 1px solid lightgray;
 
   @media only screen and (max-width: 890px) {
     display: none;
@@ -25,82 +32,58 @@
 .show-legend  {
   position: fixed;
   display: block;
-  top: 30px;
-  left: 0;
+  top: 40px;
+  left: 10px;
   width: 380px;
-  height: calc(100vh - 90px);
-  vertical-align: top;
-  background-color: rgba(255,255,255,0.9);
-  border-top: 1px solid lightgray;
-  overflow: auto;
   z-index: 1001;
+
   @media only screen and (max-width: 400px) {
+    top: 0;
+    left: 0;
     width: 100%;
     min-width: 300px;
-    margin-left: 0;
   }
 }
 
-.map-summary-length {
-  margin-bottom: 1px;
-  padding: 7px 0;
-  font-weight: bold;
-  text-align: center;
-  letter-spacing: .5px;
-  background-color: #6494ED;
-  box-shadow: inset 0px 1px 1px 1.5px rgba(0, 0, 0, 0.2);
-
-  @media only screen and (max-width: 890px) {
-    font-size: 120%;
-    border-right: none;
-  }
-}
-
-.fa-filter  {
-  display: inline-block;
-  color: grey;
-  vertical-align: middle;
-}
-
-.date-filter {
-  display: inline-block;
-  width: 90%;
-  padding: 5px;
-  @media only screen and (max-width: 890px) {
-    width: 100%;
-  }
-}
-
-select {
-  height: auto;
-  font-size: 0.83em;
-  margin-bottom: 4px;
-  @media only screen and (max-width: 890px) {
-    margin-bottom: 15px;
-  }
-}
-
-.map-legend {
+.map-summary {
   max-height: calc(100vh - 130px);
   vertical-align: top;
-  border-right: 1px solid lightgray;
-  border-bottom: 1px solid lightgray;
+  background-color: rgba(237, 189, 100, 0.3);
   overflow: auto;
+
   @media only screen and (max-width: 890px) {
-    width: 100%;
-    max-height: calc(100vh - 150px);
-    border-right: none;
+    max-height: calc(100vh - 130px);
+    background-color: white;
+  }
+
+  @media only screen and (min-width: 890px) and (max-width: 1090px) {
+    max-height: calc(100vh - 160px);
+  }
+}
+
+.map-summary::-webkit-scrollbar  {
+  background-color: rgba(237, 189, 100, 0.3);
+  width: 8px;
+
+  @media only screen and (max-width: 890px) {
+    background-color: rgba(100, 148, 237, 0.3);
+  }
+}
+
+.map-summary::-webkit-scrollbar-thumb  {
+  background-color: rgba(237, 189, 100, 0.9);
+
+  @media only screen and (max-width: 890px) {
+    background-color: rgba(100, 148, 237, 0.9);
   }
 }
 
 .map-event  {
   position: relative;
-  margin-bottom: 2px;
-  padding: 5px;
-  box-shadow: inset 0px 0px 1px 1.5px rgba(0, 0, 0, 0.2);
-  background-color: white;
+  padding: 15px 5px;
+  border-top: 1px solid lightgray;
   &:hover{
-    background-color: #F6F6F6;
+    background-color: white;
     cursor: pointer;
   }
   @media only screen and (max-width: 890px) {
@@ -149,7 +132,7 @@ select {
 
 .marker-index {
   position: absolute;
-  top: 12px;
+  top: 22px;
   left: 8px;
   height: 17px;
   width: 17px;

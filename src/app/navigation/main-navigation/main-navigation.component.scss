@@ -2,22 +2,23 @@
   position: fixed;
   top: 0;
   padding: 7.73px;
+  height: 40px;
   width: 100%;
   font-family: 'Roboto Condensed', sans-serif;
   font-weight: 700;
-  color: #F9FBFB;
-  background-color: #6494ED;
+  background-color: #F9FBFB;
+  border-bottom: 2px solid lightgray;
   z-index: 500; /** to allow google search to show in modal **/
 }
 
 .logo {
   display: inline-block;
-  padding-left: 5%;
+  padding-left: 20px;
   &:hover {
     cursor: pointer;
   }
 
-  @media only screen and (max-width: 880px) {
+  @media only screen and (max-width: 890px) {
     display: block;
     padding-left: 0;
     text-align: center;
@@ -25,7 +26,7 @@
 }
 
 .logo h2  {
-  color: #F9FBFB;
+  color: #6494ED;
 }
 
 .top-nav-search  {
@@ -33,7 +34,7 @@
   top: 0;
   right: calc(8% + 138px);
   z-index: 501;
-  @media only screen and (max-width: 880px) {
+  @media only screen and (max-width: 890px) {
     display: none;
   }
 }
@@ -43,7 +44,7 @@
   top: 0;
   right: calc(8% + 107px);
   z-index: 501;
-  @media only screen and (max-width: 880px) {
+  @media only screen and (max-width: 890px) {
     display: none;
   }
 }
@@ -53,7 +54,7 @@
   top: 0;
   right: calc(8% + 70px);
   z-index: 501;
-  @media only screen and (max-width: 880px) {
+  @media only screen and (max-width: 890px) {
     display: none;
   }
 }
@@ -68,7 +69,7 @@
     right: 0;
   }
 
-  @media only screen and (min-width: 500px) and (max-width: 880px) {
+  @media only screen and (min-width: 500px) and (max-width: 890px) {
     right: 8%;
   }
 }
@@ -78,7 +79,7 @@
   top: 9px;
   right: 8%;
   z-index: 501;
-  @media only screen and (max-width: 880px) {
+  @media only screen and (max-width: 890px) {
     display: none;
   }
 }
@@ -86,19 +87,35 @@
 .top-nav-link  {
   position: relative;
   display: inline-block;
-  color: #416099;
+  color: #6494ED;
   font-weight: 600;
   &:hover {
     width: 20px;
     margin-left: -25px;
     cursor: pointer;
-    color: white;
+    color: #416099;
   }
 }
 
-.top-nav-profile > .top-nav-link,
-.top-nav-notifications > .top-nav-link,
-.top-nav-follower-request > .top-nav-link  {
+.top-nav-search > .top-nav-link {
+  &:hover {
+    margin-left: -26px;
+  }
+}
+
+.top-nav-follower-request > .top-nav-link {
+  &:hover {
+    margin-left: -30.5px;
+  }
+}
+
+.top-nav-notifications > .top-nav-link {
+  &:hover {
+    margin-left: -28px;
+  }
+}
+
+.top-nav-profile > .top-nav-link  {
   &:hover {
     margin-left: -30px;
   }
@@ -174,7 +191,7 @@
   height: 0;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
-  border-bottom: 8px solid white;
+  border-bottom: 8px solid #416099;
 }
 
 .dropdown-new-itinerary {
@@ -306,7 +323,7 @@ h6.exit-notification-list {
 ******************/
 .side-nav  {
   display: none;
-  @media only screen and (max-width: 880px) {
+  @media only screen and (max-width: 890px) {
     display: block;
   }
 }
@@ -317,7 +334,7 @@ h6.exit-notification-list {
   top: 6px;
   left: 5%;
   display: block;
-  color: white;
+  color: #6494ED;
   z-index: 501;
   &:hover {
     cursor: pointer;
@@ -349,7 +366,7 @@ h6.exit-notification-list {
   box-shadow: inset -7px 0 10px -7px rgba(0,0,0,0.2);
   z-index: 1001;
 
-  @media only screen and (max-width: 880px) {
+  @media only screen and (max-width: 890px) {
     width: 250px;
   }
 }
@@ -411,7 +428,7 @@ h6.exit-notification-list {
   box-shadow: inset -7px 0 10px -7px rgba(0,0,0,0.2);
   z-index: 1001;
 
-  @media only screen and (max-width: 880px) {
+  @media only screen and (max-width: 890px) {
     width: 265px;
     left: -15px;
     direction: rtl;
@@ -434,7 +451,7 @@ h6.exit-notification-list {
   border-right: 100px solid transparent;
   border-top: 50px solid #6494ED;
 
-  @media only screen and (max-width: 880px) {
+  @media only screen and (max-width: 890px) {
     border-left: 125px solid transparent;
     border-right: 125px solid transparent;
     border-top: 50px solid #6494ED;
@@ -486,12 +503,6 @@ h6.exit-notification-list {
   &:hover {
     color: #6494ED;
   }
-}
-
-/* itineraries */
-.itinerary-list {
-  display: flex;
-  flex-direction: column-reverse;
 }
 
 .fa-caret-down  {

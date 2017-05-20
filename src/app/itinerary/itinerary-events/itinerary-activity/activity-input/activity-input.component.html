@@ -28,13 +28,13 @@
 
             <div class="date-to-visit">
               <label>Date To Visit <span class="required"> - required</span></label>
-              <select class="select-date" name="date" formControlName="date">
+              <select class="select-date" name="date" formControlName="date" [value]="'any day'">
                 <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
                   <div *ngIf="itinDate === 'any day'">
                     <h5>{{ itinDate }}</h5>
                   </div>
                   <div *ngIf="itinDate !== 'any day'">
-                    <h5>Day {{ i }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+                    <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
                   </div>
                 </option>
               </select>
@@ -114,8 +114,8 @@
           </div>
 
           <div class="action-response">
-            <h4 class="action-response-secondary" (click)="cancelForm()">CANCEL</h4>
-            <button type="submit" class="action-response-primary" [disabled]="!customActivityForm.valid"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
+            <h5 class="action-response-secondary" (click)="cancelForm()">CANCEL</h5>
+            <button type="submit" class="action-response-primary" [disabled]="!customActivityForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
           </div>
 
         </div>
@@ -140,7 +140,7 @@
 
     <div class="confirm-delete-footer">
       <div class="action-response">
-        <h4 class="action-response-primary" (click)="exitError()">OK</h4>
+        <h5 class="action-response-primary" (click)="exitError()">OK</h5>
       </div>
     </div>
   </div>

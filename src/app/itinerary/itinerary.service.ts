@@ -4,6 +4,7 @@ import 'rxjs/Rx';
 import { Observable, ReplaySubject } from 'rxjs';
 
 import { Itinerary } from './itinerary';
+import { ErrorMessageService } from '../error-message';
 
 @Injectable()
 export class ItineraryService {
@@ -16,7 +17,9 @@ export class ItineraryService {
 
   private url = 'https://vast-island-87972.herokuapp.com';
 
-  constructor( private http: Http)  {}
+  constructor(
+    private http: Http,
+    private errorMessageService: ErrorMessageService)  {}
 
   getItin(itineraryId) {
     return this.http.get( this.url + "/itinerary/" + itineraryId)
@@ -26,7 +29,10 @@ export class ItineraryService {
                       this.currentItinerary.next(this.itinerary);
                       return response.json();
                     })
-                    .catch((error: Response) => Observable.throw(error.json()));
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
   }
 
   setDateRange(itinerary)  {
@@ -58,7 +64,10 @@ export class ItineraryService {
                       this.updateItineraries.next(newItinerary);
                       return response.json();
                     })
-                    .catch((error: Response) => Observable.throw(error.json()));
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
   }
 
   copyItin(itinerary: Itinerary) {
@@ -68,7 +77,10 @@ export class ItineraryService {
 
     return this.http.post(this.url + '/itinerary/copy' + token, body, { headers: headers })
                     .map((response: Response) => response.json())
-                    .catch((error: Response) => Observable.throw(error.json()));
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
   }
 
   editItin(itinerary: Itinerary, method)  {
@@ -84,7 +96,10 @@ export class ItineraryService {
                       this.updateItineraries.next(this.itinerary);
                       return response.json();
                     })
-                    .catch((error: Response) => Observable.throw(error.json()));
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
   }
 
   deleteItin(itinerary: Itinerary)  {
@@ -96,6 +111,9 @@ export class ItineraryService {
                       this.updateItineraries.next(itinerary);
                       return response.json()
                     })
-                    .catch((error: Response) => Observable.throw(error.json()));
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
   }
 }

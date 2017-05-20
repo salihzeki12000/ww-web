@@ -3,6 +3,8 @@ import { Http, Headers, Response } from '@angular/http';
 import 'rxjs/Rx';
 import { Observable, ReplaySubject } from 'rxjs';
 
+import { ErrorMessageService } from '../error-message';
+
 @Injectable()
 export class NotificationService  {
 
@@ -10,7 +12,9 @@ export class NotificationService  {
 
   private url = 'https://vast-island-87972.herokuapp.com';
 
-  constructor( private http: Http)  {}
+  constructor(
+    private http: Http,
+    private errorMessageService: ErrorMessageService)  {}
 
   newNotification(notification) {
     const body = JSON.stringify(notification);
@@ -21,7 +25,10 @@ export class NotificationService  {
                     .map((response: Response) =>  {
                       return response.json();
                     })
-                    .catch((error: Response) => Observable.throw(error.json()));
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
   }
 
   getNotifications(currentUserId)  {
@@ -32,7 +39,10 @@ export class NotificationService  {
                       this.timeAgo(response.json().notifications)
                       return response.json();
                     })
-                    .catch((error: Response) => Observable.throw(error.json()));
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
   }
 
   timeAgo(notifications) {

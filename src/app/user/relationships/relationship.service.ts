@@ -3,6 +3,8 @@ import { Http, Headers, Response } from '@angular/http';
 import 'rxjs/Rx';
 import { Observable, ReplaySubject } from 'rxjs';
 
+import { ErrorMessageService } from '../../error-message';
+
 @Injectable()
 export class RelationshipService  {
   // currentUser = apple, user = apple, following = banana, apple follows banana
@@ -18,7 +20,9 @@ export class RelationshipService  {
 
   private url = 'https://vast-island-87972.herokuapp.com';
 
-  constructor( private http: Http )  {}
+  constructor(
+    private http: Http,
+    private errorMessageService: ErrorMessageService)  {}
 
   getRelationships(currentUser)  {
     this.currentUser = currentUser;
@@ -29,7 +33,10 @@ export class RelationshipService  {
                       this.filterRelationships(response.json().followings);
                       return response.json();
                     })
-                    // .catch((error: Response) => Observable.throw(error.json()));
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
   }
 
   requestFollow(following) {
@@ -71,7 +78,10 @@ export class RelationshipService  {
 
                       return newFollowing;
                     })
-                    .catch((error: Response) => Observable.throw(error.json()));
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
   }
 
   acceptFollow(following) {
@@ -115,7 +125,10 @@ export class RelationshipService  {
 
                       return response.json()
                     })
-                    // .catch((error: Response) => Observable.throw(error.json()));
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
   }
 
   deleteFollow(following, status)  {
@@ -153,7 +166,10 @@ export class RelationshipService  {
 
                       return response.json()
                     })
-                    // .catch((error: Response) => console.log(error));
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
   }
 
   filterRelationships(relationships)  {

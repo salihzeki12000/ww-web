@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, HostListener } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
 
@@ -22,8 +22,8 @@ export class PostComponent implements OnInit, OnDestroy {
   sameUser;
 
   userLike;
-  initialLike;
   likeCount;
+  likeUsers = [];
 
   commentCount;
   commentForm: FormGroup;
@@ -56,6 +56,13 @@ export class PostComponent implements OnInit, OnDestroy {
                                        )
   }
 
+  @HostListener('document:click', ['$event'])
+  checkClick(event) {
+    if(!event.target.classList.contains("item-menu")) {
+      this.showMenu = false;
+    }
+  }
+
   ngOnDestroy() {
     this.currentUserSubscription.unsubscribe();
   }
@@ -70,7 +77,6 @@ export class PostComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.post['likes'].length; i++) {
       if(this.post['likes'][i]['_id'] === this.currentUser['id']) {
         this.userLike = true;
-        i = this.post['likes'].length;
       }
     }
 

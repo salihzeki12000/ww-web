@@ -1,7 +1,8 @@
-.primaryButton  {
-  margin-top: 10px;
+.loading-overlay  {
+  position: absolute;
+  margin-left: 266px;
 
-  @media only screen and (max-width: 700px) {
-    width: 100%;
+  @media only screen and (max-width: 650px) {
+    margin-left: calc((100% - 28px)/2);
   }
 }

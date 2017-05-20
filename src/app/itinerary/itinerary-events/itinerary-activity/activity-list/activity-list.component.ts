@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs/Rx';
 import { ItineraryService }      from '../../../itinerary.service';
 import { ItineraryEvent }        from '../../itinerary-event';
 import { ItineraryEventService } from '../../itinerary-event.service';
-import { UserService }           from '../../../../user';
+import { LoadingService }        from '../../../../loading';
 
 @Component({
   selector: 'ww-activity-list',
@@ -14,12 +14,10 @@ import { UserService }           from '../../../../user';
 export class ActivityListComponent implements OnInit, OnDestroy {
   eventSubscription: Subscription;
   activities: ItineraryEvent[] = [];
+  totalActivities = 1;
 
   itinDateSubscription: Subscription;
   itinDateRange = [];
-
-  currentUserSubscription: Subscription;
-  currentUser;
 
   currentItinerarySubscription: Subscription;
   currentItinerary;
@@ -31,14 +29,11 @@ export class ActivityListComponent implements OnInit, OnDestroy {
     private renderer: Renderer,
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
-    private userService: UserService) { }
+    private loadingService: LoadingService) { }
 
   ngOnInit() {
     this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
                                   result => { this.filterEvents(result); })
-
-    this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
-                                        result => { this.currentUser = result; })
 
     this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
                                              result => { this.currentItinerary = result; })
@@ -53,8 +48,8 @@ export class ActivityListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.itinDateSubscription.unsubscribe();
     this.eventSubscription.unsubscribe();
-    this.currentUserSubscription.unsubscribe();
     this.currentItinerarySubscription.unsubscribe();
+    this.loadingService.setLoader(true, "");
   }
 
   filterEvents(events)  {
@@ -64,6 +59,9 @@ export class ActivityListComponent implements OnInit, OnDestroy {
         this.activities.push(events[i]);
       }
     }
+
+    this.totalActivities = this.activities.length
+    this.loadingService.setLoader(false, "");
   }
 
   showSummary() {

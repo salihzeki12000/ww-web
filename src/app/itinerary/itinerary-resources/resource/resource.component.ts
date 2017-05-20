@@ -1,20 +1,25 @@
-import { Component, OnInit, Input, Renderer } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Renderer, HostListener } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { Subscription } from 'rxjs/Rx';
 
 import { Resource }            from '../resource';
 import { ResourceService }     from '../resource.service';
 import { FlashMessageService } from '../../../flash-message';
-
+import { UserService }         from '../../../user';
 @Component({
   selector: 'ww-resource',
   templateUrl: './resource.component.html',
   styleUrls: ['./resource.component.scss']
 })
-export class ResourceComponent implements OnInit {
+export class ResourceComponent implements OnInit, OnDestroy {
   @Input() resource: Resource;
   @Input() currentItinerary;
-  @Input() currentUser;
-  sameUser = true;
+  @Input() totalResources;
+  @Input() index;
+
+  currentUserSubscription: Subscription;
+  currentUser;
+  sameUser;
 
   showMenu = false;
   editing = false;
@@ -24,6 +29,7 @@ export class ResourceComponent implements OnInit {
 
   constructor(
     private renderer: Renderer,
+    private userService: UserService,
     private formBuilder: FormBuilder,
     private flashMessageService: FlashMessageService,
     private resourceService: ResourceService) {
@@ -34,7 +40,22 @@ export class ResourceComponent implements OnInit {
     }
 
   ngOnInit() {
-    // this.checkSameUser();
+    this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
+                                       result => {
+                                         this.currentUser = result;
+                                         this.checkSameUser();
+                                       })
+  }
+
+  @HostListener('document:click', ['$event'])
+  checkClick(event) {
+    if(!event.target.classList.contains("item-menu")) {
+      this.showMenu = false;
+    }
+  }
+
+  ngOnDestroy() {
+    this.currentUserSubscription.unsubscribe();
   }
 
   checkSameUser() {

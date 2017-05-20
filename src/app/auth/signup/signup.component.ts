@@ -3,7 +3,8 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { Router } from '@angular/router';
 
 import { User, UserService } from '../../user'
-import { AuthService }  from '../auth.service';
+import { AuthService }       from '../auth.service';
+import { LoadingService }    from '../../loading';
 
 @Component({
   selector: 'ww-signup',
@@ -20,6 +21,7 @@ export class SignupComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private userService: UserService,
+    private loadingService: LoadingService,
     private router: Router) {
     this.signupForm = formBuilder.group({
       'username' : ['', Validators.required],
@@ -29,11 +31,19 @@ export class SignupComponent implements OnInit {
     });
   }
 
+  ngOnInit() {
+    this.loadingService.setLoader(false, "");
+  }
+
   onSubmit()  {
     this.authService.signup(this.signupForm.value)
         .subscribe(
           data => {
-            this.router.navigateByUrl('/me');
+            this.loadingService.setLoader(true, "get ready to wonder wander");
+
+            setTimeout(() =>  {
+              this.router.navigateByUrl('/me');
+            }, 1000)
           },
           error => console.error(error)
         )
@@ -52,9 +62,6 @@ export class SignupComponent implements OnInit {
       if (control.value !== this.signupForm.controls['password'].value) {
           return {passwordsNotMatch: true};
       }
-  }
-
-  ngOnInit() {
   }
 
   backToAuth() {

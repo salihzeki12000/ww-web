@@ -100,6 +100,20 @@
             <label>Address</label>
             <input type="text" formControlName="formatted_address" value="{{ googleAccommodationDetail?.formatted_address }}">
 
+            <div *ngIf="manualEntry" class="lat-lng">
+              <h5>Enter the coordinates of the location to pin it on the map</h5>
+              <div class="lat">
+                <label>Latitude (N)</label>
+                <input type="number" formControlName="lat">
+              </div>
+
+              <div class="lng">
+                <label>Longitude (E)</label>
+                <input type="number" formControlName="lng">
+              </div>
+
+            </div>
+
             <label>Staying in (City/Town)</label>
             <input type="text" formControlName="stay_city" value="{{ googleAccommodationDetail?.stay_city }}">
 
@@ -117,8 +131,8 @@
           </div>
 
           <div class="action-response">
-            <h4 class="action-response-secondary" (click)="cancelForm()">CANCEL</h4>
-            <button type="submit" class="action-response-primary" [disabled]="!addAccommodationForm.valid"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
+            <h5 class="action-response-secondary" (click)="cancelForm()">CANCEL</h5>
+            <button type="submit" class="action-response-primary" [disabled]="!addAccommodationForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
           </div>
 
         </div>
@@ -142,7 +156,7 @@
 
     <div class="confirm-delete-footer">
       <div class="action-response">
-        <h4 class="action-response-primary" (click)="exitError()">OK</h4>
+        <h5 class="action-response-primary" (click)="exitError()">OK</h5>
       </div>
     </div>
   </div>

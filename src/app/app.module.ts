@@ -20,7 +20,7 @@ import { UserComponent, UserService, ProfileComponent, ProfileDetailsComponent, 
 
 import { PostsComponent, PostComponent, PostInputComponent, PostListComponent, PostService } from './post';
 
-import { ItineraryComponent, ItineraryListComponent, ItineraryFormComponent, ItineraryAccommodationComponent, ItineraryTransportComponent, ItineraryService, ItineraryActivityComponent, ItineraryResourcesComponent, ResourceInputComponent, ResourceService, ResourceListComponent, ResourceComponent, ItineraryMapComponent, AccommodationFormComponent, TransportFormComponent, ItineraryEventService, ActivityComponent, ActivityListComponent, ActivityInputComponent, AccommodationComponent, TransportComponent, ItineraryPrintComponent, ItineraryPrintDatePreviewComponent, ItineraryPrintCategoryPreviewComponent, ItinerarySummaryComponent, ItineraryPrintCategoryComponent, ItineraryPrintDateComponent, ItinerarySettingsComponent } from './itinerary';
+import { ItineraryComponent, ItineraryListComponent, ItineraryFormComponent, ItineraryAccommodationComponent, ItineraryTransportComponent, ItineraryService, ItineraryActivityComponent, ItineraryResourcesComponent, ResourceInputComponent, ResourceService, ResourceListComponent, ResourceComponent, ItineraryMapComponent, AccommodationFormComponent, TransportFormComponent, ItineraryEventService, ActivityComponent, ActivityListComponent, ActivityInputComponent, AccommodationComponent, TransportComponent, ItineraryPrintComponent, ItineraryPrintDatePreviewComponent, ItineraryPrintCategoryPreviewComponent, ItinerarySummaryComponent, ItineraryPrintCategoryComponent, ItineraryPrintDateComponent, ItinerarySettingsComponent, ItineraryShareComponent, ItineraryAllComponent, ItineraryPastComponent, ItineraryUpcomingComponent } from './itinerary';
 
 import { GooglePlaceSearchComponent, GoogleCheckinComponent } from './google-api';
 
@@ -32,6 +32,8 @@ import { AttractionsComponent } from './attractions/attractions.component';
 import { AdminAttractionComponent,AdminAttractionFormComponent } from './admin/admin-attraction';
 
 import { FileuploadService, CommentService } from './shared';
+import { LoadingComponent, LoadingService } from './loading';
+import { ErrorMessageComponent, ErrorMessageService } from './error-message';
 
 export const cloudinaryLib = {
   Cloudinary: Cloudinary
@@ -99,6 +101,12 @@ export const cloudinaryLib = {
     PendingFollowerComponent,
     PendingFollowersComponent,
     ItineraryListComponent,
+    ItineraryShareComponent,
+    LoadingComponent,
+    ErrorMessageComponent,
+    ItineraryAllComponent,
+    ItineraryPastComponent,
+    ItineraryUpcomingComponent,
   ],
   imports: [
     BrowserModule,
@@ -109,7 +117,7 @@ export const cloudinaryLib = {
     routing,
     CloudinaryModule.forRoot(cloudinaryLib, { cloud_name: 'wwfileupload'}),
   ],
-  providers: [ AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, FileuploadService, CommentService, AuthGuard ],
+  providers: [ LoadingService, AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, FileuploadService, CommentService, ErrorMessageService, AuthGuard ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

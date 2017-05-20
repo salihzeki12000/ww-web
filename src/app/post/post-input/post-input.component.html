@@ -22,6 +22,12 @@
       <img [src]="postPic">
     </div>
 
+    <div class="loading-overlay" *ngIf="fetchLink">
+      <div class="loading-message">
+        <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+      </div>
+    </div>
+
     <div class="link-preview" *ngIf="linkExist">
       <h4 class="delete-link" (click)="deleteLink()">X</h4>
       <a href="{{ link_url }}" target="_blank">
@@ -32,8 +38,8 @@
     </div>
 
     <div class="action-response">
-      <h4 class="action-response-secondary" (click)="cancelPost()">CANCEL</h4>
-      <button type="submit" class="action-response-primary" [disabled]="!postForm.valid"><h4>POST</h4></button>
+      <h5 class="action-response-secondary" (click)="cancelPost()">CANCEL</h5>
+      <button type="submit" class="action-response-primary" [disabled]="!postForm.valid"><h5>POST</h5></button>
     </div>
 
   </form>
@@ -62,7 +68,7 @@
 
     <div class="confirm-delete-footer">
       <div class="action-response">
-        <h4 class="action-response-primary" (click)="exitError()">OK</h4>
+        <h5 class="action-response-primary" (click)="exitError()">OK</h5>
       </div>
     </div>
   </div>

@@ -1,29 +1,45 @@
 <div class="custom-modal" *ngIf="showAccommodationSummary" (click)="showSummary()"></div>
 
-<div class="accommodation-summary" [class.show-summary]="showAccommodationSummary">
-  <h4 class="summary-quick-reference">Quick reference</h4>
-  <!-- <h5 class="accommodation-summary-length">ACCOMMODATION LIST ({{ accommodations.length }})</h5> -->
-  <div *ngFor="let event of accommodations; let i = index" class="accommodation-summary-item" (click)="centerItem(event)" [class.highlighted-item]="highlightedEvent === event">
-    <a href="#accommodation{{i}}">
-      <!-- <h5 class="index">{{i+1}}</h5> -->
-      <h5 class="date">{{ event?.check_in_date | date:'dd MMM yy' }} - {{ event?.check_out_date | date:'dd MMM yy' }}</h5>
-      <h5 class="accommodation-summary-header"><i class="fa fa-bed" aria-hidden="true"></i> in {{ event?.stay_city | uppercase }}</h5>
-      <h5 class="accommodation-summary-name">{{ event?.name }}</h5>
-    </a>
+<div class="event-summary-section" [class.show-summary]="showAccommodationSummary">
+
+  <h4 class="event-summary-header">Quick reference - {{ totalAccommodations }}</h4>
+
+  <div class="event-summary">
+    <div *ngFor="let event of accommodations; let i = index" class="event-summary-item" (click)="centerItem(event)" [class.highlighted-item]="highlightedEvent === event">
+      <a href="#accommodation{{i}}">
+        <h5 class="index">{{i+1}}</h5>
+        <h5 class="date">{{ event?.check_in_date | date:'dd MMM yy' }} - {{ event?.check_out_date | date:'dd MMM yy' }}</h5>
+        <h5 class="accommodation-summary-header"><i class="fa fa-bed" aria-hidden="true"></i> in {{ event?.stay_city | uppercase }}</h5>
+        <h5 class="accommodation-summary-name">{{ event?.name }}</h5>
+      </a>
+    </div>
   </div>
+
 </div>
 
-<div class="accommodation-list">
+<div *ngIf="!totalAccommodations" class="nil-event-message">
+  <h4>You have not added any accommodation arrangement</h4>
+  <h4>You can add a new arrangement by selecting the "ADD NEW" tab and then the "NEW ACCOMMODATION" option</h4>
+  <h4>You can complete the form in just 02 steps:</h4>
+  <ol>
+    <li>Search for your accommodation by name or address. Name in local language may sometimes be required</li>
+    <li>Confirm details populated from the search</li>
+  </ol>
+</div>
+
+<div class="event-list">
   <ww-accommodation
-    *ngFor="let event of accommodations; let i = index" id="accommodation{{i}}"
+    *ngFor="let event of accommodations; let i = index"
+    id="accommodation{{i}}"
+    [index]="i"
     [event]="event"
     [class.highlighted-event]="highlightedEvent === event"
     [itinDateRange]="itinDateRange"
-    [currentUser]="currentUser"
-    [currentItinerary]="currentItinerary">
+    [currentItinerary]="currentItinerary"
+    [totalAccommodations]="totalAccommodations">
   </ww-accommodation>
 </div>
 
-<div class="accommodation-summary-popup" (click)="showSummary()">
+<div class="event-summary-popup" (click)="showSummary()" *ngIf="totalAccommodations">
   <i class="fa fa-list" aria-hidden="true"></i>
 </div>

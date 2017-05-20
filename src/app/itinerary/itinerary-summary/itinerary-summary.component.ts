@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Rx';
 
 import { ItineraryService }      from '../itinerary.service';
 import { ItineraryEventService } from '../itinerary-events/itinerary-event.service';
+import { LoadingService }        from '../../loading';
 
 @Component({
   selector: 'ww-itinerary-summary',
@@ -20,6 +21,7 @@ import { ItineraryEventService } from '../itinerary-events/itinerary-event.servi
 export class ItinerarySummaryComponent implements OnInit, OnDestroy {
   eventSubscription: Subscription;
   events = [];
+  totalEvents = 1;
 
   itinDateSubscription: Subscription;
   itinDateRange = [];
@@ -31,7 +33,8 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
 
   constructor(
     private itineraryService: ItineraryService,
-    private itineraryEventService: ItineraryEventService) { }
+    private itineraryEventService: ItineraryEventService,
+    private loadingService: LoadingService) { }
 
   ngOnInit() {
     this.events = [];
@@ -48,12 +51,19 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
                                 )
   }
 
+  // scroll(event) {
+  //   console.log(event.srcElement.scrollLeft);
+  // }
+
   ngOnDestroy() {
     this.itinDateSubscription.unsubscribe();
     this.eventSubscription.unsubscribe();
+    this.loadingService.setLoader(true, "");
   }
 
   filterEvents(events)  {
+    this.totalEvents = events.length;
+
     let accommodations = [];
     let datedEvents = [];
     let anyDateEvents = [];
@@ -225,6 +235,8 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
     })
 
     this.events = anyTimeEvents.concat(datedEvents, anyDateEvents);
+
+    setTimeout(() =>  {this.loadingService.setLoader(false, "")}, 1000);
   }
 
   showDetails(event)  {

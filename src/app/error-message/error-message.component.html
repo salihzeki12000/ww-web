@@ -1,0 +1,19 @@
+<div class="custom-modal" *ngIf="error" (click)="exitError()">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>{{ errorMessage?.title }}</h3>
+      <a (click)="exitError()">x</a>
+    </div>
+
+    <div class="confirm-delete-content">
+      <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
+      <h4>{{ errorMessage?.error.message }}</h4>
+    </div>
+
+    <div class="confirm-delete-footer">
+      <div class="action-response">
+        <h5 class="action-response-primary" (click)="exitError()">OK</h5>
+      </div>
+    </div>
+  </div>
+</div>

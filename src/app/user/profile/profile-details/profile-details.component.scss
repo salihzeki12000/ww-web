@@ -35,11 +35,11 @@
   background-color: white;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
 
-  @media only screen and (max-width: 880px) {
+  @media only screen and (max-width: 890px) {
     display: none;
   }
 
-  @media only screen and (min-width: 880px) and (max-width: 1090px) {
+  @media only screen and (min-width: 890px) and (max-width: 1200px) {
     right: calc(((100vw - 890px)/2) + 620px);
   }
 }
@@ -49,7 +49,7 @@
 }
 
 .profile-itineraries-length > h5  {
-  padding: 5px 0 1px 10px;
+  padding: 10px 0 5px 10px;
   text-align: left;
   letter-spacing: .5px;
   border-bottom: 2px solid lightgray;
@@ -95,11 +95,11 @@
     right: 0;
   }
 
-  @media only screen and (min-width: 670px) and (max-width: 880px) {
+  @media only screen and (min-width: 670px) and (max-width: 890px) {
     right: calc((100vw - 600px)/2);
   }
 
-  @media only screen and (min-width: 880px) and (max-width: 1090px) {
+  @media only screen and (min-width: 890px) and (max-width: 1200px) {
     right: calc((100vw - 890px)/2);
   }
 }

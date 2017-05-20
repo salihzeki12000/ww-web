@@ -24,7 +24,7 @@
 // profile center bar - -1
 // landing page logo - 1 (to escape image opacity)
 // flash message - 9999
-
+// error message custom modal - 9999
 
 /******** card display */
 // empty div to push down highlighted item - 1
@@ -157,7 +157,8 @@ button[disabled]  {
   }
 }
 
-.action-response-primary > h4  {
+.action-response-primary > h4,
+.action-response-primary > h5  {
   color: #6494ED;
   border: 2px solid transparent;
 }
@@ -319,16 +320,6 @@ span.username-bold  {
 	margin: 5px auto 15px auto;
   padding: 205px 0 5px 0;
   text-align: center;
-
-  @media only screen and (max-width: 400px) {
-    text-align: left;
-    padding-top: 200px;
-  }
-
-  @media only screen and (min-width: 400px) and (max-width: 500px) {
-    text-align: left;
-    padding-top: calc(((100vw - 97px)/ 3) * 2);
-  }
 }
 
 .slider-images {
@@ -340,16 +331,16 @@ span.username-bold  {
 	transition: all 0.5s;
   height: 200px;
   width: 300px;
-  left: calc((650px - 340px)/2);
+  left: calc((600px - 360px)/2);
   top: 0;
   object-fit: cover;
 
-  @media only screen and (max-width: 500px) {
+  @media only screen and (max-width: 350px) {
     left: 0;
   }
 
-  @media only screen and (min-width: 500px) and (max-width: 700px) {
-    left: calc((100vw - 517px)/2);
+  @media only screen and (min-width: 350px) and (max-width: 650px) {
+    left: calc((100vw - 360px)/2);
   }
 }
 
@@ -363,21 +354,23 @@ span.username-bold  {
 	cursor: pointer;
 	transition: all 0.5s;
 	opacity: 0.6;
-  @media only screen and (max-width: 700px) {
+
+  @media only screen and (max-width: 650px) {
     float: left;
   }
 }
 
 .slider-images label img {
 	display: block;
-  width: 102px;
-  height: 68px;
+  width: 93px;
+  height: 62px;
   object-fit: cover;
-  @media only screen and (max-width: 700px) {
-    width: calc((100vw - 160px) / 5);
-    height: calc((((100vw - 160px) / 5) / 3) * 2);
-    min-width: 49.5px;
-    min-height: 33px;
+
+  @media only screen and (max-width: 650px) {
+    width: calc((100vw - 150px) / 5);
+    height: calc((((100vw - 150px) / 5) / 3) * 2);
+    min-width: 46px;
+    min-height: 30.67px;
   }
 }
 
@@ -551,7 +544,7 @@ span.form-validator-message {
 
 /* form display */
 .form-card {
-  width: 650px;
+  width: 600px;
   margin: 40px auto;
   padding: 15px 0;
   max-height: calc(100vh - 50px);
@@ -561,15 +554,11 @@ span.form-validator-message {
   box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
   overflow: auto;
 
-  @media only screen and (max-width: 700px) {
+  @media only screen and (max-width: 650px) {
+    margin: 0;
     width: 100%;
     min-width: 300px;
-    max-height: calc(100vh - 90px);
-    padding: 5px 0;
-  }
-
-  @media only screen and (min-width: 700px) and (max-width: 1090px) {
-    max-height: calc(100vh - 90px);
+    max-height: 100vh;
   }
 }
 
@@ -688,7 +677,7 @@ span.form-validator-message {
 .form-header > h3 {
   display: inline-block;
 
-  @media only screen and (max-width: 700px) {
+  @media only screen and (max-width: 650px) {
     font-size: 1em;
   }
 }
@@ -728,7 +717,7 @@ span.form-validator-message {
   padding: 20px;
 
   @media only screen and (max-width: 500px) {
-    padding-top: 10px;
+    padding: 20px 10px;
   }
 }
 
@@ -782,7 +771,65 @@ span.form-validator-message {
 /***************************************************************
  ACCOMMODATION / TRANSPORT / ACTIVITY / RESOURCE CARDS SUMMARY
  **************************************************************/
-.summary-quick-reference {
+.event-summary-section  {
+  position: fixed;
+  margin: 15px 0 0 10px;
+  width: 210px;
+
+  @media only screen and (max-width: 890px) {
+    display: none;
+  }
+}
+
+.nil-event-message  {
+  position: fixed;
+  width: 400px;
+  margin: 60px 0 0 10px;
+  padding: 10px;
+  background-color: white;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
+
+  @media only screen and (max-width: 400px) {
+    width: 100%;
+    min-width: 300px;
+    margin: 20px 0;
+  }
+
+  @media only screen and (min-width: 400px) and (max-width: 890px) {
+    margin-left: calc((100vw - 400px) / 2);
+  }
+}
+
+.nil-event-message h4 {
+  padding-bottom: 20px;
+}
+
+.nil-event-message li {
+  padding-bottom: 10px;
+}
+
+.show-summary {
+  position: fixed;
+  display: block;
+  top: 40px;
+  left: 10px;
+  width: 380px;
+  background-color: white;
+  z-index: 1001;
+
+  @media only screen and (max-width: 400px) {
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-width: 300px;
+  }
+
+  @media only screen and (max-width: 890px) {
+    margin: 0;
+  }
+}
+
+.event-summary-header {
   padding: 10px 10px 5px 10px;
   background-color: rgb(237, 189, 100);
 
@@ -792,61 +839,47 @@ span.form-validator-message {
   }
 }
 
-.accommodation-summary,
-.activity-summary,
-.transport-summary,
-.resource-summary  {
+.event-summary  {
   position: fixed;
   width: 210px;
-  max-height: calc(100vh - 110px);
+  max-height: calc(100vh - 150px);
   background-color: rgba(237, 189, 100, 0.3);
-  border: 1px solid lightgray;
   overflow: auto;
 
-  @media only screen and (max-width: 890px) {
-    display: none;
-  }
-
-  @media only screen and (min-width: 890px) and (max-width: 1090px) {
-    height: calc(100vh - 190px);
-  }
-}
-
-.accommodation-summary::-webkit-scrollbar,
-.activity-summary::-webkit-scrollbar,
-.transport-summary::-webkit-scrollbar,
-.resource-summary::-webkit-scrollbar  {
-  background-color: rgba(237, 189, 100, 0.3);
-  width: 8px;
-}
-
-.accommodation-summary::-webkit-scrollbar-thumb,
-.activity-summary::-webkit-scrollbar-thumb,
-.transport-summary::-webkit-scrollbar-thumb,
-.resource-summary::-webkit-scrollbar-thumb  {
-  background-color: rgba(237, 189, 100, 0.9);
-}
-
-.show-summary {
-  position: fixed;
-  display: block;
-  top: 0;
-  left: 0;
-  width: 380px;
-  height: calc(100vh - 90px);
-  z-index: 1001;
-  background-color: white;
   @media only screen and (max-width: 400px) {
     width: 100%;
     min-width: 300px;
-    margin-left: 0;
+    background-color: white;
+  }
+
+  @media only screen and (min-width: 400px) and (max-width: 890px) {
+    width: 380px;
+    background-color: white;
+  }
+
+  @media only screen and (min-width: 890px) and (max-width: 1090px) {
+    max-height: calc(100vh - 190px);
   }
 }
 
-.accommodation-summary-item,
-.activity-summary-item,
-.transport-summary-item,
-.resource-summary-item {
+.event-summary::-webkit-scrollbar {
+  background-color: rgba(237, 189, 100, 0.3);
+  width: 8px;
+
+  @media only screen and (max-width: 890px) {
+    background-color: rgba(100, 148, 237, 0.3);
+  }
+}
+
+.event-summary::-webkit-scrollbar-thumb {
+  background-color: rgba(237, 189, 100, 0.9);
+
+  @media only screen and (max-width: 890px) {
+    background-color: rgba(100, 148, 237, 0.9);
+  }
+}
+
+.event-summary-item {
   text-align: right;
   border-top: 1px solid lightgray;
   // box-shadow: inset 0px 0px 1px 1.5px rgba(0, 0, 0, 0.2);
@@ -863,36 +896,33 @@ span.form-validator-message {
   }
 }
 
-.accommodation-summary-item > a,
-.activity-summary-item > a,
-.transport-summary-item > a,
-.resource-summary-item > a {
+.event-summary-item .index {
+  margin: 10px 5px;
+  padding: 3px 5px;
+  font-weight: 600;
+  border: 2px solid;
+  border-radius: 50%;
+  float: left;
+}
+
+.event-summary-item > a {
   &:hover {
     text-decoration: none;
   }
 }
 
-.accommodation-summary-item > a > *,
-.activity-summary-item > a > *,
-.transport-summary-item > a > *,
-.resource-summary-item > a > * {
+.event-summary-item > a > * {
   font-size: 11.62px;
 }
 
-.accommodation-summary-item .date,
-.activity-summary-item .date,
-.transport-summary-item .date,
-.resource-summary-item .date {
+.event-summary-item .date {
   margin-bottom: 5px;
   padding: 20px 10px 0 10px;
   color: grey;
   font-weight: 500;
 }
 
-.accommodation-summary-popup,
-.activity-summary-popup,
-.transport-summary-popup,
-.resource-summary-popup,  {
+.event-summary-popup {
   display: none;
 
   @media only screen and (max-width: 890px) {
@@ -918,8 +948,45 @@ span.form-validator-message {
 }
 
 /***************************************************************
+ ACCOMMODATION / TRANSPORT / ACTIVITY / RESOURCE LIST
+ **************************************************************/
+.event-list {
+  display: flex;
+  flex-direction: column;
+  margin-left: 230px;
+
+  @media only screen and (max-width: 890px) {
+    margin-left: calc((100vw - 660px)/2);
+  }
+
+  @media only screen and (max-width: 690px) {
+    flex-direction: column;
+    align-items: center;
+    margin-left: 0;
+  }
+}
+
+/***************************************************************
  ACCOMMODATION / TRANSPORT / ACTIVITY / RESOURCE CARDS DISPLAY
  **************************************************************/
+ww-activity,
+ww-accommodation,
+ww-transport,
+ww-resource {
+  display: flex;
+  margin-top: -90px;
+  padding-top: 90px;
+  width: 630px;
+
+  @media only screen and (max-width: 400px) {
+    width: 100vw;
+  }
+
+  @media only screen and (min-width: 400px) and (max-width: 650px) {
+    width: 330px;
+  }
+}
+
 .display-card {
   position: relative;
   display: inline-block;
@@ -1069,8 +1136,17 @@ span.form-validator-message {
 }
 
 /* accommodation/transport/activity display */
-.date-header {
- color: grey;
+.display-date-header > h5,
+.resource-count {
+  display: inline-block;
+  color: grey;
+}
+
+.display-date-header > h5:nth-of-type(2),
+.resource-count  {
+  padding: 3px 10px;
+  border: 1px solid grey;
+  border-radius: 25px;
 }
 
 .accommodation-city {
@@ -1101,16 +1177,6 @@ span.form-validator-message {
 .activity-header {
   margin: 10px 0;
   font-weight: bold;
-}
-
-.departure-details {
-  margin-bottom: 5px;
-  color: darkred;
-}
-
-.arrival-details {
-  margin-bottom: 5px;
-  color: darkblue;
 }
 
 .accommodation-details
@@ -1253,11 +1319,6 @@ span.form-validator-message {
   padding: 10px 0;
 }
 
-// span.city-highlight  {
-//   font-size: 1.3em;
-//   font-weight: 500;
-// }
-
 .rental-company,
 .rental-contact {
   display: inline-block;
@@ -1272,8 +1333,8 @@ span.form-validator-message {
   position: relative;
   margin-bottom: 15px;
   border: 1px solid lightgray;
+
   @media only screen and (max-width: 400px) {
-    width: calc(100vw - 40px);
     min-width: 260px;
   }
 }
@@ -1357,10 +1418,6 @@ span.form-validator-message {
 /******************
    ALL MODALS
 *******************/
-.modal-footer {
-  border-top: none;
-}
-
 .custom-modal {
   background-color: rgba(0,0,0,0.3);
   position: fixed;
@@ -1445,4 +1502,112 @@ span.form-validator-message {
 *********************/
 ww-itinerary-map  {
   position: relative;
+}
+
+/*********************
+  Sub routing
+*********************/
+.sub-route-container  {
+  position: absolute;
+  right: calc((100vw - 600px)/2);
+  width: 600px;
+  background-color: white;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
+
+  @media only screen and (max-width: 670px) {
+    width: 100%;
+    min-width: 300px;
+    right: 0;
+  }
+
+  @media only screen and (min-width: 670px) and (max-width: 1090px) {
+    right: calc((100vw - 600px)/2);
+  }
+}
+
+.sub-route-header {
+  padding-bottom: 3px;
+}
+
+.sub-route-header > h3  {
+  padding: 20px;
+  font-weight: 400;
+  color: #F9FBFB;
+  background-color: #6494ED;
+}
+
+.sub-route-nav-tabs {
+  margin: 0;
+  padding: 5px 0 3px 10px;
+  height: 47px;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.sub-route-nav-tabs > li  {
+  display: inline-block;
+}
+
+.sub-route-nav-tabs > li > a {
+  padding: 5px 10px;
+  color: #3A4A4D;
+  text-decoration: none;
+  letter-spacing: .5px;
+  border-radius: 0;
+  &:hover {
+    color: #6494ED;
+  }
+}
+
+.sub-route-nav-tabs > li.active > a {
+  color: #6494ED;
+  font-weight: bold;
+  border-bottom: 3px solid #6494ED;
+}
+
+.sub-route-nav-tabs span.tab-count {
+  padding-left: 5px;
+  color: grey;
+  font-weight: 400;
+}
+
+/* to display horizontal scrollbar */
+.sub-route-nav-tabs::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+/*********************
+  ITINERARY List
+*********************/
+.itinerary-list {
+  padding: 10px 20px;
+  border-top: 1px solid lightgray;
+  &:hover {
+    cursor: pointer;
+    background-color: #F6F6F6;
+    opacity: 1;
+  }
+}
+
+.past-indicator {
+  background-color: #E6E6E6;
+  opacity: .6;
+}
+
+.itinerary-list h3  {
+  padding-bottom: 5px;
+}
+
+.itinerary-list h5  {
+  padding: 0 0 5px 20px;
+}
+
+.itinerary-list > h5:nth-of-type(1) {
+  padding-bottom: 15px;
+}
+
+.itinerary-list > h5:nth-of-type(2),
+.itinerary-list > h5:nth-of-type(3)  {
+  display: inline-block;
+  padding-right: 10px;
 }

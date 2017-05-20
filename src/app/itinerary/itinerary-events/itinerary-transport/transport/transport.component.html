@@ -1,6 +1,6 @@
 <div class="display-card">
 
-  <div class="dots-menu" (mouseover)="showMenuOptions()">
+  <div class="dots-menu" (click)="showMenuOptions()" (mouseover)="showMenuOptions()">
     <div class="item-menu" *ngIf="showMenu">
       <ul>
         <!-- <li>
@@ -19,7 +19,10 @@
     </div>
   </div>
 
-  <h5 class="date-header">{{ event?.dep_date | date: 'dd MMM yyyy (EEE)' }} - {{ event?.dep_time }}</h5>
+  <div class="display-date-header">
+    <h5>{{ event?.dep_date | date: 'dd MMM yyyy (EEE)' }} - {{ event?.dep_time }}</h5>
+    <h5>{{ index + 1 }} of {{ totalTransports }}</h5>
+  </div>
 
   <div class="transport-header">
     <div [ngSwitch]="event.transport_type">
@@ -41,7 +44,7 @@
   <div *ngIf="event.transport_type === 'flight'" class="departure-arrival-details">
 
     <div class="departure-section">
-      <h4>{{ event.dep_city | uppercase }}</h4>
+      <h3>{{ event.dep_city | uppercase }}</h3>
       <h5>Departs {{ event?.dep_date | date:'dd MMM yyyy' }} - {{ event.dep_time }}</h5>
       <h5>{{ event.dep_station | uppercase }}</h5>
       <h5>{{ event.dep_terminal | uppercase }}</h5>
@@ -50,7 +53,7 @@
     <i class="fa fa-arrow-down" aria-hidden="true"></i>
 
     <div class="arrival-section">
-      <h4>{{ event.arr_city | uppercase }}</h4>
+      <h3>{{ event.arr_city | uppercase }}</h3>
       <h5>Arrives {{ event?.arr_date | date:'dd MMM yyyy' }} - {{ event.arr_time }}</h5>
       <h5>{{ event.arr_station | uppercase }}</h5>
       <h5>{{ event.arr_terminal | uppercase }}</h5>
@@ -63,7 +66,7 @@
     <div *ngIf="event.transport_type !== 'vehicle rental'">
 
       <div class="departure-section">
-        <h4>{{ event.dep_city | uppercase }}</h4>
+        <h3>{{ event.dep_city | uppercase }}</h3>
         <h5>Departs {{ event?.dep_date | date:'dd MMM yyyy' }} - {{ event.dep_time }}</h5>
         <h5>{{ event.dep_station | uppercase }}</h5>
       </div>
@@ -71,7 +74,7 @@
       <i class="fa fa-arrow-down" aria-hidden="true"></i>
 
       <div class="arrival-section">
-        <h4>{{ event.arr_city | uppercase }}</h4>
+        <h3>{{ event.arr_city | uppercase }}</h3>
         <h5>Arrives {{ event?.arr_date | date:'dd MMM yyyy' }} - {{ event.arr_time }}</h5>
         <h5>{{ event.arr_station | uppercase }}</h5>
       </div>
@@ -91,12 +94,12 @@
       </div>
 
       <div class="departure-section">
-        <h4>{{ event.dep_city | uppercase }}</h4>
+        <h3>{{ event.dep_city | uppercase }}</h3>
         <h5>Pick up {{ event?.dep_date | date:'dd MMM yyyy' }} - {{ event.dep_time }}</h5>
       </div>
 
       <div class="arrival-section">
-        <h4>{{ event.arr_city | uppercase }}</h4>
+        <h3>{{ event.arr_city | uppercase }}</h3>
         <h5>Return {{ event?.arr_date | date:'dd MMM yyyy' }} - {{ event.arr_time }}</h5>
       </div>
 
@@ -319,8 +322,8 @@
           </div>
 
           <div class="action-response">
-            <h4 class="action-response-secondary" (click)="cancelEdit()">CANCEL</h4>
-            <button type="submit" class="action-response-primary" [disabled]="!editTransportForm.valid"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
+            <h5 class="action-response-secondary" (click)="cancelEdit()">CANCEL</h5>
+            <button type="submit" class="action-response-primary" [disabled]="!editTransportForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
           </div>
         </div>
 
@@ -349,8 +352,8 @@
 
     <div class="confirm-delete-footer">
       <div class="action-response">
-        <h4 class="action-response-primary" (click)="cancelDelete()">CANCEL</h4>
-        <h4 class="action-response-warning" (click)="confirmDelete()">DELETE</h4>
+        <h5 class="action-response-primary" (click)="cancelDelete()">CANCEL</h5>
+        <h5 class="action-response-warning" (click)="confirmDelete()">DELETE</h5>
       </div>
     </div>
   </div>

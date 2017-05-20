@@ -21,6 +21,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
   @Output() hideAccommodationForm = new EventEmitter();
 
   addAccommodationForm: FormGroup;
+  manualEntry = true;
   googleAccommodationDetail;
 
   searchDone = false;
@@ -57,6 +58,8 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
       this.addAccommodationForm = this.formBuilder.group({
         'name': '',
         'formatted_address': '',
+        'lat': '',
+        'lng': '',
         'website': '',
         'international_phone_number': '',
         'check_in_date': '',
@@ -97,6 +100,8 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
 
   backToSearch() {
     this.searchDone = false;
+    this.manualEntry = true;
+    this.googleAccommodationDetail = {};
   }
 
   // get place details from Google
@@ -128,6 +133,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
     }
 
     this.searchDone = true;
+    this.manualEntry = false;
   }
 
   // select picture as display pic

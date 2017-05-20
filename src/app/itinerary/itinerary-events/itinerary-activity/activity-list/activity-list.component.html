@@ -1,29 +1,45 @@
 <div class="custom-modal" *ngIf="showActivitySummary" (click)="showSummary()"></div>
 
-<div class="activity-summary" [class.show-summary]="showActivitySummary">
-  <h4 class="summary-quick-reference">Quick reference</h4>
-  <!-- <h5 class="activity-summary-length">ACTIVITY LIST ({{ activities.length }})</h5> -->
-  <div *ngFor="let activity of activities; let i = index" class="activity-summary-item" (click)="centerItem(activity)" [class.highlighted-item]="highlightedEvent === activity">
-    <a href="#activity{{ i }}">
-      <h5 class="date" *ngIf="activity?.date === 'any day'">{{ activity?.date }} - {{ activity?.time }}</h5>
-      <h5 class="date" *ngIf="activity?.date !== 'any day'">{{ activity?.date | date: 'dd MMM yyyy' }} - {{ activity?.time }}</h5>
-      <h5 class='activity-summary-name'>{{ activity?.name }}</h5>
-    </a>
+<div class="event-summary-section" [class.show-summary]="showActivitySummary">
+
+  <h4 class="event-summary-header">Quick reference - {{ totalActivities }}</h4>
+
+  <div class="event-summary">
+    <div *ngFor="let activity of activities; let i = index" class="event-summary-item" (click)="centerItem(activity)" [class.highlighted-item]="highlightedEvent === activity">
+      <a href="#activity{{ i }}">
+        <h5 class="index">{{i+1}}</h5>
+        <h5 class="date" *ngIf="activity?.date === 'any day'">{{ activity?.date }} - {{ activity?.time }}</h5>
+        <h5 class="date" *ngIf="activity?.date !== 'any day'">{{ activity?.date | date: 'dd MMM yyyy' }} - {{ activity?.time }}</h5>
+        <h5 class='activity-summary-name'>{{ activity?.name }}</h5>
+      </a>
+    </div>
   </div>
+
 </div>
 
-<div class="activity-list">
+<div *ngIf="!totalActivities" class="nil-event-message">
+  <h4>You have not added any activity</h4>
+  <h4>You can add a new activity by selecting the "ADD NEW" tab and then the "NEW ACTIVITY" option</h4>
+  <h4>You can complete the form in just 02 steps:</h4>
+  <ol>
+    <li>Search for your activity by name or address. Name in local language may sometimes be required</li>
+    <li>Confirm details populated from the search</li>
+  </ol>
+</div>
+
+<div class="event-list">
   <ww-activity
     *ngFor="let activity of activities; let i = index"
     id="activity{{i}}"
+    [index]="i"
     [activity]="activity"
     [class.highlighted-event]="highlightedEvent === activity"
     [itinDateRange]="itinDateRange"
-    [currentUser]="currentUser"
-    [currentItinerary]="currentItinerary">
+    [currentItinerary]="currentItinerary"
+    [totalActivities]="totalActivities">
   </ww-activity>
 </div>
 
-<div class="activity-summary-popup" (click)="showSummary()">
+<div class="event-summary-popup" (click)="showSummary()" *ngIf="totalActivities">
   <i class="fa fa-list" aria-hidden="true"></i>
 </div>

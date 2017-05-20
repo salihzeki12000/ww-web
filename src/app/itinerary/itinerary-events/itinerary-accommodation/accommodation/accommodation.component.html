@@ -9,7 +9,7 @@
   </div>
 
   <div class="display-photo-housing">
-    <div class="dots-menu" (mouseover)="showMenuOptions()">
+    <div class="dots-menu" (click)="showMenuOptions()" (mouseover)="showMenuOptions()">
       <div class="item-menu" *ngIf="showMenu">
         <ul>
           <!-- <li>
@@ -28,10 +28,13 @@
       </div>
     </div>
 
-    <h5 class="date-header">{{ event?.check_in_date | date: 'dd MMM yyyy (EEE)' }} - {{ event?.check_in_time }}</h5>
+    <div class="display-date-header">
+      <h5>{{ event?.check_in_date | date: 'dd MMM yyyy (EEE)' }} - {{ event?.check_in_time }}</h5>
+      <h5>{{ index + 1 }} of {{ totalAccommodations }}</h5>
+    </div>
 
     <h4 class="accommodation-city"><i class="fa fa-bed" aria-hidden="true"></i> in {{ event?.stay_city | uppercase }}</h4>
-    <h4 class="accommodation-header">{{ event?.name | uppercase }}</h4>
+    <h3 class="accommodation-header">{{ event?.name | uppercase }}</h3>
 
     <div class="accommodation-details">
 
@@ -192,8 +195,8 @@
           </div>
 
           <div class="action-response">
-            <h4 class="action-response-secondary" (click)="cancelEdit()">CANCEL</h4>
-            <button type="submit" class="action-response-primary" [disabled]="!editAccommodationForm.valid"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
+            <h5 class="action-response-secondary" (click)="cancelEdit()">CANCEL</h5>
+            <button type="submit" class="action-response-primary" [disabled]="!editAccommodationForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
           </div>
 
         </div>
@@ -223,8 +226,8 @@
 
     <div class="confirm-delete-footer">
       <div class="action-response">
-        <h4 class="action-response-primary" (click)="cancelDelete()">CANCEL</h4>
-        <h4 class="action-response-warning" (click)="confirmDelete()">DELETE</h4>
+        <h5 class="action-response-primary" (click)="cancelDelete()">CANCEL</h5>
+        <h5 class="action-response-warning" (click)="confirmDelete()">DELETE</h5>
       </div>
     </div>
 

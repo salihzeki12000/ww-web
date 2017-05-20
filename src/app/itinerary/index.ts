@@ -5,6 +5,10 @@ export * from './itinerary.component';
 // export * from './itinerary.resolver';
 
 export * from './itinerary-list/itinerary-list.component';
+export * from './itinerary-list/itinerary-list.routes';
+export * from './itinerary-list/itinerary-all/itinerary-all.component';
+export * from './itinerary-list/itinerary-past/itinerary-past.component';
+export * from './itinerary-list/itinerary-upcoming/itinerary-upcoming.component';
 
 export * from './itinerary-form/itinerary-form.component';
 
@@ -42,3 +46,4 @@ export * from './itinerary-resources/resource-input/resource-input.component';
 export * from './itinerary-resources/resource-list/resource-list.component';
 
 export * from './itinerary-settings/itinerary-settings.component';
+export * from './itinerary-share/itinerary-share.component';

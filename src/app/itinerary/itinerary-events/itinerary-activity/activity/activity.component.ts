@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Renderer } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Renderer, HostListener } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
 
@@ -6,18 +6,23 @@ import { ItineraryService }      from '../../../itinerary.service';
 import { ItineraryEvent }        from '../../itinerary-event';
 import { ItineraryEventService } from '../../itinerary-event.service';
 import { FlashMessageService }   from '../../../../flash-message';
+import { UserService }           from '../../../../user';
 
 @Component({
   selector: 'ww-activity',
   templateUrl: './activity.component.html',
   styleUrls: ['./activity.component.scss']
 })
-export class ActivityComponent implements OnInit {
+export class ActivityComponent implements OnInit, OnDestroy {
   @Input() activity: ItineraryEvent;
   @Input() itinDateRange;
   @Input() currentItinerary;
-  @Input() currentUser;
-  sameUser = true;
+  @Input() totalActivities;
+  @Input() index;
+
+  currentUserSubscription: Subscription;
+  currentUser;
+  sameUser;
 
   showContactDetails = false;
 
@@ -32,6 +37,7 @@ export class ActivityComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private renderer: Renderer,
+    private userService: UserService,
     private itineraryEventService: ItineraryEventService,
     private flashMessageService: FlashMessageService,
     private itineraryService: ItineraryService) {
@@ -52,8 +58,23 @@ export class ActivityComponent implements OnInit {
     }
 
   ngOnInit() {
-    // this.checkSameUser();
+    this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
+                                        result => {
+                                          this.currentUser = result;
+                                          this.checkSameUser();
+                                        })
     // this.activity['formatted_hours'] = this.activity['opening_hours'].replace(/\r?\n/g, '<br/> ');
+  }
+
+  @HostListener('document:click', ['$event'])
+  checkClick(event) {
+    if(!event.target.classList.contains("item-menu")) {
+      this.showMenu = false;
+    }
+  }
+
+  ngOnDestroy() {
+    this.currentUserSubscription.unsubscribe();
   }
 
   checkSameUser() {

@@ -9,9 +9,9 @@
     </select>
   </div>
   <i class="fa fa-filter fa-lg" aria-hidden="true"></i> -->
-  <h5 class="map-summary-length">MAP LIST ({{ events.length }})</h5>
+  <h4 class="event-summary-header">Map list - {{ events.length }}</h4>
 
-  <div class="map-legend">
+  <div class="map-summary">
     <div *ngFor="let event of events; let i = index" class="map-event" (click)="changeCenter(event)">
 
       <div class="marker">

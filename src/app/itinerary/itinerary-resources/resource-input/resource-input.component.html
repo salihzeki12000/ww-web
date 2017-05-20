@@ -10,7 +10,14 @@
 
     <div class="form-housing">
 
+      <label>Content</label>
       <textarea rows="4" formControlName="content" placeholder="add a link or type in a note" #text (keyup)="checkLink(text.value)" autofocus></textarea>
+
+      <div class="loading-overlay" *ngIf="fetchLink">
+        <div class="loading-message">
+          <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+        </div>
+      </div>
 
       <div class="resource-link-preview" *ngIf="linkExist">
         <h4 class="delete-link" (click)="deleteLink()">X</h4>
@@ -26,8 +33,8 @@
       <input type="text" formControlName="title" value="{{ link_title }}">
 
       <div class="action-response">
-        <h4 class="action-response-secondary" (click)="cancelForm()">CANCEL</h4>
-        <button type="submit" class="action-response-primary" [disabled]="!resourceForm.valid"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
+        <h5 class="action-response-secondary" (click)="cancelForm()">CANCEL</h5>
+        <button type="submit" class="action-response-primary" [disabled]="!resourceForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
       </div>
     </div>
 

@@ -1,6 +1,6 @@
 <div class="display-card">
 
-  <div class="dots-menu" (mouseover)="showMenuOptions()">
+  <div class="dots-menu" (click)="showMenuOptions()" (mouseover)="showMenuOptions()">
     <div class="item-menu" *ngIf="showMenu">
       <ul>
         <!-- <li>
@@ -21,7 +21,9 @@
 
   <div class="resource-details">
 
-    <h4 class="resource-title">{{ resource?.title }}</h4>
+    <h5 class="resource-count">{{ index + 1 }} of {{ totalResources }}</h5>
+
+    <h3 class="resource-title">{{ resource?.title }}</h3>
     <h5 class="resource-content">{{ resource?.content }}</h5>
 
     <div class="resource-link-preview" *ngIf="resource?.link_url">
@@ -76,8 +78,8 @@
           </div>
 
           <div class="action-response">
-            <h4 class="action-response-secondary" (click)="cancelEdit()">CANCEL</h4>
-            <button type="submit" class="action-response-primary" [disabled]="!editResourceForm.valid"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h4></button>
+            <h5 class="action-response-secondary" (click)="cancelEdit()">CANCEL</h5>
+            <button type="submit" class="action-response-primary" [disabled]="!editResourceForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
           </div>
         </div>
 
@@ -104,8 +106,8 @@
 
     <div class="confirm-delete-footer">
       <div class="action-response">
-        <h4 class="action-response-primary" (click)="cancelDelete()">CANCEL</h4>
-        <h4 class="action-response-warning" (click)="confirmDelete()">DELETE</h4>
+        <h5 class="action-response-primary" (click)="cancelDelete()">CANCEL</h5>
+        <h5 class="action-response-warning" (click)="confirmDelete()">DELETE</h5>
       </div>
     </div>
   </div>

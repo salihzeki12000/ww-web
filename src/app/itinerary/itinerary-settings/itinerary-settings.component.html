@@ -38,7 +38,7 @@
 
       <div class="action-response">
         <!-- <h4 (click)="undoEdit()">UNDO</h4> -->
-        <button type="submit" class="action-response-primary" [disabled]="!editItineraryForm.valid"><h4><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE EDIT</h4></button>
+        <button type="submit" class="action-response-primary" [disabled]="!editItineraryForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE EDIT</h5></button>
       </div>
     </div>
 
@@ -53,7 +53,7 @@
         <h5 class="user-description">{{ member.description }}</h5>
       </div>
 
-      <div class="itinerary-member-option" (mouseover)="showMemberOption(i)" *ngIf="currentUserAdmin">
+      <div class="itinerary-member-option" (mouseover)="showMemberOption(i)" (click)="showMemberOption(i)" *ngIf="currentUserAdmin">
         <div *ngIf="!member.hide_option">
           <i class="fa fa-cog" aria-hidden="true"></i>
             <div class="itinerary-member-option-menu" *ngIf="showOptions[i]">
@@ -86,7 +86,7 @@
     </div>
 
     <div class="action-response">
-      <h4 class="action-response-primary" (click)="share()">SHARE ITINERARY</h4>
+      <h5 class="action-response-primary" (click)="share()">SHARE ITINERARY</h5>
     </div>
   </div>
 
@@ -115,8 +115,8 @@
 
     <div class="confirm-delete-footer">
       <div class="action-response">
-        <h4 class="action-response-primary" (click)="cancelLeave()">CANCEL</h4>
-        <h4 class="action-response-warning" (click)="confirmLeave()">LEAVE</h4>
+        <h5 class="action-response-primary" (click)="cancelLeave()">CANCEL</h5>
+        <h5 class="action-response-warning" (click)="confirmLeave()">LEAVE</h5>
       </div>
     </div>
 
@@ -142,14 +142,15 @@
 
     <div class="confirm-delete-footer">
       <div class="action-response">
-        <h4 class="action-response-primary" (click)="cancelDelete()">CANCEL</h4>
-        <h4 class="action-response-warning" (click)="confirmDelete()">DELETE</h4>
+        <h5 class="action-response-primary" (click)="cancelDelete()">CANCEL</h5>
+        <h5 class="action-response-warning" (click)="confirmDelete()">DELETE</h5>
       </div>
     </div>
 
   </div>
 </div>
 
+<!-- admin role info -->
 <div class="custom-modal" *ngIf="showInfo">
   <div class="form-card">
     <div class="form-header">
@@ -170,106 +171,12 @@
       </ol>
 
       <div class="action-response">
-        <h4 class="action-response-primary" (click)="hideAdminInfo()">OK</h4>
+        <h5 class="action-response-primary" (click)="hideAdminInfo()">OK</h5>
       </div>
     </div>
   </div>
 </div>
 
 <div class="custom-modal" *ngIf="shareItin">
-  <div class="form-card">
-    <div class="form-header share-itineary-header">
-      <h3>Share itinerary</h3>
-      <a (click)="cancelShare()">x</a>
-    </div>
-
-    <div class="progress-tracker-section">
-      <ul class="progress-tracker">
-        <li class="progress-title" (click)="selectItems()" [class.progress-done]="itemsSelected">SELECT ITEMS TO SHARE</li><li class="progress-title">SELECT USERS TO SHARE WITH</li>
-      </ul>
-    </div>
-
-    <div *ngIf="!itemsSelected">
-      <div class="share-all">
-        <input type="checkbox" (click)="toggleShareAll()" checked>
-        <h4>Share all</h4>
-      </div>
-
-      <div class="category-header">
-        <h4>Accommodation</h4>
-      </div>
-      <div *ngFor="let event of events; let i = index" class="category-item">
-        <div *ngIf="event.type === 'accommodation'">
-          <input type="checkbox" (click)="toggleShare(i)" [checked]="shareIndex[i]">
-          <h5>{{ event.name }}</h5>
-        </div>
-      </div>
-
-      <div class="category-header">
-        <h4>Activity</h4>
-      </div>
-      <div *ngFor="let event of events; let i = index" class="category-item">
-        <div *ngIf="event.type === 'activity'">
-          <input type="checkbox" (click)="toggleShare(i)" [checked]="shareIndex[i]">
-          <h5>{{ event.name }}</h5>
-        </div>
-      </div>
-
-      <div class="category-header">
-        <h4>Transport</h4>
-      </div>
-      <div *ngFor="let event of events; let i = index" class="category-item">
-        <div *ngIf="event.type === 'transport'">
-          <input type="checkbox" (click)="toggleShare(i)" [checked]="shareIndex[i]">
-          <h5>{{ event.name }}</h5>
-        </div>
-      </div>
-
-      <div class="category-header">
-        <h4>Resource</h4>
-      </div>
-      <div *ngFor="let resource of resources; let i = index" class="category-item">
-        <input type="checkbox" (click)="toggleShareResource(i)" [checked]="shareIndexResource[i]">
-        <h5>{{ resource.title }}</h5>
-      </div>
-
-      <div class="action-response share-response">
-        <h4 class="action-response-secondary" (click)="cancelShare()">CANCEL</h4>
-        <h4 class="action-response-primary" (click)="selectUsers()">NEXT</h4>
-      </div>
-    </div>
-
-    <div *ngIf="itemsSelected">
-      <input class="share-users-search" type="text" placeholder="Search for people..." #text (keyup)="filterSearch(text.value)">
-
-      <div *ngIf="validAddUser">
-        <h5 class="user-search-header">Selected users ({{ selectedUsers.length }})</h5>
-        <div *ngFor="let user of selectedUsers" class="search-result-card selected-user">
-          <img src="{{ user.display_picture }}" alt="" class="user-profile-thumbnail">
-          <div class="user-details">
-            <h4 class="user-username">{{ user.username }}</h4>
-            <h5 class="user-search-description">{{ user.description }}</h5>
-          </div>
-          <h5 class="toggle-remove-member" (click)="toggleAdd(user)">Selected</h5>
-        </div>
-      </div>
-
-      <h5 class="user-search-header">Search result ({{ filteredResult.length }})</h5>
-      <div *ngFor="let user of filteredResult" class="search-result-card">
-        <img src="{{ user.display_picture }}" alt="" class="user-profile-thumbnail">
-        <div class="user-details">
-          <h4 class="user-username">{{ user.username }}</h4>
-          <h5 class="user-search-description">{{ user.description }}</h5>
-        </div>
-        <h5 class="toggle-invite-member" (click)="toggleAdd(user)">Select</h5>
-      </div>
-
-      <div class="action-response share-response">
-        <h4 class="action-response-secondary" (click)="cancelShare()">CANCEL</h4>
-        <button type="button" class="action-response-primary" (click)="shareItinerary()" *ngIf="validAddUser"><h4>SHARE ITINERARY</h4></button>
-      </div>
-    </div>
-
-
-  </div>
+  <ww-itinerary-share (cancelShare)="cancelShare($event)"></ww-itinerary-share>
 </div>

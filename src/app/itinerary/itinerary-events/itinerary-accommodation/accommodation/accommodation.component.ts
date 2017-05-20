@@ -1,21 +1,27 @@
-import { Component, OnInit, Input, Renderer } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Renderer, HostListener } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { Subscription } from 'rxjs/Rx';
 
 import { ItineraryEvent }        from '../../itinerary-event';
 import { ItineraryEventService } from '../../itinerary-event.service';
 import { FlashMessageService }   from '../../../../flash-message';
+import { UserService }           from '../../../../user';
 
 @Component({
   selector: 'ww-accommodation',
   templateUrl: './accommodation.component.html',
   styleUrls: ['./accommodation.component.scss']
 })
-export class AccommodationComponent implements OnInit {
+export class AccommodationComponent implements OnInit, OnDestroy {
   @Input() event: ItineraryEvent;
   @Input() itinDateRange;
   @Input() currentItinerary;
-  @Input() currentUser;
-  sameUser = true;
+  @Input() totalAccommodations;
+  @Input() index;
+
+  currentUserSubscription: Subscription;
+  currentUser;
+  sameUser;
 
   showContactDetails = false;
 
@@ -29,6 +35,7 @@ export class AccommodationComponent implements OnInit {
 
   constructor(
     private renderer: Renderer,
+    private userService: UserService,
     private itineraryEventService: ItineraryEventService,
     private flashMessageService: FlashMessageService,
     private formBuilder: FormBuilder) {
@@ -47,7 +54,22 @@ export class AccommodationComponent implements OnInit {
     }
 
   ngOnInit()  {
-    // this.checkSameUser()
+    this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
+                                       result => {
+                                         this.currentUser = result;
+                                         this.checkSameUser();
+                                       })
+  }
+
+  @HostListener('document:click', ['$event'])
+  checkClick(event) {
+    if(!event.target.classList.contains("item-menu")) {
+      this.showMenu = false;
+    }
+  }
+
+  ngOnDestroy() {
+    this.currentUserSubscription.unsubscribe();
   }
 
   checkSameUser() {

@@ -1,16 +1,17 @@
-import { Component, OnInit, Renderer } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer } from '@angular/core';
 
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { AuthService } from '../auth';
+import { AuthService }    from '../auth';
+import { LoadingService } from '../loading';
 
 @Component({
   selector: 'ww-landing-page',
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.scss']
 })
-export class LandingPageComponent implements OnInit {
+export class LandingPageComponent implements OnInit, OnDestroy {
   signinForm: FormGroup;
 
   showAuth = false;
@@ -20,6 +21,7 @@ export class LandingPageComponent implements OnInit {
     private renderer: Renderer,
     private formBuilder: FormBuilder,
     private authService: AuthService,
+    private loadingService: LoadingService,
     private router: Router) {
       this.signinForm = formBuilder.group({
         'email' : ['', Validators.compose([ Validators.required, this.validEmail ])],
@@ -28,13 +30,21 @@ export class LandingPageComponent implements OnInit {
     }
 
   ngOnInit() {
+    this.loadingService.setLoader(false, "");
+  }
+
+  ngOnDestroy() {
   }
 
   onSubmit()  {
     this.authService.signin(this.signinForm.value)
         .subscribe(
           data => {
-            this.router.navigateByUrl('/me');
+            this.loadingService.setLoader(true, "Signing in...");
+
+            setTimeout(() =>  {
+              this.router.navigateByUrl('/me');
+            }, 1000)
           },
           error => console.error(error)
         )
@@ -48,21 +58,17 @@ export class LandingPageComponent implements OnInit {
 
   getAuth() {
     this.showAuth = true;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', true);
   }
 
   exitAuth()  {
     this.showAuth = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 
   getSignin() {
     this.showSignin = true;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', true);
   }
 
   hideSignin() {
     this.showSignin = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
 }

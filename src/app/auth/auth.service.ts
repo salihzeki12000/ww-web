@@ -10,6 +10,8 @@ import { Observable } from 'rxjs';
 import { UserService } from '../user/user.service';
 import { User }        from '../user/user';
 
+import { ErrorMessageService } from '../error-message';
+
 @Injectable()
 export class AuthService  {
   // private url = 'http://localhost:9000';
@@ -20,7 +22,8 @@ export class AuthService  {
   constructor(
     private http: Http,
     private router: Router,
-    private userService: UserService)  {
+    private userService: UserService,
+    private errorMessageService: ErrorMessageService)  {
       FB.init({
             appId      : '1751163758480192',
             cookie     : false,  // enable cookies to allow the server to access the session
@@ -39,7 +42,10 @@ export class AuthService  {
                       localStorage.setItem('token', response.json()['token']);
                       return response.json();
                     })
-                    .catch((error: Response) => Observable.throw(error.json()));
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
   }
 
   signin(user: User)  {
@@ -52,7 +58,10 @@ export class AuthService  {
                       localStorage.setItem('token', response.json()['token']);
                       return response.json();
                     })
-                    .catch((error: Response) => Observable.throw(error.json()));
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
   }
 
   loginFacebook(user) {
@@ -65,7 +74,10 @@ export class AuthService  {
                       localStorage.setItem('token', response.json()['token']);
                       return response.json();
                     })
-                    // .catch((error: Response) => Observable.throw(error.json()));
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
   }
 
   loginGoogle(user) {
@@ -79,7 +91,10 @@ export class AuthService  {
                       localStorage.setItem('token', response.json()['token']);
                       return response.json();
                     })
-                    // .catch((error: Response) => Observable.throw(error.json()));
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
   }
 
   signoutFacebook()  {

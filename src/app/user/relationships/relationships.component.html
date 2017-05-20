@@ -1,13 +1,13 @@
-<div class="relationships-container">
-  <div class="relationships-header">
+<div class="sub-route-container">
+  <div class="sub-route-header">
     <h3>Your connections</h3>
     <header>
       <nav>
-        <ul class="relationships-nav-tabs">
-          <li routerLinkActive="active"><a [routerLink]="['followers']">Followers<span class="relationship-count">{{ followers.length }}</span></a></li>
-          <li routerLinkActive="active"><a [routerLink]="['following']">Following<span class="relationship-count">{{ followings.length }}</span></a></li>
-          <li routerLinkActive="active"><a [routerLink]="['follow-request']">Follow requests<span class="relationship-count">{{ pendingFollowers.length }}</span></a></li>
-          <li routerLinkActive="active"><a [routerLink]="['following-request']">Following requests<span class="relationship-count">{{ requestedFollowings.length }}</span></a></li>
+        <ul class="sub-route-nav-tabs">
+          <li routerLinkActive="active"><a [routerLink]="['followers']">Followers<span class="tab-count">{{ followers?.length }}</span></a></li>
+          <li routerLinkActive="active"><a [routerLink]="['following']">Following<span class="tab-count">{{ followings?.length }}</span></a></li>
+          <li routerLinkActive="active"><a [routerLink]="['follow-request']">Follow requests<span class="tab-count">{{ pendingFollowers?.length }}</span></a></li>
+          <li routerLinkActive="active"><a [routerLink]="['following-request']">Following requests<span class="tab-count">{{ requestedFollowings?.length }}</span></a></li>
         </ul>
       </nav>
     </header>

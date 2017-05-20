@@ -1,55 +1,6 @@
 /*********************************
   activity summary section
 *********************************/
-.activity-summary-length {
-  margin-bottom: 1px;
-  padding: 7px 0;
-  font-weight: bold;
-  text-align: center;
-  letter-spacing: .5px;
-  background-color: rgba(237, 189, 100, 0.5);
-  box-shadow: inset 0px 1px 1px 1.5px rgba(0, 0, 0, 0.2);
-
-  @media only screen and (max-width: 890px) {
-    font-size: 120%;
-    border-right: none;
-  }
-}
-
 .activity-summary-name  {
   padding: 0 10px 20px 10px;
-}
-
-/*********************************
-  activity list section
-*********************************/
-.activity-list {
-  display: flex;
-  flex-direction: column;
-  margin-left: 215px;
-
-  @media only screen and (max-width: 890px) {
-    margin-left: calc((100vw - 660px)/2);
-  }
-
-  @media only screen and (max-width: 690px) {
-    flex-direction: column;
-    align-items: center;
-    margin-left: 0;
-  }
-}
-
-ww-activity {
-  display: flex;
-  margin-top: -90px;
-  padding-top: 90px;
-  width: 630px;
-
-  @media only screen and (max-width: 400px) {
-    width: 100vw;
-  }
-
-  @media only screen and (min-width: 400px) and (max-width: 650px) {
-    width: 330px;
-  }
 }

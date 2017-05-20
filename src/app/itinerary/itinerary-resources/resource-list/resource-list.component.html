@@ -1,28 +1,41 @@
 <div class="custom-modal" *ngIf="showResourceSummary" (click)="showSummary()"></div>
 
-<div class="resource-summary" [class.show-summary]="showResourceSummary">
-  <h4 class="summary-quick-reference">Quick reference</h4>
-  <!-- <h5 class="resource-summary-length">RESOURCE LIST ({{ resources.length }})</h5> -->
-  <div *ngFor="let resource of resources; let i = index" class="resource-summary-item" (click)="centerItem(resource)" [class.highlighted-item]="highlightedEvent === resource">
-    <a href="#resource{{i}}">
-      <h5 class="resource-summary-title">{{ resource.title }}</h5>
-      <h5 class="resource-summary-content"> {{ resource.content }}</h5>
-      <h5 class="resource-summary-link truncate"><a class="website-link" href="{{ resource?.link_url }}" target="_blank">{{ resource.link_url }}</a></h5>
-    </a>
+
+<div class="event-summary-section" [class.show-summary]="showResourceSummary">
+
+  <h4 class="event-summary-header">Quick reference - {{ totalResources }}</h4>
+
+  <div class="event-summary">
+    <div *ngFor="let resource of resources; let i = index" class="event-summary-item" (click)="centerItem(resource)" [class.highlighted-item]="highlightedEvent === resource">
+      <a href="#resource{{i}}">
+        <h5 class="index">{{i+1}}</h5>
+        <h5 class="resource-summary-title">{{ resource.title }}</h5>
+        <h5 class="resource-summary-content"> {{ resource.content }}</h5>
+        <h5 class="resource-summary-link truncate"><a class="website-link" href="{{ resource?.link_url }}" target="_blank">{{ resource.link_url }}</a></h5>
+      </a>
+    </div>
   </div>
+
 </div>
 
-<div class="resource-list">
+<div *ngIf="!totalResources" class="nil-event-message">
+  <h4>You have not added any resource</h4>
+  <h4>You can add a new resource by selecting the "ADD NEW" tab and then the "NEW RESOURCE" option</h4>
+  <h4>You can add a website link or a note. Don't forget to include a title for easy reference</h4>
+</div>
+
+<div class="event-list">
   <ww-resource
     *ngFor="let resource of resources; let i = index"
     id="resource{{i}}"
+    [index]="i"
     [resource]="resource"
     [class.highlighted-event]="highlightedEvent === resource"
-    [currentUser]="currentUser"
-    [currentItinerary]="currentItinerary">
+    [currentItinerary]="currentItinerary"
+    [totalResources]="totalResources">
   </ww-resource>
 </div>
 
-<div class="resource-summary-popup" (click)="showSummary()">
+<div class="event-summary-popup" (click)="showSummary()" *ngIf="totalResources">
   <i class="fa fa-list" aria-hidden="true"></i>
 </div>

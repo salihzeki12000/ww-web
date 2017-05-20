@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Rx';
 
 import { NotificationService } from '../notification.service';
 import { UserService }         from '../../user/user.service';
+import { LoadingService }      from '../../loading';
 
 @Component({
   selector: 'ww-notification-list',
@@ -22,8 +23,8 @@ export class NotificationListComponent implements OnInit, OnDestroy {
 
   constructor(
     private notificationService: NotificationService,
-    private userService: UserService
-  ) { }
+    private userService: UserService,
+    private loadingService: LoadingService) { }
 
   ngOnInit() {
     this.currentUserSubscription = this.userService.updateCurrentUser
@@ -43,6 +44,7 @@ export class NotificationListComponent implements OnInit, OnDestroy {
                                               this.filteredNotifications = this.notifications;
                                             }
 
+                                            this.loadingService.setLoader(false, "");
                                           }
                                         )
   }
@@ -50,6 +52,7 @@ export class NotificationListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.currentUserSubscription.unsubscribe();
     this.notificationSubscription.unsubscribe();
+    this.loadingService.setLoader(true, "");
   }
 
   getNotifications(id)  {

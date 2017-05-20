@@ -1,7 +1,7 @@
 .itinerary  {
-  margin-top: 90px;
+  margin-top: 80px;
 
-  @media only screen and (min-width: 1090px)  {
+  @media only screen and (min-width: 1090.1px)  {
     width: calc(100vw - 210px);
     margin-left: 200px;
   }
@@ -10,11 +10,12 @@
 .itinerary-header  {
   position: fixed;
   top: 40px;
-  width: calc(100vw - 200px);
-  padding: 10px 10px 10px 30px;
-  height: 50px;
+  left: 0;
+  width: 100vw;
+  padding: 8px 10px 10px 200px;
+  height: 40px;
   overflow: auto;
-  background-color: #FAFAFA;
+  background-color: #6494ED;
   z-index: 3;
   box-shadow: 0 3px 2px -2px rgba(0, 0, 0, 0.2);
 
@@ -33,13 +34,18 @@
     -webkit-appearance: none;
 }
 
+.itinerary-header::-webkit-scrollbar-corner {
+  background-color: #6494ED;
+}
+
 .itinerary-header::-webkit-scrollbar:horizontal {
-    height: 1px;
+  height: 1px;
 }
 
 .itinerary-name {
   display: inline-block;
   margin-bottom: 5px;
+  color: #F9FBFB;
   @media only screen and (max-width: 690px) {
     font-size: 1.2em;
     vertical-align: -webkit-baseline-middle;
@@ -53,21 +59,17 @@
   font-size: .8em;
 }
 
-img.user-profile-thumbnail  {
-  display: inline-block;
-  margin-right: 5px;
-}
-
 /* members section */
 .members-section  {
   position: fixed;
   left: 0;
-  top: 40px;
+  top: 80px;
   padding: 10px;
   height: 80px;
   width: 200px;
   text-align: right;
   background-color: white;
+  border-right: 2px solid lightgray;
   @media only screen and (max-width: 1090px) {
     display: none;
   }
@@ -82,6 +84,11 @@ img.user-profile-thumbnail  {
     color: #3A4A4D;
     font-style: italic;
   }
+}
+
+img.user-profile-thumbnail  {
+  display: inline-block;
+  margin-right: 5px;
 }
 
 .show-more-members > h6 {
@@ -206,12 +213,13 @@ nav {
 .itinerary-nav-tabs {
   position: fixed;
   left: 0;
-  top: 120px;
+  top: 160px;
   padding: 0;
-  height: calc(100vh - 120px);
+  height: calc(100vh - 160px);
   width: 200px;
   letter-spacing: 1px;
   background-color: white;
+  border-right: 2px solid lightgray;
 
   @media only screen and (max-width: 1090px) {
     position: fixed;

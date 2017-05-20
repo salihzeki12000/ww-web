@@ -3,10 +3,11 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { Subscription } from 'rxjs/Rx';
 import { Router } from '@angular/router';
 
-import { User } from '../../user';
-import { UserService } from '../../user.service';
+import { User }                from '../../user';
+import { UserService }         from '../../user.service';
 import { FlashMessageService } from '../../../flash-message';
-import { FileuploadService } from '../../../shared';
+import { FileuploadService }   from '../../../shared';
+import { LoadingService }      from '../../../loading';
 
 @Component({
   selector: 'ww-profile-edit',
@@ -36,6 +37,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private flashMessageService: FlashMessageService,
     private fileuploadService: FileuploadService,
+    private loadingService: LoadingService,
     private router: Router) {
       this.editProfileForm = this.formBuilder.group({
         'username': '',
@@ -55,10 +57,13 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
                                            this.thumbnailImage = this.currentUser['display_picture']
                                          }
                                        )
+
+    this.loadingService.setLoader(false, "");
   }
 
   ngOnDestroy() {
     this.currentUserSubscription.unsubscribe();
+    this.loadingService.setLoader(true, "");
   }
 
   saveProfile() {

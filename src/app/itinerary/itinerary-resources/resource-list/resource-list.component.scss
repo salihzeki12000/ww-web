@@ -1,23 +1,8 @@
 /*********************************
   resource summary section
 *********************************/
-.resource-summary-length {
-  margin-bottom: 1px;
-  padding: 7px 0;
-  font-weight: bold;
-  text-align: center;
-  letter-spacing: .5px;
-  background-color: rgba(237, 189, 100, 0.5);
-  box-shadow: inset 0px 1px 1px 1.5px rgba(0, 0, 0, 0.2);
-
-  @media only screen and (max-width: 890px) {
-    font-size: 120%;
-    border-right: none;
-  }
-}
-
 .resource-summary-title {
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   padding: 20px 10px 0 10px;
   font-weight: 500;
 }
@@ -25,42 +10,10 @@
 .resource-summary-content {
   margin-bottom: 5px;
   padding: 0 10px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .resource-summary-link {
   padding: 0 10px 20px 10px;
-}
-
-/*********************************
-  resource list section
-*********************************/
-.resource-list {
-  display: flex;
-  flex-direction: column;
-  margin-left: 215px;
-
-  @media only screen and (max-width: 890px) {
-    margin-left: calc((100vw - 660px)/2);
-  }
-
-  @media only screen and (max-width: 690px) {
-    flex-direction: column;
-    align-items: center;
-    margin-left: 0;
-  }
-}
-
-ww-resource {
-  display: flex;
-  margin-top: -90px;
-  padding-top: 90px;
-  width: 630px;
-
-  @media only screen and (max-width: 400px) {
-    width: 100vw;
-  }
-
-  @media only screen and (min-width: 400px) and (max-width: 650px) {
-    width: 330px;
-  }
 }
