@@ -5,7 +5,7 @@ declare const FB: any;
 declare const gapi: any;
 
 import 'rxjs/Rx';
-import { Observable } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 
 import { UserService } from '../user/user.service';
 import { User }        from '../user/user';
@@ -16,8 +16,9 @@ import { ErrorMessageService } from '../error-message';
 export class AuthService  {
   // private url = 'http://localhost:9000';
   private url = 'https://vast-island-87972.herokuapp.com';
-
   loginType;
+  newUser = false;
+  updateNewUser = new ReplaySubject();
 
   constructor(
     private http: Http,
@@ -40,6 +41,8 @@ export class AuthService  {
                     .map((response: Response) => {
                       this.loginType = 'local';
                       localStorage.setItem('token', response.json()['token']);
+                      // this.newUser = true;
+                      this.updateNewUser.next(response.json());
                       return response.json();
                     })
                     .catch((error: Response) => {

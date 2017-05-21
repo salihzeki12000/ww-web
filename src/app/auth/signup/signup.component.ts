@@ -45,6 +45,7 @@ export class SignupComponent implements OnInit {
             setTimeout(() =>  {
               this.router.navigateByUrl('/me');
             }, 1000)
+
           },
           error => console.error(error)
         )

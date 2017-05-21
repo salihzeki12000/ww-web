@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Rx';
 
 import { Router } from '@angular/router';
 
+import { AuthService }       from '../auth';
 import { User, UserService } from '../user';
 import { Post, PostService } from '../post';
 import { LoadingService }    from '../loading';
@@ -15,11 +16,14 @@ import { LoadingService }    from '../loading';
 export class HomeComponent implements OnInit, OnDestroy {
   user: User;
   feed: Post[] = [];
+  newUser = false;
 
+  newUserSubscription: Subscription;
   currentUserSubscription: Subscription;
   feedSubscription: Subscription;
 
   constructor(
+    private authService: AuthService,
     private userService: UserService,
     private postService: PostService,
     private loadingService: LoadingService,
@@ -43,12 +47,23 @@ export class HomeComponent implements OnInit, OnDestroy {
                                           })
           })
 
+    this.newUserSubscription = this.authService.updateNewUser.subscribe(
+                                    result => {
+                                      console.log(result);
+                                      if(result['message'] === "Sign up successful")  {
+                                        this.newUser = true;
+                                      } else  {
+                                        this.newUser = false;
+                                      }
+                                    })
+
     this.loadingService.setLoader(false, "");
   }
 
   ngOnDestroy() {
     this.feedSubscription.unsubscribe();
     this.currentUserSubscription.unsubscribe();
+    this.newUserSubscription.unsubscribe();
     this.loadingService.setLoader(true, "");
   }
 
