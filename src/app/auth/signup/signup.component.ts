@@ -28,6 +28,7 @@ export class SignupComponent implements OnInit {
       'email' : ['', Validators.compose([ Validators.required, this.validEmail ])],
       'password' : ['', Validators.required],
       'passwordConfirmation' : ['', Validators.compose([ Validators.required, this.passwordsAreEqual.bind(this) ])],
+      'display_picture': 'https://res.cloudinary.com/wwfileupload/image/upload/v1495091346/avatar_neutral_d43pub.png',
     });
   }
 

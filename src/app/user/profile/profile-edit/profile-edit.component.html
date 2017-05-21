@@ -47,10 +47,10 @@
 
       <div class="profile-edit-item">
         <h5>City of Residence</h5>
-        <h4 *ngIf="currentUser?.city.name">{{ currentUser?.city.name }}</h4>
+        <h4 *ngIf="currentUser?.city?.name">{{ currentUser?.city?.name }}</h4>
 
-        <h6 *ngIf="currentUser?.city.name" [class.new-city-search]="currentUser?.city.name">Search below to amend your city of residence</h6>
-        <ww-google-place-search [class.shift-city-search]="currentUser?.city.name" [options]="options" (placeDetail)="setCity($event)"></ww-google-place-search>
+        <h6 *ngIf="currentUser?.city?.name" [class.new-city-search]="currentUser?.city?.name">Search below to amend your city of residence</h6>
+        <ww-google-place-search [class.shift-city-search]="currentUser?.city?.name" [options]="options" (placeDetail)="setCity($event)"></ww-google-place-search>
         <!-- <input type="text" formControlName="city" [value]="currentUser?.city"> -->
       </div>
 
