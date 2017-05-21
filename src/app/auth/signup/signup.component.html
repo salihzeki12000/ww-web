@@ -4,22 +4,33 @@
 
   <label>Username</label>
   <input type="text" formControlName="username">
+  <span
+  class="form-validator"
+  *ngIf="signupForm.get('username').touched && signupForm.get('username').invalid">Username is required</span>
 
   <label>Email</label>
   <input type="text" #email formControlName="email">
-  <span *ngIf="!email.pristine && email.errors != null && email.errors['invalidEmail']">Invalid email address</span>
+  <span
+    class="form-validator"
+    *ngIf="signupForm.get('email').touched && signupForm.get('email').invalid">Invalid email address</span>
 
-  <label>Password</label><span>( at least 6 characters )</span>
-  <input type="password" formControlName="password">
+
+  <label>Password <span class="required">( at least 6 characters )</span></label>
+  <input type="password" #password formControlName="password">
+  <span
+    class="form-validator"
+    *ngIf="signupForm.get('password').touched && signupForm.get('password').invalid">Password is not valid. Please enter at least 6 characters</span>
+
 
   <label>Confirm Password</label>
   <input type="password" #passwordConfirmation formControlName="passwordConfirmation">
-  <span *ngIf="!passwordConfirmation.pristine && passwordConfirmation.errors != null && passwordConfirmation.errors['passwordsNotMatch']">Passwords do not match</span>
+  <span
+    class="form-validator"
+    *ngIf="signupForm.get('passwordConfirmation').dirty && signupForm.get('passwordConfirmation').invalid">Passwords do not match</span>
 
-  <button type="submit" class="signup-button" [disabled]="!signupForm.valid">Sign Up Now</button>
+  <button type="submit" class="action-response-primary" [disabled]="!signupForm.valid"><h4>Sign Up Now</h4></button>
 
   <h5 class="sign-in-message" (click)="getSigninForm()">Have an account? Sign in now!</h5>
   <h5 class="back-to-signin-message" (click)="backToAuth()">Back to sign in home</h5>
-
 
 </form>

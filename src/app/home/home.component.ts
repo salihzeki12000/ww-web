@@ -18,7 +18,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   feed: Post[] = [];
   newUser = false;
 
-  newUserSubscription: Subscription;
   currentUserSubscription: Subscription;
   feedSubscription: Subscription;
 
@@ -46,24 +45,15 @@ export class HomeComponent implements OnInit, OnDestroy {
                                             this.feed = Object.keys(feedResult).map(key => feedResult[key]);
                                           })
           })
-
-    this.newUserSubscription = this.authService.updateNewUser.subscribe(
-                                    result => {
-                                      console.log(result);
-                                      if(result['message'] === "Sign up successful")  {
-                                        this.newUser = true;
-                                      } else  {
-                                        this.newUser = false;
-                                      }
-                                    })
-
+    console.log(this.authService.newUser);
+    this.newUser = this.authService.newUser;
+    console.log(this.newUser);
     this.loadingService.setLoader(false, "");
   }
 
   ngOnDestroy() {
     this.feedSubscription.unsubscribe();
     this.currentUserSubscription.unsubscribe();
-    this.newUserSubscription.unsubscribe();
     this.loadingService.setLoader(true, "");
   }
 

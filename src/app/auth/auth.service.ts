@@ -41,8 +41,7 @@ export class AuthService  {
                     .map((response: Response) => {
                       this.loginType = 'local';
                       localStorage.setItem('token', response.json()['token']);
-                      // this.newUser = true;
-                      this.updateNewUser.next(response.json());
+                      this.newUser = true;
                       return response.json();
                     })
                     .catch((error: Response) => {

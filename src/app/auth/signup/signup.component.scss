@@ -7,24 +7,9 @@ input {
   width: 100%;
 }
 
-span  {
-  margin-left: 10px;
-  font-size: 1rem;
-  font-style: italic;
-}
-
-.signup-button  {
+button.action-response-primary  {
   width: 100%;
-  margin-bottom: 10px;
-  padding: 5px;
-  color: #6494ED;
-  background-color: transparent;
-  border: none;
-  &:hover {
-    cursor: pointer;
-    color: #F9FBFB;
-    background-color: #6494ED;
-  }
+  margin-bottom: 20px;
 }
 
 .sign-in-message,

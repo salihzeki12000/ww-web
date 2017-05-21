@@ -35,11 +35,11 @@ export class SigninComponent implements OnInit {
   }
 
   onSubmit()  {
+    this.loadingService.setLoader(true, "get ready to wonder wander");
+
     this.authService.signin(this.signinForm.value)
         .subscribe(
           data => {
-            this.loadingService.setLoader(true, "get ready to wonder wander");
-
             setTimeout(() =>  {
               this.router.navigateByUrl('/me');
             }, 1000)

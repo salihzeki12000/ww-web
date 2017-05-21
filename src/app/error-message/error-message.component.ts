@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ErrorMessage } from './error-message';
+import { ErrorMessage }        from './error-message';
 import { ErrorMessageService } from './error-message.service';
+import { LoadingService }      from '../loading';
 
 @Component({
   selector: 'ww-error-message',
@@ -12,7 +13,9 @@ export class ErrorMessageComponent implements OnInit {
   errorMessage: ErrorMessage;
   error = false;
 
-  constructor(private errorMessageService: ErrorMessageService) { }
+  constructor(
+    private errorMessageService: ErrorMessageService,
+    private loadingService: LoadingService) { }
 
   ngOnInit() {
     this.errorMessageService.errorMessageActivated
@@ -26,6 +29,7 @@ export class ErrorMessageComponent implements OnInit {
 
   exitError() {
     this.error = false;
+    this.loadingService.setLoader(false, "");
   }
 
 }

@@ -26,7 +26,7 @@ export class SignupComponent implements OnInit {
     this.signupForm = formBuilder.group({
       'username' : ['', Validators.required],
       'email' : ['', Validators.compose([ Validators.required, this.validEmail ])],
-      'password' : ['', Validators.required],
+      'password' : ['', Validators.compose([ Validators.required, Validators.minLength(6)])],
       'passwordConfirmation' : ['', Validators.compose([ Validators.required, this.passwordsAreEqual.bind(this) ])],
       'display_picture': 'https://res.cloudinary.com/wwfileupload/image/upload/v1495091346/avatar_neutral_d43pub.png',
     });
@@ -37,11 +37,11 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit()  {
+    this.loadingService.setLoader(true, "get ready to wonder wander");
+
     this.authService.signup(this.signupForm.value)
         .subscribe(
           data => {
-            this.loadingService.setLoader(true, "get ready to wonder wander");
-
             setTimeout(() =>  {
               this.router.navigateByUrl('/me');
             }, 1000)
@@ -59,10 +59,10 @@ export class SignupComponent implements OnInit {
 
   passwordsAreEqual(control: FormControl): {[s: string]: boolean} {
       if (!this.signupForm) {
-          return {passwordsNotMatch: true};
+          return {notMatch: true};
       }
       if (control.value !== this.signupForm.controls['password'].value) {
-          return {passwordsNotMatch: true};
+          return {otMatch: true};
       }
   }
 
