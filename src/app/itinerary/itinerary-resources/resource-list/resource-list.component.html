@@ -1,7 +1,7 @@
 <div class="custom-modal" *ngIf="showResourceSummary" (click)="showSummary()"></div>
 
 
-<div class="event-summary-section" [class.show-summary]="showResourceSummary">
+<div *ngIf="totalResources" class="event-summary-section" [class.show-summary]="showResourceSummary">
 
   <h4 class="event-summary-header">Quick reference - {{ totalResources }}</h4>
 

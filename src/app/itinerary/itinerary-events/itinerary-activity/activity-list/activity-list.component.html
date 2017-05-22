@@ -1,6 +1,6 @@
 <div class="custom-modal" *ngIf="showActivitySummary" (click)="showSummary()"></div>
 
-<div class="event-summary-section" [class.show-summary]="showActivitySummary">
+<div *ngIf="totalActivities" class="event-summary-section" [class.show-summary]="showActivitySummary">
 
   <h4 class="event-summary-header">Quick reference - {{ totalActivities }}</h4>
 

@@ -15,7 +15,7 @@
       </div>
     </div>
 
-    <textarea rows="4" formControlName="content" placeholder="{{ placeholder }}" #text (keyup)="checkLink(text.value)" autofocus></textarea>
+    <textarea rows="4" formControlName="content" placeholder="{{ placeholder }}" #text (keyup)="checkLink(text.value)" (paste)="checkLink(text.value)" autofocus></textarea>
 
     <div class="post-picture" *ngIf="postPic">
       <h4 class="delete-picture" (click)="deletePicture()">X</h4>

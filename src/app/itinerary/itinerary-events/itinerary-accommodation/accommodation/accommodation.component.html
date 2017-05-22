@@ -33,7 +33,7 @@
       <h5>{{ index + 1 }} of {{ totalAccommodations }}</h5>
     </div>
 
-    <h4 class="accommodation-city"><i class="fa fa-bed" aria-hidden="true"></i> in {{ event?.stay_city | uppercase }}</h4>
+    <h4 class="accommodation-city"><i class="fa fa-bed" aria-hidden="true"></i> {{ event?.stay_city | uppercase }}</h4>
     <h3 class="accommodation-header">{{ event?.name | uppercase }}</h3>
 
     <div class="accommodation-details">

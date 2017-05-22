@@ -30,7 +30,7 @@ export class PostInputComponent implements OnInit, OnDestroy {
   inputValue = '';
   fileTypeError = false;
   postPic;
-  newImageFile;
+  newImageFile = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -58,41 +58,46 @@ export class PostInputComponent implements OnInit, OnDestroy {
   }
 
   onSubmit()  {
-    this.fileuploadService.uploadFile(this.newImageFile)
-        .subscribe(
-          result => {
-
-            this.postService.addPost({
-              content: this.postForm.value.content,
-              created_at: Date.now(),
-              img: result.secure_url,
-              link_title: this.link_title,
-              link_url: this.link_url,
-              link_img: this.link_img,
-              user: {
-                userId: this.currentUser['id'],
-                username: this.currentUser['username']
-              },
-              })
-             .subscribe(
-               data =>  {
-                 this.flashMessageService.handleFlashMessage(data.message);
-
-                 this.placeholder = "been wondering wandering?";
-                 this.inputValue = null;
-                 this.postPic = '';
-                 this.newImageFile = '';
-                 this.textArea = false;
-                 this.linkExist = false;
-                 this.link_url = '';
-                 this.link_title = '';
-                 this.link_img = '';
-                 this.postForm.reset();
-               }
-             );
-          }
-        )
+    if(this.newImageFile !== '') {
+      this.fileuploadService.uploadFile(this.newImageFile).subscribe(
+            result => {
+              this.addPost(result.secure_url)
+            })
+    } else  {
+      this.addPost("");
     }
+
+  }
+
+  addPost(imgUrl) {
+    this.postService.addPost({
+      content: this.postForm.value.content,
+      created_at: Date.now(),
+      img: imgUrl,
+      link_title: this.link_title,
+      link_url: this.link_url,
+      link_img: this.link_img,
+      user: {
+        userId: this.currentUser['id'],
+        username: this.currentUser['username']
+      },
+    }).subscribe(
+       data =>  {
+         this.flashMessageService.handleFlashMessage(data.message);
+
+         this.placeholder = "been wondering wandering?";
+         this.inputValue = null;
+         this.postPic = '';
+         this.newImageFile = '';
+         this.textArea = false;
+         this.linkExist = false;
+         this.link_url = '';
+         this.link_title = '';
+         this.link_img = '';
+         this.postForm.reset();
+       }
+     );
+  }
 
   showTextArea()  {
     this.textArea = true;

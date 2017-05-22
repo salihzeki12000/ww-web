@@ -40,7 +40,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     this.authService.signin(this.signinForm.value)
         .subscribe(
           data => {
-            this.loadingService.setLoader(true, "Signing in...");
+            this.loadingService.setLoader(true, "get ready to wonder wander");
 
             setTimeout(() =>  {
               this.router.navigateByUrl('/me');

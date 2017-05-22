@@ -89,19 +89,24 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
 
     for (let i = 0; i < this.events.length; i++) {
       if(this.events[i]['type'] !== 'transport')  {
-        let date;
-        let eventDate;
+        if(this.events[i]['lat']) {
+          let date;
+          let eventDate;
 
-        if(this.events[i]['date'] !== 'any day')  {
-          date = new Date(this.events[i]['date'])
-          eventDate = date.getDate() + " " + this.month[date.getMonth()];
-        } else if(this.events[i]['date'] === 'any day') {
-          eventDate = 'any day';
+          if(this.events[i]['date'] !== 'any day')  {
+            date = new Date(this.events[i]['date'])
+            eventDate = date.getDate() + " " + this.month[date.getMonth()];
+          } else if(this.events[i]['date'] === 'any day') {
+            eventDate = 'any day';
+          }
+
+          eventMarker.push(
+            [this.events[i]['name'], this.events[i]['lat'], this.events[i]['lng'], eventDate, this.events[i]['time']]
+          )
+        } else if(!this.events[i]['lat']) {
+          this.events.splice(i,1)
+          i--;
         }
-
-        eventMarker.push(
-          [this.events[i]['name'], this.events[i]['lat'], this.events[i]['lng'], eventDate, this.events[i]['time']]
-        )
       }
     }
     this.setDate(eventMarker);
@@ -134,9 +139,12 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
   }
 
   changeCenter(event)  {
-    let center = new google.maps.LatLng(event['lat'], event['lng']);
+    if(event['lat'])  {
+      let center = new google.maps.LatLng(event['lat'], event['lng']);
 
-    this.itinMap.panTo(center);
+      this.itinMap.panTo(center);
+    }
+
     this.showMapLegend = false;
     this.renderer.setElementClass(document.body, 'prevent-scroll', false);
   }
