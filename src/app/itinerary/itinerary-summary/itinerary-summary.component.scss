@@ -169,6 +169,13 @@
   height: 36px;
 }
 
+.activity-indicator > i {
+  width: 36px;
+  height: 36px;
+  padding: 11px 6px;
+  background-color: #F5F5FD;
+}
+
 .activity-indicator > .event-name {
   display: inline-block;
   width: 160px;

@@ -17,7 +17,8 @@ import { FileuploadService }     from '../../../../shared';
 export class ActivityInputComponent implements OnInit, OnDestroy {
   @Output() hideActivityForm = new EventEmitter<boolean>();
 
-  customActivityForm: FormGroup;
+  addActivityForm: FormGroup;
+  manualEntry = true;
   categories;
 
   searchDone = false;
@@ -31,8 +32,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   currentItinerarySubscription: Subscription;
   currentItinerary;
 
-  activityDetail;
-
+  pictureOptions = [];
   displayPic;
   uploadPic;
   newImageFile = '';
@@ -49,20 +49,22 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     private fileuploadService: FileuploadService,
     private route: ActivatedRoute,
     private router: Router) {
-    this.customActivityForm = this.formBuilder.group({
+    this.addActivityForm = this.formBuilder.group({
       'categories': this.initCategoryArray(),
-      'name': '',
-      'description': '',
-      'subDescription': '',
+      'name': ['', Validators.required],
+      'formatted_address': '',
+      'lat': '',
+      'lng': '',
+      'international_phone_number':'',
       'opening_hours': '',
       'entry_fee': '',
       'website': '',
-      'formatted_address': '',
-      'international_phone_number':'',
       'date': '',
       'time': '',
       'note': '',
       'locationCheckedIn': '',
+      'url': '',
+      'place_id': '',
     })
   }
 
@@ -99,53 +101,57 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   // progress bar
   skipSearch()  {
     this.searchDone = true;
+
+    this.addActivityForm.patchValue({
+      date: 'any day',
+    })
   }
 
   backToSearch() {
     this.searchDone = false;
+    this.manualEntry = true;
+    this.addActivityForm.reset();
+    this.displayPic = '';
+    this.pictureOptions = [];
   }
 
   //get activity details from Google
   getActivityDetails(value)  {
-    this.resetActivityForm();
+    let opening_hours = this.getOpeningHours(value.opening_hours);
+    let lat = value['geometry'].location.lat();
+    let lng = value['geometry'].location.lng();
+
+    this.addActivityForm.patchValue({
+      name: value.name,
+      date: 'any day',
+      formatted_address: value.formatted_address,
+      lat: lat,
+      lng: lng,
+      international_phone_number: value.international_phone_number,
+      website: value.website,
+      opening_hours: opening_hours,
+      url: value.url,
+      place_id: value.place_id
+    })
+
     let index = 0;
 
-    this.activityDetail = value;
-
-    if(this.activityDetail.photos) {
+    if(value.photos) {
       this.displayPic = value.photos[0].getUrl({'maxWidth': 300, 'maxHeight': 250});
-      if(this.activityDetail.photos.length > 5)  {
+      if(value.photos.length > 5)  {
         index = 5;
       } else  {
-        index = this.activityDetail.photos.length
+        index = value.photos.length
       }
-      this.activityDetail['pictures'] = [];
+
+      this.pictureOptions = [];
       for (let i = 0; i < index; i++) {
-        this.activityDetail['pictures'].unshift(value.photos[i].getUrl({'maxWidth': 300, 'maxHeight': 250}));
+        this.pictureOptions.unshift(value.photos[i].getUrl({'maxWidth': 300, 'maxHeight': 250}));
       }
     }
 
-    this.activityDetail.opening_hours = this.getOpeningHours(this.activityDetail.opening_hours);
-
     this.searchDone = true;
-  }
-
-  resetActivityForm() {
-    this.customActivityForm.reset([{
-      'categories': this.initCategoryArray(),
-      'name': '',
-      'description': '',
-      'subDescription': '',
-      'opening_hours': '',
-      'entry_fee': '',
-      'website': '',
-      'formatted_address': '',
-      'international_phone_number':'',
-      'date': '',
-      'time': '',
-      'note': '',
-      'locationCheckedIn': '',
-    }])
+    this.manualEntry = false;
   }
 
   getOpeningHours(hours)  {
@@ -231,8 +237,8 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
 
   // save
   saveNew()  {
-    let activityForm = this.customActivityForm.value;
-    let additionalField = ['url', 'place_id', 'photo'];
+    let newActivity = this.addActivityForm.value;
+
     let categoryArray = [
       { value: 'adventure', icon: 'hand-peace-o' },
       { value: 'food/drink', icon: 'cutlery' },
@@ -240,73 +246,45 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
       { value: 'sight-seeing', icon: 'eye' },
     ]
 
-    if(this.activityDetail)  {
-      for (var value in activityForm)  {
-        if( activityForm[value] === ('' || null) && this.activityDetail) {
-          activityForm[value] = this.activityDetail[value];
-        }
-        if( activityForm[value] === undefined) {
-          activityForm[value] = '';
-        }
+    for (let i = 0; i < newActivity['categories'].length; i++) {
+      newActivity['categories'][i]['value'] = categoryArray[i]['value'];
+      newActivity['categories'][i]['icon'] = categoryArray[i]['icon'];
+      if(!newActivity['categories'][i]['checked'])  {
+        newActivity['categories'][i]['checked'] = false;
       }
-
-      for (let j = 0; j < additionalField.length; j++) {
-        if(this.activityDetail[additionalField[j]])  {
-          activityForm[additionalField[j]] = this.activityDetail[additionalField[j]];
-        }
-      }
-
-      for (let k = 0; k < activityForm['categories'].length; k++) {
-        activityForm['categories'][k]['value'] = categoryArray[k]['value'];
-        activityForm['categories'][k]['icon'] = categoryArray[k]['icon'];
-        if(!activityForm['categories'][k]['checked'])  {
-          activityForm['categories'][k]['checked'] = false;
-        }
-      }
-
-      let lat = this.activityDetail['geometry'].location.lat();
-      let lng = this.activityDetail['geometry'].location.lng();
-
-      activityForm['lat'] = lat;
-      activityForm['lng'] = lng;
-    } // end of data adjustment if details pre-populated by Google
-
-    if(activityForm['date'] === '')  {
-      activityForm['date'] = 'any day';
     }
 
-    if(activityForm['time'] === '')  {
-      activityForm['time'] = 'anytime';
+    if(newActivity['time'] === '')  {
+      newActivity['time'] = 'anytime';
     }
 
     if(this.displayPic)  {
-      activityForm['photo'] = this.displayPic;
+      newActivity['photo'] = this.displayPic;
     }
 
-    activityForm['user'] = {
+    newActivity['user'] = {
       _Id: this.currentUser['id'],
       username: this.currentUser['username'],
     }
 
-    activityForm['created_at'] = new Date();
+    newActivity['created_at'] = new Date();
 
-    activityForm['type'] = 'activity';
+    newActivity['type'] = 'activity';
 
     if(this.newImageFile !== '')  {
       this.fileuploadService.uploadFile(this.newImageFile)
           .subscribe(
             result => {
-              activityForm['photo'] = result.secure_url;
+              newActivity['photo'] = result.secure_url;
 
-              this.addActivity(activityForm);
+              this.addActivity(newActivity);
           })
     } else  {
-      this.addActivity(activityForm);
+      this.addActivity(newActivity);
     }
 
 
     this.hideActivityForm.emit(false);
-    this.resetActivityForm();
   }
 
   addActivity(activity) {

@@ -194,7 +194,7 @@
               </div>
             </div>
           </div>
-          <div *ngIf="currentUser?.itineraries.length > 5" class="view-all" [routerLink]="['/me/itinerary']">
+          <div *ngIf="currentUser?.itineraries.length > 5" class="view-all" [routerLink]="['/me/itinerary']" (click)="exitSideNav()">
             <h5>View all</h5>
           </div>
         </div>

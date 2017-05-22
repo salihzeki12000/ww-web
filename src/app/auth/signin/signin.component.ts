@@ -26,7 +26,7 @@ export class SigninComponent implements OnInit {
     private router: Router) {
     this.signinForm = formBuilder.group({
       'email' : ['', Validators.compose([ Validators.required, this.validEmail ])],
-      'password' : ['', Validators.required]
+      'password' : ['', Validators.compose([ Validators.required, Validators.minLength(6)])]
     })
   }
 

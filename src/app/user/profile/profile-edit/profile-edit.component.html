@@ -21,7 +21,11 @@
     <div class="profile-edit-section-details">
       <div class="profile-edit-item">
         <h5>Username</h5>
-        <input type="text" formControlName="username" [value]="currentUser?.username" #username>
+        <div class="">
+          <input type="text" formControlName="username" [value]="currentUser?.username" #username>
+          <span class="form-validator"
+            *ngIf="editProfileForm.get('username').touched && editProfileForm.get('username').invalid">Username is required</span>
+        </div>
       </div>
 
       <div class="profile-edit-item">
@@ -42,7 +46,11 @@
     <div class="profile-edit-section-details">
       <div class="profile-edit-item">
         <h5>Email</h5>
-        <input type="text" formControlName="email" [value]="currentUser?.email">
+        <div>
+          <input type="text" formControlName="email" [value]="currentUser?.email">
+          <span class="form-validator"
+            *ngIf="editProfileForm.get('email').touched && editProfileForm.get('email').invalid">Valid email is required</span>
+        </div>
       </div>
 
       <div class="profile-edit-item">

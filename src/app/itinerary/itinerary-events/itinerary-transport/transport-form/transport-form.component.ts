@@ -47,6 +47,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
 
   itinDateSubscription: Subscription;
   itinDateRange = [];
+  firstDay;
 
   currentUserSubscription: Subscription;
   currentUser;
@@ -69,11 +70,11 @@ export class TransportFormComponent implements OnInit, OnDestroy {
         'arr_terminal': '',
         'dep_station': '',
         'arr_station': '',
-        'dep_city': '',
-        'arr_city': '',
-        'dep_date': '',
+        'dep_city': ['', Validators.required],
+        'arr_city': ['', Validators.required],
+        'dep_date': ['', Validators.required],
         'dep_time': '',
-        'arr_date': '',
+        'arr_date': ['', Validators.required],
         'arr_time': '',
         'transport_company': '',
         'operating_carrier': '',
@@ -98,7 +99,8 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     this.itinDateSubscription = this.itineraryService.updateDate.subscribe(
                                       result => {
                                         this.itinDateRange  = Object.keys(result).map(key => result[key]);
-                                        this.itinDateRange.splice(0,1)
+                                        this.itinDateRange.splice(0,1);
+                                        this.firstDay = this.itinDateRange[0];
                                     })
   }
 
@@ -136,6 +138,10 @@ export class TransportFormComponent implements OnInit, OnDestroy {
 
   selectTransportType(transport)  {
     this.transportOption = transport;
+    this.addTransportForm.patchValue({
+      dep_date: this.firstDay,
+      arr_date: this.firstDay,
+    })
   }
 
   // get flight details from flightstats.com
@@ -242,6 +248,13 @@ export class TransportFormComponent implements OnInit, OnDestroy {
                     }
                   }
                 }
+
+                this.addTransportForm.patchValue({
+                  dep_city: departureCity,
+                  dep_date: departureDate,
+                  arr_city: arrivalCity,
+                  arr_date: arrivalDate,
+                })
 
                 this.flightSearchDetail = {
                   transport_company: carrier,
@@ -387,6 +400,11 @@ export class TransportFormComponent implements OnInit, OnDestroy {
         }
       }
     }
+
+    this.addTransportForm.patchValue({
+      dep_city: currentFlightSearch['dep_city'],
+      dep_date: currentFlightSearch['dep_date'],
+    })
   }
 
   selectedArrAirport(airportCode) {
@@ -417,6 +435,11 @@ export class TransportFormComponent implements OnInit, OnDestroy {
         }
       }
     }
+
+    this.addTransportForm.patchValue({
+      arr_city: currentFlightSearch['arr_city'],
+      arr_date: currentFlightSearch['arr_date'],
+    })
   }
 
   saveNew()  {

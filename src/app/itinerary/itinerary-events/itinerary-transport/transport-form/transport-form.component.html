@@ -42,11 +42,15 @@
             <div class="search-airline-code">
               <label>Airline Code</label>
               <input type="text" id="search-airline-code" formControlName="searchAirlineCode" maxlength="2" autofocus>
+              <span class="form-validator"
+                *ngIf="searchFlightForm.get('searchAirlineCode').touched && searchFlightForm.get('searchAirlineCode').invalid">Airline code is missing</span>
             </div>
 
             <div class="search-flight-number">
               <label>Flight Number</label>
-              <input type="number" id="search-flight-number" formControlName="searchFlightNumber" min="1" max="9999" required>
+              <input type="number" id="search-flight-number" formControlName="searchFlightNumber" min="1" max="9999">
+              <span class="form-validator"
+                *ngIf="searchFlightForm.get('searchFlightNumber').touched && searchFlightForm.get('searchFlightNumber').invalid">Flight number is missing</span>
             </div>
 
             <div class="flight-example">
@@ -211,6 +215,8 @@
 
             <label>Depart from (City) <span class="required"> - required</span></label>
             <input type="text" formControlName="dep_city">
+            <span class="form-validator"
+              *ngIf="addTransportForm.get('dep_city').touched && addTransportForm.get('dep_city').invalid">Departure city is required</span>
 
             <!-- departure details for all other transport type except vehicle rental-->
             <div *ngIf="transportOption !== 'vehicle rental'">
@@ -249,6 +255,8 @@
           <div class="form-section-details">
             <label>Going To (City) <span class="required"> - required</span></label>
             <input type="text" formControlName="arr_city">
+            <span class="form-validator"
+              *ngIf="addTransportForm.get('arr_city').touched && addTransportForm.get('arr_city').invalid">Arrival city is required</span>
 
             <!-- arrival details for all transport type except vehicle rental-->
             <div *ngIf="transportOption !== 'vehicle rental'">

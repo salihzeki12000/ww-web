@@ -4,12 +4,15 @@
 
   <label>Email</label>
   <input type="text" #email formControlName="email">
-  <span *ngIf="!email.pristine && email.errors != null && email.errors['invalidEmail']">Invalid email address</span>
+  <span class="form-validator"
+    *ngIf="signinForm.get('email').touched && signinForm.get('email').invalid">Invalid email address</span>
 
-  <label>Password</label><span>(at least 6 characters)</span>
-  <input type="password" formControlName="password">
+  <label>Password<span class="label-note"> (at least 6 characters)</span></label>
+  <input type="password" #password formControlName="password">
+  <span class="form-validator"
+    *ngIf="signinForm.get('password').touched && signinForm.get('password').invalid">Password is not valid. Please enter at least 6 characters</span>
 
-  <button type="submit" class="signin-button" [disabled]="!signinForm.valid">SIGN IN NOW</button>
+  <button type="submit" class="action-response-primary" [disabled]="!signinForm.valid"><h4>Sign In Now</h4></button>
 
 </form>
 

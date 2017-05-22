@@ -40,9 +40,9 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     private loadingService: LoadingService,
     private router: Router) {
       this.editProfileForm = this.formBuilder.group({
-        'username': '',
+        'username': ['', Validators.required],
         'description': '',
-        'email': '',
+        'email' : ['', Validators.compose([ Validators.required, this.validEmail ])],
         'city': '',
         'birth_date': '',
         'gender': '',
@@ -137,6 +137,12 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     this.newProfilePic = '';
     this.newImageFile = '';
     this.thumbnailImage = this.currentUser['display_picture'];
+  }
+
+  validEmail(control: FormControl): {[s: string]: boolean} {
+      if (!control.value.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+          return {invalidEmail: true};
+      }
   }
 
   exitError() {

@@ -112,7 +112,8 @@ button[disabled]  {
   }
 }
 
-button[disabled] h4 {
+button[disabled] h4,
+button[disabled] h5 {
   color: #CCC;
   &:hover {
     color: #CCC;
@@ -155,21 +156,31 @@ button[disabled] h4 {
 }
 
 .action-response-primary  {
-  color: #6494ED;
+  padding: 0;
   background-color: transparent;
   border: 2px solid #6494ED;
   border-radius: 2px;
   &:hover {
     cursor: pointer;
-    color: #F9FBFB;
     background-color: #6494ED;
   }
 }
 
 .action-response-primary > h4,
 .action-response-primary > h5  {
+  padding: 5px 10px;
   color: #6494ED;
   border: 2px solid transparent;
+  &:hover {
+    color: #F9FBFB;
+  }
+}
+
+h4.action-response-primary,
+h5.action-response-primary  {
+  padding: 5px 10px;
+  color: #6494ED;
+  border: 2px solid #6494ED;
   &:hover {
     color: #F9FBFB;
   }
@@ -546,12 +557,16 @@ a {
   cursor: pointer;
 }
 
-/* indicate required for form input */
-span.required {
+/* label note for form input */
+span.required,
+span.label-note {
   color: gray;
-  // font-size: 1rem;
   font-weight: normal;
   font-style: italic;
+}
+
+label.label-note  {
+  color: #6494ED;
 }
 
 /* form validators */
@@ -562,12 +577,14 @@ span.form-validator {
   font-size: 1.1rem;
 }
 
-input.ng-invalid.ng-touched {
+input.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched {
   border: 2px solid red;
 }
 
 /* form display */
 .form-card {
+  position: relative;
   width: 600px;
   margin: 40px auto;
   padding: 15px 0;
@@ -773,6 +790,19 @@ input.ng-invalid.ng-touched {
 
 .anytime-input > label {
   margin-bottom: 0;
+}
+
+.lat-lng label  {
+  display: block;
+}
+
+.lat-lng div  {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.lat-lng input  {
+  width: 100px;
 }
 
 /* show editing view for post */

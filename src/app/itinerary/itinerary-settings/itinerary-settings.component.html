@@ -9,17 +9,30 @@
     <div class="itinerary-edit-section-details">
       <div class="itinerary-edit-item">
         <h5>Itinerary Name</h5>
-        <input type="text" formControlName="name" [value]="currentItinerary?.name">
+        <div>
+          <input type="text" formControlName="name" [value]="currentItinerary?.name">
+          <span class="form-validator"
+            *ngIf="editItineraryForm.get('name').touched && editItineraryForm.get('name').invalid">Name of itinerary is required</span>
+        </div>
+
       </div>
 
       <div class="itinerary-edit-item">
         <h5>Travel Date From</h5>
-        <input type="date" formControlName="date_from" [value]="currentItinerary?.date_from | date: 'yyyy-MM-dd'">
+        <div>
+          <input type="date" formControlName="date_from" [value]="currentItinerary?.date_from | date: 'yyyy-MM-dd'">
+          <span class="form-validator"
+            *ngIf="editItineraryForm.get('date_from').touched && editItineraryForm.get('date_from').invalid">Travel start date is required</span>
+        </div>
       </div>
 
       <div class="itinerary-edit-item">
         <h5>Travel Date To</h5>
-        <input type="date" formControlName="date_to" [value]="currentItinerary?.date_to | date: 'yyyy-MM-dd'">
+        <div>
+          <input type="date" formControlName="date_to" [value]="currentItinerary?.date_to | date: 'yyyy-MM-dd'">
+          <span class="form-validator"
+            *ngIf="editItineraryForm.get('date_to').touched && editItineraryForm.get('date_to').invalid">Travel end date is required</span>
+        </div>
       </div>
 
       <div class="created-details">

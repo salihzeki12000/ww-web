@@ -1,4 +1,4 @@
-<form [formGroup]="customActivityForm" (ngSubmit)="saveNew()">
+<form [formGroup]="addActivityForm" (ngSubmit)="saveNew()">
 
   <div class="form-card">
 
@@ -27,8 +27,8 @@
           <div class="form-section-details">
 
             <div class="date-to-visit">
-              <label>Date To Visit <span class="required"> - required</span></label>
-              <select class="select-date" name="date" formControlName="date" [value]="'any day'">
+              <label>Date To Visit</label>
+              <select class="select-date" name="date" formControlName="date">
                 <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
                   <div *ngIf="itinDate === 'any day'">
                     <h5>{{ itinDate }}</h5>
@@ -53,7 +53,7 @@
               <label>Select an image as the display picture</label>
 
               <div class="slider">
-                <div class="slider-images" *ngFor="let image of activityDetail?.pictures; let i = index">
+                <div class="slider-images" *ngFor="let image of pictureOptions; let i = index">
                   <input type="radio" name="slide_switch" id="image-{{i}}" (click)="selectPic(image)" checked>
                   <label for="image-{{i}}">
                     <img src="{{ image }}" alt="">
@@ -76,19 +76,34 @@
             </div>
 
             <label>Name <span class="required"> - required</span></label>
-            <input type="text" formControlName="name" value="{{ activityDetail?.name}}">
+            <input type="text" formControlName="name">
+            <span class="form-validator"
+              *ngIf="addActivityForm.get('name').touched && addActivityForm.get('name').invalid">Name of activity is required</span>
 
             <label>Address</label>
-            <input type="text" formControlName="formatted_address" value="{{ activityDetail?.formatted_address}}">
+            <input type="text" formControlName="formatted_address">
+
+            <div *ngIf="manualEntry" class="lat-lng">
+              <label>Enter the coordinates of the location to pin it on the map</label>
+              <div class="lat">
+                <label>Latitude (N)</label>
+                <input type="number" formControlName="lat">
+              </div>
+
+              <div class="lng">
+                <label>Longitude (E)</label>
+                <input type="number" formControlName="lng">
+              </div>
+            </div>
 
             <label>Contact Number</label>
-            <input type="text" formControlName="international_phone_number" value="{{ activityDetail?.international_phone_number}}" class="contact-number-input">
+            <input type="text" formControlName="international_phone_number" class="contact-number-input">
 
             <label>Website</label>
-            <input type="url" id="website" formControlName="website" value="{{ activityDetail?.website}}">
+            <input type="url" id="website" formControlName="website">
 
             <label>Opening Hours</label>
-            <textarea rows="3" formControlName="opening_hours" value="{{ activityDetail?.opening_hours}}"></textarea>
+            <textarea rows="3" formControlName="opening_hours"></textarea>
 
             <label>Cost / Entry Fee</label>
             <input type="text" formControlName="entry_fee">
@@ -115,12 +130,11 @@
 
           <div class="action-response">
             <h5 class="action-response-secondary" (click)="cancelForm()">CANCEL</h5>
-            <button type="submit" class="action-response-primary" [disabled]="!customActivityForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
+            <button type="submit" class="action-response-primary" [disabled]="!addActivityForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
           </div>
 
         </div>
       </div>
-
 
     </div><!-- end of formCard -->
 

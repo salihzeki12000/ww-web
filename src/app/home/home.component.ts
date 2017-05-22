@@ -45,9 +45,7 @@ export class HomeComponent implements OnInit, OnDestroy {
                                             this.feed = Object.keys(feedResult).map(key => feedResult[key]);
                                           })
           })
-    console.log(this.authService.newUser);
     this.newUser = this.authService.newUser;
-    console.log(this.newUser);
     this.loadingService.setLoader(false, "");
   }
 

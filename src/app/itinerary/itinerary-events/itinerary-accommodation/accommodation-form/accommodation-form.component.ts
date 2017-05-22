@@ -22,7 +22,6 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
 
   addAccommodationForm: FormGroup;
   manualEntry = true;
-  googleAccommodationDetail;
 
   searchDone = false;
 
@@ -39,6 +38,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
   currentItinerarySubscription: Subscription;
   currentItinerary;
 
+  pictureOptions = [];
   displayPic;
   uploadPic;
   newImageFile = '';
@@ -56,7 +56,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
     private router: Router,
     private formBuilder: FormBuilder) {
       this.addAccommodationForm = this.formBuilder.group({
-        'name': '',
+        'name': ['', Validators.required],
         'formatted_address': '',
         'lat': '',
         'lng': '',
@@ -64,10 +64,12 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
         'international_phone_number': '',
         'check_in_date': '',
         'check_out_date': '',
-        'check_in_time': '',
-        'check_out_time': '',
+        'check_in_time': this.timeCheckIn,
+        'check_out_time': this.timeCheckOut,
         'stay_city':'',
         'note': '',
+        'url': '',
+        'place_id': '',
       })
     }
 
@@ -96,39 +98,65 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
   // progress bar
   skipSearch()  {
     this.searchDone = true;
+
+    this.addAccommodationForm.patchValue({
+      check_in_date: this.firstDay,
+      check_out_date: this.lastDay,
+      check_in_time: this.timeCheckIn,
+      check_out_time: this.timeCheckOut,
+    })
   }
 
   backToSearch() {
     this.searchDone = false;
     this.manualEntry = true;
-    this.googleAccommodationDetail = {};
+    this.addAccommodationForm.reset();
+    this.displayPic = '';
+    this.pictureOptions = [];
   }
 
   // get place details from Google
   getAccommodationDetails(value)  {
-    let index = 0;
-    this.googleAccommodationDetail = value;
-
-    if(this.googleAccommodationDetail.photos) {
-      this.displayPic = value.photos[0].getUrl({'maxWidth': 300, 'maxHeight': 250});
-      if(this.googleAccommodationDetail.photos.length > 5)  {
-        index = 5;
-      } else  {
-        index = this.googleAccommodationDetail.photos.length
-      }
-      this.googleAccommodationDetail['pictures'] = [];
-      for (let i = 0; i < index; i++) {
-        this.googleAccommodationDetail['pictures'].unshift(value.photos[i].getUrl({'maxWidth': 300, 'maxHeight': 250}));
-      }
-    }
+    let lat = value['geometry'].location.lat();
+    let lng = value['geometry'].location.lng();
 
     let address_components = value['address_components'];
 
     for (let i = 0; i < address_components.length; i++) {
       if(address_components[i]['types'][0] === 'locality')  {
-        this.googleAccommodationDetail['stay_city'] = address_components[i]['long_name'];
+        value['stay_city'] = address_components[i]['long_name'];
       } else if(address_components[i]['types'][0] === 'administrative_area_level_1') {
-        this.googleAccommodationDetail['stay_city'] += ', ' + address_components[i]['long_name'];
+        value['stay_city'] += ', ' + address_components[i]['long_name'];
+      }
+    }
+
+    this.addAccommodationForm.patchValue({
+      name: value.name,
+      formatted_address: value.formatted_address,
+      lat: lat,
+      lng: lng,
+      website: value.website,
+      international_phone_number: value.international_phone_number,
+      check_in_date: this.firstDay,
+      check_out_date: this.lastDay,
+      stay_city: value.stay_city,
+      url: value.url,
+      place_id: value.place_id,
+    })
+
+    let index = 0;
+
+    if(value.photos) {
+      this.displayPic = value.photos[0].getUrl({'maxWidth': 300, 'maxHeight': 250});
+      if(value.photos.length > 5)  {
+        index = 5;
+      } else  {
+        index = value.photos.length
+      }
+
+      this.pictureOptions = [];
+      for (let i = 0; i < index; i++) {
+        this.pictureOptions.unshift(value.photos[i].getUrl({'maxWidth': 300, 'maxHeight': 250}));
       }
     }
 
@@ -175,38 +203,6 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
   // save
   saveNew()  {
     let newAccommodation = this.addAccommodationForm.value;
-    if(this.googleAccommodationDetail)  {
-      for (var value in newAccommodation)  {
-        if (newAccommodation[value] === '' && this.googleAccommodationDetail[value]) {
-          newAccommodation[value] = this.googleAccommodationDetail[value];
-        }
-      }
-
-      newAccommodation['url'] = this.googleAccommodationDetail['url'];
-      newAccommodation['place_id'] = this.googleAccommodationDetail['place_id'];
-
-      let lat = this.googleAccommodationDetail['geometry'].location.lat();
-      let lng = this.googleAccommodationDetail['geometry'].location.lng();
-
-      newAccommodation['lat'] = lat;
-      newAccommodation['lng'] = lng;
-    }
-
-    if(newAccommodation['check_in_date'] === '')  {
-      newAccommodation['check_in_date'] = this.firstDay;
-    }
-
-    if(newAccommodation['check_out_date'] === '')  {
-      newAccommodation['check_out_date'] = this.lastDay;
-    }
-
-    if(newAccommodation['check_in_time'] === '')  {
-      newAccommodation['check_in_time'] = '15:00';
-    }
-
-    if(newAccommodation['check_out_time'] === '')  {
-      newAccommodation['check_out_time'] = '12:00';
-    }
 
     if(this.displayPic)  {
       newAccommodation['photo'] = this.displayPic;

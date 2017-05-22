@@ -11,12 +11,20 @@
     <div class="form-housing">
       <label>Itinerary name</label>
       <input type="text" formControlName="name">
+      <span class="form-validator"
+        *ngIf="itineraryForm.get('name').touched && itineraryForm.get('name').invalid">Name of itinerary is required</span>
+
+      <label class="label-note">Do include your date of departure and arrival for details to show up in the itinerary summary</label>
 
       <label>Travel date from (dd/mm/yyyy)</label>
       <input type="date" formControlName="date_from" max="2050-12-31">
+      <span class="form-validator"
+        *ngIf="itineraryForm.get('date_from').touched && itineraryForm.get('date_from').invalid">Travel start date is required</span>
 
       <label>Travel date to (dd/mm/yyyy)</label>
       <input type="date" formControlName="date_to" max="2050-12-31">
+      <span class="form-validator"
+        *ngIf="itineraryForm.get('date_to').touched && itineraryForm.get('date_to').invalid">Travel end date is required</span>
 
       <div class="action-response">
         <h5 class="action-response-secondary" (click)="cancelForm()">CANCEL</h5>
