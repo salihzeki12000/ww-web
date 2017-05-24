@@ -3,9 +3,12 @@
 
     <div class="profile-edit-header" [class.change-profile-picture]="newProfilePic">
       <img src="{{ currentUser?.display_picture }}" alt="">
-      <h5 class="keep-original" *ngIf="newProfilePic" (click)="keepOriginal()">Keep original</h5>
+      <div class="keep-original" *ngIf="newProfilePic">
+        <h5 (click)="keepOriginal()">Keep original</h5>
+      </div>
+
       <label class="fileUpload">
-        Change profile picture
+        {{ uploadText }}
         <input type="file" (change)="fileUploaded($event)" [value]="inputValue" accept="image/*">
       </label>
     </div>

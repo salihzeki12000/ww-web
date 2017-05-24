@@ -29,6 +29,15 @@
   position: absolute;
   top: 90px;
   left: calc(((100vw - 600px) / 2) + 400px);
+
+  @media only screen and (max-width: 610px) {
+    position: relative;
+    top: 0;
+    left: 0;
+    padding-bottom: 10px;
+    text-align: center;
+    background-color: #FAFAFA;
+  }
 }
 
 .new-profile-picture > img  {
@@ -42,13 +51,28 @@
   width: 150px;
   text-align: center;
   font-weight: 500;
+
+  @media only screen and (max-width: 610px) {
+    width: auto;
+  }
 }
 
 .change-profile-picture {
   text-align: left;
+
+  @media only screen and (max-width: 610px) {
+    height: 250px;
+    text-align: center;
+  }
 }
 
 .keep-original  {
+  @media only screen and (max-width: 610px) {
+    margin-top: 50px;
+  }
+}
+
+.keep-original > h5{
   margin-top: 5px;
   width: 150px;
   padding: 1.5px 10px;
@@ -60,19 +84,27 @@
   &:hover {
     cursor: pointer;
   }
+
+  @media only screen and (max-width: 610px) {
+    margin-left: calc((100vw - 190px)/2);
+  }
 }
 
 .fileUpload {
   overflow: hidden;
   position: absolute;
   top: 245px;
-  left: calc(((100vw - 600px) / 2) + 226px);
+  left: calc(((100vw - 600px) / 2) + 225px);
   padding: 0 10px;
   color: #567FCC;
   border-radius: 25px;
   border: 2px solid #567FCC;
   &:hover {
     cursor: pointer;
+  }
+
+  @media only screen and (max-width: 610px) {
+    left: calc((100vw - 152px) / 2);
   }
 }
 
