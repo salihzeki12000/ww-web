@@ -68,7 +68,7 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
 
     for (let i = 0; i < this.itemPosition.length; i++) {
       let offset = this.element.nativeElement.offsetParent.scrollTop;
-      let item = this.itemPosition[i]['position'];
+      let item = this.itemPosition[i]['position'] - 5;
       let diff = item - offset;
 
       if(diff < 0)  {
@@ -76,7 +76,6 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
         this.index = i;
       }
     }
-    // console.log(offset);
   }
 
   sectionPosition(event)  {
@@ -84,12 +83,10 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
   }
 
   onScroll(event) {
-    // console.log(event);
-    if(event.srcElement.clientWidth > 1090) {
+    if((event.srcElement.clientWidth + event.srcElement.offsetLeft) > 1076) {
       this.left = 200 - event.srcElement.scrollLeft + "px";
     } else  {
       this.left = -event.srcElement.scrollLeft + "px";
-
     }
   }
 
