@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, trigger, state, style, transition, animate } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, HostListener, trigger, state, style, transition, animate } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 
 import { ItineraryService }      from '../itinerary.service';
@@ -31,7 +31,13 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
 
   chosenEvent;
 
+  left;
+  itemPosition = [];
+  currentDate = 'any day';
+  index = 0;
+
   constructor(
+    private element: ElementRef,
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
     private loadingService: LoadingService) { }
@@ -51,14 +57,40 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
                                 )
   }
 
-  // scroll(event) {
-  //   console.log(event.srcElement.scrollLeft);
-  // }
-
   ngOnDestroy() {
     this.itinDateSubscription.unsubscribe();
     this.eventSubscription.unsubscribe();
     this.loadingService.setLoader(true, "");
+  }
+
+  @HostListener("window:scroll", [])
+  onWindowScroll() {
+
+    for (let i = 0; i < this.itemPosition.length; i++) {
+      let offset = this.element.nativeElement.offsetParent.scrollTop;
+      let item = this.itemPosition[i]['position'];
+      let diff = item - offset;
+
+      if(diff < 0)  {
+        this.currentDate = this.itemPosition[i]['date']
+        this.index = i;
+      }
+    }
+    // console.log(offset);
+  }
+
+  sectionPosition(event)  {
+    this.itemPosition.push(event);
+  }
+
+  onScroll(event) {
+    // console.log(event);
+    if(event.srcElement.clientWidth > 1090) {
+      this.left = 200 - event.srcElement.scrollLeft + "px";
+    } else  {
+      this.left = -event.srcElement.scrollLeft + "px";
+
+    }
   }
 
   filterEvents(events)  {
@@ -239,7 +271,7 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
     setTimeout(() =>  {this.loadingService.setLoader(false, "")}, 1000);
   }
 
-  showDetails(event)  {
+  showEventDetails(event)  {
     this.showDetailsInSummary = true;
     this.detailsInSummary = 'in';
     this.chosenEvent = event;

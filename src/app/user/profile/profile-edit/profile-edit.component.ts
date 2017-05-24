@@ -28,7 +28,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
 
   fileTypeError = false;
   newProfilePic;
-  newImageFile;
+  newImageFile = '';
 
   city;
 
@@ -54,7 +54,8 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
                                        .subscribe(
                                          result =>  {
                                            this.currentUser = result;
-                                           this.thumbnailImage = this.currentUser['display_picture']
+                                           this.thumbnailImage = this.currentUser['display_picture'];
+                                           this.patchValue(this.currentUser);
                                          }
                                        )
 
@@ -66,40 +67,51 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     this.loadingService.setLoader(true, "");
   }
 
+  patchValue(user)  {
+    this.editProfileForm.patchValue({
+      username: user['username'],
+      description: user['description'],
+      email: user['email'],
+      city: user['city'],
+      birth_date: user['birth_date'],
+      gender: user['gender'],
+    })
+  }
+
   saveProfile() {
     let editedProfile = this.editProfileForm.value;
 
     for (let value in editedProfile)  {
-      if(editedProfile[value] === null) {
-        editedProfile[value] = '';
-      }
-      if(editedProfile[value] !== '') {
-        this.currentUser[value] = editedProfile[value]
-      }
+      this.currentUser[value] = editedProfile[value];
     }
 
     if(this.city) {
       this.currentUser['city'] = this.city;
     }
 
-    this.fileuploadService.uploadFile(this.newImageFile)
-        .subscribe(
-          result => {
-            this.currentUser['display_picture'] = result.secure_url;
+    if(this.newImageFile !== '')  {
+      this.fileuploadService.uploadFile(this.newImageFile)
+          .subscribe(
+            result => {
+              this.currentUser['display_picture'] = result.secure_url;
+              this.updateProfile();
+          })
+    } else  {
+      this.updateProfile();
+    }
+  }
 
-            this.userService.editUser(this.currentUser)
-                            .subscribe(
-                              result => {
-                                this.flashMessageService.handleFlashMessage(result.message);
-                              }
-                            )
-
-            this.inputValue = null;
-            this.newProfilePic = '';
-            this.newImageFile = '';
-            this.thumbnailImage = this.currentUser['display_picture'];
-          }
-        )
+  updateProfile() {
+    this.userService.editUser(this.currentUser)
+                    .subscribe(
+                      result => {
+                        this.flashMessageService.handleFlashMessage(result.message);
+                        this.inputValue = null;
+                        this.newProfilePic = '';
+                        this.newImageFile = '';
+                        this.thumbnailImage = this.currentUser['display_picture'];
+                      }
+                    )
   }
 
   setCity(data) {

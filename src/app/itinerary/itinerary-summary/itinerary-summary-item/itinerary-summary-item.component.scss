@@ -1,0 +1,131 @@
+.summary-buffer {
+  height: 50px;
+  width: 100%;
+}
+
+.fix-date {
+  position: fixed;
+}
+
+.date {
+  display: none;
+  width: 100%;
+  text-align: left;
+  margin: -50px 0 10px 0;
+  padding: 5px 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #F9FBFB;
+  background-color: #567FCC;
+  border-right: 1px solid lightgray;
+
+  @media only screen and (max-width: 400px) {
+    display: block;
+  }
+}
+
+.event-time  {
+  padding-left: 5px;
+  color: grey;
+}
+
+.event-stay-city  {
+  padding-bottom: 10px;
+  color: #6494ED;
+}
+
+.event-name  {
+  overflow-wrap: break-word;
+  border-bottom: 3px solid white;
+}
+
+.check-out-on {
+  margin-top: 10px;
+  color: grey;
+}
+
+.accommodation-event-name  {
+  padding: 10px 5px 10px 15px;
+  overflow-wrap: break-word;
+  border-bottom: 5px solid white;
+}
+
+.accommodation-indicator  {
+  display: inline-block;
+  margin: 5px 20px 10px 20px;
+  padding: 10px;
+  width: 240px;
+  background-color: #FFF;
+  border-left: 10px solid rgba(100,235,219,0.5);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
+  &:hover {
+    cursor: pointer;
+  }
+
+  @media only screen and (max-width: 400px) {
+    min-width: 240px;
+    width: calc(100vw - 40px)
+  }
+}
+
+.transport-indicator  {
+  display: inline-block;
+  margin: 5px 20px 10px 20px;
+  padding: 10px;
+  width: 240px;
+  background-color: #FFF;
+  border-left: 10px solid rgba(237,100,148,0.5);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
+  &:hover {
+    cursor: pointer;
+  }
+
+  @media only screen and (max-width: 400px) {
+    min-width: 240px;
+    width: calc(100vw - 40px)
+  }
+}
+
+.activity-indicator {
+  display: inline-block;
+  margin: 5px 20px 10px 20px;
+  padding: 10px;
+  width: 240px;
+  background-color: #FFF;
+  border-left: 10px solid rgba(237,189,100,0.5);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
+  &:hover {
+    cursor: pointer;
+  }
+
+  @media only screen and (max-width: 400px) {
+    min-width: 240px;
+    width: calc(100vw - 40px)
+  }
+}
+
+.activity-indicator > img {
+  width: 36px;
+  height: 36px;
+}
+
+.activity-indicator > i {
+  width: 36px;
+  height: 36px;
+  padding: 11px 6px;
+  background-color: #F5F5FD;
+}
+
+.activity-indicator > .event-name {
+  display: inline-block;
+  width: 160px;
+  vertical-align: top;
+  padding-left: 0;
+  padding-bottom: 0;
+}
+
+.activity-indicator h5,
+.accommodation-indicator h5,
+.transport-indicator h5 {
+  font-weight: 500;
+}

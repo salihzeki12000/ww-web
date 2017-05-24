@@ -30,7 +30,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
   editing = false;
   deleteActivity = false;
 
-  editCustomActivityForm: FormGroup;
+  editActivityForm: FormGroup;
   categories;
   anytime;
 
@@ -41,11 +41,11 @@ export class ActivityComponent implements OnInit, OnDestroy {
     private itineraryEventService: ItineraryEventService,
     private flashMessageService: FlashMessageService,
     private itineraryService: ItineraryService) {
-      this.editCustomActivityForm = this.formBuilder.group({
+      this.editActivityForm = this.formBuilder.group({
         'categories': this.initCategoryArray(),
-        'name': '',
+        'name': ['', Validators.required],
         'description': '',
-        'subDescription': '',
+        'sub_description': '',
         'opening_hours': '',
         'entry_fee': '',
         'website': '',
@@ -107,8 +107,22 @@ export class ActivityComponent implements OnInit, OnDestroy {
 
   // edit section
   edit()  {
+    this.editActivityForm.patchValue({
+      name: this.activity['name'],
+      description: this.activity['description'],
+      sub_description: this.activity['sub_description'],
+      opening_hours: this.activity['opening_hours'],
+      entry_fee: this.activity['entry_fee'],
+      website: this.activity['website'],
+      formatted_address: this.activity['formatted_address'],
+      international_phone_number: this.activity['international_phone_number'],
+      date: this.activity['date'],
+      note: this.activity['note'],
+    })
+
     this.editing = true;
     this.renderer.setElementClass(document.body, 'prevent-scroll', true);
+
     if(this.activity['time'] === 'anytime') {
       this.anytime = true;
     }
@@ -120,33 +134,32 @@ export class ActivityComponent implements OnInit, OnDestroy {
   }
 
   saveEdit()  {
+    let editedActivity = this.editActivityForm.value;
+    let originalActivity = this.activity;
+
     let categoryArray = [
       { value: 'adventure', icon: 'hand-peace-o' },
       { value: 'food/drink', icon: 'cutlery' },
       { value: 'shopping', icon: 'shopping-bag'},
       { value: 'sight-seeing', icon: 'eye' },
     ]
-    let editedActivity = this.editCustomActivityForm.value;
 
-    for (let i = 0; i < this.activity['categories'].length; i++) {
-      this.activity['categories'][i]['value'] = categoryArray[i]['value']
-      this.activity['categories'][i]['icon'] = categoryArray[i]['icon']
+    for (let i = 0; i < originalActivity['categories'].length; i++) {
+      originalActivity['categories'][i]['value'] = categoryArray[i]['value']
+      originalActivity['categories'][i]['icon'] = categoryArray[i]['icon']
+    }
+
+    if(this.anytime === true) {
+      editedActivity['time'] = 'anytime';
+    } else if(!this.anytime && !editedActivity['time'])  {
+      editedActivity['time'] = originalActivity['time']
     }
 
     for (let value in editedActivity) {
-      if(editedActivity[value] === null)  {
-        editedActivity[value] = '';
-      }
-      if(editedActivity[value] !== '')  {
-        this.activity[value] = editedActivity[value];
-      }
+      originalActivity[value] = editedActivity[value];
     }
 
-    if(editedActivity['time'] === '' || this.anytime) {
-      this.activity['time'] = 'anytime';
-    }
-
-    this.itineraryEventService.editEvent(this.activity)
+    this.itineraryEventService.editEvent(originalActivity)
         .subscribe(
           result => {
           this.flashMessageService.handleFlashMessage(result.message);

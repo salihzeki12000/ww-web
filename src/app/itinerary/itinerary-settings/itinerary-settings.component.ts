@@ -82,6 +82,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
                                         result => {
                                           this.currentUser = result;
                                           this.checkStatus();
+                                          this.patchValue();
                                         })
 
     this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
@@ -160,6 +161,14 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     }
   }
 
+  patchValue()  {
+    this.editItineraryForm.patchValue({
+      name: this.currentItinerary['name'],
+      date_from: this.currentItinerary['date_from'],
+      date_to: this.currentItinerary['date_to'],
+    })
+  }
+
   filterUsers(users)  {
     this.users = users;
 
@@ -226,19 +235,8 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     let editedDetails = this.editItineraryForm.value;
 
     for (let value in editedDetails)  {
-      if(editedDetails[value] === null)  {
-        editedDetails[value] = '';
-      }
-      if(editedDetails[value] !== '') {
-        this.currentItinerary[value] = editedDetails[value];
-      }
+      this.currentItinerary[value] = editedDetails[value]
     }
-
-    this.editItineraryForm.reset({
-      'name': '',
-      'date_from': '',
-      'date_to': ''
-    })
 
     this.itineraryService.editItin(this.currentItinerary, 'edit').subscribe(
           data => {

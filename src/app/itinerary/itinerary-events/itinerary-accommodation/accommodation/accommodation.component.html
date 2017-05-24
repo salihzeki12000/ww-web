@@ -30,7 +30,7 @@
 
     <div class="display-date-header">
       <h5>{{ event?.check_in_date | date: 'dd MMM yyyy (EEE)' }} - {{ event?.check_in_time }}</h5>
-      <h5>{{ index + 1 }} of {{ totalAccommodations }}</h5>
+      <h5 *ngIf="index">{{ index + 1 }} of {{ totalAccommodations }}</h5>
     </div>
 
     <h4 class="accommodation-city"><i class="fa fa-bed" aria-hidden="true"></i> {{ event?.stay_city | uppercase }}</h4>
@@ -116,7 +116,7 @@
             <div class="check-in">
               <div class="date-to-visit">
                 <label>Check In Date <span class="required"> - required</span></label>
-                <select class="select-date" name="check_in_date" formControlName="check_in_date" [value]="event.check_in_date">
+                <select class="select-date" name="check_in_date" formControlName="check_in_date">
                   <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
                     <div *ngIf="itinDate !== 'any day'">
                       <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
@@ -142,7 +142,7 @@
             <div class="check-out">
               <div class="date-to-visit">
                 <label>Check Out Date <span class="required"> - required</span></label>
-                <select class="select-date" name="check_out_date" formControlName="check_out_date" [value]="event.check_out_date">
+                <select class="select-date" name="check_out_date" formControlName="check_out_date">
                   <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
                     <div *ngIf="itinDate !== 'any day'">
                       <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
@@ -171,26 +171,28 @@
           <div class="form-section-details">
 
             <label>Name of Accommodation <span class="required"> - required</span></label>
-            <input type="text" formControlName="name" [value]="event.name">
+            <input type="text" formControlName="name">
+            <span class="form-validator"
+              *ngIf="editAccommodationForm.get('name').touched && editAccommodationForm.get('name').invalid">Name of accommodation is required</span>
 
             <label>Address</label>
-            <input type="text" formControlName="formatted_address" [value]="event.formatted_address">
+            <input type="text" formControlName="formatted_address">
 
             <label>Staying in (City/Town)</label>
-            <input type="text" formControlName="stay_city" [value]="event?.stay_city">
+            <input type="text" formControlName="stay_city">
 
             <label>Contact Number</label>
-            <input type="text" formControlName="international_phone_number" [value]="event.international_phone_number" class="contact-number-input">
+            <input type="text" formControlName="international_phone_number" class="contact-number-input">
 
             <label>Website</label>
-            <input type="url" formControlName="website" [value]="event.website">
+            <input type="url" formControlName="website">
 
           </div>
 
           <h4 class="form-section-header">Note</h4>
           <div class="form-section-details">
             <div class="accommodation-note">
-              <textarea rows="3" formControlName="note" [value]="event.note"></textarea>
+              <textarea rows="3" formControlName="note"></textarea>
             </div>
           </div>
 

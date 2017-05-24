@@ -31,12 +31,12 @@
 
     <div class="display-date-header" *ngIf="activity?.date === 'any day'">
       <h5>{{ activity?.date }} - {{ activity?.time }}</h5>
-      <h5>{{ index + 1 }} of {{ totalActivities }}</h5>
+      <h5 *ngIf="index">{{ index + 1 }} of {{ totalActivities }}</h5>
     </div>
 
     <div class="display-date-header" *ngIf="activity?.date !== 'any day'">
       <h5>{{ activity?.date | date: 'dd MMM yyyy (EEE)' }} - {{ activity?.time }}</h5>
-      <h5>{{ index + 1 }} of {{ totalActivities }}</h5>
+      <h5 *ngIf="index">{{ index + 1 }} of {{ totalActivities }}</h5>
     </div>
 
     <h3 class="activity-header">{{ activity?.name }}</h3>
@@ -110,7 +110,7 @@
         <h4>{{ activity?.name }}</h4>
       </div>
 
-      <form [formGroup]="editCustomActivityForm" (ngSubmit)="saveEdit()">
+      <form [formGroup]="editActivityForm" (ngSubmit)="saveEdit()">
 
         <div class="form-housing">
           <h4 class="form-section-header">Visit Date &amp; Time Details</h4>
@@ -118,7 +118,7 @@
 
             <div class="date-to-visit">
               <label>Date To Visit</label>
-              <select class="select-date" name="date" formControlName="date" [value]="activity.date">
+              <select class="select-date" name="date" formControlName="date">
                 <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
                   <div *ngIf="itinDate === 'any day'">
                     <h5>{{ itinDate }}</h5>
@@ -148,22 +148,24 @@
           <div class="form-section-details">
 
             <label>Name</label>
-            <input type="text" formControlName="name" [value]="activity.name">
+            <input type="text" formControlName="name">
+            <span class="form-validator"
+              *ngIf="editActivityForm.get('name').touched && editActivityForm.get('name').invalid">Name of activity is required</span>
 
             <label>Address</label>
-            <input type="text" formControlName="formatted_address" [value]="activity.formatted_address">
+            <input type="text" formControlName="formatted_address">
 
             <label>Contact Number</label>
-            <input type="text" formControlName="international_phone_number" [value]="activity.international_phone_number" class="contact-number-input">
+            <input type="text" formControlName="international_phone_number" class="contact-number-input">
 
             <label>Website</label>
-            <input type="url" formControlName="website" [value]="activity.website">
+            <input type="url" formControlName="website">
 
             <label>Opening Hours</label>
-            <textarea rows="2" formControlName="opening_hours" [value]="activity.opening_hours"></textarea>
+            <textarea rows="2" formControlName="opening_hours"></textarea>
 
             <label>Cost / Entry Fee</label>
-            <input type="text" formControlName="entry_fee" [value]="activity.entry_fee">
+            <input type="text" formControlName="entry_fee">
 
             <div formArrayName="categories">
               <label>Category</label>
@@ -184,12 +186,12 @@
 
           <h4 class="form-section-header">Note</h4>
           <div class="form-section-details">
-            <textarea rows="2" formControlName="note" [value]="activity.note"></textarea>
+            <textarea rows="2" formControlName="note"></textarea>
           </div>
 
           <div class="action-response">
             <h5 class="action-response-secondary" (click)="cancelEdit()">CANCEL</h5>
-            <button type="submit" class="action-response-primary"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
+            <button type="submit" class="action-response-primary" [disabled]="!editActivityForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
           </div>
 
         </div>

@@ -22,7 +22,7 @@
       <div class="profile-edit-item">
         <h5>Username</h5>
         <div class="">
-          <input type="text" formControlName="username" [value]="currentUser?.username" #username>
+          <input type="text" formControlName="username" #username>
           <span class="form-validator"
             *ngIf="editProfileForm.get('username').touched && editProfileForm.get('username').invalid">Username is required</span>
         </div>
@@ -30,7 +30,7 @@
 
       <div class="profile-edit-item">
         <h5>Description</h5>
-        <input type="text" formControlName="description" [value]="currentUser?.description" #description>
+        <input type="text" formControlName="description" #description>
       </div>
 
       <div class="profile-preview">
@@ -47,7 +47,7 @@
       <div class="profile-edit-item">
         <h5>Email</h5>
         <div>
-          <input type="text" formControlName="email" [value]="currentUser?.email">
+          <input type="text" formControlName="email">
           <span class="form-validator"
             *ngIf="editProfileForm.get('email').touched && editProfileForm.get('email').invalid">Valid email is required</span>
         </div>
@@ -71,7 +71,7 @@
         <div class="profile-edit-item">
           <h5>Gender</h5>
           <select class="profile-gender-select" name="gender" formControlName="gender" [value]="currentUser?.gender">
-            <option *ngFor="let gender of genders" [value]="gender">
+            <option *ngFor="let gender of genders">
               <h5>{{ gender }}</h5>
             </option>
           </select>

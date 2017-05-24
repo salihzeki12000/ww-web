@@ -10,7 +10,7 @@
       <div class="itinerary-edit-item">
         <h5>Itinerary Name</h5>
         <div>
-          <input type="text" formControlName="name" [value]="currentItinerary?.name">
+          <input type="text" formControlName="name">
           <span class="form-validator"
             *ngIf="editItineraryForm.get('name').touched && editItineraryForm.get('name').invalid">Name of itinerary is required</span>
         </div>

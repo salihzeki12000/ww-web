@@ -40,7 +40,7 @@ export class AccommodationComponent implements OnInit, OnDestroy {
     private flashMessageService: FlashMessageService,
     private formBuilder: FormBuilder) {
       this.editAccommodationForm = this.formBuilder.group({
-        'name': '',
+        'name': ['', Validators.required],
         'formatted_address': '',
         'website': '',
         'international_phone_number': '',
@@ -91,12 +91,24 @@ export class AccommodationComponent implements OnInit, OnDestroy {
 
   // edit section
   edit()  {
+    this.editAccommodationForm.patchValue({
+      name: this.event['name'],
+      formatted_address: this.event['formatted_address'],
+      website: this.event['website'],
+      international_phone_number: this.event['international_phone_number'],
+      check_in_date: this.event['check_in_date'],
+      check_out_date: this.event['check_out_date'],
+      stay_city: this.event['stay_city'],
+      note: this.event['note'],
+    })
+
     this.editing = true;
     this.renderer.setElementClass(document.body, 'prevent-scroll', true);
 
     if(this.event['check_in_time'] === 'anytime') {
       this.anyCheckInTime = true;
     }
+
     if(this.event['check_out_time'] === 'anytime') {
       this.anyCheckOutTime = true;
     }
@@ -111,34 +123,24 @@ export class AccommodationComponent implements OnInit, OnDestroy {
     let editedAccommodation = this.editAccommodationForm.value;
     let originalAccommodation = this.event;
 
-    if(!editedAccommodation['check_in_time']) {
-      editedAccommodation['check_in_time'] = originalAccommodation['check_in_time'];
+    if(this.anyCheckInTime === true)  {
+      editedAccommodation['check_in_time'] = 'anytime';
+    } else if(!this.anyCheckInTime && !editedAccommodation['check_in_time'])  {
+      editedAccommodation['check_in_time'] = originalAccommodation['check_in_time']
     }
 
-    if(!editedAccommodation['check_out_time']) {
-      editedAccommodation['check_out_time'] = originalAccommodation['check_out_time'];
+    if(this.anyCheckOutTime === true)  {
+      editedAccommodation['check_out_time'] = 'anytime';
+    } else if(!this.anyCheckOutTime && !editedAccommodation['check_out_time'])  {
+      editedAccommodation['check_out_time'] = originalAccommodation['check_out_time']
     }
 
-    for (var value in editedAccommodation)  {
-      if(editedAccommodation[value] === null) {
-        editedAccommodation[value] = '';
-      }
-      if(editedAccommodation[value] !== '')  {
-        originalAccommodation[value] = editedAccommodation[value];
-      }
-    }
-
-    if(editedAccommodation['check_in_time'] === '' || this.anyCheckInTime)  {
-      originalAccommodation['check_in_time'] = 'anytime';
-    }
-
-    if(editedAccommodation['check_out_time'] === '' || this.anyCheckOutTime)  {
-      originalAccommodation['check_out_time'] = 'anytime';
+    for(let value in editedAccommodation) {
+      originalAccommodation[value] = editedAccommodation[value];
     }
 
     originalAccommodation['date'] = originalAccommodation['check_in_date'];
     originalAccommodation['time'] = originalAccommodation['check_in_time'];
-
 
     this.itineraryEventService.editEvent(originalAccommodation)
         .subscribe(

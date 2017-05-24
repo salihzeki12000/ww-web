@@ -43,7 +43,7 @@ export class ResourceInputComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router) {
       this.resourceForm = formBuilder.group({
-        content: ['', Validators.required],
+        content: '',
         title: '',
       })
   }

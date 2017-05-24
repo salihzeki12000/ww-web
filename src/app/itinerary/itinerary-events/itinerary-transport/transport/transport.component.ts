@@ -36,17 +36,16 @@ export class TransportComponent implements OnInit, OnDestroy {
     private flashMessageService: FlashMessageService,
     private formBuilder: FormBuilder) {
       this.editTransportForm = this.formBuilder.group({
-        'transport_type': '',
         'reference_number': '',
         'dep_terminal': '',
         'arr_terminal': '',
         'dep_station': '',
         'arr_station': '',
-        'dep_city': '',
-        'arr_city': '',
-        'dep_date': '',
+        'dep_city': ['', Validators.required],
+        'arr_city': ['', Validators.required],
+        'dep_date': ['', Validators.required],
         'dep_time': '',
-        'arr_date': '',
+        'arr_date': ['', Validators.required],
         'arr_time': '',
         'transport_company': '',
         'contact_number': '',
@@ -92,6 +91,23 @@ export class TransportComponent implements OnInit, OnDestroy {
 
   // edit section
   edit()  {
+    this.editTransportForm.patchValue({
+      reference_number: this.event['reference_number'],
+      dep_city: this.event['dep_city'],
+      arr_city: this.event['arr_city'],
+      dep_terminal: this.event['dep_terminal'],
+      arr_terminal: this.event['arr_terminal'],
+      dep_station: this.event['dep_station'],
+      arr_station: this.event['arr_station'],
+      dep_date: this.event['dep_date'],
+      arr_date: this.event['arr_date'],
+      dep_time: this.event['dep_time'],
+      arr_time: this.event['arr_time'],
+      transport_company: this.event['transport_company'],
+      contact_number: this.event['contact_number'],
+      note: this.event['note'],
+    })
+
     this.editing = true;
     this.renderer.setElementClass(document.body, 'prevent-scroll', true);
   }
@@ -106,12 +122,7 @@ export class TransportComponent implements OnInit, OnDestroy {
     let originalTransport = this.event;
 
     for (var value in editedTransport) {
-      if(editedTransport[value] === null) {
-        editedTransport[value] = '';
-      }
-      if(editedTransport[value] !== '')  {
-        originalTransport[value] = editedTransport[value];
-      }
+      originalTransport[value] = editedTransport[value];
     }
 
     originalTransport['date'] = originalTransport['dep_date'];
