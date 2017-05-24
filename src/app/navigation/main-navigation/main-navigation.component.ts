@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Renderer } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
@@ -49,7 +49,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private renderer: Renderer,
+    private renderer: Renderer2,
     private formBuilder: FormBuilder,
     private userService: UserService,
     private authService: AuthService,
@@ -190,19 +190,19 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   // side navigation
   showSideNav()  {
     this.sideNav = !this.sideNav;
-    this.togglePreventScroll(this.sideNav);
+    this.preventScroll(this.sideNav);
   }
 
   exitSideNav()  {
     this.sideNav = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+    this.preventScroll(false);
   }
 
   // user search
   getUsers()  {
     this.showUsers = true;
     this.sideNav = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', true);
+    this.preventScroll(true);
   }
 
   filterSearch(text)  {
@@ -250,7 +250,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
 
   cancelShowUsers() {
     this.showUsers = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+    this.preventScroll(false);
     this.filteredResult = [];
   }
 
@@ -296,7 +296,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
 
   hideItineraryForm(hide) {
     this.showItineraryForm = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+    this.preventScroll(false);
   }
 
   // route to all notifications
@@ -310,11 +310,15 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     this.authService.logout();
     this.sideNav = false;
     this.profileOptions = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+    this.preventScroll(false);
   }
 
   // prevent scroll
-  togglePreventScroll(value)  {
-    this.renderer.setElementClass(document.body, 'prevent-scroll', value);
+  preventScroll(value)  {
+    if(value) {
+      this.renderer.addClass(document.body, 'prevent-scroll');
+    } else  {
+      this.renderer.removeClass(document.body, 'prevent-scroll');
+    }
   }
 }

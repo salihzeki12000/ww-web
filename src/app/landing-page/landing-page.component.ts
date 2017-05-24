@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Renderer } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -18,7 +18,6 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   showSignin = false;
 
   constructor(
-    private renderer: Renderer,
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private loadingService: LoadingService,

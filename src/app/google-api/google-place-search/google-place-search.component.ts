@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit, ElementRef, ViewChild, Output, EventEmitter, Renderer } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, ElementRef, ViewChild, Output, EventEmitter } from '@angular/core';
 declare var google:any;
 
 @Component({
@@ -14,7 +14,7 @@ export class GooglePlaceSearchComponent implements OnInit, AfterViewInit {
   @Input() options;
   @Output() placeDetail = new EventEmitter();
 
-  constructor(private renderer: Renderer) { }
+  constructor() { }
 
   ngOnInit() {
   }
@@ -28,12 +28,12 @@ export class GooglePlaceSearchComponent implements OnInit, AfterViewInit {
     } else if(this.options)  {
       autocomplete = new google.maps.places.Autocomplete(search, this.options);
     }
-    
+
     let event = new MouseEvent('dblclick');
 
     autocomplete.addListener('place_changed', () => {
       this.place = autocomplete.getPlace();
-      this.renderer.invokeElementMethod(search, 'dispatchEvent', [event]);
+      this.ggPlaceSearch.nativeElement.dispatchEvent(event);
     })
 
     google.maps.event.addDomListener(search, 'keydown', function(e) {

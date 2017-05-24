@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, Renderer, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Renderer2, HostListener } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
 
@@ -37,7 +37,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
 
   constructor(
     private formBuilder: FormBuilder,
-    private renderer: Renderer,
+    private renderer: Renderer2,
     private userService: UserService,
     private itineraryEventService: ItineraryEventService,
     private flashMessageService: FlashMessageService,
@@ -122,7 +122,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
     })
 
     this.editing = true;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', true);
+    this.preventScroll(true);
 
     if(this.activity['time'] === 'anytime') {
       this.anytime = true;
@@ -131,7 +131,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
 
   cancelEdit()  {
     this.editing = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+    this.preventScroll(false);
   }
 
   saveEdit()  {
@@ -167,18 +167,18 @@ export class ActivityComponent implements OnInit, OnDestroy {
         })
 
     this.editing = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+    this.preventScroll(false);
   }
 
   // delete section
   delete() {
     this.deleteActivity = true;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', true);
+    this.preventScroll(true);
   }
 
   cancelDelete()  {
     this.deleteActivity = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+    this.preventScroll(false);
   }
 
   confirmDelete()  {
@@ -188,7 +188,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
             this.flashMessageService.handleFlashMessage(result.message);
           })
     this.deleteActivity = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+    this.preventScroll(false);
 }
 
   toggleAnytime() {
@@ -197,6 +197,15 @@ export class ActivityComponent implements OnInit, OnDestroy {
 
   toggleContactDetails()  {
     this.showContactDetails = !this.showContactDetails;
+  }
+
+  // others
+  preventScroll(value)  {
+    if(value) {
+      this.renderer.addClass(document.body, 'prevent-scroll');
+    } else  {
+      this.renderer.removeClass(document.body, 'prevent-scroll');
+    }
   }
 
 }

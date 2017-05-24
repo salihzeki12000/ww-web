@@ -1,11 +1,9 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { BrowserModule }                    from '@angular/platform-browser';
+import { BrowserAnimationsModule }          from '@angular/platform-browser/animations'
+import { NgModule }                         from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule, JsonpModule } from '@angular/http';
-import { routing } from './app.routing';
-
-import { Cloudinary } from 'cloudinary-core';
-import { CloudinaryModule } from '@cloudinary/angular';
+import { HttpModule, JsonpModule }          from '@angular/http';
+import { routing }                          from './app.routing';
 
 import { AppComponent } from './app.component';
 import { LandingPageComponent } from './landing-page';
@@ -34,10 +32,6 @@ import { AdminAttractionComponent,AdminAttractionFormComponent } from './admin/a
 import { FileuploadService, CommentService } from './shared';
 import { LoadingComponent, LoadingService } from './loading';
 import { ErrorMessageComponent, ErrorMessageService } from './error-message';
-
-export const cloudinaryLib = {
-  Cloudinary: Cloudinary
-};
 
 @NgModule({
   declarations: [
@@ -111,12 +105,12 @@ export const cloudinaryLib = {
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
     JsonpModule,
     routing,
-    CloudinaryModule.forRoot(cloudinaryLib, { cloud_name: 'wwfileupload'}),
   ],
   providers: [ LoadingService, AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, FileuploadService, CommentService, ErrorMessageService, AuthGuard ],
   bootstrap: [AppComponent]

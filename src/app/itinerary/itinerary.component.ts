@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter, Renderer } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
@@ -37,7 +37,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   addResource = false;
 
   constructor(
-    private renderer: Renderer,
+    private renderer: Renderer2,
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
     private resourceService: ResourceService,
@@ -261,7 +261,11 @@ export class ItineraryComponent implements OnInit, OnDestroy {
 
   // others
   preventScroll(value)  {
-    this.renderer.setElementClass(document.body, 'prevent-scroll', value);
+    if(value) {
+      this.renderer.addClass(document.body, 'prevent-scroll');
+    } else  {
+      this.renderer.removeClass(document.body, 'prevent-scroll');
+    }
   }
 
 }

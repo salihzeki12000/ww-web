@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Renderer } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 
 import { Resource }         from '../resource';
@@ -23,7 +23,7 @@ export class ResourceListComponent implements OnInit, OnDestroy {
   highlightedEvent;
 
   constructor(
-    private renderer: Renderer,
+    private renderer: Renderer2,
     private itineraryService: ItineraryService,
     private resourceService: ResourceService,
     private loadingService: LoadingService) { }
@@ -49,16 +49,20 @@ export class ResourceListComponent implements OnInit, OnDestroy {
 
   showSummary() {
     this.showResourceSummary = !this.showResourceSummary;
-    this.togglePreventScroll(this.showResourceSummary);
+    this.preventScroll(this.showResourceSummary);
   }
 
-  togglePreventScroll(value)  {
-    this.renderer.setElementClass(document.body, 'prevent-scroll', value);
+  preventScroll(value)  {
+    if(value) {
+      this.renderer.addClass(document.body, 'prevent-scroll');
+    } else  {
+      this.renderer.removeClass(document.body, 'prevent-scroll');
+    }
   }
 
   centerItem(resource)  {
     this.showResourceSummary = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+    this.preventScroll(false);
 
     this.highlightedEvent = resource;
   }

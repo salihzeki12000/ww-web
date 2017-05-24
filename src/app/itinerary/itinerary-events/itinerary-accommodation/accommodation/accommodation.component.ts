@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, Renderer, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Renderer2, HostListener } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
 
@@ -35,7 +35,7 @@ export class AccommodationComponent implements OnInit, OnDestroy {
   anyCheckOutTime;
 
   constructor(
-    private renderer: Renderer,
+    private renderer: Renderer2,
     private userService: UserService,
     private itineraryEventService: ItineraryEventService,
     private flashMessageService: FlashMessageService,
@@ -104,7 +104,7 @@ export class AccommodationComponent implements OnInit, OnDestroy {
     })
 
     this.editing = true;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', true);
+    this.preventScroll(true);
 
     if(this.event['check_in_time'] === 'anytime') {
       this.anyCheckInTime = true;
@@ -117,7 +117,7 @@ export class AccommodationComponent implements OnInit, OnDestroy {
 
   cancelEdit()  {
     this.editing = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+    this.preventScroll(false);
   }
 
   saveEdit() {
@@ -150,18 +150,18 @@ export class AccommodationComponent implements OnInit, OnDestroy {
           })
 
     this.editing = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+    this.preventScroll(false);
   }
 
   // delete section
   delete() {
     this.deleteAccommodation = true;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', true);
+    this.preventScroll(true);
   }
 
   cancelDelete()  {
     this.deleteAccommodation = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+    this.preventScroll(false);
   }
 
   confirmDelete() {
@@ -171,7 +171,7 @@ export class AccommodationComponent implements OnInit, OnDestroy {
             this.flashMessageService.handleFlashMessage(result.message);
           })
     this.deleteAccommodation = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+    this.preventScroll(false);
   }
 
   toggleCheckInTime() {
@@ -184,5 +184,14 @@ export class AccommodationComponent implements OnInit, OnDestroy {
 
   toggleContactDetails()  {
     this.showContactDetails = !this.showContactDetails;
+  }
+
+  // others
+  preventScroll(value)  {
+    if(value) {
+      this.renderer.addClass(document.body, 'prevent-scroll');
+    } else  {
+      this.renderer.removeClass(document.body, 'prevent-scroll');
+    }
   }
 }

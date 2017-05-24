@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone, Renderer, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
     Router,
     Event as RouterEvent,
@@ -14,13 +14,8 @@ import {
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  loading: boolean = true;
-  @ViewChild('spinnerElement') spinnerElement: ElementRef;
 
-  constructor(
-    private router: Router,
-    private ngZone: NgZone,
-    private renderer: Renderer) { }
+  constructor(private router: Router) { }
 
   ngOnInit()  {
     this.router.events.subscribe((evt) => {

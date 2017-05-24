@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, Renderer, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Renderer2, HostListener } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
 
@@ -31,7 +31,7 @@ export class TransportComponent implements OnInit, OnDestroy {
   editTransportForm: FormGroup;
 
   constructor(
-    private renderer: Renderer,
+    private renderer: Renderer2,
     private userService: UserService,
     private itineraryEventService: ItineraryEventService,
     private flashMessageService: FlashMessageService,
@@ -110,12 +110,12 @@ export class TransportComponent implements OnInit, OnDestroy {
     })
 
     this.editing = true;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', true);
+    this.preventScroll(true);
   }
 
   cancelEdit()  {
     this.editing = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+    this.preventScroll(false);
   }
 
   saveEdit()  {
@@ -136,18 +136,18 @@ export class TransportComponent implements OnInit, OnDestroy {
           })
 
     this.editing = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+    this.preventScroll(false);
   }
 
   // delete section
   delete() {
     this.deleteTransport = true;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', true);
+    this.preventScroll(true);
   }
 
   cancelDelete()  {
     this.deleteTransport = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+    this.preventScroll(false);
   }
 
   confirmDelete()  {
@@ -157,7 +157,16 @@ export class TransportComponent implements OnInit, OnDestroy {
             this.flashMessageService.handleFlashMessage(result.message);
           })
     this.deleteTransport = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+    this.preventScroll(false);
+  }
+
+  // others
+  preventScroll(value)  {
+    if(value) {
+      this.renderer.addClass(document.body, 'prevent-scroll');
+    } else  {
+      this.renderer.removeClass(document.body, 'prevent-scroll');
+    }
   }
 
 }

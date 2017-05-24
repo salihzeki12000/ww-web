@@ -1,4 +1,5 @@
-import { Component, OnInit, OnDestroy, ElementRef, HostListener, trigger, state, style, transition, animate } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, HostListener  } from '@angular/core';
+import { trigger, state, style, transition, animate }              from "@angular/animations"
 import { Subscription } from 'rxjs/Rx';
 
 import { ItineraryService }      from '../itinerary.service';

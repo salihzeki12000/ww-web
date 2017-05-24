@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Renderer } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
 
@@ -27,7 +27,7 @@ export class ItineraryAccommodationComponent implements OnInit, OnDestroy {
   highlightedEvent;
 
   constructor(
-    private renderer: Renderer,
+    private renderer: Renderer2,
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
     private loadingService: LoadingService) { }
@@ -66,16 +66,20 @@ export class ItineraryAccommodationComponent implements OnInit, OnDestroy {
 
   showSummary() {
     this.showAccommodationSummary = !this.showAccommodationSummary;
-    this.togglePreventScroll(this.showAccommodationSummary);
+    this.preventScroll(this.showAccommodationSummary);
   }
 
-  togglePreventScroll(value)  {
-    this.renderer.setElementClass(document.body, 'prevent-scroll', value);
+  preventScroll(value)  {
+    if(value) {
+      this.renderer.addClass(document.body, 'prevent-scroll');
+    } else  {
+      this.renderer.removeClass(document.body, 'prevent-scroll');
+    }
   }
 
   centerItem(event)  {
     this.showAccommodationSummary = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+    this.preventScroll(false);
 
     this.highlightedEvent = event;
   }

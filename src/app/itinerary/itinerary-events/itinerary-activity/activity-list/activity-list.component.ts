@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Renderer } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 
 import { ItineraryService }      from '../../../itinerary.service';
@@ -26,7 +26,7 @@ export class ActivityListComponent implements OnInit, OnDestroy {
   highlightedEvent;
 
   constructor(
-    private renderer: Renderer,
+    private renderer: Renderer2,
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
     private loadingService: LoadingService) { }
@@ -65,16 +65,20 @@ export class ActivityListComponent implements OnInit, OnDestroy {
 
   showSummary() {
     this.showActivitySummary = !this.showActivitySummary;
-    this.togglePreventScroll(this.showActivitySummary);
+    this.preventScroll(this.showActivitySummary);
   }
 
-  togglePreventScroll(value)  {
-    this.renderer.setElementClass(document.body, 'prevent-scroll', value);
+  preventScroll(value)  {
+    if(value) {
+      this.renderer.addClass(document.body, 'prevent-scroll');
+    } else  {
+      this.renderer.removeClass(document.body, 'prevent-scroll');
+    }
   }
 
   centerItem(activity)  {
     this.showActivitySummary = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+    this.preventScroll(false);
 
     this.highlightedEvent = activity;
   }

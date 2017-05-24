@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ElementRef, ViewChild, Renderer } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 declare var google:any;
@@ -28,7 +28,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
   showMapLegend = false;
 
   constructor(
-    private renderer: Renderer,
+    private renderer: Renderer2,
     private itineraryEventService: ItineraryEventService,
     private route: ActivatedRoute,
     private loadingService: LoadingService) { }
@@ -146,7 +146,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
     }
 
     this.showMapLegend = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+    this.preventScroll(false);
   }
 
   setDate(events) {
@@ -172,10 +172,14 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
 
   showLegend() {
     this.showMapLegend = !this.showMapLegend;
-    this.togglePreventScroll(this.showMapLegend);
+    this.preventScroll(this.showMapLegend);
   }
 
-  togglePreventScroll(value)  {
-    this.renderer.setElementClass(document.body, 'prevent-scroll', value);
+  preventScroll(value)  {
+    if(value) {
+      this.renderer.addClass(document.body, 'prevent-scroll');
+    } else  {
+      this.renderer.removeClass(document.body, 'prevent-scroll');
+    }
   }
 }

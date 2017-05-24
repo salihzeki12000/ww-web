@@ -43,6 +43,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       this.editProfileForm = this.formBuilder.group({
         'username': ['', Validators.required],
         'description': '',
+        // 'email': ['', Validators.required],
         'email' : ['', Validators.compose([ Validators.required, this.validEmail ])],
         'city': '',
         'birth_date': '',
