@@ -21,7 +21,7 @@
 
   <div class="display-date-header">
     <h5>{{ event?.dep_date | date: 'dd MMM yyyy (EEE)' }} - {{ event?.dep_time }}</h5>
-    <h5 *ngIf="index">{{ index + 1 }} of {{ totalTransports }}</h5>
+    <h5 *ngIf="!summary">{{ index + 1 }} of {{ totalTransports }}</h5>
   </div>
 
   <div class="transport-header">

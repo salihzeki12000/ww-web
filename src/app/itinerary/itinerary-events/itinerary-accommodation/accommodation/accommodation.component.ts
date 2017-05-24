@@ -18,7 +18,8 @@ export class AccommodationComponent implements OnInit, OnDestroy {
   @Input() currentItinerary;
   @Input() totalAccommodations;
   @Input() index;
-
+  @Input() summary;
+  
   currentUserSubscription: Subscription;
   currentUser;
   sameUser;

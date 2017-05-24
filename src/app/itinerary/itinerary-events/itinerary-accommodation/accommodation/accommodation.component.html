@@ -30,7 +30,7 @@
 
     <div class="display-date-header">
       <h5>{{ event?.check_in_date | date: 'dd MMM yyyy (EEE)' }} - {{ event?.check_in_time }}</h5>
-      <h5 *ngIf="index">{{ index + 1 }} of {{ totalAccommodations }}</h5>
+      <h5 *ngIf="!summary">{{ index + 1 }} of {{ totalAccommodations }}</h5>
     </div>
 
     <h4 class="accommodation-city"><i class="fa fa-bed" aria-hidden="true"></i> {{ event?.stay_city | uppercase }}</h4>

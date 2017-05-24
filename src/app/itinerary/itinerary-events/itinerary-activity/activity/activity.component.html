@@ -31,12 +31,12 @@
 
     <div class="display-date-header" *ngIf="activity?.date === 'any day'">
       <h5>{{ activity?.date }} - {{ activity?.time }}</h5>
-      <h5 *ngIf="index">{{ index + 1 }} of {{ totalActivities }}</h5>
+      <h5 *ngIf="!summary">{{ index + 1 }} of {{ totalActivities }}</h5>
     </div>
 
     <div class="display-date-header" *ngIf="activity?.date !== 'any day'">
       <h5>{{ activity?.date | date: 'dd MMM yyyy (EEE)' }} - {{ activity?.time }}</h5>
-      <h5 *ngIf="index">{{ index + 1 }} of {{ totalActivities }}</h5>
+      <h5 *ngIf="!summary">{{ index + 1 }} of {{ totalActivities }}</h5>
     </div>
 
     <h3 class="activity-header">{{ activity?.name }}</h3>

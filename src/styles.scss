@@ -1196,6 +1196,10 @@ ww-resource {
   color: grey;
 }
 
+.display-date-header > h5:first-of-type {
+  margin-right: 10px;
+}
+
 .display-date-header > h5:nth-of-type(2),
 .resource-count  {
   padding: 3px 10px;
