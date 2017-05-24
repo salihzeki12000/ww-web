@@ -1,9 +1,18 @@
 .item-menu,
 .dots-menu-hint  {
-  @media only screen and (max-width: 650px) {
+  @media only screen and (max-width: 300px) {
+    top: 225px;
+  }
+
+  @media only screen and (min-width: 300px) and (max-width: 400px) {
+    top: calc((100vw * 0.66) + 30px);
+  }
+
+  @media only screen and (min-width: 400px) and (max-width: 650px) {
     top: 225px;
   }
 }
+
 .check-in-details {
   display: inline-block;
   width: 49%;
