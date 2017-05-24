@@ -278,6 +278,13 @@ span.username-bold  {
 }
 
 /********** HOVER MENU */
+
+.dots-menu  {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 .dots-menu:after {
   content: '\2807';
   margin-top: -5px;
@@ -291,12 +298,26 @@ span.username-bold  {
   }
 }
 
-.dots-menu:hover .item-menu {
+.dots-menu:hover .dots-menu-hint  {
   display: block;
 }
 
-.item-menu  {
+.dots-menu-hint {
   display: none;
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  padding: 5px;
+  background-color: #3A4A4D;
+  border-radius: 2px;
+}
+
+.dots-menu-hint h6  {
+  color: #F9FBFB;
+}
+
+.item-menu  {
+  display: block;
   position: absolute;
   top: 25px;
   right: 25px;

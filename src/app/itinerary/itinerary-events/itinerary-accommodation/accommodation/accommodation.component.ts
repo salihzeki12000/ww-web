@@ -19,7 +19,7 @@ export class AccommodationComponent implements OnInit, OnDestroy {
   @Input() totalAccommodations;
   @Input() index;
   @Input() summary;
-  
+
   currentUserSubscription: Subscription;
   currentUser;
   sameUser;
@@ -64,7 +64,7 @@ export class AccommodationComponent implements OnInit, OnDestroy {
 
   @HostListener('document:click', ['$event'])
   checkClick(event) {
-    if(!event.target.classList.contains("item-menu")) {
+    if(!event.target.classList.contains("dots-menu")) {
       this.showMenu = false;
     }
   }

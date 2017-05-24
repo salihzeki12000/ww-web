@@ -51,20 +51,20 @@ export class NotificationService  {
       let timeDiff = (Date.now() - timePosted) / 1000;
 
       let units = [
-        { name: "MINUTE", in_seconds: 60, limit: 3600 },
-        { name: "HOUR", in_seconds: 3600, limit: 86400 },
-        { name: "DAY", in_seconds: 86400, limit: 604800 }
+        { name: "minute", in_seconds: 60, limit: 3600 },
+        { name: "hour", in_seconds: 3600, limit: 86400 },
+        { name: "day", in_seconds: 86400, limit: 604800 }
       ];
 
       if(timeDiff < 60) {
-        notifications[i]['time_ago'] = "LESS THAN A MINUTE AGO"
+        notifications[i]['time_ago'] = "Less than a minute ago"
       } else if(timeDiff > 604800) {
         notifications[i]['time_ago'] = '';
       } else {
         for (let j = 0; j < units.length; j++) {
           if(timeDiff < units[j]['limit'])  {
             let timeAgo =  Math.floor(timeDiff / units[j].in_seconds);
-            notifications[i]['time_ago'] = timeAgo + " " + units[j].name + (timeAgo > 1 ? "S" : "") + " AGO";
+            notifications[i]['time_ago'] = timeAgo + " " + units[j].name + (timeAgo > 1 ? "s" : "") + " ago";
             j = units.length;
           };
         }

@@ -107,21 +107,18 @@ export class ResourceService  {
       let timeDiff = (Date.now() - timePosted) / 1000;
 
       let units = [
-        { name: "MINUTE", in_seconds: 60, limit: 3600 },
-        { name: "HOUR", in_seconds: 3600, limit: 86400 },
-        { name: "DAY", in_seconds: 86400, limit: 604800 },
-        { name: "WEEK", in_seconds: 604800, limit: 2629743 },
-        { name: "MONTH", in_seconds: 2629743, limit: 31556926 },
-        { name: "YEAR", in_seconds: 31556926, limit: null }
+        { name: "minute", in_seconds: 60, limit: 3600 },
+        { name: "hour", in_seconds: 3600, limit: 86400 },
+        { name: "day", in_seconds: 86400, limit: 604800 }
       ];
 
       if(timeDiff < 60) {
-        resources[i]['time_ago'] = "LESS THAN A MINUTE AGO"
+        resources[i]['time_ago'] = "Less than a minute ago"
       } else {
         for (let j = 0; j < units.length; j++) {
-          if(timeDiff < units[j]['limit'] || !units[j]['limit'])  {
+          if(timeDiff < units[j]['limit'])  {
             let timeAgo =  Math.floor(timeDiff / units[j].in_seconds);
-            resources[i]['time_ago'] = timeAgo + " " + units[j].name + (timeAgo > 1 ? "S" : "") + " AGO";
+            resources[i]['time_ago'] = timeAgo + " " + units[j].name + (timeAgo > 1 ? "s" : "") + " ago";
             j = units.length;
           };
         }

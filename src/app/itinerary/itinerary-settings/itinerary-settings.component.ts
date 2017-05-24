@@ -108,7 +108,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
 
   @HostListener('document:click', ['$event'])
   checkClick(event) {
-    if(!event.target.classList.contains("itinerary-member-option-menu")) {
+    if(!event.target.classList.contains("fa-cog")) {
       for (let i = 0; i < this.showOptions.length; i++) {
         this.showOptions[i] = false;
       }

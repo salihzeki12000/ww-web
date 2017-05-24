@@ -66,19 +66,20 @@
         <h5 class="user-description">{{ member.description }}</h5>
       </div>
 
-      <div class="itinerary-member-option" (mouseover)="showMemberOption(i)" (click)="showMemberOption(i)" *ngIf="currentUserAdmin">
+      <div class="itinerary-member-option" (click)="showMemberOption(i)" *ngIf="currentUserAdmin">
         <div *ngIf="!member.hide_option">
           <i class="fa fa-cog" aria-hidden="true"></i>
-            <div class="itinerary-member-option-menu" *ngIf="showOptions[i]">
-              <ul>
-                <li class="make-admin" *ngIf="!member.admin">
-                  <h5 (click)="makeAdmin(member, i)">Make admin</h5>
-                  <span class="info" (click)="showAdminInfo()">?</span>
-                </li>
-                <li *ngIf="member.admin" (click)="removeAdmin(member, i)"><h5>Remove as admin</h5></li>
-                <li (click)="removeFromItin(member, i)"><h5>Remove from itinerary</h5></li>
-              </ul>
-            </div>
+
+          <div class="itinerary-member-option-menu" *ngIf="showOptions[i]">
+            <ul>
+              <li class="make-admin" *ngIf="!member.admin">
+                <h5 (click)="makeAdmin(member, i)">Make admin</h5>
+                <span class="info" (click)="showAdminInfo()">?</span>
+              </li>
+              <li *ngIf="member.admin" (click)="removeAdmin(member, i)"><h5>Remove as admin</h5></li>
+              <li (click)="removeFromItin(member, i)"><h5>Remove from itinerary</h5></li>
+            </ul>
+          </div>
         </div>
       </div>
 

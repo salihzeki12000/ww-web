@@ -9,7 +9,11 @@
   </div>
 
   <div class="display-photo-housing">
-    <div class="dots-menu" (click)="showMenuOptions()" (mouseover)="showMenuOptions()">
+    <div class="dots-menu" (click)="showMenuOptions()" *ngIf="sameUser">
+      <div class="dots-menu-hint">
+        <h6>Click to edit or delete</h6>
+      </div>
+
       <div class="item-menu" *ngIf="showMenu">
         <ul>
           <!-- <li>
