@@ -6,37 +6,6 @@
   padding: 5px 0 0 0;
 }
 
-.departure-section  {
-  padding: 5px 5px 5px 15px;
-  background-color: rgba(100,148,237,.3);
-  border: 3px solid #6494ED;
-  border-bottom: none;
-  border-radius: 5px 5px 0 0;
-}
-
-.arrival-section  {
-  padding: 5px 5px 5px 15px;
-  background-color: rgba(100,148,237,.1);
-  border: 3px solid #6494ED;
-  border-top: none;
-  border-radius: 0 0 5px 5px;
-}
-
-.departure-section > h3,
-.arrival-section > h3 {
-  padding-bottom: 10px;
-}
-
-.departure-section > h5,
-.arrival-section > h5 {
-  padding-bottom: 3px;
-}
-
-.departure-section > h5:first-of-type,
-.arrival-section > h5:first-of-type {
-  font-weight: 600;
-}
-
 .note {
   margin: 10px 0 15px 0;
   padding-left: 0;

@@ -7,6 +7,7 @@ import { ErrorMessageService } from '../error-message';
 
 @Injectable()
 export class NotificationService  {
+  private notifications = [];
 
   updateNotifications = new ReplaySubject();
 
@@ -16,13 +17,13 @@ export class NotificationService  {
     private http: Http,
     private errorMessageService: ErrorMessageService)  {}
 
-  newNotification(notification) {
-    const body = JSON.stringify(notification);
-    const headers = new Headers({ 'Content-Type': 'application/json' });
-    const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
+  getNotifications(currentUserId)  {
+    const currentUser = '?currentUserId=' + currentUserId;
 
-    return this.http.post( this.url + "/notification/new" + token, body, { headers: headers })
-                    .map((response: Response) =>  {
+    return this.http.get(this.url + '/notification' + currentUser)
+                    .map((response: Response) => {
+                      this.notifications = response.json().notifications
+                      this.timeAgo(this.notifications)
                       return response.json();
                     })
                     .catch((error: Response) => {
@@ -31,18 +32,41 @@ export class NotificationService  {
                     });
   }
 
-  getNotifications(currentUserId)  {
-    const currentUser = '?currentUserId=' + currentUserId;
+  newNotification(notification) {
+    const body = JSON.stringify(notification);
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
 
-    return this.http.get(this.url + '/notification' + currentUser)
-                    .map((response: Response) => {
-                      this.timeAgo(response.json().notifications)
+    return this.http.post( this.url + "/notification/new" + token, body, { headers: headers })
+                    .map((response: Response) =>  {
+                      let newNotification = response.json().notification
+                      this.notifications.push(newNotification);
+                      this.timeAgo(this.notifications)
                       return response.json();
                     })
                     .catch((error: Response) => {
                       this.errorMessageService.handleErrorMessage(error.json());
                       return Observable.throw(error.json())
                     });
+  }
+
+  editNotification(notification)  {
+    const body = JSON.stringify(notification);
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
+
+    return this.http.patch(this.url + "/notification/" + notification['_id'] + token, body, { headers: headers })
+               .map((response: Response) => {
+                 let index = this.notifications.indexOf(notification);
+                 this.notifications[index] = notification;
+                 this.timeAgo(this.notifications);
+                 return response.json();
+               })
+               .catch((error: Response) => {
+                 this.errorMessageService.handleErrorMessage(error.json());
+                 return Observable.throw(error.json())
+               });
+
   }
 
   timeAgo(notifications) {

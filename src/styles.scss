@@ -50,16 +50,23 @@
 // modal - 1000
 // items above modal - 1001
 
-@import url(https://fonts.googleapis.com/css?family=Roboto); //font-family: 'Roboto', sans-serif;
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700); //font-family: 'Roboto', sans-serif;
 @import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700); //font-family: 'Roboto Condensed', sans-serif;
 @import url(https://fonts.googleapis.com/css?family=Fira+Sans:300,400,600); //font-family: 'Fira Sans', sans-serif;
-@import url(https://fonts.googleapis.com/css?family=Tangerine); //font-family: 'Tangerine', cursive;
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,500,700); //font-family: 'Raleway', sans-serif;
+
 
 $primaryColor: #6494ED;
 
 $primaryText: #3A4A4D;
 $secondaryText: #808080;
 $whiteText: #F9FBFB;
+
+
+@mixin headerText {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 700;
+}
 
 * {
   box-sizing: border-box;
@@ -107,6 +114,7 @@ img { object-fit: cover }
 //     background-color: $primaryColor;
 //   }
 // }
+
 button[disabled]  {
   border: none;
   &:hover {
@@ -1237,10 +1245,6 @@ ww-resource {
   color: #6494ED;
 }
 
-.accommodation-header {
-  margin: 10px 0;
-}
-
 .transport-header {
   display: inline-block;
   margin-top: 15px;
@@ -1257,9 +1261,10 @@ ww-resource {
   }
 }
 
+.accommodation-header,
 .activity-header {
+  @include headerText;
   margin: 10px 0;
-  font-weight: bold;
 }
 
 .accommodation-details
@@ -1394,12 +1399,36 @@ ww-resource {
   color: red;
 }
 
-.departure-section {
+.departure-section  {
+  padding: 5px 5px 5px 15px;
+  background-color: rgba(100,148,237,.3);
+  border: 3px solid #6494ED;
+  border-bottom: none;
+  border-radius: 5px 5px 0 0;
+}
+
+.arrival-section  {
+  padding: 5px 5px 5px 15px;
+  background-color: rgba(100,148,237,.1);
+  border: 3px solid #6494ED;
+  border-top: none;
+  border-radius: 0 0 5px 5px;
+}
+
+.departure-section > h3,
+.arrival-section > h3 {
+  @include headerText;
   padding-bottom: 10px;
 }
 
-.arrival-section {
-  padding: 10px 0;
+.departure-section > h5,
+.arrival-section > h5 {
+  padding-bottom: 3px;
+}
+
+.departure-section > h5:first-of-type,
+.arrival-section > h5:first-of-type {
+  font-weight: 600;
 }
 
 .rental-company,
@@ -1430,6 +1459,7 @@ ww-resource {
 }
 
 .resource-title {
+  @include headerText;
   width: 90%;
   margin-bottom: 10px;
   word-wrap: break-word;

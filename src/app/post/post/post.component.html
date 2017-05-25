@@ -78,7 +78,7 @@
 
   <div class="post-comments">
     <form [formGroup]="commentForm">
-      <img src="{{ post?.user.display_picture }}" alt="display picture for {{ post?.user.username }}" class="user-profile-thumbnail">
+      <img src="{{ currentUser?.display_picture }}" alt="display picture for {{ currentUser?.username }}" class="user-profile-thumbnail">
       <textarea rows="1" placeholder="comment..." formControlName="comment" #comment (keyup.enter)="commentPost(comment.value)"></textarea>
     </form>
 
