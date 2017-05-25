@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { PostsComponent } from './posts.component';
-import { PostComponent } from './post/post.component';
+import { PostsComponent }     from './posts.component';
+import { PostComponent }      from './post/post.component';
 import { PostInputComponent } from './post-input/post-input.component';
-import { PostListComponent } from './post-list/post-list.component';
+import { PostListComponent }  from './post-list/post-list.component';
 
 @NgModule({
   declarations: [

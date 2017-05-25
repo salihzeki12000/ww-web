@@ -7,7 +7,6 @@ export * from './profile/profile.component';
 export * from './profile/profile-details/profile-details.component';
 export * from './profile/profile-edit/profile-edit.component';
 
-
 export * from './relationships/relationship';
 export * from './relationships/relationships.component';
 export * from './relationships/relationship.service';
