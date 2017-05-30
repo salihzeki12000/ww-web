@@ -1,7 +1,6 @@
 .itinerary  {
-  margin-top: 80px;
-
   @media only screen and (min-width: 1090.1px)  {
+    position: absolute;
     width: calc(100vw - 210px);
     margin-left: 200px;
   }
@@ -315,7 +314,7 @@ nav {
 .add-new-options {
   display: none;
   position: absolute;
-  top: 40px;
+  top: 38px;
   right: 0;
   width: 180px;
   @media only screen and (max-width: 1090px) {

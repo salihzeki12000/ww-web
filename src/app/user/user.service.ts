@@ -59,6 +59,19 @@ export class UserService  {
                     });
   }
 
+  changePassword(password)  {
+    const body = JSON.stringify(password);
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
+
+    return this.http.patch( this.url + '/users/changePassword' + token, body, { headers: headers})
+                    .map((response: Response) => response.json())
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
+  }
+
   deleteUser()  {
     const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
     return this.http.delete( this.url + '/users/currentUser' + token)
@@ -69,8 +82,28 @@ export class UserService  {
                     });
   }
 
-  sortItin(user) {
-    let currentUser = user;
+  handleItinChange(itinerary)  {
+    let method = itinerary['method'];
+    let itineraries = this.currentUser['itineraries'];
+    let index = -1;
+
+    for (let i = 0; i < itineraries.length; i++) {
+      if(itineraries[i]['_id'] === itinerary['_id'])  {
+        index = i;
+      };
+    }
+
+    if(method === 'add')  {
+     itineraries.push(itinerary);
+    } else if (method === 'edit') {
+      itineraries[index] = itinerary;
+    } else if (method === 'delete') {
+      itineraries.splice(index, 1);
+    }
+    this.sortItin(this.currentUser)
+  }
+
+  sortItin(currentUser) {
     let itineraries = currentUser.itineraries;
     let today = new Date();
     let past = [];

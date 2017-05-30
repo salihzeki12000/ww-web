@@ -67,8 +67,10 @@ export class PostService  {
 
     return this.http.post( this.url + "/posts/new/" + token, body, { headers: headers })
                     .map((response: Response) => {
-                      this.posts.push(response.json().post);
+                      this.posts.unshift(response.json().post);
+                      this.feed.unshift(response.json().post);
                       this.timeAgo(this.posts);
+                      this.timeAgoFeed(this.feed);
                       return response.json();
                     })
                     .catch((error: Response) => {
@@ -87,6 +89,11 @@ export class PostService  {
                       let index = this.posts.indexOf(post);
                       this.posts[index] = post;
                       this.updatePost.next(this.posts);
+
+                      let feedIndex = this.feed.indexOf(post);
+                      this.feed[index] = post;
+                      this.updateFeed.next(this.feed);
+
                       return response.json()
                     })
                     .catch((error: Response) => {
@@ -96,17 +103,20 @@ export class PostService  {
   }
 
   deletePost(post: Post)  {
-    this.posts.splice(this.posts.indexOf(post), 1);
+    console.log(post);
     const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
 
     return this.http.delete( this.url + "/posts/" + post['_id'] + token)
                     .map((response: Response) => {
                       this.posts.splice(this.posts.indexOf(post), 1);
+                      this.feed.splice(this.feed.indexOf(post), 1);
                       this.updatePost.next(this.posts);
+                      this.updateFeed.next(this.feed);
                       return response.json()
                     })
                     .catch((error: Response) => {
-                      this.errorMessageService.handleErrorMessage(error.json());
+                      console.log(error.json());
+                      // this.errorMessageService.handleErrorMessage(error.json());
                       return Observable.throw(error.json())
                     });
   }

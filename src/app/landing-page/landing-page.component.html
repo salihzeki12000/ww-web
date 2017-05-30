@@ -1,4 +1,5 @@
 <div class="landing-page-container">
+
   <div class="landing-page-logo">
 
     <h2>wondererwanderer</h2>
@@ -30,33 +31,83 @@
 
   </div>
 
+  <img class="landing-page-image" src="assets/mt_fuji.jpeg" alt="">
+
   <div class="landing-page-main">
-    <img class="landing-page-image" src="assets/mt_fuji.jpeg" alt="">
 
     <div class="landing-page-tagline">
-      <h3>Are you ready to experience a new way of organising your travel plans?</h3>
-      <h4>That is simple and that gets you excited</h4>
+      <h1>Travel planning does not need to be so painful.</h1>
+      <h2>We are here to make it better!</h2>
     </div>
 
-    <div class="landing-page-value-add">
-      <div class="travel-inspiration">
-        <h3>NEVER LOSE TRACK OF YOUR TRAVEL INSPIRATIONS</h3>
-        <img src="assets/idea.png" alt="">
-      </div>
-      <div class="organise-information">
-        <h3>WE HELP YOU ORGANISE YOUR RESEARCH</h3>
-        <img src="assets/checklist.png" alt="">
-      </div>
-      <div class="group-planning">
-        <h3>TIRED OF PLANNING ALONE? YOU DON'T HAVE TO, REALLY</h3>
-        <img src="assets/group.png" alt="">
+    <ww-auth></ww-auth>
+
+    <a href="#slideShow">
+      <i class="fa fa-arrow-circle-o-down fa-3x" aria-hidden="true" (click)="seeSlideShow()"></i>
+    </a>
+
+  </div>
+
+  <div id="slideShow" class="landing-page-slideshow">
+    <div class="slideshow-laptop">
+      <img class="img-laptop" src="assets/laptop.png" alt="">
+      <div class="slider-wrapper">
+        <img class="img-example" src="assets/example-summary.png" alt="">
+        <img class="img-example" src="assets/example-accommodation.png" alt="">
+        <img class="img-example" src="assets/example-transport.png" alt="">
+        <img class="img-example" src="assets/example-activity.png" alt="">
+        <img class="img-example" src="assets/example-resource.png" alt="">
+        <img class="img-example" src="assets/example-map.png" alt="">
       </div>
     </div>
 
-    <div class="sign-up-call-to-action" (click)="getAuth()">
-      <h3>SIGN ME UP NOW!</h3>
+    <div class="slideshow-mobile">
+      <img class="img-mobile" src="assets/phone.png" alt="">
+      <div class="slider-wrapper">
+        <img class="img-example img-example-mobile" src="assets/example-summary-mobile.png" alt="">
+        <img class="img-example img-example-mobile" src="assets/example-accommodation-mobile.png" alt="">
+        <img class="img-example img-example-mobile" src="assets/example-transport-mobile.png" alt="">
+        <img class="img-example img-example-mobile" src="assets/example-activity-mobile.png" alt="">
+        <img class="img-example img-example-mobile" src="assets/example-resource-mobile.png" alt="">
+        <img class="img-example img-example-mobile" src="assets/example-map-mobile.png" alt="">
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="landing-page-section">
+
+    <!-- <div class="background-quote">
+      <h3>We travel, initially, to lose ourselves; and we travel, next, to find ourselves. We travel to open our hearts and eyes and learn more about the world than our newspapers will accommodate. We travel to bring what little we can, in our ignorance and knowledge, to those parts of the globe whose riches are differently dispersed. And we travel, in essence, to become young fools again — to slow time down and get taken in, and fall in love once more. The beauty of this whole process was best described, perhaps, before people even took to frequent flying, by George Santayana in his lapidary essay, “The Philosophy of Travel.” We “need sometimes,” the Harvard philosopher wrote, “to escape into open solitudes, into aimlessness, into the moral holiday of running some pure hazard, in order to sharpen the edge of life, to taste hardship, and to be compelled to work desperately for a moment at no matter what.”</h3>
+
+      <h3>I like that stress on work, since never more than on the road are we shown how proportional our blessings are to the difficulty that precedes them; and I like the stress on a holiday that’s “moral” since we fall into our ethical habits as easily as into our beds at night. Few of us ever forget the connection between “travel” and “travail,” and I know that I travel in large part in search of hardship — both my own, which I want to feel, and others’, which I need to see. Travel in that sense guides us toward a better balance of wisdom and compassion — of seeing the world clearly, and yet feeling it truly. For seeing without feeling can obviously be uncaring; while feeling without seeing can be blind.</h3>
+
+      <h3>Yet for me the first great joy of traveling is simply the luxury of leaving all my beliefs and certainties at home, and seeing everything I thought I knew in a different light, and from a crooked angle. In that regard, even a Kentucky Fried Chicken outlet (in Beijing) or a scratchy revival showing of “Wild Orchids” (on the Champs-Elysees) can be both novelty and revelation: In China, after all, people will pay a whole week’s wages to eat with Colonel Sanders, and in Paris, Mickey Rourke is regarded as the greatest actor since Jerry Lewis.</h3>
+
+      <h3>If a Mongolian restaurant seems exotic to us in Evanston, Ill., it only follows that a McDonald’s would seem equally exotic in Ulan Bator — or, at least, equally far from everything expected. Though it’s fashionable nowadays to draw a distinction between the “tourist” and the “traveler,” perhaps the real distinction lies between those who leave their assumptions at home, and those who don’t: Among those who don’t, a tourist is just someone who complains, “Nothing here is the way it is at home,” while a traveler is one who grumbles, “Everything here is the same as it is in Cairo — or Cuzco or Kathmandu.” It’s all very much the same.” - Pico Iyer</h3>
+
+      <h3>But for the rest of us, the sovereign freedom of traveling comes from the fact that it whirls you around and turns you upside down, and stands everything you took for granted on its head. If a diploma can famously be a passport (to a journey through hard realism), a passport can be a diploma (for a crash course in cultural relativism). And the first lesson we learn on the road, whether we like it or not, is how provisional and provincial are the things we imagine to be universal. When you go to North Korea, for example, you really do feel as if you’ve landed on a different planet — and the North Koreans doubtless feel that they’re being visited by an extra-terrestrial, too (or else they simply assume that you, as they do, receive orders every morning from the Central Committee on what clothes to wear and what route to use when walking to work, and you, as they do, have loudspeakers in your bedroom broadcasting propaganda every morning at dawn, and you, as they do, have your radios fixed so as to receive only a single channel).</h3>
+
+      <h3>We travel, then, in part just to shake up our complacencies by seeing all the moral and political urgencies, the life-and-death dilemmas, that we seldom have to face at home. And we travel to fill in the gaps left by tomorrow’s headlines: When you drive down the streets of Port-au-Prince, for example, where there is almost no paving and women relieve themselves next to mountains of trash, your notions of the Internet and a “one world order” grow usefully revised. Travel is the best way we have of rescuing the humanity of places, and saving them from abstraction and ideology.</h3>
+    </div> -->
+
+    <div class="sub-section">
+      <h3>NEVER LOSE TRACK OF YOUR TRAVEL INSPIRATIONS</h3>
+      <img src="assets/idea.png" alt="">
+    </div>
+
+    <div class="sub-section">
+      <h3>ORGANISE YOUR TRAVEL DETAILS IN ONE PLACE</h3>
+      <img src="assets/checklist.png" alt="">
+    </div>
+
+    <div class="sub-section">
+      <h3>YOU DON'T HAVE TO PLAN ALONE</h3>
+      <img src="assets/group.png" alt="">
     </div>
   </div>
+
 
   <div class="landing-page-teaser">
     <h2>And this is just the beginning</h2>
@@ -72,7 +123,7 @@
   </div>
 
 
-  <div class="custom-modal" *ngIf="showAuth" (click)="exitAuth()"></div>
-  <ww-auth *ngIf="showAuth"></ww-auth>
+  <!-- <div class="custom-modal" *ngIf="showAuth" (click)="exitAuth()"></div>
+  <ww-auth *ngIf="showAuth"></ww-auth> -->
 
 </div>

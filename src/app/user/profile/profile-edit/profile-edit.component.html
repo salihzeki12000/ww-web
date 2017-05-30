@@ -58,33 +58,34 @@
 
       <div class="profile-edit-item">
         <h5>City of Residence</h5>
-        <h4 *ngIf="currentUser?.city?.name">{{ currentUser?.city?.name }}</h4>
-
-        <h6 *ngIf="currentUser?.city?.name" [class.new-city-search]="currentUser?.city?.name">Search below to amend your city of residence</h6>
-        <ww-google-place-search [class.shift-city-search]="currentUser?.city?.name" [options]="options" (placeDetail)="setCity($event)"></ww-google-place-search>
-        <!-- <input type="text" formControlName="city" [value]="currentUser?.city"> -->
+        <ww-google-place-search
+        [options]="options"
+        [prepopulate]="currentUser?.city?.name"
+        (placeDetail)="setCity($event)"
+        (searching)="searching($event)"></ww-google-place-search>
+        <!-- <h6 class="new-city" *ngIf="city">City change to {{ city.name }}</h6> -->
       </div>
 
-      <div [class.city-exist]="currentUser?.city.name">
-        <div class="profile-edit-item">
-          <h5>Date of Birth</h5>
-          <input type="date" formControlName="birth_date" [value]="currentUser?.birth_date | date: 'yyyy-MM-dd'">
-        </div>
-
-        <div class="profile-edit-item">
-          <h5>Gender</h5>
-          <select class="profile-gender-select" name="gender" formControlName="gender" [value]="currentUser?.gender">
-            <option *ngFor="let gender of genders">
-              <h5>{{ gender }}</h5>
-            </option>
-          </select>
-        </div>
+      <div class="profile-edit-item">
+        <h5>Date of Birth</h5>
+        <input type="date" formControlName="birth_date" [value]="currentUser?.birth_date | date: 'yyyy-MM-dd'">
       </div>
+
+      <div class="profile-edit-item">
+        <h5>Gender</h5>
+        <select class="profile-gender-select" name="gender" formControlName="gender" [value]="currentUser?.gender">
+          <option *ngFor="let gender of genders">
+            <h5>{{ gender }}</h5>
+          </option>
+        </select>
+      </div>
+
+      <h5 class="change-pw" (click)="changePassword()">Change password</h5>
 
     </div>
 
     <h4 class="profile-edit-section-header">Others</h4>
-    <h4 class="deactivate-account" (click)="confirmDelete()">Deactivate your account</h4>
+    <h5 class="deactivate-account" (click)="confirmDelete()">Deactivate your account</h5>
 
     <div class="action-response">
       <!-- <h4 (click)="cancelEdit()">CANCEL</h4> -->
@@ -114,49 +115,31 @@
   </div>
 </div>
 
-<!-- <div class="profile-edit-main" *ngIf="!profileEdit">
-  <div class="profile-edit-header">
-    <img src="{{ currentUser?.display_picture }}" alt="">
+<div class="custom-modal" *ngIf="changePw">
+  <div class="form-card">
+    <form [formGroup]="changePasswordForm" (ngSubmit)="saveNewPassword()" class="form-housing">
+
+      <label>Current Password <span class="label-note"> ( at least 6 characters )</span></label>
+      <input type="password" formControlName="currentPassword">
+      <span class="form-validator"
+        *ngIf="changePasswordForm.get('currentPassword').touched && changePasswordForm.get('currentPassword').invalid">Password is not valid. Please enter at least 6 characters</span>
+
+
+      <label>New Password <span class="label-note"> ( at least 6 characters )</span></label>
+      <input type="password" formControlName="newPassword">
+      <span class="form-validator"
+        *ngIf="changePasswordForm.get('newPassword').touched && changePasswordForm.get('newPassword').invalid">Password is not valid. Please enter at least 6 characters</span>
+
+
+      <label>Confirm New Password</label>
+      <input type="password" formControlName="confirmNewPassword">
+      <span class="form-validator"
+        *ngIf="changePasswordForm.get('confirmNewPassword').dirty && changePasswordForm.get('confirmNewPassword').invalid">Passwords do not match</span>
+
+      <div class="action-response">
+        <h5 class="action-response-secondary" (click)="cancelChangePassword()">CANCEL</h5>
+        <button type="submit" class="action-response-primary" [disabled]="!changePasswordForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
+      </div>
+    </form>
   </div>
-
-  <h5 class="profile-date-join">A wonderer wanderer since {{ currentUser?.created_at | date:'dd MMMM y'}}</h5>
-  <h5 (click)="editProfile()" class="edit-profile">EDIT PROFILE</h5>
-
-  <h4 class="profile-edit-section-header">PUBLIC DETAILS</h4>
-  <div class="profile-edit-section-details">
-    <div class="profile-edit-item">
-      <h5>USERNAME</h5>
-      <h4>{{ currentUser?.username }}</h4>
-    </div>
-
-    <div class="profile-edit-item">
-      <h5>DESCRIPTION</h5>
-      <h4>{{ currentUser?.description }}</h4>
-    </div>
-  </div>
-
-  <h4 class="profile-edit-section-header">PRIVATE DETAILS</h4>
-  <div class="profile-edit-section-details">
-    <div class="profile-edit-item">
-      <h5>EMAIL</h5>
-      <h4>{{ currentUser?.email }}</h4>
-    </div>
-
-    <div class="profile-edit-item">
-      <h5>CITY OF RESIDENCE</h5>
-      <h4>{{ currentUser?.city.name }}</h4>
-    </div>
-
-    <div class="profile-edit-item">
-      <h5>DATE OF BIRTH</h5>
-      <h4>{{ currentUser?.birth_date | date: 'dd MMM y'}}</h4>
-    </div>
-
-    <div class="profile-edit-item">
-      <h5>GENDER</h5>
-      <h4>{{ currentUser?.gender }}</h4>
-    </div>
-
-  </div>
-
-</div> -->
+</div>

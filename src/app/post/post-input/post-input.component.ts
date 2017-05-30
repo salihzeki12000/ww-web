@@ -7,6 +7,7 @@ import { User }                from '../../user/user'
 import { UserService }         from '../../user/user.service';
 import { FileuploadService }   from '../../shared'
 import { FlashMessageService } from '../../flash-message';
+import { LoadingService }      from '../../loading';
 
 @Component({
   selector: 'ww-post-input',
@@ -37,6 +38,7 @@ export class PostInputComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private fileuploadService: FileuploadService,
     private flashMessageService: FlashMessageService,
+    private loadingService: LoadingService,
     private postService: PostService) {
       this.postForm = formBuilder.group({
         content: ['', Validators.required],
@@ -58,6 +60,8 @@ export class PostInputComponent implements OnInit, OnDestroy {
   }
 
   onSubmit()  {
+    this.loadingService.setLoader(true, "Saving...");
+
     if(this.newImageFile !== '') {
       this.fileuploadService.uploadFile(this.newImageFile).subscribe(
             result => {
@@ -83,6 +87,7 @@ export class PostInputComponent implements OnInit, OnDestroy {
       },
     }).subscribe(
        data =>  {
+         this.loadingService.setLoader(false, "");
          this.flashMessageService.handleFlashMessage(data.message);
 
          this.placeholder = "been wondering wandering?";

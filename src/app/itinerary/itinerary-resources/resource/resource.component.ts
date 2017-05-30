@@ -6,6 +6,8 @@ import { Resource }            from '../resource';
 import { ResourceService }     from '../resource.service';
 import { FlashMessageService } from '../../../flash-message';
 import { UserService }         from '../../../user';
+import { LoadingService }      from '../../../loading';
+
 @Component({
   selector: 'ww-resource',
   templateUrl: './resource.component.html',
@@ -31,6 +33,7 @@ export class ResourceComponent implements OnInit, OnDestroy {
     private renderer: Renderer2,
     private userService: UserService,
     private formBuilder: FormBuilder,
+    private loadingService: LoadingService,
     private flashMessageService: FlashMessageService,
     private resourceService: ResourceService) {
       this.editResourceForm = this.formBuilder.group({
@@ -77,9 +80,21 @@ export class ResourceComponent implements OnInit, OnDestroy {
   }
 
   // edit section
+  patchValue()  {
+    this.editResourceForm.patchValue({
+      title: this.resource['title'],
+      content: this.resource['content']
+    })
+  }
+
   edit()  {
+    this.patchValue()
     this.editing = true;
     this.preventScroll(true);
+  }
+
+  undoEdit()  {
+    this.patchValue()
   }
 
   cancelEdit()  {
@@ -88,20 +103,18 @@ export class ResourceComponent implements OnInit, OnDestroy {
   }
 
   saveEdit()  {
+    this.loadingService.setLoader(true, "Saving...");
+
     let editedResource = this.editResourceForm.value;
-    console.log(editedResource);
+
     for (let value in editedResource) {
-      if(editedResource[value] === null)  {
-        editedResource[value] = '';
-      }
-      if(editedResource[value] !== '')  {
-        this.resource[value] = editedResource[value];
-      }
+      this.resource[value] = editedResource[value];
     }
 
     this.resourceService.editResource(this.resource)
         .subscribe(
           result => {
+            this.loadingService.setLoader(false, "");
             this.flashMessageService.handleFlashMessage(result.message);
           })
     this.editing = false;

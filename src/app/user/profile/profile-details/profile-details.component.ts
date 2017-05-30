@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Renderer, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2, ElementRef, HostListener } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
 
@@ -32,7 +32,7 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
 
   constructor(
     private element: ElementRef,
-    private renderer: Renderer,
+    private renderer: Renderer2,
     private formBuilder: FormBuilder,
     private userService: UserService,
     private postService: PostService,
@@ -100,12 +100,12 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
 
   createItinerary() {
     this.showItineraryForm = true;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', true);
+    this.renderer.addClass(document.body, 'prevent-scroll');
   }
 
   hideItineraryForm(hide) {
     this.showItineraryForm = false;
-    this.renderer.setElementClass(document.body, 'prevent-scroll', false);
+    this.renderer.removeClass(document.body, 'prevent-scroll');
   }
 
   routeToItin(id) {

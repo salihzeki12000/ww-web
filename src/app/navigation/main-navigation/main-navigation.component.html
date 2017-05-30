@@ -29,7 +29,7 @@
     <div class="top-nav-link-dropdown" *ngIf="showItineraries">
       <div class="dropdown-arrow-up"></div>
       <div class="top-nav-dropdown-header">
-        <h6>YOUR ITINERARIES</h6>
+        <h6>{{ currentUser?.itineraries.length > 1 ? 'ITINERARIES' : 'ITINERARY'}}</h6>
       </div>
       <h5 class="dropdown-new-itinerary" (click)="newItinerary()"><i class="fa fa-plus" aria-hidden="true"></i> Plan a new itinerary</h5>
       <div>
@@ -57,7 +57,7 @@
     <div class="top-nav-link-dropdown" *ngIf="showFollowerRequests">
       <div class="dropdown-arrow-up"></div>
       <div class="top-nav-dropdown-header">
-        <h6>PENDING FOLLOWER REQUESTS</h6>
+        <h6>PENDING FOLLOWER REQUEST{{ pendingFollowers.length > 1 ? "S" : "" }}</h6>
       </div>
       <div class="follower-requests-list">
         <div *ngIf="pendingFollowers.length === 0">
@@ -107,11 +107,11 @@
     <div class="top-nav-link-dropdown" *ngIf="profileOptions">
       <div class="dropdown-arrow-up"></div>
       <div class="top-nav-dropdown-header">
-        <h6>YOUR PROFILE SETTINGS</h6>
+        <h6>PROFILE SETTINGS</h6>
       </div>
 
       <div class="dropdown-item" (click)="hideProfileOptions()" [routerLink]="['profile']">
-        <h5><i class="fa fa-user fa-fw" aria-hidden="true"></i> View profile</h5>
+        <h5><i class="fa fa-user fa-fw" aria-hidden="true"></i> Profile home</h5>
       </div>
 
       <div class="dropdown-item" (click)="hideProfileOptions()" [routerLink]="['profile-edit']">

@@ -22,7 +22,7 @@
 
     <div class="profile-itineraries" [class.fix-profile-itineraries]="fixed">
       <div class="profile-itineraries-length">
-        <h5>YOUR ITINERARY ({{ user?.itineraries.length }})</h5>
+        <h5>{{ user?.itineraries.length > 1 ? 'Itineraries' : 'Itinerary'}} ({{ user?.itineraries.length }})</h5>
       </div>
       <h5 class="profile-new-itinerary" (click)="createItinerary()"><i class="fa fa-plus" aria-hidden="true"></i> Plan a new itinerary</h5>
       <div class="profile-itineraries-list" *ngFor="let itinerary of user?.itineraries | slice:0:5 "  (click)="routeToItin(itinerary._id)">

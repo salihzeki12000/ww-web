@@ -6,6 +6,7 @@ import { ItineraryEvent }        from '../../itinerary-event';
 import { ItineraryEventService } from '../../itinerary-event.service';
 import { FlashMessageService }   from '../../../../flash-message';
 import { UserService }           from '../../../../user';
+import { LoadingService }        from '../../../../loading';
 
 @Component({
   selector: 'ww-transport',
@@ -34,6 +35,7 @@ export class TransportComponent implements OnInit, OnDestroy {
     private renderer: Renderer2,
     private userService: UserService,
     private itineraryEventService: ItineraryEventService,
+    private loadingService: LoadingService,
     private flashMessageService: FlashMessageService,
     private formBuilder: FormBuilder) {
       this.editTransportForm = this.formBuilder.group({
@@ -91,7 +93,7 @@ export class TransportComponent implements OnInit, OnDestroy {
   }
 
   // edit section
-  edit()  {
+  patchValue()  {
     this.editTransportForm.patchValue({
       reference_number: this.event['reference_number'],
       dep_city: this.event['dep_city'],
@@ -108,9 +110,16 @@ export class TransportComponent implements OnInit, OnDestroy {
       contact_number: this.event['contact_number'],
       note: this.event['note'],
     })
+  }
 
+  edit()  {
+    this.patchValue();
     this.editing = true;
     this.preventScroll(true);
+  }
+
+  undoEdit()  {
+    this.patchValue()
   }
 
   cancelEdit()  {
@@ -119,6 +128,8 @@ export class TransportComponent implements OnInit, OnDestroy {
   }
 
   saveEdit()  {
+    this.loadingService.setLoader(true, "Saving...");
+
     let editedTransport = this.editTransportForm.value;
     let originalTransport = this.event;
 
@@ -132,6 +143,7 @@ export class TransportComponent implements OnInit, OnDestroy {
     this.itineraryEventService.editEvent(originalTransport)
         .subscribe(
           result => {
+            this.loadingService.setLoader(false, "");
             this.flashMessageService.handleFlashMessage(result.message);
           })
 

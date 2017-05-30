@@ -155,9 +155,19 @@ button[disabled] h5 {
   overflow: hidden;
 }
 
+.user-post-thumbnail  {
+  height: 40px;
+  width: 40px;
+  background-color: #AEAFAF;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
 /********** ACTION BUTTONS */
 .action-response  {
+  padding: 10px;
   text-align: right;
+  background-color: #F6F6F6;
 }
 
 .action-response > *  {
@@ -616,11 +626,10 @@ textarea.ng-invalid.ng-touched {
 
 /* form display */
 .form-card {
-  position: relative;
+  position: fixed;
+  left: calc((100vw - 600px) /2);
   width: 600px;
   top: 40px;
-  margin: 0 auto;
-  padding: 15px 0;
   max-height: calc(100vh - 80px);
   background-color: white;
   -webkit-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
@@ -629,10 +638,11 @@ textarea.ng-invalid.ng-touched {
   overflow: auto;
 
   @media only screen and (max-width: 650px) {
-    margin: 0;
     width: 100%;
     min-width: 300px;
     max-height: 100vh;
+    top: 0;
+    left: 0;
   }
 }
 
@@ -744,12 +754,21 @@ textarea.ng-invalid.ng-touched {
 
 /* form & edit header for form and edit modal display*/
 .form-header {
-  width: 100%;
-  padding: 0 20px 5px 20px;
+  position: fixed;
+  width: 600px;
+  padding: 15px 20px 5px 20px;
+  background-color: #567FCC;
+  z-index: 2;
+
+  @media only screen and (max-width: 650px) {
+    width: 100%;
+    min-width: 300px;
+  }
 }
 
 .form-header > h3 {
   display: inline-block;
+  color: #F9FBFB;
 
   @media only screen and (max-width: 650px) {
     font-size: 1em;
@@ -758,8 +777,8 @@ textarea.ng-invalid.ng-touched {
 
 .form-header > a {
   float: right;
-  width: 17px;
-  height: 17px;
+  width: 15px;
+  height: 15px;
   text-align: center;
   color: #CCC;
   border-radius: 50%;
@@ -770,12 +789,23 @@ textarea.ng-invalid.ng-touched {
   }
 }
 
+// .form-header-separator  {
+//   position: fixed;
+//   margin-top: 51px;
+//   width: 600px;
+//   height: 20px;
+//   background-color: #567FCC;
+//   z-index: 2;
+// }
+
 .form-header-name {
-  padding: 10px 20px;
-  background-color: #567FCC;
+  margin-top: 5px;
+  padding: 10px 0 5px 0;
+  border-top: 1px solid lightgray;
 }
 
 .form-header-name-delete {
+  margin-top: 40px;
   padding: 10px 20px;
   background-color: red;
 }
@@ -788,6 +818,7 @@ textarea.ng-invalid.ng-touched {
 }
 
 .form-housing {
+  margin-top: 40px;
   padding: 20px;
 
   @media only screen and (max-width: 500px) {
@@ -1483,6 +1514,7 @@ ww-resource {
 
 .resource-link-title  {
   display: inline-block;
+  width: calc(100% - 60px);
   padding: 10px;
   text-align: left;
   vertical-align: top;
@@ -1639,7 +1671,14 @@ ww-itinerary-map  {
 }
 
 .sub-route-header {
+  position: fixed;
+  width: 600px;
   padding-bottom: 3px;
+
+  @media only screen and (max-width: 670px) {
+    width: 100%;
+    min-width: 300px;
+  }
 }
 
 .sub-route-header > h3  {

@@ -20,7 +20,7 @@
 
 .profile-center-bar {
   position: absolute;
-  top: 115px;
+  top: 120px;
   height: 80px;
   width: 100%;
   background-color: #416099;
@@ -45,14 +45,15 @@
 }
 
 .profile-itineraries  {
-  top: 303px;
+  top: 313px;
 }
 
 .profile-itineraries-length > h5  {
   padding: 10px 0 5px 10px;
   text-align: left;
-  letter-spacing: .5px;
-  border-bottom: 2px solid lightgray;
+  letter-spacing: 1px;
+  color: #F9FBFB;
+  background-color: #6494ED;
 }
 
 .profile-new-itinerary  {

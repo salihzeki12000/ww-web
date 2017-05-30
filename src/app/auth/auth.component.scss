@@ -1,14 +1,10 @@
 .signin-card  {
   padding: 20px;
-  position: absolute;
-  top: 150px;
-  left: calc((100vw - 340px ) / 2 );
-  width: 340px;
-  background-color: white;
+  width: 360px;
+  background-color: rgba(255,255,255,.1);
   -webkit-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
   -moz-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
   box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
-  border-radius: 5px;
   z-index: 1001;
 
   @media only screen and (max-width: 700px) {
@@ -24,9 +20,9 @@
 }
 
 .facebook-button {
-  margin-bottom: 10px;
+  // margin-bottom: 10px;
   padding: 7px 0;
-  width: 300px;
+  width: 320px;
   font-size: 12px;
   color: white;
   background-color: #3B5998;
@@ -38,7 +34,7 @@
 }
 
 .local-signup  {
-  width: 300px;
+  width: 320px;
   height: 33px;
   margin-bottom: 10px;
   font-size: 13px;

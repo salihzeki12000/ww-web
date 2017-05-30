@@ -139,6 +139,8 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
       international_phone_number: value.international_phone_number,
       check_in_date: this.firstDay,
       check_out_date: this.lastDay,
+      check_in_time: this.timeCheckIn,
+      check_out_time: this.timeCheckOut,
       stay_city: value.stay_city,
       url: value.url,
       place_id: value.place_id,

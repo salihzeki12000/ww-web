@@ -1,4 +1,4 @@
-<h3 class="sign-up-header">Sign up with us now!</h3>
+<h4 class="sign-up-header">Sign up with us now!</h4>
 
 <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
 
@@ -18,13 +18,13 @@
     *ngIf="signupForm.get('password').touched && signupForm.get('password').invalid">Password is not valid. Please enter at least 6 characters</span>
 
   <label>Confirm Password</label>
-  <input type="password" #passwordConfirmation formControlName="passwordConfirmation">
+  <input type="password" #confirmPassword formControlName="confirmPassword">
   <span class="form-validator"
-    *ngIf="signupForm.get('passwordConfirmation').dirty && signupForm.get('passwordConfirmation').invalid">Passwords do not match</span>
+    *ngIf="signupForm.get('confirmPassword').dirty && signupForm.get('confirmPassword').invalid">Passwords do not match</span>
 
   <button type="submit" class="action-response-primary" [disabled]="!signupForm.valid"><h4>Sign Up Now</h4></button>
 
-  <h5 class="sign-in-message" (click)="getSigninForm()">Have an account? Sign in now!</h5>
-  <h5 class="back-to-signin-message" (click)="backToAuth()">Back to sign in home</h5>
+  <!-- <h5 class="sign-in-message" (click)="getSigninForm()">Have an account? Sign in now!</h5> -->
+  <!-- <h5 class="back-to-signin-message" (click)="backToAuth()">Back to sign in home</h5> -->
 
 </form>

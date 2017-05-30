@@ -56,11 +56,11 @@
 
       <div class="form-header">
         <h3>Edit resource</h3>
-        <a (click)="cancelEdit()">x</a>
-      </div>
+        <a (click)="cancelEdit()">X</a>
 
-      <div class="form-header-name">
-        <h4>{{ resource?.title }}</h4>
+        <div class="form-header-name">
+          <h4>{{ resource?.title }}</h4>
+        </div>
       </div>
 
       <form [formGroup]="editResourceForm" (ngSubmit)="saveEdit()">
@@ -83,6 +83,7 @@
 
           <div class="action-response">
             <h5 class="action-response-secondary" (click)="cancelEdit()">CANCEL</h5>
+            <h5 class="action-response-secondary" (click)="undoEdit()">UNDO</h5>
             <button type="submit" class="action-response-primary" [disabled]="!editResourceForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
           </div>
         </div>
@@ -96,7 +97,7 @@
   <div class="form-card">
     <div class="form-header">
       <h3>Delete resource?</h3>
-      <a (click)="cancelDelete()">x</a>
+      <a (click)="cancelDelete()">X</a>
     </div>
 
     <div class="form-header-name-delete">

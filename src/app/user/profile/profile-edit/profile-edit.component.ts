@@ -8,6 +8,7 @@ import { UserService }         from '../../user.service';
 import { FlashMessageService } from '../../../flash-message';
 import { FileuploadService }   from '../../../shared';
 import { LoadingService }      from '../../../loading';
+import { ErrorMessageService } from '../../../error-message';
 
 @Component({
   selector: 'ww-profile-edit',
@@ -19,12 +20,13 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   currentUserSubscription: Subscription;
 
   editProfileForm: FormGroup;
+  changePasswordForm: FormGroup;
 
   thumbnailImage;
   inputValue = '';
 
   genders = ['Not specified', 'male', 'female'];
-  options = { types: ['(cities)']};
+  options = { types: ['(cities)'] };
 
   uploadText = "Change profile picture"
   fileTypeError = false;
@@ -32,22 +34,28 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   newImageFile = '';
 
   city;
+  changePw = false;
 
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
     private flashMessageService: FlashMessageService,
+    private errorMessageService: ErrorMessageService,
     private fileuploadService: FileuploadService,
     private loadingService: LoadingService,
     private router: Router) {
       this.editProfileForm = this.formBuilder.group({
         'username': ['', Validators.required],
         'description': '',
-        // 'email': ['', Validators.required],
         'email' : ['', Validators.compose([ Validators.required, this.validEmail ])],
         'city': '',
         'birth_date': '',
         'gender': '',
+      }),
+      this.changePasswordForm = this.formBuilder.group({
+        'currentPassword': ['', Validators.compose([ Validators.required, Validators.minLength(6)])],
+        'newPassword': ['', Validators.compose([ Validators.required, Validators.minLength(6)])],
+        'confirmNewPassword': ['', Validators.compose([ Validators.required, this.passwordsAreEqual.bind(this) ])],
       })
     }
 
@@ -104,9 +112,11 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   }
 
   updateProfile() {
+    this.loadingService.setLoader(true, "Saving your profile...");
     this.userService.editUser(this.currentUser)
                     .subscribe(
                       result => {
+                        this.loadingService.setLoader(false, "");
                         this.flashMessageService.handleFlashMessage(result.message);
                         this.inputValue = null;
                         this.newProfilePic = '';
@@ -114,6 +124,17 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
                         this.thumbnailImage = this.currentUser['display_picture'];
                       }
                     )
+  }
+
+  searching(event) {
+    if(!this.city)  {
+      this.errorMessageService.handleErrorMessage({
+        title: "Error while selecting new city",
+        error:  {
+          message: "You have pressed the enter key without selecting a city from the dropdown. Please try again."
+        }
+      })
+    }
   }
 
   setCity(data) {
@@ -155,9 +176,38 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     this.thumbnailImage = this.currentUser['display_picture'];
   }
 
+  changePassword()  {
+    this.changePw = true;
+  }
+
+  cancelChangePassword()  {
+    this.changePw = false;
+  }
+
+  saveNewPassword() {
+    this.loadingService.setLoader(true, "Updating your password...");
+
+    this.userService.changePassword(this.changePasswordForm.value).subscribe(
+      result => {
+        this.loadingService.setLoader(false, "");
+        this.flashMessageService.handleFlashMessage(result.message);
+        this.changePw = false;
+      }
+    )
+  }
+
   validEmail(control: FormControl): {[s: string]: boolean} {
       if (!control.value.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
           return {invalidEmail: true};
+      }
+  }
+
+  passwordsAreEqual(control: FormControl): {[s: string]: boolean} {
+      if (!this.changePasswordForm) {
+          return {notMatch: true};
+      }
+      if (control.value !== this.changePasswordForm.controls['newPassword'].value) {
+          return {notMatch: true};
       }
   }
 

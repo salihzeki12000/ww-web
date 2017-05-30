@@ -187,7 +187,18 @@ ww-google-place-search  {
   }
 }
 
-span.form-validator {
+// .new-city {
+//   position: absolute;
+//   display: block;
+//   margin-top: -18px;
+//   margin-left: 135px;
+//
+//   @media only screen and (max-width: 610px) {
+//     margin-left: 5px;
+//   }
+// }
+
+.profile-edit-section-details span.form-validator {
   margin-top: 0;
 }
 
@@ -206,30 +217,16 @@ select.profile-gender-select  {
   margin-bottom: 0;
 }
 
-.new-city-search  {
-  display: block !important;
-  margin: 10px 0 0 135px;
-  @media only screen and (max-width: 610px) {
-    margin: 10px 0 0 0;
-  }
-}
-
-.shift-city-search  {
-  margin: 5px 0 0 135px;
-  @media only screen and (max-width: 610px) {
-    margin: 5px 0 0 0;
-  }
-}
-
-.city-exist {
-  margin-top: 50px;
-  @media only screen and (max-width: 610px) {
-    margin-top: 20px;
+.change-pw  {
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
   }
 }
 
 .action-response  {
   padding-right: 20px;
+  background-color: transparent;
 }
 
 .deactivate-account  {

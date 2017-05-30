@@ -7,6 +7,7 @@ import { ItineraryEvent }        from '../../itinerary-event';
 import { ItineraryEventService } from '../../itinerary-event.service';
 import { FlashMessageService }   from '../../../../flash-message';
 import { UserService }           from '../../../../user';
+import { LoadingService }        from '../../../../loading';
 
 @Component({
   selector: 'ww-activity',
@@ -40,6 +41,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
     private renderer: Renderer2,
     private userService: UserService,
     private itineraryEventService: ItineraryEventService,
+    private loadingService: LoadingService,
     private flashMessageService: FlashMessageService,
     private itineraryService: ItineraryService) {
       this.editActivityForm = this.formBuilder.group({
@@ -107,7 +109,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
   }
 
   // edit section
-  edit()  {
+  patchValue()  {
     this.editActivityForm.patchValue({
       name: this.activity['name'],
       description: this.activity['description'],
@@ -121,12 +123,22 @@ export class ActivityComponent implements OnInit, OnDestroy {
       note: this.activity['note'],
     })
 
-    this.editing = true;
-    this.preventScroll(true);
-
     if(this.activity['time'] === 'anytime') {
       this.anytime = true;
+    } else  {
+      this.anytime = false;
     }
+  }
+
+  edit()  {
+    this.patchValue();
+
+    this.editing = true;
+    this.preventScroll(true);
+  }
+
+  undoEdit()  {
+    this.patchValue()
   }
 
   cancelEdit()  {
@@ -135,6 +147,8 @@ export class ActivityComponent implements OnInit, OnDestroy {
   }
 
   saveEdit()  {
+    this.loadingService.setLoader(true, "Saving...");
+
     let editedActivity = this.editActivityForm.value;
     let originalActivity = this.activity;
 
@@ -163,8 +177,9 @@ export class ActivityComponent implements OnInit, OnDestroy {
     this.itineraryEventService.editEvent(originalActivity)
         .subscribe(
           result => {
-          this.flashMessageService.handleFlashMessage(result.message);
-        })
+            this.loadingService.setLoader(false, "");
+            this.flashMessageService.handleFlashMessage(result.message);
+          })
 
     this.editing = false;
     this.preventScroll(false);

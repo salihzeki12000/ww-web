@@ -55,6 +55,10 @@ export class LandingPageComponent implements OnInit, OnDestroy {
       }
   }
 
+  seeSlideShow()  {
+
+  }
+  
   getAuth() {
     this.showAuth = true;
   }

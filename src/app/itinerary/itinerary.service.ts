@@ -3,22 +3,22 @@ import { Http, Headers, Response } from '@angular/http';
 import 'rxjs/Rx';
 import { Observable, ReplaySubject } from 'rxjs';
 
-import { Itinerary } from './itinerary';
+import { Itinerary }           from './itinerary';
+import { UserService }         from '../user';
 import { ErrorMessageService } from '../error-message';
 
 @Injectable()
 export class ItineraryService {
   itinerary: Itinerary;
-  itineraries: Itinerary[] = [];
 
   updateDate = new ReplaySubject();
-  updateItineraries = new ReplaySubject();
   currentItinerary = new ReplaySubject();
 
   private url = 'https://vast-island-87972.herokuapp.com';
 
   constructor(
     private http: Http,
+    private userService: UserService,
     private errorMessageService: ErrorMessageService)  {}
 
   getItin(itineraryId) {
@@ -61,7 +61,7 @@ export class ItineraryService {
                     .map((response: Response) => {
                       let newItinerary = response.json().itinerary;
                       newItinerary['method'] = 'add';
-                      this.updateItineraries.next(newItinerary);
+                      this.userService.handleItinChange(newItinerary);
                       return response.json();
                     })
                     .catch((error: Response) => {
@@ -93,7 +93,7 @@ export class ItineraryService {
                       this.itinerary = response.json().itinerary;
                       this.updateDate.next(this.setDateRange(this.itinerary));
                       this.itinerary['method'] = method;
-                      this.updateItineraries.next(this.itinerary);
+                      this.userService.handleItinChange(this.itinerary);
                       return response.json();
                     })
                     .catch((error: Response) => {
@@ -108,7 +108,7 @@ export class ItineraryService {
     return this.http.delete( this.url + "/itinerary/" + itinerary['_id'] + token)
                     .map((response: Response) => {
                       itinerary['method'] = 'delete';
-                      this.updateItineraries.next(itinerary);
+                      this.userService.handleItinChange(itinerary);
                       return response.json()
                     })
                     .catch((error: Response) => {

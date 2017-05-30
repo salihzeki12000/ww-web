@@ -29,6 +29,7 @@ export class ItineraryUpcomingComponent implements OnInit, OnDestroy {
   }
 
   sortItin(itineraries) {
+    this.upcoming = [];
     for (let i = 0; i < itineraries.length; i++) {
       if(!itineraries[i]['past']) {
         this.upcoming.push(itineraries[i]);

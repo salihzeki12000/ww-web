@@ -24,7 +24,6 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   pendingFollowers = [];
   requestedFollowings = [];
 
-  itinerariesSubscription: Subscription;
   showItineraryForm = false;
 
   // top nav
@@ -65,9 +64,6 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
                                            this.getFollowings(this.currentUser);
                                          })
 
-    this.itinerariesSubscription = this.itineraryService.updateItineraries.subscribe(
-                                         result => { this.handleItinChange(result) })
-
     this.relationshipSubscription = this.relationshipService.updateRelationships.subscribe(
                                        result => {
                                          this.socialRelationships = Object.keys(result['relationships']).map(key => result['relationships'][key]);;
@@ -87,7 +83,6 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.currentUserSubscription.unsubscribe();
-    this.itinerariesSubscription.unsubscribe();
     this.relationshipSubscription.unsubscribe();
   }
 
@@ -113,36 +108,6 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
           if(this.users[i]['_id'] === following_id) {
             this.users[i]['following_status'] = this.socialRelationships[j]['relative_status'];
           }
-        }
-      }
-    }
-  }
-
-  // amend user.itineraries upon change
-  handleItinChange(result)  {
-    let method = result['method'];
-    let userItineraries = this.currentUser['itineraries'];
-
-    if(method === 'add')  {
-      userItineraries.push({
-        _id: result['_id'],
-        name: result['name'],
-        date_from: result['date_from'],
-        date_to: result['date_to']
-      });
-    } else if (method === 'edit') {
-      for (let i = 0; i < userItineraries.length; i++) {
-        if(userItineraries[i]['_id'] === result['_id'])  {
-          userItineraries[i]['name'] = result['name'],
-          userItineraries[i]['date_from'] = result['date_from'],
-          userItineraries[i]['date_to'] = result['date_to']
-        }
-      }
-    } else if (method === 'delete') {
-      for (let i = 0; i < userItineraries.length; i++) {
-        if(userItineraries[i]['_id'] === result['_id'])  {
-          let indexOfItin = userItineraries.indexOf(userItineraries[i]);
-          userItineraries.splice(indexOfItin, 1);
         }
       }
     }

@@ -103,12 +103,13 @@
 
       <div class="form-header">
         <h3>Edit accommodation</h3>
-        <a (click)="cancelEdit()">x</a>
+        <a (click)="cancelEdit()">X</a>
+
+        <div class="form-header-name">
+          <h4>{{ event?.name }}</h4>
+        </div>
       </div>
 
-      <div class="form-header-name">
-        <h4>{{ event?.name }}</h4>
-      </div>
 
       <form [formGroup]="editAccommodationForm" (ngSubmit)="saveEdit()">
 
@@ -134,7 +135,7 @@
 
                   <div class="anytime-input">
                     <label>Any Time
-                      <input type="checkbox" (click)="toggleCheckInTime()" formControlName="check_in_time" [ngModel]="event.check_in_time === 'anytime'">
+                      <input type="checkbox" (click)="toggleCheckInTime()" formControlName="check_in_time" [ngModel]="anyCheckInTime">
                     </label>
                   </div>
                   )
@@ -160,7 +161,7 @@
 
                   <div class="anytime-input">
                     <label>Any Time
-                      <input type="checkbox" (click)="toggleCheckOutTime()" formControlName="check_out_time" [ngModel]="event.check_out_time === 'anytime'">
+                      <input type="checkbox" (click)="toggleCheckOutTime()" formControlName="check_out_time" [ngModel]="anyCheckOutTime">
                     </label>
                   </div>
                   )
@@ -202,6 +203,7 @@
 
           <div class="action-response">
             <h5 class="action-response-secondary" (click)="cancelEdit()">CANCEL</h5>
+            <h5 class="action-response-secondary" (click)="undoEdit()">UNDO</h5>
             <button type="submit" class="action-response-primary" [disabled]="!editAccommodationForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
           </div>
 
@@ -218,7 +220,7 @@
   <div class="form-card">
     <div class="form-header">
       <h3>Delete accommodation?</h3>
-      <a (click)="cancelDelete()">x</a>
+      <a (click)="cancelDelete()">X</a>
     </div>
 
     <div class="form-header-name-delete">

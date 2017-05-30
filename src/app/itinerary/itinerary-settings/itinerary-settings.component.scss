@@ -1,6 +1,6 @@
 .itinerary-edit-main  {
   width: 600px;
-  margin-top: 110px;
+  margin-top: 20px;
   margin-left: calc((100vw - 800px) / 2 );
   padding-bottom: 20px;
   background-color: white;
@@ -189,8 +189,6 @@ span.info {
   font-weight: 400;
 }
 
-
-
 .delete-itinerary  {
   width: 160px;
   padding: 10px 20px;
@@ -200,4 +198,8 @@ span.info {
     cursor: pointer;
     color: red;
   }
+}
+
+.action-response  {
+  background-color: transparent;
 }

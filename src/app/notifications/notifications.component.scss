@@ -1,13 +1,24 @@
 .notifications-container  {
+  position: absolute;
   width: 600px;
   margin-left: calc((100vw - 600px) / 2 );
   background-color: white;
-  // box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
 
   @media only screen and (max-width: 610px) {
     width: 100%;
     min-width: 300px;
     margin-left: 0;
+  }
+}
+
+.notifications-header {
+  position: fixed;
+  width: 600px;
+
+  @media only screen and (max-width: 670px) {
+    width: 100%;
+    min-width: 300px;
   }
 }
 
@@ -17,4 +28,17 @@
   font-weight: 400;
   color: #F9FBFB;
   background-color: #6494ED;
+}
+
+ww-notification-list  {
+  position: absolute;
+  top: 59.09px;
+  max-height: calc(100vh - 135px);
+  width: 600px;
+  overflow: auto;
+
+  @media only screen and (max-width: 670px) {
+    width: 100%;
+    min-width: 300px;
+  }
 }

@@ -6,6 +6,7 @@ import { ItineraryEvent }        from '../../itinerary-event';
 import { ItineraryEventService } from '../../itinerary-event.service';
 import { FlashMessageService }   from '../../../../flash-message';
 import { UserService }           from '../../../../user';
+import { LoadingService }        from '../../../../loading';
 
 @Component({
   selector: 'ww-accommodation',
@@ -38,6 +39,7 @@ export class AccommodationComponent implements OnInit, OnDestroy {
     private renderer: Renderer2,
     private userService: UserService,
     private itineraryEventService: ItineraryEventService,
+    private loadingService: LoadingService,
     private flashMessageService: FlashMessageService,
     private formBuilder: FormBuilder) {
       this.editAccommodationForm = this.formBuilder.group({
@@ -91,7 +93,7 @@ export class AccommodationComponent implements OnInit, OnDestroy {
   }
 
   // edit section
-  edit()  {
+  patchValue()  {
     this.editAccommodationForm.patchValue({
       name: this.event['name'],
       formatted_address: this.event['formatted_address'],
@@ -103,16 +105,28 @@ export class AccommodationComponent implements OnInit, OnDestroy {
       note: this.event['note'],
     })
 
-    this.editing = true;
-    this.preventScroll(true);
-
     if(this.event['check_in_time'] === 'anytime') {
       this.anyCheckInTime = true;
+    } else  {
+      this.anyCheckInTime = false;
     }
 
     if(this.event['check_out_time'] === 'anytime') {
       this.anyCheckOutTime = true;
+    } else  {
+      this.anyCheckOutTime = false;
     }
+  }
+
+  edit()  {
+    this.patchValue()
+
+    this.editing = true;
+    this.preventScroll(true);
+  }
+
+  undoEdit()  {
+    this.patchValue()
   }
 
   cancelEdit()  {
@@ -121,6 +135,8 @@ export class AccommodationComponent implements OnInit, OnDestroy {
   }
 
   saveEdit() {
+    this.loadingService.setLoader(true, "Saving...");
+
     let editedAccommodation = this.editAccommodationForm.value;
     let originalAccommodation = this.event;
 
@@ -146,6 +162,7 @@ export class AccommodationComponent implements OnInit, OnDestroy {
     this.itineraryEventService.editEvent(originalAccommodation)
         .subscribe(
           result => {
+            this.loadingService.setLoader(false, "");
             this.flashMessageService.handleFlashMessage(result.message);
           })
 

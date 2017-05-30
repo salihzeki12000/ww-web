@@ -25,7 +25,7 @@
 
   <div class="user-postby">
     <div>
-      <img src="{{ post?.user.display_picture }}" alt="display picture for {{ post?.user.username }}" class="user-profile-thumbnail">
+      <img src="{{ post?.user.display_picture }}" alt="display picture for {{ post?.user.username }}" class="user-post-thumbnail">
     </div>
     <div class="user-details">
       <h5>{{ post?.user.username}}</h5>
@@ -43,11 +43,15 @@
       </div>
     </div>
 
-    <textarea rows="4" *ngIf="editing" [value]="post.content" class="edit" (keyup.enter)="updatePost(editedPost.value)" (blur)="updatePost(editedPost.value)" #editedPost autofocus></textarea>
+    <div *ngIf="editing">
+      <textarea rows="4" [value]="post.content" class="edit" (keyup.enter)="updatePost(editedPost.value)" (blur)="cancelEdit()" #editedPost autofocus></textarea>
+      <p class="edit-note">Enter to save, click anywhere else to cancel</p>
+    </div>
+
   </div>
 
   <div *ngIf="post.img">
-    <img class="post-img" src="{{ post.img }}" alt="">
+    <img class="post-img" src="{{ post.img }}" alt="" (dblclick)="likePost()">
   </div>
 
   <div *ngIf="post.link_url">
@@ -78,13 +82,13 @@
 
   <div class="post-comments">
     <form [formGroup]="commentForm">
-      <img src="{{ currentUser?.display_picture }}" alt="display picture for {{ currentUser?.username }}" class="user-profile-thumbnail">
+      <img src="{{ currentUser?.display_picture }}" alt="display picture for {{ currentUser?.username }}" class="user-post-thumbnail">
       <textarea rows="1" placeholder="comment..." formControlName="comment" #comment (keyup.enter)="commentPost(comment.value)"></textarea>
     </form>
 
     <div *ngIf="seeComments" class="post-comments-section">
       <div *ngFor="let comment of post.comments; let i = index" class="post-comments-item">
-        <img src="{{ comment.user.display_picture }}" class="user-profile-thumbnail">
+        <img src="{{ comment.user.display_picture }}" class="user-post-thumbnail">
         <div class="post-comments-details">
           <h5><span class="username-bold">{{ comment.user.username}}</span> {{ comment.comment }}</h5>
           <div class="time-ago">

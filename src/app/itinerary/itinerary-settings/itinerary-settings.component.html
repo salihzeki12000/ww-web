@@ -20,7 +20,7 @@
       <div class="itinerary-edit-item">
         <h5>Travel Date From</h5>
         <div>
-          <input type="date" formControlName="date_from" [value]="currentItinerary?.date_from | date: 'yyyy-MM-dd'">
+          <input type="date" formControlName="date_from">
           <span class="form-validator"
             *ngIf="editItineraryForm.get('date_from').touched && editItineraryForm.get('date_from').invalid">Travel start date is required</span>
         </div>
@@ -29,7 +29,7 @@
       <div class="itinerary-edit-item">
         <h5>Travel Date To</h5>
         <div>
-          <input type="date" formControlName="date_to" [value]="currentItinerary?.date_to | date: 'yyyy-MM-dd'">
+          <input type="date" formControlName="date_to">
           <span class="form-validator"
             *ngIf="editItineraryForm.get('date_to').touched && editItineraryForm.get('date_to').invalid">Travel end date is required</span>
         </div>
@@ -50,7 +50,7 @@
       </div>
 
       <div class="action-response">
-        <!-- <h4 (click)="undoEdit()">UNDO</h4> -->
+        <h5 class="action-response-secondary" (click)="undoEdit()">UNDO</h5>
         <button type="submit" class="action-response-primary" [disabled]="!editItineraryForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE EDIT</h5></button>
       </div>
     </div>
@@ -115,7 +115,7 @@
   <div class="form-card">
     <div class="form-header">
       <h3>Leave itinerary?</h3>
-      <a (click)="cancelLeave()">x</a>
+      <a (click)="cancelLeave()">X</a>
     </div>
 
     <div class="form-header-name-delete">
@@ -142,7 +142,7 @@
   <div class="form-card">
     <div class="form-header">
       <h3>Delete itinerary?</h3>
-      <a (click)="cancelDelete()">x</a>
+      <a (click)="cancelDelete()">X</a>
     </div>
 
     <div class="form-header-name-delete">
@@ -169,10 +169,8 @@
   <div class="form-card">
     <div class="form-header">
       <h3>Info: Admin role</h3>
-      <a (click)="hideAdminInfo()">x</a>
+      <a (click)="hideAdminInfo()">X</a>
     </div>
-
-    <div class="textless-header"></div>
 
     <div class="form-housing">
       <h4>Admins for the itinerary are allowed to:</h4>

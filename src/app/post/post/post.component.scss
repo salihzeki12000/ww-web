@@ -15,7 +15,7 @@
 
 .user-postby  {
   padding: 0 20px;
-  height: 35px;
+  height: 45px;
 }
 
 .user-postby > div,
@@ -46,6 +46,15 @@
 textarea  {
   width: 100%;
   resize: none;
+}
+
+.edit-note  {
+  position: absolute;
+  margin: -20px 0 0 5px;
+  font-size: 9px;
+  font-style: italic;
+  color: #808080;
+  text-align: right;
 }
 
 .link-preview {
@@ -139,8 +148,8 @@ textarea  {
 }
 
 .post-comments textarea  {
-  margin-bottom: 0;
-  width: 525px;
+  margin: 0 0 0 5px;
+  width: 510px;
   border-radius: 0;
 
   @media only screen and (max-width: 670px) {
@@ -150,7 +159,7 @@ textarea  {
 
 .post-comments > form > *  {
   display: inline-block;
-  vertical-align: top;
+  vertical-align: middle;
 }
 
 .dots-menu:after {
@@ -173,8 +182,8 @@ textarea  {
 }
 
 .post-comments-details  {
-  width: 520px;
-  padding-left: 5px;
+  width: 510px;
+  padding-left: 6px;
 
   @media only screen and (max-width: 670px) {
     width: calc(100% - 45px);

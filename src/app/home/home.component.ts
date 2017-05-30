@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 
 import { Router } from '@angular/router';
@@ -21,7 +21,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   currentUserSubscription: Subscription;
   feedSubscription: Subscription;
 
+  showItineraryForm = false;
+
   constructor(
+    private renderer: Renderer2,
     private authService: AuthService,
     private userService: UserService,
     private postService: PostService,
@@ -45,6 +48,7 @@ export class HomeComponent implements OnInit, OnDestroy {
                                             this.feed = Object.keys(feedResult).map(key => feedResult[key]);
                                           })
           })
+
     this.newUser = this.authService.newUser;
     this.loadingService.setLoader(false, "");
   }
@@ -53,6 +57,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.feedSubscription.unsubscribe();
     this.currentUserSubscription.unsubscribe();
     this.loadingService.setLoader(true, "");
+  }
+
+  createItinerary() {
+    this.showItineraryForm = true;
+    this.renderer.addClass(document.body, 'prevent-scroll');
+  }
+
+  hideItineraryForm(hide) {
+    this.showItineraryForm = false;
+    this.renderer.removeClass(document.body, 'prevent-scroll');
   }
 
   routeToItin(id) {

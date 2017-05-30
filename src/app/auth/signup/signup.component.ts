@@ -13,6 +13,7 @@ import { LoadingService }    from '../../loading';
 })
 export class SignupComponent implements OnInit {
   signupForm: FormGroup;
+  avatar = 'https://res.cloudinary.com/wwfileupload/image/upload/v1495091346/avatar_neutral_d43pub.png';
 
   @Output() showSigninForm = new EventEmitter();
   @Output() backAuth = new EventEmitter();
@@ -27,8 +28,8 @@ export class SignupComponent implements OnInit {
       'username' : ['', Validators.required],
       'email' : ['', Validators.compose([ Validators.required, this.validEmail ])],
       'password' : ['', Validators.compose([ Validators.required, Validators.minLength(6)])],
-      'passwordConfirmation' : ['', Validators.compose([ Validators.required, this.passwordsAreEqual.bind(this) ])],
-      'display_picture': 'https://res.cloudinary.com/wwfileupload/image/upload/v1495091346/avatar_neutral_d43pub.png',
+      'confirmPassword' : ['', Validators.compose([ Validators.required, this.passwordsAreEqual.bind(this) ])],
+      'display_picture': this.avatar,
     });
   }
 
@@ -62,7 +63,7 @@ export class SignupComponent implements OnInit {
           return {notMatch: true};
       }
       if (control.value !== this.signupForm.controls['password'].value) {
-          return {otMatch: true};
+          return {notMatch: true};
       }
   }
 

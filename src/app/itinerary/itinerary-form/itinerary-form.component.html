@@ -1,10 +1,8 @@
 <div class="form-card">
   <div class="form-header">
     <h3>Create a new itinerary</h3>
-    <a (click)="cancelForm()">x</a>
+    <a (click)="cancelForm()">X</a>
   </div>
-
-  <div class="textless-header"></div>
 
   <form [formGroup]="itineraryForm" (ngSubmit)="saveNew()">
 

@@ -130,11 +130,11 @@
 
       <div class="form-header">
         <h3>Edit transport arrangement</h3>
-        <a (click)="cancelEdit()">x</a>
-      </div>
+        <a (click)="cancelEdit()">X</a>
 
-      <div class="form-header-name">
-        <h4>{{ event?.transport_type }} from {{ event?.dep_city }} to {{ event?.arr_city }}</h4>
+        <div class="form-header-name">
+          <h4>{{ event?.transport_type }} from {{ event?.dep_city }} to {{ event?.arr_city }}</h4>
+        </div>
       </div>
 
       <form [formGroup]="editTransportForm" (ngSubmit)="saveEdit()">
@@ -331,6 +331,7 @@
 
           <div class="action-response">
             <h5 class="action-response-secondary" (click)="cancelEdit()">CANCEL</h5>
+            <h5 class="action-response-secondary" (click)="undoEdit()">UNDO</h5>
             <button type="submit" class="action-response-primary" [disabled]="!editTransportForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
           </div>
         </div>
@@ -346,7 +347,7 @@
   <div class="form-card">
     <div class="form-header">
       <h3>Delete transport arrangement?</h3>
-      <a (click)="cancelDelete()">x</a>
+      <a (click)="cancelDelete()">X</a>
     </div>
 
     <div class="form-header-name-delete">

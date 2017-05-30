@@ -164,9 +164,21 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   patchValue()  {
     this.editItineraryForm.patchValue({
       name: this.currentItinerary['name'],
-      date_from: this.currentItinerary['date_from'],
-      date_to: this.currentItinerary['date_to'],
+      date_from: this.formatDate(this.currentItinerary['date_from']),
+      date_to: this.formatDate(this.currentItinerary['date_to']),
     })
+  }
+
+  formatDate(date)  {
+    let d = new Date(date),
+    month = '' + (d.getMonth() + 1),
+    day = '' + d.getDate(),
+    year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
   }
 
   filterUsers(users)  {
@@ -231,7 +243,13 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   }
 
   // edit section
+  undoEdit()  {
+    this.patchValue()
+  }
+
   saveEdit() {
+    this.loadingService.setLoader(true, "Saving...");
+
     let editedDetails = this.editItineraryForm.value;
 
     for (let value in editedDetails)  {
@@ -240,6 +258,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
 
     this.itineraryService.editItin(this.currentItinerary, 'edit').subscribe(
           data => {
+            this.loadingService.setLoader(false, "");
             this.flashMessageService.handleFlashMessage(data.message);
           })
   }

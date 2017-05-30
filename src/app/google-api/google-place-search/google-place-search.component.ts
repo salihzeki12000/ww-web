@@ -4,7 +4,7 @@ declare var google:any;
 @Component({
   selector: 'ww-google-place-search',
   template: `
-    <input type="text" #ggPlaceSearch (dblclick)="getDetails()" placeholder="">
+    <input type="text" #ggPlaceSearch placeholder="" [value]="prepopulate" (dblclick)="getDetails()" (keyup.enter)="$event.preventDefault()" (keyup.enter)="logSearch(ggPlaceSearch.value)">
   `,
   styleUrls: ['./google-place-search.component.scss']
 })
@@ -12,7 +12,11 @@ export class GooglePlaceSearchComponent implements OnInit, AfterViewInit {
   @ViewChild('ggPlaceSearch') ggPlaceSearch: ElementRef;
   place;
   @Input() options;
+  @Input() prepopulate = "";
+
   @Output() placeDetail = new EventEmitter();
+  @Output() searching = new EventEmitter();
+
 
   constructor() { }
 
@@ -32,13 +36,16 @@ export class GooglePlaceSearchComponent implements OnInit, AfterViewInit {
     let event = new MouseEvent('dblclick');
 
     autocomplete.addListener('place_changed', () => {
-      this.place = autocomplete.getPlace();
-      this.ggPlaceSearch.nativeElement.dispatchEvent(event);
+      if(autocomplete.getPlace().place_id)  {
+        this.place = autocomplete.getPlace();
+        this.ggPlaceSearch.nativeElement.dispatchEvent(event);
+        this.getDetails();
+      }
     })
 
     google.maps.event.addDomListener(search, 'keydown', function(e) {
       if (e.keyCode == 13) {
-          e.preventDefault();
+        e.preventDefault();
       }
     });
   }
@@ -46,5 +53,10 @@ export class GooglePlaceSearchComponent implements OnInit, AfterViewInit {
   getDetails()  {
     this.placeDetail.emit(this.place)
   }
+
+  logSearch(text) {
+    this.searching.emit(text);
+  }
+
 
 }
