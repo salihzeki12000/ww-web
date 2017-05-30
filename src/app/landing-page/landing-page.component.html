@@ -4,10 +4,7 @@
 
     <h2>wondererwanderer</h2>
 
-    <div class="custom-modal" *ngIf="showSignin" (click)="hideSignin()"></div>
     <div class="landing-page-sign-in" [class.show-sign-in]="showSignin">
-
-      <h3 class="sign-in-header" *ngIf="showSignin">Please enter your email and password to sign in.</h3>
 
       <form [formGroup]="signinForm" (ngSubmit)="onSubmit()">
 
@@ -27,7 +24,13 @@
       </form>
     </div>
 
-    <h5 class="get-sign-in" (click)="getSignin()" *ngIf="!showSignin">SIGN IN</h5>
+    <div class="custom-modal" *ngIf="showSignin || showSignup" (click)="hideForms()">
+      <ww-auth *ngIf="showSignup"></ww-auth>
+      <ww-signin *ngIf="showSignin"></ww-signin>
+    </div>
+
+    <h5 class="get-sign-up" (click)="getSignup()">SIGN UP</h5>
+    <h5 class="get-sign-in" (click)="getSignin()">SIGN IN</h5>
 
   </div>
 

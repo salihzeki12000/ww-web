@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -16,8 +16,10 @@ export class LandingPageComponent implements OnInit, OnDestroy {
 
   showAuth = false;
   showSignin = false;
+  showSignup = false;
 
   constructor(
+    private renderer: Renderer2,
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private loadingService: LoadingService,
@@ -58,7 +60,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   seeSlideShow()  {
 
   }
-  
+
   getAuth() {
     this.showAuth = true;
   }
@@ -69,9 +71,25 @@ export class LandingPageComponent implements OnInit, OnDestroy {
 
   getSignin() {
     this.showSignin = true;
+    this.preventScroll(true);
   }
 
-  hideSignin() {
+  getSignup() {
+    this.showSignup = true;
+    this.preventScroll(true);
+  }
+
+  hideForms() {
     this.showSignin = false;
+    this.showSignup = false;
+    this.preventScroll(false);
+  }
+
+  preventScroll(value)  {
+    if(value) {
+      this.renderer.addClass(document.body, 'prevent-scroll');
+    } else  {
+      this.renderer.removeClass(document.body, 'prevent-scroll');
+    }
   }
 }

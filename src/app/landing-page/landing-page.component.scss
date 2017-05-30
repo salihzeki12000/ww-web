@@ -47,29 +47,8 @@
   }
 }
 
-.show-sign-in {
-  display: block;
-  right: calc(((100vw * .9) - 300px) / 2);
-  margin-top: 100px;
-  padding: 20px;
-  width: 300px;
-  background-color: white;
-  border-radius: 5px;
-  box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
-  z-index: 1001;
-}
-
-.sign-in-header {
-  margin-bottom: 15px;
-  text-align: center;
-}
-
 .sign-in-input  {
   display: inline-block;
-
-  @media only screen and (max-width: 450px) {
-    display: block;
-  }
 }
 
 .sign-in-input > input  {
@@ -84,43 +63,17 @@
   &:focus {
     background-color: rgba(0,0,0,.2);
   }
-
-  @media only screen and (max-width: 450px) {
-    margin-bottom: 15px;
-    width: 260px;
-    height: 30px;
-    font-size: 14px;
-    color: #555;
-    border: 1px solid lightgray;
-    border-radius: 5px;
-    background-color: white;
-    &:focus {
-      background-color: white;
-      border-bottom: 3px solid #6494ed;
-      outline: 0;
-    }
-  }
 }
 
 .sign-in-input > label  {
   margin-bottom: 0;
   color: #F9FBFB;
   font-size: 10px;
-
-  @media only screen and (max-width: 450px) {
-    margin-bottom: 3px;
-    color: grey;
-    font-size: 11px;
-  }
 }
 
 span.form-validator-message {
   color: #F9FBFB;
   font-size: 9px;
-  @media only screen and (max-width: 450px) {
-    font-size: 10px;
-    color: #333;
-  }
 }
 
 .signin-button  {
@@ -131,33 +84,19 @@ span.form-validator-message {
   &:hover {
     cursor: pointer;
   }
+}
 
-  @media only screen and (max-width: 450px) {
+.get-sign-up  {
+  display: none;
+  @media only screen and (max-width: 850px) {
     display: block;
-    width: 100%;
-    margin: 10px auto;
-    padding: 5px;
-    color: #6494ED;
-    font-size: 14px;
-    letter-spacing: .5px;
+    position: absolute;
+    top: 28px;
+    right: 50px;
+    color: #F9FBFB;
     &:hover {
-      color: #F9FBFB;
-      background-color: #6494ED;
+      cursor: pointer;
     }
-  }
-
-  @media only screen and (min-width: 450px) and (max-width: 500px) {
-    display: block;
-    width: 100px;
-    margin-left: calc(((100vw * .9) - 100px) / 2);
-    padding-top: 5px;
-  }
-
-  @media only screen and (min-width: 500px) and (max-width: 850px) {
-    display: block;
-    width: 100px;
-    margin-left: calc(((100vw * .7) - 100px) / 2);
-    padding-top: 5px;
   }
 }
 
@@ -172,6 +111,24 @@ span.form-validator-message {
     &:hover {
       cursor: pointer;
     }
+  }
+}
+
+.custom-modal * {
+  display: block;
+  margin-top: 100px;
+  margin-left: calc((100vw - 360px)/2);
+  padding: 20px;
+  width: 360px;
+  background-color: white;
+  -webkit-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+
+  @media only screen and (max-width: 450px) {
+    display: block;
+    width: 100%;
+    margin: 80px 0 0 0;
   }
 }
 
@@ -318,7 +275,7 @@ a[id="slideShow"]:target ~ .landing-page-slideshow  {
   0%      {opacity:0}
   2.777%  {opacity:1}
   13.885% {opacity:1}
-  50%     {opacity:0}
+  16.662% {opacity:0}
   100%    {opacity:0}
 }
 
