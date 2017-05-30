@@ -186,6 +186,10 @@ img.user-profile-thumbnail  {
   background-color: #F9FBFB;
 }
 
+.current-members  {
+  margin-top: 50px;
+}
+
 .member-mobile  {
   padding: 10px;
   text-align: left;
@@ -196,10 +200,6 @@ img.user-profile-thumbnail  {
 .member-mobile > img,
 .member-mobile > h4  {
   display: inline-block;
-}
-
-.add-member-footer  {
-  padding: 10px 10px 0 0;
 }
 
 /* Itinerary navigation */
@@ -352,17 +352,6 @@ nav {
 
   @media only screen and (max-width: 1090px) {
     padding: 15px;
-  }
-}
-
-/* add members modal */
-.users-search > input {
-  width: 540px;
-  margin: 0 20px 20px 20px;
-
-  @media only screen and (max-width: 690px) {
-    width: 100%;
-    margin: 0;
   }
 }
 

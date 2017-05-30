@@ -30,11 +30,11 @@
         <a (click)="hideMembers()">x</a>
       </div>
 
-      <div class="textless-header"></div>
-
-      <div *ngFor="let member of itinerary?.members" class="member-mobile">
-        <img src="{{ member.display_picture }}" alt="display picture for {{ member.username }}" class="user-profile-thumbnail">
-        <h4>{{ member.username }}</h4>
+      <div class="current-members">
+        <div *ngFor="let member of itinerary?.members" class="member-mobile">
+          <img src="{{ member.display_picture }}" alt="display picture for {{ member.username }}" class="user-profile-thumbnail">
+          <h4>{{ member.username }}</h4>
+        </div>
       </div>
 
       <div class="add-member-footer">
