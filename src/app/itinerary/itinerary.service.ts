@@ -25,8 +25,10 @@ export class ItineraryService {
     return this.http.get( this.url + "/itinerary/" + itineraryId)
                     .map((response: Response) => {
                       this.itinerary = response.json().itinerary;
+
                       this.updateDate.next(this.setDateRange(this.itinerary));
                       this.currentItinerary.next(this.itinerary);
+
                       return response.json();
                     })
                     .catch((error: Response) => {
@@ -91,7 +93,10 @@ export class ItineraryService {
     return this.http.patch( this.url + "/itinerary/" + itinerary['_id']+ token, body, { headers: headers })
                     .map((response: Response) => {
                       this.itinerary = response.json().itinerary;
+
+                      this.currentItinerary.next(this.itinerary);
                       this.updateDate.next(this.setDateRange(this.itinerary));
+
                       this.itinerary['method'] = method;
                       this.userService.handleItinChange(this.itinerary);
                       return response.json();

@@ -79,6 +79,7 @@ export class ItineraryShareComponent implements OnInit {
           result => {
             this.filterUsers(result.users);
           })
+
   }
 
   filterEvents(events)  {
@@ -103,7 +104,6 @@ export class ItineraryShareComponent implements OnInit {
       }
     }
 
-    console.log(this.currentItinerary['shares']);
     for (let i = 0; i < this.currentItinerary['shares'].length; i++) {
       for (let j = 0; j < this.users.length; j++) {
         if(this.currentItinerary['shares'][i]['shared_with']['_id'] === this.users[j]['_id']) {
@@ -206,6 +206,7 @@ export class ItineraryShareComponent implements OnInit {
       this.itineraryService.copyItin(newItinerary).subscribe(
         data => {
           this.shareEvents(data.itinerary);
+
           this.notificationService.newNotification({
             recipient: this.selectedUsers[i]['_id'],
             originator: this.currentUser['id'],
@@ -216,6 +217,7 @@ export class ItineraryShareComponent implements OnInit {
         }
       )
     }
+    // this.selectedUsers = [];
 
     this.itineraryService.editItin(this.currentItinerary, 'edit').subscribe(
       result => {})
@@ -250,7 +252,6 @@ export class ItineraryShareComponent implements OnInit {
     }
 
     this.itemsSelected = false;
-    this.selectedUsers = [];
     this.filteredResult = [];
     this.cancelShare.emit(false);
   }

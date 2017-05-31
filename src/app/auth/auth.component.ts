@@ -61,7 +61,6 @@ export class AuthComponent implements OnInit, AfterViewInit {
           result['username'] = result['name'];
           result['display_picture'] = result['picture']['data']['url'];
 
-          console.log(result);
           this.authService.loginFacebook(result)
               .subscribe(
                 data => {
