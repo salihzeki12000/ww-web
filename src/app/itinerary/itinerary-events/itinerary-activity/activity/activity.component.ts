@@ -66,7 +66,8 @@ export class ActivityComponent implements OnInit, OnDestroy {
                                           this.currentUser = result;
                                           this.checkSameUser();
                                         })
-    // this.activity['formatted_hours'] = this.activity['opening_hours'].replace(/\r?\n/g, '<br/> ');
+    this.activity['formatted_hours'] = this.activity['opening_hours'].replace(/\r?\n/g, '<br/> ');
+    this.activity['formatted_note'] = this.activity['note'].replace(/\r?\n/g, '<br/> ');
   }
 
   @HostListener('document:click', ['$event'])

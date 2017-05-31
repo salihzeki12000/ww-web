@@ -54,8 +54,9 @@ export class PostComponent implements OnInit, OnDestroy {
                                            this.checkSameUser();
                                            this.checkLikePost();
                                            this.checkCommentSameUser();
-                                         }
-                                       )
+                                         })
+
+    this.post['formatted_content'] = this.post['content'].replace(/\r?\n/g, '<br/> ');
   }
 
   @HostListener('document:click', ['$event'])
@@ -238,12 +239,16 @@ export class PostComponent implements OnInit, OnDestroy {
   }
 
   onDeleteComment() {
+    let comment = this.post['comments'][this.deleteComment];
+
     this.post['comments'].splice(this.deleteComment, 1);
     this.deleteComment = -1;
 
-    this.postService.editPost(this.post)
-        .subscribe(
-          data => {}
-        )
+    this.postService.editPost(this.post).subscribe(
+          data => {
+            this.commentService.deleteComment(comment).subscribe(
+              data => { }
+            )
+        })
   }
 }

@@ -110,7 +110,7 @@
     </div><!-- end of vehicle rental -->
   </div>
 
-  <h5 class="note">{{ event.note }}</h5>
+  <h5 class="note" [innerHTML]="event?.formatted_note"></h5>
 
   <div class="postby">
     <h5><a routerLink="/users/{{event?.user['_Id']}}">{{ event?.user.username }}</a></h5>

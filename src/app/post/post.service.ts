@@ -103,7 +103,6 @@ export class PostService  {
   }
 
   deletePost(post: Post)  {
-    console.log(post);
     const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
 
     return this.http.delete( this.url + "/posts/" + post['_id'] + token)
@@ -115,8 +114,7 @@ export class PostService  {
                       return response.json()
                     })
                     .catch((error: Response) => {
-                      console.log(error.json());
-                      // this.errorMessageService.handleErrorMessage(error.json());
+                      this.errorMessageService.handleErrorMessage(error.json());
                       return Observable.throw(error.json())
                     });
   }

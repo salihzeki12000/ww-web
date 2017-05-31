@@ -8,7 +8,7 @@
 
     <div class="form-housing">
 
-      <label>Content <span class="required"> - required</span></label>
+      <label>Content</label>
       <textarea rows="4" formControlName="content" placeholder="add a link or type in a note" #text (keyup)="checkLink(text.value)" (paste)="checkLink(text.value)" autofocus></textarea>
 
       <div class="loading-overlay" *ngIf="fetchLink">

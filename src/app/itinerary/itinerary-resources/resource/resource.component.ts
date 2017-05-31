@@ -48,6 +48,8 @@ export class ResourceComponent implements OnInit, OnDestroy {
                                          this.currentUser = result;
                                          this.checkSameUser();
                                        })
+
+    this.resource['formatted_content'] = this.resource['content'].replace(/\r?\n/g, '<br/> ');
   }
 
   @HostListener('document:click', ['$event'])

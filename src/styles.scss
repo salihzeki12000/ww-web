@@ -561,6 +561,7 @@ select {
 textarea  {
   max-width: 600px;
   width: 100%;
+  resize: vertical;
 }
 
 input[type=file]  {
@@ -1337,7 +1338,6 @@ ww-resource {
 .accommodation-contact-details > *,
 .activity-contact-details > * {
   display: inline-block;
-  font-weight: 500;
 }
 
 .accommodation-address,

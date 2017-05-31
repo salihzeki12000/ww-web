@@ -62,6 +62,8 @@ export class AccommodationComponent implements OnInit, OnDestroy {
                                          this.currentUser = result;
                                          this.checkSameUser();
                                        })
+
+    this.event['formatted_note'] = this.event['note'].replace(/\r?\n/g, '<br/> ');
   }
 
   @HostListener('document:click', ['$event'])

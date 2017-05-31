@@ -28,4 +28,15 @@ export class CommentService  {
                       return Observable.throw(error.json())
                     });
   }
+
+  deleteComment(comment)  {
+    const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
+
+    return this.http.delete( this.url + "/comments/" + comment['_id'] + token)
+                    .map((response: Response) => response.json())
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
+  }
 }

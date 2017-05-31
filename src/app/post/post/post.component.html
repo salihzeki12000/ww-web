@@ -39,7 +39,7 @@
   <div class="content">
     <div [class.editing]="editing">
       <div class="view">
-        <p>{{ post.content }}</p>
+        <p [innerHTML]="post?.formatted_content"></p>
       </div>
     </div>
 

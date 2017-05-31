@@ -22,6 +22,9 @@ export class ErrorMessageComponent implements OnInit {
         .subscribe(
             (errorMessage: ErrorMessage) => {
               this.errorMessage = errorMessage;
+              if(!this.errorMessage['error'])  {
+                this.errorMessage['error']['message'] = "An error has occurred. Please refresh your browser."
+              }
               this.error = true;
             }
         );

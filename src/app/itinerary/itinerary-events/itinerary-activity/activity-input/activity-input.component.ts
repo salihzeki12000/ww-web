@@ -157,7 +157,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   getOpeningHours(hours)  {
     let openingHours = [];
     let openingHoursGroup = {};
-    let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    let days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     let output = '';
 
     if (hours === undefined) {
@@ -191,7 +191,6 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
         return "Daily: " + time
       }
     }
-
     //to handle different timings
     for (let i = 0; i < hours.weekday_text.length; i++) {
       output += hours.weekday_text[i] + " \n";
