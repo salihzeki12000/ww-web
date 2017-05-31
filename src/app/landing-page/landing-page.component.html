@@ -24,10 +24,14 @@
       </form>
     </div>
 
-    <div class="custom-modal" *ngIf="showSignin || showSignup" (click)="hideForms()">
-      <ww-auth *ngIf="showSignup"></ww-auth>
-      <ww-signin *ngIf="showSignin"></ww-signin>
+    <div class="custom-modal" *ngIf="showSignin">
+      <ww-signin (hideSignin)="hideSignin($event)"></ww-signin>
     </div>
+
+    <div class="custom-modal" *ngIf="showSignup">
+      <ww-auth (hideSignup)="hideSignup($event)"></ww-auth>
+    </div>
+
 
     <h5 class="get-sign-up" (click)="getSignup()">SIGN UP</h5>
     <h5 class="get-sign-in" (click)="getSignin()">SIGN IN</h5>

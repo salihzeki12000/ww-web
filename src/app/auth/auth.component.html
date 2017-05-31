@@ -1,5 +1,6 @@
 <div class="signin-card">
-  <div class="login" *ngIf="signinHome">
+  <div class="login">
+    <a class="cancel-auth" (click)="cancelAuth()">X</a>
     <h3>Experience the ease of travel planning now!</h3>
 
     <button (click)="loginFacebook()" class="facebook-button">
@@ -10,11 +11,11 @@
 
     <h5>--- or ---</h5>
     <!-- <button type="button" (click)="showSignupForm()" class="local-signup">Sign up a new wonderer wanderer account</button> -->
-    <ww-signup (backAuth)="showAuth()"></ww-signup>
+    <ww-signup></ww-signup>
     <!-- <h5 class="sign-in-message" (click)="showSigninForm()">Have an account? Sign in now!</h5> -->
 
   </div>
-<!-- 
+<!--
   <ww-signin *ngIf="signinForm" (showSignupForm)="showSignupForm()" (backAuth)="showAuth()"></ww-signin>
 
   <ww-signup *ngIf="signupForm" (showSigninForm)="showSigninForm()" (backAuth)="showAuth()"></ww-signup> -->

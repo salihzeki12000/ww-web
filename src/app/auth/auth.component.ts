@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone, AfterViewInit } from '@angular/core';
+import { Component, OnInit, NgZone, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 declare const FB: any;
 declare const gapi: any;
@@ -13,7 +13,8 @@ import { LoadingService } from '../loading';
   styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent implements OnInit, AfterViewInit {
-  signinHome = true;
+  @Output() hideSignup = new EventEmitter();
+
   signinForm = false;
   signupForm = false;
 
@@ -110,21 +111,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
     });
   }
 
-  showSigninForm() {
-    this.signinForm = true;
-    this.signinHome = false;
-    this.signupForm = false;
-  }
-
-  showSignupForm()  {
-    this.signupForm = true;
-    this.signinForm = false;
-    this.signinHome = false;
-  }
-
-  showAuth()  {
-    this.signinHome = true;
-    this.signupForm = false;
-    this.signinForm = false;
+  cancelAuth()  {
+    this.hideSignup.emit(false);
   }
 }

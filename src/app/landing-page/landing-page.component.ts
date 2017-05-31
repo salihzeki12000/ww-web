@@ -79,8 +79,12 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     this.preventScroll(true);
   }
 
-  hideForms() {
+  hideSignin(event)  {
     this.showSignin = false;
+    this.preventScroll(false);
+  }
+
+  hideSignup(event)  {
     this.showSignup = false;
     this.preventScroll(false);
   }

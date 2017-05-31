@@ -12,10 +12,10 @@ import { LoadingService }    from '../../loading';
   styleUrls: ['./signin.component.scss']
 })
 export class SigninComponent implements OnInit {
+  @Output() hideSignin = new EventEmitter();
+
   signinForm: FormGroup;
-  //emits to auth.component.html
-  @Output() showSignupForm = new EventEmitter();
-  @Output() backAuth = new EventEmitter();
+
   userId;
 
   constructor(
@@ -54,12 +54,8 @@ export class SigninComponent implements OnInit {
       }
   }
 
-  backToAuth() {
-    this.backAuth.emit()
-  }
-
-  getSignupForm() {
-    this.showSignupForm.emit()
+  cancelAuth()  {
+    this.hideSignin.emit()
   }
 
 }
