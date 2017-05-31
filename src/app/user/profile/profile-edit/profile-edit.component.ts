@@ -214,4 +214,8 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   exitError() {
     this.fileTypeError = false;
   }
+
+  confirmDelete() {
+    
+  }
 }

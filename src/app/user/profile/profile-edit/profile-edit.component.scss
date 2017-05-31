@@ -27,13 +27,14 @@
 
 .new-profile-picture  {
   position: absolute;
-  top: 90px;
-  left: calc(((100vw - 600px) / 2) + 400px);
+  top: 100px;
+  // left: calc(((100vw - 600px) / 2) + 400px);
+  margin-left: 420px;
 
   @media only screen and (max-width: 610px) {
     position: relative;
     top: 0;
-    left: 0;
+    margin-left: 0;
     padding-bottom: 10px;
     text-align: center;
     background-color: #FAFAFA;
@@ -93,7 +94,7 @@
 .fileUpload {
   overflow: hidden;
   position: absolute;
-  top: 245px;
+  top: 260px;
   left: calc(((100vw - 600px) / 2) + 225px);
   padding: 0 10px;
   color: #567FCC;
