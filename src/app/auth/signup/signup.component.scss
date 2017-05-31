@@ -21,3 +21,18 @@ button.action-response-primary  {
     color: #6494ED;
   }
 }
+
+span.form-validator {
+  background-color: rgba(255,255,255,.5);
+  padding: 0 10px;
+}
+
+.action-response-primary  {
+  background-color: rgba(255,255,255,.7);
+}
+
+.action-response-primary > h4 {
+  &:hover {
+    color: #6494ED;
+  }
+}
