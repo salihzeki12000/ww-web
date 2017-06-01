@@ -14,34 +14,37 @@
   <div *ngIf="event?.summary_date === date">
     <h5 class="event-time">{{ event?.summary_time }}</h5>
 
-    <div *ngIf="event?.type === 'accommodation'" class="accommodation-indicator" (click)="showDetails(event)">
-      <!-- <div class="pill"></div> -->
+    <div *ngIf="event?.type === 'accommodation'" class="summary-item" (click)="showDetails(event)">
+      <div class="accommodation-indicator pill"></div>
 
-      <div *ngIf="event?.inOut === 'checkout'">
-        <div class="event-name">
-          <h5>Check out</h5>
-          <h5>{{ event?.name }}</h5>
-        </div>
+      <div *ngIf="event?.inOut === 'checkout'" class="event-name">
+        <h5>Check out</h5>
+        <h5>{{ event?.name }}</h5>
       </div>
 
-      <div *ngIf="event?.inOut === 'checkin'">
-        <h5 class="event-stay-city"><i class="fa fa-bed" aria-hidden="true"></i> {{ event?.stay_city | uppercase }} ( {{ event?.numDays }} )</h5>
-        <div class="event-name">
-          <h5>Check in</h5>
+      <div *ngIf="event?.inOut === 'checkin'" class="event-name">
+        <h5>Check in</h5>
+        <div>
+          <h5 class="event-stay-city"><i class="fa fa-bed" aria-hidden="true"></i> {{ event?.stay_city | uppercase }} ( {{ event?.numDays }} )</h5>
           <h5>{{ event?.name }}</h5>
           <h5 class="check-out-on">stay till {{ event?.check_out_date | date: 'dd MMM (EEE)' }}</h5>
         </div>
       </div>
     </div>
 
-    <div *ngIf="event?.type === 'activity'" class="activity-indicator" (click)="showDetails(event)">
+    <div *ngIf="event?.type === 'activity'" class="summary-item" (click)="showDetails(event)">
+      <div class="activity-indicator pill"></div>
+
       <img src="{{event?.photo}}" alt="picture of {{ event?.name}}" *ngIf="event?.photo">
       <i class="fa fa-bicycle fa-lg" aria-hidden="true" *ngIf="!event?.photo"></i>
 
-      <h5 class="event-name">{{ event?.name }}</h5>
+      <div class="event-name">
+        <h5>{{ event?.name }}</h5>
+      </div>
     </div>
 
-    <div *ngIf="event?.type === 'transport'" class="transport-indicator" (click)="showDetails(event)">
+    <div *ngIf="event?.type === 'transport'" class="summary-item" (click)="showDetails(event)">
+      <div class="transport-indicator pill"></div>
 
       <div *ngIf="event?.approach === 'departure'" class="event-name">
         <div [ngSwitch]="event?.transport_type">

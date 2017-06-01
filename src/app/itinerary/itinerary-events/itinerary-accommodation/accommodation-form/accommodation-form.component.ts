@@ -220,7 +220,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
     newAccommodation['created_at'] = new Date();
 
     if(this.newImageFile !== '')  {
-      this.fileuploadService.uploadFile(this.newImageFile)
+      this.fileuploadService.uploadFile(this.newImageFile, "event")
           .subscribe(
             result => {
               newAccommodation['photo'] = result.secure_url;

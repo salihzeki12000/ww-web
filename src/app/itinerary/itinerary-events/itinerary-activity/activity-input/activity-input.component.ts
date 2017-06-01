@@ -271,7 +271,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     newActivity['type'] = 'activity';
 
     if(this.newImageFile !== '')  {
-      this.fileuploadService.uploadFile(this.newImageFile)
+      this.fileuploadService.uploadFile(this.newImageFile, "event")
           .subscribe(
             result => {
               newActivity['photo'] = result.secure_url;

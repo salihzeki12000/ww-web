@@ -63,7 +63,7 @@ export class PostInputComponent implements OnInit, OnDestroy {
     this.loadingService.setLoader(true, "Saving...");
 
     if(this.newImageFile !== '') {
-      this.fileuploadService.uploadFile(this.newImageFile).subscribe(
+      this.fileuploadService.uploadFile(this.newImageFile, "post").subscribe(
             result => {
               this.addPost(result.secure_url)
             })

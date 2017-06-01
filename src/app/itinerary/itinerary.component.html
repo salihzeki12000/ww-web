@@ -50,7 +50,7 @@
     <nav>
       <ul class="itinerary-nav-tabs">
         <li [class.add-new-active]="showAddNew" (mouseover)="showAddNewOptions()" class="add-new">
-          <a (mouseover)="showAddNewOptions()">ADD NEW <i class="fa fa-caret-down fa-lg" aria-hidden="true"></i></a>
+          <a (mouseover)="showAddNewOptions()"><i class="fa fa-plus" aria-hidden="true"></i> ADD NEW <i class="fa fa-caret-down fa-lg" aria-hidden="true"></i></a>
           <div class="add-new-options" *ngIf="showAddNew">
             <ul>
               <li (click)="newAccommodation()">NEW ACCOMMODATION</li>

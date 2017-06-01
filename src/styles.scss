@@ -903,19 +903,28 @@ textarea.ng-invalid.ng-touched {
 .nil-event-message  {
   position: fixed;
   width: 400px;
-  margin: 60px 0 0 10px;
+  margin: 75px 0 0 10px;
   padding: 10px;
-  background-color: white;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
+  z-index: 2;
 
   @media only screen and (max-width: 400px) {
     width: 100%;
     min-width: 300px;
     margin: 20px 0;
+    background-color: white;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
   }
 
   @media only screen and (min-width: 400px) and (max-width: 890px) {
     margin-left: calc((100vw - 400px) / 2);
+  }
+}
+
+.nil-event-message img  {
+  margin: 0 0 5px -30px;
+
+  @media only screen and (max-width: 1090px) {
+    display: none;
   }
 }
 
@@ -925,6 +934,14 @@ textarea.ng-invalid.ng-touched {
 
 .nil-event-message li {
   padding-bottom: 10px;
+}
+
+.nil-event-message-mobile  {
+  display: none;
+  
+  @media only screen and (max-width: 1090px) {
+    display: block;
+  }
 }
 
 .show-summary {

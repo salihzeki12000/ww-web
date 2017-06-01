@@ -8,13 +8,21 @@ import { ErrorMessageService } from '../error-message';
 @Injectable()
 export class FileuploadService  {
 
-  private cloudinaryUrl = `https://api.cloudinary.com/v1_1/wwfileupload/upload`;
+  private cloudinaryUrl = `https://api.cloudinary.com/v1_1/wwfileupload/upload/`;
+
+  profile = 'w_150,h_150,c_fill,g_faces';
 
   constructor(
     private http: Http,
     private errorMessageService: ErrorMessageService)  {}
 
-  uploadFile(file)  {
+  uploadFile(file, type)  {
+    let transform = '';
+
+    if(type === 'profile')  {
+      transform = this.profile
+    }
+
     let formData: FormData = new FormData();
     formData.append('file', file, file.name);
     formData.append('upload_preset', 'oe7wfrxc');

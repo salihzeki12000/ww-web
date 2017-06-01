@@ -100,7 +100,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     }
 
     if(this.newImageFile !== '')  {
-      this.fileuploadService.uploadFile(this.newImageFile)
+      this.fileuploadService.uploadFile(this.newImageFile, "profile")
           .subscribe(
             result => {
               this.currentUser['display_picture'] = result.secure_url;
@@ -216,6 +216,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   }
 
   confirmDelete() {
-    
+
   }
 }

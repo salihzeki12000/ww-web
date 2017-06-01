@@ -182,11 +182,18 @@ span.info {
   display: inline-block;
   width: 100px;
   font-weight: 400;
+  @media only screen and (max-width: 450px) {
+    width: 80px;
+    font-size: 12px;
+  }
 }
 
 .share-details  {
   display: inline-block;
   font-weight: 400;
+  @media only screen and (max-width: 450px) {
+    font-size: 12px;
+  }
 }
 
 .delete-itinerary  {

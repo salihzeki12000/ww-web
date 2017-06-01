@@ -75,6 +75,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
                                              result => {
                                                this.currentItinerary = result;
+                                               this.getUsers();
                                                this.sortAdmin();
                                              })
 
@@ -99,7 +100,9 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
                                                }
 
                                              })
+  }
 
+  getUsers()  {
     this.userService.getAllUsers().subscribe(
           result => {
             this.filterUsers(result.users);
