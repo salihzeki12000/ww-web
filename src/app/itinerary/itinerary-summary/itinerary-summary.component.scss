@@ -20,12 +20,22 @@
   margin: 5px 10px;
   text-align: center;
   letter-spacing: 1px;
-  background-color: transparent;
-  box-shadow: none;
   @media only screen and (max-width: 400px) {
     margin: 5px;
     min-width: 0;
   }
+}
+
+.accommodation-indicator  {
+  border-left: 5px solid rgba(100,235,219,.8);
+}
+
+.transport-indicator  {
+  border-left: 5px solid rgba(237,100,148,.8);
+}
+
+.activity-indicator {
+  border-left: 5px solid rgba(237,189,100,.8);
 }
 
 .date-row {
@@ -118,60 +128,6 @@
 .summary-buffer {
   height: 50px;
   width: 100%;
-}
-
-.accommodation-indicator  {
-  display: inline-block;
-  margin: 5px 20px 10px 20px;
-  padding: 10px;
-  width: 240px;
-  background-color: #FFF;
-  border-left: 10px solid rgba(100,235,219,0.5);
-  box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
-  &:hover {
-    cursor: pointer;
-  }
-
-  @media only screen and (max-width: 400px) {
-    min-width: 240px;
-    width: calc(100vw - 40px)
-  }
-}
-
-.transport-indicator  {
-  display: inline-block;
-  margin: 5px 20px 10px 20px;
-  padding: 10px;
-  width: 240px;
-  background-color: #FFF;
-  border-left: 10px solid rgba(237,100,148,0.5);
-  box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
-  &:hover {
-    cursor: pointer;
-  }
-
-  @media only screen and (max-width: 400px) {
-    min-width: 240px;
-    width: calc(100vw - 40px)
-  }
-}
-
-.activity-indicator {
-  display: inline-block;
-  margin: 5px 20px 10px 20px;
-  padding: 10px;
-  width: 240px;
-  background-color: #FFF;
-  border-left: 10px solid rgba(237,189,100,0.5);
-  box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
-  &:hover {
-    cursor: pointer;
-  }
-
-  @media only screen and (max-width: 400px) {
-    min-width: 240px;
-    width: calc(100vw - 40px)
-  }
 }
 
 /* to display horizontal scrollbar */
