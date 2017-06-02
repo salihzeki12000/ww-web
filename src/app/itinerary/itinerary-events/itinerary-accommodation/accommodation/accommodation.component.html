@@ -9,9 +9,9 @@
   </div>
 
   <div class="display-photo-housing">
-    <div class="dots-menu" (click)="showMenuOptions()" *ngIf="sameUser">
+    <div class="dots-menu" (click)="showMenuOptions()">
       <div class="dots-menu-hint">
-        <h6>Click to edit or delete</h6>
+        <h6>Click to view options</h6>
       </div>
 
       <div class="item-menu" *ngIf="showMenu">
@@ -20,6 +20,10 @@
             <h5>Recommend</h5>
             <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
           </li> -->
+          <li (click)="copy()">
+            <h5>Copy</h5>
+            <i class="fa fa-clone" aria-hidden="true"></i>
+          </li>
           <li (click)="edit()" *ngIf="sameUser">
             <h5>Edit</h5>
             <i class="fa fa-pencil" aria-hidden="true"></i>
@@ -95,6 +99,32 @@
 
 </div>
 <!-- end of accommodation details view -->
+
+<!-- accommodation copy modal -->
+<div *ngIf="copying">
+  <div class="custom-modal">
+    <div class="form-card">
+
+      <div class="form-header">
+        <h3>Copy accommodation</h3>
+        <a (click)="cancelCopy()">X</a>
+
+        <div class="form-header-name">
+          <h4>{{ event?.name }}</h4>
+        </div>
+      </div>
+
+      <div class="form-housing">
+
+        <h4>Please select itinerary to copy to:</h4>
+        <div *ngFor="let itinerary of itineraries" class="copy-to-itinerary" (click)="copyTo(itinerary)">
+          <h4>{{ itinerary.name }} - ({{ itinerary.date_from | date:"dd MMM yy" }} to {{ itinerary.date_to | date:"dd MMM yy" }})</h4>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 <!-- accommodation edit modal -->
 <div *ngIf="editing">

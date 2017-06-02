@@ -1,6 +1,6 @@
 <div class="display-card">
 
-  <div class="dots-menu" (click)="showMenuOptions()" *ngIf="sameUser">
+  <div class="dots-menu" (click)="showMenuOptions()">
     <div class="dots-menu-hint">
       <h6>Click to edit or delete</h6>
     </div>
@@ -11,6 +11,10 @@
           <h5>Recommend</h5>
           <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
         </li> -->
+        <li (click)="copy()">
+          <h5>Copy</h5>
+          <i class="fa fa-clone" aria-hidden="true"></i>
+        </li>
         <li (click)="edit()" *ngIf="sameUser">
           <h5>Edit</h5>
           <i class="fa fa-pencil" aria-hidden="true"></i>
@@ -50,6 +54,33 @@
 
 </div>
 
+<!-- resource copy modal -->
+<div *ngIf="copying">
+  <div class="custom-modal">
+    <div class="form-card">
+
+      <div class="form-header">
+        <h3>Copy resource</h3>
+        <a (click)="cancelCopy()">X</a>
+
+        <div class="form-header-name">
+          <h4>{{ resource?.title }}</h4>
+        </div>
+      </div>
+
+      <div class="form-housing">
+
+        <h4>Please select itinerary to copy to:</h4>
+        <div *ngFor="let itinerary of itineraries" class="copy-to-itinerary" (click)="copyTo(itinerary)">
+          <h4>{{ itinerary.name }} - ({{ itinerary.date_from | date:"dd MMM yy" }} to {{ itinerary.date_to | date:"dd MMM yy" }})</h4>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- resource edit modal -->
 <div *ngIf="editing">
   <div class="custom-modal">
     <div class="form-card">

@@ -888,6 +888,21 @@ textarea.ng-invalid.ng-touched {
 }
 
 /***************************************************************
+ Copy itinerary list style
+ **************************************************************/
+.copy-to-itinerary  {
+  padding: 15px 10px;
+  &:hover {
+    background-color: #F6F6F6;
+    cursor: pointer;
+  }
+}
+
+.copy-to-itinerary h4  {
+  font-weight: 400;
+}
+
+/***************************************************************
  ACCOMMODATION / TRANSPORT / ACTIVITY / RESOURCE CARDS SUMMARY
  **************************************************************/
 .event-summary-section  {

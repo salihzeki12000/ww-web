@@ -27,7 +27,10 @@ export class AccommodationComponent implements OnInit, OnDestroy {
 
   showContactDetails = false;
 
+  itineraries = [];
+
   showMenu = false;
+  copying = false;
   editing = false;
   deleteAccommodation = false;
 
@@ -61,6 +64,7 @@ export class AccommodationComponent implements OnInit, OnDestroy {
                                        result => {
                                          this.currentUser = result;
                                          this.checkSameUser();
+                                         this.filterItineraries();
                                        })
 
     this.event['formatted_note'] = this.event['note'].replace(/\r?\n/g, '<br/> ');
@@ -88,10 +92,56 @@ export class AccommodationComponent implements OnInit, OnDestroy {
           i = admin.length;
         }
       }
-    }  }
+    }
+  }
+
+  filterItineraries() {
+    this.itineraries = [];
+    for (let i = 0; i < this.currentUser['itineraries'].length; i++) {
+      if(this.currentUser['itineraries'][i]['_id'] !== this.currentItinerary['_id'])  {
+        this.itineraries.push(this.currentUser['itineraries'][i])
+      }
+    }
+  }
 
   showMenuOptions() {
     this.showMenu = true;
+  }
+
+  // copy section
+  copy()  {
+    this.copying = true;
+    this.preventScroll(true);
+  }
+
+  cancelCopy()  {
+    this.copying = false;
+    this.preventScroll(false);
+  }
+
+  copyTo(itinerary) {
+    let copiedEvent = this.event;
+
+    delete copiedEvent['_id'];
+    delete copiedEvent['created_at'];
+    delete copiedEvent['itinerary'];
+
+    copiedEvent['check_in_date'] = itinerary['date_from'];
+    copiedEvent['check_out_date'] = itinerary['date_to'];
+    copiedEvent['date'] = copiedEvent['check_in_date'];
+    copiedEvent['user'] ={
+      _Id: this.currentUser['id'],
+      username: this.currentUser['username'],
+    }
+
+    this.itineraryEventService.copyEvent(copiedEvent, itinerary).subscribe(
+      result => {
+        this.flashMessageService.handleFlashMessage(result.message);
+      }
+    )
+
+    this.copying = false;
+    this.preventScroll(false);
   }
 
   // edit section

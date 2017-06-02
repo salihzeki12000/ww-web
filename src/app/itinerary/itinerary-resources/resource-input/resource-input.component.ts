@@ -122,7 +122,7 @@ export class ResourceInputComponent implements OnInit, OnDestroy {
         _Id: this.currentUser['id'],
         username: this.currentUser['username'],
       },
-      created_at: Date.now()
+      created_at: new Date()
     })
     .subscribe(
       result => {

@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter, ViewContainerRef, ViewChild, ComponentFactoryResolver } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
+import { DaterangePickerComponent } from 'ng2-daterange-picker';
 
 import { User, UserService } from '../../user';
 import { ItineraryService }  from '../itinerary.service';
@@ -18,13 +19,14 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
   currentUserSubscription: Subscription;
   currentUser: User;
 
+  @ViewChild('daterangePicker', { read: ViewContainerRef }) daterangePickerParentViewContainer: ViewContainerRef;
 
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private itineraryService: ItineraryService
-  ) {
+    private itineraryService: ItineraryService,
+    private componentFactory: ComponentFactoryResolver) {
       this.itineraryForm = this.formBuilder.group({
         'name': ['', Validators.required],
         'date_from': ['', Validators.required],
@@ -51,7 +53,7 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
 
     itinerary["daily_note"] = [];
     for (let i = 0; i < numDays; i++) {
-      itinerary['daily_note'].push("")
+      itinerary['daily_note'].push("e.g. Day trip to the outskirts")
     }
 
     itinerary.members = [this.currentUser['id']];
@@ -69,5 +71,22 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
   cancelForm() {
     this.hideItineraryForm.emit(false);
   }
+
+  showDaterangePickerSelector() {
+    let daterangePickerComponentFactory = this.componentFactory.resolveComponentFactory(DaterangePickerComponent);
+    let daterangePickerComponent: DaterangePickerComponent = DaterangePickerComponent.initWithData(this.daterangePickerParentViewContainer, daterangePickerComponentFactory);
+
+    daterangePickerComponent.onSelectedDaterange.subscribe(
+          data => {
+            this.showSelectedDaterange(data.startDate, data.endDate);
+          }
+    );
+  }
+
+  showSelectedDaterange(startDate: Date, endDate: Date) {
+    console.log(startDate);
+    console.log(endDate);
+  }
+
 
 }

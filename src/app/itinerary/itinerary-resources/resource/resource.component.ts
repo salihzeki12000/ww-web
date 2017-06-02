@@ -23,7 +23,10 @@ export class ResourceComponent implements OnInit, OnDestroy {
   currentUser;
   sameUser;
 
+  itineraries = [];
+
   showMenu = false;
+  copying = false;
   editing = false;
   deleteResource = false;
 
@@ -47,7 +50,8 @@ export class ResourceComponent implements OnInit, OnDestroy {
                                        result => {
                                          this.currentUser = result;
                                          this.checkSameUser();
-                                       })
+                                         this.filterItineraries();
+                                     })
 
     this.resource['formatted_content'] = this.resource['content'].replace(/\r?\n/g, '<br/> ');
   }
@@ -77,9 +81,54 @@ export class ResourceComponent implements OnInit, OnDestroy {
     }
   }
 
+  filterItineraries() {
+    this.itineraries = [];
+    for (let i = 0; i < this.currentUser['itineraries'].length; i++) {
+      if(this.currentUser['itineraries'][i]['_id'] !== this.currentItinerary['_id'])  {
+        this.itineraries.push(this.currentUser['itineraries'][i])
+      }
+    }
+  }
+
   showMenuOptions() {
     this.showMenu = true;
   }
+
+  // copy section
+  copy()  {
+    this.copying = true;
+    this.preventScroll(true);
+  }
+
+  cancelCopy()  {
+    this.copying = false;
+    this.preventScroll(false);
+  }
+
+  copyTo(itinerary) {
+    let copiedResource = this.resource;
+
+    delete copiedResource['_id'];
+    delete copiedResource['created_at'];
+    delete copiedResource['itinerary'];
+
+    copiedResource['user'] ={
+      _Id: this.currentUser['id'],
+      username: this.currentUser['username'],
+    }
+
+    copiedResource['itinerary'] = itinerary;
+    
+    this.resourceService.copyResource(copiedResource).subscribe(
+      result => {
+        this.flashMessageService.handleFlashMessage(result.message);
+      }
+    )
+
+    this.copying = false;
+    this.preventScroll(false);
+  }
+
 
   // edit section
   patchValue()  {

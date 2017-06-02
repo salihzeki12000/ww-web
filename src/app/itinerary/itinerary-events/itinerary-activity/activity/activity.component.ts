@@ -28,7 +28,10 @@ export class ActivityComponent implements OnInit, OnDestroy {
 
   showContactDetails = false;
 
+  itineraries = [];
+
   showMenu = false;
+  copying = false;
   editing = false;
   deleteActivity = false;
 
@@ -65,6 +68,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
                                         result => {
                                           this.currentUser = result;
                                           this.checkSameUser();
+                                          this.filterItineraries();
                                         })
     this.activity['formatted_hours'] = this.activity['opening_hours'].replace(/\r?\n/g, '<br/> ');
     this.activity['formatted_note'] = this.activity['note'].replace(/\r?\n/g, '<br/> ');
@@ -95,6 +99,15 @@ export class ActivityComponent implements OnInit, OnDestroy {
     }
   }
 
+  filterItineraries() {
+    this.itineraries = [];
+    for (let i = 0; i < this.currentUser['itineraries'].length; i++) {
+      if(this.currentUser['itineraries'][i]['_id'] !== this.currentItinerary['_id'])  {
+        this.itineraries.push(this.currentUser['itineraries'][i])
+      }
+    }
+  }
+
   initCategoryArray() {
     this.categories = this.formBuilder.array([
       this.formBuilder.group({ value: 'adventure', icon: 'hand-peace-o', checked: false }),
@@ -107,6 +120,41 @@ export class ActivityComponent implements OnInit, OnDestroy {
 
   showMenuOptions() {
     this.showMenu = true;
+  }
+
+  // copy section
+  copy()  {
+    this.copying = true;
+    this.preventScroll(true);
+  }
+
+  cancelCopy()  {
+    this.copying = false;
+    this.preventScroll(false);
+  }
+
+  copyTo(itinerary) {
+    let copiedEvent = this.activity;
+
+    delete copiedEvent['_id'];
+    delete copiedEvent['created_at'];
+    delete copiedEvent['itinerary'];
+
+    copiedEvent['date'] = 'any day';
+    copiedEvent['time'] = 'anytime';
+    copiedEvent['user'] ={
+      _Id: this.currentUser['id'],
+      username: this.currentUser['username'],
+    }
+
+    this.itineraryEventService.copyEvent(copiedEvent, itinerary).subscribe(
+      result => {
+        this.flashMessageService.handleFlashMessage(result.message);
+      }
+    )
+
+    this.copying = false;
+    this.preventScroll(false);
   }
 
   // edit section
