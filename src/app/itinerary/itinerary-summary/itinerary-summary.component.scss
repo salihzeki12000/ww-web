@@ -41,13 +41,20 @@
 .date-row {
   display: flex;
   overflow: auto;
+  width: calc(100vw - 200px);
+
   @media only screen and (max-width: 400px) {
     flex-direction: column;
     position: absolute;
     margin: 40px 0;
     width: 100%;
   }
+
+  @media only screen and (min-width: 400px) and (max-width: 1090px){
+    width: 100%;
+  }
 }
+
 
 .date-row .date-column:first-child  {
   @media only screen and (max-width: 400px) {

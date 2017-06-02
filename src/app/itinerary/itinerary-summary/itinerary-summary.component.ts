@@ -29,7 +29,7 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
 
   currentItinerarySubscription: Subscription;
   currentItinerary;
-  
+
   showDetailsInSummary = false;
   detailsInSummary = 'out';
 
@@ -74,7 +74,6 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
 
   @HostListener("window:scroll", [])
   onWindowScroll() {
-
     for (let i = 0; i < this.itemPosition.length; i++) {
       let offset = this.element.nativeElement.offsetParent.scrollTop;
       let item = this.itemPosition[i]['position'] - 30;
@@ -92,7 +91,7 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
   }
 
   onScroll(event) {
-    if((event.srcElement.clientWidth + event.srcElement.offsetLeft) > 1076) {
+    if((event.srcElement.clientWidth + event.srcElement.offsetParent.offsetLeft) > 1090) {
       this.left = 200 - event.srcElement.scrollLeft + "px";
     } else  {
       this.left = -event.srcElement.scrollLeft + "px";
