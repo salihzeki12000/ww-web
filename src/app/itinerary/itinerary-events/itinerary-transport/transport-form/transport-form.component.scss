@@ -1,3 +1,8 @@
+.progress-tracker-section {
+  margin-top: 40px;
+  padding: 20px 20px 0 20px;
+}
+
 .progress-tracker li {
   width: 50%;
 
@@ -20,6 +25,11 @@
   @media only screen and (max-width: 500px) {
     width: 100%;
   }
+}
+
+/* transport mode */
+.transport-mode {
+  padding: 0 20px 20px 20px;
 }
 
 .transport-mode > label {
@@ -53,11 +63,18 @@
 .transport-mode-options > label > input {
   visibility: hidden;
   position: absolute;
+  width: 0;
 }
 
 .transport-mode-options > label > i {
   display: block;
   text-align: center;
+}
+
+/* form display */
+.form-housing {
+  margin-top: 0;
+  padding-top: 0;
 }
 
 .transport-type-header  {
@@ -71,6 +88,15 @@
 
 
 /* to search for flight from flight stats */
+.loading-overlay  {
+  position: absolute;
+  margin-left: 266px;
+
+  @media only screen and (max-width: 650px) {
+    margin-left: calc((100% - 28px)/2);
+  }
+}
+
 #search-airline-code,
 .example-airline-code  {
   width: 90px;
@@ -118,18 +144,10 @@
   display: block;
 }
 
-.loading-overlay  {
-  position: absolute;
-  margin-left: 266px;
-
-  @media only screen and (max-width: 650px) {
-    margin-left: calc((100% - 28px)/2);
-  }
-}
 
 
-/* if stopover is true */
-.stop-over> h5.form-section-header  {
+/* if need to select airport */
+.stop-over > h5.form-section-header  {
   letter-spacing: 0;
   font-weight: 400;
 }

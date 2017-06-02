@@ -100,9 +100,9 @@
       </div>
     </div>
   </div>
-
 </div>
 
+<!-- delete post -->
 <div class="custom-modal" *ngIf="deletePost">
   <div class="form-card">
     <div class="form-header">
@@ -110,22 +110,20 @@
       <a (click)="cancelDelete()">x</a>
     </div>
 
-    <div class="textless-header"></div>
-
-    <div class="confirm-delete-content">
+    <div class="content-without-header-name">
       <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
       <h4>Deleting the post will permanently remove it, and all associated likes and comments.</h4>
     </div>
 
-    <div class="confirm-delete-footer">
-      <div class="action-response">
-        <h5 class="action-response-primary" (click)="cancelDelete()">CANCEL</h5>
-        <h5 class="action-response-warning" (click)="onDelete()">DELETE</h5>
-      </div>
+    <div class="action-response">
+      <h5 class="action-response-primary" (click)="cancelDelete()">CANCEL</h5>
+      <h5 class="action-response-warning" (click)="onDelete()">DELETE</h5>
     </div>
   </div>
 </div>
 
+
+<!-- delete comment -->
 <div class="custom-modal" *ngIf="deleteComment > -1">
   <div class="form-card">
     <div class="form-header">
@@ -133,18 +131,14 @@
       <a (click)="cancelDeleteComment()">x</a>
     </div>
 
-    <div class="textless-header"></div>
-
-    <div class="confirm-delete-content">
+    <div class="content-without-header-name">
       <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
       <h4>Deleting the comment will permanently remove it from the post.</h4>
     </div>
 
-    <div class="confirm-delete-footer">
-      <div class="action-response">
-        <h5 class="action-response-primary" (click)="cancelDeleteComment()">CANCEL</h5>
-        <h5 class="action-response-warning" (click)="onDeleteComment()">DELETE</h5>
-      </div>
+    <div class="action-response">
+      <h5 class="action-response-primary" (click)="cancelDeleteComment()">CANCEL</h5>
+      <h5 class="action-response-warning" (click)="onDeleteComment()">DELETE</h5>
     </div>
   </div>
 </div>

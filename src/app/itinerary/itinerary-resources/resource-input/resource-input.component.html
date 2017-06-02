@@ -30,10 +30,11 @@
       <label>Title</label>
       <input type="text" formControlName="title" value="{{ link_title }}">
 
-      <div class="action-response">
-        <h5 class="action-response-secondary" (click)="cancelForm()">CANCEL</h5>
-        <button type="submit" class="action-response-primary" [disabled]="!resourceForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
-      </div>
+    </div>
+
+    <div class="action-response">
+      <h5 class="action-response-secondary" (click)="cancelForm()">CANCEL</h5>
+      <button type="submit" class="action-response-primary" [disabled]="!resourceForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
     </div>
 
   </div>

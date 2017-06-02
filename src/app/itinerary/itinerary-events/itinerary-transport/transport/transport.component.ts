@@ -69,7 +69,6 @@ export class TransportComponent implements OnInit, OnDestroy {
                                        })
 
     this.event['formatted_note'] = this.event['note'].replace(/\r?\n/g, '<br/> ');
-    console.log(this.event)
   }
 
   @HostListener('document:click', ['$event'])

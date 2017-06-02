@@ -41,7 +41,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
 
   flightSearchDetail;
   codeshare = false;
-  stopOver = false;
+  selectStopOver = false;
   depAirports = [];
   arrAirports = [];
 
@@ -113,7 +113,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   selectTransport() {
     this.transportOption = '';
     this.codeshare = false;
-    this.stopOver = false;
+    this.selectStopOver = false;
     this.chooseAirport = false;
     this.airportsChoosen = false;
     this.populateFlightDetails = false;
@@ -121,14 +121,14 @@ export class TransportFormComponent implements OnInit, OnDestroy {
 
   flightSearch()  {
     this.codeshare = false;
-    this.stopOver = false;
+    this.selectStopOver = false;
     this.chooseAirport = false;
     this.airportsChoosen = false;
     this.populateFlightDetails = false;
   }
 
   selectAirport() {
-    this.stopOver = true;
+    this.selectStopOver = true;
     this.airportsChoosen = false;
   }
 
@@ -282,7 +282,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
               }//end of section where there is only 01 flight
 
               if (scheduledFlights.length > 1)  {
-                this.stopOver = true;
+                this.selectStopOver = true;
                 this.chooseAirport = true;
 
                 //convert departureTime to timestamp to sort by time
@@ -340,6 +340,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
                     }
                   }
                 }
+
                 this.populateFlightDetails = true;
               }//end of if more than 01 flight
 
@@ -364,7 +365,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   // show flight details after selected airport
   getFlightDetails()  {
     this.airportsChoosen = true;
-    this.stopOver = false;
+    this.selectStopOver = false;
   }
 
   selectedDepAirport(airportCode)  {

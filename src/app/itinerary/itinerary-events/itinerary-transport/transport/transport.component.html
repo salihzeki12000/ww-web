@@ -143,15 +143,18 @@
 
       <div class="form-housing">
 
-        <div class="confirm-delete-content">
+        <div class="content-with-header-name">
           <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
           <h4>Please be careful when using this copied information. Schedule for your selected transport arrangement may not operate on your intended travel date.</h4>
         </div>
 
         <h4>Please select itinerary to copy to:</h4>
-        <div *ngFor="let itinerary of itineraries" class="copy-to-itinerary" (click)="copyTo(itinerary)">
-          <h4>{{ itinerary.name }} - ({{ itinerary.date_from | date:"dd MMM yy" }} to {{ itinerary.date_to | date:"dd MMM yy" }})</h4>
+        <div class="copy-to-itinerary-list">
+          <div *ngFor="let itinerary of itineraries" class="copy-to-itinerary" (click)="copyTo(itinerary)">
+            <h4>{{ itinerary.name }} - ({{ itinerary.date_from | date:"dd MMM yy" }} to {{ itinerary.date_to | date:"dd MMM yy" }})</h4>
+          </div>
         </div>
+
       </div>
 
     </div>
@@ -364,11 +367,12 @@
             <textarea rows="3" formControlName="note"></textarea>
           </div>
 
-          <div class="action-response">
-            <h5 class="action-response-secondary" (click)="cancelEdit()">CANCEL</h5>
-            <h5 class="action-response-secondary" (click)="undoEdit()">UNDO</h5>
-            <button type="submit" class="action-response-primary" [disabled]="!editTransportForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
-          </div>
+        </div>
+
+        <div class="action-response">
+          <h5 class="action-response-secondary" (click)="cancelEdit()">CANCEL</h5>
+          <h5 class="action-response-secondary" (click)="undoEdit()">UNDO</h5>
+          <button type="submit" class="action-response-primary" [disabled]="!editTransportForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
         </div>
 
       </form>
@@ -378,6 +382,7 @@
 </div>
 <!-- end of transport edit modal -->
 
+<!-- transport delete modal -->
 <div class="custom-modal" *ngIf="deleteTransport">
   <div class="form-card">
     <div class="form-header">
@@ -389,16 +394,14 @@
       <h4>{{ event?.transport_type }} {{ event?.reference_number }} from {{ event?.dep_city }} to {{ event?.arr_city }}</h4>
     </div>
 
-    <div class="confirm-delete-content">
+    <div class="content-with-header-name">
       <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
       <h4>Deleting transport arrangement {{ event?.transport_type }} {{ event?.reference_number }} from {{ event?.dep_city }} to {{ event?.arr_city }} will permanently remove it from your itinerary.</h4>
     </div>
 
-    <div class="confirm-delete-footer">
-      <div class="action-response">
-        <h5 class="action-response-primary" (click)="cancelDelete()">CANCEL</h5>
-        <h5 class="action-response-warning" (click)="confirmDelete()">DELETE</h5>
-      </div>
+    <div class="action-response">
+      <h5 class="action-response-primary" (click)="cancelDelete()">CANCEL</h5>
+      <h5 class="action-response-warning" (click)="confirmDelete()">DELETE</h5>
     </div>
   </div>
 </div>

@@ -165,7 +165,7 @@ button[disabled] h5 {
 
 /********** ACTION BUTTONS */
 .action-response  {
-  padding: 10px;
+  padding: 10px 20px;
   text-align: right;
   background-color: #F6F6F6;
 }
@@ -890,8 +890,13 @@ textarea.ng-invalid.ng-touched {
 /***************************************************************
  Copy itinerary list style
  **************************************************************/
+.copy-to-itinerary-list {
+  margin-top: 15px;
+}
+
 .copy-to-itinerary  {
   padding: 15px 10px;
+  border: 1px solid lightgray;
   &:hover {
     background-color: #F6F6F6;
     cursor: pointer;
@@ -1347,6 +1352,7 @@ ww-resource {
 
 .note{
   color: grey;
+  line-height: 1.5;
   overflow-wrap: break-word;
 }
 
@@ -1407,6 +1413,7 @@ ww-resource {
   width: 90%;
   vertical-align: top;
   color: grey;
+  line-height: 1.5;
 }
 
 .activity-tags {
@@ -1660,11 +1667,17 @@ ww-resource {
 /****************
   delete modal
 ****************/
-.confirm-delete-content {
+.content-with-header-name {
   padding: 40px;
 }
 
-.confirm-delete-content > h4 {
+.content-without-header-name {
+  margin-top: 40px;
+  padding: 40px;
+}
+
+.content-with-header-name > h4,
+.content-without-header-name > h4{
   display: inline-block;
   width: 90%;
   padding-left: 10px;
@@ -1674,11 +1687,6 @@ ww-resource {
 .fa-exclamation-triangle {
   color: red;
   vertical-align: -webkit-baseline-middle !important;
-}
-
-.confirm-delete-footer  {
-  padding: 0 20px;
-  text-align: right;
 }
 
 /*********************

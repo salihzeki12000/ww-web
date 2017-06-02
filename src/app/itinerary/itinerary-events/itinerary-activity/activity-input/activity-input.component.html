@@ -126,12 +126,12 @@
             <textarea rows="2" formControlName="note"></textarea>
           </div>
 
-          <div class="action-response">
-            <h5 class="action-response-secondary" (click)="cancelForm()">CANCEL</h5>
-            <button type="submit" class="action-response-primary" [disabled]="!addActivityForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
-          </div>
-
         </div>
+      </div>
+
+      <div class="action-response" *ngIf="searchDone">
+        <h5 class="action-response-secondary" (click)="cancelForm()">CANCEL</h5>
+        <button type="submit" class="action-response-primary" [disabled]="!addActivityForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
       </div>
 
     </div><!-- end of formCard -->
@@ -145,15 +145,13 @@
       <a (click)="exitError()">X</a>
     </div>
 
-    <div class="confirm-delete-content">
+    <div class="content-without-header-name">
       <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
       <h4>The file you selected is not an image. Please try again.</h4>
     </div>
 
-    <div class="confirm-delete-footer">
-      <div class="action-response">
-        <h5 class="action-response-primary" (click)="exitError()">OK</h5>
-      </div>
+    <div class="action-response">
+      <h5 class="action-response-primary" (click)="exitError()">OK</h5>
     </div>
   </div>
 </div>

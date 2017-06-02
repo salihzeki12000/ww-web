@@ -55,6 +55,7 @@ export class PostService  {
     return this.http.post( this.url + "/posts/linkpreview" + token, body, { headers: headers })
                     .map((response: Response) => response.json())
                     .catch((error: Response) => {
+                      console.log(error);
                       this.errorMessageService.handleErrorMessage(error.json());
                       return Observable.throw(error.json())
                     });

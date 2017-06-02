@@ -99,42 +99,46 @@
   <div class="form-card">
     <div class="form-header">
       <h3>File type error</h3>
-      <a (click)="exitError()">x</a>
+      <a (click)="exitError()">X</a>
     </div>
 
-    <div class="confirm-delete-content">
+    <div class="content-without-header-name">
       <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
       <h4>The file you selected is not an image. Please try again.</h4>
     </div>
 
-    <div class="confirm-delete-footer">
-      <div class="action-response">
-        <h5 class="action-response-primary" (click)="exitError()">OK</h5>
-      </div>
+    <div class="action-response">
+      <h5 class="action-response-primary" (click)="exitError()">OK</h5>
     </div>
   </div>
 </div>
 
 <div class="custom-modal" *ngIf="changePw">
   <div class="form-card">
-    <form [formGroup]="changePasswordForm" (ngSubmit)="saveNewPassword()" class="form-housing">
+    <div class="form-header">
+      <h3>Change password</h3>
+      <a (click)="cancelChangePassword()">X</a>
+    </div>
 
-      <label>Current Password <span class="label-note"> ( at least 6 characters )</span></label>
-      <input type="password" formControlName="currentPassword">
-      <span class="form-validator"
-        *ngIf="changePasswordForm.get('currentPassword').touched && changePasswordForm.get('currentPassword').invalid">Password is not valid. Please enter at least 6 characters</span>
+    <form [formGroup]="changePasswordForm" (ngSubmit)="saveNewPassword()">
+      <div class="form-housing">
+        <label>Current Password <span class="label-note"> ( at least 6 characters )</span></label>
+        <input type="password" formControlName="currentPassword">
+        <span class="form-validator"
+          *ngIf="changePasswordForm.get('currentPassword').touched && changePasswordForm.get('currentPassword').invalid">Password is not valid. Please enter at least 6 characters</span>
 
 
-      <label>New Password <span class="label-note"> ( at least 6 characters )</span></label>
-      <input type="password" formControlName="newPassword">
-      <span class="form-validator"
-        *ngIf="changePasswordForm.get('newPassword').touched && changePasswordForm.get('newPassword').invalid">Password is not valid. Please enter at least 6 characters</span>
+        <label>New Password <span class="label-note"> ( at least 6 characters )</span></label>
+        <input type="password" formControlName="newPassword">
+        <span class="form-validator"
+          *ngIf="changePasswordForm.get('newPassword').touched && changePasswordForm.get('newPassword').invalid">Password is not valid. Please enter at least 6 characters</span>
 
 
-      <label>Confirm New Password</label>
-      <input type="password" formControlName="confirmNewPassword">
-      <span class="form-validator"
-        *ngIf="changePasswordForm.get('confirmNewPassword').dirty && changePasswordForm.get('confirmNewPassword').invalid">Passwords do not match</span>
+        <label>Confirm New Password</label>
+        <input type="password" formControlName="confirmNewPassword">
+        <span class="form-validator"
+          *ngIf="changePasswordForm.get('confirmNewPassword').dirty && changePasswordForm.get('confirmNewPassword').invalid">Passwords do not match</span>
+      </div>
 
       <div class="action-response">
         <h5 class="action-response-secondary" (click)="cancelChangePassword()">CANCEL</h5>

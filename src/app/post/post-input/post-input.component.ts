@@ -126,7 +126,7 @@ export class PostInputComponent implements OnInit, OnDestroy {
 
       for (let i = 0; i < texts.length; i++) {
         if(texts[i].match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g)) {
-          this.fetchLink = true;
+          // this.fetchLink = true;
           this.postService.getPreview({link:texts[i]})
                           .subscribe(
                             result => {
@@ -138,7 +138,7 @@ export class PostInputComponent implements OnInit, OnDestroy {
                               if(result.meta_img) {
                                 this.link_img = result.meta_img.trim();
                               }
-                              this.fetchLink = false;
+                              // this.fetchLink = false;
                             }
                           );
         }

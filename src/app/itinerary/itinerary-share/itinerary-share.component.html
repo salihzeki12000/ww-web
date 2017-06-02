@@ -4,14 +4,15 @@
     <a (click)="cancel()">X</a>
   </div>
 
-  <div class="form-housing">
-    <div class="progress-tracker-section">
-      <ul class="progress-tracker">
-        <li class="progress-title" (click)="selectItems()" [class.progress-done]="itemsSelected">SELECT ITEMS TO SHARE</li><li class="progress-title">SELECT USERS TO SHARE WITH</li>
-      </ul>
-    </div>
+  <div class="progress-tracker-section">
+    <ul class="progress-tracker">
+      <li class="progress-title" (click)="selectItems()" [class.progress-done]="itemsSelected">SELECT ITEMS TO SHARE</li><li class="progress-title">SELECT USERS TO SHARE WITH</li>
+    </ul>
+  </div>
 
-    <div *ngIf="!itemsSelected">
+  <div *ngIf="!itemsSelected">
+    <div class="form-housing">
+
       <div class="share-all">
         <input type="checkbox" (click)="toggleShareAll()" checked>
         <h4>Share all</h4>
@@ -54,14 +55,16 @@
         <input type="checkbox" (click)="toggleShareResource(i)" [checked]="shareIndexResource[i]">
         <h5>{{ resource.title }}</h5>
       </div>
-
-      <div class="action-response share-response">
-        <h5 class="action-response-secondary" (click)="cancel()">CANCEL</h5>
-        <h5 class="action-response-primary" (click)="selectUsers()">NEXT</h5>
-      </div>
     </div>
 
-    <div *ngIf="itemsSelected">
+    <div class="action-response share-response">
+      <h5 class="action-response-secondary" (click)="cancel()">CANCEL</h5>
+      <h5 class="action-response-primary" (click)="selectUsers()">NEXT</h5>
+    </div>
+  </div>
+
+  <div *ngIf="itemsSelected">
+    <div class="form-housing">
       <input class="share-users-search" type="text" placeholder="Search for people..." #text (keyup)="filterSearch(text.value)">
 
       <div *ngIf="validAddUser">
@@ -87,11 +90,12 @@
         </div>
         <h5 class="toggle-invite-member" (click)="toggleAdd(user)">Select</h5>
       </div>
-
-      <div class="action-response share-response">
-        <h5 class="action-response-secondary" (click)="cancel()">CANCEL</h5>
-        <button type="button" class="action-response-primary" (click)="shareItinerary()" *ngIf="validAddUser"><h5>SHARE ITINERARY</h5></button>
-      </div>
+    </div>
+    
+    <div class="action-response share-response">
+      <h5 class="action-response-secondary" (click)="cancel()">CANCEL</h5>
+      <button type="button" class="action-response-primary" (click)="shareItinerary()" *ngIf="validAddUser"><h5>SHARE ITINERARY</h5></button>
     </div>
   </div>
+
 </div>

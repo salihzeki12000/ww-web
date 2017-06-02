@@ -5,15 +5,13 @@
       <a (click)="exitError()">X</a>
     </div>
 
-    <div class="confirm-delete-content">
+    <div class="content-without-header-name">
       <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
       <h4>{{ errorMessage?.error.message }}</h4>
     </div>
 
-    <div class="confirm-delete-footer">
-      <div class="action-response">
-        <h5 class="action-response-primary" (click)="exitError()">OK</h5>
-      </div>
+    <div class="action-response">
+      <h5 class="action-response-primary" (click)="exitError()">OK</h5>
     </div>
   </div>
 </div>

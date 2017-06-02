@@ -17,6 +17,7 @@
   <div class="confirm-remove-follower">
     <img src="{{ follower.user.display_picture }}" alt="" class="user-profile-thumbnail">
     <h5 class="remove-follower-message"><span class="follower-username">{{ follower.user.username }}</span> will not be informed of this removal</h5>
+
     <div class="action-response">
       <h5 class="action-response-primary" (click)="cancelRemove()">CANCEL</h5>
       <h5 class="action-response-warning">REMOVE</h5>
