@@ -125,11 +125,6 @@
   }
 }
 
-.summary-buffer {
-  height: 50px;
-  width: 100%;
-}
-
 /* to display horizontal scrollbar */
 .date-row::-webkit-scrollbar {
     -webkit-appearance: none;
@@ -207,4 +202,10 @@
 
 .details-in-summary::-webkit-scrollbar  {
   -webkit-appearance: none;
+}
+
+.nil-event-message  {
+  @media only screen and (min-width: 400px) and (max-width: 1090px) {
+    margin-top: 150px;
+  }
 }

@@ -44,9 +44,11 @@
   </div>
 
   <div *ngFor="let date of itinDateRange; let i = index" class="date-column">
+
     <ww-itinerary-summary-item
       [index]="i"
       [date]="date"
+      [currentItinerary]="currentItinerary"
       [events]="events"
       (showEventDetails)="showEventDetails($event)"
       (sectionPosition)="sectionPosition($event)"></ww-itinerary-summary-item>

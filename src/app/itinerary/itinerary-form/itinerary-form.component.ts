@@ -43,6 +43,16 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
 
   saveNew()  {
     let itinerary = this.itineraryForm.value;
+    let oneDay = 24*60*60*1000;
+
+    let startDate = new Date(itinerary['date_from']);
+    let endDate = new Date(itinerary['date_to']);
+    let numDays = Math.round(Math.abs((startDate.getTime() - endDate.getTime())/(oneDay))) + 2;
+
+    itinerary["daily_note"] = [];
+    for (let i = 0; i < numDays; i++) {
+      itinerary['daily_note'].push("")
+    }
 
     itinerary.members = [this.currentUser['id']];
     itinerary.admin = [this.currentUser['id']];

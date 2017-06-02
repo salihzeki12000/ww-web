@@ -27,6 +27,9 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
   itinDateSubscription: Subscription;
   itinDateRange = [];
 
+  currentItinerarySubscription: Subscription;
+  currentItinerary;
+  
   showDetailsInSummary = false;
   detailsInSummary = 'out';
 
@@ -56,6 +59,11 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
                                     this.filterEvents(result);
                                   }
                                 )
+
+    this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
+                                             result => {
+                                               this.currentItinerary = result;
+                                             })
   }
 
   ngOnDestroy() {
@@ -69,7 +77,7 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
 
     for (let i = 0; i < this.itemPosition.length; i++) {
       let offset = this.element.nativeElement.offsetParent.scrollTop;
-      let item = this.itemPosition[i]['position'] - 5;
+      let item = this.itemPosition[i]['position'] - 30;
       let diff = item - offset;
 
       if(diff < 0)  {
