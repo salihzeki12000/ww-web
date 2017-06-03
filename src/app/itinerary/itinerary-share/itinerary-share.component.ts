@@ -1,4 +1,5 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
 import { Itinerary }              from '../itinerary';
@@ -7,6 +8,7 @@ import { ItineraryEventService }  from '../itinerary-events/itinerary-event.serv
 import { ResourceService }        from '../itinerary-resources/resource.service';
 import { UserService }            from '../../user';
 import { NotificationService }    from '../../notifications';
+import { FlashMessageService }    from '../../flash-message';
 
 @Component({
   selector: 'ww-itinerary-share',
@@ -14,6 +16,8 @@ import { NotificationService }    from '../../notifications';
   styleUrls: ['./itinerary-share.component.scss']
 })
 export class ItineraryShareComponent implements OnInit {
+  @Input() shareType;
+  @Input() itineraries;
   @Output() cancelShare = new EventEmitter();
 
   currentItinerarySubscription: Subscription;
@@ -42,11 +46,16 @@ export class ItineraryShareComponent implements OnInit {
   selectedUsers = []
   validAddUser = false;
 
+  selectedItinerary;
+  copying = false;
+
   constructor(
     private userService: UserService,
+    private router: Router,
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
     private resourceService: ResourceService,
+    private flashMessageService: FlashMessageService,
     private notificationService: NotificationService) { }
 
   ngOnInit() {
@@ -205,7 +214,7 @@ export class ItineraryShareComponent implements OnInit {
 
       this.itineraryService.copyItin(newItinerary).subscribe(
         data => {
-          this.shareEvents(data.itinerary);
+          this.shareEvents(data.itinerary, "share");
 
           this.notificationService.newNotification({
             recipient: this.selectedUsers[i]['_id'],
@@ -223,7 +232,8 @@ export class ItineraryShareComponent implements OnInit {
       result => {})
   }
 
-  shareEvents(itinerary) {
+  shareEvents(itinerary, type) {
+    this.selectedItinerary = itinerary;
     for (let i = 0; i < this.shareIndex.length; i++) {
       if(this.shareIndex[i]) {
         delete this.events[i]['_id'];
@@ -253,6 +263,31 @@ export class ItineraryShareComponent implements OnInit {
 
     this.itemsSelected = false;
     this.filteredResult = [];
+
+    if(type === 'share')  {
+      this.confirmShareMessage();
+    }
+
+    if(type === 'copy') {
+      this.copying = true;
+    }
+  }
+
+  stay()  {
+    this.copying = false;
+    this.cancelShare.emit(false);
+  }
+
+  redirect()  {
+    this.copying = false;
+    this.cancelShare.emit(false);
+
+    this.router.navigateByUrl('/me/itinerary/' + this.selectedItinerary['_id']);
+  }
+
+  confirmShareMessage() {
+    let message = "Itinerary " + this.currentItinerary['name'] + " has been shared"
+    this.flashMessageService.handleFlashMessage(message);
     this.cancelShare.emit(false);
   }
 }

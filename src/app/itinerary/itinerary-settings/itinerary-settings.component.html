@@ -100,7 +100,8 @@
     </div>
 
     <div class="action-response">
-      <h5 class="action-response-primary" (click)="share()">SHARE ITINERARY</h5>
+      <h5 class="action-response-primary" (click)="share('Copy')">COPY ITINERARY</h5>
+      <h5 class="action-response-primary" (click)="share('Share')">SHARE ITINERARY</h5>
     </div>
   </div>
 
@@ -190,5 +191,5 @@
 </div>
 
 <div class="custom-modal" *ngIf="shareItin">
-  <ww-itinerary-share (cancelShare)="cancelShare($event)"></ww-itinerary-share>
+  <ww-itinerary-share (cancelShare)="cancelShare($event)" [shareType]="shareType" [itineraries]="itineraries"></ww-itinerary-share>
 </div>

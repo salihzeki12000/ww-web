@@ -1,12 +1,16 @@
 <div class="form-card">
   <div class="form-header share-itineary-header">
-    <h3>Share itinerary</h3>
+    <h3>{{ shareType }} itinerary</h3>
     <a (click)="cancel()">X</a>
   </div>
 
   <div class="progress-tracker-section">
-    <ul class="progress-tracker">
+    <ul class="progress-tracker" *ngIf="shareType === 'Share'">
       <li class="progress-title" (click)="selectItems()" [class.progress-done]="itemsSelected">SELECT ITEMS TO SHARE</li><li class="progress-title">SELECT USERS TO SHARE WITH</li>
+    </ul>
+
+    <ul class="progress-tracker" *ngIf="shareType === 'Copy'">
+      <li class="progress-title" (click)="selectItems()" [class.progress-done]="itemsSelected">SELECT ITEMS TO COPY</li><li class="progress-title">SELECT ITINERARY TO COPY TO</li>
     </ul>
   </div>
 
@@ -15,7 +19,7 @@
 
       <div class="share-all">
         <input type="checkbox" (click)="toggleShareAll()" checked>
-        <h4>Share all</h4>
+        <h4>{{ shareType }} all</h4>
       </div>
 
       <div class="category-header">
@@ -57,13 +61,13 @@
       </div>
     </div>
 
-    <div class="action-response share-response">
+    <div class="action-response">
       <h5 class="action-response-secondary" (click)="cancel()">CANCEL</h5>
       <h5 class="action-response-primary" (click)="selectUsers()">NEXT</h5>
     </div>
   </div>
 
-  <div *ngIf="itemsSelected">
+  <div *ngIf="itemsSelected && shareType === 'Share'">
     <div class="form-housing">
       <input class="share-users-search" type="text" placeholder="Search for people..." #text (keyup)="filterSearch(text.value)">
 
@@ -91,11 +95,44 @@
         <h5 class="toggle-invite-member" (click)="toggleAdd(user)">Select</h5>
       </div>
     </div>
-    
-    <div class="action-response share-response">
+
+    <div class="action-response">
       <h5 class="action-response-secondary" (click)="cancel()">CANCEL</h5>
       <button type="button" class="action-response-primary" (click)="shareItinerary()" *ngIf="validAddUser"><h5>SHARE ITINERARY</h5></button>
     </div>
   </div>
 
+  <div *ngIf="itemsSelected && shareType === 'Copy'">
+    <div class="form-housing">
+      <h4>Please select itinerary to copy to:</h4>
+      <div class="copy-to-itinerary-list">
+        <div *ngFor="let itinerary of itineraries" class="copy-to-itinerary" (click)="shareEvents(itinerary, 'copy')">
+          <h4>{{ itinerary.name }} - ({{ itinerary.date_from | date:"dd MMM yy" }} to {{ itinerary.date_to | date:"dd MMM yy" }})</h4>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-response">
+      <h5 class="action-response-secondary" (click)="cancel()">CANCEL</h5>
+    </div>
+  </div>
+</div>
+
+<!-- stay or redirect after copying -->
+<div class="custom-modal" *ngIf="copying">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>Stay or redirect?</h3>
+    </div>
+
+    <div class="content-without-header-name">
+      <h4>Would you like to remain in this itinerary - {{ currentItinerary?.name }} or would you like to be redirected to the itinerary - {{ selectedItinerary?.name }}?</h4>
+    </div>
+
+    <div class="action-response">
+      <h5 class="action-response-primary" (click)="stay()">STAY</h5>
+      <h5 class="action-response-secondary" (click)="redirect()">REDIRECT</h5>
+    </div>
+
+  </div>
 </div>

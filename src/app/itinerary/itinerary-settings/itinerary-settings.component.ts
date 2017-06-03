@@ -34,6 +34,8 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   showInfo = false;
 
   // share itinerary
+  shareType;
+  itineraries;
   eventSubscription: Subscription;
   events = [];
 
@@ -84,6 +86,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
                                           this.currentUser = result;
                                           this.checkStatus();
                                           this.patchValue();
+                                          this.filterItineraries();
                                         })
 
     this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
@@ -197,6 +200,15 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     }
 
     this.loadingService.setLoader(false, "");
+  }
+
+  filterItineraries() {
+    this.itineraries = [];
+    for (let i = 0; i < this.currentUser['itineraries'].length; i++) {
+      if(this.currentUser['itineraries'][i]['_id'] !== this.currentItinerary['_id'])  {
+        this.itineraries.push(this.currentUser['itineraries'][i])
+      }
+    }
   }
 
   // display dropdown option for each member
@@ -329,8 +341,9 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   }
 
   // share section
-  share() {
+  share(type) {
     this.shareItin = true;
+    this.shareType = type;
   }
 
   cancelShare() {
