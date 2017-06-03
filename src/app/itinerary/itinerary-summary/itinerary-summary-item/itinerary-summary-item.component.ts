@@ -46,14 +46,6 @@ export class ItinerarySummaryItemComponent implements OnInit, AfterViewInit {
       this.showEventDetails.emit(event);
   }
 
-  onEdit()  {
-    this.editing = true;
-  }
-
-  cancelEdit()  {
-    this.editing = false;
-  }
-
   updateNote(editedNote: string)  {
     editedNote = editedNote.trim();
 

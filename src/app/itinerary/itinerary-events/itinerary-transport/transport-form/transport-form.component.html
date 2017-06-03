@@ -336,11 +336,11 @@
   </div><!-- end of formCard -->
 </form>
 
-<div class="custom-modal" *ngIf="flightNotFound" (click)="exitError()">
+<div class="custom-modal" *ngIf="flightNotFound" (click)="flightNotFound = false">
   <div class="form-card">
     <div class="form-header">
       <h3>Flight not found</h3>
-      <a (click)="exitError()">X</a>
+      <a (click)="flightNotFound = false">X</a>
     </div>
 
     <div class="content-without-header-name">
@@ -349,7 +349,7 @@
     </div>
 
     <div class="action-response">
-      <h5 class="action-response-primary" (click)="exitError()">OK</h5>
+      <h5 class="action-response-primary" (click)="flightNotFound = false">OK</h5>
     </div>
   </div>
 </div>

@@ -14,12 +14,4 @@ export class NotificationsComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  showNotificationsList() {
-    this.showNotification = true;
-  }
-
-  hideNotificationList()  {
-    this.showNotification = false;
-  }
 }

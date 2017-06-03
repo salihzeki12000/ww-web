@@ -44,8 +44,13 @@
   top: 0;
   right: calc(8% + 107px);
   z-index: 501;
-  @media only screen and (max-width: 890px) {
-    display: none;
+
+  @media only screen and (max-width: 500px) {
+    right: 0;
+  }
+
+  @media only screen and (min-width: 500px) and (max-width: 890px) {
+    right: 8%;
   }
 }
 
@@ -65,12 +70,8 @@
   top: 0px;
   z-index: 501;
 
-  @media only screen and (max-width: 500px) {
-    right: 0;
-  }
-
-  @media only screen and (min-width: 500px) and (max-width: 890px) {
-    right: 8%;
+  @media only screen and (max-width: 890px) {
+    display: none;
   }
 }
 
@@ -243,7 +244,9 @@
   display: inline-block;
 }
 
-.top-nav-notifications > .top-nav-link  {
+
+// fixed itinerary on small screen
+.top-nav-itinerary > .top-nav-link  {
   @media only screen and (max-width: 500px) {
     width: 100%;
     min-width: 100vw;
@@ -253,7 +256,15 @@
   }
 }
 
-.top-nav-notifications > .top-nav-link:hover .top-nav-link-dropdown {
+i.fa-sticky-note {
+  @media only screen and (max-width: 500px) {
+    position: fixed;
+    top: 0;
+    right: 15px;
+  }
+}
+
+.top-nav-itinerary > .top-nav-link:hover .top-nav-link-dropdown {
   @media only screen and (max-width: 500px) {
     width: 100%;
     top: 48px;
@@ -262,19 +273,22 @@
   }
 }
 
-i.fa-bell {
-  @media only screen and (max-width: 500px) {
-    position: fixed;
-    top: 0;
-    right: 15px;
-  }
-}
-
-.top-nav-notifications >  .top-nav-link:hover > .top-nav-link-dropdown > .dropdown-arrow-up {
+.top-nav-itinerary >  .top-nav-link:hover > .top-nav-link-dropdown > .dropdown-arrow-up {
   @media only screen and (max-width: 500px) {
     position: fixed;
     right: 16px;
     left: 0;
+  }
+}
+
+.exit-itinerary-view  {
+  display: none;
+  @media only screen and (max-width: 500px) {
+    display: block;
+    padding: 10px;
+    text-align: center;
+    color: #F9FBFB;
+    background-color: #6494ED;
   }
 }
 
@@ -295,26 +309,6 @@ ww-notification-list  {
   max-height: calc(100vh - 100px);
   border-bottom: 1px solid lightgray;
   overflow: overlay;
-}
-
-.exit-notification-list {
-  display: none;
-
-  @media only screen and (max-width: 500px) {
-    display: block;
-    position: fixed;
-    top: 40px;
-    right: 5px;
-    padding: 10px 8px 3px 8px;
-    font-size: .6em;
-    &:hover {
-      cursor: pointer;
-    }
-  }
-}
-
-h6.exit-notification-list {
-  color: #A6A6A6;
 }
 
 /*****************
@@ -483,8 +477,7 @@ h6.exit-notification-list {
   }
 }
 
-.search-connection,
-.new-itinerary {
+.search-connection {
   color: grey;
 }
 

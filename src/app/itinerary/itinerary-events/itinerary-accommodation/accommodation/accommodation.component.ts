@@ -104,10 +104,6 @@ export class AccommodationComponent implements OnInit, OnDestroy {
     }
   }
 
-  showMenuOptions() {
-    this.showMenu = true;
-  }
-
   // copy section
   copy()  {
     this.copying = true;
@@ -249,10 +245,6 @@ export class AccommodationComponent implements OnInit, OnDestroy {
 
   toggleCheckOutTime() {
     this.anyCheckOutTime = !this.anyCheckOutTime;
-  }
-
-  toggleContactDetails()  {
-    this.showContactDetails = !this.showContactDetails;
   }
 
   // others

@@ -118,10 +118,6 @@ export class ActivityComponent implements OnInit, OnDestroy {
     return this.categories;
   }
 
-  showMenuOptions() {
-    this.showMenu = true;
-  }
-
   // copy section
   copy()  {
     this.copying = true;
@@ -257,10 +253,6 @@ export class ActivityComponent implements OnInit, OnDestroy {
 
   toggleAnytime() {
     this.anytime = !this.anytime;
-  }
-
-  toggleContactDetails()  {
-    this.showContactDetails = !this.showContactDetails;
   }
 
   // others

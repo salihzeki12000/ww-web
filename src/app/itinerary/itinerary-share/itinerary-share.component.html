@@ -6,11 +6,11 @@
 
   <div class="progress-tracker-section">
     <ul class="progress-tracker" *ngIf="shareType === 'Share'">
-      <li class="progress-title" (click)="selectItems()" [class.progress-done]="itemsSelected">SELECT ITEMS TO SHARE</li><li class="progress-title">SELECT USERS TO SHARE WITH</li>
+      <li class="progress-title" (click)="itemsSelected = false" [class.progress-done]="itemsSelected">SELECT ITEMS TO SHARE</li><li class="progress-title">SELECT USERS TO SHARE WITH</li>
     </ul>
 
     <ul class="progress-tracker" *ngIf="shareType === 'Copy'">
-      <li class="progress-title" (click)="selectItems()" [class.progress-done]="itemsSelected">SELECT ITEMS TO COPY</li><li class="progress-title">SELECT ITINERARY TO COPY TO</li>
+      <li class="progress-title" (click)="itemsSelected = false" [class.progress-done]="itemsSelected">SELECT ITEMS TO COPY</li><li class="progress-title">SELECT ITINERARY TO COPY TO</li>
     </ul>
   </div>
 
@@ -63,7 +63,7 @@
 
     <div class="action-response">
       <h5 class="action-response-secondary" (click)="cancel()">CANCEL</h5>
-      <h5 class="action-response-primary" (click)="selectUsers()">NEXT</h5>
+      <h5 class="action-response-primary" (click)="itemsSelected = true">NEXT</h5>
     </div>
   </div>
 

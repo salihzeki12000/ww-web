@@ -104,10 +104,6 @@ export class PostInputComponent implements OnInit, OnDestroy {
      );
   }
 
-  showTextArea()  {
-    this.textArea = true;
-  }
-
   cancelPost()  {
     this.textArea = false;
     this.linkExist = false;
@@ -189,7 +185,4 @@ export class PostInputComponent implements OnInit, OnDestroy {
     this.newImageFile = '';
   }
 
-  exitError() {
-    this.fileTypeError = false;
-  }
 }

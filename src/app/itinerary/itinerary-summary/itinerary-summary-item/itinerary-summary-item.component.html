@@ -1,6 +1,6 @@
 <!-- <div class="summary-buffer"></div> -->
 
-<div class="daily-note first-note" *ngIf="index === 0" [ngClass]="[uniqueClass]" (click)="onEdit()">
+<div class="daily-note first-note" *ngIf="index === 0" [ngClass]="[uniqueClass]" (click)="editing = true">
   <h6>Note</h6>
 
   <div [class.editing]="editing">
@@ -10,13 +10,13 @@
   </div>
 
   <div *ngIf="editing">
-    <textarea rows="2" [ngClass]="[uniqueClass]" [value]="currentItinerary?.daily_note[index]" (keyup.enter)="updateNote(editedNote.value)" (blur)="cancelEdit()" #editedNote></textarea>
+    <textarea rows="2" [ngClass]="[uniqueClass]" [value]="currentItinerary?.daily_note[index]" (keyup.enter)="updateNote(editedNote.value)" (blur)="editing = false" #editedNote></textarea>
     <p class="edit-note">Enter to save, click anywhere else to cancel</p>
   </div>
 
 </div>
 
-<div class="daily-note" *ngIf="index > 0" [ngClass]="[uniqueClass]" (click)="onEdit()">
+<div class="daily-note" *ngIf="index > 0" [ngClass]="[uniqueClass]" (click)="editing = true">
   <h6>Day {{ index }} note</h6>
 
   <div [class.editing]="editing">
@@ -26,7 +26,7 @@
   </div>
 
   <div *ngIf="editing">
-    <textarea rows="2" [ngClass]="[uniqueClass]" [value]="currentItinerary?.daily_note[index]" (keyup.enter)="updateNote(editedNote.value)" (blur)="cancelEdit()" #editedNote></textarea>
+    <textarea rows="2" [ngClass]="[uniqueClass]" [value]="currentItinerary?.daily_note[index]" (keyup.enter)="updateNote(editedNote.value)" (blur)="editing = false" #editedNote></textarea>
     <p class="edit-note">Enter to save, click anywhere else to cancel</p>
   </div>
 </div>

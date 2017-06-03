@@ -95,14 +95,6 @@ export class PostComponent implements OnInit, OnDestroy {
     }
   }
 
-  onEdit()  {
-    this.editing = true;
-  }
-
-  cancelEdit()  {
-    this.editing = false;
-  }
-
   updatePost(editedPost: string)  {
     editedPost = editedPost.trim();
 
@@ -201,13 +193,6 @@ export class PostComponent implements OnInit, OnDestroy {
         )
   }
 
-  confirmDelete() {
-    this.deletePost = true;
-  }
-  cancelDelete()  {
-    this.deletePost = false;
-  }
-
   onDelete()  {
     this.postService.deletePost(this.post)
         .subscribe(
@@ -216,18 +201,6 @@ export class PostComponent implements OnInit, OnDestroy {
           }
         )
     this.deletePost = false;
-  }
-
-  showMenuOptions() {
-    this.showMenu = true;
-  }
-
-  showComments()  {
-    this.seeComments = !this.seeComments;
-  }
-
-  showLikes()  {
-    this.seeLikes = true;
   }
 
   confirmDeleteComment(i)  {

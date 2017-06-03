@@ -36,7 +36,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   // side nav
   sideNav = false;
   connectionsSection = true;
-  itinerariesSection = true;
+  notificationsSection = true;
   settingsSection = false;
 
   showUsers = false;
@@ -114,15 +114,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   }
 
   // top navigation
-  showSearchOptions() {
-    this.searchOptions = true;
-  }
-
-  showItineraryList() {
-    this.showItineraries = true;
-  }
-
-  hideItineraryList(id) {
+  routeToItinerary(id) {
     this.showItineraries = false;
 
     if(this.route.snapshot['_urlSegment'].segments[2]) {
@@ -130,26 +122,6 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
         this.loadingService.setLoader(true, "");
       }
     }
-  }
-
-  showFollowerRequestsList() {
-    this.showFollowerRequests = true;
-  }
-
-  showNotificationsList() {
-    this.showNotifications = true;
-  }
-
-  hideNotificationsList()  {
-    this.showNotifications = false;
-  }
-
-  showProfileOptions()  {
-    this.profileOptions = true;
-  }
-
-  hideProfileOptions()  {
-    this.profileOptions = false;
   }
 
   // side navigation
@@ -254,11 +226,6 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   }
 
   // new itinerary
-  newItinerary() {
-    this.showItineraryForm = true;
-    this.sideNav = false;
-  }
-
   hideItineraryForm(hide) {
     this.showItineraryForm = false;
     this.preventScroll(false);
@@ -266,6 +233,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
 
   // route to all notifications
   routeToNotifications()  {
+    this.sideNav = false;
     this.showNotifications = false;
     this.router.navigateByUrl('/me/notifications');
   }

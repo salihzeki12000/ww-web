@@ -224,10 +224,6 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     }
   }
 
-  exitError() {
-    this.fileTypeError = false;
-  }
-
   deletePicture() {
     this.inputValue = null;
     this.uploadPic = '';

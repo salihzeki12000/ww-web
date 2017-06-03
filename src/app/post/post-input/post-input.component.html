@@ -1,5 +1,5 @@
 <div class="post-form">
-  <div class="post-input-box" (click)="showTextArea()" *ngIf="!textArea">
+  <div class="post-input-box" (click)="textArea = true" *ngIf="!textArea">
     <h4><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i> {{ placeholder }}</h4>
   </div>
 
@@ -53,11 +53,11 @@
   </div>
 </div>
 
-<div class="custom-modal" *ngIf="fileTypeError" (click)="exitError()">
+<div class="custom-modal" *ngIf="fileTypeError" (click)="fileTypeError = false">
   <div class="form-card">
     <div class="form-header">
       <h3>File type error</h3>
-      <a (click)="exitError()">x</a>
+      <a (click)="fileTypeError = false">x</a>
     </div>
 
     <div class="content-without-header-name">
@@ -66,7 +66,7 @@
     </div>
 
     <div class="action-response">
-      <h5 class="action-response-primary" (click)="exitError()">OK</h5>
+      <h5 class="action-response-primary" (click)="fileTypeError = false">OK</h5>
     </div>
   </div>
 </div>

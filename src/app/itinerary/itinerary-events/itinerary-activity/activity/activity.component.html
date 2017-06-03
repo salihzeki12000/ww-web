@@ -10,7 +10,7 @@
 
   <div class="display-photo-housing">
 
-    <div class="dots-menu" (click)="showMenuOptions()">
+    <div class="dots-menu" (click)="showMenu = true">
       <div class="dots-menu-hint">
         <h6>Click to edit or delete</h6>
       </div>
@@ -48,7 +48,7 @@
 
     <h3 class="activity-header">{{ activity?.name }}</h3>
 
-    <div class="activity-contact-details" (click)="toggleContactDetails()">
+    <div class="activity-contact-details" (click)="showContactDetails = !showContactDetails">
       <h5>Address and contact number</h5>
       <h5><i class="fa fa-angle-down" aria-hidden="true"></i></h5>
     </div>

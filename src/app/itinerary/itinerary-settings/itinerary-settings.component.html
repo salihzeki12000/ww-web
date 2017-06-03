@@ -74,7 +74,7 @@
             <ul>
               <li class="make-admin" *ngIf="!member.admin">
                 <h5 (click)="makeAdmin(member, i)">Make admin</h5>
-                <span class="info" (click)="showAdminInfo()">?</span>
+                <span class="info" (click)="showInfo = true">?</span>
               </li>
               <li *ngIf="member.admin" (click)="removeAdmin(member, i)"><h5>Remove as admin</h5></li>
               <li (click)="removeFromItin(member, i)"><h5>Remove from itinerary</h5></li>
@@ -100,23 +100,23 @@
     </div>
 
     <div class="action-response">
-      <h5 class="action-response-primary" (click)="share('Copy')">COPY ITINERARY</h5>
-      <h5 class="action-response-primary" (click)="share('Share')">SHARE ITINERARY</h5>
+      <h5 class="action-response-primary" (click)="share('Copy')">COPY ITINERARY <span class="info">?</span></h5>
+      <h5 class="action-response-primary" (click)="share('Share')">SHARE ITINERARY <span class="info">?</span></h5>
     </div>
   </div>
 
   <h4 class="itinerary-edit-section-header">Others</h4>
-  <h4 *ngIf="masterAdmin" class="delete-itinerary" (click)="delete()">Delete this itinerary</h4>
-  <h4 *ngIf="!masterAdmin" class="delete-itinerary" (click)="leave()">Leave itinerary</h4>
+  <h4 *ngIf="masterAdmin" class="delete-itinerary" (click)="deleteItinerary = true">Delete this itinerary</h4>
+  <h4 *ngIf="!masterAdmin" class="delete-itinerary" (click)="leaveItinerary = true">Leave itinerary</h4>
 
 </div>
 
-<!-- delete itinerary modal -->
+<!-- leave itinerary modal -->
 <div class="custom-modal" *ngIf="leaveItinerary">
   <div class="form-card">
     <div class="form-header">
       <h3>Leave itinerary?</h3>
-      <a (click)="cancelLeave()">X</a>
+      <a (click)="leaveItinerary = false">X</a>
     </div>
 
     <div class="form-header-name-delete">
@@ -130,7 +130,7 @@
 
     <div class="confirm-delete-footer">
       <div class="action-response">
-        <h5 class="action-response-primary" (click)="cancelLeave()">CANCEL</h5>
+        <h5 class="action-response-primary" (click)="leaveItinerary = false">CANCEL</h5>
         <h5 class="action-response-warning" (click)="confirmLeave()">LEAVE</h5>
       </div>
     </div>
@@ -143,7 +143,7 @@
   <div class="form-card">
     <div class="form-header">
       <h3>Delete itinerary?</h3>
-      <a (click)="cancelDelete()">X</a>
+      <a (click)="deleteItinerary = false">X</a>
     </div>
 
     <div class="form-header-name-delete">
@@ -157,7 +157,7 @@
 
     <div class="confirm-delete-footer">
       <div class="action-response">
-        <h5 class="action-response-primary" (click)="cancelDelete()">CANCEL</h5>
+        <h5 class="action-response-primary" (click)="deleteItinerary = false">CANCEL</h5>
         <h5 class="action-response-warning" (click)="confirmDelete()">DELETE</h5>
       </div>
     </div>
@@ -170,7 +170,7 @@
   <div class="form-card">
     <div class="form-header">
       <h3>Info: Admin role</h3>
-      <a (click)="hideAdminInfo()">X</a>
+      <a (click)="showInfo = false">X</a>
     </div>
 
     <div class="form-housing">
@@ -184,12 +184,13 @@
       </ol>
 
       <div class="action-response">
-        <h5 class="action-response-primary" (click)="hideAdminInfo()">OK</h5>
+        <h5 class="action-response-primary" (click)="showInfo = false">OK</h5>
       </div>
     </div>
   </div>
 </div>
 
+<!-- copy/share itinerary -->
 <div class="custom-modal" *ngIf="shareItin">
   <ww-itinerary-share (cancelShare)="cancelShare($event)" [shareType]="shareType" [itineraries]="itineraries"></ww-itinerary-share>
 </div>

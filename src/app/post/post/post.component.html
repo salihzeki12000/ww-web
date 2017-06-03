@@ -1,6 +1,6 @@
 <div class="user-posts">
 
-  <div class="dots-menu" (click)="showMenuOptions()" *ngIf="sameUser">
+  <div class="dots-menu" (click)="showMenu = true" *ngIf="sameUser">
     <div class="dots-menu-hint">
       <h6>Click to edit or delete</h6>
     </div>
@@ -11,11 +11,11 @@
           <h5>Recommend</h5>
           <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
         </li> -->
-        <li (click)="onEdit()" *ngIf="sameUser">
+        <li (click)="editing = true" *ngIf="sameUser">
           <h5>Edit</h5>
           <i class="fa fa-pencil" aria-hidden="true"></i>
         </li>
-        <li (click)="confirmDelete()" *ngIf="sameUser">
+        <li (click)="deletePost = true" *ngIf="sameUser">
           <h5>Delete</h5>
           <i class="fa fa-trash-o" aria-hidden="true"></i>
         </li>
@@ -44,7 +44,7 @@
     </div>
 
     <div *ngIf="editing">
-      <textarea rows="4" [value]="post.content" class="edit" (keyup.enter)="updatePost(editedPost.value)" (blur)="cancelEdit()" #editedPost autofocus></textarea>
+      <textarea rows="4" [value]="post.content" class="edit" (keyup.enter)="updatePost(editedPost.value)" (blur)="editing = false" #editedPost autofocus></textarea>
       <p class="edit-note">Enter to save, click anywhere else to cancel</p>
     </div>
 
@@ -67,7 +67,7 @@
   <div class="post-reaction">
     <i class="fa fa-heart fa-lg" aria-hidden="true" (click)="likePost()" *ngIf="userLike"></i>
     <i class="fa fa-heart-o fa-lg" aria-hidden="true" (click)="likePost()" *ngIf="!userLike"></i>
-    <div class="post-reaction-likes" *ngIf="post.likes.length > 0" (click)="showLikes()" (mouseover)="showLikes()">
+    <div class="post-reaction-likes" *ngIf="post.likes.length > 0" (click)="seeLikes = true" (mouseover)="seeLikes = true">
       <div class="like-user-list" *ngIf="seeLikes">
         <div *ngFor="let user of post.likes">
           <h5>{{ user.username }}</h5>
@@ -77,7 +77,7 @@
     </div>
 
     <i class="fa fa-comment-o fa-lg" aria-hidden="true"></i>
-    <p class="post-reaction-stats" *ngIf="post.comments.length > 0" (click)="showComments()">{{ post.comments.length }} {{ commentCount }}</p>
+    <p class="post-reaction-stats" *ngIf="post.comments.length > 0" (click)="seeComments = !seeComments">{{ post.comments.length }} {{ commentCount }}</p>
   </div>
 
   <div class="post-comments">
@@ -107,7 +107,7 @@
   <div class="form-card">
     <div class="form-header">
       <h3>Delete post?</h3>
-      <a (click)="cancelDelete()">x</a>
+      <a (click)="deletePost = false">x</a>
     </div>
 
     <div class="content-without-header-name">
@@ -116,7 +116,7 @@
     </div>
 
     <div class="action-response">
-      <h5 class="action-response-primary" (click)="cancelDelete()">CANCEL</h5>
+      <h5 class="action-response-primary" (click)="deletePost = false">CANCEL</h5>
       <h5 class="action-response-warning" (click)="onDelete()">DELETE</h5>
     </div>
   </div>

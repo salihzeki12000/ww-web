@@ -226,14 +226,6 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
         .subscribe(data => {})
   }
 
-  showAdminInfo() {
-    this.showInfo = true;
-  }
-
-  hideAdminInfo() {
-    this.showInfo = false;
-  }
-
   removeAdmin(member, i) {
     member['admin'] = false;
     this.showOptions[i] = false;
@@ -279,14 +271,6 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   }
 
   // delete section
-  delete() {
-    this.deleteItinerary = true;
-  }
-
-  cancelDelete()  {
-    this.deleteItinerary = false;
-  }
-
   confirmDelete()  {
     this.itineraryService.deleteItin(this.currentItinerary)
         .subscribe(
@@ -295,15 +279,6 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
             this.flashMessageService.handleFlashMessage(data.message);
         })
     this.deleteItinerary = false;
-  }
-
-
-  leave() {
-    this.leaveItinerary = true;
-  }
-
-  cancelLeave() {
-    this.leaveItinerary = false;
   }
 
   confirmLeave()  {

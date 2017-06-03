@@ -357,11 +357,6 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     })
   }//end of flight search
 
-
-  exitError() {
-    this.flightNotFound = false;
-  }
-
   // show flight details after selected airport
   getFlightDetails()  {
     this.airportsChoosen = true;

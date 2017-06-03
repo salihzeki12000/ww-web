@@ -95,11 +95,11 @@
 
 </div>
 
-<div class="custom-modal" *ngIf="fileTypeError" (click)="exitError()">
+<div class="custom-modal" *ngIf="fileTypeError" (click)="fileTypeError = false">
   <div class="form-card">
     <div class="form-header">
       <h3>File type error</h3>
-      <a (click)="exitError()">X</a>
+      <a (click)="fileTypeError = false">X</a>
     </div>
 
     <div class="content-without-header-name">
@@ -108,7 +108,7 @@
     </div>
 
     <div class="action-response">
-      <h5 class="action-response-primary" (click)="exitError()">OK</h5>
+      <h5 class="action-response-primary" (click)="fileTypeError = false">OK</h5>
     </div>
   </div>
 </div>

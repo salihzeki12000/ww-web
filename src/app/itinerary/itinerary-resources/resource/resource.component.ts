@@ -90,10 +90,6 @@ export class ResourceComponent implements OnInit, OnDestroy {
     }
   }
 
-  showMenuOptions() {
-    this.showMenu = true;
-  }
-
   // copy section
   copy()  {
     this.copying = true;
@@ -118,7 +114,7 @@ export class ResourceComponent implements OnInit, OnDestroy {
     }
 
     copiedResource['itinerary'] = itinerary;
-    
+
     this.resourceService.copyResource(copiedResource).subscribe(
       result => {
         this.flashMessageService.handleFlashMessage(result.message);

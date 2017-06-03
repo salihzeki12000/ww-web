@@ -61,14 +61,6 @@ export class LandingPageComponent implements OnInit, OnDestroy {
 
   }
 
-  getAuth() {
-    this.showAuth = true;
-  }
-
-  exitAuth()  {
-    this.showAuth = false;
-  }
-
   getSignin() {
     this.showSignin = true;
     this.preventScroll(true);

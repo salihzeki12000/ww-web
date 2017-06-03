@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
 import { Router } from '@angular/router';
@@ -38,6 +38,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
 
   constructor(
     private formBuilder: FormBuilder,
+    private renderer: Renderer2,
     private userService: UserService,
     private flashMessageService: FlashMessageService,
     private errorMessageService: ErrorMessageService,
@@ -178,10 +179,12 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
 
   changePassword()  {
     this.changePw = true;
+    this.preventScroll(true);
   }
 
   cancelChangePassword()  {
     this.changePw = false;
+    this.preventScroll(false);
   }
 
   saveNewPassword() {
@@ -211,11 +214,15 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       }
   }
 
-  exitError() {
-    this.fileTypeError = false;
-  }
-
   confirmDelete() {
 
+  }
+
+  preventScroll(value)  {
+    if(value) {
+      this.renderer.addClass(document.body, 'prevent-scroll');
+    } else  {
+      this.renderer.removeClass(document.body, 'prevent-scroll');
+    }
   }
 }

@@ -192,10 +192,6 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  exitError() {
-    this.fileTypeError = false;
-  }
-
   deleteUpload() {
     this.inputValue = null;
     this.uploadPic = '';

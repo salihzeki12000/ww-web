@@ -105,10 +105,6 @@ export class TransportComponent implements OnInit, OnDestroy {
     }
   }
 
-  showMenuOptions() {
-    this.showMenu = true;
-  }
-
   // copy section
   copy()  {
     this.copying = true;

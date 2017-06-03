@@ -14,13 +14,4 @@ export class FollowerComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  remove()  {
-    this.removeFollower = true;
-  }
-
-  cancelRemove()  {
-    this.removeFollower = false;
-  }
-
 }

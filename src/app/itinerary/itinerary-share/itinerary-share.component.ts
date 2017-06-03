@@ -142,14 +142,6 @@ export class ItineraryShareComponent implements OnInit {
     this.shareIndexResource[index] = !this.shareIndexResource[index]
   }
 
-  selectUsers() {
-    this.itemsSelected = true;
-  }
-
-  selectItems() {
-    this.itemsSelected = false;
-  }
-
   filterSearch(text)  {
     if(!text)   {
       this.filteredResult = [];

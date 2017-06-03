@@ -25,11 +25,11 @@
         <h5>{{ user?.itineraries.length > 1 ? 'Itineraries' : 'Itinerary'}} ({{ user?.itineraries.length }})</h5>
       </div>
       <h5 class="profile-new-itinerary" (click)="createItinerary()"><i class="fa fa-plus" aria-hidden="true"></i> Plan a new itinerary</h5>
-      <div class="profile-itineraries-list" *ngFor="let itinerary of user?.itineraries | slice:0:5 "  (click)="routeToItin(itinerary._id)">
+      <div class="profile-itineraries-list" *ngFor="let itinerary of user?.itineraries | slice:0:10 "  (click)="routeToItin(itinerary._id)">
         <h5>{{ itinerary.name }}</h5>
         <h6>( {{ itinerary.date_from | date:'dd MMM yy' }} to {{ itinerary.date_to | date:'dd MMM yy' }} )</h6>
       </div>
-      <div *ngIf="user?.itineraries.length > 5" class="view-all" [routerLink]="['/me/itinerary']">
+      <div *ngIf="user?.itineraries.length > 10" class="view-all" [routerLink]="['/me/itinerary']">
         <h5>View all</h5>
       </div>
     </div>
