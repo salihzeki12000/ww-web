@@ -1,24 +1,26 @@
-<div class="profile">
-  <div class="profile-header">
+<div class="user-profile-container">
+  <div class="user-profile-header">
     <img src="{{ user?.display_picture }}" alt="">
-    <!-- <h5>{{ user?.description }}</h5> -->
+    <h4>{{ user?.description }}</h4>
   </div>
 
-  <div class="profile-center-bar"></div>
-
-  <div class="profile-main">
-    <div class="profile-connections" [class.fix-profile-connections]="fixed">
-      <div class="follower-following">
-        <div class="follower-counter" (click)="routeToFollowers()">
-          <h4>{{ followers.length }}</h4>
-          <h5>FOLLOWERS</h5>
-        </div>
-        <div class="following-counter" (click)="routeToFollowings()">
-          <h4>{{ followings.length }}</h4>
-          <h5>FOLLOWING</h5>
-        </div>
-      </div>
+  <div class="user-profile-background"></div>
+  <div class="user-profile-counters">
+    <div class="follower-counter" (click)="routeToFollowers()">
+      <h2>{{ followers.length }}</h2>
+      <h5>FOLLOWERS</h5>
     </div>
+    <div class="following-counter" (click)="routeToFollowings()">
+      <h2>{{ followings.length }}</h2>
+      <h5>FOLLOWING</h5>
+    </div>
+    <div class="itinerary-counter" [routerLink]="['/me/itinerary']">
+      <h2>{{ user?.itineraries.length }}</h2>
+      <h5>ITINERARY</h5>
+    </div>
+  </div>
+
+  <div class="user-profile-main">
 
     <div class="profile-itineraries" [class.fix-profile-itineraries]="fixed">
       <div class="profile-itineraries-length">
@@ -34,9 +36,9 @@
       </div>
     </div>
 
-    <div class="profile-posts">
+    <div class="user-profile-posts">
       <ww-post-input></ww-post-input>
-      <div class="profile-posts-list">
+      <div class="user-profile-posts-list">
         <ww-post-list [posts]="posts"></ww-post-list>
       </div>
     </div>

@@ -61,7 +61,7 @@
 
       <div class="activity-contact-number">
         <i class="fa fa-phone fa-fw" aria-hidden="true"></i>
-        <h5>{{ activity?.international_phone_number }}</h5>
+        <a href="tel:{{ activity?.international_phone_number }}">{{ activity?.international_phone_number }}</a>
       </div>
     </div>
 
@@ -91,8 +91,8 @@
       </div>
     </div>
 
-    <div class="postby">
-      <h5><a routerLink="/users/{{activity.user['_Id']}}">{{ activity?.user.username }}</a></h5>
+    <div class="created-by">
+      <h5 class="username" (click)="routeToUser(activity?.user._id)">{{ activity?.user.username }}</h5>
       <div class="time-ago">
         <p *ngIf="activity?.time_ago !== ''">{{ activity?.time_ago }}</p>
         <p *ngIf="activity?.time_ago === ''">{{ activity?.created_at | date: 'dd MMM yyyy (EEE)' }}</p>

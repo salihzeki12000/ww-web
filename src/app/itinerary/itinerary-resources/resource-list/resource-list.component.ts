@@ -32,7 +32,7 @@ export class ResourceListComponent implements OnInit, OnDestroy {
     this.updateResourcesSubscription = this.resourceService.updateResources.subscribe(
                                              result => {
                                                this.resources = Object.keys(result).map(key => result[key]);
-                                               this.totalResources = this.resources.length
+                                               this.totalResources = this.resources.length;
                                              })
 
     this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(

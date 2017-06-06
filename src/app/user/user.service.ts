@@ -12,6 +12,7 @@ export class UserService  {
 
   updateCurrentUser = new ReplaySubject();
   updateAllUsers = new ReplaySubject();
+  updateDisplayUser = new ReplaySubject();
 
   private url = 'https://vast-island-87972.herokuapp.com';
 
@@ -30,6 +31,19 @@ export class UserService  {
                     })
                     .catch((error: Response) => {
                       console.log(error)
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
+  }
+
+  getUser(id) {
+    const userId = id;
+    return this.http.get( this.url + "/users/displayUser/" + userId)
+                    .map((response: Response) => {
+                      this.updateDisplayUser.next(response.json().user);
+                      return response.json();
+                    })
+                    .catch((error: Response) => {
                       this.errorMessageService.handleErrorMessage(error.json());
                       return Observable.throw(error.json())
                     });

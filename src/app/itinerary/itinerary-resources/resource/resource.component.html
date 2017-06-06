@@ -43,8 +43,8 @@
       </a>
     </div>
 
-    <div class="postby">
-      <h5><a routerLink="/users/{{resource?.user['_Id']}}">{{ resource?.user.username }}</a></h5>
+    <div class="created-by">
+      <h5 class="username" (click)="routeToUser(resource?.user._Id)">{{ resource?.user.username }}</h5>
       <div class="time-ago">
         <p *ngIf="resource?.time_ago !== ''">{{ resource?.time_ago }}</p>
         <p *ngIf="resource?.time_ago === ''">{{ resource?.created_at | date: 'dd MMM yyyy (EEE)' }}</p>

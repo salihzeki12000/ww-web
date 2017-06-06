@@ -9,7 +9,7 @@
 
     <div *ngFor="let member of itinerary?.members | slice:0:5" class="member">
       <div class="tool-tip">
-        <img src="{{ member.display_picture }}" alt="display picture for {{ member.username }}" class="user-profile-thumbnail">
+        <img src="{{ member.display_picture }}" alt="" class="user-profile-thumbnail" (click)="routeToUser(member._id)">
         <span class="tool-tiptext">{{ member.username }}</span>
       </div>
     </div>

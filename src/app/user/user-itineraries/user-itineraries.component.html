@@ -1,0 +1,17 @@
+<div class="sub-route-container">
+  <div class="sub-route-header">
+    <h3>Itineraries</h3>
+  </div>
+
+  <div class="nil-message-main" *ngIf="itineraries.length === 0">
+    <h4>There is no itinerary to display at the moment</h4>
+  </div>
+
+  <div class="itinerary-list" *ngFor="let itinerary of itineraries">
+    <h3>{{ itinerary.name }}</h3>
+    <h5>{{ itinerary.date_from | date:'dd MMM yy' }} to {{ itinerary.date_to | date:'dd MMM yy' }}</h5>
+    <h5>{{ itinerary.members.length }} {{ itinerary.members.length > 1 ? "Members" : "Member" }}</h5>
+    <h5>{{ itinerary.shares.length }} {{ itinerary.shares.length > 1 ? "Shares" : "Share" }}</h5>
+    <h5>Created by {{ itinerary.created_by.username }} on {{ itinerary.created_at | date: 'dd MMM yy'}}</h5>
+  </div>
+</div>

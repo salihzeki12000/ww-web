@@ -22,9 +22,8 @@ export class PostService  {
     private http: Http,
     private errorMessageService: ErrorMessageService)  {}
 
-  getPosts() {
-    const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
-    return this.http.get( this.url + "/posts/" + token)
+  getPosts(userId) {
+    return this.http.get( this.url + "/posts/displayUser/" + userId)
                     .map((response: Response) => {
                       this.posts = response.json().posts;
                       this.timeAgo(this.posts);

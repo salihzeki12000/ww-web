@@ -37,7 +37,7 @@
           <h5 class="nil-dropdown-item">No itinerary at the moment</h5>
         </div>
         <div *ngFor="let itinerary of currentUser?.itineraries | slice:0:10" class="dropdown-item">
-          <div [routerLink]="['itinerary/', itinerary._id]" (click)="routeToItinerary(itinerary._id)">
+          <div [routerLink]="['/me/itinerary/', itinerary._id]" (click)="routeToItinerary(itinerary._id)">
             <h5>{{ itinerary.name }}</h5>
             <h6>( {{ itinerary.date_from | date:'dd MMM yy' }} to {{ itinerary.date_to | date:'dd MMM yy' }} )</h6>
           </div>
@@ -103,7 +103,7 @@
 
 <div class="top-nav-profile">
   <div class="top-nav-link">
-    <img src="{{ currentUser?.display_picture }}" class="user-profile-thumbnail" [routerLink]="['profile']" (mouseover)="profileOptions = true">
+    <img src="{{ currentUser?.display_picture }}" class="user-profile-thumbnail" [routerLink]="['/me/profile']" (mouseover)="profileOptions = true">
 
     <div class="top-nav-link-dropdown" *ngIf="profileOptions">
       <div class="dropdown-arrow-up"></div>
@@ -111,11 +111,11 @@
         <h6>PROFILE SETTINGS</h6>
       </div>
 
-      <div class="dropdown-item" (click)="profileOptions = false" [routerLink]="['profile']">
+      <div class="dropdown-item" (click)="profileOptions = false" [routerLink]="['/me/profile']">
         <h5><i class="fa fa-user fa-fw" aria-hidden="true"></i> Profile home</h5>
       </div>
 
-      <div class="dropdown-item" (click)="profileOptions = false" [routerLink]="['profile-edit']">
+      <div class="dropdown-item" (click)="profileOptions = false" [routerLink]="['/me/profile-edit']">
         <h5><i class="fa fa-pencil fa-fw" aria-hidden="true"></i> Edit profile</h5>
       </div>
 
@@ -136,12 +136,12 @@
   <div class="side-nav-panel" [class.show-side-nav-menu]="sideNav">
 
     <div class="side-nav-profile">
-      <img src="{{ currentUser?.display_picture }}" alt="" [routerLink]="['profile']" (click)="exitSideNav()">
-      <div class="edit-profile" [routerLink]="['profile-edit']" (click)="exitSideNav()">
+      <img src="{{ currentUser?.display_picture }}" alt="" [routerLink]="['/me/profile']" (click)="exitSideNav()">
+      <div class="edit-profile" [routerLink]="['/me/profile-edit']" (click)="exitSideNav()">
         <i class="fa fa-pencil" aria-hidden="true"></i>
       </div>
       <div class="username">
-        <h4 [routerLink]="['profile']" (click)="exitSideNav()">{{ currentUser?.username }}</h4>
+        <h4 [routerLink]="['/me/profile']" (click)="exitSideNav()">{{ currentUser?.username }}</h4>
       </div>
       <h5 class="user-description">{{ currentUser?.description }}</h5>
     </div>
@@ -150,8 +150,8 @@
       <div class="side-nav-menu-arrow-down"></div>
       <div>
         <div class="category-header" (click)="connectionsSection = !connectionsSection">
-          <h4>Connections <i class="fa fa-caret-down" aria-hidden="true"></i>
-          </h4>
+          <h4 *ngIf="!connectionsSection">Connections <i class="fa fa-caret-down" aria-hidden="true"></i></h4>
+          <h4 *ngIf="connectionsSection">Connections <i class="fa fa-caret-up" aria-hidden="true"></i></h4>
         </div>
 
         <div *ngIf="connectionsSection">
@@ -174,13 +174,13 @@
           <div class="category-item" (click)="routeToPendingFollowers()">
             <h5>Follow requests</h5>
           </div>
-
         </div>
       </div>
 
       <div>
         <div class="category-header" (click)="notificationsSection = !notificationsSection">
-          <h4>Notifications <i class="fa fa-caret-down" aria-hidden="true"></i></h4>
+          <h4 *ngIf="!notificationsSection">Notifications <i class="fa fa-caret-down" aria-hidden="true"></i></h4>
+          <h4 *ngIf="notificationsSection">Notifications <i class="fa fa-caret-up" aria-hidden="true"></i></h4>
         </div>
 
         <div *ngIf="notificationsSection">
@@ -192,7 +192,8 @@
 
       <div>
         <div class="category-header" (click)="settingsSection = !settingsSection">
-          <h4>Settings <i class="fa fa-caret-down" aria-hidden="true"></i></h4>
+          <h4 *ngIf="!settingsSection">Settings <i class="fa fa-caret-down" aria-hidden="true"></i></h4>
+          <h4 *ngIf="settingsSection">Settings <i class="fa fa-caret-up" aria-hidden="true"></i></h4>
         </div>
         <div *ngIf="settingsSection">
           <div class="category-item" (click)="logout()">
@@ -220,7 +221,7 @@
   <div *ngFor="let user of filteredResult" class="search-result-card">
     <img src="{{ user.display_picture }}" alt="" class="user-profile-thumbnail">
     <div class="user-details">
-      <h4 class="user-username">{{ user.username }}</h4>
+      <h4 class="username-bold" (click)="routeToUser(user._id)">{{ user.username }}</h4>
       <h5 class="user-search-description">{{ user.description }}</h5>
     </div>
 

@@ -11,7 +11,7 @@ import { UserService }  from '../../../user';
 })
 export class ItineraryAllComponent implements OnInit, OnDestroy {
   itineraries;
-
+  currentUser;
   currentUserSubscription: Subscription;
 
   constructor(
@@ -22,7 +22,9 @@ export class ItineraryAllComponent implements OnInit, OnDestroy {
     this.currentUserSubscription = this.userService.updateCurrentUser
                                        .subscribe(
                                          result => {
+                                           this.currentUser = result;
                                            this.itineraries = Object.keys(result['itineraries']).map(key => result['itineraries'][key]);
+                                           console.log(this.itineraries)
                                          }
                                        )
   }
@@ -33,6 +35,14 @@ export class ItineraryAllComponent implements OnInit, OnDestroy {
 
   routeToItin(id) {
     this.router.navigateByUrl('/me/itinerary/' + id);
+  }
+
+  routeToUser(id) {
+    if(id === this.currentUser['id']) {
+      this.router.navigateByUrl('/me/profile');
+    } else  {
+      this.router.navigateByUrl('/wondererwanderer/' + id)
+    }
   }
 
 }

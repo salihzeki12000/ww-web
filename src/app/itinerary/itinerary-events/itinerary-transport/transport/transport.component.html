@@ -116,8 +116,8 @@
 
   <h5 class="note" [innerHTML]="event?.formatted_note"></h5>
 
-  <div class="postby">
-    <h5><a routerLink="/users/{{event?.user['_Id']}}">{{ event?.user.username }}</a></h5>
+  <div class="created-by">
+    <h5 class="username" (click)="routeToUser(event?.user._id)">{{ event?.user.username }}</h5>
     <div class="time-ago">
       <p *ngIf="event?.time_ago !== ''">{{ event?.time_ago }}</p>
       <p *ngIf="event?.time_ago === ''">{{ event?.created_at | date: 'dd MMM yyyy (EEE)' }}</p>

@@ -254,4 +254,13 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
       this.renderer.removeClass(document.body, 'prevent-scroll');
     }
   }
+
+  routeToUser(id) {
+    this.cancelShowUsers();
+    if(id === this.currentUser['id']) {
+      this.router.navigateByUrl('/me/profile');
+    } else  {
+      this.router.navigateByUrl('/wondererwanderer/' + id)
+    }
+  }
 }

@@ -13,29 +13,8 @@
   top: 38px;
 }
 
-.user-postby  {
-  padding: 0 20px;
-  height: 45px;
-}
-
-.user-postby > div,
-.user-postby > .user-details {
-  display: inline-block;
-}
-
-.user-details  {
-  margin-left: 5px;
-  vertical-align: top;
-}
-
-.user-details > h5  {
+.username  {
   margin-top: 2px;
-  font-weight: 600;
-}
-
-.time-ago > p {
-  margin-top: 3px;
-  vertical-align: text-top;
 }
 
 .content  {
@@ -153,7 +132,7 @@ textarea  {
   border-radius: 0;
 
   @media only screen and (max-width: 670px) {
-    width: calc(100% - 40px);
+    width: calc(100% - 50px);
   }
 }
 
@@ -193,6 +172,10 @@ textarea  {
 .post-comments-details > h5,
 .post-comments-details .time-ago{
   display: block;
+}
+
+.post-comments-details > .time-ago > p{
+  margin-top: 3px;
 }
 
 .post-comment-delete  {

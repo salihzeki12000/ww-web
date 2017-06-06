@@ -46,28 +46,15 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
                                        .subscribe(
                                          result => {
                                            this.user = result;
-                                         }
-                                       )
-
-    this.postService.getPosts()
-        .subscribe(
-          result => {
-            this.postsSubscription = this.postService.updatePost
-                                         .subscribe(
-                                           result =>  {
-                                             this.posts = Object.keys(result).map(key => result[key]);
-                                           }
-                                         )
-          }
-        )
+                                           this.getPosts(this.user['id'])
+                                         })
 
     this.relationshipSubscription = this.relationshipService.updateRelationships
                                      .subscribe(
                                        result => {
                                          this.followers = Object.keys(result['followers']).map(key => result['followers'][key]);;
                                          this.followings = Object.keys(result['followings']).map(key => result['followings'][key]);;
-                                       }
-                                     )
+                                       })
 
     this.loadingService.setLoader(false, "");
   }
@@ -87,6 +74,16 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
     this.postsSubscription.unsubscribe();
     this.currentUserSubscription.unsubscribe();
     this.loadingService.setLoader(true, "");
+  }
+
+  getPosts(userId)  {
+    this.postService.getPosts(userId).subscribe(
+      result => {
+        this.postsSubscription = this.postService.updatePost.subscribe(
+                                       result =>  {
+                                         this.posts = Object.keys(result).map(key => result[key]);
+                                       })
+      })
   }
 
   onDelete()  {

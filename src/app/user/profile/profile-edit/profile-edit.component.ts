@@ -15,7 +15,7 @@ import { ErrorMessageService } from '../../../error-message';
   templateUrl: './profile-edit.component.html',
   styleUrls: ['./profile-edit.component.scss']
 })
-export class ProfileEditComponent implements OnInit, OnDestroy {
+export class ProfileEditComponent implements OnInit, OnDestroy {  
   currentUser: User;
   currentUserSubscription: Subscription;
 

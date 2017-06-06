@@ -1,0 +1,99 @@
+.user-profile-container {
+  margin-top: 80px;
+}
+
+.user-profile-follow-status  {
+  position: absolute;
+  top: 45px;
+  right: calc((100vw - 600px) /2);
+
+  @media only screen and (max-width: 670px) {
+    right: 10px;
+  }
+}
+
+.user-profile-follow-status .already-following {
+  border: 1px solid #3A4A4D;
+  border-radius: 5px;
+  &:hover {
+    cursor: default;
+  }
+}
+
+.user-profile-follow-status .requested-following {
+  border: 1px solid grey;
+  border-radius: 5px;
+  &:hover {
+    cursor: default;
+  }
+}
+
+.user-profile-header > h1 {
+  position: absolute;
+  margin-top: -10px;
+  left: calc(((100vw - 600px)/2) + 170px);
+  font-family: 'Alice', serif;
+  color: #f9fbfb;
+
+  @media only screen and (max-width: 670px) {
+    left: 0;
+    margin-top: 130px;
+    width: 100vw;
+    text-align: center;
+  }
+}
+
+.user-profile-header > img  {
+  &:hover{
+    cursor: pointer;
+  }
+
+  @media only screen and (min-width: 670px) {
+    right: 0;
+    left: calc((100vw - 600px) /2);
+  }
+}
+
+.user-profile-header > h4 {
+  @media only screen and (min-width: 670px) {
+    left: calc(((100vw - 600px)/2) + 180px);
+  }
+
+  @media only screen and (max-width: 670px) {
+    margin-top: 240px;
+  }
+}
+
+.user-profile-background  {
+  @media only screen and (max-width: 670px) {
+    height: 270px;
+  }
+}
+
+.user-profile-counters {
+  @media only screen and (min-width: 670px) {
+    left: calc(((100vw - 600px)/2) + 150px);
+  }
+
+  @media only screen and (max-width: 670px) {
+    margin-top: 170px;
+  }
+}
+
+.router-outlet  {
+  position: absolute;
+  left: calc((100vw - 600px)/2);
+  width: 600px;
+  margin-top: 180px;
+
+  @media only screen and (max-width: 670px) {
+    width: 100%;
+    min-width: 300px;
+    margin-top: 300px;
+    left: 0;
+  }
+}
+
+.hide {
+  display: none;
+}

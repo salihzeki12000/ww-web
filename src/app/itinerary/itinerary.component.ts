@@ -51,8 +51,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
     this.route.params.forEach((params: Params) => {
       let id = params['id'];
 
-      this.itineraryService.getItin(id)
-      .subscribe(
+      this.itineraryService.getItin(id).subscribe(
         result => {
           this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
                                              result =>  {
@@ -265,6 +264,14 @@ export class ItineraryComponent implements OnInit, OnDestroy {
       this.renderer.addClass(document.body, 'prevent-scroll');
     } else  {
       this.renderer.removeClass(document.body, 'prevent-scroll');
+    }
+  }
+
+  routeToUser(id) {
+    if(id === this.currentUser['id']) {
+      this.router.navigateByUrl('/me/profile');
+    } else  {
+      this.router.navigateByUrl('/wondererwanderer/' + id)
     }
   }
 

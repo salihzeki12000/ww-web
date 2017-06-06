@@ -489,7 +489,15 @@ ww-notification-list  {
 
 .follower-counter,
 .following-counter  {
-  width: 48%;
+  width: 49%;
+  &:hover {
+    background-color: #F6F6F6;
+  }
+}
+
+.follower-counter *,
+.following-counter * {
+  color: #3A4A4D;
 }
 
 .follower-following-counter + .category-item  {
@@ -498,7 +506,8 @@ ww-notification-list  {
   }
 }
 
-.fa-caret-down  {
+.fa-caret-down,
+.fa-caret-up  {
   float: right;
   &:hover {
     cursor: pointer;

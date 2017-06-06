@@ -114,6 +114,8 @@ export class ResourceService  {
 
       if(timeDiff < 60) {
         resources[i]['time_ago'] = "Less than a minute ago"
+      } else if(timeDiff > 604800) {
+        resources[i]['time_ago'] = '';
       } else {
         for (let j = 0; j < units.length; j++) {
           if(timeDiff < units[j]['limit'])  {

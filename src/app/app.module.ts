@@ -15,7 +15,7 @@ import { HomeComponent } from './home';
 import { MeComponent } from './me';
 import { MainNavigationComponent } from './navigation';
 
-import { UserComponent, UserService, ProfileComponent, ProfileDetailsComponent, ProfileEditComponent, RelationshipService, RelationshipsComponent, FollowingsComponent, FollowingComponent, FollowersComponent, FollowerComponent, RequestedFollowingsComponent, RequestedFollowingComponent, PendingFollowerComponent, PendingFollowersComponent } from './user';
+import { UserComponent, UserFollowersComponent, UserFollowingsComponent, UserItinerariesComponent, UserPostsComponent, UserService, ProfileComponent, ProfileDetailsComponent, ProfileEditComponent, RelationshipService, RelationshipsComponent, FollowingsComponent, FollowingComponent, FollowersComponent, FollowerComponent, RequestedFollowingsComponent, RequestedFollowingComponent, PendingFollowerComponent, PendingFollowersComponent } from './user';
 
 import { PostsComponent, PostComponent, PostInputComponent, PostListComponent, PostService } from './post';
 
@@ -41,6 +41,10 @@ import { ErrorMessageComponent, ErrorMessageService } from './error-message';
     SignupComponent,
     SigninComponent,
     UserComponent,
+    UserFollowersComponent,
+    UserFollowingsComponent,
+    UserItinerariesComponent,
+    UserPostsComponent,
     ProfileComponent,
     ProfileDetailsComponent,
     FollowingComponent,

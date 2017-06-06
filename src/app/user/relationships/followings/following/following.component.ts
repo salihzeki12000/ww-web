@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { RelationshipService } from '../../relationship.service';
 
@@ -10,7 +11,9 @@ import { RelationshipService } from '../../relationship.service';
 export class FollowingComponent implements OnInit {
   @Input() following;
 
-  constructor(private relationshipService: RelationshipService) { }
+  constructor(
+    private router: Router,
+    private relationshipService: RelationshipService) { }
 
   ngOnInit() {
   }
@@ -20,6 +23,10 @@ export class FollowingComponent implements OnInit {
 
     this.relationshipService.deleteFollow(this.following, status)
         .subscribe( result => {} )
+  }
+
+  routeToUser(id) {
+    this.router.navigateByUrl('/wondererwanderer/' + id)
   }
 
 }

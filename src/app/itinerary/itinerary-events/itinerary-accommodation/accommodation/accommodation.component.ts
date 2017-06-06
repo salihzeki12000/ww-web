@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, Input, Renderer2, HostListener } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
 import { ItineraryEvent }        from '../../itinerary-event';
@@ -40,6 +41,7 @@ export class AccommodationComponent implements OnInit, OnDestroy {
 
   constructor(
     private renderer: Renderer2,
+    private router: Router,
     private userService: UserService,
     private itineraryEventService: ItineraryEventService,
     private loadingService: LoadingService,
@@ -253,6 +255,14 @@ export class AccommodationComponent implements OnInit, OnDestroy {
       this.renderer.addClass(document.body, 'prevent-scroll');
     } else  {
       this.renderer.removeClass(document.body, 'prevent-scroll');
+    }
+  }
+
+  routeToUser(id) {
+    if(id === this.currentUser['id']) {
+      this.router.navigateByUrl('/me/profile');
+    } else  {
+      this.router.navigateByUrl('/wondererwanderer/' + id)
     }
   }
 }

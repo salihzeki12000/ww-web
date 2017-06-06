@@ -1,0 +1,17 @@
+<div class="sub-route-container">
+  <div class="sub-route-header">
+    <h3>Followers</h3>
+  </div>
+
+  <div class="nil-message-main" *ngIf="followers.length === 0">
+    <h4>There is no follower to display at the moment</h4>
+  </div>
+
+  <div *ngFor="let follower of followers" class="search-result-card">
+    <img src="{{ follower.user.display_picture }}" alt="" class="user-profile-thumbnail">
+    <div class="user-details">
+      <h4 class="user-username" (click)="routeToUser(follower.user._id)">{{ follower.user.username }}</h4>
+      <h5 class="user-search-description">{{ follower.user.description }}</h5>
+    </div>
+  </div>
+</div>

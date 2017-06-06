@@ -23,12 +23,10 @@
     </div>
   </div>
 
-  <div class="user-postby">
-    <div>
-      <img src="{{ post?.user.display_picture }}" alt="display picture for {{ post?.user.username }}" class="user-post-thumbnail">
-    </div>
-    <div class="user-details">
-      <h5>{{ post?.user.username}}</h5>
+  <div class="post-by">
+    <img src="{{ post?.user.display_picture }}" alt="" class="user-post-thumbnail">
+    <div class="post-by-user-details">
+      <h5 class="username-bold" (click)="routeToUser(post?.user._id)">{{ post?.user.username}}</h5>
       <div class="time-ago">
         <p *ngIf="post?.time_ago !== ''">{{ post?.time_ago }}</p>
         <p *ngIf="post?.time_ago === ''">{{ post?.created_at | date: 'dd MMM yyyy (EEE)' }}</p>
@@ -82,7 +80,7 @@
 
   <div class="post-comments">
     <form [formGroup]="commentForm">
-      <img src="{{ currentUser?.display_picture }}" alt="display picture for {{ currentUser?.username }}" class="user-post-thumbnail">
+      <img src="{{ currentUser?.display_picture }}" alt="" class="user-post-thumbnail">
       <textarea rows="1" placeholder="comment..." formControlName="comment" #comment (keyup.enter)="commentPost(comment.value)"></textarea>
     </form>
 
@@ -90,7 +88,7 @@
       <div *ngFor="let comment of post.comments; let i = index" class="post-comments-item">
         <img src="{{ comment.user.display_picture }}" class="user-post-thumbnail">
         <div class="post-comments-details">
-          <h5><span class="username-bold">{{ comment.user.username}}</span> {{ comment.comment }}</h5>
+          <h5><span class="username-bold" (click)="routeToUser(comment.user._id)">{{ comment.user.username}}</span> {{ comment.comment }}</h5>
           <div class="time-ago">
             <p *ngIf="comment?.time_ago !== ''">{{ comment?.time_ago }}</p>
             <p *ngIf="comment?.time_ago === ''">{{ comment?.created_at | date: 'dd MMM yyyy (EEE)' }}</p>

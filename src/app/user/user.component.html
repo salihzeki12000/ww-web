@@ -1,0 +1,49 @@
+<ww-main-navigation></ww-main-navigation>
+
+<div class="user-profile-container">
+
+  <div class="user-profile-follow-status">
+    <div class="following-response">
+      <h5 *ngIf="followStatus === 'accepted'" class="already-following">Following</h5>
+      <h5 class="unfollow" (click)="unfollow()">Stop following</h5>
+    </div>
+
+    <div class="following-response">
+      <h5 *ngIf="followStatus === 'requested'" class="requested-following">Requested</h5>
+      <h5 class="unfollow" (click)="unfollow()">Cancel request</h5>
+    </div>
+
+    <button *ngIf="followStatus === ''" type="button" class="follow-button" (click)="follow()"><h5>Follow</h5></button>
+  </div>
+
+  <div class="user-profile-header">
+    <img src="{{ user?.display_picture }}" alt="" [routerLink]="['/wondererwanderer', user?.id]">
+    <h1>{{ user?.username }}</h1>
+    <h4>{{ user?.description }}</h4>
+  </div>
+
+  <div class="user-profile-background"></div>
+  <div class="user-profile-counters">
+    <div class="follower-counter" [routerLink]="['followers']">
+      <h2>{{ followers.length }}</h2>
+      <h5>FOLLOWERS</h5>
+    </div>
+    <div class="following-counter" [routerLink]="['followings']">
+      <h2>{{ followings.length }}</h2>
+      <h5>FOLLOWING</h5>
+    </div>
+    <div class="itinerary-counter" [routerLink]="['itineraries']">
+      <h2>{{ user?.itineraries.length }}</h2>
+      <h5>ITINERARY</h5>
+    </div>
+  </div>
+
+  <div class="router-outlet" [class.hide]="followStatus !== 'accepted'">
+    <router-outlet></router-outlet>
+  </div>
+
+  <div class="router-outlet nil-message-main" *ngIf="followStatus !== 'accepted'">
+    <h4>You need to follow {{ user?.username }} to view their details.</h4>
+  </div>
+
+</div>

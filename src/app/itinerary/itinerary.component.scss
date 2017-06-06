@@ -89,6 +89,9 @@
 img.user-profile-thumbnail  {
   display: inline-block;
   margin-right: 5px;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .show-more-members > h6 {

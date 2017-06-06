@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ww-follower',
@@ -10,8 +11,12 @@ export class FollowerComponent implements OnInit {
 
   removeFollower = false;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
+  }
+
+  routeToUser(id) {
+    this.router.navigateByUrl('/wondererwanderer/' + id)
   }
 }

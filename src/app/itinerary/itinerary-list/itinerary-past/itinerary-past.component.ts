@@ -12,6 +12,7 @@ export class ItineraryPastComponent implements OnInit, OnDestroy {
   itineraries;
   past =[];
 
+  currentUser;
   currentUserSubscription: Subscription;
 
   constructor(
@@ -22,6 +23,7 @@ export class ItineraryPastComponent implements OnInit, OnDestroy {
     this.currentUserSubscription = this.userService.updateCurrentUser
                                        .subscribe(
                                          result => {
+                                           this.currentUser = result;
                                            this.itineraries = Object.keys(result['itineraries']).map(key => result['itineraries'][key]);
                                            this.sortItin(this.itineraries);
                                          }
@@ -43,6 +45,14 @@ export class ItineraryPastComponent implements OnInit, OnDestroy {
 
   routeToItin(id) {
     this.router.navigateByUrl('/me/itinerary/' + id);
+  }
+
+  routeToUser(id) {
+    if(id === this.currentUser['id']) {
+      this.router.navigateByUrl('/me/profile');
+    } else  {
+      this.router.navigateByUrl('/wondererwanderer/' + id)
+    }
   }
 
 }

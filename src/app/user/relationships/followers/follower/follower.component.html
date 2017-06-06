@@ -1,7 +1,7 @@
 <div class="search-result-card">
   <img src="{{ follower.user.display_picture }}" alt="" class="user-profile-thumbnail">
   <div class="user-details">
-    <h4 class="user-username">{{ follower.user.username }}</h4>
+    <h4 class="username-bold" (click)="routeToUser(follower.user._id)">{{ follower.user.username }}</h4>
     <h5 class="user-search-description">{{ follower.user.description }}</h5>
   </div>
 

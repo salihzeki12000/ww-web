@@ -1,7 +1,7 @@
 <div class="search-result-card">
   <img src="{{ pendingFollower.user.display_picture }}" alt="" class="user-profile-thumbnail">
   <div class="user-details">
-    <h4 class="user-username">{{ pendingFollower.user.username }}</h4>
+    <h4 class="username-bold" (click)="routeToUser(pendingFollower.user._id)">{{ pendingFollower.user.username }}</h4>
     <h5 class="user-search-description">{{ pendingFollower.user.description }}</h5>
   </div>
 

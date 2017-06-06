@@ -31,7 +31,9 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   currentUserAdmin;
   masterAdmin = false;
 
-  showInfo = false;
+  adminInfo = false;
+  copyInfo = false;
+  shareInfo = false;
 
   // share itinerary
   shareType;
@@ -119,6 +121,19 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
         this.showOptions[i] = false;
       }
     }
+
+    if(!event.target.classList.contains("info")) {
+      for (let i = 0; i < this.showOptions.length; i++) {
+        this.copyInfo = false;
+        this.shareInfo = false;
+      }
+    }
+
+    // if(!event.target.classList.contains("fa-cog")) {
+    //   for (let i = 0; i < this.showOptions.length; i++) {
+    //     this.showOptions[i] = false;
+    //   }
+    // }
   }
 
   ngOnDestroy() {
@@ -325,4 +340,11 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     this.shareItin = false;
   }
 
+  routeToUser(id) {
+    if(id === this.currentUser['id']) {
+      this.router.navigateByUrl('/me/profile');
+    } else  {
+      this.router.navigateByUrl('/wondererwanderer/' + id)
+    }
+  }
 }

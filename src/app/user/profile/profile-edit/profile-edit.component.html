@@ -59,6 +59,7 @@
       <div class="profile-edit-item">
         <h5>City of Residence</h5>
         <ww-google-place-search
+        [settings]="'true'"
         [options]="options"
         [prepopulate]="currentUser?.city?.name"
         (placeDetail)="setCity($event)"

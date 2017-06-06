@@ -54,7 +54,7 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700); //font-family: 'Roboto Condensed', sans-serif;
 @import url(https://fonts.googleapis.com/css?family=Fira+Sans:300,400,600); //font-family: 'Fira Sans', sans-serif;
 @import url(https://fonts.googleapis.com/css?family=Raleway:400,500,700); //font-family: 'Raleway', sans-serif;
-
+@import url(https://fonts.googleapis.com/css?family=Alice);//font-family: 'Alice', serif;
 
 $primaryColor: #6494ED;
 
@@ -70,6 +70,7 @@ $whiteText: #F9FBFB;
 
 * {
   box-sizing: border-box;
+  outline: none;
 }
 
 body  {
@@ -146,7 +147,23 @@ button[disabled] h5 {
   color: #567FCC;
 }
 
-/********** USER THUMBNAIL IMAGE */
+/* USER NAME */
+.username {
+  &:hover {
+    cursor: pointer;
+    color: #6494ED;
+  }
+}
+
+.username-bold  {
+  font-weight: 600;
+  &:hover {
+    cursor: pointer;
+    color: #6494ED;
+  }
+}
+
+/* USER THUMBNAIL IMAGE */
 .user-profile-thumbnail  {
   height: 30px;
   width: 30px;
@@ -163,7 +180,7 @@ button[disabled] h5 {
   overflow: hidden;
 }
 
-/********** ACTION BUTTONS */
+/* ACTION BUTTONS */
 .action-response  {
   padding: 10px 20px;
   text-align: right;
@@ -245,6 +262,9 @@ h5.action-response-primary  {
   color: grey;
   font-weight: 500;
   letter-spacing: .5px;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .unfollow {
@@ -256,6 +276,7 @@ h5.action-response-primary  {
   position: absolute;
   right: 25px;
   padding: 7px 10px;
+  width: 100px;
   font-weight: 500;
   text-align: center;
   background-color: white;
@@ -294,11 +315,7 @@ h5.action-response-primary  {
   }
 }
 
-span.username-bold  {
-  font-weight: 600;
-}
-
-/********** HOVER MENU */
+/* HOVER MENU */
 
 .dots-menu  {
   &:hover {
@@ -454,28 +471,156 @@ span.username-bold  {
 	transform: scale(1);
 }
 
-/********** follower following counter*/
+/***
+
+      USER PROFILE DISPLAY
+
+*****************************/
+
+.user-profile-header > img  {
+  position: absolute;
+  right: calc(((100vw - 600px)/2) + 720px);
+  margin-bottom: 15px;
+  padding: 2px;
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  border: 5px solid #416099;
+  background-color: white;
+  overflow: hidden;
+
+  @media only screen and (max-width: 670px) {
+    margin-top: -30px;
+    right: 0;
+    left: calc((100vw - 150px) /2);
+  }
+
+  @media only screen and (min-width: 670px) and (max-width: 890px) {
+    right: 0;
+    left: calc((100vw - 600px) / 2);
+  }
+
+  @media only screen and (min-width: 890px) and (max-width: 1200px) {
+    right: calc(((100vw - 890px)/2) + 720px);
+  }
+}
+
+.user-profile-header > h4  {
+  position: absolute;
+  margin-top: 85px;
+  font-weight: 400;
+  color: #808080;
+  left: calc(((100vw - 600px)/2) - 105px);;
+
+  @media only screen and (max-width: 670px) {
+    margin-top: 185px;
+    left: 10px;
+    width: calc(100% - 20px);
+    text-align: center;
+  }
+
+  @media only screen and (min-width: 670px) and (max-width: 890px) {
+    left: calc(((100vw - 600px) / 2) + 179px);
+  }
+
+  @media only screen and (min-width: 890px) and (max-width: 1200px) {
+    left: calc(((100vw - 850px)/2) + 165px);
+  }
+}
+
+.user-profile-background  {
+  position: absolute;
+  top: 40px;
+  height: 120px;
+  width: 100%;
+  background: #567FCC;
+  background: -webkit-linear-gradient(to right, #2F80ED, #56CCF2);
+  background: linear-gradient(to right, #2F80ED, #56CCF2);
+  z-index: -1;
+
+  @media only screen and (max-width: 670px) {
+    height: 215px;
+  }
+}
+
+.user-profile-counters  {
+  position: absolute;
+  width: 360px;
+  margin-top: 20px;
+  right: calc(((100vw - 600px)/2) + 360px);
+
+  @media only screen and (max-width: 670px) {
+    right: 0;
+    width: 100%;
+    min-width: 300px;
+    margin-top: 115px;
+  }
+
+  @media only screen and (min-width: 670px) and (max-width: 890px) {
+    right: 0;
+    left: calc(((100vw - 600px) / 2) + 150px);
+  }
+
+  @media only screen and (min-width: 890px) and (max-width: 1200px) {
+    right: calc(((100vw - 890px)/2) + 360px);
+  }
+}
+
 .follower-counter,
-.following-counter  {
+.following-counter,
+.itinerary-counter  {
   display: inline-block;
-  width: 49.2%;
+  width: 32.5%;
   padding: 10px 5px;
   text-align: center;
   &:hover {
     cursor: pointer;
-    background-color: #F6F6F6;
   }
 }
 
-.follower-counter > h4,
-.following-counter > h4 {
+.follower-counter *,
+.following-counter *,
+.itinerary-counter * {
+  color: #F9FBFB;
+}
+
+.follower-counter > h2,
+.following-counter > h2,
+.itinerary-counter > h2 {
   padding-bottom: 3px;
 }
 
-
+/* dont have follower/following message */
 .nil-message-main {
   padding: 20px;
   text-align: center;
+}
+
+.user-profile-posts  {
+  position: absolute;
+  right: calc((100vw - 600px)/2);
+  width: 600px;
+  margin-top: 180px;
+
+  @media only screen and (max-width: 670px) {
+    width: 100%;
+    min-width: 300px;
+    margin-top: 245px;
+    right: 0;
+  }
+
+  @media only screen and (min-width: 670px) and (max-width: 890px) {
+    right: calc((100vw - 600px)/2);
+  }
+
+  @media only screen and (min-width: 890px) and (max-width: 1200px) {
+    right: calc((100vw - 890px)/2);
+  }
+}
+
+.user-profile-posts-list  {
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 /********** URL LINK PREVIEW */
@@ -1401,12 +1546,12 @@ ww-resource {
 }
 
 .accommodation-address > h5,
-.accommodation-contact-number > h5,
+.accommodation-contact-number > a,
 .accommodation-website > h5,
 .activity-opening-hours > h5,
 .activity-fee > h5,
 .activity-address > h5,
-.activity-contact-number > h5,
+.activity-contact-number > a,
 .activity-website > h5 {
   display: inline-block;
   width: 90%;
@@ -1570,25 +1715,56 @@ ww-resource {
   color: grey;
 }
 
-/************************************************************************
-  POSTBY DISPLAY FOR ACCOMMODATION/TRANSPORT/ACTIVITY/RESOURCE
-************************************************************************/
-.postby {
+/***
+
+  CREATED BY DISPLAY
+
+*********************/
+.created-by {
   position: absolute;
   bottom: 10px;
 }
 
-.postby > *,
-.time-ago,
-.time-ago > p {
+.created-by > *,
+.created-by .time-ago,
+.created-by .time-ago > p {
   display: inline-block;
 }
 
-.postby > h5 > a  {
+.created-by > h5 > a  {
   color: #567FCC;
   font-size: 0.9em;
 }
 
+/***
+
+  POST BY DISPLAY
+
+******************/
+.post-by  {
+  padding: 0 20px;
+  height: 45px;
+}
+
+.post-by > img,
+.post-by > .post-by-user-details {
+  display: inline-block;
+}
+
+.post-by-user-details {
+  margin-left: 5px;
+  vertical-align: top;
+}
+
+.post-by-user-details > .time-ago > p {
+  margin-top: 3px;
+}
+
+/***
+
+  Time ago
+
+******************/
 .time-ago > p {
   color: grey;
   font-size: 0.7em;
@@ -1702,6 +1878,7 @@ ww-itinerary-map  {
   position: absolute;
   right: calc((100vw - 600px)/2);
   width: 600px;
+  margin-bottom: 20px;
   background-color: white;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
 

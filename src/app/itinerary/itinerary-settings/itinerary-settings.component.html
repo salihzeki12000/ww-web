@@ -38,14 +38,14 @@
       <div class="created-details">
         <div class="itinerary-edit-item">
           <h5>Created By</h5>
-          <h4>{{ currentItinerary?.created_by.username }}</h4>
+          <h4 class="username" (click)="routeToUser(currentItinerary?.created_by._id)">{{ currentItinerary?.created_by.username }}</h4>
         </div>
       </div>
 
       <div class="created-details">
         <div class="itinerary-edit-item">
           <h5>Master Admin</h5>
-          <h4>{{ currentItinerary?.members[0].username }}</h4>
+          <h4 class="username" (click)="routeToUser(currentItinerary?.created_by._id)">{{ currentItinerary?.members[0].username }}</h4>
         </div>
       </div>
 
@@ -62,7 +62,7 @@
     <div *ngFor="let member of currentItinerary?.members; let i = index" class="itinerary-member-list">
       <img src="{{ member.display_picture }}" alt="" class="user-profile-thumbnail">
       <div class="user-details">
-        <h4 class="user-username">{{ member.username }}</h4>
+        <h4 class="username-bold" (click)="routeToUser(member._id)">{{ member.username }}</h4>
         <h5 class="user-description">{{ member.description }}</h5>
       </div>
 
@@ -74,7 +74,7 @@
             <ul>
               <li class="make-admin" *ngIf="!member.admin">
                 <h5 (click)="makeAdmin(member, i)">Make admin</h5>
-                <span class="info" (click)="showInfo = true">?</span>
+                <span class="info" (click)="adminInfo = true">?</span>
               </li>
               <li *ngIf="member.admin" (click)="removeAdmin(member, i)"><h5>Remove as admin</h5></li>
               <li (click)="removeFromItin(member, i)"><h5>Remove from itinerary</h5></li>
@@ -96,12 +96,27 @@
     </div>
     <div *ngFor="let share of currentItinerary?.shares">
       <h4 class="share-date">{{ share.shared_on | date: 'dd MMM yyyy'}}</h4>
-      <h4 class="share-details">{{ share.shared_by.username }} shared with {{ share.shared_with.username }}</h4>
+      <h4 class="share-details"><span class="username-bold" (click)="routeToUser(share.shared_by._id)">{{ share.shared_by.username }}</span> shared with <span class="username-bold" (click)="routeToUser(share.shared_with._id)">{{ share.shared_with.username }}</span></h4>
     </div>
 
-    <div class="action-response">
-      <h5 class="action-response-primary" (click)="share('Copy')">COPY ITINERARY <span class="info">?</span></h5>
-      <h5 class="action-response-primary" (click)="share('Share')">SHARE ITINERARY <span class="info">?</span></h5>
+    <div class="action-response _p">
+      <div class="action-response-primary">
+        <h5 class="_p5" (click)="share('Copy')">COPY ITINERARY</h5>
+        <span class="info" (click)="copyInfo = true">?</span>
+      </div>
+
+      <div class="copy-share-info" *ngIf="copyInfo">
+        <h5>Copying to another itinerary of yours. A new itinerary is not created.</h5>
+      </div>
+
+      <div class="action-response-primary">
+        <h5 class="_p5" (click)="share('Share')">SHARE ITINERARY</h5>
+        <span class="info" (click)="shareInfo = true">?</span>
+      </div>
+
+      <div class="copy-share-info" *ngIf="shareInfo">
+        <h5>Share with other users. A new itinerary is created for each selected user.</h5>
+      </div>
     </div>
   </div>
 
@@ -166,11 +181,11 @@
 </div>
 
 <!-- admin role info -->
-<div class="custom-modal" *ngIf="showInfo">
+<div class="custom-modal" *ngIf="adminInfo">
   <div class="form-card">
     <div class="form-header">
       <h3>Info: Admin role</h3>
-      <a (click)="showInfo = false">X</a>
+      <a (click)="adminInfo = false">X</a>
     </div>
 
     <div class="form-housing">
@@ -184,7 +199,7 @@
       </ol>
 
       <div class="action-response">
-        <h5 class="action-response-primary" (click)="showInfo = false">OK</h5>
+        <h5 class="action-response-primary" (click)="adminInfo = false">OK</h5>
       </div>
     </div>
   </div>

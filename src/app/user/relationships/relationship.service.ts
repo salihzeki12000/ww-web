@@ -4,6 +4,7 @@ import 'rxjs/Rx';
 import { Observable, ReplaySubject } from 'rxjs';
 
 import { ErrorMessageService } from '../../error-message';
+import { UserService }         from '../user.service';
 
 @Injectable()
 export class RelationshipService  {
@@ -17,11 +18,13 @@ export class RelationshipService  {
   currentUser;
 
   updateRelationships = new ReplaySubject();
+  updateUserRelationships = new ReplaySubject();
 
   private url = 'https://vast-island-87972.herokuapp.com';
 
   constructor(
     private http: Http,
+    private userService: UserService,
     private errorMessageService: ErrorMessageService)  {}
 
   getRelationships(currentUser)  {
@@ -31,6 +34,20 @@ export class RelationshipService  {
     return this.http.get(this.url + '/following' + token, { headers: headers })
                     .map((response: Response) => {
                       this.filterRelationships(response.json().followings);
+                      return response.json();
+                    })
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
+  }
+
+  getUserRelationships(id)  {
+    this.currentUser = this.userService.currentUser;
+    const userId = id;
+    return this.http.get(this.url + '/following/displayUser/' + userId)
+                    .map((response: Response) => {
+                      this.filterUserRelationships(response.json().followings, userId);
                       return response.json();
                     })
                     .catch((error: Response) => {
@@ -132,8 +149,6 @@ export class RelationshipService  {
   }
 
   deleteFollow(following, status)  {
-    console.log(following);
-    console.log(status);
     const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
 
     return this.http.delete( this.url + "/following/" + following['_id'] + token)
@@ -211,5 +226,30 @@ export class RelationshipService  {
       pendingFollowers: this.pendingFollowers,
       requestedFollowings: this.requestedFollowings,
     });
+  }
+
+  filterUserRelationships(relationships, userId)  {
+    let followings = [];
+    let followers = [];
+
+    for (let i = 0; i < relationships.length; i++) {
+      if(relationships[i]['user']['_id'] === userId)  {
+        if(relationships[i]['status'] === "accepted") {
+          followings.push(relationships[i]);
+        }
+      }
+
+      if(relationships[i]['following']['_id'] === userId) {
+        if(relationships[i]['status'] === "accepted") {
+          followers.push(relationships[i])
+        }
+      }
+    }
+
+    this.updateUserRelationships.next({
+      relationships: relationships,
+      followings: followings,
+      followers: followers,
+    })
   }
 }
