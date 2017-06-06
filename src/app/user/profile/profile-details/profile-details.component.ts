@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 
 import { User }                from '../../user';
 import { UserService }         from '../../user.service';
-import { RelationshipService } from '../../relationships/relationship.service';
+import { RelationshipService } from '../../../relationships/relationship.service';
 import { FlashMessageService } from '../../../flash-message';
 import { Post, PostService }   from '../../../post';
 import { LoadingService }      from '../../../loading';

@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Rx';
 import { UserService }         from './user.service';
 import { PostService }         from '../post';
 import { LoadingService }      from '../loading';
-import { RelationshipService } from './relationships/relationship.service';
+import { RelationshipService } from '../relationships/relationship.service';
 
 @Component({
   selector: 'ww-user',

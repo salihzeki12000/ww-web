@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 
 import { LoadingService } from './loading.service';
+
 @Component({
   selector: 'ww-loading',
   templateUrl: './loading.component.html',

@@ -3,7 +3,8 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
-import { User, UserService, RelationshipService }  from '../../user';
+import { User, UserService }                       from '../../user';
+import { RelationshipService }                     from '../../relationships';
 import { ItineraryService, ItineraryEventService } from '../../itinerary';
 import { AuthService }                             from '../../auth';
 import { LoadingService }                          from '../../loading';

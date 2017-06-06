@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Rx';
 import { Router } from '@angular/router';
 
 import { UserService }  from '../../../user';
+
 @Component({
   selector: 'ww-itinerary-past',
   templateUrl: './itinerary-past.component.html',

@@ -3,8 +3,8 @@ import { Http, Headers, Response } from '@angular/http';
 import 'rxjs/Rx';
 import { Observable, ReplaySubject } from 'rxjs';
 
-import { ErrorMessageService } from '../../error-message';
-import { UserService }         from '../user.service';
+import { ErrorMessageService } from '../error-message';
+import { UserService }         from '../user';
 
 @Injectable()
 export class RelationshipService  {

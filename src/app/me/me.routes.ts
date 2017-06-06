@@ -1,7 +1,8 @@
 import { Routes } from "@angular/router";
 
 import { HomeComponent } from '../home';
-import { ProfileComponent, ProfileEditComponent, RelationshipsComponent, RELATIONSHIP_ROUTES } from '../user';
+import { ProfileComponent, ProfileEditComponent } from '../user';
+import { RelationshipsComponent, RELATIONSHIP_ROUTES } from '../relationships';
 import { ItineraryComponent, ItineraryListComponent, ITINERARY_ROUTES, ITINERARY_LIST_ROUTES } from '../itinerary';
 import { NotificationsComponent } from '../notifications';
 

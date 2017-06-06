@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 import { Router } from '@angular/router';
 
-import { UserService }  from '../../user';
-import { LoadingService }     from '../../loading';
+import { UserService }    from '../../user';
+import { LoadingService } from '../../loading';
 
 @Component({
   selector: 'ww-itinerary-list',
@@ -35,7 +35,7 @@ export class ItineraryListComponent implements OnInit, OnDestroy {
   sortItin(itineraries) {
     this.past = [];
     this.upcoming = [];
-    
+
     for (let i = 0; i < itineraries.length; i++) {
       if(itineraries[i]['past'] === true) {
         this.past.push(itineraries[i])

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
-import { RelationshipService } from '../relationships/relationship.service';
+import { RelationshipService } from '../../relationships/relationship.service';
 import { UserService }         from '../user.service';
 
 @Component({

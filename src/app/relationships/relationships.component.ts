@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 
 import { RelationshipService } from './relationship.service';
-import { LoadingService }      from '../../loading';
+import { LoadingService }      from '../loading';
 
 @Component({
   selector: 'ww-relationships',
