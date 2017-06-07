@@ -24,7 +24,6 @@ export class ItineraryAllComponent implements OnInit, OnDestroy {
                                          result => {
                                            this.currentUser = result;
                                            this.itineraries = Object.keys(result['itineraries']).map(key => result['itineraries'][key]);
-                                           console.log(this.itineraries)
                                          }
                                        )
   }

@@ -29,21 +29,6 @@
   }
 }
 
-.local-signup  {
-  width: 320px;
-  height: 33px;
-  margin-bottom: 10px;
-  font-size: 13px;
-  color: #F9FBFB;
-  background-color: #6494ED;
-  border: 1px solid #6494ED;
-  box-shadow: 0 0 0 1px rgba(100,148,237,.1), 0 2px 3px rgba(100,148,237,.2);
-  &:hover {
-    color: #6494ED;
-    background-color: #F9FBFB;
-  }
-}
-
 i {
   float: left;
   padding-top: 4px;
@@ -55,16 +40,11 @@ h5  {
   text-align: center;
 }
 
-.sign-in-message  {
-  text-align: left;
-  font-style: italic;
-  &:hover {
-    cursor: pointer;
-    color: #6494ED;
-  }
-}
-
 a.cancel-auth {
-  float: right;
-  color: grey;
+  display: none;
+  @media only screen and (max-width: 850px) {
+    display: block;
+    float: right;
+    color: grey;
+  }
 }

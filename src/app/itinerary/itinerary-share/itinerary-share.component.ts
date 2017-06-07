@@ -191,6 +191,7 @@ export class ItineraryShareComponent implements OnInit {
         name: this.currentItinerary['name'] + " - shared by " + this.currentUser['username'],
         date_from: this.currentItinerary['date_from'],
         date_to: this.currentItinerary['date_to'],
+        daily_note: this.currentItinerary['daily_note'],
         members: [this.selectedUsers[i]['_id']],
         admin: [this.selectedUsers[i]['_id']],
         created_by: this.currentItinerary['created_by'],

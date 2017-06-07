@@ -24,7 +24,7 @@ export class ItinerarySummaryItemComponent implements OnInit, AfterViewInit {
     private itineraryService: ItineraryService) { }
 
   ngOnInit() {
-    this.dailyNote = this.currentItinerary['daily_note'][this.index].replace(/\r?\n/g, '<br/> ');
+    this.dailyNote = this.currentItinerary['daily_note'][this.index]['note'].replace(/\r?\n/g, '<br/> ');
 
     this.uniqueClass = "daily-note-" + this.index;
   }
@@ -50,7 +50,7 @@ export class ItinerarySummaryItemComponent implements OnInit, AfterViewInit {
     editedNote = editedNote.trim();
 
     this.dailyNote = editedNote.replace(/\r?\n/g, '<br/> ');
-    this.currentItinerary['daily_note'][this.index] = editedNote;
+    this.currentItinerary['daily_note'][this.index]['note'] = editedNote;
 
     this.itineraryService.editItin(this.currentItinerary, 'edit').subscribe(
       result => {}

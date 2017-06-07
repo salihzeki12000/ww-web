@@ -4,7 +4,7 @@ import { NgModule }                         from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule }          from '@angular/http';
 import { routing }                          from './app.routing';
-import { DaterangePickerModule }            from 'ng2-daterange-picker'
+import { Daterangepicker }                  from 'ng2-daterangepicker';
 
 import { AppComponent } from './app.component';
 import { LandingPageComponent } from './landing-page';
@@ -118,7 +118,7 @@ import { ErrorMessageComponent, ErrorMessageService } from './error-message';
     HttpModule,
     JsonpModule,
     routing,
-    DaterangePickerModule,
+    Daterangepicker
   ],
   providers: [ LoadingService, AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, FileuploadService, CommentService, ErrorMessageService, AuthGuard ],
   bootstrap: [AppComponent]

@@ -132,6 +132,45 @@ button[disabled] h5 {
   }
 }
 
+/***
+
+  Date picker
+
+***************/
+
+.date-picker {
+  width: 300px;
+  padding: 4px 8px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.date-picker-single {
+  width: 170px;
+}
+
+.date-picker i  {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.date-picker h4  {
+  display: inline-block;
+  width: 125px;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.date-picker h4 span {
+  font-weight: 500;
+}
+
+
+
+
 .view-all {
   padding: 10px;
   text-align: center;
@@ -212,6 +251,11 @@ button[disabled] h5 {
   &:hover {
     color: #F9FBFB;
   }
+}
+
+.action-response-primary:hover h4,
+.action-response-primary:hover h5 {
+  color: #F9FBFB;
 }
 
 h4.action-response-primary,

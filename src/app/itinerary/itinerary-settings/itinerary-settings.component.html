@@ -3,7 +3,7 @@
 
   <div class="textless-header"></div>
 
-  <form [formGroup]="editItineraryForm" (ngSubmit)="saveEdit()">
+  <form [formGroup]="editItineraryForm" (ngSubmit)="checkEdit()">
 
     <h4 class="itinerary-edit-section-header">Basic Details</h4>
     <div class="itinerary-edit-section-details">
@@ -18,26 +18,36 @@
       </div>
 
       <div class="itinerary-edit-item">
-        <h5>Travel Date From</h5>
-        <div>
+        <h5 (click)="log()">Travel Dates</h5>
+        <div class="date-picker" daterangepicker [options]="options" (selected)="selectedDate($event)">
+          <i class="fa fa-calendar" aria-hidden="true"></i>
+          <h4><span>From:</span> {{ dateFrom | date: 'dd MMM yyyy'}}</h4>
+          <h4><span>To:</span> {{ dateTo | date: 'dd MMM yyyy'}}</h4>
+        </div>
+        <!-- <div>
           <input type="date" formControlName="date_from">
           <span class="form-validator"
             *ngIf="editItineraryForm.get('date_from').touched && editItineraryForm.get('date_from').invalid">Travel start date is required</span>
-        </div>
+        </div> -->
       </div>
 
-      <div class="itinerary-edit-item">
+      <!-- <div class="itinerary-edit-item">
         <h5>Travel Date To</h5>
+        <div class="date-picker date-picker-single" daterangepicker [options]="dateToPicker" (selected)="selectedDate($event)">
+          <i class="fa fa-calendar" aria-hidden="true"></i>
+          <h4> {{ dateTo | date: 'dd MMM yyyy'}}</h4>
+        </div>
+
         <div>
           <input type="date" formControlName="date_to">
           <span class="form-validator"
             *ngIf="editItineraryForm.get('date_to').touched && editItineraryForm.get('date_to').invalid">Travel end date is required</span>
         </div>
-      </div>
+      </div> -->
 
       <div class="created-details">
         <div class="itinerary-edit-item">
-          <h5>Created By</h5>
+          <h5 (click)="getvalue()">Created By</h5>
           <h4 class="username" (click)="routeToUser(currentItinerary?.created_by._id)">{{ currentItinerary?.created_by.username }}</h4>
         </div>
       </div>
@@ -138,16 +148,14 @@
       <h4>{{ currentItinerary?.name }}</h4>
     </div>
 
-    <div class="confirm-delete-content">
+    <div class="content-with-header-name">
       <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
       <h4>Leaving itinerary {{ currentItinerary?.name }} will permanently remove it from your list of itineraries. You will not be able to participate in the itinerary further. You will also lose all information associated with the itinerary.</h4>
     </div>
 
-    <div class="confirm-delete-footer">
-      <div class="action-response">
-        <h5 class="action-response-primary" (click)="leaveItinerary = false">CANCEL</h5>
-        <h5 class="action-response-warning" (click)="confirmLeave()">LEAVE</h5>
-      </div>
+    <div class="action-response">
+      <h5 class="action-response-primary" (click)="leaveItinerary = false">CANCEL</h5>
+      <h5 class="action-response-warning" (click)="confirmLeave()">LEAVE</h5>
     </div>
 
   </div>
@@ -165,16 +173,14 @@
       <h4>{{ currentItinerary?.name }}</h4>
     </div>
 
-    <div class="confirm-delete-content">
+    <div class="content-with-header-name">
       <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
       <h4>Deleting itinerary {{ currentItinerary?.name }} will permanently remove it from your list of itineraries.  You will lose all information associated with the itinerary.</h4>
     </div>
 
-    <div class="confirm-delete-footer">
-      <div class="action-response">
-        <h5 class="action-response-primary" (click)="deleteItinerary = false">CANCEL</h5>
-        <h5 class="action-response-warning" (click)="confirmDelete()">DELETE</h5>
-      </div>
+    <div class="action-response">
+      <h5 class="action-response-primary" (click)="deleteItinerary = false">CANCEL</h5>
+      <h5 class="action-response-warning" (click)="confirmDelete()">DELETE</h5>
     </div>
 
   </div>
@@ -201,6 +207,42 @@
       <div class="action-response">
         <h5 class="action-response-primary" (click)="adminInfo = false">OK</h5>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- itinerary date changed -->
+<div class="custom-modal" *ngIf="dateChanged">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>Itinerary date range amended</h3>
+      <a (click)="dateChanged = false">X</a>
+    </div>
+
+    <div class="form-housing change-date-content">
+      <h4>Date range for itinerary has been amended.</h4>
+      <h5>From ( {{currentItinerary.date_from | date: 'dd MMM yyyy'}} - {{currentItinerary.date_to | date: 'dd MMM yyyy'}} ) to ( {{editItineraryForm.value.date_from | date: 'dd MMM yyyy'}} - {{editItineraryForm.value.date_to | date: 'dd MMM yyyy'}} )</h5>
+      <h5>Dates for accommodation and transport arrangements will remain the same.</h5>
+      <h5>Dates for activities can be adjusted as below.</h5>
+      <h4>Please select how would you like dated activities to be adjusted:</h4>
+
+      <div class="change-date-option">
+        <h4 (click)="sameDates()">Keep to same date</h4>
+        <h5>Activity and summary note on 05 June 2017 will remain on 05 June 2017.</h5>
+        <h5>If the new date range does not include 05 June 2017, the activity will be amended to "any day", summary note will be deleted.</h5>
+      </div>
+
+      <div class="change-date-option">
+        <h4 (click)="sameDays()">Keep to same day of itinerary</h4>
+        <h5>Activity  and summary note on 05 June 2017 (Day 01) will be amended to the new Day 01 date.</h5>
+        <h5>For example, itinerary start date change to 07 June 2017, activity and summary note on 05 June 2017 will be moved to 07 June 2017.</h5>
+        <h5>Any activity not included in the new date range will be amended to "any day", summary note will be deleted.</h5>
+      </div>
+
+      <div class="action-response">
+        <h5 class="action-response-secondary" (click)="dateChanged = false">CANCEL EDIT</h5>
+      </div>
+
     </div>
   </div>
 </div>

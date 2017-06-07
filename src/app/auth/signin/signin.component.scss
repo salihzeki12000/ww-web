@@ -7,17 +7,6 @@
 
 button.action-response-primary  {
   width: 100%;
-  margin-bottom: 20px;
-}
-
-.sign-up-message,
-.back-to-signin-message  {
-  text-align: left;
-  font-style: italic;
-  &:hover {
-    cursor: pointer;
-    color: #6494ED;
-  }
 }
 
 a.cancel-auth {

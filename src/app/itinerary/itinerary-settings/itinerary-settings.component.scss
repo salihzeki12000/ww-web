@@ -5,6 +5,36 @@ input {
   border-radius: 0;
 }
 
+.change-date-content > h5 {
+  line-height: 1.8;
+}
+
+.change-date-content > h5:last-of-type  {
+  margin-bottom: 30px;
+}
+
+.change-date-option {
+  margin: 20px 0;
+}
+
+.change-date-option h4  {
+  display: inline-block;
+  margin-bottom: 5px;
+  padding: 5px 10px;
+  color: #6494ED;
+  border: 2px solid #6494ED;
+  &:hover {
+    cursor: pointer;
+    color: #F9FBFB;
+    background-color: #6494ED;
+  }
+}
+
+.change-date-option h5  {
+  padding: 0 10px;
+  line-height: 1.8;
+}
+
 .itinerary-edit-main  {
   width: 600px;
   margin-top: 20px;
@@ -81,6 +111,10 @@ span.form-validator {
 
 .created-details  {
   padding-top: 6px;
+}
+
+.created-details > .itinerary-edit-item {
+  height: 40px;
 }
 
 

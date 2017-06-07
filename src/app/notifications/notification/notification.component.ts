@@ -36,4 +36,7 @@ export class NotificationComponent implements OnInit {
     )
   }
 
+  routeToUser(id) {
+    this.router.navigateByUrl('/wondererwanderer/' + id)
+  }
 }

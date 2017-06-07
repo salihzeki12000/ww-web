@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
 import { Router } from '@angular/router';
+import { DaterangePickerComponent } from 'ng2-daterangepicker';
 
 import { User }                from '../../user';
 import { UserService }         from '../../user.service';
@@ -15,7 +16,10 @@ import { ErrorMessageService } from '../../../error-message';
   templateUrl: './profile-edit.component.html',
   styleUrls: ['./profile-edit.component.scss']
 })
-export class ProfileEditComponent implements OnInit, OnDestroy {  
+export class ProfileEditComponent implements OnInit, OnDestroy {
+  @ViewChild(DaterangePickerComponent)
+  private picker: DaterangePickerComponent;
+
   currentUser: User;
   currentUserSubscription: Subscription;
 
@@ -27,6 +31,15 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
 
   genders = ['Not specified', 'male', 'female'];
   options = { types: ['(cities)'] };
+
+  birthDate;
+  displayDate;
+
+  birthDatePicker = {
+    locale: { format: 'YYYY-MM-DD' },
+    singleDatePicker: true,
+    showDropdowns: true,
+  }
 
   uploadText = "Change profile picture"
   fileTypeError = false;
@@ -67,6 +80,18 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
                                            this.currentUser = result;
                                            this.thumbnailImage = this.currentUser['display_picture'];
                                            this.patchValue(this.currentUser);
+
+                                           if(this.currentUser['birth_date'] === undefined || this.currentUser['birth_date'] === "")  {
+                                             this.birthDate = new Date();
+                                             this.displayDate = "";
+                                           } else {
+                                             this.birthDate = this.currentUser['birth_date'].slice(0,10);
+                                             this.displayDate = this.currentUser['birth_date'].slice(0,10)
+                                           }
+
+                                           setTimeout(() => {
+                                             this.updateDateRange();
+                                           },1000)
                                          }
                                        )
 
@@ -86,6 +111,24 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       city: user['city'],
       birth_date: user['birth_date'],
       gender: user['gender'],
+    })
+  }
+
+  updateDateRange() {
+    this.picker.datePicker.setStartDate(this.birthDate);
+    this.picker.datePicker.setEndDate(this.birthDate);
+  }
+
+  selectedDate(value) {
+    let date = value.start._d;
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    this.birthDate = year + "-" + month + "-" + day;
+    this.displayDate = this.birthDate;
+    
+    this.editProfileForm.patchValue({
+      birth_date: this.birthDate,
     })
   }
 

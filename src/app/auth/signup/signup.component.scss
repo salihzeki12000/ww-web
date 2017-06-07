@@ -3,36 +3,6 @@
   text-align: center;
 }
 
-input {
-  width: 100%;
-}
-
 button.action-response-primary  {
   width: 100%;
-  margin-bottom: 20px;
-}
-
-.sign-in-message,
-.back-to-signin-message {
-  text-align: left;
-  font-style: italic;
-  &:hover {
-    cursor: pointer;
-    color: #6494ED;
-  }
-}
-
-span.form-validator {
-  background-color: rgba(255,255,255,.5);
-  padding: 0 10px;
-}
-
-.action-response-primary  {
-  background-color: rgba(255,255,255,.7);
-}
-
-.action-response-primary > h4 {
-  &:hover {
-    color: #6494ED;
-  }
 }
