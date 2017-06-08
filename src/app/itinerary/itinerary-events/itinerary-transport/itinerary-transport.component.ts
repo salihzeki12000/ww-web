@@ -33,17 +33,17 @@ export class ItineraryTransportComponent implements OnInit {
     private loadingService: LoadingService) { }
 
   ngOnInit() {
-    this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
-                                 result => { this.filterEvent(result); })
-
-    this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
-                                            result => { this.currentItinerary = result; })
-
     this.itinDateSubscription = this.itineraryService.updateDate.subscribe(
                                       result => {
                                         this.itinDateRange = Object.keys(result).map(key => result[key]);
                                         this.itinDateRange.splice(0,1);
                                     })
+
+    this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
+                                 result => { this.filterEvent(result); })
+
+    this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
+                                            result => { this.currentItinerary = result; })
   }
 
   ngOnDestroy() {
@@ -57,6 +57,13 @@ export class ItineraryTransportComponent implements OnInit {
     this.transports = [];
     for (let i = 0; i < events.length; i++) {
       if(events[i]['type'] === 'transport') {
+        let index = this.itinDateRange.indexOf(events[i]['dep_date'])
+        let outIndex = this.itinDateRange.indexOf(events[i]['arr_date'])
+
+        if(index < 0 || outIndex < 0) {
+          events[i]['out_of_range'] = true;
+        }
+
         this.transports.push(events[i])
       }
     }

@@ -33,17 +33,17 @@ export class ItineraryAccommodationComponent implements OnInit, OnDestroy {
     private loadingService: LoadingService) { }
 
   ngOnInit() {
-    this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
-                                 result => { this.filterEvent(result); })
-
-    this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
-                                            result => { this.currentItinerary = result; })
-
     this.itinDateSubscription = this.itineraryService.updateDate.subscribe(
                                       result => {
                                         this.itinDateRange = Object.keys(result).map(key => result[key]);
                                         this.itinDateRange.splice(0,1);
                                     })
+                                    
+    this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
+                                 result => { this.filterEvent(result); })
+
+    this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
+                                            result => { this.currentItinerary = result; })
   }
 
   ngOnDestroy() {
@@ -57,6 +57,12 @@ export class ItineraryAccommodationComponent implements OnInit, OnDestroy {
     this.accommodations = [];
     for (let i = 0; i < events.length; i++) {
       if(events[i]['type'] === 'accommodation') {
+        let index = this.itinDateRange.indexOf(events[i]['check_in_date'])
+        let outIndex = this.itinDateRange.indexOf(events[i]['check_out_date'])
+
+        if(index < 0 || outIndex < 0) {
+          events[i]['out_of_range'] = true;
+        }
         this.accommodations.push(events[i])
       }
     }

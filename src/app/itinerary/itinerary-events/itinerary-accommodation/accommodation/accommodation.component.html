@@ -41,6 +41,8 @@
       <h5 *ngIf="!summary">{{ index + 1 }} of {{ totalAccommodations }}</h5>
     </div>
 
+    <h4 class="event-out-of-range" *ngIf="event.out_of_range">Out of itinerary date range</h4>
+
     <h4 class="accommodation-city"><i class="fa fa-bed" aria-hidden="true"></i> {{ event?.stay_city | uppercase }}</h4>
     <h3 class="accommodation-header">{{ event?.name | uppercase }}</h3>
 

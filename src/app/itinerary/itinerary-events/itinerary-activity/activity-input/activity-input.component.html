@@ -15,7 +15,7 @@
         </div>
 
         <div *ngIf="!searchDone">
-          <label>Search activity by name or adddress <span class="required"> - local name or address may be required</span></label>
+          <label>Search activity by name or adddress <span class="label-note"> - local name or address may be required</span></label>
           <ww-google-place-search (placeDetail)="getActivityDetails($event)"></ww-google-place-search>
           <h6 class="cannot-find" (click)="skipSearch()">Unable to find by name or address? Proceed to key in details ></h6>
         </div>
@@ -24,23 +24,32 @@
           <h4 class="form-section-header">Visit Date &amp; Time Details</h4>
           <div class="form-section-details">
 
-            <div class="date-to-visit">
-              <label>Date To Visit</label>
-              <select class="select-date" name="date" formControlName="date">
-                <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
-                  <div *ngIf="itinDate === 'any day'">
-                    <h5>{{ itinDate }}</h5>
-                  </div>
-                  <div *ngIf="itinDate !== 'any day'">
-                    <h5>Day {{ i }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
-                  </div>
-                </option>
-              </select>
-            </div>
+            <label>Date To Visit</label>
+            <select class="select-date" name="date" formControlName="date">
+              <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
+                <div *ngIf="itinDate === 'any day'">
+                  <h5>{{ itinDate }}</h5>
+                </div>
+                <div *ngIf="itinDate !== 'any day'">
+                  <h5>Day {{ i }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+                </div>
+              </option>
+            </select>
 
-            <div class="time-to-visit" [class.any-time-true]="anytime">
-              <label>Time To Visit <span class="required"> - Default: any time</span></label>
-              <input type="time" formControlName="time">
+            <label>Time To Visit <span class="label-note"> - Default: any time</span></label>
+            <input type="time" formControlName="time">
+
+            <div formArrayName="meals" class="meal-indicator">
+              <label>Meal indicator <span class="label-note"> - may select more than 01 option</span></label>
+
+              <div *ngFor="let meal of meals.controls; let j = index" [formGroupName]="j" class="meal-item">
+                <div class="meal-input">
+                  <label [class.meal-checked]="meal.value.checked">
+                    <input type="checkbox" formControlName="checked">
+                    {{ meal.value.value }}
+                  </label>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -73,7 +82,7 @@
               </label>
             </div>
 
-            <label>Name <span class="required"> - required</span></label>
+            <label>Name <span class="label-note"> - required</span></label>
             <input type="text" formControlName="name">
             <span class="form-validator"
               *ngIf="addActivityForm.get('name').touched && addActivityForm.get('name').invalid">Name of activity is required</span>
@@ -106,7 +115,7 @@
             <label>Cost / Entry Fee</label>
             <input type="text" formControlName="entry_fee">
 
-            <div formArrayName="categories">
+            <!-- <div formArrayName="categories">
               <label>Category</label>
 
               <div *ngFor="let category of categories.controls; let j = index" [formGroupName]="j">
@@ -118,7 +127,7 @@
                   </label>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
 
           <h4 class="form-section-header">Note</h4>

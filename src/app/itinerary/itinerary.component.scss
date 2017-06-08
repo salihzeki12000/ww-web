@@ -217,7 +217,7 @@ nav {
 .scroll-left,
 .scroll-right {
   display: none;
-  @media only screen and (min-width: 420px) and (max-width: 1091px) {
+  @media only screen and (max-width: 1091px) {
     position: fixed;
     display: block;
     bottom: 0;

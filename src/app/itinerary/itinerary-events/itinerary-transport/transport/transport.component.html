@@ -32,6 +32,8 @@
     <h5 *ngIf="!summary">{{ index + 1 }} of {{ totalTransports }}</h5>
   </div>
 
+  <h4 class="event-out-of-range" *ngIf="event.out_of_range">Out of itinerary date range</h4>
+
   <div class="transport-header">
     <div [ngSwitch]="event.transport_type">
       <div *ngSwitchCase="'flight'">

@@ -64,6 +64,13 @@
     </div>
 
     <div *ngIf="event?.type === 'activity'" class="summary-item" (click)="showDetails(event)">
+
+      <div class="summary-meal-indicator">
+        <div *ngFor="let meal of event?.meals">
+          <h6 *ngIf="meal.checked">{{ meal.value }}</h6>
+        </div>
+      </div>
+
       <div class="activity-indicator pill"></div>
 
       <img src="{{event?.photo}}" alt="picture of {{ event?.name}}" *ngIf="event?.photo">

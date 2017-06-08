@@ -784,6 +784,7 @@ select.select-date  {
   width: 250px;
 }
 
+
 a {
   cursor: pointer;
 }
@@ -1063,6 +1064,38 @@ textarea.ng-invalid.ng-touched {
   width: 100px;
 }
 
+/* meal indicator for activity */
+.meal-indicator > label {
+  display: block;
+}
+
+.meal-item  {
+  display: inline-block;
+  margin: 0 5px 5px 0;
+}
+
+.meal-input label {
+  padding: 2px 10px;
+  color: lightgray;
+  border: 1px solid lightgray;
+  border-radius: 15px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.meal-input input {
+  visibility: hidden;
+  width: 0;
+  margin: 0;
+  height: 0;
+}
+
+.meal-input .meal-checked {
+  color: #19CC72;
+  border: 1px solid #19CC72;
+}
+
 /* show editing view for post */
 .editing > .view{
   display: none;
@@ -1227,6 +1260,13 @@ textarea.ng-invalid.ng-touched {
     background-color: rgba(100, 148, 237, 0.9);
   }
 }
+
+.event-out-of-range {
+  text-align: center;
+  color: #F9FBFB;
+  background-color: red;
+}
+
 
 .event-summary-item {
   text-align: right;

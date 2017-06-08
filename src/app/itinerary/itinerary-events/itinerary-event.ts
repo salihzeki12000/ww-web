@@ -6,6 +6,7 @@ export class ItineraryEvent {
     city: string,
     name: string,
     photo: string,
+    meals: [string],
     description: string,
     sub_description: string,
     opening_hours: string,

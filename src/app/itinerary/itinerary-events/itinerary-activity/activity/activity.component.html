@@ -46,6 +46,12 @@
       <h5 *ngIf="!summary">{{ index + 1 }} of {{ totalActivities }}</h5>
     </div>
 
+    <div class="meals-tags">
+      <div *ngFor="let meal of activity?.meals">
+        <h5 *ngIf="meal.checked"> {{ meal.value }}</h5>
+      </div>
+    </div>
+
     <h3 class="activity-header">{{ activity?.name }}</h3>
 
     <div class="activity-contact-details" (click)="showContactDetails = !showContactDetails">
@@ -84,12 +90,12 @@
 
     <h5 class="note" [innerHTML]="activity?.formatted_note"></h5>
 
-    <div class="activity-tags">
+    <!-- <div class="activity-tags">
       <i class="fa fa-tags" aria-hidden="true"></i>
       <div *ngFor="let category of activity.categories" class="activity-category">
         <h6 *ngIf="category.checked">|  {{ category.value }}  |</h6>
       </div>
-    </div>
+    </div> -->
 
     <div class="created-by">
       <h5 class="username" (click)="routeToUser(activity?.user._id)">{{ activity?.user.username }}</h5>
@@ -150,21 +156,19 @@
           <h4 class="form-section-header">Visit Date &amp; Time Details</h4>
           <div class="form-section-details">
 
-            <div class="date-to-visit">
-              <label>Date To Visit</label>
-              <select class="select-date" name="date" formControlName="date">
-                <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
-                  <div *ngIf="itinDate === 'any day'">
-                    <h5>{{ itinDate }}</h5>
-                  </div>
-                  <div *ngIf="itinDate !== 'any day'">
-                    <h5>Day {{ i }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
-                  </div>
-                </option>
-              </select>
-            </div>
+            <label>Date To Visit</label>
+            <select class="select-date" name="date" formControlName="date">
+              <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
+                <div *ngIf="itinDate === 'any day'">
+                  <h5>{{ itinDate }}</h5>
+                </div>
+                <div *ngIf="itinDate !== 'any day'">
+                  <h5>Day {{ i }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+                </div>
+              </option>
+            </select>
 
-            <div class="time-to-visit" [class.any-time-true]="anytime">
+            <div [class.any-time-true]="anytime">
               <label>Time To Visit (
 
                 <div class="anytime-input">
@@ -176,6 +180,20 @@
               </label>
               <input type="time" formControlName="time" [value]="activity.time" *ngIf="!anytime">
             </div>
+
+            <div formArrayName="meals" class="meal-indicator">
+              <label>Meal indicator <span class="label-note"> - may select more than 01 option</span></label>
+
+              <div *ngFor="let meal of meals.controls; let j = index" [formGroupName]="j" class="meal-item">
+                <div class="meal-input">
+                  <label [class.meal-checked]="meal.value.checked">
+                    <input type="checkbox" formControlName="checked" [ngModel]="activity.meals[j].checked">
+                    {{ meal.value.value }}
+                  </label>
+                </div>
+              </div>
+            </div>
+
           </div>
 
           <h4 class="form-section-header">Activity Details</h4>
@@ -201,7 +219,7 @@
             <label>Cost / Entry Fee</label>
             <input type="text" formControlName="entry_fee">
 
-            <div formArrayName="categories">
+            <!-- <div formArrayName="categories">
               <label>Category</label>
 
               <div *ngFor="let category of categories.controls; let j = index" [formGroupName]="j">
@@ -215,7 +233,7 @@
                   </div>
 
               </div>
-            </div>
+            </div> -->
           </div>
 
           <h4 class="form-section-header">Note</h4>

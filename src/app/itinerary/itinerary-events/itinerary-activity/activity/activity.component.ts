@@ -38,6 +38,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
 
   editActivityForm: FormGroup;
   categories;
+  meals;
   anytime;
 
   constructor(
@@ -62,6 +63,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
         'date': '',
         'time': '',
         'note': '',
+        'meals': this.initMeals(),
       })
     }
 
@@ -108,6 +110,18 @@ export class ActivityComponent implements OnInit, OnDestroy {
         this.itineraries.push(this.currentUser['itineraries'][i])
       }
     }
+  }
+
+  initMeals()  {
+    this.meals = this.formBuilder.array([
+      this.formBuilder.group({ value: "Breakfast", checked: false }),
+      this.formBuilder.group({ value: "Lunch", checked: false }),
+      this.formBuilder.group({ value: "Dinner", checked: false }),
+      this.formBuilder.group({ value: "Supper", checked: false }),
+      this.formBuilder.group({ value: "Coffee/Tea", checked: false }),
+      this.formBuilder.group({ value: "Drinks", checked: false }),
+    ])
+    return this.meals;
   }
 
   initCategoryArray() {
@@ -159,6 +173,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
   patchValue()  {
     this.editActivityForm.patchValue({
       name: this.activity['name'],
+      meals: this.activity['meals'],
       description: this.activity['description'],
       sub_description: this.activity['sub_description'],
       opening_hours: this.activity['opening_hours'],
@@ -198,18 +213,6 @@ export class ActivityComponent implements OnInit, OnDestroy {
 
     let editedActivity = this.editActivityForm.value;
     let originalActivity = this.activity;
-
-    let categoryArray = [
-      { value: 'adventure', icon: 'hand-peace-o' },
-      { value: 'food/drink', icon: 'cutlery' },
-      { value: 'shopping', icon: 'shopping-bag'},
-      { value: 'sight-seeing', icon: 'eye' },
-    ]
-
-    for (let i = 0; i < originalActivity['categories'].length; i++) {
-      originalActivity['categories'][i]['value'] = categoryArray[i]['value']
-      originalActivity['categories'][i]['icon'] = categoryArray[i]['icon']
-    }
 
     if(this.anytime === true) {
       editedActivity['time'] = 'anytime';

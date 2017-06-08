@@ -8,6 +8,13 @@
     <div *ngFor="let activity of activities; let i = index" class="event-summary-item" (click)="centerItem(activity)" [class.highlighted-item]="highlightedEvent === activity">
       <a href="#activity{{ i }}">
         <h5 class="index">{{i+1}}</h5>
+
+        <div *ngFor="let meal of activity.meals">
+          <div class="event-meal-indicator" *ngIf="meal.checked">
+            <i class="fa fa-cutlery" aria-hidden="true"></i>
+          </div>
+        </div>
+
         <h5 class="date" *ngIf="activity?.date === 'any day'">{{ activity?.date }} - {{ activity?.time }}</h5>
         <h5 class="date" *ngIf="activity?.date !== 'any day'">{{ activity?.date | date: 'dd MMM yyyy' }} - {{ activity?.time }}</h5>
         <h5 class='activity-summary-name'>{{ activity?.name }}</h5>

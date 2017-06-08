@@ -40,6 +40,9 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
   currentDate = 'any day';
   index = 0;
 
+  oldWidth;
+  newWidth;
+
   constructor(
     private element: ElementRef,
     private itineraryService: ItineraryService,
@@ -93,13 +96,17 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
 
   onScroll(event) {
     // console.log("detect")
-    // console.log(event)
     if(event.type === "resize") {
-      console.log(event.srcElement.innerWidth)
-      if(event.srcElement.innerWidth < 1091)  {
-        // remove 2000px
-      } else  {
-        //add 200px
+      this.oldWidth = this.newWidth;
+      this.newWidth = event.srcElement.innerWidth;
+      if(this.oldWidth >= 1091 && this.newWidth < 1091)  {
+        if(this.left !== undefined) {
+          this.left = (Number(this.left.slice(0, this.left.length - 2)) - 200) + 'px';
+        }
+      } else if(this.oldWidth <= 1091 && this.newWidth > 1091) {
+        if(this.left !== undefined) {
+          this.left = (Number(this.left.slice(0, this.left.length - 2)) + 200) + 'px';
+        }
       }
     }
 

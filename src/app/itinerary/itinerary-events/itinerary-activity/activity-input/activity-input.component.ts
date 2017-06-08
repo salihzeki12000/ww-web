@@ -20,6 +20,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   addActivityForm: FormGroup;
   manualEntry = true;
   categories;
+  meals;
 
   searchDone = false;
 
@@ -65,6 +66,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
       'locationCheckedIn': '',
       'url': '',
       'place_id': '',
+      'meals': this.initMeals(),
     })
   }
 
@@ -86,6 +88,18 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     this.currentUserSubscription.unsubscribe();
     this.currentItinerarySubscription.unsubscribe();
     this.itinDateSubscription.unsubscribe();
+  }
+
+  initMeals()  {
+    this.meals = this.formBuilder.array([
+      this.formBuilder.group({ value: "Breakfast", checked: false }),
+      this.formBuilder.group({ value: "Lunch", checked: false }),
+      this.formBuilder.group({ value: "Dinner", checked: false }),
+      this.formBuilder.group({ value: "Supper", checked: false }),
+      this.formBuilder.group({ value: "Coffee/Tea", checked: false }),
+      this.formBuilder.group({ value: "Drinks", checked: false }),
+    ])
+    return this.meals;
   }
 
   initCategoryArray() {
@@ -234,21 +248,6 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   saveNew()  {
     let newActivity = this.addActivityForm.value;
 
-    let categoryArray = [
-      { value: 'adventure', icon: 'hand-peace-o' },
-      { value: 'food/drink', icon: 'cutlery' },
-      { value: 'shopping', icon: 'shopping-bag'},
-      { value: 'sight-seeing', icon: 'eye' },
-    ]
-
-    for (let i = 0; i < newActivity['categories'].length; i++) {
-      newActivity['categories'][i]['value'] = categoryArray[i]['value'];
-      newActivity['categories'][i]['icon'] = categoryArray[i]['icon'];
-      if(!newActivity['categories'][i]['checked'])  {
-        newActivity['categories'][i]['checked'] = false;
-      }
-    }
-
     if(newActivity['time'] === '')  {
       newActivity['time'] = 'anytime';
     }
@@ -277,7 +276,6 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     } else  {
       this.addActivity(newActivity);
     }
-
 
     this.hideActivityForm.emit(false);
   }
