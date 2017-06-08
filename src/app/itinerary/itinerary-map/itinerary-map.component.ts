@@ -136,6 +136,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
       })
     }
     this.loadingService.setLoader(false, "");
+    this.preventScroll(false);
   }
 
   changeCenter(event)  {

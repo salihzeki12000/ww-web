@@ -96,6 +96,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
                                        )
 
     this.loadingService.setLoader(false, "");
+    this.preventScroll(false);
   }
 
   ngOnDestroy() {
@@ -126,7 +127,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     let year = date.getFullYear();
     this.birthDate = year + "-" + month + "-" + day;
     this.displayDate = this.birthDate;
-    
+
     this.editProfileForm.patchValue({
       birth_date: this.birthDate,
     })
@@ -171,14 +172,16 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   }
 
   searching(event) {
-    if(!this.city)  {
-      this.errorMessageService.handleErrorMessage({
-        title: "Error while selecting new city",
-        error:  {
-          message: "You have pressed the enter key without selecting a city from the dropdown. Please try again."
-        }
-      })
-    }
+    setTimeout(() =>  {
+      if(!this.city)  {
+        this.errorMessageService.handleErrorMessage({
+          title: "Error while selecting new city",
+          error:  {
+            message: "You have pressed the enter key without selecting a city from the dropdown. Please try again."
+          }
+        })
+      }
+    }, 1000)
   }
 
   setCity(data) {

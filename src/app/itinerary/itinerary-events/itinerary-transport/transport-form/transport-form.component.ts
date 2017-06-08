@@ -10,6 +10,7 @@ import { ItineraryEventService } from '../../itinerary-event.service';
 
 import { UserService }         from '../../../../user';
 import { FlashMessageService } from '../../../../flash-message';
+import { ErrorMessageService } from '../../../../error-message';
 
 @Component({
   selector: 'ww-transport-form',
@@ -45,6 +46,13 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   depAirports = [];
   arrAirports = [];
 
+  // google search options
+  cityOptions = { types: ['(cities)'] };
+  depCity = '';
+  arrCity = '';
+  depStation = '';
+  arrStation = '';
+
   itinDateSubscription: Subscription;
   itinDateRange = [];
   firstDay;
@@ -60,6 +68,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     private itineraryEventService: ItineraryEventService,
     private userService: UserService,
     private flashMessageService: FlashMessageService,
+    private errorMessageService: ErrorMessageService,
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder) {
@@ -69,7 +78,9 @@ export class TransportFormComponent implements OnInit, OnDestroy {
         'dep_terminal': '',
         'arr_terminal': '',
         'dep_station': '',
+        'dep_station_location': '',
         'arr_station': '',
+        'arr_station_location': '',
         'dep_city': ['', Validators.required],
         'arr_city': ['', Validators.required],
         'dep_date': ['', Validators.required],
@@ -435,6 +446,90 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     this.addTransportForm.patchValue({
       arr_city: currentFlightSearch['arr_city'],
       arr_date: currentFlightSearch['arr_date'],
+    })
+  }
+
+  // google search
+  searchingDep(event) {
+    this.depCity = event;
+
+    this.addTransportForm.patchValue({
+      dep_city: this.depCity,
+    })
+  }
+
+  setDepCity(data) {
+    this.depCity = data['formatted_address'];
+
+    this.addTransportForm.patchValue({
+      dep_city: this.depCity,
+    })
+  }
+
+  searchingDepStation(event) {
+    setTimeout(() =>  {
+      if(!this.depStation)  {
+        this.errorMessageService.handleErrorMessage({
+          title: "Error while selecting departure station",
+          error:  {
+            message: "You have pressed the enter key without selecting a station/terminal from the dropdown. Please try again."
+          }
+        })
+      }
+    }, 1000)
+
+  }
+
+  setDepStation(data) {
+    this.depStation = data['name'];
+
+    this.addTransportForm.patchValue({
+      dep_station: this.depStation,
+      dep_station_location: {
+        lat: data['geometry'].location.lat(),
+        lng: data['geometry'].location.lng(),
+      }
+    })
+  }
+
+  searchingArr(event) {
+    this.arrCity = event;
+
+    this.addTransportForm.patchValue({
+      arr_city: this.arrCity,
+    })
+  }
+
+  setArrCity(data) {
+    this.arrCity = data['formatted_address'];
+
+    this.addTransportForm.patchValue({
+      arr_city: this.arrCity,
+    })
+  }
+
+  searchingArrStation(event) {
+    setTimeout(() =>  {
+      if(!this.arrStation)  {
+        this.errorMessageService.handleErrorMessage({
+          title: "Error while selecting arrival station",
+          error:  {
+            message: "You have pressed the enter key without selecting a station/terminal from the dropdown. Please try again."
+          }
+        })
+      }
+    }, 1000)
+  }
+
+  setArrStation(data) {
+    this.arrStation = data['name'];
+
+    this.addTransportForm.patchValue({
+      arr_station: this.arrStation,
+      arr_station_location: {
+        lat: data['geometry'].location.lat(),
+        lng: data['geometry'].location.lng(),
+      }
     })
   }
 

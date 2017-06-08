@@ -104,6 +104,36 @@
   }
 }
 
+.scroll-left,
+.scroll-right {
+  position: fixed;
+  margin-top: 79px;
+  width: 40px;
+  height: calc(100vh - 190px);
+  background-color: rgba(255,255,255, 0.3);
+  &:hover {
+    cursor: pointer;
+  }
+
+  @media only screen and (max-width: 420px) {
+    display: none;
+  }
+
+  @media only screen and (min-width: 420px) and (max-width: 1091px) {
+    height: calc(100vh - 245px);
+  }
+}
+
+.scroll-left i,
+.scroll-right i {
+  color: #808080;
+  padding: 12.7px 14.5px;
+}
+
+.scroll-right {
+  right: 0;
+}
+
 // .date-display {
 //   position: fixed;
 // }

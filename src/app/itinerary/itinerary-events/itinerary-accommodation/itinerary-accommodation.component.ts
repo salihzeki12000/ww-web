@@ -62,6 +62,7 @@ export class ItineraryAccommodationComponent implements OnInit, OnDestroy {
     }
     this.totalAccommodations = this.accommodations.length;
     this.loadingService.setLoader(false, "");
+    this.preventScroll(false);
   }
 
   showSummary() {

@@ -61,6 +61,7 @@ export class ActivityListComponent implements OnInit, OnDestroy {
 
     this.totalActivities = this.activities.length
     this.loadingService.setLoader(false, "");
+    this.preventScroll(false);
   }
 
   showSummary() {

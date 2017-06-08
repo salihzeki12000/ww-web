@@ -39,6 +39,7 @@ export class ResourceListComponent implements OnInit, OnDestroy {
                                              result => { this.currentItinerary = result; })
 
     this.loadingService.setLoader(false, "");
+    this.preventScroll(false);
   }
 
   ngOnDestroy() {

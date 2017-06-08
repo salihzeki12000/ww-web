@@ -137,7 +137,6 @@ button[disabled] h5 {
   Date picker
 
 ***************/
-
 .date-picker {
   width: 300px;
   padding: 4px 8px;
@@ -1033,6 +1032,11 @@ textarea.ng-invalid.ng-touched {
   @media only screen and (max-width: 500px) {
     padding: 5px;
   }
+}
+
+.fields-required  {
+  margin-bottom: 10px;
+  text-decoration: underline;
 }
 
 .date-to-visit,

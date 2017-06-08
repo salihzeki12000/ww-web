@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ElementRef, HostListener  } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, HostListener } from '@angular/core';
 import { trigger, state, style, transition, animate }              from "@angular/animations"
 import { Subscription } from 'rxjs/Rx';
 
@@ -64,6 +64,7 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
                                              result => {
                                                this.currentItinerary = result;
                                              })
+
   }
 
   ngOnDestroy() {
@@ -91,11 +92,28 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
   }
 
   onScroll(event) {
-    if((event.srcElement.clientWidth + event.srcElement.offsetParent.offsetLeft) > 1090) {
-      this.left = 200 - event.srcElement.scrollLeft + "px";
-    } else  {
-      this.left = -event.srcElement.scrollLeft + "px";
+    // console.log("detect")
+    // console.log(event)
+    if(event.type === "resize") {
+      console.log(event.srcElement.innerWidth)
+      if(event.srcElement.innerWidth < 1091)  {
+        // remove 2000px
+      } else  {
+        //add 200px
+      }
     }
+
+    if(event.type === "scroll") {
+      this.left = event.srcElement.offsetParent.offsetLeft - event.srcElement.scrollLeft + "px"
+    }
+  }
+
+  scrollLeft()  {
+    this.element.nativeElement.lastElementChild.scrollLeft -= 280;
+  }
+
+  scrollRight() {
+    this.element.nativeElement.lastElementChild.scrollLeft += 280;
   }
 
   filterEvents(events)  {

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 import { Router } from '@angular/router';
 
@@ -18,6 +18,7 @@ export class ItineraryListComponent implements OnInit, OnDestroy {
   currentUserSubscription: Subscription;
 
   constructor(
+    private renderer: Renderer2,
     private userService: UserService,
     private loadingService: LoadingService) { }
 
@@ -30,6 +31,7 @@ export class ItineraryListComponent implements OnInit, OnDestroy {
                                          }
                                        )
     this.loadingService.setLoader(false, "");
+    this.renderer.removeClass(document.body, 'prevent-scroll');
   }
 
   sortItin(itineraries) {

@@ -30,6 +30,7 @@
 
         <div class="form-housing">
           <h4 class="transport-type-header">Search For Your Flight</h4>
+          <h5 class="fields-required">All fields required</h5>
 
           <div class="form-section-details">
             <div class="loading-overlay" *ngIf="fetchFlightDetails">
@@ -226,14 +227,19 @@
           </div>
 
           <label>Depart from (City) <span class="required"> - required</span></label>
-          <input type="text" formControlName="dep_city">
-          <span class="form-validator"
-            *ngIf="addTransportForm.get('dep_city').touched && addTransportForm.get('dep_city').invalid">Departure city is required</span>
+          <ww-google-place-search
+          [populate]="depCity"
+          [options]="cityOptions"
+          (placeDetail)="setDepCity($event)"
+          (searching)="searchingDep($event)"></ww-google-place-search>
 
           <!-- departure details for all other transport type except vehicle rental-->
           <div *ngIf="transportOption !== 'vehicle rental'">
             <label>Departure Station / Terminal</label>
-            <input type="text" formControlName="dep_station">
+            <ww-google-place-search
+            [populate]="depStation"
+            (placeDetail)="setDepStation($event)"
+            (searching)="searchingDepStation($event)"></ww-google-place-search>
 
             <label>Departure Date <span class="required"> - required</span></label>
             <select class="select-date" name="dep_date" formControlName="dep_date">
@@ -267,14 +273,19 @@
         <h4 class="form-section-header">Arrival Details</h4>
         <div class="form-section-details">
           <label>Going To (City) <span class="required"> - required</span></label>
-          <input type="text" formControlName="arr_city">
-          <span class="form-validator"
-            *ngIf="addTransportForm.get('arr_city').touched && addTransportForm.get('arr_city').invalid">Arrival city is required</span>
+          <ww-google-place-search
+          [populate]="arrCity"
+          [options]="cityOptions"
+          (placeDetail)="setArrCity($event)"
+          (searching)="searchingArr($event)"></ww-google-place-search>
 
           <!-- arrival details for all transport type except vehicle rental-->
           <div *ngIf="transportOption !== 'vehicle rental'">
             <label>Arrival Station / Terminal</label>
-            <input type="text" formControlName="arr_station">
+            <ww-google-place-search
+            [populate]="arrStation"
+            (placeDetail)="setArrStation($event)"
+            (searching)="searchingArrStation($event)"></ww-google-place-search>
 
             <label>Arrival Date</label>
             <select class="select-date" name="arr_date" formControlName="arr_date">

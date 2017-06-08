@@ -62,6 +62,7 @@ export class ItineraryTransportComponent implements OnInit {
     }
     this.totalTransports = this.transports.length
     this.loadingService.setLoader(false, "");
+    this.preventScroll(false);
   }
 
   showSummary() {

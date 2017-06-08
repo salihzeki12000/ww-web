@@ -61,10 +61,9 @@
         <ww-google-place-search
         [settings]="'true'"
         [options]="options"
-        [prepopulate]="currentUser?.city?.name"
+        [populate]="currentUser?.city?.name"
         (placeDetail)="setCity($event)"
         (searching)="searching($event)"></ww-google-place-search>
-        <!-- <h6 class="new-city" *ngIf="city">City change to {{ city.name }}</h6> -->
       </div>
 
       <div class="profile-edit-item">

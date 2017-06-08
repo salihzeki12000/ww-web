@@ -100,9 +100,6 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
                                                this.currentItinerary['date_from'] = result['date_from'].slice(0,10);
                                                this.currentItinerary['date_to'] = result['date_to'].slice(0,10);
 
-                                               this.dateFrom = this.currentItinerary['date_from'];
-                                               this.dateTo = this.currentItinerary['date_to'];
-
                                                this.getUsers();
                                                this.sortAdmin();
 
@@ -225,6 +222,9 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   }
 
   updateDateRange() {
+    this.dateFrom = this.currentItinerary['date_from'];
+    this.dateTo = this.currentItinerary['date_to'];
+
     this.picker.datePicker.setStartDate(this.dateFrom);
     this.picker.datePicker.setEndDate(this.dateTo);
   }
@@ -242,6 +242,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     }
 
     this.loadingService.setLoader(false, "");
+    this.preventScroll(false);
   }
 
   filterItineraries() {
@@ -499,10 +500,6 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
           }
           this.router.navigateByUrl('/me');
         })
-  }
-
-  getvalue()  {
-    console.log(this.editItineraryForm)
   }
 
   // share section

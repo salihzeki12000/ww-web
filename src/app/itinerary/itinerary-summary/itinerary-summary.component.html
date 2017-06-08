@@ -19,7 +19,8 @@
   <h4 class="nil-event-message-mobile">You can access the "ADD NEW" tab by scrolling up and the options will appear at the bottom of the screen.</h4>
 </div>
 
-<div class="date-row" [class.show-details-in-summary-true]="showDetailsInSummary" (scroll)=onScroll($event)>
+<div class="date-row" [class.show-details-in-summary-true]="showDetailsInSummary" (scroll)="onScroll($event)">
+<!-- (window:resize)="onScroll($event)" -->
 
   <div class="date-bar" [style.left]="left">
     <div *ngFor="let date of itinDateRange; let i = index">
@@ -33,6 +34,14 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <div class="scroll-left" (click)="scrollLeft()">
+    <i class="fa fa-chevron-left" aria-hidden="true"></i>
+  </div>
+
+  <div class="scroll-right" (click)="scrollRight()">
+    <i class="fa fa-chevron-right" aria-hidden="true"></i>
   </div>
 
   <div *ngIf="currentDate === 'any day'">

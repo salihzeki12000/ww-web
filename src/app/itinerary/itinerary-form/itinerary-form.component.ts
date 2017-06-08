@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs/Rx';
 
 import { User, UserService } from '../../user';
 import { ItineraryService }  from '../itinerary.service';
+import { LoadingService }    from '../../loading';
 
 @Component({
   selector: 'ww-itinerary-form',
@@ -28,6 +29,7 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
+    private loadingService: LoadingService,
     private formBuilder: FormBuilder,
     private userService: UserService,
     private itineraryService: ItineraryService) {
@@ -67,6 +69,8 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
   }
 
   saveNew()  {
+    this.loadingService.setLoader(true, "Saving new itinerary...");
+
     let itinerary = this.itineraryForm.value;
     let oneDay = 24*60*60*1000;
 
@@ -96,6 +100,7 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
 
     this.itineraryService.addItin(itinerary).subscribe(
       data => {
+        this.loadingService.setLoader(false, "");
         this.router.navigate(['/me/itinerary', data.itinerary._id]);
     });
 

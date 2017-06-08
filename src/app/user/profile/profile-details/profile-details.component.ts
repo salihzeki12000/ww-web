@@ -57,6 +57,7 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
                                        })
 
     this.loadingService.setLoader(false, "");
+    this.renderer.removeClass(document.body, 'prevent-scroll');
   }
 
   @HostListener('window:scroll', ['$event'])

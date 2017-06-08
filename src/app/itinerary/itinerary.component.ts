@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter, Renderer2 } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter, Renderer2, ElementRef } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
@@ -37,6 +37,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   addResource = false;
 
   constructor(
+    private element: ElementRef,
     private renderer: Renderer2,
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
@@ -265,6 +266,14 @@ export class ItineraryComponent implements OnInit, OnDestroy {
     } else  {
       this.renderer.removeClass(document.body, 'prevent-scroll');
     }
+  }
+
+  scrollLeft()  {
+    this.element.nativeElement.firstElementChild.children[5].firstElementChild.firstElementChild.scrollLeft -= 100;
+  }
+
+  scrollRight() {
+    this.element.nativeElement.firstElementChild.children[5].firstElementChild.firstElementChild.scrollLeft += 100;
   }
 
   routeToUser(id) {

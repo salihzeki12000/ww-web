@@ -51,6 +51,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.newUser = this.authService.newUser;
     this.loadingService.setLoader(false, "");
+    this.renderer.removeClass(document.body, 'prevent-scroll');
   }
 
   ngOnDestroy() {

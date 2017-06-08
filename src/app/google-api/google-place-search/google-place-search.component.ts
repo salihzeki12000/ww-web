@@ -4,7 +4,7 @@ declare var google:any;
 @Component({
   selector: 'ww-google-place-search',
   template: `
-    <input type="text" #ggPlaceSearch placeholder="" [value]="prepopulate" (dblclick)="getDetails()" (keyup.enter)="$event.preventDefault()" (keyup.enter)="logSearch(ggPlaceSearch.value)" [class.settings]="settings === 'true'">
+    <input type="text" #ggPlaceSearch placeholder="" [value]="populate" (dblclick)="getDetails()" (keyup.enter)="$event.preventDefault()" (keyup.enter)="logSearch(ggPlaceSearch.value)" [class.settings]="settings === 'true'">
   `,
   styleUrls: ['./google-place-search.component.scss']
 })
@@ -12,7 +12,7 @@ export class GooglePlaceSearchComponent implements OnInit, AfterViewInit {
   @ViewChild('ggPlaceSearch') ggPlaceSearch: ElementRef;
   place;
   @Input() options;
-  @Input() prepopulate = "";
+  @Input() populate = "";
   @Input() settings; //to display input field without border
 
   @Output() placeDetail = new EventEmitter();

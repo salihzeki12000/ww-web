@@ -169,6 +169,7 @@ img.user-profile-thumbnail  {
     position: fixed;
     display: block;
     top: calc(100vh - 40px);
+    left: 40px;
     // top: calc(100vh - 21px);
     padding: 10.5px 20px;
     height: 40px;
@@ -213,6 +214,37 @@ nav {
   }
 }
 
+.scroll-left,
+.scroll-right {
+  display: none;
+  @media only screen and (min-width: 420px) and (max-width: 1091px) {
+    position: fixed;
+    display: block;
+    bottom: 0;
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    z-index: 4;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+}
+
+.scroll-left i,
+.scroll-right i {
+  padding: 12.7px 14.5px;
+}
+
+.scroll-left  {
+  left: 0;
+}
+
+.scroll-right {
+  right: 0;
+}
+
 .itinerary-nav-tabs {
   position: fixed;
   left: 0;
@@ -228,9 +260,9 @@ nav {
     position: fixed;
     top: calc(100vh - 40px);
     // top: calc(100vh - 21px);
-    left: 55px;
+    left: 95px;
     height: auto;
-    width: calc(100vw - 50px);
+    width: calc(100vw - 135px);
     margin-bottom: 0;
     padding: 0;
     list-style: none;
