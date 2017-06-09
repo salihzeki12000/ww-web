@@ -32,7 +32,7 @@ import { AdminComponent } from './admin';
 import { AttractionsComponent } from './attractions/attractions.component';
 import { AdminAttractionComponent,AdminAttractionFormComponent } from './admin/admin-attraction';
 
-import { FileuploadService, CommentService } from './shared';
+import { FileuploadService, CommentService, TimePickerComponent } from './shared';
 import { LoadingComponent, LoadingService } from './loading';
 import { ErrorMessageComponent, ErrorMessageService } from './error-message';
 
@@ -109,6 +109,7 @@ import { ErrorMessageComponent, ErrorMessageService } from './error-message';
     PendingFollowersComponent,
     LoadingComponent,
     ErrorMessageComponent,
+    TimePickerComponent
   ],
   imports: [
     BrowserModule,

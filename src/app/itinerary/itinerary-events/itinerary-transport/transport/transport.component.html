@@ -256,8 +256,15 @@
                     </option>
                   </select>
 
-                  <label>Departure Time</label>
-                  <input type="time" formControlName="dep_time">
+                  <label>Departure Time (24hrs)</label>
+                  <ww-time-picker
+                  [timePicker]="timePickerDep"
+                  [ats]="ats"
+                  [initHour]="initHourDep"
+                  [initMinute]="initMinuteDep"
+                  (hourSelected)="selectHourDep($event)"
+                  (minuteSelected)="selectMinuteDep($event)"
+                  (pickerSelected)="selectPickerDep($event)"></ww-time-picker>
                 </div>
 
                 <div *ngIf="event.transport_type === 'vehicle rental'">
@@ -271,7 +278,14 @@
                   </select>
 
                   <label>Pick Up Time</label>
-                  <input type="time" formControlName="dep_time">
+                  <ww-time-picker
+                  [timePicker]="timePickerDep"
+                  [ats]="ats"
+                  [initHour]="initHourDep"
+                  [initMinute]="initMinuteDep"
+                  (hourSelected)="selectHourDep($event)"
+                  (minuteSelected)="selectMinuteDep($event)"
+                  (pickerSelected)="selectPickerDep($event)"></ww-time-picker>   
                 </div>
               </div><!-- end of departure details except flights -->
 
@@ -331,7 +345,14 @@
                   </select>
 
                   <label>Arrival Time</label>
-                  <input type="time" formControlName="arr_time">
+                  <ww-time-picker
+                  [timePicker]="timePickerArr"
+                  [ats]="ats"
+                  [initHour]="initHourArr"
+                  [initMinute]="initMinuteArr"
+                  (hourSelected)="selectHourArr($event)"
+                  (minuteSelected)="selectMinuteArr($event)"
+                  (pickerSelected)="selectPickerArr($event)"></ww-time-picker>
                 </div>
 
                 <div *ngIf="event.transport_type === 'vehicle rental'">
@@ -345,7 +366,14 @@
                   </select>
 
                   <label>Return Time</label>
-                  <input type="time" formControlName="arr_time">
+                  <ww-time-picker
+                  [timePicker]="timePickerArr"
+                  [ats]="ats"
+                  [initHour]="initHourArr"
+                  [initMinute]="initMinuteArr"
+                  (hourSelected)="selectHourArr($event)"
+                  (minuteSelected)="selectMinuteArr($event)"
+                  (pickerSelected)="selectPickerArr($event)"></ww-time-picker>
                 </div>
               </div><!-- end of arrival details except flights -->
 

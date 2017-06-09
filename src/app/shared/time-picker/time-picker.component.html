@@ -1,0 +1,23 @@
+<div class="time-picker" (click)="showPicker()">
+  <h4 class="time" *ngIf="hour !== 'anytime'">{{ hour }} : {{ minute }}</h4>
+  <h4 class="time" *ngIf="hour === 'anytime'">{{ hour }}</h4>
+</div>
+
+<div *ngIf="timePicker" class="time-picker-dropdown">
+  <h5 class="time">hh</h5>
+  <h5 class="time">mm</h5>
+
+  <select class="time-select" (change)="selectHour($event.target.value)">
+    <option *ngFor="let h of hours" [selected]="hour === h">
+      <h4>{{h}}</h4>
+    </option>
+  </select>
+
+  <select class="time-select" (change)="selectMinute($event.target.value)">
+    <option *ngFor="let m of minutes" [selected]="minute === m">
+      <h4>{{m}}</h4>
+    </option>
+  </select>
+
+  <h4 *ngIf="ats" (click)="selectHour('anytime')" [class.selected-time]="hour === 'anytime'">anytime</h4>
+</div>

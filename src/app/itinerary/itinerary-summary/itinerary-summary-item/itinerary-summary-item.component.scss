@@ -92,17 +92,10 @@ p.edit-note  {
   }
 }
 
-.summary-meal-indicator {
-  margin: -5px 0 5px 0;
-}
-
-.summary-meal-indicator div {
-  display: inline-block;
-  margin-right: 2px;
-}
-
 .summary-meal-indicator h6  {
-  padding: 2px 5px 0px 5px;
+  display: inline-block;
+  margin: 0 2px 5px 0;
+  padding: 2px 5px 1px 5px;
   color: #19CC72;
   border: 1px solid #19cc72;
   border-radius: 15px;

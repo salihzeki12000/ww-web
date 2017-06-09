@@ -36,11 +36,14 @@
               </option>
             </select>
 
-            <label>Time To Visit <span class="label-note"> - Default: any time</span></label>
-            <input type="time" formControlName="time">
+            <label>Time To Visit (24hrs)</label>
+            <ww-time-picker
+            [timePicker]="timePicker"
+            [ats]="ats"
+            (hourSelected)="selectHour($event)" (minuteSelected)="selectMinute($event)" (pickerSelected)="selectPicker($event)"></ww-time-picker>
 
             <div formArrayName="meals" class="meal-indicator">
-              <label>Meal indicator <span class="label-note"> - may select more than 01 option</span></label>
+              <label>Meal tags <span class="label-note"> - may select more than 01 option</span></label>
 
               <div *ngFor="let meal of meals.controls; let j = index" [formGroupName]="j" class="meal-item">
                 <div class="meal-input">

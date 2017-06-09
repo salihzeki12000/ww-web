@@ -39,7 +39,14 @@ export class ActivityComponent implements OnInit, OnDestroy {
   editActivityForm: FormGroup;
   categories;
   meals;
-  anytime;
+
+  //time picker
+  ats = true;
+  initHour = "";
+  initMinute = "";
+  timePicker = false;
+  hour = "";
+  minute = "";
 
   constructor(
     private formBuilder: FormBuilder,
@@ -76,12 +83,21 @@ export class ActivityComponent implements OnInit, OnDestroy {
                                         })
     this.activity['formatted_hours'] = this.activity['opening_hours'].replace(/\r?\n/g, '<br/> ');
     this.activity['formatted_note'] = this.activity['note'].replace(/\r?\n/g, '<br/> ');
+
+    this.initTime();
   }
 
   @HostListener('document:click', ['$event'])
   checkClick(event) {
     if(!event.target.classList.contains("dots-menu")) {
       this.showMenu = false;
+    }
+
+    if(!event.target.classList.contains("time-picker-dropdown") &&
+      !event.target.classList.contains("time") &&
+      !event.target.classList.contains("time-select") &&
+      !event.target.classList.contains("selected-time")) {
+      this.timePicker = false;
     }
   }
 
@@ -134,6 +150,19 @@ export class ActivityComponent implements OnInit, OnDestroy {
     return this.categories;
   }
 
+  initTime()  {
+    if(this.activity['time'] === "anytime") {
+      this.hour = 'anytime';
+      this.minute = "00";
+    } else {
+      this.hour = this.activity['time'].slice(0,2);
+      this.minute = this.activity['time'].slice(3,6);
+    }
+
+    this.initHour = this.hour;
+    this.initMinute = this.minute;
+  }
+
   // copy section
   copy()  {
     this.copying = true;
@@ -184,12 +213,6 @@ export class ActivityComponent implements OnInit, OnDestroy {
       date: this.activity['date'],
       note: this.activity['note'],
     })
-
-    if(this.activity['time'] === 'anytime') {
-      this.anytime = true;
-    } else  {
-      this.anytime = false;
-    }
   }
 
   edit()  {
@@ -208,16 +231,30 @@ export class ActivityComponent implements OnInit, OnDestroy {
     this.preventScroll(false);
   }
 
+  // select time
+  selectPicker()  {
+    this.timePicker = true;
+  }
+
+  selectHour(h) {
+    this.hour = h;
+  }
+
+  selectMinute(m) {
+    this.minute = m;
+  }
+
+
   saveEdit()  {
     this.loadingService.setLoader(true, "Saving...");
 
     let editedActivity = this.editActivityForm.value;
     let originalActivity = this.activity;
 
-    if(this.anytime === true) {
+    if(this.hour === 'anytime')  {
       editedActivity['time'] = 'anytime';
-    } else if(!this.anytime && !editedActivity['time'])  {
-      editedActivity['time'] = originalActivity['time']
+    } else  {
+      editedActivity['time'] = this.hour + ':' + this.minute;
     }
 
     for (let value in editedActivity) {
@@ -233,6 +270,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
 
     this.editing = false;
     this.preventScroll(false);
+    this.initTime();
   }
 
   // delete section
@@ -254,10 +292,6 @@ export class ActivityComponent implements OnInit, OnDestroy {
           })
     this.deleteActivity = false;
     this.preventScroll(false);
-}
-
-  toggleAnytime() {
-    this.anytime = !this.anytime;
   }
 
   // others

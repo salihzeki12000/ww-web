@@ -38,8 +38,13 @@
               </div>
 
               <div class="time-to-visit">
-                <label>Check In Time</label>
-                <input type="time" formControlName="check_in_time">
+                <label>Check In Time (24hrs)</label>
+                <ww-time-picker
+                [timePicker]="timePickerIn"
+                [ats]="ats"
+                [initHour]="initHourIn"
+                [initMinute]="initMinuteIn"
+                (hourSelected)="selectHourIn($event)" (minuteSelected)="selectMinuteIn($event)" (pickerSelected)="selectPickerIn($event)"></ww-time-picker>
               </div>
             </div><!-- end of check in -->
 
@@ -56,8 +61,13 @@
               </div>
 
               <div class="time-to-visit">
-                <label>Check Out Time</label>
-                <input type="time" formControlName="check_out_time">
+                <label>Check Out Time (24hrs)</label>
+                <ww-time-picker
+                [timePicker]="timePickerOut"
+                [ats]="ats"
+                [initHour]="initHourOut"
+                [initMinute]="initMinuteOut"
+                (hourSelected)="selectHourOut($event)" (minuteSelected)="selectMinuteOut($event)" (pickerSelected)="selectPickerOut($event)"></ww-time-picker>
               </div>
             </div><!-- end of check out -->
 

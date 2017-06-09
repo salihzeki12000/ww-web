@@ -33,8 +33,21 @@ export class TransportComponent implements OnInit, OnDestroy {
   editing = false;
   deleteTransport = false;
 
-
   editTransportForm: FormGroup;
+
+  // time picker
+  ats = true;
+  initHourDep = "";
+  initMinuteDep = "";
+  timePickerDep = false;
+  hourDep = "";
+  minuteDep = "";
+
+  initHourArr = "";
+  initMinuteArr = "";
+  timePickerArr = false;
+  hourArr = "";
+  minuteArr = "";
 
   constructor(
     private renderer: Renderer2,
@@ -71,12 +84,21 @@ export class TransportComponent implements OnInit, OnDestroy {
                                        })
 
     this.event['formatted_note'] = this.event['note'].replace(/\r?\n/g, '<br/> ');
+    this.initTime();
   }
 
   @HostListener('document:click', ['$event'])
   checkClick(event) {
     if(!event.target.classList.contains("dots-menu")) {
       this.showMenu = false;
+    }
+
+    if(!event.target.classList.contains("time-picker-dropdown") &&
+      !event.target.classList.contains("time") &&
+      !event.target.classList.contains("time-select") &&
+      !event.target.classList.contains("selected-time")) {
+      this.timePickerDep = false;
+      this.timePickerArr = false;
     }
   }
 
@@ -105,6 +127,31 @@ export class TransportComponent implements OnInit, OnDestroy {
         this.itineraries.push(this.currentUser['itineraries'][i])
       }
     }
+  }
+
+  initTime()  {
+    if(this.event['dep_time'] === 'anytime') {
+      this.hourDep = 'anytime';
+      this.minuteDep = "00";
+    } else  {
+      this.hourDep = this.event['dep_time'].slice(0,2);
+      this.minuteDep = this.event['dep_time'].slice(3,6);
+    }
+
+    this.initHourDep = this.hourDep;
+    this.initMinuteDep = this.minuteDep;
+
+
+    if(this.event['arr_time'] === 'anytime')  {
+      this.hourArr = 'anytime';
+      this.minuteArr = "00";
+    } else  {
+      this.hourArr = this.event['arr_time'].slice(0,2);
+      this.minuteArr = this.event['arr_time'].slice(3,6);
+    }
+
+    this.initHourArr = this.hourArr;
+    this.initMinuteArr = this.minuteArr;
   }
 
   // copy section
@@ -175,11 +222,49 @@ export class TransportComponent implements OnInit, OnDestroy {
     this.preventScroll(false);
   }
 
+  // select departure time
+  selectPickerDep()  {
+    this.timePickerDep = true;
+  }
+
+  selectHourDep(h) {
+    this.hourDep = h;
+  }
+
+  selectMinuteDep(m) {
+    this.minuteDep = m;
+  }
+
+  // select arrival time
+  selectPickerArr()  {
+    this.timePickerArr = true;
+  }
+
+  selectHourArr(h) {
+    this.hourArr = h;
+  }
+
+  selectMinuteArr(m) {
+    this.minuteArr = m;
+  }
+
   saveEdit()  {
     this.loadingService.setLoader(true, "Saving...");
 
     let editedTransport = this.editTransportForm.value;
     let originalTransport = this.event;
+
+    if(this.hourDep === 'anytime')  {
+      editedTransport['dep_time'] = 'anytime';
+    } else  {
+      editedTransport['dep_time'] = this.hourDep + ':' + this.minuteDep;
+    }
+
+    if(this.hourArr === 'anytime')  {
+      editedTransport['arr_time'] = 'anytime';
+    } else  {
+      editedTransport['arr_time'] = this.hourArr + ':' + this.minuteArr;
+    }
 
     for (var value in editedTransport) {
       originalTransport[value] = editedTransport[value];
@@ -197,6 +282,7 @@ export class TransportComponent implements OnInit, OnDestroy {
 
     this.editing = false;
     this.preventScroll(false);
+    this.initTime()
   }
 
   // delete section

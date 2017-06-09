@@ -65,10 +65,8 @@
 
     <div *ngIf="event?.type === 'activity'" class="summary-item" (click)="showDetails(event)">
 
-      <div class="summary-meal-indicator">
-        <div *ngFor="let meal of event?.meals">
-          <h6 *ngIf="meal.checked">{{ meal.value }}</h6>
-        </div>
+      <div class="summary-meal-indicator" *ngFor="let meal of event?.meals">
+        <h6 *ngIf="meal.checked">{{ meal.value }}</h6>
       </div>
 
       <div class="activity-indicator pill"></div>

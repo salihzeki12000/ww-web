@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, HostListener } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
@@ -52,6 +52,16 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   arrCity = '';
   depStation = '';
   arrStation = '';
+
+  // time picker
+  ats = true;
+  timePickerDep = false;
+  hourDep = "anytime";
+  minuteDep = "00";
+
+  timePickerArr = false;
+  hourArr = "anytime";
+  minuteArr = "00";
 
   itinDateSubscription: Subscription;
   itinDateRange = [];
@@ -113,6 +123,17 @@ export class TransportFormComponent implements OnInit, OnDestroy {
                                         this.itinDateRange.splice(0,1);
                                         this.firstDay = this.itinDateRange[0];
                                     })
+  }
+
+  @HostListener('document:click', ['$event'])
+  checkClick(event) {
+    if(!event.target.classList.contains("time-picker-dropdown") &&
+      !event.target.classList.contains("time") &&
+      !event.target.classList.contains("time-select") &&
+      !event.target.classList.contains("selected-time")) {
+      this.timePickerDep = false;
+      this.timePickerArr = false;
+    }
   }
 
   ngOnDestroy() {
@@ -533,6 +554,32 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     })
   }
 
+  // select departure time
+  selectPickerDep()  {
+    this.timePickerDep = true;
+  }
+
+  selectHourDep(h) {
+    this.hourDep = h;
+  }
+
+  selectMinuteDep(m) {
+    this.minuteDep = m;
+  }
+
+  // select arrival time
+  selectPickerArr()  {
+    this.timePickerArr = true;
+  }
+
+  selectHourArr(h) {
+    this.hourArr = h;
+  }
+
+  selectMinuteArr(m) {
+    this.minuteArr = m;
+  }
+
   saveNew()  {
     let newTransport = this.addTransportForm.value;
 
@@ -547,20 +594,18 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       newTransport['reference_number'] = this.flightSearchDetail['carrierCode'] + this.flightSearchDetail['reference_number'];
     }
 
-    if(newTransport['dep_time'] === '')  {
+    if(this.hourDep === 'anytime')  {
       newTransport['dep_time'] = 'anytime';
+    } else  {
+      newTransport['dep_time'] = this.hourDep + ':' + this.minuteDep;
     }
 
-    if(newTransport['arr_time'] === '')  {
+    if(this.hourArr === 'anytime')  {
       newTransport['arr_time'] = 'anytime';
+    } else  {
+      newTransport['arr_time'] = this.hourArr + ':' + this.minuteArr;
     }
 
-    let depYear = newTransport['dep_date'].slice(1,5);
-    let depMonth = newTransport['dep_date'].slice(6,8);
-    let depDay = newTransport['dep_date'].slice(9,11);
-    let time = 'T00:00:00.000Z';
-
-    // let date = new Date(depYear + "-" + depMonth + "-" + depDay + "T00:00:00.000Z").toISOString();
     let date = new Date(newTransport['dep_date']).toISOString();
 
     newTransport['date'] = date;

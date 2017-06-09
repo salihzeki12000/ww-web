@@ -46,10 +46,8 @@
       <h5 *ngIf="!summary">{{ index + 1 }} of {{ totalActivities }}</h5>
     </div>
 
-    <div class="meals-tags">
-      <div *ngFor="let meal of activity?.meals">
-        <h5 *ngIf="meal.checked"> {{ meal.value }}</h5>
-      </div>
+    <div class="meals-tags" *ngFor="let meal of activity?.meals">
+      <h5 *ngIf="meal.checked"> {{ meal.value }}</h5>
     </div>
 
     <h3 class="activity-header">{{ activity?.name }}</h3>
@@ -168,18 +166,15 @@
               </option>
             </select>
 
-            <div [class.any-time-true]="anytime">
-              <label>Time To Visit (
-
-                <div class="anytime-input">
-                  <label>Any Time
-                    <input type="checkbox" (click)="toggleAnytime()" formControlName="time" [ngModel]="anytime">
-                  </label>
-                </div>
-                )
-              </label>
-              <input type="time" formControlName="time" [value]="activity.time" *ngIf="!anytime">
-            </div>
+            <label>Time To Visit (24hrs)</label>
+            <ww-time-picker
+            [timePicker]="timePicker"
+            [ats]="ats"
+            [initHour]="initHour"
+            [initMinute]="initMinute"
+            (hourSelected)="selectHour($event)"
+            (minuteSelected)="selectMinute($event)"
+            (pickerSelected)="selectPicker($event)"></ww-time-picker>
 
             <div formArrayName="meals" class="meal-indicator">
               <label>Meal indicator <span class="label-note"> - may select more than 01 option</span></label>

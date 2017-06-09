@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, HostListener } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
@@ -22,6 +22,20 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
 
   addAccommodationForm: FormGroup;
   manualEntry = true;
+
+  // time picker
+  ats = true;
+  initHourIn = '15';
+  initMinuteIn = "00";
+  timePickerIn = false;
+  hourIn = "15";
+  minuteIn = "00";
+
+  initHourOut = '12';
+  initMinuteOut = "00";
+  timePickerOut = false;
+  hourOut = "12";
+  minuteOut = "00";
 
   searchDone = false;
 
@@ -89,6 +103,17 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
                                     })
   }
 
+  @HostListener('document:click', ['$event'])
+  checkClick(event) {
+    if(!event.target.classList.contains("time-picker-dropdown") &&
+      !event.target.classList.contains("time") &&
+      !event.target.classList.contains("time-select") &&
+      !event.target.classList.contains("selected-time")) {
+      this.timePickerIn = false;
+      this.timePickerOut = false;
+    }
+  }
+
   ngOnDestroy() {
     this.currentUserSubscription.unsubscribe();
     this.currentItinerarySubscription.unsubscribe();
@@ -144,6 +169,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
       stay_city: value.stay_city,
       url: value.url,
       place_id: value.place_id,
+      note: ""
     })
 
     let index = 0;
@@ -164,6 +190,32 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
 
     this.searchDone = true;
     this.manualEntry = false;
+  }
+
+  // select check in time
+  selectPickerIn()  {
+    this.timePickerIn = true;
+  }
+
+  selectHourIn(h) {
+    this.hourIn = h;
+  }
+
+  selectMinuteIn(m) {
+    this.minuteIn = m;
+  }
+
+  // select check out time
+  selectPickerOut()  {
+    this.timePickerOut = true;
+  }
+
+  selectHourOut(h) {
+    this.hourOut = h;
+  }
+
+  selectMinuteOut(m) {
+    this.minuteOut = m;
   }
 
   // select picture as display pic
@@ -201,9 +253,20 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
   // save
   saveNew()  {
     let newAccommodation = this.addAccommodationForm.value;
-
     if(this.displayPic)  {
       newAccommodation['photo'] = this.displayPic;
+    }
+
+    if(this.hourIn === 'anytime') {
+      newAccommodation['check_in_time'] = 'anytime';
+    } else  {
+      newAccommodation['check_in_time'] = this.hourIn + ':' + this.minuteIn;
+    }
+
+    if(this.hourOut === 'anytime') {
+      newAccommodation['check_out_time'] = 'anytime';
+    } else  {
+      newAccommodation['check_out_time'] = this.hourOut + ':' + this.minuteOut;
     }
 
     newAccommodation['date'] = newAccommodation['check_in_date'];
@@ -234,6 +297,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
     this.itineraryEventService.addEvent(accommodation, this.currentItinerary)
         .subscribe(
           result => {
+            console.log(result);
             if(this.route.snapshot['_urlSegment'].segments[3].path !== 'accommodation') {
               let id = this.route.snapshot['_urlSegment'].segments[2].path;
               this.router.navigateByUrl('/me/itinerary/' + id + '/accommodation');

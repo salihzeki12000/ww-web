@@ -13,12 +13,9 @@
   }
 }
 
-.meals-tags div {
-  display: inline-block;
-  margin: 10px 2px 5px 0;
-}
-
 .meals-tags h5  {
+  display: inline-block;
+  margin: 10px 2px 0 0;
   padding: 2px 10px;
   border: 1px solid #19CC72;
   border-radius: 15px;
@@ -31,19 +28,6 @@
 }
 
 /* edit view */
-.anytime-input  {
-  display: inline-block;
-}
-
-.anytime-input > label > input  {
-  display: inline-block;
-  width: 15px;
-}
-
-.any-time-true {
-  margin-bottom: 10px;
-}
-
 .category-input > input {
   display: inline-block;
   width: 15px;

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, EventEmitter, Input, Output } from '@angular/core';
+import { Component, OnInit, OnDestroy, EventEmitter, Input, Output, HostListener } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
@@ -19,6 +19,13 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
 
   addActivityForm: FormGroup;
   manualEntry = true;
+
+  // time picker
+  ats = true;
+  timePicker = false;
+  hour = "anytime";
+  minute = "";
+
   categories;
   meals;
 
@@ -84,6 +91,16 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
                                     })
   }
 
+  @HostListener('document:click', ['$event'])
+  checkClick(event) {
+    if(!event.target.classList.contains("time-picker-dropdown") &&
+      !event.target.classList.contains("time") &&
+      !event.target.classList.contains("time-select") &&
+      !event.target.classList.contains("selected-time")) {
+      this.timePicker = false;
+    }
+  }
+
   ngOnDestroy() {
     this.currentUserSubscription.unsubscribe();
     this.currentItinerarySubscription.unsubscribe();
@@ -125,6 +142,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     this.searchDone = false;
     this.manualEntry = true;
     this.addActivityForm.reset();
+    this.initMeals();
     this.displayPic = '';
     this.pictureOptions = [];
   }
@@ -212,6 +230,19 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     return output;
   }
 
+  // select time
+  selectPicker()  {
+    this.timePicker = true;
+  }
+
+  selectHour(h) {
+    this.hour = h;
+  }
+
+  selectMinute(m) {
+    this.minute = m;
+  }
+
   // select picture as display pic
   selectPic(image)  {
     this.displayPic = image;
@@ -248,8 +279,10 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   saveNew()  {
     let newActivity = this.addActivityForm.value;
 
-    if(newActivity['time'] === '')  {
+    if(this.hour === 'anytime')  {
       newActivity['time'] = 'anytime';
+    } else  {
+      newActivity['time'] = this.hour + ':' + this.minute;
     }
 
     if(this.displayPic)  {

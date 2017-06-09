@@ -36,8 +36,20 @@ export class AccommodationComponent implements OnInit, OnDestroy {
   deleteAccommodation = false;
 
   editAccommodationForm: FormGroup;
-  anyCheckInTime;
-  anyCheckOutTime;
+
+  // time picker
+  ats = true;
+  initHourIn = "";
+  initMinuteIn = "";
+  timePickerIn = false;
+  hourIn = "";
+  minuteIn = "";
+
+  initHourOut = "";
+  initMinuteOut = "";
+  timePickerOut = false;
+  hourOut = "";
+  minuteOut = "";
 
   constructor(
     private renderer: Renderer2,
@@ -70,12 +82,22 @@ export class AccommodationComponent implements OnInit, OnDestroy {
                                        })
 
     this.event['formatted_note'] = this.event['note'].replace(/\r?\n/g, '<br/> ');
+
+    this.initTime();
   }
 
   @HostListener('document:click', ['$event'])
   checkClick(event) {
     if(!event.target.classList.contains("dots-menu")) {
       this.showMenu = false;
+    }
+
+    if(!event.target.classList.contains("time-picker-dropdown") &&
+      !event.target.classList.contains("time") &&
+      !event.target.classList.contains("time-select") &&
+      !event.target.classList.contains("selected-time")) {
+      this.timePickerIn = false;
+      this.timePickerOut = false;
     }
   }
 
@@ -104,6 +126,31 @@ export class AccommodationComponent implements OnInit, OnDestroy {
         this.itineraries.push(this.currentUser['itineraries'][i])
       }
     }
+  }
+
+  initTime()  {
+    if(this.event['check_in_time'] === 'anytime') {
+      this.hourIn = 'anytime';
+      this.minuteIn = "00";
+    } else  {
+      this.hourIn = this.event['check_in_time'].slice(0,2);
+      this.minuteIn = this.event['check_in_time'].slice(3,6);
+    }
+
+    this.initHourIn = this.hourIn;
+    this.initMinuteIn = this.minuteIn;
+
+
+    if(this.event['check_out_time'] === 'anytime')  {
+      this.hourOut = 'anytime';
+      this.minuteOut = "00";
+    } else  {
+      this.hourOut = this.event['check_out_time'].slice(0,2);
+      this.minuteOut = this.event['check_out_time'].slice(3,6);
+    }
+
+    this.initHourOut = this.hourOut;
+    this.initMinuteOut = this.minuteOut;
   }
 
   // copy section
@@ -154,18 +201,6 @@ export class AccommodationComponent implements OnInit, OnDestroy {
       stay_city: this.event['stay_city'],
       note: this.event['note'],
     })
-
-    if(this.event['check_in_time'] === 'anytime') {
-      this.anyCheckInTime = true;
-    } else  {
-      this.anyCheckInTime = false;
-    }
-
-    if(this.event['check_out_time'] === 'anytime') {
-      this.anyCheckOutTime = true;
-    } else  {
-      this.anyCheckOutTime = false;
-    }
   }
 
   edit()  {
@@ -184,22 +219,48 @@ export class AccommodationComponent implements OnInit, OnDestroy {
     this.preventScroll(false);
   }
 
+  // select check in time
+  selectPickerIn()  {
+    this.timePickerIn = true;
+  }
+
+  selectHourIn(h) {
+    this.hourIn = h;
+  }
+
+  selectMinuteIn(m) {
+    this.minuteIn = m;
+  }
+
+  // select check out time
+  selectPickerOut()  {
+    this.timePickerOut = true;
+  }
+
+  selectHourOut(h) {
+    this.hourOut = h;
+  }
+
+  selectMinuteOut(m) {
+    this.minuteOut = m;
+  }
+
   saveEdit() {
     this.loadingService.setLoader(true, "Saving...");
 
     let editedAccommodation = this.editAccommodationForm.value;
     let originalAccommodation = this.event;
 
-    if(this.anyCheckInTime === true)  {
+    if(this.hourIn === 'anytime') {
       editedAccommodation['check_in_time'] = 'anytime';
-    } else if(!this.anyCheckInTime && !editedAccommodation['check_in_time'])  {
-      editedAccommodation['check_in_time'] = originalAccommodation['check_in_time']
+    } else  {
+      editedAccommodation['check_in_time'] = this.hourIn + ':' + this.minuteIn;
     }
 
-    if(this.anyCheckOutTime === true)  {
+    if(this.hourOut === 'anytime') {
       editedAccommodation['check_out_time'] = 'anytime';
-    } else if(!this.anyCheckOutTime && !editedAccommodation['check_out_time'])  {
-      editedAccommodation['check_out_time'] = originalAccommodation['check_out_time']
+    } else  {
+      editedAccommodation['check_out_time'] = this.hourOut + ':' + this.minuteOut;
     }
 
     for(let value in editedAccommodation) {
@@ -218,6 +279,7 @@ export class AccommodationComponent implements OnInit, OnDestroy {
 
     this.editing = false;
     this.preventScroll(false);
+    this.initTime();
   }
 
   // delete section
@@ -239,14 +301,6 @@ export class AccommodationComponent implements OnInit, OnDestroy {
           })
     this.deleteAccommodation = false;
     this.preventScroll(false);
-  }
-
-  toggleCheckInTime() {
-    this.anyCheckInTime = !this.anyCheckInTime;
-  }
-
-  toggleCheckOutTime() {
-    this.anyCheckOutTime = !this.anyCheckOutTime;
   }
 
   // others
