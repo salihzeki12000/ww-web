@@ -269,11 +269,11 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   }
 
   scrollLeft()  {
-    this.element.nativeElement.firstElementChild.children[5].firstElementChild.firstElementChild.scrollLeft -= 100;
+    this.element.nativeElement.firstElementChild.children[4].firstElementChild.firstElementChild.scrollLeft -= 100;
   }
 
   scrollRight() {
-    this.element.nativeElement.firstElementChild.children[5].firstElementChild.firstElementChild.scrollLeft += 100;
+    this.element.nativeElement.firstElementChild.children[4].firstElementChild.firstElementChild.scrollLeft += 100;
   }
 
   routeToUser(id) {
