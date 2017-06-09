@@ -18,9 +18,7 @@
     </div>
   </div>
 
-  <div class="members-icon-mobile" (click)="showMembers()" [class.show-current-members-active]="showCurrentMembers">
-    <i class="fa fa-users fa-lg" aria-hidden="true"></i>
-  </div>
+
 
   <!-- show members list in media screen max-width: 1090px-->
   <div class="custom-modal" *ngIf="showCurrentMembers">
@@ -52,12 +50,14 @@
     <i class="fa fa-chevron-right" aria-hidden="true"></i>
   </div>
 
-  <div class="test">
-
-  </div>
   <header>
     <nav>
       <ul class="itinerary-nav-tabs">
+        <li>
+          <div class="members-icon-mobile" (click)="showMembers()" [class.show-current-members-active]="showCurrentMembers">
+            <i class="fa fa-users fa-lg" aria-hidden="true"></i>
+          </div>
+        </li>
         <li [class.add-new-active]="showAddNew" (mouseover)="showAddNewOptions()" class="add-new">
           <a (mouseover)="showAddNewOptions()"><i class="fa fa-plus" aria-hidden="true"></i> ADD NEW <i class="fa fa-caret-down fa-lg" aria-hidden="true"></i></a>
           <div class="add-new-options" *ngIf="showAddNew">
