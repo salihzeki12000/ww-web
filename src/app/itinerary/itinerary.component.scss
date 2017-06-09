@@ -207,7 +207,7 @@ img.user-profile-thumbnail  {
 }
 
 /* Itinerary navigation */
-nav {
+header, nav {
   @media only screen and (max-width: 1090px) {
     position: fixed;
     z-index: 500;
