@@ -156,7 +156,7 @@
                 <select class="select-date" name="check_in_date" formControlName="check_in_date">
                   <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
                     <div *ngIf="itinDate !== 'any day'">
-                      <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+                      <h5>Day {{ i }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
                     </div>
                   </option>
                 </select>
@@ -182,7 +182,7 @@
                 <select class="select-date" name="check_out_date" formControlName="check_out_date">
                   <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
                     <div *ngIf="itinDate !== 'any day'">
-                      <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+                      <h5>Day {{ i }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
                     </div>
                   </option>
                 </select>

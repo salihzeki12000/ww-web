@@ -9,7 +9,7 @@
   @media only screen and (max-width: 890px) {
     display: block;
     width: 100%;
-    height: calc(100vh - 130px);
+    height: calc(100vh - 125px);
   }
 
   @media only screen and (min-width: 890px) and (max-width: 1090px) {
@@ -103,17 +103,11 @@
 }
 
 .marker-details {
-  width: 80%;
+  width: 78%;
   @media only screen and (max-width: 890px) {
-    width: 90%;
+    width: 85%;
     font-size: 120%;
   }
-}
-
-.fa-map-marker {
-  display: inline-block;
-  width: 20%;
-  color: #6494ED;
 }
 
 .accommodation-summary-header {
@@ -133,16 +127,12 @@
 }
 
 .marker-index {
-  position: absolute;
-  top: 22px;
-  left: 8px;
-  height: 17px;
-  width: 17px;
-  padding: 0 2px;
-  color: white;
-  text-align: center;
-  background-color: #6494ED;
+  margin: 10px 5px;
+  padding: 3px 5px;
+  font-weight: 600;
+  border: 2px solid;
   border-radius: 50%;
+  float: left;
 }
 
 .marker-date {

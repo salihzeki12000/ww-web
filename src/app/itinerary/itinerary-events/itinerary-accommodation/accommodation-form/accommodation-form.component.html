@@ -18,6 +18,7 @@
         <div *ngIf="!searchDone">
           <label>Search accommodation by name or address <span class="required"> - local name or address may be required</span></label>
           <ww-google-place-search (placeDetail)="getAccommodationDetails($event)"></ww-google-place-search>
+          <h5 class="place-search-note">If you are staying at an Airbnb accommodation, you may want to search for a nearest location (like a train station or landmark) to pin this accommodation to the map.</h5>
           <h6 class="cannot-find" (click)="skipSearch()">Cannot find your accommodation? Proceed to key in details ></h6>
         </div>
 

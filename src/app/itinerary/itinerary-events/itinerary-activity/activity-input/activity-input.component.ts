@@ -24,7 +24,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   ats = true;
   timePicker = false;
   hour = "anytime";
-  minute = "";
+  minute = "00";
 
   categories;
   meals;
@@ -110,6 +110,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   initMeals()  {
     this.meals = this.formBuilder.array([
       this.formBuilder.group({ value: "Breakfast", checked: false }),
+      this.formBuilder.group({ value: "Brunch", checked: false }),
       this.formBuilder.group({ value: "Lunch", checked: false }),
       this.formBuilder.group({ value: "Dinner", checked: false }),
       this.formBuilder.group({ value: "Supper", checked: false }),

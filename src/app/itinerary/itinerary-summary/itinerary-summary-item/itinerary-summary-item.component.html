@@ -42,7 +42,7 @@
 </div>
 
 <div *ngFor="let event of events">
-  <div *ngIf="event?.summary_date === date">
+  <div *ngIf="event?.summary_date === date" class="summary-item-container">
     <h5 class="event-time">{{ event?.summary_time }}</h5>
 
     <div *ngIf="event?.type === 'accommodation'" class="summary-item" (click)="showDetails(event)">
@@ -65,18 +65,21 @@
 
     <div *ngIf="event?.type === 'activity'" class="summary-item" (click)="showDetails(event)">
 
-      <div class="summary-meal-indicator" *ngFor="let meal of event?.meals">
+      <div class="meals-display" *ngFor="let meal of event?.meals">
         <h6 *ngIf="meal.checked">{{ meal.value }}</h6>
       </div>
 
-      <div class="activity-indicator pill"></div>
+      <div>
+        <div class="activity-indicator pill"></div>
 
-      <img src="{{event?.photo}}" alt="picture of {{ event?.name}}" *ngIf="event?.photo">
-      <i class="fa fa-bicycle fa-lg" aria-hidden="true" *ngIf="!event?.photo"></i>
+        <img src="{{event?.photo}}" alt="picture of {{ event?.name}}" *ngIf="event?.photo">
+        <i class="fa fa-bicycle fa-lg" aria-hidden="true" *ngIf="!event?.photo"></i>
 
-      <div class="event-name">
-        <h5>{{ event?.name }}</h5>
+        <div class="event-name">
+          <h5>{{ event?.name }}</h5>
+        </div>
       </div>
+
     </div>
 
     <div *ngIf="event?.type === 'transport'" class="summary-item" (click)="showDetails(event)">

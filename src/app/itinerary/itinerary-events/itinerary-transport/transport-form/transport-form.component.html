@@ -244,6 +244,9 @@
             <label>Departure Date <span class="required"> - required</span></label>
             <select class="select-date" name="dep_date" formControlName="dep_date">
               <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
+                <div *ngIf="itinDate === 'any day'">
+                  <h5>{{ itinDate }}</h5>
+                </div>
                 <div *ngIf="itinDate !== 'any day'">
                   <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
                 </div>
@@ -261,6 +264,9 @@
             <label>Pick Up Date <span class="required"> - required</span></label>
             <select class="select-date" name="dep_date" formControlName="dep_date">
               <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
+                <div *ngIf="itinDate === 'any day'">
+                  <h5>{{ itinDate }}</h5>
+                </div>
                 <div *ngIf="itinDate !== 'any day'">
                   <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
                 </div>
@@ -295,6 +301,9 @@
             <label>Arrival Date</label>
             <select class="select-date" name="arr_date" formControlName="arr_date">
               <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
+                <div *ngIf="itinDate === 'any day'">
+                  <h5>{{ itinDate }}</h5>
+                </div>
                 <div *ngIf="itinDate !== 'any day'">
                   <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
                 </div>
@@ -312,6 +321,9 @@
             <label>Return Date</label>
             <select class="select-date" name="arr_date" formControlName="arr_date">
               <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
+                <div *ngIf="itinDate === 'any day'">
+                  <h5>{{ itinDate }}</h5>
+                </div>
                 <div *ngIf="itinDate !== 'any day'">
                   <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
                 </div>

@@ -35,6 +35,10 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
 
   chosenEvent;
 
+  scroll = false;
+  dateBar;
+  dateRow;
+
   left;
   itemPosition = [];
   currentDate = 'any day';
@@ -54,6 +58,7 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
     this.itinDateSubscription = this.itineraryService.updateDate.subscribe(
                                       result => {
                                         this.itinDateRange = Object.keys(result).map(key => result[key]);
+                                        this.checkScroll();
                                     })
 
     this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
@@ -67,6 +72,7 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
                                              result => {
                                                this.currentItinerary = result;
                                              })
+
 
   }
 
@@ -90,15 +96,27 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
     }
   }
 
+  checkScroll() {
+    setTimeout(()=> {
+      this.scroll = false;
+      this.dateRow = this.element.nativeElement.children[1].clientWidth;
+      this.dateBar = this.element.nativeElement.children[1].children[0].clientWidth - 20;
+
+      if(this.dateBar > this.dateRow) {
+        this.scroll = true
+      }
+    },500)
+  }
+
   sectionPosition(event)  {
     this.itemPosition.push(event);
   }
 
   onScroll(event) {
-    // console.log("detect")
     if(event.type === "resize") {
       this.oldWidth = this.newWidth;
       this.newWidth = event.srcElement.innerWidth;
+
       if(this.oldWidth >= 1091 && this.newWidth < 1091)  {
         if(this.left !== undefined) {
           this.left = (Number(this.left.slice(0, this.left.length - 2)) - 200) + 'px';
@@ -107,6 +125,14 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
         if(this.left !== undefined) {
           this.left = (Number(this.left.slice(0, this.left.length - 2)) + 200) + 'px';
         }
+      }
+
+      this.dateRow = this.element.nativeElement.children[1].clientWidth;
+
+      if(this.dateBar > this.dateRow) {
+        this.scroll = true
+      } else if(this.dateBar < this.dateRow)  {
+        this.scroll = false;
       }
     }
 
@@ -124,181 +150,102 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
   }
 
   filterEvents(events)  {
+    this.events = [];
     this.totalEvents = events.length;
 
-    let accommodations = [];
-    let datedEvents = [];
-    let anyDateEvents = [];
-    let anyTimeEvents = [];
+    let summaryEvents = [];
+    let copyEvents = [];
 
     for (let i = 0; i < events.length; i++) {
+
+      if(events[i]['type'] === 'activity')  {
+        events[i]['summary_date'] = events[i]['date'];
+        events[i]['summary_time'] = events[i]['time'];
+      }
+
       if(events[i]['type'] === 'accommodation') {
         let oneDay = 24*60*60*1000;
         let inDate = new Date(events[i]['check_in_date']);
         let outDate = new Date(events[i]['check_out_date']);
         let numDaysDiff = Math.round(Math.abs((inDate.getTime() - outDate.getTime())/oneDay));
         let numDays = numDaysDiff + " night" + (numDaysDiff > 1 ? "s" : "");
-        accommodations.push({
-          check_in_date: events[i]['check_in_date'],
-          check_in_time: events[i]['check_in_time'],
-          check_out_date: events[i]['check_out_date'],
-          check_out_time: events[i]['check_out_time'],
-          created_at: events[i]['created_at'],
-          date: events[i]['date'],
-          formatted_address: events[i]['formatted_address'],
-          international_phone_number: events[i]['international_phone_number'],
-          itinerary: events[i]['itinerary'],
-          name: events[i]['name'],
-          note: events[i]['note'],
-          stay_city: events[i]['stay_city'],
-          time: events[i]['time'],
-          time_ago: events[i]['time_ago'],
-          type: events[i]['type'],
-          user: events[i]['user'],
-          website: events[i]['website'],
-          _id: events[i]['_id'],
-          inOut: "checkin",
-          numDays: numDays,
-          summary_date: events[i]['check_in_date'],
-          summary_time: events[i]['check_in_time']
-        });
-        accommodations.push({
-          check_in_date: events[i]['check_in_date'],
-          check_in_time: events[i]['check_in_time'],
-          check_out_date: events[i]['check_out_date'],
-          check_out_time: events[i]['check_out_time'],
-          created_at: events[i]['created_at'],
-          date: events[i]['date'],
-          formatted_address: events[i]['formatted_address'],
-          international_phone_number: events[i]['international_phone_number'],
-          itinerary: events[i]['itinerary'],
-          name: events[i]['name'],
-          note: events[i]['note'],
-          stay_city: events[i]['stay_city'],
-          time: events[i]['time'],
-          time_ago: events[i]['time_ago'],
-          type: events[i]['type'],
-          user: events[i]['user'],
-          website: events[i]['website'],
-          _id: events[i]['_id'],
-          inOut: "checkout",
-          summary_date: events[i]['check_out_date'],
-          summary_time: events[i]['check_out_time']
-        })
+
+        let copy = Object.assign({}, events[i]);
+
+        events[i]['inOut'] = "checkin";
+        events[i]['numDays'] = numDays;
+        events[i]['summary_date'] = events[i]['check_in_date'];
+        events[i]['summary_time'] = events[i]['check_in_time'];
+
+        copy['inOut'] = "checkout";
+        copy['summary_date'] = events[i]['check_out_date'];
+        copy['summary_time'] = events[i]['check_out_time'];
+
+        copyEvents.push(copy);
       }
-      if(events[i]['type'] === 'activity') {
-        if(events[i]['time'] === 'anytime') {
-          events[i]['summary_date'] = events[i]['date'];
-          events[i]['summary_time'] = 'anytime';
-          anyTimeEvents.push(events[i]);
-        } else if (events[i]['date'] === 'any day' && events[i]['time'] !== 'anytime')  {
-          events[i]['summary_date'] = 'any day';
-          events[i]['summary_time'] = events[i]['time'];
-          anyDateEvents.push(events[i])
-        } else  {
-          events[i]['summary_date'] = events[i]['date'];
-          events[i]['summary_time'] = events[i]['time'];
-          datedEvents.push(events[i]);
-        }
-      }
+
       if(events[i]['type'] === 'transport') {
-        datedEvents.push({
-          arr_city: events[i]['arr_city'],
-          arr_date: events[i]['arr_date'],
-          arr_station: events[i]['arr_station'],
-          arr_terminal: events[i]['arr_terminal'],
-          arr_time: events[i]['arr_time'],
-          contact_number: events[i]['contact_number'],
-          created_at: events[i]['created_at'],
-          date: events[i]['date'],
-          dep_city: events[i]['dep_city'],
-          dep_date: events[i]['dep_date'],
-          dep_station: events[i]['dep_station'],
-          dep_terminal: events[i]['dep_terminal'],
-          dep_time: events[i]['dep_time'],
-          itinerary: events[i]['itinerary'],
-          note: events[i]['note'],
-          reference_number: events[i]['reference_number'],
-          time: events[i]['time'],
-          time_ago: events[i]['time_ago'],
-          transport_company: events[i]['transport_company'],
-          transport_type: events[i]['transport_type'],
-          type: events[i]['type'],
-          user: events[i]['user'],
-          _id: events[i]['_id'],
-          approach: 'departure',
-          summary_date: events[i]['dep_date'],
-          summary_time: events[i]['dep_time']
-        });
-        datedEvents.push({
-          arr_city: events[i]['arr_city'],
-          arr_date: events[i]['arr_date'],
-          arr_station: events[i]['arr_station'],
-          arr_terminal: events[i]['arr_terminal'],
-          arr_time: events[i]['arr_time'],
-          contact_number: events[i]['contact_number'],
-          created_at: events[i]['created_at'],
-          date: events[i]['date'],
-          dep_city: events[i]['dep_city'],
-          dep_date: events[i]['dep_date'],
-          dep_station: events[i]['dep_station'],
-          dep_terminal: events[i]['dep_terminal'],
-          dep_time: events[i]['dep_time'],
-          itinerary: events[i]['itinerary'],
-          note: events[i]['note'],
-          reference_number: events[i]['reference_number'],
-          time: events[i]['time'],
-          time_ago: events[i]['time_ago'],
-          transport_company: events[i]['transport_company'],
-          transport_type: events[i]['transport_type'],
-          type: events[i]['type'],
-          user: events[i]['user'],
-          _id: events[i]['_id'],
-          approach: 'arrival',
-          summary_date: events[i]['arr_date'],
-          summary_time: events[i]['arr_time']
-        })
+        let copy = Object.assign({}, events[i]);
+
+        events[i]['approach'] = 'departure';
+        events[i]['summary_date'] = events[i]['dep_date'];
+        events[i]['summary_time'] = events[i]['dep_time'];
+
+        copy['approach'] = 'arrival';
+        copy['summary_date'] = events[i]['arr_date'];
+        copy['summary_time'] = events[i]['arr_time'];
+
+        copyEvents.push(copy);
       }
     }
 
-    for (let i = 0; i < accommodations.length; i++) {
-      if(accommodations[i]['time'] === 'anytime')  {
-        anyTimeEvents.push(accommodations[i]);
-      } else if(accommodations[i]['time'] !== 'anytime') {
-        datedEvents.push(accommodations[i]);
-      }
-    }
-    this.sortEventByDate(datedEvents, anyDateEvents, anyTimeEvents);
+    summaryEvents = events.concat(copyEvents);
+    this.sortEvents(summaryEvents);
   }
 
-  sortEventByDate(datedEvents, anyDateEvents, anyTimeEvents) {
-    datedEvents.sort((a,b) =>  {
-      return new Date(a['summary_date']).getTime() - new Date(b['summary_date']).getTime();
-    })
+  sortEvents(events)  {
+    let flex = [];
+    let dated = [];
 
-    datedEvents.sort((a,b) =>  {
-      let aTime = a['summary_time'].replace(a['summary_time'].substring(2,3), "");
-      let convertedATime = parseInt(aTime);
+    for (let i = 0; i < events.length; i++) {
+      if(events[i]['summary_time'] === 'anytime') {
+        events[i]['sort_time'] = "25:00"
+      } else  {
+        events[i]['sort_time'] = events[i]['summary_time']
+      }
 
-      let bTime = b['summary_time'].replace(b['summary_time'].substring(2,3), "");
-      let convertedBTime = parseInt(bTime);
+      if(events[i]['summary_date'] === 'any day') {
+        flex.push(events[i]);
+      } else  {
+        dated.push(events[i])
+      }
+    }
 
-      return convertedATime - convertedBTime;
-    })
+    flex = this.sort(flex);
+    dated = this.sort(dated);
 
-    anyDateEvents.sort((a,b) =>  {
-      let aTime = a['summary_time'].replace(a['summary_time'].substring(2,3), "");
-      let convertedATime = parseInt(aTime);
-
-      let bTime = b['summary_time'].replace(b['summary_time'].substring(2,3), "");
-      let convertedBTime = parseInt(bTime);
-
-      return convertedATime - convertedBTime;
-    })
-
-    this.events = anyTimeEvents.concat(datedEvents, anyDateEvents);
+    this.events = dated.concat(flex);
 
     setTimeout(() =>  {this.loadingService.setLoader(false, "")}, 1000);
+  }
+
+  sort(events)  {
+    events.sort((a,b) =>  {
+      let dateA = new Date(a['summary_date']).getTime();
+      let dateB = new Date(b['summary_date']).getTime();
+
+      let timeA = parseInt((a['sort_time'].replace(a['sort_time'].substring(2,3), "")));
+      let timeB = parseInt((b['sort_time'].replace(b['sort_time'].substring(2,3), "")));
+
+      if (dateA < dateB) return -1;
+      if (dateA > dateB) return 1;
+      if (timeA < timeB) return -1;
+      if (timeA > timeB) return 1;
+
+      return 0;
+    })
+
+    return events;
   }
 
   showEventDetails(event)  {

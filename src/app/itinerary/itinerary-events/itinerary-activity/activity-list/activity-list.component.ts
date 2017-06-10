@@ -53,6 +53,7 @@ export class ActivityListComponent implements OnInit, OnDestroy {
 
   filterEvents(events)  {
     this.activities = [];
+
     for (let i = 0; i < events.length; i++) {
       if(events[i]['type'] === 'activity') {
         this.activities.push(events[i]);

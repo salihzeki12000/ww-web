@@ -42,7 +42,7 @@
             [ats]="ats"
             (hourSelected)="selectHour($event)" (minuteSelected)="selectMinute($event)" (pickerSelected)="selectPicker($event)"></ww-time-picker>
 
-            <div formArrayName="meals" class="meal-indicator">
+            <div formArrayName="meals" class="meal-tags">
               <label>Meal tags <span class="label-note"> - may select more than 01 option</span></label>
 
               <div *ngFor="let meal of meals.controls; let j = index" [formGroupName]="j" class="meal-item">

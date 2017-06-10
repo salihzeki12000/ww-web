@@ -120,8 +120,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     this.itinDateSubscription = this.itineraryService.updateDate.subscribe(
                                       result => {
                                         this.itinDateRange  = Object.keys(result).map(key => result[key]);
-                                        this.itinDateRange.splice(0,1);
-                                        this.firstDay = this.itinDateRange[0];
+                                        this.firstDay = this.itinDateRange[1];
                                     })
   }
 
@@ -606,7 +605,12 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       newTransport['arr_time'] = this.hourArr + ':' + this.minuteArr;
     }
 
-    let date = new Date(newTransport['dep_date']).toISOString();
+    let date;
+    if(newTransport['dep_date'] !== "any day")  {
+      date = new Date(newTransport['dep_date']).toISOString();
+    } else  {
+      date = newTransport['dep_date'];
+    }
 
     newTransport['date'] = date;
     newTransport['time'] = newTransport['dep_time'];

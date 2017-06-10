@@ -36,7 +36,6 @@ export class ItineraryTransportComponent implements OnInit {
     this.itinDateSubscription = this.itineraryService.updateDate.subscribe(
                                       result => {
                                         this.itinDateRange = Object.keys(result).map(key => result[key]);
-                                        this.itinDateRange.splice(0,1);
                                     })
 
     this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(

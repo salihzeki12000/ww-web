@@ -31,7 +31,7 @@
       <div class="top-nav-dropdown-header">
         <h6>{{ currentUser?.itineraries.length > 1 ? 'ITINERARIES' : 'ITINERARY'}}</h6>
       </div>
-      <h5 class="dropdown-new-itinerary" (click)="showItineraryForm = true"><i class="fa fa-plus" aria-hidden="true"></i> Plan a new itinerary</h5>
+      <h5 class="dropdown-new-itinerary" (click)="newItin()"><i class="fa fa-plus" aria-hidden="true"></i> Plan a new itinerary</h5>
       <div>
         <div *ngIf="currentUser?.itineraries.length === 0">
           <h5 class="nil-dropdown-item">No itinerary at the moment</h5>

@@ -81,6 +81,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
                                           this.checkSameUser();
                                           this.filterItineraries();
                                         })
+                                        
     this.activity['formatted_hours'] = this.activity['opening_hours'].replace(/\r?\n/g, '<br/> ');
     this.activity['formatted_note'] = this.activity['note'].replace(/\r?\n/g, '<br/> ');
 
@@ -131,6 +132,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
   initMeals()  {
     this.meals = this.formBuilder.array([
       this.formBuilder.group({ value: "Breakfast", checked: false }),
+      this.formBuilder.group({ value: "Brunch", checked: false }),
       this.formBuilder.group({ value: "Lunch", checked: false }),
       this.formBuilder.group({ value: "Dinner", checked: false }),
       this.formBuilder.group({ value: "Supper", checked: false }),

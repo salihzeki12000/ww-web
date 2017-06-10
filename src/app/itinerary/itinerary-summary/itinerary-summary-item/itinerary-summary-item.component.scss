@@ -21,7 +21,7 @@
 }
 
 .daily-note  {
-  margin: 40px 0 10px 0;
+  margin-top: 40px;
   padding: 5px;
   height: 70px;
   background-color: rgba(100, 148, 237, 0.1);
@@ -71,13 +71,19 @@ p.edit-note  {
 }
 
 .event-time  {
-  padding-left: 5px;
+  padding: 10px 0 0 5px;
   color: grey;
+}
+
+.summary-item-container {
+  &:hover {
+    background-color: rgba(100, 148, 237, 0.2);
+  }
 }
 
 .summary-item {
   display: inline-block;
-  margin: 5px 20px 10px 20px;
+  margin: 5px 20px 0 20px;
   padding-bottom: 10px;
   width: 240px;
   border-bottom: 1px solid lightgray;
@@ -92,7 +98,11 @@ p.edit-note  {
   }
 }
 
-.summary-meal-indicator h6  {
+.meals-display  {
+  display: inline-block;
+}
+
+.meals-display h6  {
   display: inline-block;
   margin: 0 2px 5px 0;
   padding: 2px 5px 1px 5px;
@@ -121,12 +131,12 @@ p.edit-note  {
   background-color: rgba(237,100,148,.8);
 }
 
-.summary-item > img {
+.summary-item > div > img {
   width: 36px;
   height: 36px;
 }
 
-.summary-item > i {
+.fa-bicycle {
   width: 36px;
   height: 36px;
   padding: 11px 6px;

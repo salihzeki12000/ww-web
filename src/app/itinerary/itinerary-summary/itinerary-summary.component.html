@@ -36,11 +36,11 @@
     </div>
   </div>
 
-  <div class="scroll-left" (click)="scrollLeft()">
+  <div class="scroll-left" (click)="scrollLeft()" *ngIf="scroll">
     <i class="fa fa-chevron-left" aria-hidden="true"></i>
   </div>
 
-  <div class="scroll-right" (click)="scrollRight()">
+  <div class="scroll-right" (click)="scrollRight()" *ngIf="scroll">
     <i class="fa fa-chevron-right" aria-hidden="true"></i>
   </div>
 
@@ -73,15 +73,27 @@
     </div>
 
     <div *ngIf="chosenEvent?.type === 'transport'" class="details-in-summary">
-      <ww-transport [event]="chosenEvent" [itinDateRange]="itinDateRange" [summary]="true"></ww-transport>
+      <ww-transport
+        [event]="chosenEvent"
+        [itinDateRange]="itinDateRange"
+        [currentItinerary]="currentItinerary"
+        [summary]="true"></ww-transport>
     </div>
 
     <div *ngIf="chosenEvent?.type === 'activity'" class="details-in-summary">
-      <ww-activity [activity]="chosenEvent" [itinDateRange]="itinDateRange" [summary]="true"></ww-activity>
+      <ww-activity
+        [activity]="chosenEvent"
+        [itinDateRange]="itinDateRange"
+        [currentItinerary]="currentItinerary"
+        [summary]="true"></ww-activity>
     </div>
 
     <div *ngIf="chosenEvent?.type === 'accommodation'" class="details-in-summary">
-      <ww-accommodation [event]="chosenEvent" [itinDateRange]="itinDateRange" [summary]="true"></ww-accommodation>
+      <ww-accommodation
+        [event]="chosenEvent"
+        [itinDateRange]="itinDateRange"
+        [currentItinerary]="currentItinerary"
+        [summary]="true"></ww-accommodation>
     </div>
   </div>
 </div>

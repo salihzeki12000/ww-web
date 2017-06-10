@@ -46,7 +46,7 @@
       <h5 *ngIf="!summary">{{ index + 1 }} of {{ totalActivities }}</h5>
     </div>
 
-    <div class="meals-tags" *ngFor="let meal of activity?.meals">
+    <div class="meals-display" *ngFor="let meal of activity?.meals">
       <h5 *ngIf="meal.checked"> {{ meal.value }}</h5>
     </div>
 
@@ -176,8 +176,8 @@
             (minuteSelected)="selectMinute($event)"
             (pickerSelected)="selectPicker($event)"></ww-time-picker>
 
-            <div formArrayName="meals" class="meal-indicator">
-              <label>Meal indicator <span class="label-note"> - may select more than 01 option</span></label>
+            <div formArrayName="meals" class="meal-tags">
+              <label>Meal tags <span class="label-note"> - may select more than 01 option</span></label>
 
               <div *ngFor="let meal of meals.controls; let j = index" [formGroupName]="j" class="meal-item">
                 <div class="meal-input">

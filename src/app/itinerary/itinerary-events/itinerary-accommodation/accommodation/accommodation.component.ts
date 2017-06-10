@@ -263,6 +263,14 @@ export class AccommodationComponent implements OnInit, OnDestroy {
       editedAccommodation['check_out_time'] = this.hourOut + ':' + this.minuteOut;
     }
 
+    if(editedAccommodation['check_in_date'] == "any day") {
+      editedAccommodation['check_in_date'] = originalAccommodation['check_in_date'];
+    }
+
+    if(editedAccommodation['check_out_date'] == "any day") {
+      editedAccommodation['check_out_date'] = originalAccommodation['check_out_date'];
+    }
+
     for(let value in editedAccommodation) {
       originalAccommodation[value] = editedAccommodation[value];
     }

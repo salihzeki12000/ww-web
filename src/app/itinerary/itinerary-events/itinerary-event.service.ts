@@ -143,10 +143,42 @@ export class ItineraryEventService  {
   }
 
   sortEventByDate(events) {
-    events.sort((a,b) =>  {
-      return new Date(a['date']).getTime() - new Date(b['date']).getTime();
-    })
+    let flex = [];
+    let dated = [];
+
+    for (let i = 0; i < events.length; i++) {
+      if(events[i]['date'] === 'any day') {
+        flex.push(events[i]);
+      } else  {
+        dated.push(events[i])
+      }
+    }
+
+    flex = this.sort(flex);
+    dated = this.sort(dated);
+
+    events = dated.concat(flex);
+
     this.timeAgo(events);
+  }
+
+  sort(events)  {
+    events.sort((a,b) =>  {
+      let dateA = new Date(a['date']).getTime();
+      let dateB = new Date(b['date']).getTime();
+
+      let timeA = parseInt((a['time'].replace(a['time'].substring(2,3), "")));
+      let timeB = parseInt((b['time'].replace(b['time'].substring(2,3), "")));
+
+      if (dateA < dateB) return -1;
+      if (dateA > dateB) return 1;
+      if (timeA < timeB) return -1;
+      if (timeA > timeB) return 1;
+
+      return 0;
+    })
+
+    return events;
   }
 
   timeAgo(events) {
