@@ -930,14 +930,14 @@ textarea.ng-invalid.ng-touched {
   }
 }
 
-.cannot-find  {
-  color: gray;
-  font-style: italic;
-  text-align: right;
-  &:hover {
-    cursor: pointer;
-    color: #6494ED;
-  }
+.dragged-address  {
+  margin: 10px 0;
+  padding: 10px 5px;
+  background-color: rgba(100,148,237, .5)
+}
+
+span.dragged-location {
+  font-weight: 500;
 }
 
 /* form & edit header for form and edit modal display*/
@@ -1047,19 +1047,6 @@ textarea.ng-invalid.ng-touched {
 
 .anytime-input > label {
   margin-bottom: 0;
-}
-
-.lat-lng label  {
-  display: block;
-}
-
-.lat-lng div  {
-  display: inline-block;
-  margin-right: 10px;
-}
-
-.lat-lng input  {
-  width: 100px;
 }
 
 /* meal tags for activity */

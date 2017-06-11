@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, ElementRef, HostListener } from '@angular/core';
-import { trigger, state, style, transition, animate }              from "@angular/animations"
 import { Subscription } from 'rxjs/Rx';
 
 import { ItineraryService }      from '../itinerary.service';
@@ -10,14 +9,6 @@ import { LoadingService }        from '../../loading';
   selector: 'ww-itinerary-summary',
   templateUrl: './itinerary-summary.component.html',
   styleUrls: ['./itinerary-summary.component.scss'],
-  animations: [
-    trigger('slideInOut', [
-      state('in', style({ transform: 'translate3d(0, 0, 0)' })),
-      state('out', style({ transform: 'translate3d(0, -100%, 0)' })),
-      transition('in => out', animate('800ms ease-in-out')),
-      transition('out => in', animate('800ms ease-in-out'))
-    ])
-  ]
 })
 export class ItinerarySummaryComponent implements OnInit, OnDestroy {
   eventSubscription: Subscription;
@@ -29,9 +20,9 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
 
   currentItinerarySubscription: Subscription;
   currentItinerary;
+  dailyNotes = [];
 
   showDetailsInSummary = false;
-  detailsInSummary = 'out';
 
   chosenEvent;
 
@@ -55,6 +46,12 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.events = [];
+    this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
+                                             result => {
+                                               this.currentItinerary = result;
+                                               this.sortDailyNotes();
+                                             })
+
     this.itinDateSubscription = this.itineraryService.updateDate.subscribe(
                                       result => {
                                         this.itinDateRange = Object.keys(result).map(key => result[key]);
@@ -65,15 +62,7 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
                                   result => {
                                     this.showDetailsInSummary = false;
                                     this.filterEvents(result);
-                                  }
-                                )
-
-    this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
-                                             result => {
-                                               this.currentItinerary = result;
-                                             })
-
-
+                                  })
   }
 
   ngOnDestroy() {
@@ -93,6 +82,14 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
         this.currentDate = this.itemPosition[i]['date']
         this.index = i;
       }
+    }
+  }
+
+  sortDailyNotes()  {
+    this.dailyNotes = [];
+
+    for (let i = 0; i < this.currentItinerary['daily_note'].length; i++) {
+      this.dailyNotes.push(this.currentItinerary['daily_note'][i]['note'].replace(/\r?\n/g, '<br/> '));
     }
   }
 
@@ -249,14 +246,16 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
   }
 
   showEventDetails(event)  {
-    this.showDetailsInSummary = true;
-    this.detailsInSummary = 'in';
-    this.chosenEvent = event;
+    if(this.chosenEvent === event)  {
+      this.hideDetailsInSummary();
+    } else  {
+      this.showDetailsInSummary = true;
+      this.chosenEvent = event;
+    }
   }
 
   hideDetailsInSummary()  {
     this.showDetailsInSummary = false;
-    this.detailsInSummary = 'out';
     this.chosenEvent = '';
   }
 

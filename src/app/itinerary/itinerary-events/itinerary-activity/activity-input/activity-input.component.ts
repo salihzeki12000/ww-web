@@ -1,13 +1,15 @@
-import { Component, OnInit, OnDestroy, EventEmitter, Input, Output, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, EventEmitter, Input, Output, HostListener, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
+declare var google:any;
 
 import { UserService }           from '../../../../user';
 import { ItineraryService }      from '../../../itinerary.service';
 import { ItineraryEventService } from '../../itinerary-event.service';
 import { FlashMessageService }   from '../../../../flash-message';
 import { FileuploadService }     from '../../../../shared';
+import { LoadingService }        from '../../../../loading';
 
 @Component({
   selector: 'ww-activity-input',
@@ -15,10 +17,17 @@ import { FileuploadService }     from '../../../../shared';
   styleUrls: ['./activity-input.component.scss']
 })
 export class ActivityInputComponent implements OnInit, OnDestroy {
+  @ViewChild('map') map: ElementRef;
+  locationMap;
+  marker;
+  dragLat;
+  dragLng;
+  dragAddress;
+  dragPlaceId;
+
   @Output() hideActivityForm = new EventEmitter<boolean>();
 
   addActivityForm: FormGroup;
-  manualEntry = true;
 
   // time picker
   ats = true;
@@ -26,8 +35,8 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   hour = "anytime";
   minute = "00";
 
-  categories;
   meals;
+  categories;
 
   searchDone = false;
 
@@ -54,6 +63,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
     private flashMessageService: FlashMessageService,
+    private loadingService: LoadingService,
     private fileuploadService: FileuploadService,
     private route: ActivatedRoute,
     private router: Router) {
@@ -87,8 +97,9 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     this.itinDateSubscription = this.itineraryService.updateDate.subscribe(
                                       result => {
                                         this.itinDateRange  = Object.keys(result).map(key => result[key]);
-                                        // this.itinDateRange.splice(0,1);
                                     })
+
+    setTimeout(() => {this.initMap()},100);
   }
 
   @HostListener('document:click', ['$event'])
@@ -105,6 +116,16 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     this.currentUserSubscription.unsubscribe();
     this.currentItinerarySubscription.unsubscribe();
     this.itinDateSubscription.unsubscribe();
+  }
+
+  initMap() {
+    let mapDiv = this.map.nativeElement;
+
+    this.locationMap = new google.maps.Map(mapDiv, {
+      center: {lat: 0, lng: 0},
+      zoom: 1,
+      styles: [{"stylers": [{ "saturation": -20 }]}]
+    })
   }
 
   initMeals()  {
@@ -131,21 +152,16 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   }
 
   // progress bar
-  skipSearch()  {
-    this.searchDone = true;
-
-    this.addActivityForm.patchValue({
-      date: 'any day',
-    })
-  }
-
   backToSearch() {
     this.searchDone = false;
-    this.manualEntry = true;
     this.addActivityForm.reset();
     this.initMeals();
     this.displayPic = '';
     this.pictureOptions = [];
+    this.dragAddress = '';
+    this.marker = undefined;
+
+    setTimeout(() => {this.initMap()}, 100)
   }
 
   //get activity details from Google
@@ -153,6 +169,9 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     let opening_hours = this.getOpeningHours(value.opening_hours);
     let lat = value['geometry'].location.lat();
     let lng = value['geometry'].location.lng();
+
+    this.pinLocation(lat, lng)
+    this.dragAddress = '';
 
     this.addActivityForm.patchValue({
       name: value.name,
@@ -182,25 +201,17 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
         this.pictureOptions.unshift(value.photos[i].getUrl({'maxWidth': 300, 'maxHeight': 250}));
       }
     }
-
-    this.searchDone = true;
-    this.manualEntry = false;
   }
 
   getOpeningHours(hours)  {
     let openingHours = [];
     let openingHoursGroup = {};
-    let days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     let output = '';
 
-    if (hours === undefined) {
-      return ''
-    }
+    if (hours === undefined) return '';
 
     //to handle 24hrs establishments
-    if(hours.periods.length === 1)  {
-      return "Open 24hrs"
-    }
+    if(hours.periods.length === 1) return "Open 24hrs";
 
     //reorgnise each day to open-close time
     for (let i = 0; i < hours.periods.length; i++) {
@@ -210,25 +221,82 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     //group similar timings
     for (let i = 0; i < openingHours.length; i++) {
       if(openingHoursGroup[openingHours[i]])  {
-        openingHoursGroup[openingHours[i]].push([days[i], i])
+        openingHoursGroup[openingHours[i]].push([i]);
       } else  {
         openingHoursGroup[openingHours[i]] = [];
-        openingHoursGroup[openingHours[i]].push([days[i], i])
+        openingHoursGroup[openingHours[i]].push([i]);
       }
     }
 
     //to handle daily same timing
     for (let time in openingHoursGroup) {
-      let groupLength = Object.keys(openingHoursGroup).length;
-      if( groupLength === 1 && openingHoursGroup[time].length === 7)  {
-        return "Daily: " + time
-      }
+      if(openingHoursGroup[time].length === 7) return "Daily: " + time;
     }
+
     //to handle different timings
     for (let i = 0; i < hours.weekday_text.length; i++) {
       output += hours.weekday_text[i] + " \n";
     }
     return output;
+  }
+
+  pinLocation(lat, lng)  {
+    let center = new google.maps.LatLng(lat, lng);
+
+    this.locationMap.panTo(center);
+    this.locationMap.setZoom(17);
+
+    if(this.marker !== undefined) {
+      this.marker.setPosition({ lat: lat, lng: lng });
+    } else  {
+      this.marker = new google.maps.Marker({
+        position: { lat: lat, lng: lng },
+        map: this.locationMap,
+        animation: google.maps.Animation.DROP,
+        zIndex: 1,
+        draggable: true
+      })
+    }
+
+    let geocoder = new google.maps.Geocoder;
+
+    google.maps.event.addListener(this.marker, 'dragend', (event) => {
+      this.loadingService.setLoader(true, "Getting location address...");
+
+      this.dragLat = event.latLng.lat();
+      this.dragLng = event.latLng.lng();
+
+      this.getDragLocation(geocoder, this.dragLat, this.dragLng);
+    });
+  }
+
+  getDragLocation(geocoder, lat, lng) {
+    geocoder.geocode({location: {lat:lat, lng:lng}}, (result, status) =>  {
+      if(status === 'OK') {
+        if(result[0]) {
+          this.dragAddress = result[0]['formatted_address'];
+          this.dragPlaceId = result[0]['place_id'];
+
+          this.loadingService.setLoader(false, "");
+          this.patchLocationData();
+        }
+      }
+    })
+  }
+
+  patchLocationData() {
+    this.addActivityForm.reset();
+    this.initMeals();
+    this.displayPic = '';
+    this.pictureOptions = [];
+
+    this.addActivityForm.patchValue({
+      date: 'any day',
+      formatted_address: this.dragAddress,
+      lat: this.dragLat,
+      lng: this.dragLng,
+      place_id: this.dragPlaceId
+    })
   }
 
   // select time

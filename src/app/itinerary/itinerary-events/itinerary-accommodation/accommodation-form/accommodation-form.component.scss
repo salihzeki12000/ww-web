@@ -6,8 +6,27 @@
   }
 }
 
-.place-search-note {
+.search-accommodation  .action-response  {
+  background-color: transparent;
   margin-bottom: 10px;
+}
+
+.search-accommodation > h5  {
+  padding-bottom: 5px;
+}
+
+#map  {
+  height: 300px;
+  width: 560px;
+
+  @media only screen and (max-width: 500px) {
+    width: calc(100vw - 20px);
+    min-width: 260px;
+  }
+
+  @media only screen and (min-width: 500px) and (max-width: 650px) {
+    width: calc(100vw - 40px);
+  }
 }
 
 .file-upload {

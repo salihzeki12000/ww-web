@@ -12,10 +12,10 @@ export class ItinerarySummaryItemComponent implements OnInit, AfterViewInit {
   @Input() index;
   @Input() events;
   @Input() currentItinerary;
+  @Input() dailyNote;
   @Output() showEventDetails = new EventEmitter();
   @Output() sectionPosition = new EventEmitter();
 
-  dailyNote;
   editing = false;
   uniqueClass;
 
@@ -24,8 +24,6 @@ export class ItinerarySummaryItemComponent implements OnInit, AfterViewInit {
     private itineraryService: ItineraryService) { }
 
   ngOnInit() {
-    this.dailyNote = this.currentItinerary['daily_note'][this.index]['note'].replace(/\r?\n/g, '<br/> ');
-
     this.uniqueClass = "daily-note-" + this.index;
   }
 

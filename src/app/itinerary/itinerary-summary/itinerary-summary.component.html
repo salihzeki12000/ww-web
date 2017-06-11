@@ -19,8 +19,7 @@
   <h4 class="nil-event-message-mobile">You can access the "ADD NEW" tab by scrolling up and the options will appear at the bottom of the screen.</h4>
 </div>
 
-<div class="date-row" [class.show-details-in-summary-true]="showDetailsInSummary" (window:resize)="onScroll($event)" (scroll)="onScroll($event)">
-
+<div class="date-row" (window:resize)="onScroll($event)" (scroll)="onScroll($event)">
 
   <div class="date-bar" [style.left]="left">
     <div *ngFor="let date of itinDateRange; let i = index">
@@ -58,18 +57,17 @@
       [index]="i"
       [date]="date"
       [currentItinerary]="currentItinerary"
+      [dailyNote]="dailyNotes[i]"
       [events]="events"
       (showEventDetails)="showEventDetails($event)"
       (sectionPosition)="sectionPosition($event)"></ww-itinerary-summary-item>
   </div>
 </div>
 
-<!-- [@slideInOut]="detailsInSummary" -->
 <div *ngIf="showDetailsInSummary">
   <div class="show-details-in-summary">
-    <div class="slide-back" (click)="hideDetailsInSummary()">
+    <div class="hide-details" (click)="hideDetailsInSummary()">
       <h4>close</h4>
-      <!-- <i class="fa fa-arrow-right fa-2x" aria-hidden="true"></i> -->
     </div>
 
     <div *ngIf="chosenEvent?.type === 'transport'" class="details-in-summary">

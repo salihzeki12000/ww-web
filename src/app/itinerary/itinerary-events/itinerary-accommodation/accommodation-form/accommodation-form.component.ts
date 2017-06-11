@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, HostListener, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
+declare var google:any;
 
 import { Itinerary }             from '../../../itinerary';
 import { ItineraryService }      from '../../../itinerary.service';
@@ -11,6 +12,7 @@ import { ItineraryEventService } from '../../itinerary-event.service';
 import { UserService }         from '../../../../user';
 import { FlashMessageService } from '../../../../flash-message';
 import { FileuploadService }   from '../../../../shared';
+import { LoadingService }      from '../../../../loading';
 
 @Component({
   selector: 'ww-accommodation-form',
@@ -18,10 +20,17 @@ import { FileuploadService }   from '../../../../shared';
   styleUrls: ['./accommodation-form.component.scss']
 })
 export class AccommodationFormComponent implements OnInit, OnDestroy {
+  @ViewChild('map') map: ElementRef;
+  locationMap;
+  marker;
+  dragLat;
+  dragLng;
+  dragAddress;
+  dragPlaceId;
+
   @Output() hideAccommodationForm = new EventEmitter();
 
   addAccommodationForm: FormGroup;
-  manualEntry = true;
 
   // time picker
   ats = true;
@@ -66,6 +75,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private flashMessageService: FlashMessageService,
     private fileuploadService: FileuploadService,
+    private loadingService: LoadingService,
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder) {
@@ -101,6 +111,8 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
                                         this.firstDay = this.itinDateRange[0];
                                         this.lastDay = this.itinDateRange[this.itinDateRange.length - 1];
                                     })
+
+    setTimeout(() => {this.initMap()},100);
   }
 
   @HostListener('document:click', ['$event'])
@@ -120,30 +132,35 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
     this.itinDateSubscription.unsubscribe();
   }
 
-  // progress bar
-  skipSearch()  {
-    this.searchDone = true;
+  initMap() {
+    let mapDiv = this.map.nativeElement;
 
-    this.addAccommodationForm.patchValue({
-      check_in_date: this.firstDay,
-      check_out_date: this.lastDay,
-      check_in_time: this.timeCheckIn,
-      check_out_time: this.timeCheckOut,
+    this.locationMap = new google.maps.Map(mapDiv, {
+      center: {lat: 0, lng: 0},
+      zoom: 1,
+      styles: [{"stylers": [{ "saturation": -20 }]}]
     })
   }
 
+  // progress bar
   backToSearch() {
     this.searchDone = false;
-    this.manualEntry = true;
     this.addAccommodationForm.reset();
     this.displayPic = '';
     this.pictureOptions = [];
+    this.dragAddress = '';
+    this.marker = undefined;
+
+    setTimeout(() => {this.initMap()}, 100)
   }
 
   // get place details from Google
   getAccommodationDetails(value)  {
     let lat = value['geometry'].location.lat();
     let lng = value['geometry'].location.lng();
+
+    this.pinLocation(lat, lng)
+    this.dragAddress = '';
 
     let address_components = value['address_components'];
 
@@ -187,9 +204,67 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
         this.pictureOptions.unshift(value.photos[i].getUrl({'maxWidth': 300, 'maxHeight': 250}));
       }
     }
+  }
 
-    this.searchDone = true;
-    this.manualEntry = false;
+  pinLocation(lat, lng)  {
+    let center = new google.maps.LatLng(lat, lng);
+
+    this.locationMap.panTo(center);
+    this.locationMap.setZoom(17);
+
+    if(this.marker !== undefined) {
+      this.marker.setPosition({ lat: lat, lng: lng });
+    } else  {
+      this.marker = new google.maps.Marker({
+        position: { lat: lat, lng: lng },
+        map: this.locationMap,
+        animation: google.maps.Animation.DROP,
+        zIndex: 1,
+        draggable: true
+      })
+    }
+
+    let geocoder = new google.maps.Geocoder;
+
+    google.maps.event.addListener(this.marker, 'dragend', (event) => {
+      this.loadingService.setLoader(true, "Getting location address...");
+
+      this.dragLat = event.latLng.lat();
+      this.dragLng = event.latLng.lng();
+
+      this.getDragLocation(geocoder, this.dragLat, this.dragLng);
+    });
+  }
+
+  getDragLocation(geocoder, lat, lng) {
+    geocoder.geocode({location: {lat:lat, lng:lng}}, (result, status) =>  {
+      if(status === 'OK') {
+        if(result[0]) {
+          this.dragAddress = result[0]['formatted_address'];
+          this.dragPlaceId = result[0]['place_id'];
+
+          this.loadingService.setLoader(false, "");
+          this.patchLocationData();
+        }
+      }
+    })
+  }
+
+  patchLocationData() {
+    this.addAccommodationForm.reset();
+    this.displayPic = '';
+    this.pictureOptions = [];
+
+    this.addAccommodationForm.patchValue({
+      check_in_date: this.firstDay,
+      check_out_date: this.lastDay,
+      check_in_time: this.timeCheckIn,
+      check_out_time: this.timeCheckOut,
+      formatted_address: this.dragAddress,
+      lat: this.dragLat,
+      lng: this.dragLng,
+      place_id: this.dragPlaceId
+    })
   }
 
   // select check in time
