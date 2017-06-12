@@ -195,6 +195,11 @@ export class ItineraryComponent implements OnInit, OnDestroy {
     this.preventScroll(true);
   }
 
+  cancelAddNewOptions() {
+    this.showAddNew = false;
+    this.preventScroll(false);
+  }
+
   newAccommodation()  {
     this.showAddNew = false;
     this.addAccommodation = true;

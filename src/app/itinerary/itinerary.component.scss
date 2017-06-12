@@ -288,20 +288,6 @@ header {
   }
 }
 
-.itinerary-nav-tabs .add-new > a  {
-  &:hover {
-    padding-bottom: 13px;
-    color: white;
-    background-color: #567FCC;
-    border-top: 6px solid #567FCC;
-
-    @media only screen and (max-width: 1090px) {
-      background-color: #6494ED;
-      border-top: 6px solid #6494ED;
-    }
-  }
-}
-
 .itinerary-nav-tabs > li.active > a {
   color: #6494ED;
   font-weight: bold;
@@ -335,60 +321,55 @@ header {
 // }
 
 /* show options to add new item */
-.add-new:hover .add-new-options  {
-  display: block;
-}
-
 .fa-plus  {
   padding: 5px 4px 4px 5px;
   border: 2px solid;
   border-radius: 50%;
 }
 
-.add-new-options {
-  display: none;
-  position: absolute;
-  top: 38px;
-  right: 0;
-  width: 180px;
-  @media only screen and (max-width: 1090px) {
-    position: fixed;
-    top: calc(100vh - 235px);
-    left: 40px;
-    width: 200px;
-    text-align: center;
-    border-top: 1px solid lightgray;
+.add-new-modal .form-card {
+  width: 400px;
+  top: 40px;
+  left: calc((100vw - 400px) /2);
+
+  @media only screen and (max-width: 450px) {
+    width: 100%;
+    min-width: 300px;
+    max-height: 100vh;
+    left: 0;
   }
 }
 
-.add-new-options > ul  {
-  padding: 0;
-  list-style-type: none;
-  background-color: #F9FBFB;
+.add-new-modal .form-header  {
+  width: 400px;
 
-  @media only screen and (max-width: 1090px) {
-    border: none;
+  @media only screen and (max-width: 450px) {
+    width: 100%;
+    min-width: 300px;
   }
 }
 
-.add-new-options > ul > li {
-  padding: 15px;
-  letter-spacing: .5px;
-  font-size: 11.5px;
-  color: white;
-  background-color: #567FCC;
-  border: 1px solid #567FCC;
+.add-new-modal h4 {
+  margin-bottom: 10px;
+  padding: 10px;
+  width: 320px;
+  text-align: center;
+  border: 2px solid;
+  border-radius: 5px;
   &:hover {
     cursor: pointer;
-    color: #567FCC;
-    background-color: white;
+    color: #F9FBFB;
+    background-color: #6494ED;
+    border: 2px solid #6494ED;
   }
 
-  @media only screen and (max-width: 1090px) {
-    padding: 15px;
+  @media only screen and (max-width: 450px) {
+    width: calc(100vw - 80px);
+    min-width: 220px;
   }
 }
 
+/* user search */
 .users-search > .action-response  {
   margin-top: 20px;
 }
