@@ -580,8 +580,6 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   }
 
   saveNew()  {
-
-    console.log(this.flightSearchDetail)
     let newTransport = this.addTransportForm.value;
 
     if(this.flightSearchDetail)  {
@@ -595,7 +593,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       newTransport['reference_number'] = this.flightSearchDetail['carrierCode'] + this.flightSearchDetail['reference_number'];
     }
 
-    if(this.flightSearchDetail === undefined)  {
+    if(this.transportOption !== 'flight')  {
       if(this.hourDep === 'anytime')  {
         newTransport['dep_time'] = 'anytime';
       } else  {
