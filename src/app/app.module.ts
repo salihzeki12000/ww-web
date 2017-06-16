@@ -36,6 +36,8 @@ import { FileuploadService, CommentService, TimePickerComponent } from './shared
 import { LoadingComponent, LoadingService } from './loading';
 import { ErrorMessageComponent, ErrorMessageService } from './error-message';
 
+import { PrivacyPolicyComponent } from './privacy-policy';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -109,7 +111,8 @@ import { ErrorMessageComponent, ErrorMessageService } from './error-message';
     PendingFollowersComponent,
     LoadingComponent,
     ErrorMessageComponent,
-    TimePickerComponent
+    TimePickerComponent,
+    PrivacyPolicyComponent
   ],
   imports: [
     BrowserModule,

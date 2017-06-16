@@ -49,7 +49,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
   loginFacebook() {
     FB.login((response) =>  {
       this.getDetails();
-    }, {scope: 'email,user_location' });
+    }, {scope: 'email' });
   }
 
   getDetails() {

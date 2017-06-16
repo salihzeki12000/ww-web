@@ -1,9 +1,7 @@
-.home-itineraries  {
+.itinerary-shortcut  {
   position: fixed;
   right: calc(((100vw - 600px)/2) + 620px);
   width: 250px;
-  background-color: white;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
 
   @media only screen and (max-width: 890px) {
     display: none;
@@ -13,32 +11,6 @@
   }
 }
 
-.home-itineraries-length > h5  {
-  padding: 10px 0 5px 10px;
-  text-align: left;
-  letter-spacing: .5px;
-  color: #F9FBFB;
-  background-color: #6494ED;
-}
-
-.home-new-itinerary  {
-  padding: 10px;
-  text-align: center;
-  &:hover {
-    cursor: pointer;
-    color: #6494ED;
-  }
-}
-
-.home-itineraries-list {
-  padding: 10px;
-  text-align: center;
-  border-top: 1px solid lightgray;
-  &:hover {
-    cursor: pointer;
-    background-color: #F6F6F6;
-  }
-}
 
 .home-posts  {
   position: absolute;

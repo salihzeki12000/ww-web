@@ -168,6 +168,43 @@ button[disabled] h5 {
 }
 
 
+/***
+
+  Home and profile page itinerary shortcut
+
+*********************************************/
+.itinerary-shortcut-header > h5  {
+  padding: 10px 0 5px 10px;
+  text-align: left;
+  font-weight: 500;
+  letter-spacing: .5px;
+}
+
+.itinerary-shortcut-new  {
+  padding: 10px;
+  text-align: center;
+  color: #6494ED;
+  &:hover {
+    cursor: pointer;
+    color: #808080;
+  }
+}
+
+.itinerary-shortcut-list {
+  padding: 10px;
+  text-align: right;
+  border-top: 1px solid lightgray;
+  &:hover {
+    cursor: pointer;
+    background-color: #E6E6E6;
+  }
+}
+
+.itinerary-shortcut-list h5 {
+  padding-bottom: 5px;
+}
+
+
 .view-all {
   padding: 10px;
   text-align: center;
