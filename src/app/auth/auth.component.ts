@@ -48,6 +48,8 @@ export class AuthComponent implements OnInit, AfterViewInit {
 
   loginFacebook() {
     FB.login((response) =>  {
+      this.loadingService.setLoader(true, "get ready to wonder wander");
+
       this.getDetails();
     }, {scope: 'email' });
   }
@@ -56,7 +58,6 @@ export class AuthComponent implements OnInit, AfterViewInit {
     FB.api('/me?fields=id,name,gender,picture.width(150).height(150),email',
       (result) => {
         if (result && !result.error) {
-          console.log(result)
           // if no email, to open up a modal notice and to sign up or sign in
           result['username'] = result['name'];
           result['display_picture'] = result['picture']['data']['url'];
@@ -64,7 +65,10 @@ export class AuthComponent implements OnInit, AfterViewInit {
           this.authService.loginFacebook(result)
               .subscribe(
                 data => {
-                  this.loadingService.setLoader(true, "get ready to wonder wander");
+                  this.loadingService.setLoader(true, "We are redirecting you");
+
+                  this.userService.getCurrentUser()
+                      .subscribe(data => {});
 
                   setTimeout(() =>  {
                     this.router.navigateByUrl('/me');
