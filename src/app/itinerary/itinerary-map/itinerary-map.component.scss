@@ -14,6 +14,7 @@
 
   @media only screen and (min-width: 890px) and (max-width: 1090px) {
     width: calc(100% - 230px);
+    height: calc(100vh - 125px);
   }
 }
 
@@ -160,4 +161,12 @@
       cursor: pointer;
     }
   }
+}
+
+div.info-window  {
+  padding: 10px
+}
+
+.gm-style-iw  {
+  padding: 50px;
 }

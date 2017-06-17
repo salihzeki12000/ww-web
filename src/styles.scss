@@ -414,6 +414,13 @@ h5.action-response-primary  {
   }
 }
 
+.display-card .dots-menu::after,
+.display-photo-housing .dots-menu::after {
+  margin-top: 0;
+  padding-top: 5px;
+  padding-right: 20px;
+}
+
 .dots-menu:hover .dots-menu-hint  {
   display: block;
 }
@@ -1123,17 +1130,6 @@ span.dragged-location {
   display: none;
 }
 
-/* transport departure and arrival details for form and edit */
-.departure-arrival-details {
-  display: inline-block;
-  width: 380px;
-  padding: 10px;
-  @media only screen and (max-width: 650px) {
-    display: block;
-    width: auto;
-    margin-bottom: 10px;
-  }
-}
 
 /***************************************************************
  Copy itinerary list style
@@ -1402,7 +1398,7 @@ ww-resource {
   position: relative;
   display: inline-block;
   margin: 15px;
-  padding: 10px 20px 20px 20px;
+  padding: 0 0 20px 0;
   width: 600px;
   vertical-align: text-top;
   background-color: white;
@@ -1456,7 +1452,7 @@ ww-resource {
 .display-card-image > img {
   width: 180px;
   overflow: hidden;
-  margin: 10px 0 10px 10px;
+  margin: 18px 0 10px 10px;
   border: 3px solid white;
   box-shadow: 0px 0px 8px rgba(0,0,0,.3);
 
@@ -1482,7 +1478,7 @@ ww-resource {
 
 .display-card-image-placeholder {
   display: inline-block;
-  margin: 10px 0 10px 10px;
+  margin: 18px 0 10px 10px;
   padding-top: 60px;
   width: 180px;
   height: 180px;
@@ -1506,15 +1502,26 @@ ww-resource {
   }
 }
 
+.photo-credit {
+  position: absolute;
+  margin-top: -30px;
+  left: 17px;
+  padding: 0 3px;
+  background-color: rgba(255,255,255,.8);
+}
+
 .display-photo-housing  {
   display: inline-block;
-  padding: 10px 20px;
-  width: 405px;
+  width: 406.56px;
 
   @media only screen and (max-width: 650px) {
     display: block;
     width: auto;
   }
+}
+
+.display-details-housing  {
+  padding: 0 20px;
 }
 
 .highlighted-event  {
@@ -1546,10 +1553,28 @@ ww-resource {
 }
 
 /* accommodation/transport/activity display */
+.display-header-background  {
+  position: absolute;
+  top: 0;
+  width: 600px;
+  height: 35.8px;
+  background-color: #6494ED;
+  z-index: -1;
+
+  @media only screen and (max-width: 650px) {
+    display: none;
+  }
+}
+
+.display-date-header  {
+  padding: 7px 20px;
+  background-color: #6494ED;
+}
+
 .display-date-header > h5,
 .resource-count {
   display: inline-block;
-  color: grey;
+  color: #F9FBFB;
 }
 
 .display-date-header > h5:first-of-type {
@@ -1559,7 +1584,7 @@ ww-resource {
 .display-date-header > h5:nth-of-type(2),
 .resource-count  {
   padding: 3px 10px;
-  border: 1px solid grey;
+  border: 1px solid #F9FBFB;
   border-radius: 25px;
 }
 
@@ -1569,18 +1594,29 @@ ww-resource {
 }
 
 .transport-header {
-  display: inline-block;
-  margin-top: 15px;
-  padding-right: 10px;
-  width: 160px;
-  vertical-align: top;
-  text-align: right;
+  padding: 10px 20px;
 
   @media only screen and (max-width: 650px) {
-    display: block;
-    width: auto;
-    padding: 0;
-    text-align: center;
+    // text-align: center;
+  }
+}
+
+.transport-header .transport-type,
+.transport-header .transport-header-text  {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.transport-type h1  {
+  font-size: 40px;
+  color: #6494ED;
+}
+
+.transport-header-text  {
+  padding-left: 15px;
+
+  @media only screen and (max-width: 650px) {
+    width: 240px;
   }
 }
 
@@ -1682,7 +1718,73 @@ ww-resource {
 
 /* transport display */
 
+.departure-arrival-details {
+  padding: 20px 0;
+  background-color: #F6F6F6;
+
+  @media only screen  and (max-width: 400px) {
+    padding-left: calc((100vw - 300px) / 2 );
+  }
+
+  @media only screen and (min-width: 400px) and (max-width: 650px) {
+    margin-bottom: 10px;
+  }
+}
+
+.departure-section,
+.arrival-section  {
+  display: inline-block;
+  width: 250px;
+  vertical-align: top;
+
+  @media only screen and (max-width: 650px) {
+    width: 120px;
+  }
+}
+
+.departure-section  {
+  text-align: right;
+}
+
+.arrival-section  {
+  padding-left: 10px;
+}
+
+.departure-section > h3,
+.arrival-section > h3 {
+  @include headerText;
+  padding-bottom: 10px;
+}
+
+.departure-section > h5,
+.arrival-section > h5 {
+  padding-bottom: 3px;
+  color: #808080;
+}
+
+h5.approach-details,
+h5.date-details  {
+  display: inline-block;
+  font-weight: 600;
+  color: #3A4A4D;
+
+  @media only screen and (max-width: 650px) {
+    display: block;
+  }
+}
+
+.rental-company,
+.rental-contact {
+  display: inline-block;
+  margin-right: 30px;
+  margin-bottom: 20px;
+}
+
 /* flight details display */
+.flight-airline {
+  padding: 5px 0;
+}
+
 .flight-details {
   height: 40px;
   @media only screen and (max-width: 700px) {
@@ -1723,44 +1825,7 @@ ww-resource {
   color: red;
 }
 
-.departure-section  {
-  padding: 5px 5px 5px 15px;
-  background-color: rgba(100,148,237,.3);
-  border: 3px solid #6494ED;
-  border-bottom: none;
-  border-radius: 5px 5px 0 0;
-}
 
-.arrival-section  {
-  padding: 5px 5px 5px 15px;
-  background-color: rgba(100,148,237,.1);
-  border: 3px solid #6494ED;
-  border-top: none;
-  border-radius: 0 0 5px 5px;
-}
-
-.departure-section > h3,
-.arrival-section > h3 {
-  @include headerText;
-  padding-bottom: 10px;
-}
-
-.departure-section > h5,
-.arrival-section > h5 {
-  padding-bottom: 3px;
-}
-
-.departure-section > h5:first-of-type,
-.arrival-section > h5:first-of-type {
-  font-weight: 600;
-}
-
-.rental-company,
-.rental-contact {
-  display: inline-block;
-  margin-right: 30px;
-  margin-bottom: 20px;
-}
 
 /********************************
   RESOURCE DISPLAY

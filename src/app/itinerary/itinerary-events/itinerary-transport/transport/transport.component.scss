@@ -1,3 +1,6 @@
+.dots-menu  {
+}
+
 .transport-from-to  {
   padding-top: 5px;
 }
@@ -8,22 +11,11 @@
 
 .note {
   margin: 10px 0 15px 0;
-  padding-left: 0;
+  padding-left: 25px;
 }
 
-.departure-arrival-details i  {
-  position: absolute;
-  margin-top: -13px;
-  padding: 2px 1.5px;
-  left: 184.3px;
-  color: #6494ED;
-  background-color: white;
-  border: 3px solid #6494ED;
-  border-radius: 50%;
-
-  @media only screen and (max-width: 650px) {
-    left: 20.3px;
-  }
+.created-by {
+  padding-left: 25px;
 }
 
 .form-housing {
@@ -32,4 +24,27 @@
 
 .form-housing > .content-with-header-name {
   padding: 0 0 20px 10px;
+}
+
+.route-visual {
+  display: inline-block;
+  width: 60px;
+  margin-left: 20px;
+  border-bottom: 3px dotted #C6C6C6;
+
+  @media only screen and (max-width: 650px) {
+    width: 20px;
+  }
+}
+
+.route-visual i  {
+  position: absolute;
+  margin-top: -6px;
+  margin-left: -10px;
+  color: #C6C6C6;
+}
+
+
+.route-visual .fa-plane  {
+  transform: rotate(45deg);
 }

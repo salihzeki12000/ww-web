@@ -166,6 +166,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
 
   //get activity details from Google
   getActivityDetails(value)  {
+    console.log(value);
     let opening_hours = this.getOpeningHours(value.opening_hours);
     let lat = value['geometry'].location.lat();
     let lng = value['geometry'].location.lng();
@@ -189,7 +190,11 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     let index = 0;
 
     if(value.photos) {
-      this.displayPic = value.photos[0].getUrl({'maxWidth': 300, 'maxHeight': 250});
+      let credit = value.photos[0].html_attributions[0];
+      this.displayPic = {
+        url: value.photos[0].getUrl({'maxWidth': 300, 'maxHeight': 250}),
+        credit: credit.slice(0,3) + 'target="_blank" ' + credit.slice(3,credit.length)
+      };
       if(value.photos.length > 5)  {
         index = 5;
       } else  {
@@ -198,7 +203,11 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
 
       this.pictureOptions = [];
       for (let i = 0; i < index; i++) {
-        this.pictureOptions.unshift(value.photos[i].getUrl({'maxWidth': 300, 'maxHeight': 250}));
+        let c = value.photos[i].html_attributions[0]
+        this.pictureOptions.unshift({
+          url: value.photos[i].getUrl({'maxWidth': 300, 'maxHeight': 250}),
+          credit: c.slice(0,3) + 'target="_blank" ' + c.slice(3,c.length)
+        });
       }
     }
   }
@@ -371,7 +380,10 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
       this.fileuploadService.uploadFile(this.newImageFile, "event")
           .subscribe(
             result => {
-              newActivity['photo'] = result.secure_url;
+              newActivity['photo'] = {
+                url: result.secure_url,
+                credit: ""
+              };
 
               this.addActivity(newActivity);
           })

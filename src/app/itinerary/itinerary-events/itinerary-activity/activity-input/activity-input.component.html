@@ -80,9 +80,9 @@
                 <div class="slider-images" *ngFor="let image of pictureOptions; let i = index">
                   <input type="radio" name="slide_switch" id="image-{{i}}" (click)="selectPic(image)" checked>
                   <label for="image-{{i}}">
-                    <img src="{{ image }}" alt="">
+                    <img src="{{ image.url }}" alt="">
                   </label>
-                  <img src="{{ image }}" alt="">
+                  <img src="{{ image.url }}" alt="">
                 </div>
               </div>
             </div>

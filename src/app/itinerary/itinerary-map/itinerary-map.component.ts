@@ -37,7 +37,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
     this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
                                   result => {
                                     this.filterEvents(result);
-                                    this.initMap()
+                                    this.initMap();
                                   })
   }
 
@@ -77,6 +77,28 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
     });
 
     this.setMarkers(this.itinMap);
+    this.getCurrentLocation(this.itinMap);
+  }
+
+  getCurrentLocation(map)  {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        let pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        }
+        let marker = new google.maps.Marker({
+          position: { lat: pos['lat'], lng: pos['lng'] },
+          map: map,
+          title: "Current location",
+          label: {
+            text: 'C',
+            color: 'black',
+          },
+          zIndex: 100
+        })
+      })
+    }
   }
 
   getCenter(event) {
@@ -128,8 +150,18 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
       this.mapMarkers.push(marker);
 
       let infoWindow = new google.maps.InfoWindow({
-        content: '<p>' + event[0] + '</p><br/><p>' + event[3] + " - " + event[4]
+        content: '<div class="info-window"><p>' + event[0] + '</p><br/><p>' + event[3] + " - " + event[4] + '</p></div>'
       })
+
+      // infoWindow.open(map, marker)
+
+      // google.maps.event.addListener(map, 'zoom_changed', (e) =>  {
+      //   if(map.zoom > 16) {
+      //     infoWindow.open(map, marker)
+      //   } else  {
+      //     infoWindow.close()
+      //   }
+      // })
 
       marker.addListener('click', ()  =>  {
         infoWindow.open(map, marker)

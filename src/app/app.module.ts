@@ -38,8 +38,11 @@ import { ErrorMessageComponent, ErrorMessageService } from './error-message';
 
 import { PrivacyPolicyComponent } from './privacy-policy';
 
+import { CapitalisePipe } from './pipes';
+
 @NgModule({
   declarations: [
+    CapitalisePipe,
     AppComponent,
     AuthComponent,
     SignupComponent,

@@ -35,38 +35,48 @@
   <h4 class="event-out-of-range" *ngIf="event.out_of_range">Out of itinerary date range</h4>
 
   <div class="transport-header">
-    <div [ngSwitch]="event.transport_type">
-      <div *ngSwitchCase="'flight'">
-        <h2><i class="fa fa-plane" aria-hidden="true"></i> {{ event.reference_number | uppercase }}</h2>
-        <h4>{{ event.transport_company }}</h4>
+    <div [ngSwitch]="event.transport_type" class="transport-type">
+      <h1 *ngSwitchCase="'flight'"><i class="fa fa-plane" aria-hidden="true"></i></h1>
+      <h1 *ngSwitchCase="'train'"><i class="fa fa-train" aria-hidden="true"></i></h1>
+      <h1 *ngSwitchCase="'bus'"><i class="fa fa-bus" aria-hidden="true"></i></h1>
+      <h1 *ngSwitchCase="'cruise'"><i class="fa fa-ship" aria-hidden="true"></i></h1>
+      <h1 *ngSwitchCase="'vehicle rental'"><i class="fa fa-car" aria-hidden="true"></i></h1>
+      <h1 *ngSwitchCase="'others'"><i class="fa fa-rocket" aria-hidden="true"></i></h1>
+    </div>
+
+    <div class="transport-header-text">
+      <h3>{{ event?.transport_type | capitalise }} from {{ event?.dep_city }} to {{ event?.arr_city}}</h3>
+
+      <div *ngIf="event.transport_type === 'flight'" class="flight-airline">
+        <h4>{{ event.reference_number }} - {{ event.transport_company }}</h4>
         <div *ngIf="event.operating_carrier" class="operating-message operating-message-display">
           <h5>*This flight is operated by {{ event.operating_carrier }} ({{ event.operating_flight }}).</h5>
         </div>
       </div>
-      <h2 *ngSwitchCase="'train'"><i class="fa fa-train" aria-hidden="true"></i> Train</h2>
-      <h2 *ngSwitchCase="'bus'"><i class="fa fa-bus" aria-hidden="true"></i> Bus {{ event.reference_number | uppercase }}</h2>
-      <h2 *ngSwitchCase="'cruise'"><i class="fa fa-ship" aria-hidden="true"></i> Cruise</h2>
-      <h2 *ngSwitchCase="'vehicle rental'"><i class="fa fa-car" aria-hidden="true"></i> Vehicle rental</h2>
-      <h2 *ngSwitchCase="'others'"><i class="fa fa-rocket" aria-hidden="true"></i> Transport</h2>
     </div>
+
   </div>
 
   <div *ngIf="event.transport_type === 'flight'" class="departure-arrival-details">
 
     <div class="departure-section">
       <h3>{{ event.dep_city | uppercase }}</h3>
-      <h5>Departs {{ event?.dep_date | date:'dd MMM yyyy' }} - {{ event.dep_time }}</h5>
-      <h5>{{ event.dep_station | uppercase }}</h5>
-      <h5>{{ event.dep_terminal | uppercase }}</h5>
+      <h5 class="approach-details">Departs</h5>
+      <h5 class="date-details">{{ event?.dep_date | date:'dd MMM yyyy' }} - {{ event.dep_time }}</h5>
+      <h5>{{ event.dep_station }}</h5>
+      <h5>{{ event.dep_terminal }}</h5>
     </div>
 
-    <i class="fa fa-arrow-down" aria-hidden="true"></i>
+    <div class="route-visual">
+      <h3><i class="fa fa-plane" aria-hidden="true"></i></h3>
+    </div>
 
     <div class="arrival-section">
       <h3>{{ event.arr_city | uppercase }}</h3>
-      <h5>Arrives {{ event?.arr_date | date:'dd MMM yyyy' }} - {{ event.arr_time }}</h5>
-      <h5>{{ event.arr_station | uppercase }}</h5>
-      <h5>{{ event.arr_terminal | uppercase }}</h5>
+      <h5 class="approach-details">Arrives</h5>
+      <h5 class="date-details">{{ event?.arr_date | date:'dd MMM yyyy' }} - {{ event.arr_time }}</h5>
+      <h5>{{ event.arr_station }}</h5>
+      <h5>{{ event.arr_terminal }}</h5>
     </div>
 
   </div><!-- end of flight -->
@@ -77,16 +87,25 @@
 
       <div class="departure-section">
         <h3>{{ event.dep_city | uppercase }}</h3>
-        <h5>Departs {{ event?.dep_date | date:'dd MMM yyyy' }} - {{ event.dep_time }}</h5>
-        <h5>{{ event.dep_station | uppercase }}</h5>
+        <h5 class="approach-details">Departs</h5>
+        <h5 class="date-details">{{ event?.dep_date | date:'dd MMM yyyy' }} - {{ event.dep_time }}</h5>
+        <h5>{{ event.dep_station }}</h5>
       </div>
 
-      <i class="fa fa-arrow-down" aria-hidden="true"></i>
+      <div class="route-visual">
+        <div [ngSwitch]="event.transport_type">
+          <h3 *ngSwitchCase="'train'"><i class="fa fa-train" aria-hidden="true"></i></h3>
+          <h3 *ngSwitchCase="'bus'"><i class="fa fa-bus" aria-hidden="true"></i></h3>
+          <h3 *ngSwitchCase="'cruise'"><i class="fa fa-ship" aria-hidden="true"></i></h3>
+          <h3 *ngSwitchCase="'others'"><i class="fa fa-rocket" aria-hidden="true"></i></h3>
+        </div>
+      </div>
 
       <div class="arrival-section">
         <h3>{{ event.arr_city | uppercase }}</h3>
-        <h5>Arrives {{ event?.arr_date | date:'dd MMM yyyy' }} - {{ event.arr_time }}</h5>
-        <h5>{{ event.arr_station | uppercase }}</h5>
+        <h5 class="approach-details">Arrives</h5>
+        <h5 class="date-details">{{ event?.arr_date | date:'dd MMM yyyy' }} - {{ event.arr_time }}</h5>
+        <h5>{{ event.arr_station }}</h5>
       </div>
 
     </div>
@@ -105,12 +124,18 @@
 
       <div class="departure-section">
         <h3>{{ event.dep_city | uppercase }}</h3>
-        <h5>Pick up {{ event?.dep_date | date:'dd MMM yyyy' }} - {{ event.dep_time }}</h5>
+        <h5 class="approach-details">Pick up</h5>
+        <h5 class="date-details">{{ event?.dep_date | date:'dd MMM yyyy' }} - {{ event.dep_time }}</h5>
+      </div>
+
+      <div class="route-visual">
+        <h3><i class="fa fa-rocket" aria-hidden="true"></i></h3>
       </div>
 
       <div class="arrival-section">
         <h3>{{ event.arr_city | uppercase }}</h3>
-        <h5>Return {{ event?.arr_date | date:'dd MMM yyyy' }} - {{ event.arr_time }}</h5>
+        <h5 class="approach-details">Return</h5>
+        <h5 class="date-details">{{ event?.arr_date | date:'dd MMM yyyy' }} - {{ event.arr_time }}</h5>
       </div>
 
     </div><!-- end of vehicle rental -->

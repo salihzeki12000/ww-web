@@ -26,7 +26,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
   currentUserSubscription: Subscription;
   currentUser;
   sameUser;
-
+  mealTag = false;
   showContactDetails = false;
 
   itineraries = [];
@@ -81,10 +81,11 @@ export class ActivityComponent implements OnInit, OnDestroy {
                                           this.checkSameUser();
                                           this.filterItineraries();
                                         })
-                                        
+
     this.activity['formatted_hours'] = this.activity['opening_hours'].replace(/\r?\n/g, '<br/> ');
     this.activity['formatted_note'] = this.activity['note'].replace(/\r?\n/g, '<br/> ');
 
+    this.checkMealTag();
     this.initTime();
   }
 
@@ -163,6 +164,15 @@ export class ActivityComponent implements OnInit, OnDestroy {
 
     this.initHour = this.hour;
     this.initMinute = this.minute;
+  }
+
+  checkMealTag()  {
+    for (let i = 0; i < this.activity['meals'].length; i++) {
+      if(this.activity['meals'][i]['checked'])  {
+        this.mealTag = true;
+        i = this.activity['meals'].length;
+      }
+    }
   }
 
   // copy section
