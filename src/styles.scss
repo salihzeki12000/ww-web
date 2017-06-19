@@ -486,7 +486,6 @@ h5.action-response-primary  {
   position: relative;
 	margin: 5px auto 15px auto;
   padding: 205px 0 5px 0;
-  text-align: center;
 }
 
 .slider-images {
@@ -497,18 +496,10 @@ h5.action-response-primary  {
 	position: absolute;
 	transition: all 0.5s;
   height: 200px;
-  width: 300px;
-  left: calc((600px - 360px)/2);
+  max-width: 300px;
+  left: 5px;
   top: 0;
   object-fit: cover;
-
-  @media only screen and (max-width: 350px) {
-    left: 0;
-  }
-
-  @media only screen and (min-width: 350px) and (max-width: 650px) {
-    left: calc((100vw - 360px)/2);
-  }
 }
 
 .slider-images input[name='slide_switch'] {
@@ -881,7 +872,7 @@ textarea.ng-invalid.ng-touched {
 /* progress tracker */
 .progress-tracker-section {
   @media only screen and (max-width: 500px) {
-    margin-bottom: 20px;
+    margin: -20px 0 10px 0;
     border-bottom: 1px solid lightgray;
   }
 }
@@ -889,6 +880,10 @@ textarea.ng-invalid.ng-touched {
 .progress-tracker  {
   margin-bottom: 20px;
   padding-left: 0;
+
+  @media only screen and (max-width: 500px) {
+    margin-bottom: 10px;
+  }
 }
 
 .progress-tracker li {
@@ -1171,7 +1166,7 @@ span.dragged-location {
   padding: 10px;
   z-index: 2;
 
-  @media only screen and (max-width: 400px) {
+  @media only screen and (max-width: 420px) {
     width: 100%;
     min-width: 300px;
     margin: 40px 0;
@@ -1179,7 +1174,7 @@ span.dragged-location {
     box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
   }
 
-  @media only screen and (min-width: 400px) and (max-width: 890px) {
+  @media only screen and (min-width: 420px) and (max-width: 890px) {
     margin-left: calc((100vw - 400px) / 2);
   }
 }
@@ -1505,9 +1500,19 @@ ww-resource {
 .photo-credit {
   position: absolute;
   margin-top: -30px;
+  max-width: 165px;
   left: 17px;
   padding: 0 3px;
   background-color: rgba(255,255,255,.8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @media only screen and (max-width: 650px) {
+    max-width: 290px;
+    margin-top: -15px;
+    left: 5px;
+  }
 }
 
 .display-photo-housing  {
@@ -1547,9 +1552,9 @@ ww-resource {
 }
 
 .truncate {
- white-space: nowrap;
- overflow: hidden;
- text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* accommodation/transport/activity display */

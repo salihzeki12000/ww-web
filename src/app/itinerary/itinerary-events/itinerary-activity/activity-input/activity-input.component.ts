@@ -166,7 +166,6 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
 
   //get activity details from Google
   getActivityDetails(value)  {
-    console.log(value);
     let opening_hours = this.getOpeningHours(value.opening_hours);
     let lat = value['geometry'].location.lat();
     let lng = value['geometry'].location.lng();
@@ -184,7 +183,8 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
       website: value.website,
       opening_hours: opening_hours,
       url: value.url,
-      place_id: value.place_id
+      place_id: value.place_id,
+      note: ''
     })
 
     let index = 0;
@@ -239,7 +239,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
 
     //to handle daily same timing
     for (let time in openingHoursGroup) {
-      if(openingHoursGroup[time].length === 7) return "Daily: " + time;
+      if(openingHoursGroup[time].length === 7 && Object.keys(openingHoursGroup).length === 1) return "Daily: " + time;
     }
 
     //to handle different timings

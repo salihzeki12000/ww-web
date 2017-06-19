@@ -275,6 +275,8 @@ export class AccommodationComponent implements OnInit, OnDestroy {
       originalAccommodation[value] = editedAccommodation[value];
     }
 
+    this.event['formatted_note'] = originalAccommodation['note'].replace(/\r?\n/g, '<br/> ');
+
     originalAccommodation['date'] = originalAccommodation['check_in_date'];
     originalAccommodation['time'] = originalAccommodation['check_in_time'];
 

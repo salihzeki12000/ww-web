@@ -383,7 +383,6 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
     this.itineraryEventService.addEvent(accommodation, this.currentItinerary)
         .subscribe(
           result => {
-            console.log(result);
             if(this.route.snapshot['_urlSegment'].segments[3].path !== 'accommodation') {
               let id = this.route.snapshot['_urlSegment'].segments[2].path;
               this.router.navigateByUrl('/me/itinerary/' + id + '/accommodation');

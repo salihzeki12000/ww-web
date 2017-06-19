@@ -57,6 +57,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
   getDetails() {
     FB.api('/me?fields=id,name,gender,picture.width(150).height(150),email',
       (result) => {
+        console.log(result);
         if (result && !result.error) {
           // if no email, to open up a modal notice and to sign up or sign in
           result['username'] = result['name'];
@@ -65,6 +66,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
           this.authService.loginFacebook(result)
               .subscribe(
                 data => {
+                  console.log(data);
                   this.loadingService.setLoader(true, "We are redirecting you");
 
                   this.userService.getCurrentUser()

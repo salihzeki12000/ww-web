@@ -193,8 +193,13 @@
   right: 0;
   height: 40px;
   width: 60px;
-  background-color: #FFC65C;
+  background-color: rgba(0,0,0,.2);
   z-index: 3;
+
+  @media only screen and (max-width: 420px) {
+    top: 0;
+    width: 100vw;
+  }
 }
 
 .hide-details {
@@ -208,8 +213,9 @@
 }
 
 .hide-details > h4  {
+  color: #F9FBFB;
   &:hover {
-    color: #F9FBFB;
+    color: #6494ED;
     cursor: pointer;
   }
 }
@@ -218,7 +224,7 @@
   position: fixed;
   top: 80px;
   right: 0;
-  background-color: rgba(255, 198, 92, .6);
+  background-color: rgba(0,0,0,.3);
 
   @media only screen and (max-width: 420px) {
     max-height: calc(100vh - 130px);
