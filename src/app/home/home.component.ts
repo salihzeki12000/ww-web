@@ -57,8 +57,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     let login = this.authService.loginType;
     if(login === 'facebook')  {
       this.authService.setLogin("fb").subscribe(result =>{});
-
-      window.location.reload();
+      setTimeout(() =>  {
+        window.location.reload();
+      },1000)
     }
   }
 
