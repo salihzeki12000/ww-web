@@ -19,7 +19,7 @@ export class LoadingComponent implements OnInit {
       result => {
         console.log(result)
         this.loading = result['status'];
-
+        console.log(this.loading)
         if(result['message'] === "") {
           this.message = "We are fetching your data";
         }
