@@ -35,8 +35,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.currentUserSubscription = this.userService.updateCurrentUser
                                        .subscribe(
                                          result => {
-                                           console.log(this.user);
                                            this.user = result;
+                                           console.log(this.user);
                                          }
                                        )
 

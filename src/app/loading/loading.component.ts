@@ -17,6 +17,7 @@ export class LoadingComponent implements OnInit {
   ngOnInit() {
     this.loadingSubscription = this.loadingService.updateLoading.subscribe(
       result => {
+        console.log(result)
         this.loading = result['status'];
 
         if(result['message'] === "") {
