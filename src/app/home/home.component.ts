@@ -35,6 +35,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.currentUserSubscription = this.userService.updateCurrentUser
                                        .subscribe(
                                          result => {
+                                           console.log(this.user);
                                            this.user = result;
                                          }
                                        )
@@ -51,6 +52,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.newUser = this.authService.newUser;
     this.loadingService.setLoader(false, "");
+    console.log("home set false")
     this.renderer.removeClass(document.body, 'prevent-scroll');
   }
 
