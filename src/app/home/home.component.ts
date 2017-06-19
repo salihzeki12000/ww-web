@@ -32,6 +32,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     private router: Router) { }
 
   ngOnInit() {
+    let win = (window as any);
+    if(win.location.search !== '?loaded' ) {
+        win.location.search = '?loaded';
+        win.location.reload();
+    }
+    
     this.currentUserSubscription = this.userService.updateCurrentUser
                                        .subscribe(
                                          result => {
