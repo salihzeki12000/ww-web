@@ -54,6 +54,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.loadingService.setLoader(false, "");
     this.renderer.removeClass(document.body, 'prevent-scroll');
 
+
+    // to solve issue where fb login cant load page properly
     let login = this.authService.loginType;
     if(login === 'facebook')  {
       this.authService.setLogin("fb");
