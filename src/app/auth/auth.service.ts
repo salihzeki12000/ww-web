@@ -99,6 +99,10 @@ export class AuthService  {
                     });
   }
 
+  setLogin(type)  {
+    this.loginType = type;
+  }
+
   signoutFacebook()  {
     FB.getLoginStatus(response => {
       if (response.status === 'connected') {

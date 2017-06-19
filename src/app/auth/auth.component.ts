@@ -70,8 +70,6 @@ export class AuthComponent implements OnInit, AfterViewInit {
                   this.userService.getCurrentUser()
                       .subscribe(data => {});
 
-                  window.location.reload();
-
                   setTimeout(() =>  {
                     this.router.navigateByUrl('/me');
                   }, 1000)
