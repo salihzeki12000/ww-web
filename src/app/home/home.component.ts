@@ -32,12 +32,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     private router: Router) { }
 
   ngOnInit() {
-    let win = (window as any);
-    if(win.location.search !== '?loaded' ) {
-        win.location.search = '?loaded';
-        win.location.reload();
-    }
-    
     this.currentUserSubscription = this.userService.updateCurrentUser
                                        .subscribe(
                                          result => {
@@ -57,10 +51,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           })
 
     this.newUser = this.authService.newUser;
-    setTimeout(() =>  {
-      this.loadingService.setLoader(false, "");
-    }, 500)
-    console.log("home set false")
+    this.loadingService.setLoader(false, "");
     this.renderer.removeClass(document.body, 'prevent-scroll');
   }
 
