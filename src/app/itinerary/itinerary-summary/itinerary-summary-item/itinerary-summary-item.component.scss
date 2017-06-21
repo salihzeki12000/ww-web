@@ -1,78 +1,27 @@
-.summary-buffer {
-  height: 50px;
-  width: 100%;
-}
-
-.date {
-  display: none;
-  width: 100%;
-  text-align: left;
-  margin: -95px 0 85px 0;
-  padding: 5px 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: #F9FBFB;
-  background-color: #567FCC;
-  border-right: 1px solid lightgray;
-
-  @media only screen and (max-width: 420px) {
-    display: block;
+.view > .event-time {
+  &:hover {
+    cursor: pointer;
   }
 }
 
-.daily-note  {
-  margin-top: 40px;
-  padding: 5px;
-  height: 70px;
-  background-color: rgba(100, 148, 237, 0.1);
-
-  @media only screen and (max-width: 420px) {
-    margin-top: 0;
-  }
-}
-
-.first-note  {
-  @media only screen and (max-width: 420px) {
-    margin-top: 25px;
-  }
-}
-
-.daily-note h6  {
-  color: grey;
-}
-
-.daily-note p {
-  padding: 4px 8px;
-  height: 50px;
-  font-size: 11px;
-  overflow: auto;
-}
-
-.daily-note p::-webkit-scrollbar  {
-  width: 5px;
-  border-radius: 5px;
-  background-color: rgba(100, 148, 237, 0.5);
-}
-
-.daily-note textarea  {
-  margin: 0;
-  background-color: rgba(100, 148, 237, 0.1);
-  border: none;
-  border-radius: 0;
-  resize: none;
-  font-size: 11px;
-}
-
-p.edit-note  {
-  position: absolute;
-  font-size: 9px !important;
-  font-style: italic;
-  color: #808080;
-}
 
 .event-time  {
   padding: 10px 0 0 5px;
   color: grey;
+}
+
+.edit-time  {
+  position: absolute;
+  margin: 0 0 0 110px;
+  padding: 5px 10px;
+  height: 74px;
+  background-color: #E6E6E6;
+  z-index: 3;
+}
+
+.edit-time h5 {
+  padding: 8px;
+  text-align: center;
 }
 
 .summary-item-container {

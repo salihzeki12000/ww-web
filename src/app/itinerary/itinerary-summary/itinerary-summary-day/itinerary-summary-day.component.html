@@ -1,0 +1,46 @@
+<div class="daily-note first-note" *ngIf="index === 0" [ngClass]="[uniqueClass]" (click)="editing = true">
+  <h6>Note</h6>
+
+  <div [class.editing]="editing">
+    <div class="view">
+      <p [ngClass]="[uniqueClass]" [innerHTML]="dailyNote"></p>
+    </div>
+  </div>
+
+  <div *ngIf="editing">
+    <textarea rows="2" [ngClass]="[uniqueClass]" [value]="currentItinerary?.daily_note[index]['note']" (keyup.enter)="updateNote(editedNote.value)" (blur)="editing = false" #editedNote></textarea>
+    <p class="edit-note">Enter to save, click anywhere else to cancel</p>
+  </div>
+
+</div>
+
+<div class="daily-note" *ngIf="index > 0" [ngClass]="[uniqueClass]" (click)="editing = true">
+  <h6>Day {{ index }} note</h6>
+
+  <div [class.editing]="editing">
+    <div class="view">
+      <p [ngClass]="[uniqueClass]" [innerHTML]="dailyNote"></p>
+    </div>
+  </div>
+
+  <div *ngIf="editing">
+    <textarea rows="2" [ngClass]="[uniqueClass]" [value]="currentItinerary?.daily_note[index]['note']" (keyup.enter)="updateNote(editedNote.value)" (blur)="editing = false" #editedNote></textarea>
+    <p class="edit-note">Enter to save, click anywhere else to cancel</p>
+  </div>
+</div>
+
+<div *ngIf="date === 'any day'">
+  <h5 class="date">Any day</h5>
+</div>
+
+<div *ngIf="date !== 'any day'">
+  <div>
+    <h5 class="date">Day {{ index }} - {{ date | date: "dd MMM (EEE)" }}</h5>
+  </div>
+</div>
+
+<ww-itinerary-summary-item
+  *ngFor="let event of events; let i = index"
+  [index]="i"
+  [event]="event" [date]="date"
+  (showEventDetails)="showDetails($event)"></ww-itinerary-summary-item>

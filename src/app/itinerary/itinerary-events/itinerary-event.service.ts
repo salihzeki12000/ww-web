@@ -158,9 +158,8 @@ export class ItineraryEventService  {
     dated = this.sort(dated);
 
     events = dated.concat(flex);
-    
-    this.events = events;
 
+    this.events = events;
     this.timeAgo(events);
   }
 

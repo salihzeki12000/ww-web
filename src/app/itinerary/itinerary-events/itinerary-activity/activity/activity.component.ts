@@ -276,8 +276,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
     this.activity['formatted_hours'] = originalActivity['opening_hours'].replace(/\r?\n/g, '<br/> ');
     this.activity['formatted_note'] = originalActivity['note'].replace(/\r?\n/g, '<br/> ');
 
-    this.itineraryEventService.editEvent(originalActivity)
-        .subscribe(
+    this.itineraryEventService.editEvent(originalActivity).subscribe(
           result => {
             this.loadingService.setLoader(false, "");
             this.flashMessageService.handleFlashMessage(result.message);

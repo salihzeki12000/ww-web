@@ -14,6 +14,7 @@ export * from './itinerary-list/itinerary-upcoming/itinerary-upcoming.component'
 export * from './itinerary-form/itinerary-form.component';
 
 export * from './itinerary-summary/itinerary-summary.component';
+export * from './itinerary-summary/itinerary-summary-day/itinerary-summary-day.component';
 export * from './itinerary-summary/itinerary-summary-item/itinerary-summary-item.component';
 
 export * from './itinerary-events/itinerary-event.service';

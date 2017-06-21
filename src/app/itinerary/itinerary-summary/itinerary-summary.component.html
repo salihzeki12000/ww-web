@@ -57,14 +57,14 @@
 
   <div *ngFor="let date of itinDateRange; let i = index" class="date-column">
 
-    <ww-itinerary-summary-item
+    <ww-itinerary-summary-day
       [index]="i"
       [date]="date"
       [currentItinerary]="currentItinerary"
       [dailyNote]="dailyNotes[i]"
       [events]="events"
       (showEventDetails)="showEventDetails($event)"
-      (sectionPosition)="sectionPosition($event)"></ww-itinerary-summary-item>
+      (sectionPosition)="sectionPosition($event)"></ww-itinerary-summary-day>
   </div>
 </div>
 

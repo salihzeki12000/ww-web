@@ -15,7 +15,7 @@ export class TimePickerComponent implements OnInit {
   @Input() ats; //any time selector
   @Input() initHour;
   @Input() initMinute;
-
+  
   @Output() hourSelected = new EventEmitter();
   @Output() minuteSelected = new EventEmitter();
   @Output() pickerSelected = new EventEmitter();
