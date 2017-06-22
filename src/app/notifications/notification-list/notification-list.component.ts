@@ -14,6 +14,7 @@ import { LoadingService }      from '../../loading';
 })
 export class NotificationListComponent implements OnInit, OnDestroy {
   @Input() notificationsLimit;
+
   currentUserSubscription: Subscription;
   currentUser;
 
@@ -45,8 +46,8 @@ export class NotificationListComponent implements OnInit, OnDestroy {
                                             }
 
                                             this.loadingService.setLoader(false, "");
-                                          }
-                                        )
+                                          })
+
   }
 
   ngOnDestroy() {

@@ -132,7 +132,7 @@ export class AuthService  {
   logout()  {
     localStorage.clear();
     console.log("logout");
-    if(this.loginType === 'facebook')  {
+    if(this.loginType === 'facebook' || this.loginType === 'fb')  {
       this.signoutFacebook();
     } else if(this.loginType === 'google')  {
       this.signoutGoogle();

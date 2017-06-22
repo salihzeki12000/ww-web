@@ -8,6 +8,7 @@ import { RelationshipService }                     from '../../relationships';
 import { ItineraryService, ItineraryEventService } from '../../itinerary';
 import { AuthService }                             from '../../auth';
 import { LoadingService }                          from '../../loading';
+import { NotificationService }                     from '../../notifications';
 
 @Component({
   selector: 'ww-main-navigation',
@@ -25,6 +26,9 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   pendingFollowers = [];
   requestedFollowings = [];
 
+  notificationSubscription: Subscription;
+  notifications = [];
+
   showItineraryForm = false;
 
   // top nav
@@ -33,6 +37,9 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   showFollowerRequests = false;
   showNotifications = false;
   profileOptions = false;
+
+  newFollower = false;
+  newNotification = false;
 
   // side nav
   sideNav = false;
@@ -56,25 +63,32 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     private itineraryEventService: ItineraryEventService,
     private relationshipService: RelationshipService,
     private itineraryService: ItineraryService,
+    private notificationService: NotificationService,
     private loadingService: LoadingService) { }
 
   ngOnInit() {
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
-                                         result => {
-                                           this.currentUser = result;
-                                           this.getFollowings(this.currentUser);
-                                         })
+      result => {
+        this.currentUser = result;
+        this.getFollowings(this.currentUser);
+      })
 
     this.relationshipSubscription = this.relationshipService.updateRelationships.subscribe(
-                                       result => {
-                                         this.socialRelationships = Object.keys(result['relationships']).map(key => result['relationships'][key]);;
-                                         this.followers = Object.keys(result['followers']).map(key => result['followers'][key]);;
-                                         this.followings = Object.keys(result['followings']).map(key => result['followings'][key]);;
-                                         this.pendingFollowers = Object.keys(result['pendingFollowers']).map(key => result['pendingFollowers'][key]);;
-                                         this.requestedFollowings = Object.keys(result['requestedFollowings']).map(key => result['requestedFollowings'][key]);;
-                                         this.groupUsers();
-                                       }
-                                     )
+      result => {
+        this.socialRelationships = Object.keys(result['relationships']).map(key => result['relationships'][key]);;
+        this.followers = Object.keys(result['followers']).map(key => result['followers'][key]);;
+        this.followings = Object.keys(result['followings']).map(key => result['followings'][key]);;
+        this.pendingFollowers = Object.keys(result['pendingFollowers']).map(key => result['pendingFollowers'][key]);;
+        this.requestedFollowings = Object.keys(result['requestedFollowings']).map(key => result['requestedFollowings'][key]);;
+        this.groupUsers();
+        this.checkNewFollower();
+      })
+
+    this.notificationSubscription = this.notificationService.updateNotifications.subscribe(
+      result => {
+        this.notifications = Object.keys(result).map(key => result[key]);
+        this.checkNewNotification();
+      })
 
     this.userService.getAllUsers().subscribe(
           result => {
@@ -85,6 +99,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.currentUserSubscription.unsubscribe();
     this.relationshipSubscription.unsubscribe();
+    this.notificationSubscription.unsubscribe();
   }
 
   getFollowings(currentUser) {
@@ -114,8 +129,27 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     }
   }
 
-  // top navigation
+  checkNewFollower()  {
+    let today = new Date()
+    for (let i = 0; i < this.pendingFollowers.length; i++) {
+      if(this.pendingFollowers[i]['created_at'] > today)  {
+        this.newFollower = true;
+        i = this.pendingFollowers.length;
+      }
+    }
+  }
 
+  checkNewNotification()  {
+    let today = new Date()
+    for (let i = 0; i < this.notifications.length; i++) {
+      if(this.notifications[i]['created_at'] > today)  {
+        this.newNotification = true;
+        i = this.notifications.length;
+      }
+    }
+  }
+
+  // top navigation
   newItin() {
     this.showItineraryForm = true;
   }
@@ -128,6 +162,22 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
         this.loadingService.setLoader(true, "");
       }
     }
+  }
+
+  getNotifications()  {
+    this.showNotifications = true;
+    this.currentUser['check_notification'] = new Date();
+
+    this.userService.editUser(this.currentUser).subscribe(
+      result => {})
+  }
+
+  getFollowers()  {
+    this.showFollowerRequests = true;
+
+    this.currentUser['check_follower'] = new Date();
+    this.userService.editUser(this.currentUser).subscribe(
+      result => {})
   }
 
   // side navigation

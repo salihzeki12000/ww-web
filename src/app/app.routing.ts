@@ -1,11 +1,11 @@
 import { Routes, RouterModule } from '@angular/router';
 
 import { AdminComponent, ADMIN_ROUTES } from './admin';
-import { LandingPageComponent } from './landing-page';
-import { MeComponent, HOME_ROUTES } from './me';
-import { UserComponent, USER_ROUTES } from './user';
+import { LandingPageComponent }         from './landing-page';
+import { MeComponent, HOME_ROUTES }     from './me';
+import { UserComponent, USER_ROUTES }   from './user';
+import { PrivacyPolicyComponent }       from './privacy-policy';
 import { ItineraryPrintDatePreviewComponent, ItineraryPrintCategoryPreviewComponent } from './itinerary';
-import { PrivacyPolicyComponent } from './privacy-policy';
 
 import { AuthGuard } from './_guards/auth.guard';
 

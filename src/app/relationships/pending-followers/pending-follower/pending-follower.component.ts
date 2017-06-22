@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { RelationshipService } from '../../relationship.service';
+import { NotificationService } from '../../../notifications';
 
 @Component({
   selector: 'ww-pending-follower',
@@ -13,6 +14,7 @@ export class PendingFollowerComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private notificationService: NotificationService,
     private relationshipService: RelationshipService) { }
 
   ngOnInit() {
@@ -24,7 +26,15 @@ export class PendingFollowerComponent implements OnInit {
     this.pendingFollower['request_accepted'] = true;
 
     this.relationshipService.acceptFollow(this.pendingFollower)
-        .subscribe( result => {} )
+        .subscribe( result => {
+          this.notificationService.newNotification({
+            recipient: this.pendingFollower['user']['_id'],
+            originator: this.pendingFollower['following']['_id'],
+            message: " has accepted your follow request",
+            link: "/wondererwanderer" + this.pendingFollower['following']['_id'],
+            read: false
+          }).subscribe(data => {})
+        } )
   }
 
   ignoreRequest() {

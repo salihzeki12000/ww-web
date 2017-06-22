@@ -48,16 +48,16 @@
 
   </div>
 
-  <div *ngIf="post.img">
-    <img class="post-img" src="{{ post.img }}" alt="" (dblclick)="likePost()">
+  <div *ngIf="post?.img">
+    <img class="post-img" src="{{ post?.img }}" alt="" (dblclick)="likePost()">
   </div>
 
-  <div *ngIf="post.link_url">
+  <div *ngIf="post?.link_url">
     <div class="link-preview">
-      <a href="{{ post.link_url }}" target="_blank">
-        <img class="link-img" src="{{ post.link_img }}" alt="">
-        <h3 class="link-title">{{ post.link_title }}</h3>
-        <h5 class="link-url">{{ post.link_url }}</h5>
+      <a href="{{ post?.link_url }}" target="_blank">
+        <img class="link-img" src="{{ post?.link_img }}" alt="">
+        <h3 class="link-title">{{ post?.link_title }}</h3>
+        <h5 class="link-url">{{ post?.link_url }}</h5>
       </a>
     </div>
   </div>
@@ -65,7 +65,7 @@
   <div class="post-reaction">
     <i class="fa fa-heart fa-lg" aria-hidden="true" (click)="likePost()" *ngIf="userLike"></i>
     <i class="fa fa-heart-o fa-lg" aria-hidden="true" (click)="likePost()" *ngIf="!userLike"></i>
-    <div class="post-reaction-likes" *ngIf="post.likes.length > 0" (click)="seeLikes = true" (mouseover)="seeLikes = true">
+    <div class="post-reaction-likes" *ngIf="post?.likes.length > 0" (click)="seeLikes = true" (mouseover)="seeLikes = true">
       <div class="like-user-list" *ngIf="seeLikes">
         <div *ngFor="let user of post.likes">
           <h5>{{ user.username }}</h5>
@@ -75,7 +75,7 @@
     </div>
 
     <i class="fa fa-comment-o fa-lg" aria-hidden="true"></i>
-    <p class="post-reaction-stats" *ngIf="post.comments.length > 0" (click)="seeComments = !seeComments">{{ post.comments.length }} {{ commentCount }}</p>
+    <p class="post-reaction-stats" *ngIf="post?.comments.length > 0" (click)="seeComments = !seeComments">{{ post.comments.length }} {{ commentCount }}</p>
   </div>
 
   <div class="post-comments">

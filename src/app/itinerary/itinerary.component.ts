@@ -168,8 +168,8 @@ export class ItineraryComponent implements OnInit, OnDestroy {
                 read: false
               })
             }
-          }
-        )
+          })
+          
     this.showUsersSearchModal = false;
     this.preventScroll(false);
     this.newMembers = [];

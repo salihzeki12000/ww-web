@@ -15,7 +15,6 @@ export class PostService  {
   updatePost = new ReplaySubject();
   updateFeed = new ReplaySubject();
 
-  // private url = 'http://localhost:9000';
   private url = 'https://vast-island-87972.herokuapp.com';
 
   constructor(
@@ -29,6 +28,15 @@ export class PostService  {
                       this.timeAgo(this.posts);
                       return this.posts;
                     })
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
+  }
+
+  getPost(id) {
+    return this.http.get( this.url + "/posts/" + id)
+                    .map((response: Response) => response.json())
                     .catch((error: Response) => {
                       this.errorMessageService.handleErrorMessage(error.json());
                       return Observable.throw(error.json())

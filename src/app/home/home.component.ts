@@ -32,30 +32,24 @@ export class HomeComponent implements OnInit, OnDestroy {
     private router: Router) { }
 
   ngOnInit() {
-    this.currentUserSubscription = this.userService.updateCurrentUser
-                                       .subscribe(
-                                         result => {
-                                           this.user = result;
-                                           console.log(this.user);
-                                         }
-                                       )
+    this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
+      result => {
+        this.user = result;
+      })
 
-    this.postService.getFeed()
-        .subscribe(
-          result  => {
-            this.feedSubscription = this.postService.updateFeed
-                                        .subscribe(
-                                          feedResult => {
-                                            this.feed = Object.keys(feedResult).map(key => feedResult[key]);
-                                          })
+    this.postService.getFeed().subscribe(
+      result  => {
+        this.feedSubscription = this.postService.updateFeed.subscribe(
+          feedResult => {
+            this.feed = Object.keys(feedResult).map(key => feedResult[key]);
           })
+      })
 
     this.newUser = this.authService.newUser;
     this.loadingService.setLoader(false, "");
     this.renderer.removeClass(document.body, 'prevent-scroll');
 
-
-    // to solve issue where fb login cant load page properly
+    // work around for issue where fb login cant load page properly
     let login = this.authService.loginType;
     if(login === 'facebook')  {
       this.authService.setLogin("fb");
@@ -71,6 +65,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.feedSubscription.unsubscribe();
     this.currentUserSubscription.unsubscribe();
     this.loadingService.setLoader(true, "");
+    this.authService.newUser = false;
   }
 
   createItinerary() {

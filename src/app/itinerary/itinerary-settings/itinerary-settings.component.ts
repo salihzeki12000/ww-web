@@ -95,48 +95,46 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
-                                             result => {
-                                               this.currentItinerary = result;
-                                               this.currentItinerary['date_from'] = result['date_from'].slice(0,10);
-                                               this.currentItinerary['date_to'] = result['date_to'].slice(0,10);
+      result => {
+        this.currentItinerary = result;
+        this.currentItinerary['date_from'] = result['date_from'].slice(0,10);
+        this.currentItinerary['date_to'] = result['date_to'].slice(0,10);
 
-                                               this.getUsers();
-                                               this.sortAdmin();
+        this.getUsers();
+        this.sortAdmin();
 
-                                               setTimeout(() => {
-                                                 this.updateDateRange();
-                                               },1000)
-                                             })
+        setTimeout(() => {
+          this.updateDateRange();
+        },1000)
+      })
 
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
-                                        result => {
-                                          this.currentUser = result;
-                                          this.checkStatus();
-                                          this.patchValue();
-                                          this.filterItineraries();
-                                        })
+      result => {
+        this.currentUser = result;
+        this.checkStatus();
+        this.patchValue();
+        this.filterItineraries();
+      })
 
     this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
-                                  result => {
-                                    this.filterEvents(result);
-                                  }
-                                )
+      result => {
+        this.filterEvents(result);
+      })
 
     this.updateResourcesSubscription = this.resourceService.updateResources.subscribe(
-                                             result => {
-                                               this.resources = Object.keys(result).map(key => result[key]);
-                                               for (let i = 0; i < this.resources.length; i++) {
-                                                 this.shareIndexResource.push(true);
-                                               }
-
-                                             })
+      result => {
+        this.resources = Object.keys(result).map(key => result[key]);
+        for (let i = 0; i < this.resources.length; i++) {
+          this.shareIndexResource.push(true);
+        }
+      })
   }
 
   getUsers()  {
     this.userService.getAllUsers().subscribe(
-          result => {
-            this.filterUsers(result.users);
-          })
+      result => {
+        this.filterUsers(result.users);
+      })
   }
 
   @HostListener('document:click', ['$event'])

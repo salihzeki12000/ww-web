@@ -9,6 +9,7 @@ import { FlashMessageService } from '../../flash-message';
 import { UserService }         from '../../user/user.service';
 import { CommentService }      from '../../shared';
 import { ErrorMessageService } from '../../error-message';
+import { NotificationService } from '../../notifications';
 
 @Component({
   selector: 'ww-post',
@@ -42,6 +43,7 @@ export class PostComponent implements OnInit, OnDestroy {
     private commentService: CommentService,
     private flashMessageService: FlashMessageService,
     private errorMessageService: ErrorMessageService,
+    private notificationService: NotificationService,
     private formBuilder: FormBuilder) {
       this.commentForm = this.formBuilder.group({
         comment: '',
@@ -53,12 +55,17 @@ export class PostComponent implements OnInit, OnDestroy {
                                        .subscribe(
                                          result => {
                                            this.currentUser = result;
-                                           this.checkSameUser();
-                                           this.checkLikePost();
-                                           this.checkCommentSameUser();
+
+                                           setTimeout(()  =>  {
+                                             this.checkSameUser();
+                                             this.checkLikePost();
+                                             this.checkCommentSameUser();
+                                             this.post['formatted_content'] = this.post['content'].replace(/\r?\n/g, '<br/> ');
+
+                                           },500)
+
                                          })
 
-    this.post['formatted_content'] = this.post['content'].replace(/\r?\n/g, '<br/> ');
   }
 
   @HostListener('document:click', ['$event'])
@@ -181,6 +188,18 @@ export class PostComponent implements OnInit, OnDestroy {
                 }
               }
             }
+
+            if(!this.sameUser)  {
+              this.notificationService.newNotification({
+                recipient: this.post['user']['_id'],
+                originator: this.currentUser['id'],
+                message: " has comment on your post",
+                link: "/me/post/" + this.post['_id'],
+                read: false
+              }).subscribe(data => {})
+            }
+
+
             this.seeComments = true;
           })
 

@@ -54,7 +54,8 @@
 
 <div class="top-nav-follower-request">
   <div class="top-nav-link">
-    <i class="fa fa-user-plus fa-lg" aria-hidden="true" (mouseover)="showFollowerRequests = true"></i>
+    <i class="fa fa-user-plus fa-lg" aria-hidden="true" (mouseover)="getFollowers()"></i>
+    <div class="new-indicator" *ngIf='newFollower'></div>
 
     <div class="top-nav-link-dropdown" *ngIf="showFollowerRequests">
       <div class="dropdown-arrow-up"></div>
@@ -87,7 +88,8 @@
 
 <div class="top-nav-notifications">
   <div class="top-nav-link">
-    <i class="fa fa-bell fa-lg" aria-hidden="true" (mouseover)="showNotifications = true"></i>
+    <i class="fa fa-bell fa-lg" aria-hidden="true" (mouseover)="getNotifications()"></i>
+    <div class="new-indicator" *ngIf='newNotification'></div>
 
     <div class="top-nav-link-dropdown" *ngIf="showNotifications">
       <div class="dropdown-arrow-up"></div>

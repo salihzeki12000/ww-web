@@ -244,6 +244,17 @@
   display: inline-block;
 }
 
+.new-indicator  {
+  margin: 1px 0 0 7px;
+  height: 5px;
+  width: 5px;
+  border-radius: 50%;
+  background-color: red;
+}
+
+.top-nav-follower-request .new-indicator  {
+  margin: 1px 0 0 5px;
+}
 
 // fixed itinerary on small screen
 .top-nav-itinerary > .top-nav-link  {
