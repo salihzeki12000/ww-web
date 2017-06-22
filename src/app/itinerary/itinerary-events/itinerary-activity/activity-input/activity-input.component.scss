@@ -63,8 +63,16 @@
 .uploaded-picture  {
   position: relative;
   width: 300px;
-  left: calc((650px - 340px)/2);
+  left: calc((526px - 300px)/2);
   margin-bottom: 10px;
+
+  @media only screen and (max-width: 500px) {
+    left: calc((100vw - 330px) /2);
+  }
+
+  @media only screen and (min-width: 500px) and (max-width: 650px) {
+    left: calc((100vw - 360px) /2);
+  }
 }
 
 .uploaded-picture > img  {

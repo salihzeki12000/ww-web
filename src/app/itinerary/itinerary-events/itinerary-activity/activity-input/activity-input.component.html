@@ -10,11 +10,13 @@
       <div class="form-housing">
         <div class="progress-tracker-section">
           <ul class="progress-tracker">
-            <li class="progress-title" (click)="backToSearch()" [class.progress-done]="searchDone">SEARCH ACTIVITY</li><li class="progress-title">CONFIRM VISIT DATE &amp; TIME DETAILS</li>
+            <li class="progress-title" (click)="backToSearch()" [class.progress-done]="searchDone">SELECT ACTIVITY</li><li class="progress-title">CONFIRM VISIT DATE &amp; TIME DETAILS</li>
           </ul>
         </div>
 
         <div *ngIf="!searchDone" class="search-activity">
+          <label class="activity-no-location" (click)="getForm()">Click here to add activity without location</label>
+
           <label>Search activity location by name or adddress <span class="label-note"> - local name or address may be required</span></label>
           <ww-google-place-search (placeDetail)="getActivityDetails($event)"></ww-google-place-search>
 
@@ -56,7 +58,7 @@
             [ats]="ats"
             (hourSelected)="selectHour($event)" (minuteSelected)="selectMinute($event)" (pickerSelected)="selectPicker($event)"></ww-time-picker>
 
-            <div formArrayName="meals" class="meal-tags">
+            <div formArrayName="meals" class="meal-tags" *ngIf="!noLocation">
               <label>Meal tags <span class="label-note"> - may select more than 01 option</span></label>
 
               <div *ngFor="let meal of meals.controls; let j = index" [formGroupName]="j" class="meal-item">
@@ -71,12 +73,22 @@
           </div>
 
           <h4 class="form-section-header">Activity Details</h4>
-          <div class="form-section-details">
+
+          <div class="form-section-details" *ngIf="noLocation">
+            <label>Name <span class="label-note"> - required</span></label>
+            <input type="text" formControlName="name">
+            <span class="form-validator"
+              *ngIf="addActivityForm.get('name').touched && addActivityForm.get('name').invalid">Name of activity is required</span>
+
+            <h5>e.g. meet at hotel lobby at 6pm</h5>
+          </div>
+
+          <div class="form-section-details" *ngIf="!noLocation">
 
             <div class="form-select-image" *ngIf="!uploadPic">
               <label>Select an image as the display picture</label>
 
-              <div class="slider">
+              <div class="slider" [class.slider-exist]="displayPic">
                 <div class="slider-images" *ngFor="let image of pictureOptions; let i = index">
                   <input type="radio" name="slide_switch" id="image-{{i}}" (click)="selectPic(image)" checked>
                   <label for="image-{{i}}">

@@ -146,7 +146,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
   backToSearch() {
     this.searchDone = false;
     this.addAccommodationForm.reset();
-    this.displayPic = '';
+    this.displayPic = undefined;
     this.pictureOptions = [];
     this.dragAddress = '';
     this.marker = undefined;

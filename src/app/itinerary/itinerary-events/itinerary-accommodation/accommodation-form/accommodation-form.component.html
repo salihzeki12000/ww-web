@@ -91,7 +91,7 @@
             <div class="form-select-image" *ngIf="!uploadPic">
               <label>Select an image as the display picture</label>
 
-              <div class="slider">
+              <div class="slider" [class.slider-exist]="displayPic">
                 <div class="slider-images" *ngFor="let image of pictureOptions; let i = index">
                   <input type="radio" name="slide_switch" id="image-{{i}}" (click)="selectPic(image)" checked>
                   <label for="image-{{i}}">

@@ -429,7 +429,7 @@ h5.action-response-primary  {
   display: none;
   position: absolute;
   top: 25px;
-  right: 25px;
+  right: 10px;
   padding: 5px;
   background-color: #3A4A4D;
   border-radius: 2px;
@@ -443,7 +443,7 @@ h5.action-response-primary  {
   display: block;
   position: absolute;
   top: 25px;
-  right: 25px;
+  right: 10px;
   width: 150px;
   background-color: white;
   box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
@@ -485,7 +485,11 @@ h5.action-response-primary  {
 .slider {
   position: relative;
 	margin: 5px auto 15px auto;
-  padding: 205px 0 5px 0;
+  padding: 0 0 5px 0;
+}
+
+.slider-exist {
+  padding-top: 205px;
 }
 
 .slider-images {
@@ -832,6 +836,15 @@ span.label-note {
 
 label.label-note  {
   color: #6494ED;
+}
+
+label.activity-no-location  {
+  margin-bottom: 10px;
+  color: #6494ED;
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
 }
 
 /* form validators */
@@ -1599,11 +1612,7 @@ ww-resource {
 }
 
 .transport-header {
-  padding: 10px 20px;
-
-  @media only screen and (max-width: 650px) {
-    // text-align: center;
-  }
+  padding: 20px;
 }
 
 .transport-header .transport-type,
@@ -1855,7 +1864,7 @@ h5.date-details  {
 .resource-title {
   @include headerText;
   width: 90%;
-  margin-bottom: 10px;
+  margin: 20px 0 10px 0;
   word-wrap: break-word;
 }
 

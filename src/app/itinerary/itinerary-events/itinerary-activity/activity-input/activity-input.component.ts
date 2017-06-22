@@ -28,6 +28,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   @Output() hideActivityForm = new EventEmitter<boolean>();
 
   addActivityForm: FormGroup;
+  noLocation = false;
 
   // time picker
   ats = true;
@@ -154,14 +155,24 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   // progress bar
   backToSearch() {
     this.searchDone = false;
+    this.noLocation = false;
     this.addActivityForm.reset();
     this.initMeals();
-    this.displayPic = '';
+    this.displayPic = undefined;
     this.pictureOptions = [];
     this.dragAddress = '';
     this.marker = undefined;
 
     setTimeout(() => {this.initMap()}, 100)
+  }
+
+  getForm() {
+    this.searchDone = true;
+    this.noLocation = true;
+
+    this.addActivityForm.patchValue({
+      date: 'any day',
+    })
   }
 
   //get activity details from Google
