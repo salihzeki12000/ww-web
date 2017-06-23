@@ -6,6 +6,16 @@
   </nav>
 </div>
 
+<div class="top-nav-checkin">
+  <div class="top-nav-link">
+    <i class="fa fa-map-marker fa-lg" aria-hidden="true" (click)="checkIn()"></i>
+
+    <div class="top-nav-link-hint">
+      <h6>click to check in</h6>
+    </div>
+  </div>
+</div>
+
 <div class="top-nav-search">
   <div class="top-nav-link">
     <i class="fa fa-search fa-lg" aria-hidden="true" (mouseover)="searchOptions = true"></i>
@@ -250,4 +260,18 @@
 <!-- new itin form -->
 <div class="custom-modal" *ngIf="showItineraryForm">
   <ww-itinerary-form (hideItineraryForm)="hideItineraryForm($event)"></ww-itinerary-form>
+</div>
+
+<!-- check in -->
+<div class="custom-modal" *ngIf="checkin">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>Check in</h3>
+      <a (click)="cancelCheckin()">X</a>
+    </div>
+
+    <div class="form-housing">
+      <ww-google-checkin (cancelCheckIn)="cancelCheckin()"></ww-google-checkin>
+    </div>
+  </div>
 </div>

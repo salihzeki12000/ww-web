@@ -1,46 +1,187 @@
-import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, Output, EventEmitter, Renderer } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Output, EventEmitter, Renderer } from '@angular/core';
+import { Subscription } from 'rxjs/Rx';
 declare var google:any;
+
+import { User, UserService }  from '../../user';
+import { LoadingService }     from '../../loading';
+import { CheckInService }     from '../../check-in';
 
 @Component({
   selector: 'ww-google-checkin',
-  template:`
-    <div class="form-group">
-      <label>Search for your check in location</label>
-      <input type="text" #checkinSearch class="form-control" (blur)="getDetails()">
-    </div>
-  `,
+  templateUrl: './google-checkin.component.html',
   styleUrls: ['./google-checkin.component.scss']
 })
-export class GoogleCheckinComponent implements OnInit, AfterViewInit {
-  @ViewChild('checkinSearch') checkinSearch: ElementRef;
-  place;
+export class GoogleCheckinComponent implements OnInit {
+  @ViewChild('map') map: ElementRef;
+  locationMap;
+  marker;
+  lat;
+  lng;
+  name;
+  address;
+  city;
+  country;
+  placeId;
+  currentUser: User;
+  locationType = '';
 
-  @Output() checkinDetail = new EventEmitter();
+  currentUserSubscription: Subscription;
 
-  constructor(private renderer: Renderer) { }
+  @Output() cancelCheckIn = new EventEmitter<boolean>();
+
+  constructor(
+    private renderer: Renderer,
+    private userService: UserService,
+    private checkinService: CheckInService,
+    private loadingService: LoadingService) { }
 
   ngOnInit() {
+    this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
+      result => {
+        this.currentUser = result;
+      })
+
+    setTimeout(() => {this.initMap()},100);
   }
 
-  ngAfterViewInit() {
-    let search = this.checkinSearch.nativeElement;
-    let autocomplete = new google.maps.places.Autocomplete(search);
-    let event = new MouseEvent('blur');
+  initMap() {
+    let mapDiv = this.map.nativeElement;
 
-    autocomplete.addListener('place_changed', () => {
-      this.place = autocomplete.getPlace();
-      this.renderer.invokeElementMethod(search, 'dispatchEvent', [event]);
+    this.locationMap = new google.maps.Map(mapDiv, {
+      center: {lat: 0, lng: 0},
+      zoom: 1,
+      styles: [{"stylers": [{ "saturation": -20 }]}]
     })
+  }
 
-    google.maps.event.addDomListener(search, 'keydown', function(e) {
-      if (e.keyCode == 13) {
-          e.preventDefault();
-      }
+  getDetails(value)  {
+    this.clear();
+
+    this.lat = value['geometry'].location.lat();
+    this.lng = value['geometry'].location.lng();
+    this.placeId = value['place_id'];
+    this.address = value['formatted_address'];
+    this.name = value['name'];
+
+    this.getCitynCountry(value['address_components'])
+
+    this.pinLocation(this.lat, this.lng);
+  }
+
+  pinLocation(lat, lng)  {
+    let center = new google.maps.LatLng(lat, lng);
+
+    this.locationMap.panTo(center);
+    this.locationMap.setZoom(17);
+
+    if(this.marker !== undefined) {
+      this.marker.setPosition({ lat: lat, lng: lng });
+    } else  {
+      this.marker = new google.maps.Marker({
+        position: { lat: lat, lng: lng },
+        map: this.locationMap,
+        animation: google.maps.Animation.DROP,
+        zIndex: 1,
+        draggable: true
+      })
+    }
+
+    let geocoder = new google.maps.Geocoder;
+
+    google.maps.event.addListener(this.marker, 'dragend', (event) => {
+      this.loadingService.setLoader(true, "Getting location address...");
+      this.clear();
+
+      this.lat = event.latLng.lat();
+      this.lng = event.latLng.lng();
+
+      this.getDragLocation(geocoder, this.lat, this.lng);
+      this.locationType = 'Dragged';
     });
   }
 
-  getDetails()  {
-    this.checkinDetail.emit(this.place)
+  getDragLocation(geocoder, lat, lng) {
+    geocoder.geocode({location: {lat:lat, lng:lng}}, (result, status) =>  {
+      if(status === 'OK') {
+        if(result[0]) {
+          this.address = result[0]['formatted_address'];
+          this.placeId = result[0]['place_id'];
+
+          this.getCitynCountry(result[0]['address_components'])
+
+          this.loadingService.setLoader(false, "");
+        }
+      }
+    })
+  }
+
+  getLocation() {
+    this.loadingService.setLoader(true, "Getting your current location...");
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.clear();
+
+        this.lat = position.coords.latitude;
+        this.lng = position.coords.longitude;
+
+        this.pinLocation(this.lat, this.lng);
+
+        let geocoder = new google.maps.Geocoder;
+        this.getDragLocation(geocoder, this.lat, this.lng);
+        this.locationType = 'Current';
+
+        this.loadingService.setLoader(false, "");
+      })
+    }
+  }
+
+  getCitynCountry(address)  {
+    for (let i = 0; i < address.length; i++) {
+      if(address[i]['types'][0] === 'locality')  {
+        this.city = address[i]['long_name'];
+      } else if(address[i]['types'][0] === 'administrative_area_level_1') {
+        this.city += ', ' + address[i]['long_name'];
+      }
+
+      if(address[i]['types'][0] === 'country')  {
+        this.country = address[i]['long_name'];
+      }
+    }
+  }
+
+  clear() {
+    this.lat = '';
+    this.lng = '';
+    this.name = '';
+    this.address = '';
+    this.city = '';
+    this.country = '';
+    this.placeId = '';
+    this.locationType = '';
+  }
+
+  checkin() {
+    this.loadingService.setLoader(true, "Saving your check in...");
+    this.cancelCheckIn.emit();
+
+    let checkin = {
+      lat: this.lat,
+      lng: this.lng,
+      name: this.name,
+      address: this.address,
+      city: this.city,
+      country: this.country,
+      place_id: this.placeId,
+      user: this.currentUser['_id']
+    }
+
+    this.checkinService.addCheckin(checkin).subscribe(
+      result  =>  {
+        console.log(result);
+        this.loadingService.setLoader(false, "");
+      }
+    )
   }
 
 }

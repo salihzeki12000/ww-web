@@ -31,7 +31,7 @@ export class NotificationListComponent implements OnInit, OnDestroy {
     this.currentUserSubscription = this.userService.updateCurrentUser
                                        .subscribe(
                                          result =>  {
-                                           this.getNotifications(result['id'])
+                                           this.getNotifications(result['_id'])
                                          }
                                        )
     this.notificationSubscription = this.notificationService.updateNotifications

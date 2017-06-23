@@ -108,12 +108,12 @@ export class ActivityComponent implements OnInit, OnDestroy {
   }
 
   checkSameUser() {
-    if(this.currentUser['id'] === this.activity['user']['_id']) {
+    if(this.currentUser['_id'] === this.activity['user']['_id']) {
       this.sameUser = true;
     } else  {
       let admin = this.currentItinerary['admin'];
       for (let i = 0; i < admin.length; i++) {
-        if(this.currentUser['id'] === admin[i]) {
+        if(this.currentUser['_id'] === admin[i]) {
           this.sameUser = true;
           i = admin.length;
         }
@@ -196,7 +196,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
     copiedEvent['date'] = 'any day';
     copiedEvent['time'] = 'anytime';
     copiedEvent['user'] ={
-      _Id: this.currentUser['id'],
+      _id: this.currentUser['_id'],
       username: this.currentUser['username'],
     }
 
@@ -318,7 +318,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
   }
 
   routeToUser(id) {
-    if(id === this.currentUser['id']) {
+    if(id === this.currentUser['_id']) {
       this.router.navigateByUrl('/me/profile');
     } else  {
       this.router.navigateByUrl('/wondererwanderer/' + id)

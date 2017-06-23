@@ -175,13 +175,13 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
 
   checkStatus()  {
     for (let i = 0; i < this.currentItinerary['admin'].length; i++) {
-      if(this.currentItinerary['admin'][i] === this.currentUser['id']) {
+      if(this.currentItinerary['admin'][i] === this.currentUser['_id']) {
         this.currentUserAdmin = true;
       }
     }
 
     for (let i = 0; i < this.currentItinerary['members'].length; i++) {
-      if(this.currentItinerary['members'][i]['_id'] === this.currentUser['id'])  {
+      if(this.currentItinerary['members'][i]['_id'] === this.currentUser['_id'])  {
         this.currentItinerary['members'][i]['hide_option'] = true;
       }
 
@@ -190,7 +190,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
       }
     }
 
-    if(this.currentUser['id'] === this.currentItinerary['members'][0]['_id']) {
+    if(this.currentUser['_id'] === this.currentItinerary['members'][0]['_id']) {
       this.masterAdmin = true;
     }
 
@@ -281,7 +281,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     member['admin'] = false;
     this.showOptions[i] = false;
 
-    this.currentItinerary['admin'].splice(this.currentItinerary['admin'].indexOf(member['id']), 1);
+    this.currentItinerary['admin'].splice(this.currentItinerary['admin'].indexOf(member['_id']), 1);
 
     this.itineraryService.editItin(this.currentItinerary, 'edit').subscribe(
          data => {})
@@ -293,7 +293,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     this.currentItinerary['members'].splice(i, 1)
 
     if(member['admin']) {
-      this.currentItinerary['admin'].splice(this.currentItinerary['admin'].indexOf(member['id']), 1);
+      this.currentItinerary['admin'].splice(this.currentItinerary['admin'].indexOf(member['_id']), 1);
     }
 
     this.itineraryService.editItin(this.currentItinerary, 'edit').subscribe(
@@ -471,10 +471,10 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     let admin = this.currentItinerary['admin'];
 
     for (let i = 0; i < members.length; i++) {
-      if(members[i]['_id'] === this.currentUser['id']) {
+      if(members[i]['_id'] === this.currentUser['_id']) {
         if(members[i]['admin'])  {
           for (let j = 0; j < admin.length; j++) {
-            if(admin[j] === this.currentUser['id']) {
+            if(admin[j] === this.currentUser['_id']) {
               admin.splice(j,1);
               members.splice(i,1);
             } else  {
@@ -490,7 +490,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
           for (let i = 0; i < this.currentItinerary['members'].length; i++) {
             this.notificationService.newNotification({
               recipient: this.currentItinerary['members'][i]['_id'],
-              originator: this.currentUser['id'],
+              originator: this.currentUser['_id'],
               message: " has left the itinerary - " + this.currentItinerary['name'],
               link: "/me/itinerary/" + this.currentItinerary['_id'],
               read: false
@@ -511,7 +511,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   }
 
   routeToUser(id) {
-    if(id === this.currentUser['id']) {
+    if(id === this.currentUser['_id']) {
       this.router.navigateByUrl('/me/profile');
     } else  {
       this.router.navigateByUrl('/wondererwanderer/' + id)

@@ -5,15 +5,15 @@ export class Itinerary {
     date_to: string,
     members: [{
       username: string,
-      userId: number
+      _id: number
     }],
     admin: [{
       username: string,
-      userId: number
+      _id: number
     }],
     created_by: {
       username: string,
-      userId: number
+      _id: number
     }
   ) {}
 }

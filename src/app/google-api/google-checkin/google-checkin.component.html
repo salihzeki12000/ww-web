@@ -1,0 +1,15 @@
+<label>Search check in location by name or adddress <span class="label-note"> - local name or address may be required</span></label>
+<ww-google-place-search (placeDetail)="getDetails($event)"></ww-google-place-search>
+
+<h5>You may drag the pin to set a new location after searching or getting current location.</h5>
+
+<h5 *ngIf="locationType !== ''" class="dragged-address">
+  <span class="dragged-location">{{ locationType }} location:</span> {{ address}}
+</h5>
+
+<div class="action-response">
+  <h5 class="action-response-primary" (click)="getLocation()">Get current location</h5>
+  <h5 class="action-response-primary" (click)="checkin()">Check in now</h5>
+</div>
+
+<div #map id="map"></div>

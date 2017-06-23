@@ -78,7 +78,7 @@ export class UserComponent implements OnInit, OnDestroy {
     this.followStatus = '';
     if(this.currentUser !== undefined && this.relationships.length > 0)  {
       for (let i = 0; i < this.relationships.length; i++) {
-        if(this.relationships[i]['user']['_id'] === this.currentUser['id'])  {
+        if(this.relationships[i]['user']['_id'] === this.currentUser['_id'])  {
           this.followStatus = this.relationships[i]['status'];
           this.relationship = this.relationships[i];
         }

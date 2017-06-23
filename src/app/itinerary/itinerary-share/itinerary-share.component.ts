@@ -198,7 +198,7 @@ export class ItineraryShareComponent implements OnInit {
       }
 
       let newShare = {
-        shared_by: this.currentUser['id'],
+        shared_by: this.currentUser['_id'],
         shared_with: this.selectedUsers[i]['_id'],
         shared_on: new Date()
       }
@@ -211,7 +211,7 @@ export class ItineraryShareComponent implements OnInit {
 
           this.notificationService.newNotification({
             recipient: this.selectedUsers[i]['_id'],
-            originator: this.currentUser['id'],
+            originator: this.currentUser['_id'],
             message: " has shared with you the itinerary - " + this.currentItinerary['name'],
             link: "/me/itinerary/" + data.itinerary['_id'],
             read: false

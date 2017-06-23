@@ -119,7 +119,7 @@ export class ResourceInputComponent implements OnInit, OnDestroy {
       link_img: this.link_img,
       itinerary: this.currentItinerary,
       user: {
-        _Id: this.currentUser['id'],
+        _id: this.currentUser['_id'],
         username: this.currentUser['username'],
       },
       created_at: new Date()

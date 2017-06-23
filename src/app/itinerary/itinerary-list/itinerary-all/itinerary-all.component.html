@@ -1,7 +1,16 @@
 <div class="itinerary-list" *ngFor="let itinerary of itineraries" (click)="routeToItin(itinerary._id)" [class.past-indicator]="itinerary.past">
   <h3>{{ itinerary.name }}</h3>
   <h5>{{ itinerary.date_from | date:'dd MMM yy' }} to {{ itinerary.date_to | date:'dd MMM yy' }}</h5>
-  <h5>{{ itinerary.members.length }} {{ itinerary.members.length > 1 ? "Members" : "Member" }}</h5>
-  <h5>{{ itinerary.shares.length }} {{ itinerary.shares.length > 1 ? "Shares" : "Share" }}</h5>
+
+  <div class="itinerary-list-stats">
+    <h3>{{ itinerary.members.length }}</h3>
+    <h5>{{ itinerary.members.length > 1 ? "Members" : "Member" }}</h5>
+  </div>
+
+  <div class="itinerary-list-stats">
+    <h3>{{ itinerary.shares.length }}</h3>
+    <h5>{{ itinerary.shares.length > 1 ? "Shares" : "Share" }}</h5>
+  </div>
+
   <h5>Created by <span class="username-bold" (click)="routeToUser(itinerary.created_by._id)">{{ itinerary.created_by.username }}</span> on {{ itinerary.created_at | date: 'dd MMM yy'}}</h5>
 </div>

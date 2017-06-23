@@ -37,7 +37,7 @@ export class ItineraryAllComponent implements OnInit, OnDestroy {
   }
 
   routeToUser(id) {
-    if(id === this.currentUser['id']) {
+    if(id === this.currentUser['_id']) {
       this.router.navigateByUrl('/me/profile');
     } else  {
       this.router.navigateByUrl('/wondererwanderer/' + id)

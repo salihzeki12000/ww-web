@@ -30,6 +30,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   notifications = [];
 
   showItineraryForm = false;
+  checkin = false;
 
   // top nav
   searchOptions = false;
@@ -94,6 +95,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
           result => {
             this.users = result.users;
           })
+
   }
 
   ngOnDestroy() {
@@ -149,7 +151,18 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     }
   }
 
-  // top navigation
+  // top navigation check in
+  checkIn() {
+    this.checkin = true;
+    this.preventScroll(true);
+  }
+
+  cancelCheckin() {
+    this.checkin = false;
+    this.preventScroll(false);
+  }
+
+  // top navigation itinerary
   newItin() {
     this.showItineraryForm = true;
   }
@@ -164,6 +177,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     }
   }
 
+  // top navigation notification/followers
   getNotifications()  {
     this.showNotifications = true;
     this.currentUser['check_notification'] = new Date();
@@ -313,7 +327,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
 
   routeToUser(id) {
     this.cancelShowUsers();
-    if(id === this.currentUser['id']) {
+    if(id === this.currentUser['_id']) {
       this.router.navigateByUrl('/me/profile');
     } else  {
       this.router.navigateByUrl('/wondererwanderer/' + id)

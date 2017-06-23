@@ -58,7 +58,7 @@ export class RelationshipService  {
 
   requestFollow(following) {
     const body = JSON.stringify({
-      user: following.user["id"],
+      user: following.user["_id"],
       following: following.following["_id"],
       status: "requested"
     });
@@ -70,7 +70,7 @@ export class RelationshipService  {
                       newFollowing['relative_status'] = "requestedFollowing";
 
                       newFollowing['user'] = {
-                        _id: this.currentUser['id'],
+                        _id: this.currentUser['_id'],
                         username: this.currentUser['username'],
                         display_picture: this.currentUser['display_picture'],
                         description: this.currentUser['description']
@@ -120,7 +120,7 @@ export class RelationshipService  {
                       }
 
                       acceptedFollowing['following'] = {
-                        _id: this.currentUser['id'],
+                        _id: this.currentUser['_id'],
                         username: this.currentUser['username'],
                         display_picture: this.currentUser['display_picture'],
                         description: this.currentUser['description']
@@ -194,7 +194,7 @@ export class RelationshipService  {
     this.requestedFollowings = [];
 
     for (let i = 0; i < relationships.length; i++) {
-      if(relationships[i]['user']['_id'] === this.currentUser['id']) {
+      if(relationships[i]['user']['_id'] === this.currentUser['_id']) {
         if(relationships[i]['status'] === "requested")  {
           relationships[i]['relative_status'] = "requestedFollowing";
           this.requestedFollowings.push(relationships[i]);
@@ -204,7 +204,7 @@ export class RelationshipService  {
         }
       }
 
-      if(relationships[i]['following']['_id'] === this.currentUser['id']) {
+      if(relationships[i]['following']['_id'] === this.currentUser['_id']) {
         if(relationships[i]['status'] === "requested")  {
           relationships[i]['request_ignored'] = false;
           relationships[i]['request_accepted'] = false;

@@ -37,7 +37,7 @@ import { LoadingComponent, LoadingService } from './loading';
 import { ErrorMessageComponent, ErrorMessageService } from './error-message';
 
 import { PrivacyPolicyComponent } from './privacy-policy';
-
+import { CheckInComponent, CheckInService } from './check-in';
 import { CapitalisePipe } from './pipes';
 
 @NgModule({
@@ -117,7 +117,8 @@ import { CapitalisePipe } from './pipes';
     LoadingComponent,
     ErrorMessageComponent,
     TimePickerComponent,
-    PrivacyPolicyComponent
+    PrivacyPolicyComponent,
+    CheckInComponent
   ],
   imports: [
     BrowserModule,
@@ -129,7 +130,7 @@ import { CapitalisePipe } from './pipes';
     routing,
     Daterangepicker
   ],
-  providers: [ LoadingService, AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, FileuploadService, CommentService, ErrorMessageService, AuthGuard ],
+  providers: [ LoadingService, AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, FileuploadService, CommentService, ErrorMessageService, CheckInService, AuthGuard ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

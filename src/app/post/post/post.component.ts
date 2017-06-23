@@ -80,14 +80,14 @@ export class PostComponent implements OnInit, OnDestroy {
   }
 
   checkSameUser() {
-    if(this.currentUser['id'] === this.post['user']['_id']) {
+    if(this.currentUser['_id'] === this.post['user']['_id']) {
       this.sameUser = true;
     }
   }
 
   checkLikePost() {
     for (let i = 0; i < this.post['likes'].length; i++) {
-      if(this.post['likes'][i]['_id'] === this.currentUser['id']) {
+      if(this.post['likes'][i]['_id'] === this.currentUser['_id']) {
         this.userLike = true;
       }
     }
@@ -98,7 +98,7 @@ export class PostComponent implements OnInit, OnDestroy {
 
   checkCommentSameUser()  {
     for (let i = 0; i < this.post['comments'].length; i++) {
-      if(this.post['comments'][i]['user']['_id'] === this.currentUser['id'])  {
+      if(this.post['comments'][i]['user']['_id'] === this.currentUser['_id'])  {
         this.post['comments'][i]['same_user'] = true;
       }
     }
@@ -131,13 +131,13 @@ export class PostComponent implements OnInit, OnDestroy {
   likePost()  {
     if(this.userLike) {
       for (let i = 0; i < this.post['likes'].length; i++) {
-        if(this.post['likes'][i]['_id'] === this.currentUser['id'])  {
+        if(this.post['likes'][i]['_id'] === this.currentUser['_id'])  {
           this.post['likes'].splice(i,1)
         }
       }
     } else if(!this.userLike) {
       this.post['likes'].push({
-        _id: this.currentUser['id'],
+        _id: this.currentUser['_id'],
         display_picture: this.currentUser['display_picture'],
         description: this.currentUser['description'],
         username: this.currentUser['username']
@@ -153,7 +153,7 @@ export class PostComponent implements OnInit, OnDestroy {
   commentPost(comment)  {
     let newComment = {
       comment: comment,
-      user: this.currentUser['id'],
+      user: this.currentUser['_id'],
       post: this.post['_id']
     }
 
@@ -192,7 +192,7 @@ export class PostComponent implements OnInit, OnDestroy {
             if(!this.sameUser)  {
               this.notificationService.newNotification({
                 recipient: this.post['user']['_id'],
-                originator: this.currentUser['id'],
+                originator: this.currentUser['_id'],
                 message: " has comment on your post",
                 link: "/me/post/" + this.post['_id'],
                 read: false
@@ -247,7 +247,7 @@ export class PostComponent implements OnInit, OnDestroy {
   }
 
   routeToUser(id) {
-    if(id === this.currentUser['id']) {
+    if(id === this.currentUser['_id']) {
       this.router.navigateByUrl('/me/profile');
     } else  {
       this.router.navigateByUrl('/wondererwanderer/' + id)

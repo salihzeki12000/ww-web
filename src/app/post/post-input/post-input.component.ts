@@ -82,7 +82,7 @@ export class PostInputComponent implements OnInit, OnDestroy {
       link_url: this.link_url,
       link_img: this.link_img,
       user: {
-        userId: this.currentUser['id'],
+        _id: this.currentUser['_id'],
         username: this.currentUser['username']
       },
     }).subscribe(

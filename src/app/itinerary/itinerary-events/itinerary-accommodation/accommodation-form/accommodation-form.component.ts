@@ -356,7 +356,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
     newAccommodation['time'] = newAccommodation['check_in_time'];
     newAccommodation['type'] = 'accommodation';
     newAccommodation['user'] =  {
-      _Id: this.currentUser['id'],
+      _id: this.currentUser['_id'],
       username: this.currentUser['username'],
     }
     newAccommodation['created_at'] = new Date();

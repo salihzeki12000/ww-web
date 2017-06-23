@@ -2162,7 +2162,7 @@ ww-itinerary-map  {
   padding-bottom: 5px;
 }
 
-.itinerary-list h5  {
+.itinerary-list > h5  {
   padding: 0 0 5px 20px;
 }
 
@@ -2170,8 +2170,8 @@ ww-itinerary-map  {
   padding-bottom: 15px;
 }
 
-.itinerary-list > h5:nth-of-type(2),
-.itinerary-list > h5:nth-of-type(3)  {
+.itinerary-list-stats {
   display: inline-block;
-  padding-right: 10px;
+  margin: 0 0 15px 20px;
+  text-align: center;
 }

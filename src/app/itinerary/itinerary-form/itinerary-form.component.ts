@@ -95,8 +95,8 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
       })
     }
 
-    itinerary.members = [this.currentUser['id']];
-    itinerary.admin = [this.currentUser['id']];
+    itinerary.members = [this.currentUser['_id']];
+    itinerary.admin = [this.currentUser['_id']];
 
     this.itineraryService.addItin(itinerary).subscribe(
       data => {

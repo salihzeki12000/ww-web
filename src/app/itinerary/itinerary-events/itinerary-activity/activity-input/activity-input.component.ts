@@ -379,7 +379,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     }
 
     newActivity['user'] = {
-      _Id: this.currentUser['id'],
+      _id: this.currentUser['_id'],
       username: this.currentUser['username'],
     }
 

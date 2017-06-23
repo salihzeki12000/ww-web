@@ -38,7 +38,7 @@ export class ResourceService  {
                     .map((response: Response) => {
                       let newResource = response.json().resource;
                       newResource.user = {
-                        _Id: resource['user']._Id,
+                        _id: resource['user']._id,
                         username: resource['user'].username
                       }
 
@@ -48,10 +48,10 @@ export class ResourceService  {
                       let itinerary = resource['itinerary'];
 
                       for (let i = 0; i < itinerary['members'].length; i++) {
-                        if(itinerary['members'][i]['_id'] !== resource['user']._Id)  {
+                        if(itinerary['members'][i]['_id'] !== resource['user']._id)  {
                           this.notificationService.newNotification({
                             recipient: itinerary['members'][i]['_id'],
-                            originator: resource['user']._Id,
+                            originator: resource['user']._id,
                             message: " has added a new resource " + resource['title'] + " to the itinerary " + itinerary['name'],
                             link: "/me/itinerary/" + itinerary['_id'] + "/resource",
                             read: false

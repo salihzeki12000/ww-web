@@ -67,7 +67,7 @@ export class ItineraryEventService  {
                     .map((response: Response) => {
                       let newEvent = response.json().eventItem;
                       newEvent.user = {
-                        _id: event['user']._Id,
+                        _id: event['user']._id,
                         username: event['user'].username
                       }
                       newEvent.sameUser = true;
@@ -75,10 +75,10 @@ export class ItineraryEventService  {
                       this.sortEventByDate(this.events);
 
                       for (let i = 0; i < itinerary['members'].length; i++) {
-                        if(itinerary['members'][i]['_id'] !== event['user']._Id)  {
+                        if(itinerary['members'][i]['_id'] !== event['user']._id)  {
                           this.notificationService.newNotification({
                             recipient: itinerary['members'][i]['_id'],
-                            originator: event['user']._Id,
+                            originator: event['user']._id,
                             message: " has added a new " + messageBody + ' to the itinerary ' + itinerary['name'],
                             link: "/me/itinerary/" + itinerary['_id'] + "/" + event['type'],
                             read: false

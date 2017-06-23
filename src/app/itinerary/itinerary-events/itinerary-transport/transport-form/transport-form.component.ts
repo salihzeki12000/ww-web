@@ -619,7 +619,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     newTransport['type'] = 'transport';
     newTransport['transport_type'] = this.transportOption;
     newTransport['user'] =  {
-      _Id: this.currentUser['id'],
+      _id: this.currentUser['_id'],
       username: this.currentUser['username'],
     }
     newTransport['created_at'] = new Date();

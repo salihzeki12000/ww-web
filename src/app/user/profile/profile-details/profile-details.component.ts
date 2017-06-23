@@ -17,7 +17,7 @@ import { LoadingService }      from '../../../loading';
   styleUrls: ['./profile-details.component.scss']
 })
 export class ProfileDetailsComponent implements OnInit, OnDestroy {
-  user: User;
+  currentUser: User;
   currentUserSubscription: Subscription;
 
   posts: Post[] = [];
@@ -45,8 +45,8 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
     this.currentUserSubscription = this.userService.updateCurrentUser
                                        .subscribe(
                                          result => {
-                                           this.user = result;
-                                           this.getPosts(this.user['id'])
+                                           this.currentUser = result;
+                                           this.getPosts(this.currentUser['_id'])
                                          })
 
     this.relationshipSubscription = this.relationshipService.updateRelationships
