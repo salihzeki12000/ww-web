@@ -1,7 +1,9 @@
 import { Component, OnInit, OnDestroy, ElementRef, ViewChild, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
+
 declare var google:any;
+declare var MarkerClusterer:any;
 
 import { ItineraryEvent }        from '../itinerary-events/itinerary-event';
 import { ItineraryEventService } from '../itinerary-events/itinerary-event.service';
@@ -67,7 +69,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
       zoom = 13
     } else if (centerEvent === undefined) {
       center = {lat: 0, lng: 0},
-      zoom = 1
+      zoom = 2
     }
 
     this.itinMap = new google.maps.Map(mapDiv, {
@@ -167,6 +169,12 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
         infoWindow.open(map, marker)
       })
     }
+    let imagePath = 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+    let markerCluster = new MarkerClusterer(map, this.mapMarkers, {
+            maxZoom: 15,
+            imagePath: imagePath
+          });
+
     this.loadingService.setLoader(false, "");
     this.preventScroll(false);
   }
@@ -176,6 +184,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
       let center = new google.maps.LatLng(event['lat'], event['lng']);
 
       this.itinMap.panTo(center);
+      this.itinMap.setZoom(18);
     }
 
     this.showMapLegend = false;

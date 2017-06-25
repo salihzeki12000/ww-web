@@ -15,7 +15,7 @@ import { HomeComponent } from './home';
 import { MeComponent } from './me';
 import { MainNavigationComponent } from './navigation';
 
-import { UserComponent, UserFollowersComponent, UserFollowingsComponent, UserItinerariesComponent, UserPostsComponent, UserService, ProfileComponent, ProfileDetailsComponent, ProfileEditComponent } from './user';
+import { UserComponent, UserCheckInComponent, UserFollowersComponent, UserFollowingsComponent, UserItinerariesComponent, UserPostsComponent, UserService, ProfileComponent, ProfileDetailsComponent, ProfileEditComponent } from './user';
 
 import { RelationshipService, RelationshipsComponent, FollowingsComponent, FollowingComponent, FollowersComponent, FollowerComponent, RequestedFollowingsComponent, RequestedFollowingComponent, PendingFollowerComponent, PendingFollowersComponent } from './relationships';
 
@@ -48,6 +48,7 @@ import { CapitalisePipe } from './pipes';
     SignupComponent,
     SigninComponent,
     UserComponent,
+    UserCheckInComponent,
     UserFollowersComponent,
     UserFollowingsComponent,
     UserItinerariesComponent,

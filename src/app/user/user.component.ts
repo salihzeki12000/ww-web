@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs/Rx';
 import { UserService }         from './user.service';
 import { PostService }         from '../post';
 import { LoadingService }      from '../loading';
+import { CheckInService }      from '../check-in';
 import { RelationshipService } from '../relationships/relationship.service';
 
 @Component({
@@ -26,9 +27,13 @@ export class UserComponent implements OnInit, OnDestroy {
   followStatus = '';// current user following display user?
   relationship;
 
+  checkins = [];
+  checkInSubscription: Subscription;
+
   constructor(
     private route: ActivatedRoute,
     private postService: PostService,
+    private checkinService: CheckInService,
     private loadingService: LoadingService,
     private relationshipService: RelationshipService,
     private userService: UserService) { }
@@ -52,8 +57,11 @@ export class UserComponent implements OnInit, OnDestroy {
           this.loadingService.setLoader(false, "");
         })
 
-      this.postService.getPosts(id).subscribe(
-        result => {})
+      this.postService.getPosts(id).subscribe(result => {})
+
+      this.checkinService.getCheckins(id).subscribe(result =>{
+        this.checkins = result['checkins'];
+      })
 
       this.relationshipService.getUserRelationships(id).subscribe(
         result => {

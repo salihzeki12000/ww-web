@@ -5,16 +5,14 @@ import { Subscription } from 'rxjs/Rx';
 declare var google:any;
 declare var MarkerClusterer:any;
 
-import { CheckInService }     from './check-in.service';
-import { User, UserService }  from '../user';
-import { LoadingService }     from '../loading';
+import { CheckInService }     from '../../check-in';
 
 @Component({
-  selector: 'ww-check-in',
-  templateUrl: './check-in.component.html',
-  styleUrls: ['./check-in.component.scss']
+  selector: 'ww-user-check-in',
+  templateUrl: './user-check-in.component.html',
+  styleUrls: ['./user-check-in.component.scss']
 })
-export class CheckInComponent implements OnInit, OnDestroy {
+export class UserCheckInComponent implements OnInit, OnDestroy {
   @ViewChild('map') map: ElementRef;
   itinMap;
   checkins;
@@ -24,38 +22,26 @@ export class CheckInComponent implements OnInit, OnDestroy {
   countries = [];
 
   checkInSubscription: Subscription;
-  currentUserSubscription: Subscription;
-  currentUser: User;
-
   zoom = false;
 
   constructor(
     private renderer: Renderer2,
-    private userService: UserService,
-    private checkinService: CheckInService,
-    private loadingService: LoadingService) { }
+    private checkinService: CheckInService) { }
 
   ngOnInit() {
-    this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
-      result => {
-        this.currentUser = result;
-        this.checkinService.getCheckins(this.currentUser['_id']).subscribe(result =>{})
-      })
+    setTimeout(() =>  {
+      this.initMap();
+    }, 100)
 
     this.checkInSubscription = this.checkinService.updateCheckIns.subscribe(
       result => {
         this.checkins = result;
-        this.initMap();
-        this.setLocations();
         this.setCountries();
       })
-
   }
 
   ngOnDestroy() {
-    if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
     if(this.checkInSubscription) this.checkInSubscription.unsubscribe();
-    this.loadingService.setLoader(true, "");
   }
 
   @HostListener('document:click', ['$event'])
@@ -76,6 +62,8 @@ export class CheckInComponent implements OnInit, OnDestroy {
       zoom: zoom,
       styles: [{"stylers": [{ "saturation": -20 }]}]
     });
+
+    this.setLocations();
   }
 
   setLocations()  {
@@ -180,7 +168,6 @@ export class CheckInComponent implements OnInit, OnDestroy {
             imagePath: imagePath
           });
 
-    this.loadingService.setLoader(false, "");
     this.preventScroll(false);
   }
 
@@ -200,5 +187,4 @@ export class CheckInComponent implements OnInit, OnDestroy {
       this.renderer.removeClass(document.body, 'prevent-scroll');
     }
   }
-
 }

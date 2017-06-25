@@ -18,6 +18,10 @@
       <h2>{{ currentUser?.itineraries.length }}</h2>
       <h5>ITINERARY</h5>
     </div>
+    <div class="itinerary-counter" [routerLink]="['/me/check-in']">
+      <h2>{{ checkins?.length }}</h2>
+      <h5>CHECK IN</h5>
+    </div>
   </div>
 
   <div class="user-profile-main">

@@ -62,8 +62,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.feedSubscription.unsubscribe();
-    this.currentUserSubscription.unsubscribe();
+    if(this.feedSubscription) this.feedSubscription.unsubscribe();
+    if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
     this.loadingService.setLoader(true, "");
     this.authService.newUser = false;
   }

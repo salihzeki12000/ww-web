@@ -10,6 +10,7 @@ import { RelationshipService } from '../../../relationships/relationship.service
 import { FlashMessageService } from '../../../flash-message';
 import { Post, PostService }   from '../../../post';
 import { LoadingService }      from '../../../loading';
+import { CheckInService }      from '../../../check-in';
 
 @Component({
   selector: 'ww-profile-details',
@@ -27,6 +28,9 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
   followings = [];
   followers = [];
 
+  checkins = [];
+  checkInSubscription: Subscription;
+
   showItineraryForm = false;
   fixed = false;
 
@@ -36,6 +40,7 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private userService: UserService,
     private postService: PostService,
+    private checkinService: CheckInService,
     private relationshipService: RelationshipService,
     private flashMessageService: FlashMessageService,
     private loadingService: LoadingService,
@@ -46,15 +51,21 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
                                        .subscribe(
                                          result => {
                                            this.currentUser = result;
-                                           this.getPosts(this.currentUser['_id'])
+                                           this.getPosts(this.currentUser['_id']);
+                                           this.checkinService.getCheckins(this.currentUser['_id']).subscribe(result =>{})
                                          })
 
     this.relationshipSubscription = this.relationshipService.updateRelationships
                                      .subscribe(
                                        result => {
-                                         this.followers = Object.keys(result['followers']).map(key => result['followers'][key]);;
-                                         this.followings = Object.keys(result['followings']).map(key => result['followings'][key]);;
+                                         this.followers = Object.keys(result['followers']).map(key => result['followers'][key]);
+                                         this.followings = Object.keys(result['followings']).map(key => result['followings'][key]);
                                        })
+
+    this.checkInSubscription = this.checkinService.updateCheckIns.subscribe(
+      result => {
+        this.checkins = Object.keys(result).map(key => result[key]);
+      })
 
     this.loadingService.setLoader(false, "");
     this.renderer.removeClass(document.body, 'prevent-scroll');

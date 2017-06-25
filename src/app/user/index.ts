@@ -7,6 +7,7 @@ export * from './user.component';
 export * from './user-followers/user-followers.component';
 export * from './user-followings/user-followings.component';
 export * from './user-itineraries/user-itineraries.component';
+export * from './user-check-in/user-check-in.component';
 export * from './user-posts/user-posts.component';
 
 export * from './profile/profile.component';

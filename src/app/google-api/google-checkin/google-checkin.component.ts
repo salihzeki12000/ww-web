@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, Output, EventEmitter, Renderer } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild, Output, EventEmitter, Renderer } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 declare var google:any;
 
@@ -11,7 +11,7 @@ import { CheckInService }     from '../../check-in';
   templateUrl: './google-checkin.component.html',
   styleUrls: ['./google-checkin.component.scss']
 })
-export class GoogleCheckinComponent implements OnInit {
+export class GoogleCheckinComponent implements OnInit, OnDestroy {
   @ViewChild('map') map: ElementRef;
   locationMap;
   marker;
@@ -22,10 +22,10 @@ export class GoogleCheckinComponent implements OnInit {
   city;
   country;
   placeId;
-  currentUser: User;
   locationType = '';
 
   currentUserSubscription: Subscription;
+  currentUser: User;
 
   @Output() cancelCheckIn = new EventEmitter<boolean>();
 
@@ -42,6 +42,10 @@ export class GoogleCheckinComponent implements OnInit {
       })
 
     setTimeout(() => {this.initMap()},100);
+  }
+
+  ngOnDestroy() {
+    if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
   }
 
   initMap() {
@@ -145,9 +149,28 @@ export class GoogleCheckinComponent implements OnInit {
       }
 
       if(address[i]['types'][0] === 'country')  {
-        this.country = address[i]['long_name'];
+        let country = address[i]['long_name'];
+        this.getCountryLatLng(country)
       }
     }
+  }
+
+  getCountryLatLng(country)  {
+    let geocoder = new google.maps.Geocoder;
+
+    geocoder.geocode({address: country}, (result, status) =>  {
+      if(status === 'OK') {
+        console.log(result)
+        let lat = result[0]['geometry'].location.lat();
+        let lng = result[0]['geometry'].location.lng();
+
+        this.country = {
+          name: country,
+          lat: lat,
+          lng: lng
+        }
+      }
+    })
   }
 
   clear() {
@@ -178,7 +201,6 @@ export class GoogleCheckinComponent implements OnInit {
 
     this.checkinService.addCheckin(checkin).subscribe(
       result  =>  {
-        console.log(result);
         this.loadingService.setLoader(false, "");
       }
     )

@@ -17,7 +17,7 @@
   </div>
 
   <div class="user-profile-header">
-    <img src="{{ user?.display_picture }}" alt="" [routerLink]="['/wondererwanderer', user?.id]">
+    <img src="{{ user?.display_picture }}" alt="" [routerLink]="['/wondererwanderer', user?._id]">
     <h1>{{ user?.username }}</h1>
     <h4>{{ user?.description }}</h4>
   </div>
@@ -35,6 +35,10 @@
     <div class="itinerary-counter" [routerLink]="['itineraries']">
       <h2>{{ user?.itineraries.length }}</h2>
       <h5>ITINERARY</h5>
+    </div>
+    <div class="itinerary-counter" [routerLink]="['check-in']">
+      <h2>{{ checkins?.length }}</h2>
+      <h5>CHECK IN</h5>
     </div>
   </div>
 

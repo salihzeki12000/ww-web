@@ -1,6 +1,7 @@
 import { Routes } from "@angular/router";
 
 import { HomeComponent } from '../home';
+import { CheckInComponent } from '../check-in'
 import { ProfileComponent, ProfileEditComponent } from '../user';
 import { RelationshipsComponent, RELATIONSHIP_ROUTES } from '../relationships';
 import { ItineraryComponent, ItineraryListComponent, ITINERARY_ROUTES, ITINERARY_LIST_ROUTES } from '../itinerary';
@@ -16,4 +17,6 @@ export const HOME_ROUTES: Routes = [
   { path: 'itinerary/:id', component: ItineraryComponent, children: ITINERARY_ROUTES },
   { path: 'notifications', component: NotificationsComponent },
   { path: 'post/:id', component: PostDisplayComponent},
+  { path: 'check-in', component: CheckInComponent},
+
 ]
