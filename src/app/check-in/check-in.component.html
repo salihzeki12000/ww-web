@@ -2,7 +2,8 @@
 
   <div class="check-in-stats">
     <h2>{{ checkins?.length }}</h2>
-    <h5>Check ins</h5>
+    <h5 class="drop-down" (click)="showCheckIn = true">Check ins</h5>
+    <i class="fa fa-caret-down" aria-hidden="true"></i>
   </div>
 
   <div class="check-in-stats">
@@ -12,7 +13,8 @@
 
   <div class="check-in-stats">
     <i class="fa fa-search-plus fa-lg" aria-hidden="true"></i>
-    <h5 class="zoom" (click)="zoom = true">zoom to</h5>
+    <h5 class="drop-down" (click)="zoom = true">zoom to</h5>
+    <i class="fa fa-caret-down" aria-hidden="true"></i>
   </div>
 </div>
 
@@ -22,6 +24,43 @@
   </div>
 </div>
 
-<div class="dropdown-arrow-up" *ngIf="zoom"></div>
+<div class="country-dropdown-arrow" *ngIf="zoom"></div>
+
+<div class="checkin-dropdown" *ngIf="showCheckIn">
+  <div *ngFor="let checkin of checkins" >
+    <h6 class="delete-checkin" (click)="delete(checkin)">X</h6>
+    <div (click)="zoomTo(checkin.place)">
+      <h6>{{ checkin.created_at | date: 'dd MMM yyyy, HH:mm' }}</h6>
+      <h4>{{ checkin.place.name }}</h4>
+      <h5>{{ checkin.place.address }}</h5>
+    </div>
+  </div>
+</div>
+
+<div class="checkin-dropdown-arrow" *ngIf="showCheckIn"></div>
 
 <div #map id="map"></div>
+
+<div class="custom-modal" *ngIf="deleteCheckIn !== undefined">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>Delete check in?</h3>
+      <a (click)="cancelDelete()">X</a>
+    </div>
+
+    <div class="form-header-name-delete">
+      <h4>{{ deleteCheckIn?.place.name }}</h4>
+    </div>
+
+    <div class="content-with-header-name">
+      <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
+      <h4>Deleting check in {{ deleteCheckIn?.place.name }} will permanently remove it from your list of check ins.</h4>
+    </div>
+
+    <div class="action-response">
+      <h5 class="action-response-primary" (click)="cancelDelete()">CANCEL</h5>
+      <h5 class="action-response-warning" (click)="confirmDelete()">DELETE</h5>
+    </div>
+
+  </div>
+</div>

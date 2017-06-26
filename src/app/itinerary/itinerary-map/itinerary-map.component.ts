@@ -21,7 +21,8 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
   eventSubscription: Subscription;
   events: ItineraryEvent[] = [];
 
-  mapMarkers = [];
+  markers = [];
+  infoWindows = [];
 
   month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   dates = [];
@@ -109,7 +110,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
 
   setMarkers(map) {
     let eventMarker = [];
-    this.mapMarkers = [];
+    this.markers = [];
 
     for (let i = 0; i < this.events.length; i++) {
       if(this.events[i]['type'] !== 'transport')  {
@@ -149,11 +150,13 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
         zIndex: i
       })
 
-      this.mapMarkers.push(marker);
+      this.markers.push(marker);
 
       let infoWindow = new google.maps.InfoWindow({
         content: '<div class="info-window"><p>' + event[0] + '</p><br/><p>' + event[3] + " - " + event[4] + '</p></div>'
       })
+
+      this.infoWindows.push(infoWindow);
 
       // infoWindow.open(map, marker)
 
@@ -169,8 +172,9 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
         infoWindow.open(map, marker)
       })
     }
+
     let imagePath = 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
-    let markerCluster = new MarkerClusterer(map, this.mapMarkers, {
+    let markerCluster = new MarkerClusterer(map, this.markers, {
             maxZoom: 15,
             imagePath: imagePath
           });
@@ -183,12 +187,30 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
     if(event['lat'])  {
       let center = new google.maps.LatLng(event['lat'], event['lng']);
 
+      this.openInfoWindow(event['lat'], event['lng'])
       this.itinMap.panTo(center);
       this.itinMap.setZoom(18);
     }
 
     this.showMapLegend = false;
     this.preventScroll(false);
+  }
+
+  openInfoWindow(lat, lng)  {
+    for (let i = 0; i < this.infoWindows.length; i++) {
+      this.infoWindows[i].close();
+    }
+
+    for (let i = 0; i < this.markers.length; i++) {
+      let mlat = this.markers[i]['position'].lat().toFixed(6);
+      let mlng = this.markers[i]['position'].lng().toFixed(6);
+      let placeLat = lat.toFixed(6);
+      let placeLng = lng.toFixed(6);    
+
+      if((placeLat == mlat) && (placeLng == mlng))  {
+        google.maps.event.trigger(this.markers[i], 'click');
+      }
+    }
   }
 
   setDate(events) {
@@ -203,11 +225,11 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
   }
 
   filterMarkers(date) {
-    for (let i = 0; i < this.mapMarkers.length; i++) {
-      if(this.mapMarkers[i]['date'] === date || date === "All dates")  {
-        this.mapMarkers[i].setVisible(true);
+    for (let i = 0; i < this.markers.length; i++) {
+      if(this.markers[i]['date'] === date || date === "All dates")  {
+        this.markers[i].setVisible(true);
       } else  {
-        this.mapMarkers[i].setVisible(false);
+        this.markers[i].setVisible(false);
       }
     }
   }

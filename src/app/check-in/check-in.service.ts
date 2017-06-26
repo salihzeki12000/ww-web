@@ -38,7 +38,7 @@ export class CheckInService {
 
     return this.http.post( this.url + "/checkin/new/" + token, body, { headers: headers })
                     .map((response: Response) => {
-                      this.checkins.push(checkin);
+                      this.checkins.push(response.json().checkin);
                       this.updateCheckIns.next(this.checkins)
                       return response.json()
                     })
@@ -47,4 +47,21 @@ export class CheckInService {
                       return Observable.throw(error.json())
                     });
   }
+
+  deleteCheckin(checkin)  {
+    const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
+
+    return this.http.delete( this.url + "/checkin/" + checkin['_id'] + token)
+                    .map((response: Response) => {
+                      this.checkins.splice(this.checkins.indexOf(checkin), 1);
+                      this.updateCheckIns.next(this.checkins)
+
+                      return response.json()
+                    })
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
+  }
+
 }

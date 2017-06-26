@@ -22,12 +22,16 @@ export class CheckInComponent implements OnInit, OnDestroy {
   locationIds = [];
 
   countries = [];
+  markers = [];
+  infoWindows = [];
 
   checkInSubscription: Subscription;
   currentUserSubscription: Subscription;
   currentUser: User;
 
+  showCheckIn = false;
   zoom = false;
+  deleteCheckIn = undefined;
 
   constructor(
     private renderer: Renderer2,
@@ -61,8 +65,10 @@ export class CheckInComponent implements OnInit, OnDestroy {
   @HostListener('document:click', ['$event'])
   checkClick(event) {
     if(!event.target.classList.contains("country-dropdown") &&
-      !event.target.classList.contains("zoom")) {
+      !event.target.classList.contains("checkin-dropdown") &&
+      !event.target.classList.contains("drop-down")) {
       this.zoom = false;
+      this.showCheckIn = false;
     }
   }
 
@@ -123,7 +129,7 @@ export class CheckInComponent implements OnInit, OnDestroy {
   }
 
   setMarkers(map) {
-    let markers = [];
+    this.markers = [];
 
     for (let i = 0; i < this.locations.length; i++) {
       let l = this.locations[i];
@@ -142,7 +148,7 @@ export class CheckInComponent implements OnInit, OnDestroy {
         zIndex: i
       })
 
-      markers.push(marker);
+      this.markers.push(marker);
 
       let created_at_string = '';
 
@@ -165,6 +171,8 @@ export class CheckInComponent implements OnInit, OnDestroy {
         content: content
       })
 
+      this.infoWindows.push(infoWindow);
+
       marker.addListener('click', () => {
         infoWindow.open(map, marker)
         let center = new google.maps.LatLng(l['lat'], l['lng'])
@@ -175,7 +183,7 @@ export class CheckInComponent implements OnInit, OnDestroy {
     }
     let imagePath = 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
 
-    let markerCluster = new MarkerClusterer(map, markers, {
+    let markerCluster = new MarkerClusterer(map, this.markers, {
             maxZoom: 15,
             imagePath: imagePath
           });
@@ -191,6 +199,55 @@ export class CheckInComponent implements OnInit, OnDestroy {
     this.itinMap.setZoom(6);
 
     this.zoom = false;
+  }
+
+  zoomTo(place) {
+    let center = new google.maps.LatLng(place['lat'], place['lng']);
+
+    this.openInfoWindow(place['lat'], place['lng'])
+    this.itinMap.panTo(center);
+    this.itinMap.setZoom(17);
+
+    this.showCheckIn = false;
+  }
+
+  openInfoWindow(lat, lng)  {
+    for (let i = 0; i < this.infoWindows.length; i++) {
+      this.infoWindows[i].close();
+    }
+
+    for (let i = 0; i < this.markers.length; i++) {
+      let mlat = this.markers[i]['position'].lat().toFixed(6);
+      let mlng = this.markers[i]['position'].lng().toFixed(6);
+      let placeLat = lat.toFixed(6);
+      let placeLng = lng.toFixed(6);
+
+      if((placeLat == mlat) && (placeLng == mlng))  {
+        google.maps.event.trigger(this.markers[i], 'click');
+      }
+    }
+  }
+
+  delete(checkin)  {
+    this.deleteCheckIn = checkin;
+    this.preventScroll(true);
+  }
+
+  cancelDelete()  {
+    this.deleteCheckIn = undefined;
+    this.preventScroll(false);
+  }
+
+  confirmDelete() {
+    this.loadingService.setLoader(true, "Deleting your check in...");
+
+    this.checkinService.deleteCheckin(this.deleteCheckIn).subscribe(
+      result =>{
+        this.deleteCheckIn = undefined;
+      })
+
+    this.loadingService.setLoader(false, "");
+    this.preventScroll(false);
   }
 
   preventScroll(value)  {

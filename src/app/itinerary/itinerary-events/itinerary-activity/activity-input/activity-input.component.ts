@@ -24,6 +24,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   dragLng;
   dragAddress;
   dragPlaceId;
+  country;
 
   @Output() hideActivityForm = new EventEmitter<boolean>();
 
@@ -72,6 +73,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
       'categories': this.initCategoryArray(),
       'name': ['', Validators.required],
       'formatted_address': '',
+      'country': '',
       'lat': '',
       'lng': '',
       'international_phone_number':'',
@@ -182,6 +184,8 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     let lng = value['geometry'].location.lng();
 
     this.pinLocation(lat, lng)
+    this.getCountry(value['address_components']);
+
     this.dragAddress = '';
 
     this.addActivityForm.patchValue({
@@ -297,8 +301,36 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
           this.dragAddress = result[0]['formatted_address'];
           this.dragPlaceId = result[0]['place_id'];
 
+          this.getCountry(result[0]['address_components'])
+
           this.loadingService.setLoader(false, "");
           this.patchLocationData();
+        }
+      }
+    })
+  }
+
+  getCountry(address)  {
+    for (let i = 0; i < address.length; i++) {
+      if(address[i]['types'][0] === 'country')  {
+        let country = address[i]['long_name'];
+        this.getCountryLatLng(country)
+      }
+    }
+  }
+
+  getCountryLatLng(country)  {
+    let geocoder = new google.maps.Geocoder;
+
+    geocoder.geocode({address: country}, (result, status) =>  {
+      if(status === 'OK') {
+        let lat = result[0]['geometry'].location.lat();
+        let lng = result[0]['geometry'].location.lng();
+
+        this.country = {
+          name: country,
+          lat: lat,
+          lng: lng
         }
       }
     })
@@ -383,8 +415,8 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
       username: this.currentUser['username'],
     }
 
+    newActivity['country'] = this.country;
     newActivity['created_at'] = new Date();
-
     newActivity['type'] = 'activity';
 
     if(this.newImageFile !== '')  {

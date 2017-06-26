@@ -27,6 +27,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
   dragLng;
   dragAddress;
   dragPlaceId;
+  country;
 
   @Output() hideAccommodationForm = new EventEmitter();
 
@@ -82,6 +83,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
       this.addAccommodationForm = this.formBuilder.group({
         'name': ['', Validators.required],
         'formatted_address': '',
+        'country': '',
         'lat': '',
         'lng': '',
         'website': '',
@@ -172,6 +174,8 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
       }
     }
 
+    this.getCountry(address_components);
+
     this.addAccommodationForm.patchValue({
       name: value.name,
       formatted_address: value.formatted_address,
@@ -251,8 +255,36 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
           this.dragAddress = result[0]['formatted_address'];
           this.dragPlaceId = result[0]['place_id'];
 
+          this.getCountry(result[0]['address_components'])
+
           this.loadingService.setLoader(false, "");
           this.patchLocationData();
+        }
+      }
+    })
+  }
+
+  getCountry(address)  {
+    for (let i = 0; i < address.length; i++) {
+      if(address[i]['types'][0] === 'country')  {
+        let country = address[i]['long_name'];
+        this.getCountryLatLng(country)
+      }
+    }
+  }
+
+  getCountryLatLng(country)  {
+    let geocoder = new google.maps.Geocoder;
+
+    geocoder.geocode({address: country}, (result, status) =>  {
+      if(status === 'OK') {
+        let lat = result[0]['geometry'].location.lat();
+        let lng = result[0]['geometry'].location.lng();
+
+        this.country = {
+          name: country,
+          lat: lat,
+          lng: lng
         }
       }
     })
@@ -352,6 +384,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
       newAccommodation['check_out_time'] = this.hourOut + ':' + this.minuteOut;
     }
 
+    newAccommodation['country'] = this.country;
     newAccommodation['date'] = newAccommodation['check_in_date'];
     newAccommodation['time'] = newAccommodation['check_in_time'];
     newAccommodation['type'] = 'accommodation';

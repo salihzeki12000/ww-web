@@ -26,19 +26,19 @@
   vertical-align: 0;
 }
 
-.zoom {
+.drop-down {
   &:hover {
     text-decoration: underline;
     cursor: pointer;
   }
 }
 
-.country-dropdown {
+.country-dropdown,
+.checkin-dropdown {
   position: absolute;
-  margin-left: calc((100vw - 250px) / 2);
-  padding: 10px 0;
-  width: 250px;
-  max-height: 300px;
+  margin-left: calc((100vw - 280px) / 2);
+  width: 280px;
+  max-height: calc(100vh - 150px);
   text-align: center;
   background-color: white;
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
@@ -46,10 +46,11 @@
   z-index: 2;
 }
 
-.dropdown-arrow-up  {
+.country-dropdown-arrow,
+.checkin-dropdown-arrow  {
   position: relative;
   top: -8px;
-  margin-left: calc(((100vw - 250px)/2) + 215px);
+  margin-left: calc(((100vw - 280px)/2) + 230px);
   width: 0;
   height: 0;
   border-left: 8px solid transparent;
@@ -57,11 +58,41 @@
   border-bottom: 8px solid white;
 }
 
+.checkin-dropdown-arrow {
+  margin-left: calc(((100vw - 280px)/2) + 40px);
+}
+
 .country-dropdown h4  {
-  padding: 5px 10px;
+  padding: 10px;
   &:hover {
     cursor: pointer;
     background-color: #F6F6F6;
+  }
+}
+
+.checkin-dropdown {
+  text-align: left;
+}
+
+.checkin-dropdown > div {
+  padding: 10px;
+  border-bottom: 1px solid lightgray;
+  &:hover {
+    cursor: pointer;
+    background-color: #F6F6F6;
+  }
+}
+
+.checkin-dropdown h4  {
+  padding-top: 5px;
+}
+
+.delete-checkin {
+  float: right;
+  color: #A6A6A6;
+  &:hover {
+    color: #808080;
+    cursor: pointer;
   }
 }
 

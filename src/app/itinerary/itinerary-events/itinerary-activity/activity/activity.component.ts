@@ -9,6 +9,7 @@ import { ItineraryEventService } from '../../itinerary-event.service';
 import { FlashMessageService }   from '../../../../flash-message';
 import { UserService }           from '../../../../user';
 import { LoadingService }        from '../../../../loading';
+import { CheckInService }        from '../../../../check-in';
 
 @Component({
   selector: 'ww-activity',
@@ -32,6 +33,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
   itineraries = [];
 
   showMenu = false;
+  validCheckin = false;
   copying = false;
   editing = false;
   deleteActivity = false;
@@ -53,6 +55,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
     private renderer: Renderer2,
     private router: Router,
     private userService: UserService,
+    private checkinService: CheckInService,
     private itineraryEventService: ItineraryEventService,
     private loadingService: LoadingService,
     private flashMessageService: FlashMessageService,
@@ -87,6 +90,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
 
     this.checkMealTag();
     this.initTime();
+    this.checkCheckIn();
   }
 
   @HostListener('document:click', ['$event'])
@@ -173,6 +177,42 @@ export class ActivityComponent implements OnInit, OnDestroy {
         i = this.activity['meals'].length;
       }
     }
+  }
+
+  checkCheckIn()  {
+    let today = new Date();
+    let start = new Date(this.currentItinerary['date_from'])
+
+    if(today.getTime() >= start.getTime())  {
+      if(!this.activity['checked_in']) {
+        this.validCheckin = true;
+      }
+    }
+  }
+
+  //check in section
+  checkin() {
+    this.loadingService.setLoader(true, "Checking you in...");
+
+    console.log(this.activity);
+    let checkin = {
+      lat: this.activity['lat'],
+      lng: this.activity['lng'],
+      name: this.activity['name'],
+      address: this.activity['formatted_address'],
+      country: this.activity['country'],
+      place_id: this.activity['place_id'],
+      user: this.currentUser['_id']
+    }
+
+    this.checkinService.addCheckin(checkin).subscribe(
+      result  =>  {
+        this.loadingService.setLoader(false, "");
+      })
+
+    this.activity['checked_in'] = new Date();
+    this.itineraryEventService.editEvent(this.activity).subscribe(
+      result => {})
   }
 
   // copy section

@@ -19,7 +19,6 @@ export class GoogleCheckinComponent implements OnInit, OnDestroy {
   lng;
   name;
   address;
-  city;
   country;
   placeId;
   locationType = '';
@@ -67,7 +66,7 @@ export class GoogleCheckinComponent implements OnInit, OnDestroy {
     this.address = value['formatted_address'];
     this.name = value['name'];
 
-    this.getCitynCountry(value['address_components'])
+    this.getCountry(value['address_components'])
 
     this.pinLocation(this.lat, this.lng);
   }
@@ -111,7 +110,7 @@ export class GoogleCheckinComponent implements OnInit, OnDestroy {
           this.address = result[0]['formatted_address'];
           this.placeId = result[0]['place_id'];
 
-          this.getCitynCountry(result[0]['address_components'])
+          this.getCountry(result[0]['address_components'])
 
           this.loadingService.setLoader(false, "");
         }
@@ -140,14 +139,8 @@ export class GoogleCheckinComponent implements OnInit, OnDestroy {
     }
   }
 
-  getCitynCountry(address)  {
+  getCountry(address)  {
     for (let i = 0; i < address.length; i++) {
-      if(address[i]['types'][0] === 'locality')  {
-        this.city = address[i]['long_name'];
-      } else if(address[i]['types'][0] === 'administrative_area_level_1') {
-        this.city += ', ' + address[i]['long_name'];
-      }
-
       if(address[i]['types'][0] === 'country')  {
         let country = address[i]['long_name'];
         this.getCountryLatLng(country)
@@ -178,7 +171,6 @@ export class GoogleCheckinComponent implements OnInit, OnDestroy {
     this.lng = '';
     this.name = '';
     this.address = '';
-    this.city = '';
     this.country = '';
     this.placeId = '';
     this.locationType = '';
@@ -193,7 +185,6 @@ export class GoogleCheckinComponent implements OnInit, OnDestroy {
       lng: this.lng,
       name: this.name,
       address: this.address,
-      city: this.city,
       country: this.country,
       place_id: this.placeId,
       user: this.currentUser['_id']

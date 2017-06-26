@@ -8,6 +8,7 @@ import { ItineraryEventService } from '../../itinerary-event.service';
 import { FlashMessageService }   from '../../../../flash-message';
 import { UserService }           from '../../../../user';
 import { LoadingService }        from '../../../../loading';
+import { CheckInService }        from '../../../../check-in';
 
 @Component({
   selector: 'ww-accommodation',
@@ -31,6 +32,7 @@ export class AccommodationComponent implements OnInit, OnDestroy {
   itineraries = [];
 
   showMenu = false;
+  validCheckin = false;
   copying = false;
   editing = false;
   deleteAccommodation = false;
@@ -55,6 +57,7 @@ export class AccommodationComponent implements OnInit, OnDestroy {
     private renderer: Renderer2,
     private router: Router,
     private userService: UserService,
+    private checkinService: CheckInService,
     private itineraryEventService: ItineraryEventService,
     private loadingService: LoadingService,
     private flashMessageService: FlashMessageService,
@@ -84,6 +87,7 @@ export class AccommodationComponent implements OnInit, OnDestroy {
     this.event['formatted_note'] = this.event['note'].replace(/\r?\n/g, '<br/> ');
 
     this.initTime();
+    this.checkCheckIn();
   }
 
   @HostListener('document:click', ['$event'])
@@ -151,6 +155,41 @@ export class AccommodationComponent implements OnInit, OnDestroy {
 
     this.initHourOut = this.hourOut;
     this.initMinuteOut = this.minuteOut;
+  }
+
+  checkCheckIn()  {
+    let today = new Date();
+    let start = new Date(this.currentItinerary['date_from'])
+
+    if(today.getTime() >= start.getTime())  {
+      if(!this.event['checked_in']) {
+        this.validCheckin = true;
+      }
+    }
+  }
+
+  //check in section
+  checkin() {
+    this.loadingService.setLoader(true, "Checking you in...");
+
+    let checkin = {
+      lat: this.event['lat'],
+      lng: this.event['lng'],
+      name: this.event['name'],
+      address: this.event['formatted_address'],
+      country: this.event['country'],
+      place_id: this.event['place_id'],
+      user: this.currentUser['_id']
+    }
+
+    this.checkinService.addCheckin(checkin).subscribe(
+      result  =>  {
+        this.loadingService.setLoader(false, "");
+      })
+
+    this.event['checked_in'] = new Date();
+    this.itineraryEventService.editEvent(this.event).subscribe(
+      result => {})
   }
 
   // copy section
@@ -304,11 +343,11 @@ export class AccommodationComponent implements OnInit, OnDestroy {
   }
 
   confirmDelete() {
-    this.itineraryEventService.deleteEvent(this.event)
-        .subscribe(
+    this.itineraryEventService.deleteEvent(this.event).subscribe(
           result => {
             this.flashMessageService.handleFlashMessage(result.message);
           })
+
     this.deleteAccommodation = false;
     this.preventScroll(false);
   }
