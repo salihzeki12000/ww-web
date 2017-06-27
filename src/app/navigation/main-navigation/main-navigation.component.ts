@@ -45,7 +45,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   // side nav
   sideNav = false;
   connectionsSection = true;
-  notificationsSection = true;
+  quickLinksSection = true;
   settingsSection = false;
 
   showUsers = false;
@@ -306,6 +306,11 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     this.sideNav = false;
     this.showNotifications = false;
     this.router.navigateByUrl('/me/notifications');
+  }
+
+  routeToCheckins()  {
+    this.sideNav = false;
+    this.router.navigateByUrl('/me/check-in');
   }
 
   // profile options

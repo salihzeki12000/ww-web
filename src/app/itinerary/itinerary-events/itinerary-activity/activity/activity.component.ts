@@ -33,7 +33,8 @@ export class ActivityComponent implements OnInit, OnDestroy {
   itineraries = [];
 
   showMenu = false;
-  validCheckin = false;
+  allowCheckin = false;
+  checkedInDate = undefined;
   copying = false;
   editing = false;
   deleteActivity = false;
@@ -183,9 +184,15 @@ export class ActivityComponent implements OnInit, OnDestroy {
     let today = new Date();
     let start = new Date(this.currentItinerary['date_from'])
 
+    for (let i = 0; i < this.activity['checked_in'].length; i++) {
+      if(this.currentUser['_id'] === this.activity['checked_in'][i]['user'])  {
+        this.checkedInDate = this.activity['checked_in'][i]['date'];
+      }
+    }
+
     if(today.getTime() >= start.getTime())  {
-      if(!this.activity['checked_in']) {
-        this.validCheckin = true;
+      if(!this.checkedInDate) {
+        this.allowCheckin = true;
       }
     }
   }
@@ -194,7 +201,6 @@ export class ActivityComponent implements OnInit, OnDestroy {
   checkin() {
     this.loadingService.setLoader(true, "Checking you in...");
 
-    console.log(this.activity);
     let checkin = {
       lat: this.activity['lat'],
       lng: this.activity['lng'],
@@ -202,6 +208,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
       address: this.activity['formatted_address'],
       country: this.activity['country'],
       place_id: this.activity['place_id'],
+      itinerary: this.currentItinerary['_id'],
       user: this.currentUser['_id']
     }
 
@@ -210,7 +217,14 @@ export class ActivityComponent implements OnInit, OnDestroy {
         this.loadingService.setLoader(false, "");
       })
 
-    this.activity['checked_in'] = new Date();
+    this.activity['checked_in'].push({
+      date: new Date(),
+      user: this.currentUser['_id']
+    });
+
+    this.allowCheckin = false;
+    this.checkedInDate = new Date();
+    
     this.itineraryEventService.editEvent(this.activity).subscribe(
       result => {})
   }

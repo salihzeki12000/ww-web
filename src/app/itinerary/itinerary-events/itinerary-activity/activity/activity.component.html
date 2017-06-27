@@ -23,7 +23,7 @@
             <h5>Recommend</h5>
             <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
           </li> -->
-          <li (click)="checkin()">
+          <li (click)="checkin()" *ngIf="allowCheckin">
             <h5>Check in</h5>
             <i class="fa fa-map-marker" aria-hidden="true"></i>
           </li>
@@ -54,6 +54,8 @@
     </div>
 
     <div class="display-details-housing">
+
+      <h6 class="check-in-note" *ngIf="checkedInDate">You checked in on {{ checkedInDate | date: 'dd MMM yyyy'}}</h6>
 
       <div *ngIf="mealTag">
         <div class="meals-display" *ngFor="let meal of activity?.meals">

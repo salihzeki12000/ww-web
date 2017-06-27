@@ -145,7 +145,7 @@
     <i class="fa fa-bars fa-2x" aria-hidden="true"></i>
   </div>
 
-  <div class="side-nav-panel" [class.show-side-nav-menu]="sideNav">
+  <div *ngIf="sideNav">
 
     <div class="side-nav-profile">
       <img src="{{ currentUser?.display_picture }}" alt="" [routerLink]="['/me/profile']" (click)="exitSideNav()">
@@ -190,14 +190,18 @@
       </div>
 
       <div>
-        <div class="category-header" (click)="notificationsSection = !notificationsSection">
-          <h4 *ngIf="!notificationsSection">Notifications <i class="fa fa-caret-down" aria-hidden="true"></i></h4>
-          <h4 *ngIf="notificationsSection">Notifications <i class="fa fa-caret-up" aria-hidden="true"></i></h4>
+        <div class="category-header" (click)="quickLinksSection = !quickLinksSection">
+          <h4 *ngIf="!quickLinksSection">Quick links <i class="fa fa-caret-down" aria-hidden="true"></i></h4>
+          <h4 *ngIf="quickLinksSection">Quick links <i class="fa fa-caret-up" aria-hidden="true"></i></h4>
         </div>
 
-        <div *ngIf="notificationsSection">
+        <div *ngIf="quickLinksSection">
           <div class="category-item">
             <h5 (click)="routeToNotifications()">View all notifications</h5>
+          </div>
+
+          <div class="category-item">
+            <h5 (click)="routeToCheckins()">View all check ins</h5>
           </div>
         </div>
       </div>
@@ -207,6 +211,7 @@
           <h4 *ngIf="!settingsSection">Settings <i class="fa fa-caret-down" aria-hidden="true"></i></h4>
           <h4 *ngIf="settingsSection">Settings <i class="fa fa-caret-up" aria-hidden="true"></i></h4>
         </div>
+        ß
         <div *ngIf="settingsSection">
           <div class="category-item" (click)="logout()">
             <h5><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</h5>

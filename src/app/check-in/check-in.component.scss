@@ -84,7 +84,19 @@
 }
 
 .checkin-dropdown h4  {
-  padding-top: 5px;
+  padding: 5px 0;
+}
+
+.check-in-itinerary {
+  padding-top: 10px;
+}
+
+.check-in-itinerary * {
+  display: inline-block;
+  color: #6494ED;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .delete-checkin {

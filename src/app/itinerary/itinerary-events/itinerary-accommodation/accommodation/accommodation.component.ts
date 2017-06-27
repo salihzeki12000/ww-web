@@ -32,7 +32,8 @@ export class AccommodationComponent implements OnInit, OnDestroy {
   itineraries = [];
 
   showMenu = false;
-  validCheckin = false;
+  allowCheckin = false;
+  checkedInDate = undefined;
   copying = false;
   editing = false;
   deleteAccommodation = false;
@@ -161,9 +162,15 @@ export class AccommodationComponent implements OnInit, OnDestroy {
     let today = new Date();
     let start = new Date(this.currentItinerary['date_from'])
 
+    for (let i = 0; i < this.event['checked_in'].length; i++) {
+      if(this.currentUser['_id'] === this.event['checked_in'][i]['user'])  {
+        this.checkedInDate = this.event['checked_in'][i]['date'];
+      }
+    }
+
     if(today.getTime() >= start.getTime())  {
-      if(!this.event['checked_in']) {
-        this.validCheckin = true;
+      if(!this.checkedInDate) {
+        this.allowCheckin = true;
       }
     }
   }
@@ -179,6 +186,7 @@ export class AccommodationComponent implements OnInit, OnDestroy {
       address: this.event['formatted_address'],
       country: this.event['country'],
       place_id: this.event['place_id'],
+      itinerary: this.currentItinerary['_id'],
       user: this.currentUser['_id']
     }
 
@@ -187,7 +195,14 @@ export class AccommodationComponent implements OnInit, OnDestroy {
         this.loadingService.setLoader(false, "");
       })
 
-    this.event['checked_in'] = new Date();
+    this.event['checked_in'].push({
+      date: new Date(),
+      user: this.currentUser['_id']
+    });
+
+    this.allowCheckin = false;
+    this.checkedInDate = new Date();
+
     this.itineraryEventService.editEvent(this.event).subscribe(
       result => {})
   }

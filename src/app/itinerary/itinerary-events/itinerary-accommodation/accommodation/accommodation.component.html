@@ -23,7 +23,7 @@
             <h5>Recommend</h5>
             <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
           </li> -->
-          <li (click)="checkin()" *ngIf="validCheckin">
+          <li (click)="checkin()" *ngIf="allowCheckin">
             <h5>Check in</h5>
             <i class="fa fa-map-marker" aria-hidden="true"></i>
           </li>
@@ -51,6 +51,8 @@
     <h4 class="event-out-of-range" *ngIf="event.out_of_range">Out of itinerary date range</h4>
 
     <div class="display-details-housing">
+      <h6 class="check-in-note" *ngIf="checkedInDate">You checked in on {{ checkedInDate | date: 'dd MMM yyyy'}}</h6>
+
       <h4 class="accommodation-city"><i class="fa fa-bed" aria-hidden="true"></i> {{ event?.stay_city | uppercase }}</h4>
       <h3 class="accommodation-header">{{ event?.name | uppercase }}</h3>
 

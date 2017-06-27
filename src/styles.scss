@@ -1029,15 +1029,6 @@ span.dragged-location {
   }
 }
 
-// .form-header-separator  {
-//   position: fixed;
-//   margin-top: 51px;
-//   width: 600px;
-//   height: 20px;
-//   background-color: #567FCC;
-//   z-index: 2;
-// }
-
 .form-header-name {
   margin-top: 5px;
   padding: 10px 0 5px 0;
@@ -1604,6 +1595,11 @@ ww-resource {
   padding: 3px 10px;
   border: 1px solid #F9FBFB;
   border-radius: 25px;
+}
+
+.check-in-note  {
+  color: #808080;
+  padding-top: 5px;
 }
 
 .accommodation-city {

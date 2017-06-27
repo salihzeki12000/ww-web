@@ -49,6 +49,7 @@ export class CheckInComponent implements OnInit, OnDestroy {
     this.checkInSubscription = this.checkinService.updateCheckIns.subscribe(
       result => {
         this.checkins = result;
+        console.log(this.checkins);
         this.initMap();
         this.setLocations();
         this.setCountries();
@@ -112,11 +113,13 @@ export class CheckInComponent implements OnInit, OnDestroy {
       let index = countryName.indexOf(this.checkins[i]['place']['country']['name']);
 
       if(index < 0) {
+        this.checkins[i]['place']['country']['zoom'] = 6;
         this.countries.push(this.checkins[i]['place']['country']);
         countryName.push(this.checkins[i]['place']['country']['name']);
       }
     }
     this.countries = this.sortCountries();
+    this.countries.unshift({name: 'Global view', lat: 25, lng: 0, zoom: 3})
   }
 
   sortCountries() {
@@ -196,7 +199,7 @@ export class CheckInComponent implements OnInit, OnDestroy {
     let center = new google.maps.LatLng(country['lat'], country['lng']);
 
     this.itinMap.panTo(center);
-    this.itinMap.setZoom(6);
+    this.itinMap.setZoom(country['zoom']);
 
     this.zoom = false;
   }
