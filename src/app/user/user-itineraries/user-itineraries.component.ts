@@ -31,6 +31,13 @@ export class UserItinerariesComponent implements OnInit, OnDestroy {
     this.itineraries.sort((a,b)  =>  {
       return new Date(b['date_to']).getTime() - new Date(a['date_to']).getTime();
     })
+
+    for (let i = 0; i < this.itineraries.length; i++) {
+      if(this.itineraries[i]['private'])  {
+        this.itineraries.splice(i,1);
+        i--;
+      }
+    }
   }
 
 }

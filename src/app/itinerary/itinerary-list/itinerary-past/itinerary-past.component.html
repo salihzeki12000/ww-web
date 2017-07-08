@@ -1,5 +1,6 @@
 <div class="itinerary-list" *ngFor="let itinerary of past" (click)="routeToItin(itinerary._id)">
   <h3>{{ itinerary.name }}</h3>
+  <h6 class="private-indicator" *ngIf="itinerary.private">PRIVATE</h6>
   <h5>{{ itinerary.date_from | date:'dd MMM yy' }} to {{ itinerary.date_to | date:'dd MMM yy' }}</h5>
 
   <div class="itinerary-list-stats">
@@ -11,6 +12,6 @@
     <h3>{{ itinerary.shares.length }}</h3>
     <h5>{{ itinerary.shares.length > 1 ? "Shares" : "Share" }}</h5>
   </div>
-  
+
   <h5>Created by <span class="username-bold" (click)="routeToUser(itinerary.created_by._id)">{{ itinerary.created_by.username }}</span> on {{ itinerary.created_at | date: 'dd MMM yy'}}</h5>
 </div>

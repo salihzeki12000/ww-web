@@ -5,7 +5,7 @@ import { LandingPageComponent }         from './landing-page';
 import { MeComponent, HOME_ROUTES }     from './me';
 import { UserComponent, USER_ROUTES }   from './user';
 import { PrivacyPolicyComponent }       from './privacy-policy';
-import { ItineraryPrintDatePreviewComponent, ItineraryPrintCategoryPreviewComponent } from './itinerary';
+import { ItineraryInviteComponent, ItineraryPrintDatePreviewComponent, ItineraryPrintCategoryPreviewComponent } from './itinerary';
 
 import { AuthGuard } from './_guards/auth.guard';
 
@@ -17,6 +17,7 @@ const APP_ROUTES: Routes = [
   { path: 'wondererwanderer/:id', component: UserComponent, children: USER_ROUTES, canActivate: [AuthGuard] },
   { path: 'print-date', component: ItineraryPrintDatePreviewComponent, canActivate: [AuthGuard] },
   { path: 'print-category', component: ItineraryPrintCategoryPreviewComponent, canActivate: [AuthGuard] },
+  { path: 'invite/me/:id', component: ItineraryInviteComponent },
 ]
 
 export const routing = RouterModule.forRoot(APP_ROUTES, { useHash: true })

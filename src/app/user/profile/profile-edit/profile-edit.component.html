@@ -61,7 +61,7 @@
         <ww-google-place-search
         [settings]="'true'"
         [options]="options"
-        [populate]="currentUser?.city?.name"
+        [populate]="defaultCity"
         (placeDetail)="setCity($event)"
         (searching)="searching($event)"></ww-google-place-search>
       </div>
@@ -87,11 +87,38 @@
 
     </div>
 
+    <h4 class="profile-edit-section-header">Default Privacy Settings</h4>
+    <div class="profile-edit-section-details">
+      <div class="profile-edit-item">
+        <h5>New itinerary</h5>
+
+        <h4 *ngIf="itinPrivacy" class="toggle-true" (click)="itinPrivacy = false">Yes</h4>
+        <h4 *ngIf="itinPrivacy" class="toggle-button-true" (click)="itinPrivacy = false"></h4>
+        <h6 *ngIf="itinPrivacy">New itinerary created by you is private. Only members of itinerary can view.</h6>
+
+        <h4 *ngIf="!itinPrivacy" class="toggle-false" (click)="itinPrivacy = true">No</h4>
+        <h4 *ngIf="!itinPrivacy" class="toggle-button-false" (click)="itinPrivacy = true"></h4>
+        <h6 *ngIf="!itinPrivacy">New itinerary created by you is not private. Followers of members can view.</h6>
+      </div>
+
+      <div class="profile-edit-item">
+        <h5>New check in</h5>
+
+        <h4 *ngIf="checkinPrivacy" class="toggle-true" (click)="checkinPrivacy = false">Yes</h4>
+        <h4 *ngIf="checkinPrivacy" class="toggle-button-true" (click)="checkinPrivacy = false"></h4>
+        <h6 *ngIf="checkinPrivacy">New check in is private. Only you can view.</h6>
+
+        <h4 *ngIf="!checkinPrivacy" class="toggle-false" (click)="checkinPrivacy = true">No</h4>
+        <h4 *ngIf="!checkinPrivacy" class="toggle-button-false" (click)="checkinPrivacy = true"></h4>
+        <h6 *ngIf="!checkinPrivacy">New check in is not private. Your followers can view.</h6>
+      </div>
+    </div>
+
     <h4 class="profile-edit-section-header">Others</h4>
     <h5 class="deactivate-account" (click)="confirmDelete()">Deactivate your account</h5>
 
     <div class="action-response">
-      <!-- <h4 (click)="cancelEdit()">CANCEL</h4> -->
+      <h5 class="action-response-secondary" (click)="undo()">UNDO</h5>
       <button type="submit" class="action-response-primary" [disabled]="!editProfileForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE PROFILE</h5></button>
     </div>
   </form>

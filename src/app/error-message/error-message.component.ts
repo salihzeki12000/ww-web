@@ -24,7 +24,9 @@ export class ErrorMessageComponent implements OnInit {
               this.errorMessage = errorMessage;
               if(this.errorMessage['error'] === undefined)  {
                 this.errorMessage['title'] = "An error has occurred"
-                this.errorMessage['error']['message'] = "An error has occurred. Please refresh your browser."
+                this.errorMessage['error'] = {
+                  message: "An error has occurred. Please refresh your browser."
+                }
               }
               this.error = true;
             }

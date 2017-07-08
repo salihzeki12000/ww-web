@@ -2,7 +2,8 @@
 
   <div class="check-in-stats">
     <h2>{{ checkins?.length }}</h2>
-    <h5>Check ins</h5>
+    <h5 class="select-checkins" (click)="showCheckIn = true">Check ins</h5>
+    <i class="fa fa-caret-down" aria-hidden="true"></i>
   </div>
 
   <div class="check-in-stats">
@@ -12,16 +13,33 @@
 
   <div class="check-in-stats">
     <i class="fa fa-search-plus fa-lg" aria-hidden="true"></i>
-    <h5 class="zoom" (click)="zoom = true">zoom to</h5>
+    <h5 class="select-country" (click)="showCountry = true">zoom to</h5>
+    <i class="fa fa-caret-down" aria-hidden="true"></i>
   </div>
 </div>
 
-<div class="country-dropdown" *ngIf="zoom">
+<div class="country-dropdown" *ngIf="showCountry">
   <div *ngFor="let country of countries">
     <h4 (click)="changeCenter(country)">{{ country.name }}</h4>
   </div>
 </div>
 
-<div class="dropdown-arrow-up" *ngIf="zoom"></div>
+<div class="country-dropdown-arrow" *ngIf="showCountry"></div>
+
+<div class="checkin-dropdown" *ngIf="showCheckIn">
+  <div *ngFor="let checkin of checkins" >
+    <div (click)="zoomTo(checkin.place)">
+      <h6>{{ checkin.created_at | date: 'dd MMM yyyy, HH:mm' }}</h6>
+      <h4>{{ checkin.place.name }}</h4>
+      <h5>{{ checkin.place.address }}</h5>
+    </div>
+    <div class="check-in-itinerary" *ngIf="checkin.itinerary">
+      <i class="fa fa-sticky-note" aria-hidden="true"></i>
+      <h5 [routerLink]="['/me/itinerary/', checkin.itinerary._id]">{{ checkin.itinerary.name }}</h5>
+    </div>
+  </div>
+</div>
+
+<div class="checkin-dropdown-arrow" *ngIf="showCheckIn"></div>
 
 <div #map id="map"></div>

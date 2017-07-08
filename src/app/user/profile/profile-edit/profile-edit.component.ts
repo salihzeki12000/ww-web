@@ -47,7 +47,11 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   newImageFile = '';
 
   city;
+  defaultCity;
   changePw = false;
+
+  checkinPrivacy = false;
+  itinPrivacy = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -79,7 +83,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
                                          result =>  {
                                            this.currentUser = result;
                                            this.thumbnailImage = this.currentUser['display_picture'];
-                                           this.patchValue(this.currentUser);
+                                           this.patchValue();
 
                                            if(this.currentUser['birth_date'] === undefined || this.currentUser['birth_date'] === "")  {
                                              this.birthDate = new Date();
@@ -104,15 +108,19 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     this.loadingService.setLoader(true, "");
   }
 
-  patchValue(user)  {
+  patchValue()  {
     this.editProfileForm.patchValue({
-      username: user['username'],
-      description: user['description'],
-      email: user['email'],
-      city: user['city'],
-      birth_date: user['birth_date'],
-      gender: user['gender'],
+      username: this.currentUser['username'],
+      description: this.currentUser['description'],
+      email: this.currentUser['email'],
+      city: this.currentUser['city'],
+      birth_date: this.currentUser['birth_date'],
+      gender: this.currentUser['gender'],
     })
+
+    this.defaultCity = this.currentUser['city']['name'];
+    this.checkinPrivacy = this.currentUser['privacy']['check_in'];
+    this.itinPrivacy = this.currentUser['privacy']['itinerary'];
   }
 
   updateDateRange() {
@@ -133,12 +141,19 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     })
   }
 
+  undo()  {
+    this.patchValue();
+  }
+
   saveProfile() {
     let editedProfile = this.editProfileForm.value;
 
     for (let value in editedProfile)  {
       this.currentUser[value] = editedProfile[value];
     }
+
+    this.currentUser['privacy']['itinerary'] = this.itinPrivacy;
+    this.currentUser['privacy']['check_in'] = this.checkinPrivacy;
 
     if(this.city) {
       this.currentUser['city'] = this.city;
@@ -185,6 +200,8 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   }
 
   setCity(data) {
+    this.defaultCity = data['formatted_address'];
+    
     this.city = {
       name: data['formatted_address'],
       lat: data['geometry'].location.lat(),

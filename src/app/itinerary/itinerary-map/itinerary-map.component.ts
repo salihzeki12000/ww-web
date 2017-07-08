@@ -205,7 +205,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
       let mlat = this.markers[i]['position'].lat().toFixed(6);
       let mlng = this.markers[i]['position'].lng().toFixed(6);
       let placeLat = lat.toFixed(6);
-      let placeLng = lng.toFixed(6);    
+      let placeLng = lng.toFixed(6);
 
       if((placeLat == mlat) && (placeLng == mlng))  {
         google.maps.event.trigger(this.markers[i], 'click');
@@ -234,7 +234,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
     }
   }
 
-  showLegend() {
+  toggleLegend() {
     this.showMapLegend = !this.showMapLegend;
     this.preventScroll(this.showMapLegend);
   }

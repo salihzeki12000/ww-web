@@ -39,7 +39,7 @@
   width: 380px;
   z-index: 1001;
 
-  @media only screen and (max-width: 400px) {
+  @media only screen and (max-width: 420px) {
     top: 0;
     left: 0;
     width: 100%;
@@ -105,6 +105,7 @@
 
 .marker-details {
   width: 78%;
+  text-align: right;
   @media only screen and (max-width: 890px) {
     width: 85%;
     font-size: 120%;
@@ -141,6 +142,10 @@
   padding-left: 5px;
   color: grey;
   font-weight: 500;
+}
+
+.event-summary-note  {
+  padding: 5px 0 0 5px;
 }
 
 .map-legend-popup  {

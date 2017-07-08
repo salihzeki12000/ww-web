@@ -106,6 +106,12 @@ export class AccommodationComponent implements OnInit, OnDestroy {
     }
   }
 
+  // @HostListener('window:popstate', ['$event'])
+  // onPopState(event) {
+  //   console.log('Back button pressed');
+  //   event.preventDefault()
+  // }
+
   ngOnDestroy() {
     this.currentUserSubscription.unsubscribe();
   }

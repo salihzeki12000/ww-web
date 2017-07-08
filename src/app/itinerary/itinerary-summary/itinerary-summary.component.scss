@@ -215,7 +215,7 @@
 
   @media only screen and (max-width: 420px) {
     width: 100vw;
-    background-color: #6494ED;
+    background-color: black;
     z-index: 1000;
   }
 }
@@ -235,6 +235,7 @@
   background-color: rgba(0,0,0,.3);
 
   @media only screen and (max-width: 420px) {
+    top: 25px;
     max-height: calc(100vh - 130px);
     width: 100vw;
     padding-left: calc((100vw - 330px)/2);

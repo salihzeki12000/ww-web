@@ -26,7 +26,8 @@
   vertical-align: 0;
 }
 
-.drop-down {
+.select-checkins,
+.select-country {
   &:hover {
     text-decoration: underline;
     cursor: pointer;
@@ -85,6 +86,14 @@
 
 .checkin-dropdown h4  {
   padding: 5px 0;
+}
+
+.checkin-details h6 {
+  display: inline-block;
+}
+
+.checkin-details h6:nth-of-type(2)  {
+  color: red;
 }
 
 .check-in-itinerary {

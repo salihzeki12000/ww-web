@@ -1,10 +1,11 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { User, UserService } from '../../user';
 import { AuthService }       from '../auth.service';
 import { LoadingService }    from '../../loading';
+import { ItineraryService }  from '../../itinerary';
 
 @Component({
   selector: 'ww-signin',
@@ -12,6 +13,8 @@ import { LoadingService }    from '../../loading';
   styleUrls: ['./signin.component.scss']
 })
 export class SigninComponent implements OnInit {
+  @Input() reroute;
+  @Input() itinerary;
   @Output() hideSignin = new EventEmitter();
 
   signinForm: FormGroup;
@@ -20,6 +23,7 @@ export class SigninComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private userService: UserService,
+    private itineraryService: ItineraryService,
     private loadingService: LoadingService,
     private router: Router) {
     this.signinForm = formBuilder.group({
@@ -38,12 +42,31 @@ export class SigninComponent implements OnInit {
     this.authService.signin(this.signinForm.value)
         .subscribe(
           data => {
-            setTimeout(() =>  {
-              this.router.navigateByUrl('/me');
-            }, 1000)
+            this.userService.getCurrentUser().subscribe(
+                  data => {});
+
+            if(this.reroute !== '/me')  {
+              let user = {_id: data.userId};
+              this.addToItin(user);
+            } else  {
+              setTimeout(() =>  {
+                this.router.navigateByUrl(this.reroute);
+              }, 1000)
+            }
           },
           error => console.error(error)
         )
+  }
+
+  addToItin(user) {
+    this.itinerary['members'].push(user);
+
+    this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
+      data => {
+        setTimeout(() =>  {
+          this.router.navigateByUrl(this.reroute);
+        }, 1000)
+      })
   }
 
   validEmail(control: FormControl): {[s: string]: boolean} {

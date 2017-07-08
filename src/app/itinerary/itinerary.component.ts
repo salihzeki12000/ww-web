@@ -36,6 +36,8 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   addActivity = false;
   addResource = false;
 
+  inviteLink = '';
+
   constructor(
     private element: ElementRef,
     private renderer: Renderer2,
@@ -46,7 +48,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService,
     private userService: UserService,
     private route: ActivatedRoute,
-    private router: Router) {}
+    private router: Router) { }
 
   ngOnInit() {
     this.route.params.forEach((params: Params) => {
@@ -58,6 +60,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
                                              result =>  {
                                                this.itinerary = result;
                                                this.getAllUsers();
+                                               this.setInviteLink();
                                              })
 
           this.itineraryEventService.getEvents(id).subscribe(
@@ -98,6 +101,10 @@ export class ItineraryComponent implements OnInit, OnDestroy {
         }
       }
     }
+  }
+
+  setInviteLink() {
+    this.inviteLink = 'https://wondererwanderer.herokuapp.com/#/invite/me/' + this.itinerary['_id'];
   }
 
   // show add members modal

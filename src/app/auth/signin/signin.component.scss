@@ -1,7 +1,10 @@
+.sign-in-form-header  {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 .sign-in-header  {
-  width: 80%;
   margin-bottom: 10px;
-  margin-left: 10%;
   text-align: center;
 }
 
@@ -12,4 +15,9 @@ button.action-response-primary  {
 a.cancel-auth {
   float: right;
   color: grey;
+}
+
+h5  {
+  margin: 20px 0;
+  text-align: center;
 }

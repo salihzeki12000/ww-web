@@ -70,7 +70,7 @@ export class ItineraryAccommodationComponent implements OnInit, OnDestroy {
     this.preventScroll(false);
   }
 
-  showSummary() {
+  toggleSummary() {
     this.showAccommodationSummary = !this.showAccommodationSummary;
     this.preventScroll(this.showAccommodationSummary);
   }

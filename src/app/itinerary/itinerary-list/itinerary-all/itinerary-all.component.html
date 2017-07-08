@@ -1,5 +1,6 @@
 <div class="itinerary-list" *ngFor="let itinerary of itineraries" (click)="routeToItin(itinerary._id)" [class.past-indicator]="itinerary.past">
   <h3>{{ itinerary.name }}</h3>
+  <h6 class="private-indicator" *ngIf="itinerary.private">PRIVATE</h6>
   <h5>{{ itinerary.date_from | date:'dd MMM yy' }} to {{ itinerary.date_to | date:'dd MMM yy' }}</h5>
 
   <div class="itinerary-list-stats">

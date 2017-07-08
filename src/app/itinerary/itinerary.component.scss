@@ -371,6 +371,44 @@ header {
 }
 
 /* user search */
+.invite-by-link  {
+  margin-top: 60px;
+  padding: 0 20px;
+}
+
+.invite-by-search {
+  margin-top: 30px;
+  padding: 0 20px;
+}
+
+.invite-by-link h4,
+.invite-by-search h4  {
+  padding-bottom: 5px;
+}
+
+.invite-by-link h5  {
+  padding-bottom: 10px;
+  width: 560px;
+  color: #6494ED;
+  font-style: italic;
+  word-break: break-all;
+
+  @media only screen and (max-width: 650px) {
+   width: calc(100vw - 40px);
+   min-width: 260px;
+  }
+}
+
+.invite-by-link h6  {
+  padding-bottom: 3px;
+  font-size: 11px;
+  color: #808080;
+}
+
+.users-search > input {
+  margin-top: 0;
+}
+
 .users-search > .action-response  {
   margin-top: 20px;
 }

@@ -1,8 +1,9 @@
-<div class="custom-modal" *ngIf="showAccommodationSummary" (click)="showSummary()"></div>
+<div class="custom-modal" *ngIf="showAccommodationSummary" (click)="toggleSummary()"></div>
 
 <div *ngIf="totalAccommodations" class="event-summary-section" [class.show-summary]="showAccommodationSummary">
 
   <h4 class="event-summary-header">Quick reference - {{ totalAccommodations }}</h4>
+  <h5 class="close-pop-up" (click)="toggleSummary()">X</h5>
 
   <div class="event-summary">
     <div *ngFor="let event of accommodations; let i = index" class="event-summary-item" (click)="centerItem(event)" [class.highlighted-item]="highlightedEvent === event">
@@ -11,6 +12,8 @@
         <h5 class="date">{{ event?.check_in_date | date:'dd MMM yy' }} - {{ event?.check_out_date | date:'dd MMM yy' }}</h5>
         <h5 class="accommodation-summary-header"><i class="fa fa-bed" aria-hidden="true"></i> {{ event?.stay_city | uppercase }}</h5>
         <h5 class="accommodation-summary-name">{{ event?.name }}</h5>
+        <h5 class="event-summary-note truncate">{{ event?.note }}</h5>
+
         <h4 class="event-out-of-range" *ngIf="event?.out_of_range"><i class="fa fa-arrow-up" aria-hidden="true"></i> Out of itinerary date range</h4>
       </a>
     </div>
@@ -43,6 +46,6 @@
   </ww-accommodation>
 </div>
 
-<div class="event-summary-popup" (click)="showSummary()" *ngIf="totalAccommodations">
+<div class="event-summary-popup" (click)="toggleSummary()" *ngIf="totalAccommodations">
   <i class="fa fa-list" aria-hidden="true"></i>
 </div>

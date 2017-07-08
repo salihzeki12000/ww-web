@@ -1,8 +1,9 @@
-<div class="custom-modal" *ngIf="showActivitySummary" (click)="showSummary()"></div>
+<div class="custom-modal" *ngIf="showActivitySummary" (click)="toggleSummary()"></div>
 
 <div *ngIf="totalActivities" class="event-summary-section" [class.show-summary]="showActivitySummary">
 
   <h4 class="event-summary-header">Quick reference - {{ totalActivities }}</h4>
+  <h5 class="close-pop-up" (click)="toggleSummary()">X</h5>
 
   <div class="event-summary">
     <div *ngFor="let activity of activities; let i = index" class="event-summary-item" (click)="centerItem(activity)" [class.highlighted-item]="highlightedEvent === activity">
@@ -18,6 +19,7 @@
         <h5 class="date" *ngIf="activity?.date === 'any day'">{{ activity?.date }} - {{ activity?.time }}</h5>
         <h5 class="date" *ngIf="activity?.date !== 'any day'">{{ activity?.date | date: 'dd MMM yyyy' }} - {{ activity?.time }}</h5>
         <h5 class='activity-summary-name'>{{ activity?.name }}</h5>
+        <h5 class="event-summary-note truncate">{{ activity?.note }}</h5>
       </a>
     </div>
   </div>
@@ -49,6 +51,6 @@
   </ww-activity>
 </div>
 
-<div class="event-summary-popup" (click)="showSummary()" *ngIf="totalActivities">
+<div class="event-summary-popup" (click)="toggleSummary()" *ngIf="totalActivities">
   <i class="fa fa-list" aria-hidden="true"></i>
 </div>

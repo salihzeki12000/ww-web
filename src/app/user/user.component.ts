@@ -19,6 +19,7 @@ export class UserComponent implements OnInit, OnDestroy {
   currentUser;
   currentUserSubscription: Subscription;
 
+  itineraries = [];
   relationships = [];
   followers = [];
   followings = [];
@@ -39,6 +40,12 @@ export class UserComponent implements OnInit, OnDestroy {
     private userService: UserService) { }
 
   ngOnInit() {
+    this.itineraries = [];
+    this.relationships = [];
+    this.followers = [];
+    this.followings = [];
+    this.checkins = [];
+
     this.userService.getCurrentUser().subscribe( data => {} );
 
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
@@ -54,6 +61,9 @@ export class UserComponent implements OnInit, OnDestroy {
       this.userService.getUser(id).subscribe(
         result => {
           this.user = result.user;
+          this.itineraries = Object.keys(this.user['itineraries']).map(key => this.user['itineraries'][key]);
+          this.sortItin();
+
           this.loadingService.setLoader(false, "");
         })
 
@@ -90,6 +100,19 @@ export class UserComponent implements OnInit, OnDestroy {
           this.followStatus = this.relationships[i]['status'];
           this.relationship = this.relationships[i];
         }
+      }
+    }
+  }
+
+  sortItin()  {
+    this.itineraries.sort((a,b)  =>  {
+      return new Date(b['date_to']).getTime() - new Date(a['date_to']).getTime();
+    })
+
+    for (let i = 0; i < this.itineraries.length; i++) {
+      if(this.itineraries[i]['private'])  {
+        this.itineraries.splice(i,1);
+        i--;
       }
     }
   }

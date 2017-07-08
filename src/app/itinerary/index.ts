@@ -12,6 +12,7 @@ export * from './itinerary-list/itinerary-past/itinerary-past.component';
 export * from './itinerary-list/itinerary-upcoming/itinerary-upcoming.component';
 
 export * from './itinerary-form/itinerary-form.component';
+export * from './itinerary-invite/itinerary-invite.component';
 
 export * from './itinerary-summary/itinerary-summary.component';
 export * from './itinerary-summary/itinerary-summary-day/itinerary-summary-day.component';

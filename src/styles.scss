@@ -170,6 +170,53 @@ button[disabled] h5 {
 
 /***
 
+  Toggle yes/no
+
+***************/
+.toggle-true,
+.toggle-false {
+  display: inline-block;
+  width: 60px;
+  color: #F9FBFB;
+  border-radius: 25px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.toggle-true *,
+.toggle-false *  {
+  color: #F9FBFB;
+}
+
+.toggle-true {
+  padding: 2px 8px 2px 2px;
+  text-align: right;
+  border: 2px solid #19CC72;
+  background-color: #19CC72;
+}
+
+.toggle-false  {
+  padding: 2px 2px 2px 10px;
+  text-align: left;
+  border: 2px solid #A6A6A6;
+  background-color: #A6A6A6;
+}
+
+.toggle-button-true,
+.toggle-button-false  {
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  background-color: white;
+  border-radius: 50%;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+/***
+
   Home and profile page itinerary shortcut
 
 *********************************************/
@@ -876,7 +923,7 @@ textarea.ng-invalid.ng-touched {
   @media only screen and (max-width: 650px) {
     width: 100%;
     min-width: 300px;
-    max-height: 100vh;
+    max-height: calc(100vh - 60px);
     top: 0;
     left: 0;
   }
@@ -1216,7 +1263,7 @@ span.dragged-location {
   background-color: white;
   z-index: 1001;
 
-  @media only screen and (max-width: 400px) {
+  @media only screen and (max-width: 420px) {
     top: 0;
     left: 0;
     width: 100%;
@@ -1238,6 +1285,17 @@ span.dragged-location {
   }
 }
 
+.close-pop-up {
+  display: none;
+
+  @media only screen and (max-width: 890px) {
+    display: block;
+    margin: -20px 12px 0 0;
+    color: #F9FBFB;
+    float: right;
+  }
+}
+
 .event-summary  {
   position: fixed;
   width: 210px;
@@ -1245,13 +1303,13 @@ span.dragged-location {
   background-color: rgba(237, 189, 100, 0.3);
   overflow: auto;
 
-  @media only screen and (max-width: 400px) {
+  @media only screen and (max-width: 420px) {
     width: 100%;
     min-width: 300px;
     background-color: white;
   }
 
-  @media only screen and (min-width: 400px) and (max-width: 890px) {
+  @media only screen and (min-width: 420px) and (max-width: 890px) {
     width: 380px;
     background-color: white;
   }
@@ -1326,6 +1384,11 @@ span.dragged-location {
   padding: 20px 10px 0 10px;
   color: grey;
   font-weight: 500;
+}
+
+.event-summary-note  {
+  padding: 0 10px 10px 10px;
+  color: #808080;
 }
 
 .event-summary-popup {
@@ -2017,6 +2080,10 @@ h5.date-details  {
   width: 70%;
   margin-left: 5px;
   vertical-align: top;
+
+  @media only screen and (max-width: 400px) {
+   width: 59%;
+  }
 }
 
 .user-description {
@@ -2155,7 +2222,13 @@ ww-itinerary-map  {
 }
 
 .itinerary-list h3  {
+  display: inline-block;
   padding-bottom: 5px;
+}
+
+.private-indicator  {
+  display: inline-block;
+  color: red;
 }
 
 .itinerary-list > h5  {

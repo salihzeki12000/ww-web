@@ -71,7 +71,7 @@ export class ItineraryTransportComponent implements OnInit {
     this.preventScroll(false);
   }
 
-  showSummary() {
+  toggleSummary() {
     this.showTransportSummary = !this.showTransportSummary;
     this.preventScroll(this.showTransportSummary);
   }

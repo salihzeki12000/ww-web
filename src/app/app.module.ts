@@ -21,7 +21,7 @@ import { RelationshipService, RelationshipsComponent, FollowingsComponent, Follo
 
 import { PostsComponent, PostComponent, PostInputComponent, PostListComponent, PostService, PostDisplayComponent } from './post';
 
-import { ItineraryComponent, ItineraryListComponent, ItineraryFormComponent, ItineraryAccommodationComponent, ItineraryTransportComponent, ItineraryService, ItineraryActivityComponent, ItineraryResourcesComponent, ResourceInputComponent, ResourceService, ResourceListComponent, ResourceComponent, ItineraryMapComponent, AccommodationFormComponent, TransportFormComponent, ItineraryEventService, ActivityComponent, ActivityListComponent, ActivityInputComponent, AccommodationComponent, TransportComponent, ItineraryPrintComponent, ItineraryPrintDatePreviewComponent, ItineraryPrintCategoryPreviewComponent, ItinerarySummaryComponent, ItinerarySummaryDayComponent, ItinerarySummaryItemComponent, ItineraryPrintCategoryComponent, ItineraryPrintDateComponent, ItinerarySettingsComponent, ItineraryShareComponent, ItineraryAllComponent, ItineraryPastComponent, ItineraryUpcomingComponent } from './itinerary';
+import { ItineraryComponent, ItineraryListComponent, ItineraryFormComponent, ItineraryInviteComponent, ItineraryAccommodationComponent, ItineraryTransportComponent, ItineraryService, ItineraryActivityComponent, ItineraryResourcesComponent, ResourceInputComponent, ResourceService, ResourceListComponent, ResourceComponent, ItineraryMapComponent, AccommodationFormComponent, TransportFormComponent, ItineraryEventService, ActivityComponent, ActivityListComponent, ActivityInputComponent, AccommodationComponent, TransportComponent, ItineraryPrintComponent, ItineraryPrintDatePreviewComponent, ItineraryPrintCategoryPreviewComponent, ItinerarySummaryComponent, ItinerarySummaryDayComponent, ItinerarySummaryItemComponent, ItineraryPrintCategoryComponent, ItineraryPrintDateComponent, ItinerarySettingsComponent, ItineraryShareComponent, ItineraryAllComponent, ItineraryPastComponent, ItineraryUpcomingComponent } from './itinerary';
 
 import { GooglePlaceSearchComponent, GoogleCheckinComponent } from './google-api';
 
@@ -65,6 +65,7 @@ import { CapitalisePipe } from './pipes';
     PostDisplayComponent,
     ItineraryComponent,
     ItineraryFormComponent,
+    ItineraryInviteComponent,
     ItineraryAccommodationComponent,
     ItineraryTransportComponent,
     AccommodationComponent,

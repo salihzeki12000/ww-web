@@ -1,0 +1,98 @@
+.logo {
+  margin-bottom: 40px;
+  padding: 7.73px;
+  height: 40px;
+  width: 100%;
+  text-align: center;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.logo h2  {
+  color: #6494ED;
+}
+
+.invite-container {
+  width: 600px;
+  margin-left: calc((100vw - 600px)/2);
+  text-align: center;
+
+  @media only screen and (max-width: 650px) {
+   width: 100%;
+   min-width: 300px;
+   margin-left: 0;
+   padding: 0 10px;
+  }
+}
+
+.invite-container h2  {
+  padding: 20px 0 5px 0;
+}
+
+.invite-password  {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.invite-password > h4 {
+  padding-bottom: 3px;
+}
+
+.invite-password input  {
+  width: 280px;
+  margin-left: 160px;
+
+  @media only screen and (max-width: 650px) {
+   margin-left: calc((100vw - 300px) / 2);
+  }
+}
+
+.accept-invite  {
+  margin: 40px 0;
+}
+
+.accept-invite h3 {
+  display: inline-block;
+  margin: 20px 10px;
+  padding: 3px 10px;
+  color: #6494ED;
+  border: 2px solid #6494ed;
+  border-radius: 5px;
+  &:hover {
+    cursor: pointer;
+    color: #F9FBFB;
+    background-color: #6494ED;
+  }
+}
+
+.member-list  {
+  margin-bottom: 15px;
+}
+
+.current-members  {
+  margin-top: 25px;
+  text-align: left;
+}
+
+.current-members > h4 {
+  padding-bottom: 10px;
+}
+
+.custom-modal * {
+  display: block;
+  margin-top: 100px;
+  margin-left: calc((100vw - 360px)/2);
+  padding: 20px;
+  width: 360px;
+  background-color: white;
+  -webkit-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+
+  @media only screen and (max-width: 450px) {
+    display: block;
+    width: 100%;
+    margin: 80px 0 0 0;
+  }
+}

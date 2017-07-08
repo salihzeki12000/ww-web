@@ -65,7 +65,7 @@ export class ActivityListComponent implements OnInit, OnDestroy {
     this.preventScroll(false);
   }
 
-  showSummary() {
+  toggleSummary() {
     this.showActivitySummary = !this.showActivitySummary;
     this.preventScroll(this.showActivitySummary);
   }

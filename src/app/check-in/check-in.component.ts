@@ -30,7 +30,7 @@ export class CheckInComponent implements OnInit, OnDestroy {
   currentUser: User;
 
   showCheckIn = false;
-  zoom = false;
+  showCountry = false;
   deleteCheckIn = undefined;
 
   constructor(
@@ -49,7 +49,7 @@ export class CheckInComponent implements OnInit, OnDestroy {
     this.checkInSubscription = this.checkinService.updateCheckIns.subscribe(
       result => {
         this.checkins = result;
-        console.log(this.checkins);
+        console.log(this.checkins)
         this.initMap();
         this.setLocations();
         this.setCountries();
@@ -66,9 +66,12 @@ export class CheckInComponent implements OnInit, OnDestroy {
   @HostListener('document:click', ['$event'])
   checkClick(event) {
     if(!event.target.classList.contains("country-dropdown") &&
-      !event.target.classList.contains("checkin-dropdown") &&
-      !event.target.classList.contains("drop-down")) {
-      this.zoom = false;
+      !event.target.classList.contains("select-country")) {
+      this.showCountry = false;
+    }
+
+    if(!event.target.classList.contains("country-dropdown") &&
+      !event.target.classList.contains("select-checkins")) {
       this.showCheckIn = false;
     }
   }
@@ -86,6 +89,14 @@ export class CheckInComponent implements OnInit, OnDestroy {
   }
 
   setLocations()  {
+    let panTo = {
+      lat: 0,
+      lng: this.checkins[0]['place']['lng'],
+      zoom: 2
+    }
+
+    this.changeCenter(panTo);
+
     this.locations = [];
     this.locationIds = [];
 
@@ -133,6 +144,7 @@ export class CheckInComponent implements OnInit, OnDestroy {
 
   setMarkers(map) {
     this.markers = [];
+    this.infoWindows = [];
 
     for (let i = 0; i < this.locations.length; i++) {
       let l = this.locations[i];
@@ -201,7 +213,7 @@ export class CheckInComponent implements OnInit, OnDestroy {
     this.itinMap.panTo(center);
     this.itinMap.setZoom(country['zoom']);
 
-    this.zoom = false;
+    this.showCountry = false;
   }
 
   zoomTo(place) {

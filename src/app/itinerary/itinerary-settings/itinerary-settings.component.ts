@@ -34,6 +34,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
 
   currentItinerarySubscription: Subscription;
   currentItinerary: Itinerary;
+  private = false;
 
   currentUserSubscription: Subscription;
   currentUser;
@@ -89,7 +90,8 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
       this.editItineraryForm = this.formBuilder.group({
         'name': ['', Validators.required],
         'date_from': ['', Validators.required],
-        'date_to': ['', Validators.required]
+        'date_to': ['', Validators.required],
+        'invite_password': '',
       })
     }
 
@@ -99,6 +101,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
         this.currentItinerary = result;
         this.currentItinerary['date_from'] = result['date_from'].slice(0,10);
         this.currentItinerary['date_to'] = result['date_to'].slice(0,10);
+        this.private = result['private'];
 
         this.getUsers();
         this.sortAdmin();
@@ -204,6 +207,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
       name: this.currentItinerary['name'],
       date_from: this.formatDate(this.currentItinerary['date_from']),
       date_to: this.formatDate(this.currentItinerary['date_to']),
+      invite_password: this.currentItinerary['invite_password'],
     })
   }
 
@@ -321,7 +325,8 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   }
 
   undoEdit()  {
-    this.patchValue()
+    this.patchValue();
+    this.private = this.currentItinerary['private'];
   }
 
   checkEdit() {
@@ -435,16 +440,14 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
       result => {})
   }
 
-  log() {
-    console.log(this.editItineraryForm)
-  }
-
   saveEdit() {
     let editedDetails = this.editItineraryForm.value;
 
     for (let value in editedDetails)  {
       this.currentItinerary[value] = editedDetails[value]
     }
+
+    this.currentItinerary['private'] = this.private;
 
     this.itineraryService.editItin(this.currentItinerary, 'edit').subscribe(
           data => {

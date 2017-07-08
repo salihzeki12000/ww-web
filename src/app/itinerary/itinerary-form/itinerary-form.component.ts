@@ -21,6 +21,7 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
 
   dateFrom;
   dateTo;
+  private = false;
 
   options: any = {
     locale: { format: 'DD-MMM-YYYY' },
@@ -95,6 +96,7 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
       })
     }
 
+    itinerary.private = this.private;
     itinerary.members = [this.currentUser['_id']];
     itinerary.admin = [this.currentUser['_id']];
 

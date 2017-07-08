@@ -72,7 +72,7 @@
   <div class="form-card">
     <div class="form-header">
       <h3> Members list ({{ itinerary?.members.length }})</h3>
-      <a (click)="hideMembers()">x</a>
+      <a (click)="hideMembers()">X</a>
     </div>
 
     <div class="current-members">
@@ -95,9 +95,23 @@
 
     <div class="form-header">
       <h3>Invite members to itinerary</h3>
+      <a (click)="cancelShowUsers()">X</a>
     </div>
 
-    <input type="text" placeholder="Search for people..." #text (keyup)="filterSearch(text.value)">
+    <div class="invite-by-link">
+      <h4>Invite by link</h4>
+      <h5>{{ inviteLink }}</h5>
+
+      <h5>Invitation password: {{ itinerary?.invite_password }}</h5>
+      <h6>A password ensure only genuine invitees are added to the itinerary.</h6>
+      <h6>Only admins can change the password. Password is empty by default.</h6>
+    </div>
+
+    <div class="invite-by-search">
+      <h4>Invite users on wondererwanderer</h4>
+      <input type="text" placeholder="Search for users..." #text (keyup)="filterSearch(text.value)">
+    </div>
+
 
     <div *ngIf="validAddUser">
       <div *ngFor="let user of newMembers" class="search-result-card selected-user">

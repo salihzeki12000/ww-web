@@ -1,0 +1,48 @@
+<div class="logo" [routerLink]="['/']">
+  <h2>wondererwanderer</h2>
+</div>
+
+<div class="invite-container">
+  <h3>You have been invited to the itinerary:</h3>
+  <h2>{{ itinerary?.name }}</h2>
+  <h3>from {{ itinerary?.date_from | date: 'dd MMM yyyy'}} to {{ itinerary?.date_to | date: 'dd MMM yyyy'}}</h3>
+
+  <div *ngIf="itinerary?.invite_password !== ''" class="invite-password">
+    <h4>A password is required to join this itinerary</h4>
+    <form [formGroup]="passwordForm">
+      <input type="text" formControlName="password">
+    </form>
+  </div>
+
+  <div class="accept-invite">
+    <h4>Sign in or sign up to access the itinerary now!</h4>
+
+    <h3 (click)="signin = true">Sign in</h3>
+    <h3 (click)="signup = true">Sign up</h3>
+  </div>
+
+  <div class="current-members">
+    <h4>Current members in the itinerary</h4>
+    <div *ngFor="let member of itinerary?.members" class="member-list">
+      <img src="{{ member.display_picture }}" alt="" class="user-profile-thumbnail">
+      <div class="user-details">
+        <h4 class="username-bold">{{ member.username }}</h4>
+        <h5 class="user-description">{{ member.description }}</h5>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="custom-modal" *ngIf="signin">
+  <ww-signin
+    [reroute]="reroute"
+    [itinerary]="itinerary"
+    (hideSignin)="hideSignin($event)"></ww-signin>
+</div>
+
+<div class="custom-modal" *ngIf="signup">
+  <ww-signup
+    [reroute]="reroute"
+    [itinerary]="itinerary"
+    (hideSignup)="hideSignup($event)"></ww-signup>
+</div>

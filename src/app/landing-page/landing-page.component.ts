@@ -38,11 +38,11 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   }
 
   onSubmit()  {
+    this.loadingService.setLoader(true, "get ready to wonder wander");
+
     this.authService.signin(this.signinForm.value)
         .subscribe(
           data => {
-            this.loadingService.setLoader(true, "get ready to wonder wander");
-
             setTimeout(() =>  {
               this.router.navigateByUrl('/me');
             }, 1000)
@@ -55,10 +55,6 @@ export class LandingPageComponent implements OnInit, OnDestroy {
       if (!control.value.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
           return {invalidEmail: true};
       }
-  }
-
-  seeSlideShow()  {
-
   }
 
   getSignin() {

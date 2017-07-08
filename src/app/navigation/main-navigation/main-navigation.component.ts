@@ -33,6 +33,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   checkin = false;
 
   // top nav
+  checkinOptions = false;
   searchOptions = false;
   showItineraries = false;
   showFollowerRequests = false;
@@ -160,6 +161,11 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   cancelCheckin() {
     this.checkin = false;
     this.preventScroll(false);
+  }
+
+  viewCheckinMap()  {
+    this.checkinOptions = false;
+    this.router.navigateByUrl('/me/check-in');
   }
 
   // top navigation itinerary

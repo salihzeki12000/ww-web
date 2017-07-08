@@ -1,8 +1,9 @@
-<div class="custom-modal" *ngIf="showTransportSummary" (click)="showSummary()"></div>
+<div class="custom-modal" *ngIf="showTransportSummary" (click)="toggleSummary()"></div>
 
 <div *ngIf="totalTransports" class="event-summary-section" [class.show-summary]="showTransportSummary">
 
   <h4 class="event-summary-header">Quick reference - {{ totalTransports }}</h4>
+  <h5 class="close-pop-up" (click)="toggleSummary()">X</h5>
 
   <div class="event-summary">
     <div *ngFor="let event of transports; let i = index" class="event-summary-item" (click)="centerItem(event)" [class.highlighted-item]="highlightedEvent === event">
@@ -20,6 +21,8 @@
           <h5 class="transport-summary-header" *ngSwitchCase="'others'"><i class="fa fa-rocket" aria-hidden="true"></i> Transport</h5>
         </div>
         <h5 class="transport-summary-details">from {{ event.dep_city | uppercase }} to {{ event.arr_city | uppercase }}</h5>
+        <h5 class="event-summary-note truncate">{{ event?.note }}</h5>
+
         <h4 class="event-out-of-range" *ngIf="event?.out_of_range"><i class="fa fa-arrow-up" aria-hidden="true"></i> Out of itinerary date range</h4>
       </a>
     </div>
@@ -48,6 +51,6 @@
   </ww-transport>
 </div>
 
-<div class="event-summary-popup" (click)="showSummary()" *ngIf="totalTransports">
+<div class="event-summary-popup" (click)="toggleSummary()" *ngIf="totalTransports">
   <i class="fa fa-list" aria-hidden="true"></i>
 </div>

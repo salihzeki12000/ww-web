@@ -14,36 +14,16 @@
           <span class="form-validator"
             *ngIf="editItineraryForm.get('name').touched && editItineraryForm.get('name').invalid">Name of itinerary is required</span>
         </div>
-
       </div>
 
       <div class="itinerary-edit-item">
-        <h5 (click)="log()">Travel Dates</h5>
+        <h5>Travel Dates</h5>
         <div class="date-picker" daterangepicker [options]="options" (selected)="selectedDate($event)">
           <i class="fa fa-calendar" aria-hidden="true"></i>
           <h4><span>From:</span> {{ dateFrom | date: 'dd MMM yyyy'}}</h4>
           <h4><span>To:</span> {{ dateTo | date: 'dd MMM yyyy'}}</h4>
         </div>
-        <!-- <div>
-          <input type="date" formControlName="date_from">
-          <span class="form-validator"
-            *ngIf="editItineraryForm.get('date_from').touched && editItineraryForm.get('date_from').invalid">Travel start date is required</span>
-        </div> -->
       </div>
-
-      <!-- <div class="itinerary-edit-item">
-        <h5>Travel Date To</h5>
-        <div class="date-picker date-picker-single" daterangepicker [options]="dateToPicker" (selected)="selectedDate($event)">
-          <i class="fa fa-calendar" aria-hidden="true"></i>
-          <h4> {{ dateTo | date: 'dd MMM yyyy'}}</h4>
-        </div>
-
-        <div>
-          <input type="date" formControlName="date_to">
-          <span class="form-validator"
-            *ngIf="editItineraryForm.get('date_to').touched && editItineraryForm.get('date_to').invalid">Travel end date is required</span>
-        </div>
-      </div> -->
 
       <div class="created-details">
         <div class="itinerary-edit-item">
@@ -59,6 +39,38 @@
         </div>
       </div>
 
+      <div class="itinerary-edit-item" *ngIf="masterAdmin">
+        <h5>Private</h5>
+        <h4 *ngIf="private" class="check-in-private" (click)="private = false">Yes</h4>
+        <h4 *ngIf="private" class="toggle-button-private" (click)="private = false"></h4>
+        <h4 *ngIf="!private" class="check-in-public" (click)="private = true">No</h4>
+        <h4 *ngIf="!private" class="toggle-button-public" (click)="private = true"></h4>
+      </div>
+
+      <div class="created-details" *ngIf="!masterAdmin">
+        <div class="itinerary-edit-item">
+          <h5>Private</h5>
+          <h4 *ngIf="private">Yes</h4>
+          <h4 *ngIf="!private">No</h4>
+        </div>
+      </div>
+
+
+      <div class="itinerary-edit-item" *ngIf="currentUserAdmin">
+        <h5>Invitation Password <br> (Admin can amend)</h5>
+        <div>
+          <input type="text" formControlName="invite_password">
+        </div>
+      </div>
+
+      <div class="created-details" *ngIf="!currentUserAdmin">
+        <div class="itinerary-edit-item">
+          <h5>Invitation Password <br> (Admin can amend)</h5>
+          <h4>{{ currentItinerary?.invite_password }}</h4>
+        </div>
+      </div>
+
+
       <div class="action-response">
         <h5 class="action-response-secondary" (click)="undoEdit()">UNDO</h5>
         <button type="submit" class="action-response-primary" [disabled]="!editItineraryForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE EDIT</h5></button>
@@ -66,6 +78,7 @@
     </div>
 
   </form>
+
 
   <h4 class="itinerary-edit-section-header">Member Details</h4>
   <div class="itinerary-edit-section-details">

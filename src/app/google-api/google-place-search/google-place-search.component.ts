@@ -1,4 +1,12 @@
-import { Component, OnInit, Input, AfterViewInit, ElementRef, ViewChild, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  AfterViewInit,
+  ElementRef,
+  ViewChild,
+  Output,
+  EventEmitter } from '@angular/core';
 declare var google:any;
 
 @Component({
@@ -12,7 +20,7 @@ export class GooglePlaceSearchComponent implements OnInit, AfterViewInit {
   @ViewChild('ggPlaceSearch') ggPlaceSearch: ElementRef;
   place;
   @Input() options;
-  @Input() populate = "";
+  @Input() populate: any;
   @Input() settings; //to display input field without border
 
   @Output() placeDetail = new EventEmitter();
@@ -52,7 +60,7 @@ export class GooglePlaceSearchComponent implements OnInit, AfterViewInit {
   }
 
   getDetails()  {
-    this.placeDetail.emit(this.place)
+    this.placeDetail.emit(this.place);
   }
 
   logSearch(text) {

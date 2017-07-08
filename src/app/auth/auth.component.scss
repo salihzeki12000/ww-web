@@ -34,17 +34,3 @@ i {
   padding-top: 4px;
   padding-left: 7px;
 }
-
-h5  {
-  margin: 10px 0;
-  text-align: center;
-}
-
-a.cancel-auth {
-  display: none;
-  @media only screen and (max-width: 850px) {
-    display: block;
-    float: right;
-    color: grey;
-  }
-}

@@ -47,7 +47,7 @@ export class ItineraryShareComponent implements OnInit {
   validAddUser = false;
 
   selectedItinerary;
-  copying = false;
+  copied = false;
 
   constructor(
     private userService: UserService,
@@ -192,6 +192,7 @@ export class ItineraryShareComponent implements OnInit {
         date_from: this.currentItinerary['date_from'],
         date_to: this.currentItinerary['date_to'],
         daily_note: this.currentItinerary['daily_note'],
+        private: this.currentItinerary['private'],
         members: [this.selectedUsers[i]['_id']],
         admin: [this.selectedUsers[i]['_id']],
         created_by: this.currentItinerary['created_by'],
@@ -262,17 +263,17 @@ export class ItineraryShareComponent implements OnInit {
     }
 
     if(type === 'copy') {
-      this.copying = true;
+      this.copied = true;
     }
   }
 
   stay()  {
-    this.copying = false;
+    this.copied = false;
     this.cancelShare.emit(false);
   }
 
   redirect()  {
-    this.copying = false;
+    this.copied = false;
     this.cancelShare.emit(false);
 
     this.router.navigateByUrl('/me/itinerary/' + this.selectedItinerary['_id']);

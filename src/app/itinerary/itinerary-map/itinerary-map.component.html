@@ -1,4 +1,4 @@
-<div class="custom-modal" *ngIf="showMapLegend" (click)="showLegend()"></div>
+<div class="custom-modal" *ngIf="showMapLegend" (click)="toggleLegend()"></div>
 
 <div class="legend-section" [class.show-legend]="showMapLegend">
   <!-- <div class="date-filter">
@@ -10,6 +10,7 @@
   </div>
   <i class="fa fa-filter fa-lg" aria-hidden="true"></i> -->
   <h4 class="event-summary-header">Map list - {{ events.length }}</h4>
+  <h5 class="close-pop-up" (click)="toggleLegend()">X</h5>
 
   <div class="map-summary">
     <div *ngFor="let event of events; let i = index" class="map-event" (click)="changeCenter(event)">
@@ -32,13 +33,14 @@
         </div>
 
         <h5 class="marker-name">{{ event.name }}</h5>
+        <h5 class="event-summary-note truncate">{{ event?.note }}</h5>
       </div>
 
     </div>
   </div>
 </div>
 
-<div class="map-legend-popup" (click)="showLegend()">
+<div class="map-legend-popup" (click)="toggleLegend()">
   <i class="fa fa-list" aria-hidden="true"></i>
 </div>
 

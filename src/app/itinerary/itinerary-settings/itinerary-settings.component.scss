@@ -88,6 +88,8 @@ input {
   width: 130px;
   color: grey;
   letter-spacing: .5px;
+  vertical-align: text-top;
+  
   @media only screen and (max-width: 610px) {
     padding-bottom: 3px;
   }
@@ -117,6 +119,64 @@ span.form-validator {
   height: 40px;
 }
 
+/* privacy */
+.check-in-private,
+.check-in-public {
+  display: inline-block;
+  width: 60px;
+  color: #F9FBFB;
+  border-radius: 25px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.check-in-private *,
+.check-in-public *  {
+  color: #F9FBFB;
+}
+
+.check-in-private {
+  padding: 2px 8px 2px 2px;
+  text-align: right;
+  border: 2px solid #19CC72;
+  background-color: #19CC72;
+}
+
+.check-in-public  {
+  padding: 2px 2px 2px 10px;
+  text-align: left;
+  border: 2px solid #A6A6A6;
+  background-color: #A6A6A6;
+}
+
+.toggle-button-private,
+.toggle-button-public  {
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  background-color: white;
+  border-radius: 50%;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.toggle-button-private  {
+  margin: 2px 0 0 -57px;
+
+  @media only screen and (max-width: 610px) {
+    margin: -22.5px 0 0 3px;
+  }
+}
+
+.toggle-button-public  {
+  margin: 2px 0 0 -23px;
+
+  @media only screen and (max-width: 610px) {
+    margin: -22.5px 0 0 38px;
+  }
+}
 
 /* member details section */
 .itinerary-member-list  {
@@ -207,10 +267,10 @@ span.form-validator {
 span.info {
   float: right;
   padding: 2px 3px 0 3px;
-  color: #A6A6A6;
+  color: #6494ED;
   font-size: 11px;
   font-weight: 600;
-  border: 2px solid #A6A6A6;
+  border: 2px solid #6494ED;
   border-radius: 50%;
   &:hover {
     cursor: pointer;

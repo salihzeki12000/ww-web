@@ -8,10 +8,20 @@
 
 <div class="top-nav-checkin">
   <div class="top-nav-link">
-    <i class="fa fa-map-marker fa-lg" aria-hidden="true" (click)="checkIn()"></i>
+    <i class="fa fa-map-marker fa-lg" aria-hidden="true" (mouseover)="checkinOptions = true"></i>
 
-    <div class="top-nav-link-hint">
-      <h6>click to check in</h6>
+    <div class="top-nav-link-dropdown" *ngIf="checkinOptions">
+      <div class="dropdown-arrow-up"></div>
+      <div class="top-nav-dropdown-header">
+        <h6>CHECK IN OPTIONS</h6>
+      </div>
+      <div class="dropdown-item" (click)="checkIn()">
+        <h5>Check in now</h5>
+      </div>
+
+      <div class="dropdown-item" (click)="viewCheckinMap()">
+        <h5>View check in map</h5>
+      </div>
     </div>
   </div>
 </div>

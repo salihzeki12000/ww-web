@@ -22,6 +22,7 @@ export class GoogleCheckinComponent implements OnInit, OnDestroy {
   country;
   placeId;
   locationType = '';
+  private = false;
 
   currentUserSubscription: Subscription;
   currentUser: User;
@@ -153,7 +154,6 @@ export class GoogleCheckinComponent implements OnInit, OnDestroy {
 
     geocoder.geocode({address: country}, (result, status) =>  {
       if(status === 'OK') {
-        console.log(result)
         let lat = result[0]['geometry'].location.lat();
         let lng = result[0]['geometry'].location.lng();
 
@@ -187,6 +187,7 @@ export class GoogleCheckinComponent implements OnInit, OnDestroy {
       address: this.address,
       country: this.country,
       place_id: this.placeId,
+      private: this.private,
       user: this.currentUser['_id']
     }
 

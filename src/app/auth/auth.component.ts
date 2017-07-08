@@ -1,11 +1,12 @@
-import { Component, OnInit, NgZone, AfterViewInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, NgZone, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 declare const FB: any;
 declare const gapi: any;
 
-import { AuthService }    from './auth.service';
-import { UserService }    from '../user';
-import { LoadingService } from '../loading';
+import { AuthService }       from './auth.service';
+import { UserService }       from '../user';
+import { LoadingService }    from '../loading';
+import { ItineraryService }  from '../itinerary';
 
 @Component({
   selector: 'ww-auth',
@@ -13,14 +14,14 @@ import { LoadingService } from '../loading';
   styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent implements OnInit, AfterViewInit {
-  @Output() hideSignup = new EventEmitter();
 
-  signinForm = false;
-  signupForm = false;
+  @Input() reroute;
+  @Input() itinerary;
 
   constructor(
     private authService: AuthService,
     private userService: UserService,
+    private itineraryService: ItineraryService,
     private loadingService: LoadingService,
     private _zone: NgZone,
     private router: Router)  {
@@ -70,9 +71,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
                   this.userService.getCurrentUser()
                       .subscribe(data => {});
 
-                  setTimeout(() =>  {
-                    this.router.navigateByUrl('/me');
-                  }, 1000)
+                  this.rerouting({_id: data.userId});
                 }
               )
         } else {
@@ -108,13 +107,32 @@ export class AuthComponent implements OnInit, AfterViewInit {
       console.log("log in google ok")
       this.loadingService.setLoader(true, "get ready to wonder wander");
 
-      setTimeout(() =>  {
-        this.router.navigateByUrl('/me');
-      }, 1000)
+      let user = {_id: data.userId};
+      this.rerouting(user);
     });
   }
 
-  cancelAuth()  {
-    this.hideSignup.emit(false);
+  rerouting(user) {
+    this.userService.getCurrentUser().subscribe(
+          data => {});
+          
+    if(this.reroute !== '/me')  {
+      this.addToItin(user);
+    } else  {
+      setTimeout(() =>  {
+        this.router.navigateByUrl(this.reroute);
+      }, 1000)
+    }
+  }
+
+  addToItin(user) {
+    this.itinerary['members'].push(user);
+
+    this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
+      data => {
+        setTimeout(() =>  {
+          this.router.navigateByUrl(this.reroute);
+        }, 1000)
+      })
   }
 }
