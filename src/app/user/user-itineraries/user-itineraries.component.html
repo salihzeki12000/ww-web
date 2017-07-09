@@ -3,11 +3,11 @@
     <h3>Itineraries</h3>
   </div>
 
-  <div class="nil-message-main" *ngIf="itineraries.length === 0">
+  <div class="nil-message-main" *ngIf="itineraries?.length === 0">
     <h4>There is no itinerary to display at the moment</h4>
   </div>
 
-  <div class="itinerary-list" *ngFor="let itinerary of itineraries">
+  <div class="itinerary-list" *ngFor="let itinerary of itineraries" (click)="routeToItin(itinerary)">
     <h3>{{ itinerary.name }}</h3>
     <h5>{{ itinerary.date_from | date:'dd MMM yy' }} to {{ itinerary.date_to | date:'dd MMM yy' }}</h5>
     <h5>{{ itinerary.members.length }} {{ itinerary.members.length > 1 ? "Members" : "Member" }}</h5>

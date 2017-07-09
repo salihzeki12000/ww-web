@@ -1,0 +1,71 @@
+.header {
+  width: 100%;
+  margin-bottom: 20px;
+  color: #6494ED;
+  text-align: center;
+}
+
+.header-note  {
+  padding-left: 10px;
+  color: #808080;
+}
+
+.event-details-card  {
+  border-bottom: 1px solid lightgray;
+}
+
+.event-item-cardmg,
+.event-item-card i,
+.event-item-card .summary-item-details  {
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 15px;
+}
+
+.event-item-card .transport-switch  {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.event-item-card img,
+.event-item-card i  {
+  height: 80px;
+  width: 80px;
+  margin: 10px;
+}
+
+
+.fa-bicycle  {
+  padding: 20px 13px;
+}
+
+.fa-home,
+.fa-plane,
+.fa-train,
+.fa-bus,
+.fa-rocket  {
+  padding: 20px;
+}
+
+.fa-car,
+.fa-ship  {
+  padding: 20px 16px;
+}
+
+.summary-item-details {
+  @media only screen and (max-width: 670px) {
+    width: calc((100vw - 120px))
+  }
+}
+
+.summary-item-details h5  {
+  padding-bottom: 5px;
+}
+
+.summary-item-details h4  {
+  padding-bottom: 10px;
+}
+
+.event-type {
+  color: #567FCC;
+}

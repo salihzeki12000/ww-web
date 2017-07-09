@@ -1,7 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
+import { Router } from '@angular/router';
 
 import { UserService }  from '../user.service';
+import { ItineraryService, ItineraryEventService } from '../../itinerary';
+import { LoadingService } from '../../loading';
 
 @Component({
   selector: 'ww-user-itineraries',
@@ -11,12 +14,19 @@ import { UserService }  from '../user.service';
 export class UserItinerariesComponent implements OnInit, OnDestroy {
   itineraries;
   userSubscription: Subscription;
+  user;
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private itineraryService: ItineraryService,
+    private itineraryEventService: ItineraryEventService,
+    private userService: UserService,
+    private loadingService: LoadingService,
+    private router: Router) { }
 
   ngOnInit() {
     this.userSubscription = this.userService.updateDisplayUser.subscribe(
       result => {
+        this.user = result;
         this.itineraries = Object.keys(result['itineraries']).map(key => result['itineraries'][key]);
         this.sortItin();
       }
@@ -38,6 +48,11 @@ export class UserItinerariesComponent implements OnInit, OnDestroy {
         i--;
       }
     }
+  }
+
+  routeToItin(itinerary)  {
+    this.router.navigateByUrl('/wondererwanderer/' + this.user['_id'] + '/itinerary/' + itinerary['_id'])
+    this.loadingService.setLoader(true, "");
   }
 
 }

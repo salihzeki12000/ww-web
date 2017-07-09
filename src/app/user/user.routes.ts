@@ -5,11 +5,13 @@ import { UserFollowingsComponent }  from './user-followings/user-followings.comp
 import { UserFollowersComponent }   from './user-followers/user-followers.component';
 import { UserItinerariesComponent } from './user-itineraries/user-itineraries.component';
 import { UserCheckInComponent }     from './user-check-in/user-check-in.component';
+import { UserItinerarySummaryComponent } from './user-itinerary-summary/user-itinerary-summary.component';
 
 export const USER_ROUTES: Routes = [
   { path: '', component: UserPostsComponent },
   { path: 'followers', component: UserFollowersComponent },
   { path: 'followings', component: UserFollowingsComponent },
   { path: 'itineraries', component: UserItinerariesComponent },
+  { path: 'itinerary/:id', component: UserItinerarySummaryComponent },
   { path: 'check-in', component: UserCheckInComponent },
 ]

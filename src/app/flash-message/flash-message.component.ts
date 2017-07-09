@@ -36,7 +36,7 @@ export class FlashMessageComponent implements OnInit {
                   this.messageState = 'in';
                   setTimeout(()  =>  {
                     this.messageState = 'out';
-                  }, 5000);
+                  }, 3000);
               }
           );
   }

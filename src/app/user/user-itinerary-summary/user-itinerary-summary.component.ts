@@ -1,16 +1,16 @@
-import { Component, OnInit, OnDestroy, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2, ElementRef, HostListener } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
-import { ItineraryService }      from '../itinerary.service';
-import { ItineraryEventService } from '../itinerary-events/itinerary-event.service';
-import { LoadingService }        from '../../loading';
+import { ItineraryService, ItineraryEventService }  from '../../itinerary';
+import { LoadingService } from '../../loading';
 
 @Component({
-  selector: 'ww-itinerary-summary',
-  templateUrl: './itinerary-summary.component.html',
-  styleUrls: ['./itinerary-summary.component.scss'],
+  selector: 'ww-user-itinerary-summary',
+  templateUrl: './user-itinerary-summary.component.html',
+  styleUrls: ['./user-itinerary-summary.component.scss']
 })
-export class ItinerarySummaryComponent implements OnInit, OnDestroy {
+export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
   eventSubscription: Subscription;
   events = [];
   totalEvents = 1;
@@ -21,10 +21,6 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
   currentItinerarySubscription: Subscription;
   currentItinerary;
   dailyNotes = [];
-
-  showDetailsInSummary = false;
-
-  chosenEvent;
 
   scroll = false;
   dateBar;
@@ -39,12 +35,24 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
   newWidth;
 
   constructor(
+    private renderer: Renderer2,
     private element: ElementRef,
+    private route: ActivatedRoute,
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
     private loadingService: LoadingService) { }
 
   ngOnInit() {
+    this.route.params.forEach((params: Params) => {
+      let id = params['id'];
+
+      this.itineraryService.getItin(id).subscribe(
+        result => {})
+
+      this.itineraryEventService.getEvents(id).subscribe(
+        eventResult => {})
+    })
+
     this.events = [];
     this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
        result => {
@@ -53,36 +61,21 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
        })
 
     this.itinDateSubscription = this.itineraryService.updateDate.subscribe(
-        result => {
-          this.itinDateRange = Object.keys(result).map(key => result[key]);
-          this.checkScroll();
-        })
+      result => {
+        this.itinDateRange = Object.keys(result).map(key => result[key]);
+      })
 
     this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
       result => {
-        this.showDetailsInSummary = false;
-        this.filterEvents(result);
+        this.events = Object.keys(result).map(key => result[key]);
+        // this.filterEvents(result);
+        this.loadingService.setLoader(false, "")
       })
   }
 
   ngOnDestroy() {
     this.itinDateSubscription.unsubscribe();
     this.eventSubscription.unsubscribe();
-    this.loadingService.setLoader(true, "");
-  }
-
-  @HostListener("window:scroll", [])
-  onWindowScroll() {
-    for (let i = 0; i < this.itemPosition.length; i++) {
-      let offset = this.element.nativeElement.offsetParent.scrollTop;
-      let item = this.itemPosition[i]['position'] - 30;
-      let diff = item - offset;
-
-      if(diff < 0)  {
-        this.currentDate = this.itemPosition[i]['date']
-        this.index = i;
-      }
-    }
   }
 
   sortDailyNotes()  {
@@ -91,59 +84,6 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.currentItinerary['daily_note'].length; i++) {
       this.dailyNotes.push(this.currentItinerary['daily_note'][i]['note'].replace(/\r?\n/g, '<br/> '));
     }
-  }
-
-  checkScroll() {
-    setTimeout(()=> {
-      this.scroll = false;
-      this.dateRow = this.element.nativeElement.children[1].clientWidth;
-      this.dateBar = this.element.nativeElement.children[1].children[0].clientWidth - 20;
-
-      if(this.dateBar > this.dateRow) {
-        this.scroll = true
-      }
-    },500)
-  }
-
-  sectionPosition(event)  {
-    this.itemPosition.push(event);
-  }
-
-  onScroll(event) {
-    if(event.type === "resize") {
-      this.oldWidth = this.newWidth;
-      this.newWidth = event.srcElement.innerWidth;
-
-      if(this.oldWidth >= 1091 && this.newWidth < 1091)  {
-        if(this.left !== undefined) {
-          this.left = (Number(this.left.slice(0, this.left.length - 2)) - 200) + 'px';
-        }
-      } else if(this.oldWidth <= 1091 && this.newWidth > 1091) {
-        if(this.left !== undefined) {
-          this.left = (Number(this.left.slice(0, this.left.length - 2)) + 200) + 'px';
-        }
-      }
-
-      this.dateRow = this.element.nativeElement.children[1].clientWidth;
-
-      if(this.dateBar > this.dateRow) {
-        this.scroll = true
-      } else if(this.dateBar < this.dateRow)  {
-        this.scroll = false;
-      }
-    }
-
-    if(event.type === "scroll") {
-      this.left = event.srcElement.offsetParent.offsetLeft - event.srcElement.scrollLeft + "px"
-    }
-  }
-
-  scrollLeft()  {
-    this.element.nativeElement.lastElementChild.scrollLeft -= 280;
-  }
-
-  scrollRight() {
-    this.element.nativeElement.lastElementChild.scrollLeft += 280;
   }
 
   filterEvents(events)  {
@@ -245,18 +185,12 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
     return events;
   }
 
-  showEventDetails(event)  {
-    if(this.chosenEvent === event)  {
-      this.hideDetailsInSummary();
+  preventScroll(value)  {
+    if(value) {
+      this.renderer.addClass(document.body, 'prevent-scroll');
     } else  {
-      this.showDetailsInSummary = true;
-      this.chosenEvent = event;
+      this.renderer.removeClass(document.body, 'prevent-scroll');
     }
-  }
-
-  hideDetailsInSummary()  {
-    this.showDetailsInSummary = false;
-    this.chosenEvent = '';
   }
 
 }
