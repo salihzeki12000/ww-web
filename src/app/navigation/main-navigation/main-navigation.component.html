@@ -88,11 +88,14 @@
           <h5 class="nil-dropdown-item">No request at the moment</h5>
         </div>
         <div *ngFor="let request of pendingFollowers" class="dropdown-item">
-          <img src="{{ request.user.display_picture }}" alt="" class="user-profile-thumbnail">
+          <!-- <img src="{{ request.user.display_picture }}" alt="" class="user-profile-thumbnail">
           <div class="user-details">
             <h5 class="user-username">{{ request.user.username }}</h5>
             <h6 class="user-search-description">{{ request.user.description }}</h6>
-          </div>
+          </div> -->
+
+          <ww-user-profile-card [user]="request.user" [currentUser]="currentUser"></ww-user-profile-card>
+
           <div class="action-response" *ngIf="!request.responded">
             <h5 class="action-response-secondary" (click)="ignoreRequest(request)">IGNORE</h5>
             <h5 class="action-response-primary" (click)="acceptRequest(request)">ACCEPT</h5>
@@ -222,7 +225,7 @@
           <h4 *ngIf="!settingsSection">Settings <i class="fa fa-caret-down" aria-hidden="true"></i></h4>
           <h4 *ngIf="settingsSection">Settings <i class="fa fa-caret-up" aria-hidden="true"></i></h4>
         </div>
-        ß
+        
         <div *ngIf="settingsSection">
           <div class="category-item" (click)="logout()">
             <h5><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</h5>
@@ -247,11 +250,7 @@
   <input type="text" placeholder="Search for people..." #text (keyup)="filterSearch(text.value)">
 
   <div *ngFor="let user of filteredResult" class="search-result-card">
-    <img src="{{ user.display_picture }}" alt="" class="user-profile-thumbnail">
-    <div class="user-details">
-      <h4 class="username-bold" (click)="routeToUser(user._id)">{{ user.username }}</h4>
-      <h5 class="user-search-description">{{ user.description }}</h5>
-    </div>
+    <ww-user-profile-card [user]="user" [currentUser]="currentUser"></ww-user-profile-card>
 
     <div class="follow-button">
       <div *ngIf="user.following_status === 'following'">

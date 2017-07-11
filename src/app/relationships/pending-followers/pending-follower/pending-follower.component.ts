@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { RelationshipService } from '../../relationship.service';
 import { NotificationService } from '../../../notifications';
@@ -11,9 +10,11 @@ import { NotificationService } from '../../../notifications';
 })
 export class PendingFollowerComponent implements OnInit {
   @Input() pendingFollower;
-
+  currentUser = {
+    _id: 0
+  }
+  
   constructor(
-    private router: Router,
     private notificationService: NotificationService,
     private relationshipService: RelationshipService) { }
 
@@ -43,10 +44,6 @@ export class PendingFollowerComponent implements OnInit {
 
     this.relationshipService.deleteFollow(this.pendingFollower, "pendingFollower")
         .subscribe( result => {} )
-  }
-
-  routeToUser(id) {
-    this.router.navigateByUrl('/wondererwanderer/' + id)
   }
 
 }

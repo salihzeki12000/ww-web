@@ -73,6 +73,8 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
       result => {
         this.currentUser = result;
         this.getFollowings(this.currentUser);
+        this.notificationService.getNotifications(this.currentUser['_id']).subscribe(
+          data =>{})
       })
 
     this.relationshipSubscription = this.relationshipService.updateRelationships.subscribe(
@@ -133,9 +135,12 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   }
 
   checkNewFollower()  {
-    let today = new Date()
+    let checkDate = new Date(this.currentUser['check_follower']).getTime();
+
     for (let i = 0; i < this.pendingFollowers.length; i++) {
-      if(this.pendingFollowers[i]['created_at'] > today)  {
+      let itemDate = new Date(this.pendingFollowers[i]['created_at']).getTime();
+
+      if( itemDate > checkDate)  {
         this.newFollower = true;
         i = this.pendingFollowers.length;
       }
@@ -143,9 +148,12 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   }
 
   checkNewNotification()  {
-    let today = new Date()
+    let checkDate = new Date(this.currentUser['check_notification']).getTime();
+
     for (let i = 0; i < this.notifications.length; i++) {
-      if(this.notifications[i]['created_at'] > today)  {
+      let itemDate = new Date(this.notifications[i]['created_at']).getTime();
+
+      if(itemDate > checkDate)  {
         this.newNotification = true;
         i = this.notifications.length;
       }

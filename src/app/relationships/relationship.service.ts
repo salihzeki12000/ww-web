@@ -102,7 +102,6 @@ export class RelationshipService  {
   }
 
   acceptFollow(following) {
-    console.log(following);
     const body = JSON.stringify(following);
     const headers = new Headers({ 'Content-Type': 'application/json' });
     const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';

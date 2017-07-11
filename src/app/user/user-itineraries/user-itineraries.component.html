@@ -8,10 +8,6 @@
   </div>
 
   <div class="itinerary-list" *ngFor="let itinerary of itineraries" (click)="routeToItin(itinerary)">
-    <h3>{{ itinerary.name }}</h3>
-    <h5>{{ itinerary.date_from | date:'dd MMM yy' }} to {{ itinerary.date_to | date:'dd MMM yy' }}</h5>
-    <h5>{{ itinerary.members.length }} {{ itinerary.members.length > 1 ? "Members" : "Member" }}</h5>
-    <h5>{{ itinerary.shares.length }} {{ itinerary.shares.length > 1 ? "Shares" : "Share" }}</h5>
-    <h5>Created by {{ itinerary.created_by.username }} on {{ itinerary.created_at | date: 'dd MMM yy'}}</h5>
+    <ww-itinerary-list-item [itinerary]="itinerary" [currentUser]="currentUser"></ww-itinerary-list-item>
   </div>
 </div>

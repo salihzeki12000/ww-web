@@ -130,7 +130,7 @@ export class CheckInComponent implements OnInit, OnDestroy {
       }
     }
     this.countries = this.sortCountries();
-    this.countries.unshift({name: 'Global view', lat: 25, lng: 0, zoom: 3})
+    this.countries.unshift({name: 'Global view', lat: 0, lng: this.checkins[0]['place']['lng'], zoom: 2})
   }
 
   sortCountries() {

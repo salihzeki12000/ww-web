@@ -200,6 +200,11 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     if(this.currentItinerary['shares'].length !== 0) {
       this.shared = true;
     }
+
+    setTimeout(() =>  {
+      this.loadingService.setLoader(false, "");
+      this.preventScroll(false);
+    }, 1000)
   }
 
   patchValue()  {
@@ -242,9 +247,6 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
         }
       }
     }
-
-    this.loadingService.setLoader(false, "");
-    this.preventScroll(false);
   }
 
   filterItineraries() {

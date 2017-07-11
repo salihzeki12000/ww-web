@@ -1,0 +1,5 @@
+<img src="{{ user.display_picture }}" alt="" class="user-profile-thumbnail">
+<div class="user-details">
+  <h4 class="username-bold" (click)="routeToUser(user._id)">{{ user.username }}</h4>
+  <h5 class="user-description">{{ user.description }}</h5>
+</div>

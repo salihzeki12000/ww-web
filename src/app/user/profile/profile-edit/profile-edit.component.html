@@ -115,7 +115,7 @@
     </div>
 
     <h4 class="profile-edit-section-header">Others</h4>
-    <h5 class="deactivate-account" (click)="confirmDelete()">Deactivate your account</h5>
+    <h5 class="deactivate-account" (click)="confirmDeactivate()">Deactivate your account</h5>
 
     <div class="action-response">
       <h5 class="action-response-secondary" (click)="undo()">UNDO</h5>
@@ -175,5 +175,25 @@
         <button type="submit" class="action-response-primary" [disabled]="!changePasswordForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
       </div>
     </form>
+  </div>
+</div>
+
+<div class="custom-modal" *ngIf="deactivate">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>Deactivate account</h3>
+      <a (click)="cancelDeactivate()">X</a>
+    </div>
+
+    <div class="content-without-header-name">
+      <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
+      <h4>Deactivating your account will disable your Profile. It will not show up when searched. Information created by you will not be deleted and will not be available unless it is shared with other users.</h4>
+    </div>
+
+    <div class="action-response">
+      <h5 class="action-response-primary" (click)="cancelDeactivate()">CANCEL</h5>
+      <h5 class="action-response-warning" (click)="deactivateAccount()">DEACTIVATE</h5>
+    </div>
+
   </div>
 </div>

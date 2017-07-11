@@ -1,9 +1,5 @@
 <div class="search-result-card">
-  <img src="{{ requestedFollowing.following.display_picture }}" alt="" class="user-profile-thumbnail">
-  <div class="user-details">
-    <h4 class="username-bold" (click)="routeToUser(requestedFollowing.following._id)">{{ requestedFollowing.following.username }}</h4>
-    <h5 class="user-search-description">{{ requestedFollowing.following.description }}</h5>
-  </div>
+  <ww-user-profile-card [user]="requestedFollowing.following" [currentUser]="currentUser"></ww-user-profile-card>
 
   <div class="follow-button">
     <div class="following-response">

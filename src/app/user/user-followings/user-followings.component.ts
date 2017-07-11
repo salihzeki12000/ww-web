@@ -40,12 +40,4 @@ export class UserFollowingsComponent implements OnInit, OnDestroy {
     this.followingsSubscription.unsubscribe();
   }
 
-  routeToUser(id) {
-    if(id === this.currentUser['_id']) {
-      this.router.navigateByUrl('/me/profile');
-    } else  {
-      this.router.navigateByUrl('/wondererwanderer/' + id)
-    }
-  }
-
 }

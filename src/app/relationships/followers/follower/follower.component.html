@@ -1,9 +1,5 @@
 <div class="search-result-card">
-  <img src="{{ follower.user.display_picture }}" alt="" class="user-profile-thumbnail">
-  <div class="user-details">
-    <h4 class="username-bold" (click)="routeToUser(follower.user._id)">{{ follower.user.username }}</h4>
-    <h5 class="user-search-description">{{ follower.user.description }}</h5>
-  </div>
+  <ww-user-profile-card [user]="follower.user" [currentUser]="currentUser"></ww-user-profile-card>
 
   <div class="follow-button">
     <div class="following-response">
@@ -20,7 +16,7 @@
 
     <div class="action-response">
       <h5 class="action-response-primary" (click)="removeFollower = false">CANCEL</h5>
-      <h5 class="action-response-warning">REMOVE</h5>
+      <h5 class="action-response-warning" (click)="remove()">REMOVE</h5>
     </div>
   </div>
 </div>

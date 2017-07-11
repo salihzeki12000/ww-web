@@ -77,13 +77,12 @@
 
     <div class="current-members">
       <div *ngFor="let member of itinerary?.members" class="member-mobile">
-        <img src="{{ member.display_picture }}" alt="display picture for {{ member.username }}" class="user-profile-thumbnail">
-        <h4>{{ member.username }}</h4>
+        <ww-user-profile-card [user]="member" [currentUser]="currentUser"></ww-user-profile-card>
       </div>
     </div>
 
     <div class="action-response">
-      <h5 class="action-response-primary" (click)="getUsers()">ADD NEW MEMBERS <i class="fa fa-user-plus" aria-hidden="true"></i></h5>
+      <h5 class="action-response-primary" (click)="getUsers()">INVITE NEW MEMBERS <i class="fa fa-user-plus" aria-hidden="true"></i></h5>
     </div>
 
   </div>
@@ -115,21 +114,15 @@
 
     <div *ngIf="validAddUser">
       <div *ngFor="let user of newMembers" class="search-result-card selected-user">
-        <img src="{{ user.display_picture }}" alt="" class="user-profile-thumbnail">
-        <div class="user-details">
-          <h4 class="user-username">{{ user.username }}</h4>
-          <h5 class="user-search-description">{{ user.description }}</h5>
-        </div>
+        <ww-user-profile-card [user]="user" [currentUser]="currentUser"></ww-user-profile-card>
+
         <h5 class="toggle-remove-member" (click)="toggleAdd(user)">Selected</h5>
       </div>
     </div>
 
     <div *ngFor="let user of filteredResult" class="search-result-card">
-      <img src="{{ user.display_picture }}" alt="" class="user-profile-thumbnail">
-      <div class="user-details">
-        <h4 class="user-username">{{ user.username }}</h4>
-        <h5 class="user-search-description">{{ user.description }}</h5>
-      </div>
+      <ww-user-profile-card [user]="user" [currentUser]="currentUser"></ww-user-profile-card>
+
       <h5 class="toggle-invite-member" (click)="toggleAdd(user)">Invite</h5>
     </div>
 

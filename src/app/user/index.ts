@@ -3,6 +3,7 @@ export * from './user.routes';
 
 export * from './user';
 export * from './user.component';
+export * from './user-profile-card/user-profile-card.component';
 
 export * from './user-followers/user-followers.component';
 export * from './user-followings/user-followings.component';

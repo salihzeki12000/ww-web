@@ -53,6 +53,8 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   checkinPrivacy = false;
   itinPrivacy = false;
 
+  deactivate = false;
+
   constructor(
     private formBuilder: FormBuilder,
     private renderer: Renderer2,
@@ -201,7 +203,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
 
   setCity(data) {
     this.defaultCity = data['formatted_address'];
-    
+
     this.city = {
       name: data['formatted_address'],
       lat: data['geometry'].location.lat(),
@@ -277,8 +279,19 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       }
   }
 
-  confirmDelete() {
+  // deactivate account
+  confirmDeactivate() {
+    this.deactivate = true;
+    this.preventScroll(true);
+  }
 
+  cancelDeactivate() {
+    this.deactivate = false;
+    this.preventScroll(false);
+  }
+
+  deactivateAccount() {
+    this.deactivate = false;
   }
 
   preventScroll(value)  {

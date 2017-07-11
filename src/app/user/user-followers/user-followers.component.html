@@ -8,10 +8,6 @@
   </div>
 
   <div *ngFor="let follower of followers" class="search-result-card">
-    <img src="{{ follower.user.display_picture }}" alt="" class="user-profile-thumbnail">
-    <div class="user-details">
-      <h4 class="user-username" (click)="routeToUser(follower.user._id)">{{ follower.user.username }}</h4>
-      <h5 class="user-search-description">{{ follower.user.description }}</h5>
-    </div>
+    <ww-user-profile-card [user]="follower.user" [currentUser]="currentUser"></ww-user-profile-card>
   </div>
 </div>

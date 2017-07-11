@@ -83,11 +83,7 @@
   <h4 class="itinerary-edit-section-header">Member Details</h4>
   <div class="itinerary-edit-section-details">
     <div *ngFor="let member of currentItinerary?.members; let i = index" class="itinerary-member-list">
-      <img src="{{ member.display_picture }}" alt="" class="user-profile-thumbnail">
-      <div class="user-details">
-        <h4 class="username-bold" (click)="routeToUser(member._id)">{{ member.username }}</h4>
-        <h5 class="user-description">{{ member.description }}</h5>
-      </div>
+      <ww-user-profile-card [user]="member" [currentUser]="currentUser"></ww-user-profile-card>
 
       <div class="itinerary-member-option" (click)="showMemberOption(i)" *ngIf="currentUserAdmin">
         <div *ngIf="!member.hide_option">

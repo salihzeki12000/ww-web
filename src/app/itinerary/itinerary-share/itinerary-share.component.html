@@ -74,24 +74,18 @@
       <div *ngIf="validAddUser">
         <h5 class="user-search-header">Selected users ({{ selectedUsers.length }})</h5>
         <div *ngFor="let user of selectedUsers" class="search-result-card selected-user">
-          <img src="{{ user.display_picture }}" alt="" class="user-profile-thumbnail">
-          <div class="user-details">
-            <h4 class="user-username">{{ user.username }}</h4>
-            <h5 class="user-search-description">{{ user.description }}</h5>
-            <h5 class="user-shared-status">{{ user.status }}</h5>
-          </div>
+          <ww-user-profile-card [user]="user" [currentUser]="currentUser"></ww-user-profile-card>
+          <h5 class="user-shared-status">{{ user.status }}</h5>
+          
           <h5 class="toggle-remove-member" (click)="toggleAdd(user)">Selected</h5>
         </div>
       </div>
 
       <h5 class="user-search-header">Search result ({{ filteredResult.length }})</h5>
       <div *ngFor="let user of filteredResult" class="search-result-card">
-        <img src="{{ user.display_picture }}" alt="" class="user-profile-thumbnail">
-        <div class="user-details">
-          <h4 class="user-username">{{ user.username }}</h4>
-          <h5 class="user-search-description">{{ user.description }}</h5>
-          <h5 class="user-shared-status">{{ user.status }}</h5>
-        </div>
+        <ww-user-profile-card [user]="user" [currentUser]="currentUser"></ww-user-profile-card>
+        <h5 class="user-shared-status">{{ user.status }}</h5>
+
         <h5 class="toggle-invite-member" (click)="toggleAdd(user)">Select</h5>
       </div>
     </div>

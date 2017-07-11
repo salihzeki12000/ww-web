@@ -415,6 +415,7 @@ h5.action-response-primary  {
 .follow-button  {
   background-color: transparent;
   border: none;
+  float: right;
 }
 
 .follow-button > h5  {
@@ -2241,7 +2242,7 @@ ww-itinerary-map  {
 
 .itinerary-list-stats {
   display: inline-block;
-  margin: 0 0 15px 20px;
+  margin: 15px;
   text-align: center;
 }
 
