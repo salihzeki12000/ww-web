@@ -1,7 +1,7 @@
 export * from './itinerary';
 export * from './itinerary.routes';
 export * from './itinerary.service';
-export * from './itinerary.module';
+// export * from './itinerary.module';
 export * from './itinerary.component';
 // export * from './itinerary.resolver';
 
