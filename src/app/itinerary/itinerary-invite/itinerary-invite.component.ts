@@ -12,7 +12,7 @@ import { LoadingService }   from '../../loading';
   styleUrls: ['./itinerary-invite.component.scss']
 })
 export class ItineraryInviteComponent implements OnInit {
-  itinerary: Itinerary;
+  itinerary;
   reroute;
 
   passwordForm: FormGroup;
@@ -34,7 +34,7 @@ export class ItineraryInviteComponent implements OnInit {
     this.route.params.forEach((params: Params) => {
       let id = params['id'];
       this.reroute = '/me/itinerary/' + id;
-      
+
       this.itineraryService.getItin(id).subscribe(
         result => {
           this.itinerary = result.itinerary;

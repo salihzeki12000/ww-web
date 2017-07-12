@@ -14,7 +14,7 @@ import { LoadingService }        from '../../../loading';
 })
 export class ItineraryAccommodationComponent implements OnInit, OnDestroy {
   eventSubscription: Subscription;
-  accommodations: ItineraryEvent[] = [];
+  accommodations = [];
   totalAccommodations = 1;
 
   itinDateSubscription: Subscription;

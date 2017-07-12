@@ -17,7 +17,7 @@ import { NotificationService }                     from '../../notifications';
 })
 export class MainNavigationComponent implements OnInit, OnDestroy {
   currentUserSubscription: Subscription;
-  currentUser: User;
+  currentUser;
 
   relationshipSubscription: Subscription;
   socialRelationships = [];

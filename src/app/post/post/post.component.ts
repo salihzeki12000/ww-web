@@ -17,7 +17,7 @@ import { NotificationService } from '../../notifications';
   styleUrls: ['./post.component.scss']
 })
 export class PostComponent implements OnInit, OnDestroy {
-  @Input() post: Post;
+  @Input() post;
   editing = false;
   deletePost = false;
   currentUserSubscription: Subscription;

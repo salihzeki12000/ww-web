@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./notifications.component.scss']
 })
 export class NotificationsComponent implements OnInit {
-  notificationLimit = false;
+  notificationsLimit = false;
 
   showNotification = false;
 

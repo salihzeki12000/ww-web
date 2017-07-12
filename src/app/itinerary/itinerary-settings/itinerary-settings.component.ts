@@ -33,7 +33,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   leaveItinerary = false;
 
   currentItinerarySubscription: Subscription;
-  currentItinerary: Itinerary;
+  currentItinerary;
   private = false;
 
   currentUserSubscription: Subscription;

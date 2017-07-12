@@ -18,10 +18,10 @@ import { CheckInService }      from '../../../check-in';
   styleUrls: ['./profile-details.component.scss']
 })
 export class ProfileDetailsComponent implements OnInit, OnDestroy {
-  currentUser: User;
+  currentUser;
   currentUserSubscription: Subscription;
 
-  posts: Post[] = [];
+  posts = [];
   postsSubscription: Subscription;
 
   relationshipSubscription: Subscription;

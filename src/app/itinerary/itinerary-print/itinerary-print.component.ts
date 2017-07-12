@@ -16,8 +16,8 @@ import { ResourceService } from '../itinerary-resources/resource.service';
   styleUrls: ['./itinerary-print.component.scss']
 })
 export class ItineraryPrintComponent implements OnInit {
-  itinerary: Itinerary;
-  resources: Resource;
+  itinerary;
+  resources;
   transports = [];
   accommodations = [];
   activities = [];
@@ -28,7 +28,7 @@ export class ItineraryPrintComponent implements OnInit {
 
   category = false;
   date = true;
-  
+
   constructor(
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,

@@ -16,7 +16,7 @@ import { CheckInService }        from '../../../../check-in';
   styleUrls: ['./accommodation.component.scss']
 })
 export class AccommodationComponent implements OnInit, OnDestroy {
-  @Input() event: ItineraryEvent;
+  @Input() event;
   @Input() itinDateRange;
   @Input() currentItinerary;
   @Input() totalAccommodations;

@@ -15,7 +15,7 @@ import { LoadingService }      from '../../../loading';
   styleUrls: ['./resource.component.scss']
 })
 export class ResourceComponent implements OnInit, OnDestroy {
-  @Input() resource: Resource;
+  @Input() resource;
   @Input() currentItinerary;
   @Input() totalResources;
   @Input() index;

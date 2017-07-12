@@ -10,8 +10,8 @@ import { Resource } from '../../itinerary-resources/resource';
   styleUrls: ['./itinerary-print-category.component.scss']
 })
 export class ItineraryPrintCategoryComponent implements OnInit {
-  @Input() itinerary: Itinerary;
-  @Input() resources: Resource;
+  @Input() itinerary;
+  @Input() resources;
   @Input() transports = [];
   @Input() accommodations = [];
   @Input() activities = [];

@@ -17,7 +17,7 @@ import { CheckInService }        from '../../../../check-in';
   styleUrls: ['./activity.component.scss']
 })
 export class ActivityComponent implements OnInit, OnDestroy {
-  @Input() activity: ItineraryEvent;
+  @Input() activity;
   @Input() itinDateRange;
   @Input() currentItinerary;
   @Input() totalActivities;
@@ -224,7 +224,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
 
     this.allowCheckin = false;
     this.checkedInDate = new Date();
-    
+
     this.itineraryEventService.editEvent(this.activity).subscribe(
       result => {})
   }

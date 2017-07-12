@@ -13,8 +13,8 @@ import { Resource }              from '../../itinerary-resources/resource';
   styleUrls: ['./itinerary-print-date.component.scss']
 })
 export class ItineraryPrintDateComponent implements OnInit {
-  @Input() itinerary: Itinerary;
-  @Input() resources: Resource;
+  @Input() itinerary;
+  @Input() resources;
 
   eventSubscription: Subscription;
   events = [];

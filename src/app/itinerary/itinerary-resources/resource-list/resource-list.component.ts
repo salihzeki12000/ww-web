@@ -13,7 +13,7 @@ import { LoadingService }   from '../../../loading';
 })
 export class ResourceListComponent implements OnInit, OnDestroy {
   updateResourcesSubscription: Subscription;
-  resources: Resource[] = [];
+  resources = [];
   totalResources = 1;
 
   currentItinerarySubscription: Subscription;

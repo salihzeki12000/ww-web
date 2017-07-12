@@ -7,5 +7,7 @@ export class Post {
     link_title: string,
     link_url: string,
     link_img: string,
+    time_ago: string,
+    img: string,
   ) {}
 }

@@ -20,7 +20,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   @ViewChild(DaterangePickerComponent)
   private picker: DaterangePickerComponent;
 
-  currentUser: User;
+  currentUser;
   currentUserSubscription: Subscription;
 
   editProfileForm: FormGroup;

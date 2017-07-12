@@ -15,7 +15,7 @@ import { LoadingService }        from '../../../../loading';
   styleUrls: ['./transport.component.scss']
 })
 export class TransportComponent implements OnInit, OnDestroy {
-  @Input() event: ItineraryEvent;
+  @Input() event;
   @Input() itinDateRange;
   @Input() currentItinerary;
   @Input() totalTransports;

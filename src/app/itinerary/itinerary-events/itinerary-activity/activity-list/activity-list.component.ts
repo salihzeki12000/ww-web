@@ -13,7 +13,7 @@ import { LoadingService }        from '../../../../loading';
 })
 export class ActivityListComponent implements OnInit, OnDestroy {
   eventSubscription: Subscription;
-  activities: ItineraryEvent[] = [];
+  activities = [];
   totalActivities = 1;
 
   itinDateSubscription: Subscription;

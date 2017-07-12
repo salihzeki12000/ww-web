@@ -10,7 +10,7 @@ import { PostService } from '../post.service';
   styleUrls: ['./post-list.component.scss']
 })
 export class PostListComponent implements OnInit {
-  @Input() posts: Post[] = [];
+  @Input() posts = [];
 
   constructor(private postService: PostService) { }
 

@@ -17,7 +17,7 @@ import { NotificationService }   from '../notifications';
 })
 export class ItineraryComponent implements OnInit, OnDestroy {
   currentItinerarySubscription: Subscription;
-  itinerary: Itinerary;
+  itinerary;
 
   currentUserSubscription: Subscription;
   currentUser: User;

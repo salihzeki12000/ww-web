@@ -14,8 +14,8 @@ import { LoadingService }    from '../loading';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  user: User;
-  feed: Post[] = [];
+  user;
+  feed = [];
   newUser = false;
 
   currentUserSubscription: Subscription;

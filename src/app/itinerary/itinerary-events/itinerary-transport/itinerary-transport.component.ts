@@ -14,7 +14,7 @@ import { LoadingService }        from '../../../loading';
 })
 export class ItineraryTransportComponent implements OnInit {
   eventSubscription: Subscription;
-  transports: ItineraryEvent[] = [];
+  transports = [];
   totalTransports = 1;
 
   itinDateSubscription: Subscription;
