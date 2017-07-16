@@ -56,49 +56,51 @@
       <h4 class="accommodation-city"><i class="fa fa-bed" aria-hidden="true"></i> {{ event?.stay_city | uppercase }}</h4>
       <h3 class="accommodation-header">{{ event?.name | uppercase }}</h3>
 
-      <div class="accommodation-details">
-
-        <div class="check-in-details">
-          <h5>Check in</h5>
-          <h2>{{ event?.check_in_date | date:'dd MMM yy' }}</h2>
-          <h5>{{ event?.check_in_date | date: 'EEEE'}}</h5>
-          <h5>{{ event.check_in_time }}</h5>
-        </div>
-
-        <div class="check-out-details">
-          <h5>Check out</h5>
-          <h2>{{ event?.check_out_date | date:'dd MMM yy' }}</h2>
-          <h5>{{ event?.check_out_date | date: 'EEEE'}}</h5>
-          <h5>{{ event.check_out_time }}</h5>
-        </div>
-
-        <div class="accommodation-contact-details" (click)="showContactDetails = !showContactDetails">
-          <h5>Address and contact number</h5>
-          <h5><i class="fa fa-angle-down" aria-hidden="true"></i></h5>
-        </div>
-
-        <div *ngIf="showContactDetails">
-          <div class="accommodation-address">
-            <i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>
-            <h5>{{ event?.formatted_address }}</h5>
-          </div>
-
-          <div class="accommodation-contact-number">
-            <i class="fa fa-phone fa-fw" aria-hidden="true"></i>
-            <a href="tel:{{ event?.international_phone_number }}">{{ event?.international_phone_number }}</a>
-          </div>
-        </div>
-
-        <div class="accommodation-website">
-          <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
-          <h5 class="truncate">
-            <a href="{{ event?.website }}" target="_blank" class="website-link">{{ event?.website }}</a>
-          </h5>
-        </div>
-
+      <div class="check-in-details">
+        <h5>Check in</h5>
+        <h2>{{ event?.check_in_date | date:'dd MMM yy' }}</h2>
+        <h5>{{ event?.check_in_date | date: 'EEEE'}}</h5>
+        <h5>{{ event.check_in_time }}</h5>
       </div>
 
-      <h5 class="note" [innerHTML]="event?.formatted_note"></h5>
+      <div class="check-out-details">
+        <h5>Check out</h5>
+        <h2>{{ event?.check_out_date | date:'dd MMM yy' }}</h2>
+        <h5>{{ event?.check_out_date | date: 'EEEE'}}</h5>
+        <h5>{{ event.check_out_time }}</h5>
+      </div>
+
+      <div class="toggle-contact-details" (click)="showContactDetails = !showContactDetails">
+        <h5>Address and contact number</h5>
+        <h5><i class="fa fa-angle-down" aria-hidden="true"></i></h5>
+      </div>
+
+      <div *ngIf="showContactDetails">
+        <div class="details-item">
+          <i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>
+          <h5>{{ event?.formatted_address }}</h5>
+        </div>
+
+        <div class="details-item">
+          <i class="fa fa-phone fa-fw" aria-hidden="true"></i>
+          <h5>
+            <a href="tel:{{ event?.international_phone_number }}">{{ event?.international_phone_number }}</a>
+          </h5>
+        </div>
+      </div>
+
+      <div class="details-item">
+        <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+        <h5 class="truncate">
+          <a href="{{ event?.website }}" target="_blank" class="website-link">{{ event?.website }}</a>
+        </h5>
+      </div>
+
+
+      <div class="details-item">
+        <i class="fa fa-sticky-note-o fa-fw" aria-hidden="true"></i>
+        <h5 class="note" [innerHTML]="event?.formatted_note"></h5>
+      </div>
 
       <div class="created-by">
         <h5 class="username" (click)="routeToUser(event?.user._id)">{{ event?.user.username }}</h5>

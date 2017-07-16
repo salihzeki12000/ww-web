@@ -102,8 +102,10 @@
       <h5>{{ inviteLink }}</h5>
 
       <h5>Invitation password: {{ itinerary?.invite_password }}</h5>
-      <h6>A password ensure only genuine invitees are added to the itinerary.</h6>
-      <h6>Only admins can change the password. Password is empty by default.</h6>
+
+      <h6 *ngIf="itinerary.invite_password === ''">A password has not been set. Invitees will not be asked for a password.</h6>
+      <h6>A password ensures only genuine invitees are added to the itinerary.</h6>
+      <h6>Only admins can change the password.</h6>
     </div>
 
     <div class="invite-by-search">

@@ -1700,7 +1700,6 @@ ww-resource {
   margin: 10px 0;
 }
 
-.accommodation-details
 .transport-details {
   padding: 0 10px;
 }
@@ -1724,55 +1723,31 @@ ww-resource {
   white-space: pre-line;
 }
 
-/* ACTIVITY DISPLAY */
-.accommodation-contact-details,
-.activity-contact-details {
+/* ACCOMODATION & ACTIVITY DISPLAY */
+.toggle-contact-details {
   margin-bottom: 5px;
   &:hover {
     cursor: pointer;
   }
 }
-.accommodation-contact-details > h5 > i,
-.activity-contact-details > h5 > i {
+.toggle-contact-details > h5 > i {
   text-align: right;
 }
 
-.accommodation-contact-details > *,
-.activity-contact-details > * {
+.toggle-contact-details > * {
   display: inline-block;
 }
 
-.accommodation-address,
-.accommodation-contact-number,
-.accommodation-website,
-.activity-opening-hours,
-.activity-fee,
-.activity-address,
-.activity-contact-number,
-.activity-website  {
+.details-item  {
   margin-bottom: 10px;
 }
 
-.accommodation-address > i,
-.accommodation-contact-number > i,
-.accommodation-website > i,
-.activity-opening-hours > i,
-.activity-fee > i,
-.activity-address > i,
-.activity-contact-number > i,
-.activity-website > i {
+.details-item > i {
   vertical-align: top;
   color: grey;
 }
 
-.accommodation-address > h5,
-.accommodation-contact-number > a,
-.accommodation-website > h5,
-.activity-opening-hours > h5,
-.activity-fee > h5,
-.activity-address > h5,
-.activity-contact-number > a,
-.activity-website > h5 {
+.details-item > h5 {
   display: inline-block;
   width: 90%;
   vertical-align: top;
@@ -1791,7 +1766,6 @@ ww-resource {
 }
 
 /* transport display */
-
 .departure-arrival-details {
   padding: 20px 0;
   background-color: #F6F6F6;
