@@ -66,7 +66,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
     let centerEvent = this.events.find(this.getCenter);
 
     if (centerEvent !== undefined) {
-      center = {lat: centerEvent['lat'], lng: centerEvent['lng'] },
+      center = {lat: centerEvent['place']['lat'], lng: centerEvent['place']['lng'] },
       zoom = 13
     } else if (centerEvent === undefined) {
       center = {lat: 0, lng: 0},
@@ -114,7 +114,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
 
     for (let i = 0; i < this.events.length; i++) {
       if(this.events[i]['type'] !== 'transport')  {
-        if(this.events[i]['lat']) {
+        if(this.events[i]['place']['lat']) {
           let date;
           let eventDate;
 
@@ -126,9 +126,9 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
           }
 
           eventMarker.push(
-            [this.events[i]['name'], this.events[i]['lat'], this.events[i]['lng'], eventDate, this.events[i]['time']]
+            [this.events[i]['name'], this.events[i]['place']['lat'], this.events[i]['place']['lng'], eventDate, this.events[i]['time']]
           )
-        } else if(!this.events[i]['lat']) {
+        } else if(!this.events[i]['place']['lat']) {
           this.events.splice(i,1)
           i--;
         }
@@ -185,9 +185,9 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
 
   changeCenter(event)  {
     if(event['lat'])  {
-      let center = new google.maps.LatLng(event['lat'], event['lng']);
+      let center = new google.maps.LatLng(event['place']['lat'], event['place']['lng']);
 
-      this.openInfoWindow(event['lat'], event['lng'])
+      this.openInfoWindow(event['place']['lat'], event['place']['lng'])
       this.itinMap.panTo(center);
       this.itinMap.setZoom(18);
     }
