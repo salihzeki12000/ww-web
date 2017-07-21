@@ -78,13 +78,13 @@
       <div *ngIf="showContactDetails">
         <div class="details-item">
           <i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>
-          <h5>{{ event?.formatted_address }}</h5>
+          <h5>{{ event?.place.formatted_address }}</h5>
         </div>
 
         <div class="details-item">
           <i class="fa fa-phone fa-fw" aria-hidden="true"></i>
           <h5>
-            <a href="tel:{{ event?.international_phone_number }}">{{ event?.international_phone_number }}</a>
+            <a href="tel:{{ event?.international_phone_number }}">{{ event?.place.international_phone_number }}</a>
           </h5>
         </div>
       </div>
@@ -92,7 +92,7 @@
       <div class="details-item">
         <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
         <h5 class="truncate">
-          <a href="{{ event?.website }}" target="_blank" class="website-link">{{ event?.website }}</a>
+          <a href="{{ event?.website }}" target="_blank" class="website-link">{{ event?.place.website }}</a>
         </h5>
       </div>
 
@@ -226,17 +226,17 @@
             <span class="form-validator"
               *ngIf="editAccommodationForm.get('name').touched && editAccommodationForm.get('name').invalid">Name of accommodation is required</span>
 
-            <label>Address</label>
-            <input type="text" formControlName="formatted_address">
-
             <label>Staying in (City/Town)</label>
             <input type="text" formControlName="stay_city">
 
+            <label>Address</label>
+            <h4>{{ event.place.formatted_address }}</h4>
+
             <label>Contact Number</label>
-            <input type="text" formControlName="international_phone_number" class="contact-number-input">
+            <h4>{{ event.place.international_phone_number }}</h4>
 
             <label>Website</label>
-            <input type="url" formControlName="website">
+            <h4>{{ event.place.website }}</h4>
 
           </div>
 

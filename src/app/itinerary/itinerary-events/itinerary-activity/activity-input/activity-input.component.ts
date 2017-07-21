@@ -72,6 +72,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     this.addActivityForm = this.formBuilder.group({
       'categories': this.initCategoryArray(),
       'name': ['', Validators.required],
+      'Oname': '',
       'formatted_address': '',
       'country': '',
       'lat': '',
@@ -189,6 +190,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     this.dragAddress = '';
 
     this.addActivityForm.patchValue({
+      Oname: value.name,
       name: value.name,
       date: 'any day',
       formatted_address: value.formatted_address,
@@ -415,6 +417,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
       username: this.currentUser['username'],
     }
 
+    newActivity['photos'] = this.pictureOptions;
     newActivity['country'] = this.country;
     newActivity['created_at'] = new Date();
     newActivity['type'] = 'activity';

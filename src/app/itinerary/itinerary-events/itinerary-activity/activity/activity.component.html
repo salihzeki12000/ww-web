@@ -73,12 +73,12 @@
       <div *ngIf="showContactDetails">
         <div class="details-item">
           <i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>
-          <h5> {{ activity?.formatted_address }}</h5>
+          <h5> {{ activity?.place.formatted_address }}</h5>
         </div>
 
         <div class="details-item">
           <i class="fa fa-phone fa-fw" aria-hidden="true"></i>
-          <a href="tel:{{ activity?.international_phone_number }}">{{ activity?.international_phone_number }}</a>
+          <a href="tel:{{ activity?.international_phone_number }}">{{ activity?.place.international_phone_number }}</a>
         </div>
       </div>
 
@@ -95,7 +95,7 @@
       <div class="details-item">
         <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
         <h5 class="truncate">
-          <a href="{{activity?.website}}" target="_blank" class="website-link">{{ activity?.website }}</a>
+          <a href="{{activity?.website}}" target="_blank" class="website-link">{{ activity?.place.website }}</a>
         </h5>
       </div>
 
@@ -218,13 +218,13 @@
               *ngIf="editActivityForm.get('name').touched && editActivityForm.get('name').invalid">Name of activity is required</span>
 
             <label>Address</label>
-            <input type="text" formControlName="formatted_address">
+            <h4>{{ activity.place.formatted_address }}</h4>
 
             <label>Contact Number</label>
-            <input type="text" formControlName="international_phone_number" class="contact-number-input">
+            <h4>{{ activity.place.international_phone_number }}</h4>
 
             <label>Website</label>
-            <input type="url" formControlName="website">
+            <h4>{{ activity.place.website }}</h4>
 
             <label>Opening Hours</label>
             <textarea rows="2" formControlName="opening_hours"></textarea>

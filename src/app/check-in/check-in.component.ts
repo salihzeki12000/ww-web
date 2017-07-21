@@ -153,7 +153,7 @@ export class CheckInComponent implements OnInit, OnDestroy {
       if(l['name'] !== '') {
         title = l['name'];
       } else  {
-        title = l['address']
+        title = l['formatted_address']
       }
 
       let marker = new google.maps.Marker({
@@ -178,7 +178,7 @@ export class CheckInComponent implements OnInit, OnDestroy {
 
       let content = '<div>' +
         '<h4>' + l['name'] + '</h4>' +
-        '<h5>' +  l['address'] + '</h5>' +
+        '<h5>' +  l['formatted_address'] + '</h5>' +
         '<h6>' + created_at_string + '</h6>' +
         '</div>';
 

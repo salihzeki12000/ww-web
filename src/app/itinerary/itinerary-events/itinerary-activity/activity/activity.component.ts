@@ -84,14 +84,14 @@ export class ActivityComponent implements OnInit, OnDestroy {
                                           this.currentUser = result;
                                           this.checkSameUser();
                                           this.filterItineraries();
+                                          this.checkCheckIn();
                                         })
 
-    this.activity['formatted_hours'] = this.activity['opening_hours'].replace(/\r?\n/g, '<br/> ');
+    this.activity['formatted_hours'] = this.activity['place']['opening_hours'].replace(/\r?\n/g, '<br/> ');
     this.activity['formatted_note'] = this.activity['note'].replace(/\r?\n/g, '<br/> ');
 
     this.checkMealTag();
     this.initTime();
-    this.checkCheckIn();
   }
 
   @HostListener('document:click', ['$event'])
@@ -202,12 +202,12 @@ export class ActivityComponent implements OnInit, OnDestroy {
     this.loadingService.setLoader(true, "Checking you in...");
 
     let checkin = {
-      lat: this.activity['lat'],
-      lng: this.activity['lng'],
-      name: this.activity['name'],
-      address: this.activity['formatted_address'],
-      country: this.activity['country'],
-      place_id: this.activity['place_id'],
+      lat: this.activity['place']['lat'],
+      lng: this.activity['place']['lng'],
+      name: this.activity['place']['name'],
+      address: this.activity['place']['formatted_address'],
+      country: this.activity['place']['country'],
+      place_id: this.activity['place']['place_id'],
       itinerary: this.currentItinerary['_id'],
       user: this.currentUser['_id']
     }
@@ -269,13 +269,13 @@ export class ActivityComponent implements OnInit, OnDestroy {
     this.editActivityForm.patchValue({
       name: this.activity['name'],
       meals: this.activity['meals'],
-      description: this.activity['description'],
-      sub_description: this.activity['sub_description'],
+      description: this.activity['place']['description'],
+      sub_description: this.activity['place']['sub_description'],
       opening_hours: this.activity['opening_hours'],
       entry_fee: this.activity['entry_fee'],
-      website: this.activity['website'],
-      formatted_address: this.activity['formatted_address'],
-      international_phone_number: this.activity['international_phone_number'],
+      website: this.activity['place']['website'],
+      formatted_address: this.activity['place']['formatted_address'],
+      international_phone_number: this.activity['place']['international_phone_number'],
       date: this.activity['date'],
       note: this.activity['note'],
     })

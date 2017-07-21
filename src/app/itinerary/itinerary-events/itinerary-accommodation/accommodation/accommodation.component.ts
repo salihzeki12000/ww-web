@@ -83,12 +83,12 @@ export class AccommodationComponent implements OnInit, OnDestroy {
                                          this.currentUser = result;
                                          this.checkSameUser();
                                          this.filterItineraries();
+                                         this.checkCheckIn();
                                        })
 
     this.event['formatted_note'] = this.event['note'].replace(/\r?\n/g, '<br/> ');
 
     this.initTime();
-    this.checkCheckIn();
   }
 
   @HostListener('document:click', ['$event'])
@@ -186,12 +186,12 @@ export class AccommodationComponent implements OnInit, OnDestroy {
     this.loadingService.setLoader(true, "Checking you in...");
 
     let checkin = {
-      lat: this.event['lat'],
-      lng: this.event['lng'],
-      name: this.event['name'],
-      address: this.event['formatted_address'],
-      country: this.event['country'],
-      place_id: this.event['place_id'],
+      lat: this.event['place']['lat'],
+      lng: this.event['place']['lng'],
+      name: this.event['place']['name'],
+      address: this.event['place']['formatted_address'],
+      country: this.event['place']['country'],
+      place_id: this.event['place']['place_id'],
       itinerary: this.currentItinerary['_id'],
       user: this.currentUser['_id']
     }
@@ -253,9 +253,9 @@ export class AccommodationComponent implements OnInit, OnDestroy {
   patchValue()  {
     this.editAccommodationForm.patchValue({
       name: this.event['name'],
-      formatted_address: this.event['formatted_address'],
-      website: this.event['website'],
-      international_phone_number: this.event['international_phone_number'],
+      formatted_address: this.event['place']['formatted_address'],
+      website: this.event['place']['website'],
+      international_phone_number: this.event['place']['international_phone_number'],
       check_in_date: this.event['check_in_date'],
       check_out_date: this.event['check_out_date'],
       stay_city: this.event['stay_city'],

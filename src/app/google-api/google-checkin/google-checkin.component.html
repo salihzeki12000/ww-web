@@ -4,7 +4,7 @@
 <h5>You may drag the pin to set a new location after searching or getting current location.</h5>
 
 <h5 *ngIf="locationType !== ''" class="dragged-address">
-  <span class="dragged-location">{{ locationType }} location:</span> {{ address}}
+  <span class="dragged-location">{{ locationType }} location:</span> {{ formatted_address }}
 </h5>
 
 <div class="check-in-privacy">

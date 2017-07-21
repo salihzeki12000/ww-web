@@ -33,7 +33,7 @@
       <h6>{{ checkin.created_at | date: 'dd MMM yyyy, HH:mm' }}</h6>
       <h6 *ngIf="checkin.private">PRIVATE</h6>
       <h4>{{ checkin.place.name }}</h4>
-      <h5>{{ checkin.place.address }}</h5>
+      <h5>{{ checkin.place.formatted_address }}</h5>
     </div>
     <div class="check-in-itinerary" *ngIf="checkin.itinerary">
       <i class="fa fa-sticky-note" aria-hidden="true"></i>

@@ -82,6 +82,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder) {
       this.addAccommodationForm = this.formBuilder.group({
         'name': ['', Validators.required],
+        'Oname': '',
         'formatted_address': '',
         'country': '',
         'lat': '',
@@ -177,6 +178,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
     this.getCountry(address_components);
 
     this.addAccommodationForm.patchValue({
+      Oname: value.name,
       name: value.name,
       formatted_address: value.formatted_address,
       lat: lat,
@@ -384,15 +386,16 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
       newAccommodation['check_out_time'] = this.hourOut + ':' + this.minuteOut;
     }
 
+    newAccommodation['photos'] = this.pictureOptions;
     newAccommodation['country'] = this.country;
     newAccommodation['date'] = newAccommodation['check_in_date'];
     newAccommodation['time'] = newAccommodation['check_in_time'];
     newAccommodation['type'] = 'accommodation';
+    newAccommodation['created_at'] = new Date();
     newAccommodation['user'] =  {
       _id: this.currentUser['_id'],
       username: this.currentUser['username'],
     }
-    newAccommodation['created_at'] = new Date();
 
     if(this.newImageFile !== '')  {
       this.fileuploadService.uploadFile(this.newImageFile, "event")

@@ -1124,6 +1124,10 @@ span.dragged-location {
   }
 }
 
+.form-section-details > h4  {
+  margin-bottom: 20px;
+}
+
 .fields-required  {
   margin-bottom: 10px;
   text-decoration: underline;
@@ -1690,7 +1694,8 @@ ww-resource {
   padding-left: 15px;
 
   @media only screen and (max-width: 650px) {
-    width: 240px;
+    width: 225px;
+    padding-left: 10px;
   }
 }
 

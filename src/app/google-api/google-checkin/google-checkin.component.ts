@@ -18,7 +18,7 @@ export class GoogleCheckinComponent implements OnInit, OnDestroy {
   lat;
   lng;
   name;
-  address;
+  formatted_address;
   country;
   placeId;
   locationType = '';
@@ -64,7 +64,7 @@ export class GoogleCheckinComponent implements OnInit, OnDestroy {
     this.lat = value['geometry'].location.lat();
     this.lng = value['geometry'].location.lng();
     this.placeId = value['place_id'];
-    this.address = value['formatted_address'];
+    this.formatted_address = value['formatted_address'];
     this.name = value['name'];
 
     this.getCountry(value['address_components'])
@@ -108,7 +108,7 @@ export class GoogleCheckinComponent implements OnInit, OnDestroy {
     geocoder.geocode({location: {lat:lat, lng:lng}}, (result, status) =>  {
       if(status === 'OK') {
         if(result[0]) {
-          this.address = result[0]['formatted_address'];
+          this.formatted_address = result[0]['formatted_address'];
           this.placeId = result[0]['place_id'];
 
           this.getCountry(result[0]['address_components'])
@@ -170,7 +170,7 @@ export class GoogleCheckinComponent implements OnInit, OnDestroy {
     this.lat = '';
     this.lng = '';
     this.name = '';
-    this.address = '';
+    this.formatted_address = '';
     this.country = '';
     this.placeId = '';
     this.locationType = '';
@@ -184,7 +184,7 @@ export class GoogleCheckinComponent implements OnInit, OnDestroy {
       lat: this.lat,
       lng: this.lng,
       name: this.name,
-      address: this.address,
+      formatted_address: this.formatted_address,
       country: this.country,
       place_id: this.placeId,
       private: this.private,
