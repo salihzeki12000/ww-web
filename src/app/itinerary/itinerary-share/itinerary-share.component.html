@@ -76,7 +76,7 @@
         <div *ngFor="let user of selectedUsers" class="search-result-card selected-user">
           <ww-user-profile-card [user]="user" [currentUser]="currentUser"></ww-user-profile-card>
           <h5 class="user-shared-status">{{ user.status }}</h5>
-          
+
           <h5 class="toggle-remove-member" (click)="toggleAdd(user)">Selected</h5>
         </div>
       </div>
@@ -100,7 +100,7 @@
     <div class="form-housing">
       <h4>Please select itinerary to copy to:</h4>
       <div class="copy-to-itinerary-list">
-        <div *ngFor="let itinerary of itineraries" class="copy-to-itinerary" (click)="shareEvents(itinerary, 'copy')">
+        <div *ngFor="let itinerary of itineraries" class="copy-to-itinerary" (click)="shareEvents(itinerary)">
           <h4>{{ itinerary.name }} - ({{ itinerary.date_from | date:"dd MMM yy" }} to {{ itinerary.date_to | date:"dd MMM yy" }})</h4>
         </div>
       </div>

@@ -17,7 +17,7 @@
 
         <div *ngIf="!searchDone" class="search-accommodation">
           <label>Search accommodation by name or address <span class="required"> - local name or address may be required</span></label>
-          <ww-google-place-search (placeDetail)="getAccommodationDetails($event)"></ww-google-place-search>
+          <ww-google-place-search [populate]="''" (placeDetail)="getAccommodationDetails($event)"></ww-google-place-search>
 
           <h5>You may also search for a nearby location and drag the pin to set a location.</h5>
           <h5>Only address is available when the pin is dragged.</h5>
@@ -114,22 +114,22 @@
               </label>
             </div>
 
-            <label>Name of Accommodation <span class="required"> - required</span></label>
+            <label>Name of Accommodation <span class="label-note"> - required</span></label>
             <input type="text" formControlName="name">
             <span class="form-validator"
               *ngIf="addAccommodationForm.get('name').touched && addAccommodationForm.get('name').invalid">Name of accommodation is required</span>
 
-            <label>Address</label>
-            <input type="text" formControlName="formatted_address">
-
             <label>Staying in (City/Town)</label>
             <input type="text" formControlName="stay_city">
 
+            <label>Address</label>
+            <h4>{{ details.formatted_address }}</h4>
+
             <label>Contact Number</label>
-            <input type="text" formControlName="international_phone_number" class="contact-number-input">
+            <h4>{{ details.international_phone_number }}</h4>
 
             <label>Website</label>
-            <input type="url" formControlName="website">
+            <h4>{{ details.website }}</h4>
 
           </div>
 

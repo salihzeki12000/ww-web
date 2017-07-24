@@ -20,7 +20,7 @@ export class GooglePlaceSearchComponent implements OnInit, AfterViewInit {
   @ViewChild('ggPlaceSearch') ggPlaceSearch: ElementRef;
   place;
   @Input() options;
-  @Input() populate: any;
+  @Input() populate;
   @Input() settings; //to display input field without border
 
   @Output() placeDetail = new EventEmitter();

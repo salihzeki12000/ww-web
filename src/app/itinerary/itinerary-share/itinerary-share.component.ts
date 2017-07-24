@@ -196,6 +196,7 @@ export class ItineraryShareComponent implements OnInit {
         members: [this.selectedUsers[i]['_id']],
         admin: [this.selectedUsers[i]['_id']],
         created_by: this.currentItinerary['created_by'],
+        shared_by: this.currentUser['_id']
       }
 
       let newShare = {
@@ -208,7 +209,7 @@ export class ItineraryShareComponent implements OnInit {
 
       this.itineraryService.copyItin(newItinerary).subscribe(
         data => {
-          this.shareEvents(data.itinerary, "share");
+          this.shareEvents(data.itinerary);
 
           this.notificationService.newNotification({
             recipient: this.selectedUsers[i]['_id'],
@@ -226,7 +227,7 @@ export class ItineraryShareComponent implements OnInit {
       result => {})
   }
 
-  shareEvents(itinerary, type) {
+  shareEvents(itinerary) {
     this.selectedItinerary = itinerary;
     for (let i = 0; i < this.shareIndex.length; i++) {
       if(this.shareIndex[i]) {
@@ -258,11 +259,11 @@ export class ItineraryShareComponent implements OnInit {
     this.itemsSelected = false;
     this.filteredResult = [];
 
-    if(type === 'share')  {
+    if(this.shareType === 'Share')  {
       this.confirmShareMessage();
     }
 
-    if(type === 'copy') {
+    if(this.shareType === 'Copy') {
       this.copied = true;
     }
   }

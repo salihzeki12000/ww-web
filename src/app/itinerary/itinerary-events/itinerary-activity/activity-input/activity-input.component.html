@@ -15,10 +15,11 @@
         </div>
 
         <div *ngIf="!searchDone" class="search-activity">
-          <label class="activity-no-location" (click)="getForm()">Click here to add activity without location</label>
+          <label class="activity-no-location" (click)="getForm()">Click here to add activity without a location</label>
+          <h5 class="activity-no-location-note">e.g. meet at hotel lobby at 6pm</h5>
 
           <label>Search activity location by name or adddress <span class="label-note"> - local name or address may be required</span></label>
-          <ww-google-place-search (placeDetail)="getActivityDetails($event)"></ww-google-place-search>
+          <ww-google-place-search [populate]="''" (placeDetail)="getActivityDetails($event)"></ww-google-place-search>
 
           <h5>You may also search for a nearby location and drag the pin to set a location.</h5>
           <h5>Only address is available when the pin is dragged.</h5>
@@ -117,13 +118,13 @@
               *ngIf="addActivityForm.get('name').touched && addActivityForm.get('name').invalid">Name of activity is required</span>
 
             <label>Address</label>
-            <input type="text" formControlName="formatted_address">
+            <h4>{{ details.formatted_address }}</h4>
 
             <label>Contact Number</label>
-            <input type="text" formControlName="international_phone_number" class="contact-number-input">
+            <h4>{{ details.international_phone_number }}</h4>
 
             <label>Website</label>
-            <input type="url" id="website" formControlName="website">
+            <h4>{{ details.website }}</h4>
 
             <label>Opening Hours</label>
             <textarea rows="3" formControlName="opening_hours"></textarea>

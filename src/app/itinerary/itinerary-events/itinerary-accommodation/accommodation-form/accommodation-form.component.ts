@@ -32,6 +32,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
   @Output() hideAccommodationForm = new EventEmitter();
 
   addAccommodationForm: FormGroup;
+  details;
 
   // time picker
   ats = true;
@@ -153,12 +154,15 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
     this.pictureOptions = [];
     this.dragAddress = '';
     this.marker = undefined;
+    this.details = undefined;
 
     setTimeout(() => {this.initMap()}, 100)
   }
 
   // get place details from Google
   getAccommodationDetails(value)  {
+    this.details = value;
+
     let lat = value['geometry'].location.lat();
     let lng = value['geometry'].location.lng();
 
@@ -296,6 +300,11 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
     this.addAccommodationForm.reset();
     this.displayPic = '';
     this.pictureOptions = [];
+    this.details = undefined;
+
+    this.details = {
+      formatted_address: this.dragAddress,
+    }
 
     this.addAccommodationForm.patchValue({
       check_in_date: this.firstDay,
@@ -392,6 +401,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
     newAccommodation['time'] = newAccommodation['check_in_time'];
     newAccommodation['type'] = 'accommodation';
     newAccommodation['created_at'] = new Date();
+    newAccommodation['location'] = true;
     newAccommodation['user'] =  {
       _id: this.currentUser['_id'],
       username: this.currentUser['username'],

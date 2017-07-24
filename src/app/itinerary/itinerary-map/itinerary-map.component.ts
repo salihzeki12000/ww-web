@@ -52,7 +52,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
   filterEvents(events)  {
     this.events = [];
     for (let i = 0; i < events.length; i++) {
-      if(events[i]['type'] !== 'transport')  {
+      if(events[i]['type'] !== 'transport' && events[i]['location'])  {
         this.events.push(events[i])
       }
     }
@@ -184,7 +184,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
   }
 
   changeCenter(event)  {
-    if(event['lat'])  {
+    if(event['place']['lat'])  {
       let center = new google.maps.LatLng(event['place']['lat'], event['place']['lng']);
 
       this.openInfoWindow(event['place']['lat'], event['place']['lng'])

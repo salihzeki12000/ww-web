@@ -29,6 +29,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   @Output() hideActivityForm = new EventEmitter<boolean>();
 
   addActivityForm: FormGroup;
+  details;
   noLocation = false;
 
   // time picker
@@ -165,6 +166,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     this.pictureOptions = [];
     this.dragAddress = '';
     this.marker = undefined;
+    this.details = undefined;
 
     setTimeout(() => {this.initMap()}, 100)
   }
@@ -180,6 +182,8 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
 
   //get activity details from Google
   getActivityDetails(value)  {
+    this.details = value;
+
     let opening_hours = this.getOpeningHours(value.opening_hours);
     let lat = value['geometry'].location.lat();
     let lng = value['geometry'].location.lng();
@@ -343,6 +347,11 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     this.initMeals();
     this.displayPic = '';
     this.pictureOptions = [];
+    this.details = undefined;
+
+    this.details = {
+      formatted_address: this.dragAddress,
+    }
 
     this.addActivityForm.patchValue({
       date: 'any day',
@@ -421,7 +430,8 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     newActivity['country'] = this.country;
     newActivity['created_at'] = new Date();
     newActivity['type'] = 'activity';
-
+    newActivity['location'] = !this.noLocation;
+    
     if(this.newImageFile !== '')  {
       this.fileuploadService.uploadFile(this.newImageFile, "event")
           .subscribe(

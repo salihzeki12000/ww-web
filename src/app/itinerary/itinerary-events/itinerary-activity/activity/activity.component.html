@@ -23,7 +23,7 @@
             <h5>Recommend</h5>
             <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
           </li> -->
-          <li (click)="checkin()" *ngIf="allowCheckin">
+          <li (click)="checkin()" *ngIf="allowCheckin && activity?.location">
             <h5>Check in</h5>
             <i class="fa fa-map-marker" aria-hidden="true"></i>
           </li>
@@ -65,38 +65,42 @@
 
       <h3 class="activity-header">{{ activity?.name }}</h3>
 
-      <div class="toggle-contact-details" (click)="showContactDetails = !showContactDetails">
-        <h5>Address and contact number</h5>
-        <h5><i class="fa fa-angle-down" aria-hidden="true"></i></h5>
-      </div>
+      <div *ngIf="activity?.location">
 
-      <div *ngIf="showContactDetails">
-        <div class="details-item">
-          <i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>
-          <h5> {{ activity?.place.formatted_address }}</h5>
+        <div class="toggle-contact-details" (click)="showContactDetails = !showContactDetails">
+          <h5>Address and contact number</h5>
+          <h5><i class="fa fa-angle-down" aria-hidden="true"></i></h5>
+        </div>
+
+        <div *ngIf="showContactDetails">
+          <div class="details-item">
+            <i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>
+            <h5> {{ activity?.place.formatted_address }}</h5>
+          </div>
+
+          <div class="details-item">
+            <i class="fa fa-phone fa-fw" aria-hidden="true"></i>
+            <a href="tel:{{ activity?.international_phone_number }}">{{ activity?.place.international_phone_number }}</a>
+          </div>
         </div>
 
         <div class="details-item">
-          <i class="fa fa-phone fa-fw" aria-hidden="true"></i>
-          <a href="tel:{{ activity?.international_phone_number }}">{{ activity?.place.international_phone_number }}</a>
+          <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>
+          <h5 [innerHTML]="activity?.formatted_hours"></h5>
         </div>
-      </div>
 
-      <div class="details-item">
-        <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>
-        <h5 [innerHTML]="activity?.formatted_hours"></h5>
-      </div>
+        <div class="details-item">
+          <i class="fa fa-money fa-fw" aria-hidden="true"></i>
+          <h5>{{ activity?.entry_fee }}</h5>
+        </div>
 
-      <div class="details-item">
-        <i class="fa fa-money fa-fw" aria-hidden="true"></i>
-        <h5>{{ activity?.entry_fee }}</h5>
-      </div>
+        <div class="details-item">
+          <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+          <h5 class="truncate">
+            <a href="{{activity?.website}}" target="_blank" class="website-link">{{ activity?.place.website }}</a>
+          </h5>
+        </div>
 
-      <div class="details-item">
-        <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
-        <h5 class="truncate">
-          <a href="{{activity?.website}}" target="_blank" class="website-link">{{ activity?.place.website }}</a>
-        </h5>
       </div>
 
       <div class="details-item">
@@ -194,7 +198,7 @@
             (minuteSelected)="selectMinute($event)"
             (pickerSelected)="selectPicker($event)"></ww-time-picker>
 
-            <div formArrayName="meals" class="meal-tags">
+            <div formArrayName="meals" class="meal-tags" *ngIf="activity?.location">
               <label>Meal tags <span class="label-note"> - may select more than 01 option</span></label>
 
               <div *ngFor="let meal of meals.controls; let j = index" [formGroupName]="j" class="meal-item">
@@ -212,25 +216,28 @@
           <h4 class="form-section-header">Activity Details</h4>
           <div class="form-section-details">
 
-            <label>Name</label>
+            <label>Name <span class="required"> - required</span></label>
             <input type="text" formControlName="name">
             <span class="form-validator"
               *ngIf="editActivityForm.get('name').touched && editActivityForm.get('name').invalid">Name of activity is required</span>
 
-            <label>Address</label>
-            <h4>{{ activity.place.formatted_address }}</h4>
+            <div *ngIf="activity?.location">
+              <label>Address</label>
+              <h4>{{ activity.place.formatted_address }}</h4>
 
-            <label>Contact Number</label>
-            <h4>{{ activity.place.international_phone_number }}</h4>
+              <label>Contact Number</label>
+              <h4>{{ activity.place.international_phone_number }}</h4>
 
-            <label>Website</label>
-            <h4>{{ activity.place.website }}</h4>
+              <label>Website</label>
+              <h4>{{ activity.place.website }}</h4>
 
-            <label>Opening Hours</label>
-            <textarea rows="2" formControlName="opening_hours"></textarea>
+              <label>Opening Hours</label>
+              <textarea rows="2" formControlName="opening_hours"></textarea>
 
-            <label>Cost / Entry Fee</label>
-            <input type="text" formControlName="entry_fee">
+              <label>Cost / Entry Fee</label>
+              <input type="text" formControlName="entry_fee">
+
+            </div>
 
             <!-- <div formArrayName="categories">
               <label>Category</label>

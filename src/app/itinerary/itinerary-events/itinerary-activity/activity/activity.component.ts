@@ -79,6 +79,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
     }
 
   ngOnInit() {
+    console.log(this.activity)
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
                                         result => {
                                           this.currentUser = result;
@@ -87,10 +88,12 @@ export class ActivityComponent implements OnInit, OnDestroy {
                                           this.checkCheckIn();
                                         })
 
-    this.activity['formatted_hours'] = this.activity['place']['opening_hours'].replace(/\r?\n/g, '<br/> ');
-    this.activity['formatted_note'] = this.activity['note'].replace(/\r?\n/g, '<br/> ');
+    if(this.activity['location']){
+      this.activity['formatted_hours'] = this.activity['place']['opening_hours'].replace(/\r?\n/g, '<br/> ');
+      this.activity['formatted_note'] = this.activity['note'].replace(/\r?\n/g, '<br/> ');
+      this.checkMealTag();
+    }
 
-    this.checkMealTag();
     this.initTime();
   }
 
@@ -266,19 +269,28 @@ export class ActivityComponent implements OnInit, OnDestroy {
 
   // edit section
   patchValue()  {
-    this.editActivityForm.patchValue({
-      name: this.activity['name'],
-      meals: this.activity['meals'],
-      description: this.activity['place']['description'],
-      sub_description: this.activity['place']['sub_description'],
-      opening_hours: this.activity['opening_hours'],
-      entry_fee: this.activity['entry_fee'],
-      website: this.activity['place']['website'],
-      formatted_address: this.activity['place']['formatted_address'],
-      international_phone_number: this.activity['place']['international_phone_number'],
-      date: this.activity['date'],
-      note: this.activity['note'],
-    })
+    if(this.activity.location)  {
+      this.editActivityForm.patchValue({
+        name: this.activity['name'],
+        meals: this.activity['meals'],
+        opening_hours: this.activity['opening_hours'],
+        entry_fee: this.activity['entry_fee'],
+        website: this.activity['place']['website'],
+        formatted_address: this.activity['place']['formatted_address'],
+        international_phone_number: this.activity['place']['international_phone_number'],
+        date: this.activity['date'],
+        note: this.activity['note'],
+      })
+    }
+
+    if(!this.activity.location) {
+      this.editActivityForm.patchValue({
+        name: this.activity['name'],
+        date: this.activity['date'],
+        note: this.activity['note'],
+      })
+    }
+
   }
 
   edit()  {

@@ -32,6 +32,13 @@
         </div>
       </div>
 
+      <div class="created-details" *ngIf="currentItinerary?.shared_by">
+        <div class="itinerary-edit-item">
+          <h5>Shared By</h5>
+          <h4 class="username" (click)="routeToUser(currentItinerary?.shared_by._id)">{{ currentItinerary?.shared_by.username }}</h4>
+        </div>
+      </div>
+
       <div class="created-details">
         <div class="itinerary-edit-item">
           <h5>Master Admin</h5>

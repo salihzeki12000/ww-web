@@ -887,12 +887,21 @@ label.label-note  {
 }
 
 label.activity-no-location  {
-  margin-bottom: 10px;
+  margin-bottom: 2px;
+  padding: 3px 10px;
   color: #6494ED;
+  border: 2px solid #6494ED;
+
   &:hover {
     cursor: pointer;
     text-decoration: underline;
   }
+}
+
+.activity-no-location-note  {
+  margin-bottom: 20px;
+  padding-left: 5px;
+  color: #808080;
 }
 
 /* form validators */
