@@ -18,6 +18,7 @@ export class CheckInComponent implements OnInit, OnDestroy {
   @ViewChild('map') map: ElementRef;
   itinMap;
   checkins;
+  displayCheckins;
   locations = [];
   locationIds = [];
 
@@ -30,6 +31,8 @@ export class CheckInComponent implements OnInit, OnDestroy {
   currentUser: User;
 
   showCheckIn = false;
+  selectedCountry; // for check in filter
+
   showCountry = false;
   deleteCheckIn = undefined;
 
@@ -49,7 +52,7 @@ export class CheckInComponent implements OnInit, OnDestroy {
     this.checkInSubscription = this.checkinService.updateCheckIns.subscribe(
       result => {
         this.checkins = result;
-        console.log(this.checkins)
+        this.displayCheckins = Object.assign([], this.checkins);
         this.initMap();
         this.setLocations();
         this.setCountries();
@@ -71,6 +74,7 @@ export class CheckInComponent implements OnInit, OnDestroy {
     }
 
     if(!event.target.classList.contains("country-dropdown") &&
+      !event.target.classList.contains("filter-check-in") &&
       !event.target.classList.contains("select-checkins")) {
       this.showCheckIn = false;
     }
@@ -130,7 +134,9 @@ export class CheckInComponent implements OnInit, OnDestroy {
       }
     }
     this.countries = this.sortCountries();
-    this.countries.unshift({name: 'Global view', lat: 0, lng: this.checkins[0]['place']['lng'], zoom: 2})
+    this.countries.unshift({name: 'Show all', lat: 0, lng: this.checkins[0]['place']['lng'], zoom: 2})
+
+    this.selectedCountry = this.countries[0]['name'];
   }
 
   sortCountries() {
@@ -205,6 +211,16 @@ export class CheckInComponent implements OnInit, OnDestroy {
 
     this.loadingService.setLoader(false, "");
     this.preventScroll(false);
+  }
+
+  filterCheckins(country) {
+    if(country === 'Show all')  {
+      this.displayCheckins = this.checkins;
+    } else  {
+      this.displayCheckins = Object.assign([], this.checkins).filter(
+        checkin => checkin['place']['country']['name'] === country
+      )
+    }
   }
 
   changeCenter(country) {

@@ -27,7 +27,17 @@
 <div class="country-dropdown-arrow" *ngIf="showCountry"></div>
 
 <div class="checkin-dropdown" *ngIf="showCheckIn">
-  <div *ngFor="let checkin of checkins" >
+
+  <div class="checkin-filter">
+    <h4>Filter by country</h4>
+    <select name="country" [(ngModel)]="selectedCountry" (ngModelChange)="filterCheckins($event)" class="filter-check-in">
+      <option *ngFor="let country of countries" [value]="country.name">
+        <h5>{{ country.name }}</h5>
+      </option>
+    </select>
+  </div>
+
+  <div *ngFor="let checkin of displayCheckins" >
     <h6 class="delete-checkin" (click)="delete(checkin)">X</h6>
     <div class="checkin-details" (click)="zoomTo(checkin.place)">
       <h6>{{ checkin.created_at | date: 'dd MMM yyyy, HH:mm' }}</h6>
