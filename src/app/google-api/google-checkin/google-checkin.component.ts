@@ -19,8 +19,13 @@ export class GoogleCheckinComponent implements OnInit, OnDestroy {
   lng;
   name;
   formatted_address;
+  international_phone_number;
+  website;
   country;
   placeId;
+  photos;
+  opening_hours;
+  url;
   locationType = '';
   private = false;
 
@@ -65,11 +70,74 @@ export class GoogleCheckinComponent implements OnInit, OnDestroy {
     this.lng = value['geometry'].location.lng();
     this.placeId = value['place_id'];
     this.formatted_address = value['formatted_address'];
+    this.international_phone_number = value['international_phone_number'];
+    this.website = value['website'];
     this.name = value['name'];
+    this.url = value['url'];
 
+    this.getPhotos(value)
+    this.opening_hours = this.getOpeningHours(value['opening_hours'])
     this.getCountry(value['address_components'])
 
     this.pinLocation(this.lat, this.lng);
+  }
+
+  getPhotos(value) {
+    let index = 0;
+
+    if(value.photos) {
+      if(value.photos.length > 5)  {
+        index = 5;
+      } else  {
+        index = value.photos.length
+      }
+
+      this.photos = [];
+      for (let i = 0; i < index; i++) {
+        let c = value.photos[i].html_attributions[0]
+        this.photos.push({
+          url: value.photos[i].getUrl({'maxWidth': 300, 'maxHeight': 250}),
+          credit: c.slice(0,3) + 'target="_blank" ' + c.slice(3,c.length)
+        });
+      }
+    }
+  }
+
+  getOpeningHours(hours)  {
+    let openingHours = [];
+    let openingHoursGroup = {};
+    let output = '';
+
+    if (hours === undefined) return '';
+
+    //to handle 24hrs establishments
+    if(hours.periods.length === 1) return "Open 24hrs";
+
+    //reorgnise each day to open-close time
+    for (let i = 0; i < hours.periods.length; i++) {
+      openingHours.push(hours.periods[i].open.time + "hrs" + " - " + hours.periods[i].close.time + "hrs");
+    }
+
+    //group similar timings
+    for (let i = 0; i < openingHours.length; i++) {
+      if(openingHoursGroup[openingHours[i]])  {
+        openingHoursGroup[openingHours[i]].push([i]);
+      } else  {
+        openingHoursGroup[openingHours[i]] = [];
+        openingHoursGroup[openingHours[i]].push([i]);
+      }
+    }
+
+    //to handle daily same timing
+    for (let time in openingHoursGroup) {
+      if(openingHoursGroup[time].length === 7 && Object.keys(openingHoursGroup).length === 1) return "Daily: " + time;
+    }
+
+    //to handle different timings
+    for (let i = 0; i < hours.weekday_text.length; i++) {
+      output += hours.weekday_text[i] + " \n";
+    }
+    return output;
   }
 
   pinLocation(lat, lng)  {
@@ -171,9 +239,14 @@ export class GoogleCheckinComponent implements OnInit, OnDestroy {
     this.lng = '';
     this.name = '';
     this.formatted_address = '';
+    this.international_phone_number = '';
+    this.website = '';
     this.country = '';
     this.placeId = '';
     this.locationType = '';
+    this.url = '';
+    this.photos = [];
+    this.opening_hours = '';
   }
 
   checkin() {
@@ -186,8 +259,13 @@ export class GoogleCheckinComponent implements OnInit, OnDestroy {
       name: this.name,
       formatted_address: this.formatted_address,
       country: this.country,
+      international_phone_number: this.international_phone_number,
+      website: this.website,
       place_id: this.placeId,
       private: this.private,
+      url: this.url,
+      photos: this.photos,
+      opening_hours: this.opening_hours,
       user: this.currentUser['_id']
     }
 
