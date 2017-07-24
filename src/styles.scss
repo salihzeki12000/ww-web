@@ -607,7 +607,7 @@ h5.action-response-primary  {
 
 .user-profile-header > img  {
   position: absolute;
-  right: calc(((100vw - 600px)/2) + 720px);
+  left: calc((100vw - 600px)/2);
   margin-bottom: 15px;
   padding: 2px;
   height: 150px;
@@ -619,17 +619,7 @@ h5.action-response-primary  {
 
   @media only screen and (max-width: 670px) {
     margin-top: -30px;
-    right: 0;
     left: calc((100vw - 150px) /2);
-  }
-
-  @media only screen and (min-width: 670px) and (max-width: 890px) {
-    right: 0;
-    left: calc((100vw - 600px) / 2);
-  }
-
-  @media only screen and (min-width: 890px) and (max-width: 1200px) {
-    right: calc(((100vw - 890px)/2) + 720px);
   }
 }
 
@@ -638,7 +628,7 @@ h5.action-response-primary  {
   margin-top: 85px;
   font-weight: 400;
   color: #808080;
-  left: calc(((100vw - 600px)/2) - 105px);;
+  left: calc(((100vw - 600px)/2) + 190px);;
 
   @media only screen and (max-width: 670px) {
     margin-top: 185px;
@@ -649,10 +639,6 @@ h5.action-response-primary  {
 
   @media only screen and (min-width: 670px) and (max-width: 890px) {
     left: calc(((100vw - 600px) / 2) + 179px);
-  }
-
-  @media only screen and (min-width: 890px) and (max-width: 1200px) {
-    left: calc(((100vw - 850px)/2) + 165px);
   }
 }
 
@@ -675,22 +661,17 @@ h5.action-response-primary  {
   position: absolute;
   width: 360px;
   margin-top: 20px;
-  right: calc(((100vw - 600px)/2) + 360px);
+  left: calc(((100vw - 600px)/2) + 180px);
 
   @media only screen and (max-width: 670px) {
-    right: 0;
+    left: 0;
     width: 100%;
     min-width: 300px;
     margin-top: 115px;
   }
 
   @media only screen and (min-width: 670px) and (max-width: 890px) {
-    right: 0;
-    left: calc(((100vw - 600px) / 2) + 150px);
-  }
-
-  @media only screen and (min-width: 890px) and (max-width: 1200px) {
-    right: calc(((100vw - 890px)/2) + 360px);
+    left: calc(((100vw - 600px) / 2) + 170px);
   }
 }
 

@@ -348,6 +348,10 @@ i.fa-sticky-note {
   font-size: 10px;
   font-weight: 300;
   color: #f9fbfb;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 

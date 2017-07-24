@@ -79,7 +79,6 @@ export class ActivityComponent implements OnInit, OnDestroy {
     }
 
   ngOnInit() {
-    console.log(this.activity)
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
                                         result => {
                                           this.currentUser = result;

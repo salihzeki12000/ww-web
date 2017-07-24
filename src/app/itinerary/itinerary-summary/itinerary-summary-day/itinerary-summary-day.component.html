@@ -1,10 +1,8 @@
 <div class="daily-note first-note" *ngIf="index === 0" [ngClass]="[uniqueClass]" (click)="editing = true">
   <h6>Note (click to edit)</h6>
 
-  <div [class.editing]="editing">
-    <div class="view">
-      <p [ngClass]="[uniqueClass]" [innerHTML]="dailyNote"></p>
-    </div>
+  <div *ngIf="!editing">
+    <p [ngClass]="[uniqueClass]" [innerHTML]="dailyNote"></p>
   </div>
 
   <div *ngIf="editing">
@@ -17,10 +15,8 @@
 <div class="daily-note" *ngIf="index > 0" [ngClass]="[uniqueClass]" (click)="editing = true">
   <h6>Day {{ index }} note</h6>
 
-  <div [class.editing]="editing">
-    <div class="view">
-      <p [ngClass]="[uniqueClass]" [innerHTML]="dailyNote"></p>
-    </div>
+  <div *ngIf="!editing">
+    <p [ngClass]="[uniqueClass]" [innerHTML]="dailyNote"></p>
   </div>
 
   <div *ngIf="editing">

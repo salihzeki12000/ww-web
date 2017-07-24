@@ -65,7 +65,7 @@
         </div>
       </div>
       <div *ngIf="currentUser?.itineraries.length > 10" class="view-all" [routerLink]="['/me/itinerary']">
-        <h5>View all</h5>
+        <h5>See all</h5>
       </div>
 
       <h4 class="exit-itinerary-view" (click)="showItineraries = false">EXIT</h4>
@@ -119,7 +119,7 @@
       <div class="dropdown-arrow-up"></div>
       <div class="top-nav-dropdown-header">
         <h6>RECENT NOTIFICATIONS</h6>
-        <p class="notifications-view-all" (click)="routeToNotifications()">view all</p>
+        <p class="notifications-view-all" (click)="routeToNotifications()">see all</p>
       </div>
 
       <ww-notification-list [notificationsLimit]="notificationsLimit"></ww-notification-list>
@@ -225,7 +225,7 @@
           <h4 *ngIf="!settingsSection">Settings <i class="fa fa-caret-down" aria-hidden="true"></i></h4>
           <h4 *ngIf="settingsSection">Settings <i class="fa fa-caret-up" aria-hidden="true"></i></h4>
         </div>
-        
+
         <div *ngIf="settingsSection">
           <div class="category-item" (click)="logout()">
             <h5><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</h5>
