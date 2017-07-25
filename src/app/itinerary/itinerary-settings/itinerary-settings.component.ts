@@ -25,6 +25,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   editItineraryForm: FormGroup;
   dateChanged = false;
   dateRange = [];
+  newDateRange = [];
   newDailyNote = [];
   itinDateSubscription: Subscription;
 
@@ -131,6 +132,11 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
           this.shareIndexResource.push(true);
         }
       })
+
+    this.itinDateSubscription = this.itineraryService.updateDate.subscribe(
+      result => {
+        this.dateRange = Object.keys(result).map(key => result[key]);
+    })
   }
 
   getUsers()  {
@@ -157,10 +163,11 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.currentUserSubscription.unsubscribe();
-    this.currentItinerarySubscription.unsubscribe();
-    this.eventSubscription.unsubscribe();
-    this.updateResourcesSubscription.unsubscribe();
+    if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
+    if(this.currentItinerarySubscription) this.currentItinerarySubscription.unsubscribe();
+    if(this.eventSubscription) this.eventSubscription.unsubscribe();
+    if(this.updateResourcesSubscription) this.updateResourcesSubscription.unsubscribe();
+    if(this.itinDateSubscription) this.itinDateSubscription.unsubscribe();
     this.loadingService.setLoader(true, "");
   }
 
@@ -214,6 +221,8 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
       date_to: this.formatDate(this.currentItinerary['date_to']),
       invite_password: this.currentItinerary['invite_password'],
     })
+
+    this.updateDateRange();
   }
 
   formatDate(date)  {
@@ -232,8 +241,10 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     this.dateFrom = this.currentItinerary['date_from'];
     this.dateTo = this.currentItinerary['date_to'];
 
-    this.picker.datePicker.setStartDate(this.dateFrom);
-    this.picker.datePicker.setEndDate(this.dateTo);
+    setTimeout(() =>  {
+      this.picker.datePicker.setStartDate(this.dateFrom);
+      this.picker.datePicker.setEndDate(this.dateTo);
+    },1000)
   }
 
   filterUsers(users)  {
@@ -310,9 +321,17 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   selectedDate(value) {
     let startDate = value.start._d;
     let startDay = startDate.getDate();
+    if(startDay < 10) {
+      startDay = "0" + startDay;
+    }
+
     let startMonth = startDate.getMonth() + 1;
+    if(startMonth < 10) {
+      startMonth = "0" + startMonth;
+    }
+
     let startYear = startDate.getFullYear();
-    this.dateFrom = startMonth + "-" + startDay + "-" + startYear;
+    this.dateFrom = startYear + "-" + startMonth + "-" + startDay + "T00:00:00.000Z";
 
     let endDate = value.end._d;
     let endDay = endDate.getDate();
@@ -351,15 +370,15 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     let startDate = new Date(editedDetails['date_from']);
     let endDate = new Date(editedDetails['date_to']);
 
-    this.dateRange = [];
+    this.newDateRange = [];
 
-    this.dateRange.push('any day');
-    this.dateRange.push((new Date(editedDetails['date_from'])).toISOString());
+    this.newDateRange.push('any day');
+    this.newDateRange.push((new Date(editedDetails['date_from'])).toISOString());
 
     while(startDate < endDate){
       let addDate = startDate.setDate(startDate.getDate() + 1);
       let newDate = new Date(addDate);
-      this.dateRange.push(newDate.toISOString());
+      this.newDateRange.push(newDate.toISOString());
     }
 
     this.setDailyNotes();
@@ -368,9 +387,9 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   setDailyNotes() {
     this.newDailyNote = [];
 
-    for (let i = 0; i < this.dateRange.length; i++) {
+    for (let i = 0; i < this.newDateRange.length; i++) {
       this.newDailyNote.push({
-        date: this.dateRange[i],
+        date: this.newDateRange[i],
         note: "e.g. Day trip to the outskirts"
       })
     }
@@ -380,7 +399,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     this.dateChanged = false;
 
     for (let i = 0; i < this.events.length; i++) {
-      let index = this.dateRange.indexOf(this.events[i]['date']);
+      let index = this.newDateRange.indexOf(this.events[i]['date']);
 
       if(index < 0) {
         this.events[i]['date'] = "any day";
@@ -389,7 +408,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     }
 
     for (let i = 0; i < this.currentItinerary['daily_note'].length; i++) {
-      let index = this.dateRange.indexOf(this.currentItinerary['daily_note'][i]['date']);
+      let index = this.newDateRange.indexOf(this.currentItinerary['daily_note'][i]['date']);
 
       if(index > -1)  {
         this.newDailyNote[index]['note'] = this.currentItinerary['daily_note'][i]['note'];
@@ -402,32 +421,26 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
 
   sameDays()  {
     this.dateChanged = false;
-    let itinDateRange = [];
-
-    this.itinDateSubscription = this.itineraryService.updateDate.subscribe(
-      result => {
-        itinDateRange = Object.keys(result).map(key => result[key]);
-    })
 
     for (let i = 0; i < this.events.length; i++) {
-      let index = itinDateRange.indexOf(this.events[i]['date'])
+      let index = this.dateRange.indexOf(this.events[i]['date']);
 
-      if(index < this.dateRange.length && index > -1) {
-        this.events[i]['date'] = this.dateRange[index];
+      if(index < this.newDateRange.length && index > -1) {
+        this.events[i]['date'] = this.newDateRange[index];
         this.updateEvent(this.events[i]);
       }
 
-      if(index >= this.dateRange.length && index > -1)  {
+      if(index >= this.newDateRange.length) {
         this.events[i]['date'] = "any day";
         this.updateEvent(this.events[i]);
       }
     }
 
-    if(this.dateRange.length <= itinDateRange.length)  {
+    if(this.newDateRange.length <= this.dateRange.length)  {
       for (let i = 0; i < this.newDailyNote.length; i++) {
         this.newDailyNote[i]['note'] = this.currentItinerary['daily_note'][i]['note'];
       }
-    } else if(this.dateRange.length > itinDateRange.length)  {
+    } else if(this.newDateRange.length > this.dateRange.length)  {
       for (let i = 0; i < this.currentItinerary['daily_note'].length; i++) {
         this.newDailyNote[i]['note'] = this.currentItinerary['daily_note'][i]['note'];
       }
@@ -435,6 +448,11 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
 
     this.currentItinerary['daily_note'] = this.newDailyNote;
     this.saveEdit();
+  }
+
+  cancelEdit()  {
+    this.dateChanged = false;
+    this.preventScroll(false);
   }
 
   updateEvent(event) {

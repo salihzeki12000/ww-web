@@ -86,8 +86,8 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
       let addDate = startDate.setDate(startDate.getDate() + 1);
       let newDate = new Date(addDate);
       dateRange.push(newDate.toISOString());
-   }
-
+    }
+    
     itinerary["daily_note"] = [];
     for (let i = 0; i < dateRange.length; i++) {
       itinerary['daily_note'].push({
