@@ -26,6 +26,8 @@ export class ItineraryTransportComponent implements OnInit {
   showTransportSummary = false;
   highlightedEvent;
 
+  addTransport = false;
+  
   constructor(
     private renderer: Renderer2,
     private itineraryService: ItineraryService,
@@ -64,7 +66,7 @@ export class ItineraryTransportComponent implements OnInit {
         } else  {
           events[i]['out_of_range'] = false;
         }
-        
+
         this.transports.push(events[i])
       }
     }
@@ -76,6 +78,10 @@ export class ItineraryTransportComponent implements OnInit {
   toggleSummary() {
     this.showTransportSummary = !this.showTransportSummary;
     this.preventScroll(this.showTransportSummary);
+  }
+
+  hideTransportForm() {
+    this.addTransport = false;
   }
 
   preventScroll(value)  {

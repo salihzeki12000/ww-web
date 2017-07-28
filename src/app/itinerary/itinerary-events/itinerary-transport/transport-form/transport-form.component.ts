@@ -627,7 +627,8 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     this.itineraryEventService.addEvent(newTransport, this.currentItinerary)
         .subscribe(
           result => {
-            if(this.route.snapshot['_urlSegment'].segments[3].path !== 'transport') {
+            if(this.route.snapshot['_urlSegment'].segments[3].path !== 'summary' &&
+               this.route.snapshot['_urlSegment'].segments[3].path !== 'transport') {
               let id = this.route.snapshot['_urlSegment'].segments[2].path;
               this.router.navigateByUrl('/me/itinerary/' + id + '/transport');
             }

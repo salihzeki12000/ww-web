@@ -34,6 +34,12 @@
 
     <h5 class="resource-count">{{ index + 1 }} of {{ totalResources }}</h5>
 
+    <div class="resource-category">
+      <i class="fa fa-tags" aria-hidden="true"></i>
+      <h5>{{ resource.category }}</h5>
+    </div>
+
+
     <h3 class="resource-title">{{ resource?.title }}</h3>
     <h5 class="resource-content" [innerHTML]="resource?.formatted_content"></h5>
 
@@ -106,6 +112,13 @@
 
           <label>Content</label>
           <textarea rows="4" formControlName="content" [value]="resource.content"></textarea>
+
+          <label>Category</label>
+          <select name="category" formControlName="category">
+            <option *ngFor="let category of categories" [value]="category">
+              <h5>{{ category }}</h5>
+            </option>
+          </select>
 
           <div class="resource-link-preview" *ngIf="resource?.link_url">
             <a href="{{ resource?.link_url }}" target="_blank">

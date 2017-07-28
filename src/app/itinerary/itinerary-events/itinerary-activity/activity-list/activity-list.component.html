@@ -28,14 +28,10 @@
 
 <div *ngIf="!totalActivities" class="nil-event-message">
   <img class="img-example" src="assets/arrow.png" alt="">
-  <h4>You have not added any activity</h4>
-  <h4>You can add a new activity by selecting the "ADD NEW" tab and then the "NEW ACTIVITY" option</h4>
-  <h4>You can complete the form in just 02 steps:</h4>
-  <ol>
-    <li>Search for your activity by name or address. Name in local language may be required</li>
-    <li>Confirm details populated from the search</li>
-  </ol>
-  <h4 class="nil-event-message-mobile">You can access the "ADD NEW" tab by scrolling up and the options will appear at the bottom of the screen.</h4>
+  <h4>This is a dedicated section for all your activities.</h4>
+  <h4 class="action-response-primary" (click)="addActivity = true">Add new activity now</h4>
+  <h4>You can also add a new activity by selecting the "ADD NEW" tab and then the "NEW ACTIVITY" option</h4>
+  <h4 class="nil-event-message-mobile">You can access the "ADD NEW" tab at the bottom of the screen.</h4>
 </div>
 
 <div class="event-list">
@@ -53,4 +49,8 @@
 
 <div class="event-summary-popup" (click)="toggleSummary()" *ngIf="totalActivities">
   <i class="fa fa-list" aria-hidden="true"></i>
+</div>
+
+<div *ngIf="addActivity" class="custom-modal">
+  <ww-activity-input (hideActivityForm)="hideActivityForm($event)"></ww-activity-input>
 </div>

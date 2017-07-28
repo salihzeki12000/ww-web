@@ -1,9 +1,19 @@
 /*********************************
   resource summary section
 *********************************/
+.resource-summary-category  {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.resource-summary-category * {
+  display: inline-block;
+  color: #3A4A4D;
+}
+
 .resource-summary-title {
   margin-bottom: 10px;
-  padding: 20px 10px 0 10px;
+  padding: 5px 10px 0 10px;
   font-weight: 500;
 }
 
@@ -16,4 +26,10 @@
 
 .resource-summary-link {
   padding: 0 10px 20px 10px;
+}
+
+
+.category-filter  {
+  margin-bottom: 0;
+  border-radius: 0;
 }

@@ -1,9 +1,32 @@
+.display-header-background  {
+  @media only screen and (max-width: 400px) {
+    display: block;
+    width: 100vw;
+    min-width: 300px;
+  }
+
+  @media only screen and (min-width: 400px) and (max-width: 650px) {
+    display: block;
+    width: 300px;
+  }
+}
+
 .resource-details {
   padding: 0 20px;
 }
 
 .resource-count {
   margin-top: 8px;
+}
+
+.resource-category  {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.resource-category *  {
+  display: inline-block;
+  color: #F9FBFB;
 }
 
 .form-housing {

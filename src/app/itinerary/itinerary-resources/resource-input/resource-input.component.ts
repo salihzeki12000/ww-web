@@ -18,6 +18,7 @@ export class ResourceInputComponent implements OnInit, OnDestroy {
   @Output() hideResourceForm = new EventEmitter();
 
   resourceForm: FormGroup;
+  categories = ['', 'Food', 'Accommodation', 'Transport', 'Activity'];
 
   textArea = false;
   fetchLink = false;
@@ -45,6 +46,7 @@ export class ResourceInputComponent implements OnInit, OnDestroy {
       this.resourceForm = formBuilder.group({
         content: '',
         title: '',
+        category: '',
       })
   }
 
@@ -118,6 +120,7 @@ export class ResourceInputComponent implements OnInit, OnDestroy {
       link_description: this.link_description,
       link_img: this.link_img,
       itinerary: this.currentItinerary,
+      category: this.resourceForm.value.category,
       user: {
         _id: this.currentUser['_id'],
         username: this.currentUser['username'],

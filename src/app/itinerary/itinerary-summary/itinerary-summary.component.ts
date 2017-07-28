@@ -38,6 +38,10 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
   oldWidth;
   newWidth;
 
+  addAccommodation = false;
+  addTransport = false;
+  addActivity = false;
+
   constructor(
     private element: ElementRef,
     private itineraryService: ItineraryService,
@@ -243,6 +247,18 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
     })
 
     return events;
+  }
+
+  hideAccommodationForm(hide)  {
+    this.addAccommodation = false;
+  }
+
+  hideTransportForm(hide)  {
+    this.addTransport = false;
+  }
+
+  hideActivityForm(hide)  {
+    this.addActivity = false;
   }
 
   showEventDetails(event)  {

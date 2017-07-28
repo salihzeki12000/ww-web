@@ -14,13 +14,19 @@ import { LoadingService }   from '../../../loading';
 export class ResourceListComponent implements OnInit, OnDestroy {
   updateResourcesSubscription: Subscription;
   resources = [];
+  filteredResources = [];
+
   totalResources = 1;
+  categories = ['See all', 'Food', 'Accommodation', 'Transport', 'Activity'];
+  selectedCategory = "See all";
 
   currentItinerarySubscription: Subscription;
   currentItinerary;
 
   showResourceSummary = false;
   highlightedEvent;
+
+  addResource = false;
 
   constructor(
     private renderer: Renderer2,
@@ -32,6 +38,7 @@ export class ResourceListComponent implements OnInit, OnDestroy {
     this.updateResourcesSubscription = this.resourceService.updateResources.subscribe(
                                              result => {
                                                this.resources = Object.keys(result).map(key => result[key]);
+                                               this.filteredResources = this.resources;
                                                this.totalResources = this.resources.length;
                                              })
 
@@ -51,6 +58,20 @@ export class ResourceListComponent implements OnInit, OnDestroy {
   showSummary() {
     this.showResourceSummary = !this.showResourceSummary;
     this.preventScroll(this.showResourceSummary);
+  }
+
+  filter(c)  {
+    if(c === "See all") {
+      this.filteredResources = this.resources;
+    } else  {
+      this.filteredResources = Object.assign([], this.resources).filter(
+        resource => resource.category === c
+      )
+    }
+  }
+
+  hideResourceForm()  {
+    this.addResource = false;
   }
 
   preventScroll(value)  {

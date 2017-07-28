@@ -5,9 +5,20 @@
 
   <h4 class="event-summary-header">Quick reference - {{ totalResources }}</h4>
 
+  <select class="category-filter" [(ngModel)]="selectedCategory" (ngModelChange)="filter($event)">
+    <option *ngFor="let category of categories" [value]="category">
+      <h5>{{ category }}</h5>
+    </option>
+  </select>
+
   <div class="event-summary">
-    <div *ngFor="let resource of resources; let i = index" class="event-summary-item" (click)="centerItem(resource)" [class.highlighted-item]="highlightedEvent === resource">
+    <div *ngFor="let resource of filteredResources; let i = index" class="event-summary-item" (click)="centerItem(resource)" [class.highlighted-item]="highlightedEvent === resource">
       <a href="#resource{{i}}">
+        <div class="resource-summary-category" *ngIf="resource?.category">
+          <i class="fa fa-tags" aria-hidden="true"></i>
+          <h5>{{ resource.category }}</h5>
+        </div>
+
         <h5 class="index">{{i+1}}</h5>
         <h5 class="resource-summary-title">{{ resource.title }}</h5>
         <h5 class="resource-summary-content"> {{ resource.content }}</h5>
@@ -20,15 +31,15 @@
 
 <div *ngIf="!totalResources" class="nil-event-message">
   <img class="img-example" src="assets/arrow.png" alt="">
-  <h4>You have not added any resource</h4>
-  <h4>You can add a new resource by selecting the "ADD NEW" tab and then the "NEW RESOURCE" option</h4>
-  <h4>You can add a website link or a note. Don't forget to include a title for easy reference</h4>
-  <h4 class="nil-event-message-mobile">You can access the "ADD NEW" tab by scrolling up and the options will appear at the bottom of the screen.</h4>
+  <h4>This is a dedicated section for all your resources. This includes website links you are interested in or a note for your travel.</h4>
+  <h4 class="action-response-primary" (click)="addResource = true">Add new resource now</h4>
+  <h4>You can also add a new resource by selecting the "ADD NEW" tab and then the "NEW RESOURCE" option</h4>
+  <h4 class="nil-event-message-mobile">You can access the "ADD NEW" tab at the bottom of the screen.</h4>
 </div>
 
 <div class="event-list">
   <ww-resource
-    *ngFor="let resource of resources; let i = index"
+    *ngFor="let resource of filteredResources; let i = index"
     id="resource{{i}}"
     [index]="i"
     [resource]="resource"
@@ -40,4 +51,8 @@
 
 <div class="event-summary-popup" (click)="showSummary()" *ngIf="totalResources">
   <i class="fa fa-list" aria-hidden="true"></i>
+</div>
+
+<div *ngIf="addResource" class="custom-modal">
+  <ww-resource-input (hideResourceForm)="hideResourceForm($event)"></ww-resource-input>
 </div>

@@ -32,6 +32,7 @@ export class ResourceComponent implements OnInit, OnDestroy {
   deleteResource = false;
 
   editResourceForm: FormGroup;
+  categories = ['', 'Food', 'Accommodation', 'Transport', 'Activity'];
 
   constructor(
     private renderer: Renderer2,
@@ -44,6 +45,7 @@ export class ResourceComponent implements OnInit, OnDestroy {
       this.editResourceForm = this.formBuilder.group({
         'title': '',
         'content': '',
+        'category': '',
       })
     }
 
@@ -132,7 +134,8 @@ export class ResourceComponent implements OnInit, OnDestroy {
   patchValue()  {
     this.editResourceForm.patchValue({
       title: this.resource['title'],
-      content: this.resource['content']
+      content: this.resource['content'],
+      category: this.resource['category']
     })
   }
 

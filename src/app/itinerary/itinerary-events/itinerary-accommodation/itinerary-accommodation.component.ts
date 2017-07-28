@@ -26,6 +26,8 @@ export class ItineraryAccommodationComponent implements OnInit, OnDestroy {
   showAccommodationSummary = false;
   highlightedEvent;
 
+  addAccommodation = false;
+  
   constructor(
     private renderer: Renderer2,
     private itineraryService: ItineraryService,
@@ -76,6 +78,10 @@ export class ItineraryAccommodationComponent implements OnInit, OnDestroy {
   toggleSummary() {
     this.showAccommodationSummary = !this.showAccommodationSummary;
     this.preventScroll(this.showAccommodationSummary);
+  }
+
+  hideAccommodationForm() {
+    this.addAccommodation = false;
   }
 
   preventScroll(value)  {

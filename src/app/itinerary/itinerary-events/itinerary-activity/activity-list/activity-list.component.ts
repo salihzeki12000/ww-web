@@ -25,6 +25,8 @@ export class ActivityListComponent implements OnInit, OnDestroy {
   showActivitySummary = false;
   highlightedEvent;
 
+  addActivity = false;
+
   constructor(
     private renderer: Renderer2,
     private itineraryService: ItineraryService,
@@ -68,6 +70,10 @@ export class ActivityListComponent implements OnInit, OnDestroy {
   toggleSummary() {
     this.showActivitySummary = !this.showActivitySummary;
     this.preventScroll(this.showActivitySummary);
+  }
+
+  hideActivityForm()  {
+    this.addActivity = false;
   }
 
   preventScroll(value)  {

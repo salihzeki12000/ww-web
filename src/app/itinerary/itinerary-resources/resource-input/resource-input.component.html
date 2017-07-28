@@ -30,6 +30,13 @@
       <label>Title</label>
       <input type="text" formControlName="title" value="{{ link_title }}">
 
+      <label>Category</label>
+      <select name="category" formControlName="category" [value]="category">
+        <option *ngFor="let category of categories">
+          <h5>{{ category }}</h5>
+        </option>
+      </select>
+
     </div>
 
     <div class="action-response">

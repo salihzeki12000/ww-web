@@ -18,12 +18,17 @@
 
 <div *ngIf="!totalEvents" class="nil-event-message">
   <img class="img-example" src="assets/arrow.png" alt="">
-  <h4>You have not added any item to show on this summary</h4>
-  <h4>You can add a new item by selecting the "ADD NEW" tab and then the respective options for accommodation, activity or transport</h4>
+  <h4>You have not added any item to display on this summary</h4>
+
+  <h4 class="action-response-primary" (click)="addAccommodation = true">Add new accommodation now</h4>
+  <h4 class="action-response-primary" (click)="addTransport = true">Add new transport now</h4>
+  <h4 class="action-response-primary" (click)="addActivity = true">Add new activity now</h4>
+
+  <h4>You can also add a new item by selecting the "ADD NEW" tab and then the respective options for accommodation, activity or transport</h4>
   <h4 class="nil-event-message-mobile">You can access the "ADD NEW" tab at the bottom of the screen.</h4>
 </div>
 
-<div class="date-row" (window:resize)="onScroll($event)" (scroll)="onScroll($event)">
+<div *ngIf="totalEvents" class="date-row" (window:resize)="onScroll($event)" (scroll)="onScroll($event)">
 
   <div class="date-bar" [style.left]="left">
     <div *ngFor="let date of itinDateRange; let i = index">
@@ -98,4 +103,16 @@
         [summary]="true"></ww-accommodation>
     </div>
   </div>
+</div>
+
+<div *ngIf="addAccommodation" class="custom-modal">
+  <ww-accommodation-form (hideAccommodationForm)="hideAccommodationForm($event)"></ww-accommodation-form>
+</div>
+
+<div *ngIf="addTransport" class="custom-modal">
+  <ww-transport-form (hideTransportForm)="hideTransportForm($event)"></ww-transport-form>
+</div>
+
+<div *ngIf="addActivity" class="custom-modal">
+  <ww-activity-input (hideActivityForm)="hideActivityForm($event)"></ww-activity-input>
 </div>
