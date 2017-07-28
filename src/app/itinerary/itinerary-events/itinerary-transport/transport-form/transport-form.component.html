@@ -72,7 +72,7 @@
               <select class="select-date" name="searchDepDate" formControlName="searchDepDate">
                 <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
                   <div *ngIf="itinDate !== 'any day'">
-                    <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+                    <h5>Day {{ i }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
                   </div>
                 </option>
               </select>
@@ -248,7 +248,7 @@
                   <h5>{{ itinDate }}</h5>
                 </div>
                 <div *ngIf="itinDate !== 'any day'">
-                  <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+                  <h5>Day {{ i }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
                 </div>
               </option>
             </select>
@@ -268,7 +268,7 @@
                   <h5>{{ itinDate }}</h5>
                 </div>
                 <div *ngIf="itinDate !== 'any day'">
-                  <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+                  <h5>Day {{ i }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
                 </div>
               </option>
             </select>
@@ -305,7 +305,7 @@
                   <h5>{{ itinDate }}</h5>
                 </div>
                 <div *ngIf="itinDate !== 'any day'">
-                  <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+                  <h5>Day {{ i }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
                 </div>
               </option>
             </select>
@@ -325,7 +325,7 @@
                   <h5>{{ itinDate }}</h5>
                 </div>
                 <div *ngIf="itinDate !== 'any day'">
-                  <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+                  <h5>Day {{ i }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
                 </div>
               </option>
             </select>

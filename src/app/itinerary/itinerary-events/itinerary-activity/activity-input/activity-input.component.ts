@@ -431,7 +431,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     newActivity['created_at'] = new Date();
     newActivity['type'] = 'activity';
     newActivity['location'] = !this.noLocation;
-    
+
     if(this.newImageFile !== '')  {
       this.fileuploadService.uploadFile(this.newImageFile, "event")
           .subscribe(
@@ -454,7 +454,8 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     this.itineraryEventService.addEvent(activity, this.currentItinerary)
         .subscribe(
           result => {
-            if(this.route.snapshot['_urlSegment'].segments[3].path !== 'activities') {
+            if(this.route.snapshot['_urlSegment'].segments[3].path !== 'summary' &&
+               this.route.snapshot['_urlSegment'].segments[3].path !== 'activities') {
               let id = this.route.snapshot['_urlSegment'].segments[2].path;
               this.router.navigateByUrl('/me/itinerary/' + id + '/activity');
             }

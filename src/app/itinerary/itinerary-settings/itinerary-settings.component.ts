@@ -351,7 +351,6 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   }
 
   checkEdit() {
-    this.loadingService.setLoader(true, "Saving...");
     this.preventScroll(true);
 
     if(this.currentItinerary['date_from'] === this.editItineraryForm.value['date_from'] &&
@@ -359,7 +358,6 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
       this.saveEdit()
     } else  {
       this.dateChanged = true;
-      this.loadingService.setLoader(false, "");
       this.setDateRange();
     }
   }
@@ -461,6 +459,8 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   }
 
   saveEdit() {
+    this.loadingService.setLoader(true, "Saving...");
+
     let editedDetails = this.editItineraryForm.value;
 
     for (let value in editedDetails)  {

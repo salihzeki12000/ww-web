@@ -87,11 +87,12 @@ export class ActivityComponent implements OnInit, OnDestroy {
                                           this.checkCheckIn();
                                         })
 
-    if(this.activity['location']){
+    if(this.activity['location'] && this.activity['place']['opening_hours']){
       this.activity['formatted_hours'] = this.activity['place']['opening_hours'].replace(/\r?\n/g, '<br/> ');
-      this.activity['formatted_note'] = this.activity['note'].replace(/\r?\n/g, '<br/> ');
-      this.checkMealTag();
     }
+
+    this.checkMealTag();
+    this.activity['formatted_note'] = this.activity['note'].replace(/\r?\n/g, '<br/> ');
 
     this.initTime();
   }
@@ -338,7 +339,10 @@ export class ActivityComponent implements OnInit, OnDestroy {
       originalActivity[value] = editedActivity[value];
     }
 
-    this.activity['formatted_hours'] = originalActivity['place']['opening_hours'].replace(/\r?\n/g, '<br/> ');
+    if(originalActivity['place']['opening_hours'])  {
+      this.activity['formatted_hours'] = originalActivity['place']['opening_hours'].replace(/\r?\n/g, '<br/> ');
+    }
+    
     this.activity['formatted_note'] = originalActivity['note'].replace(/\r?\n/g, '<br/> ');
 
     this.itineraryEventService.editEvent(originalActivity).subscribe(

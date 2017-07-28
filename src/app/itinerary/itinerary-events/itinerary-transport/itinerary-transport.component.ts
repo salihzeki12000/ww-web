@@ -61,8 +61,10 @@ export class ItineraryTransportComponent implements OnInit {
 
         if(index < 0 || outIndex < 0) {
           events[i]['out_of_range'] = true;
+        } else  {
+          events[i]['out_of_range'] = false;
         }
-
+        
         this.transports.push(events[i])
       }
     }

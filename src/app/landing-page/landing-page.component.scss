@@ -219,8 +219,9 @@ a[id="slideShow"]:target ~ .landing-page-slideshow  {
 }
 
 .landing-page-slideshow {
-  padding: 100px 0;
+  padding: 120px 0 50px 0;
   width: 100%;
+  height: 600px;
   text-align: center;
   background-color: white;
   -webkit-transform: translateZ( 0 );
@@ -230,9 +231,31 @@ a[id="slideShow"]:target ~ .landing-page-slideshow  {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 
-  @media only screen and (max-width: 750px) {
-    padding: 20px 0;
+  @media only screen and (max-width: 450px) {
+    padding-top: 90px;
   }
+}
+
+.text-example,
+.example-header  {
+  position: absolute;
+  margin-left: calc((100vw - 680px) /2);
+  width: 680px;
+  opacity: 0;
+  font-family: 'Fira Sans', sans-serif;
+  animation:fade 36s infinite;
+  -webkit-animation:fade 36s infinite;
+
+  @media only screen and (max-width: 750px) {
+    margin: 0 10px;
+    width: calc(100vw - 20px);
+  }
+}
+
+.example-header {
+  margin-top: -50px;
+  color: #6494ED;
+  letter-spacing: 1px;
 }
 
 .slideshow-laptop {
@@ -258,31 +281,44 @@ a[id="slideShow"]:target ~ .landing-page-slideshow  {
 
 .slider-wrapper {
   position: absolute;
-  margin-top: -325px;
-  margin-left: calc((100vw - 495px) /2);
-  height: 280px;
+  margin-left: calc((100vw - 680px) /2);
+  height: 380px;
+
+  @media only screen and (max-width: 750px) {
+    margin-left: 0;
+  }
 }
 
 .img-example  {
   position: absolute;
-  height: 280px;
+  // height: 280px;
+  margin-top: 50px;
+  height: 380px;
   opacity: 0;
   animation:fade 36s infinite;
   -webkit-animation:fade 36s infinite;
+  border-radius: 10px;
+  border: 1px solid lightgray;
+
+  @media only screen and (max-width: 450px) {
+    margin-top: 85px;
+  }
+
+  @media only screen and (min-width: 450px) and (max-width: 750px) {
+    margin-top: 65px;
+  }
 }
 
 .img-example-mobile {
-  margin: -40px 0 0 156px;
-  height: 325px;
+  margin-left: calc((100vw - 215px) /2);
 }
 
-.img-example:nth-of-type(1) { animation-delay: 0s }
-.img-example:nth-of-type(2) { animation-delay: 6s }
-.img-example:nth-of-type(3) { animation-delay: 12s }
-.img-example:nth-of-type(4) { animation-delay: 18s }
-.img-example:nth-of-type(5) { animation-delay: 24s }
-.img-example:nth-of-type(6) { animation-delay: 30s }
-
+.eg-delay:nth-of-type(1) { animation-delay: 0s }
+.eg-delay:nth-of-type(2) { animation-delay: 6s }
+.eg-delay:nth-of-type(3) { animation-delay: 12s }
+.eg-delay:nth-of-type(4) { animation-delay: 18s }
+.eg-delay:nth-of-type(5) { animation-delay: 24s }
+.eg-delay:nth-of-type(6) { animation-delay: 30s }
 
 @keyframes fade
 {
