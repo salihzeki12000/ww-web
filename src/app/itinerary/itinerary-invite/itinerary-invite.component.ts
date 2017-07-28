@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Title }        from '@angular/platform-browser';
 
 import { Itinerary }        from '../itinerary';
 import { ItineraryService } from '../itinerary.service';
@@ -21,6 +22,7 @@ export class ItineraryInviteComponent implements OnInit {
   signup = false;
 
   constructor(
+    private titleService: Title,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private itineraryService: ItineraryService,
@@ -38,7 +40,8 @@ export class ItineraryInviteComponent implements OnInit {
       this.itineraryService.getItin(id).subscribe(
         result => {
           this.itinerary = result.itinerary;
-          console.log(this.itinerary)
+          let title = this.itinerary['name'] + " | Invite"
+          this.titleService.setTitle(title);
         }
       )
     })

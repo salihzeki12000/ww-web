@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { Subscription } from 'rxjs/Rx';
 import { Router } from '@angular/router';
 import { DaterangePickerComponent } from 'ng2-daterangepicker';
+import { Title }        from '@angular/platform-browser';
 
 import { User }                from '../../user';
 import { UserService }         from '../../user.service';
@@ -56,6 +57,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   deactivate = false;
 
   constructor(
+    private titleService: Title,
     private formBuilder: FormBuilder,
     private renderer: Renderer2,
     private userService: UserService,
@@ -80,26 +82,26 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     }
 
   ngOnInit() {
-    this.currentUserSubscription = this.userService.updateCurrentUser
-                                       .subscribe(
-                                         result =>  {
-                                           this.currentUser = result;
-                                           this.thumbnailImage = this.currentUser['display_picture'];
-                                           this.patchValue();
+    this.titleService.setTitle("Profile Edit");
 
-                                           if(this.currentUser['birth_date'] === undefined || this.currentUser['birth_date'] === "")  {
-                                             this.birthDate = new Date();
-                                             this.displayDate = "";
-                                           } else {
-                                             this.birthDate = this.currentUser['birth_date'].slice(0,10);
-                                             this.displayDate = this.currentUser['birth_date'].slice(0,10)
-                                           }
+    this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
+     result =>  {
+       this.currentUser = result;
+       this.thumbnailImage = this.currentUser['display_picture'];
+       this.patchValue();
 
-                                           setTimeout(() => {
-                                             this.updateDateRange();
-                                           },1000)
-                                         }
-                                       )
+       if(this.currentUser['birth_date'] === undefined || this.currentUser['birth_date'] === "")  {
+         this.birthDate = new Date();
+         this.displayDate = "";
+       } else {
+         this.birthDate = this.currentUser['birth_date'].slice(0,10);
+         this.displayDate = this.currentUser['birth_date'].slice(0,10)
+       }
+
+       setTimeout(() => {
+         this.updateDateRange();
+       },1000)
+     })
 
     this.loadingService.setLoader(false, "");
     this.preventScroll(false);

@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params }    from '@angular/router';
+import { Title }        from '@angular/platform-browser';
 
 import { PostService }    from '../post.service';
 import { LoadingService } from '../../loading';
@@ -13,19 +14,21 @@ export class PostDisplayComponent implements OnInit, OnDestroy {
   post;
 
   constructor(
+    private titleService: Title,
     private loadingService: LoadingService,
     private postService: PostService,
     private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.titleService.setTitle("wondererwanderer | Post");
+
     this.route.params.forEach((params: Params) => {
       let id = params['id'];
 
       this.postService.getPost(id).subscribe(
         result => {
           this.timeAgo(result.post)
-        }
-      )
+        })
     })
 
     this.loadingService.setLoader(false, "");

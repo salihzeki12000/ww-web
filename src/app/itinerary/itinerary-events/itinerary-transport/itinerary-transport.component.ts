@@ -1,5 +1,6 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { Title }        from '@angular/platform-browser';
 import { Subscription } from 'rxjs/Rx';
 
 import { ItineraryService }      from '../../itinerary.service';
@@ -27,8 +28,9 @@ export class ItineraryTransportComponent implements OnInit {
   highlightedEvent;
 
   addTransport = false;
-  
+
   constructor(
+    private titleService: Title,
     private renderer: Renderer2,
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
@@ -44,7 +46,11 @@ export class ItineraryTransportComponent implements OnInit {
                                  result => { this.filterEvent(result); })
 
     this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
-                                            result => { this.currentItinerary = result; })
+      result => {
+        this.currentItinerary = result;
+        let title = this.currentItinerary['name'] + " | transport"
+        this.titleService.setTitle(title);
+      })
   }
 
   ngOnDestroy() {

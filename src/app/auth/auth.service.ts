@@ -83,7 +83,6 @@ export class AuthService  {
   }
 
   loginGoogle(user) {
-    console.log(user);
     const body = JSON.stringify(user);
     const headers = new Headers({ 'Content-Type': 'application/json' });
 

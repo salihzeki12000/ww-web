@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, Renderer2, ElementRef, HostListener } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
+import { Title }        from '@angular/platform-browser';
 
 import { Router } from '@angular/router';
 
@@ -35,6 +36,7 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
   fixed = false;
 
   constructor(
+    private titleService: Title,
     private element: ElementRef,
     private renderer: Renderer2,
     private formBuilder: FormBuilder,
@@ -47,20 +49,20 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
     private router: Router) {}
 
   ngOnInit() {
-    this.currentUserSubscription = this.userService.updateCurrentUser
-                                       .subscribe(
-                                         result => {
-                                           this.currentUser = result;
-                                           this.getPosts(this.currentUser['_id']);
-                                           this.checkinService.getCheckins(this.currentUser['_id']).subscribe(result =>{})
-                                         })
+    this.titleService.setTitle("Profile");
 
-    this.relationshipSubscription = this.relationshipService.updateRelationships
-                                     .subscribe(
-                                       result => {
-                                         this.followers = Object.keys(result['followers']).map(key => result['followers'][key]);
-                                         this.followings = Object.keys(result['followings']).map(key => result['followings'][key]);
-                                       })
+    this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
+     result => {
+       this.currentUser = result;
+       this.getPosts(this.currentUser['_id']);
+       this.checkinService.getCheckins(this.currentUser['_id']).subscribe(result =>{})
+     })
+
+    this.relationshipSubscription = this.relationshipService.updateRelationships.subscribe(
+     result => {
+       this.followers = Object.keys(result['followers']).map(key => result['followers'][key]);
+       this.followings = Object.keys(result['followings']).map(key => result['followings'][key]);
+     })
 
     this.checkInSubscription = this.checkinService.updateCheckIns.subscribe(
       result => {

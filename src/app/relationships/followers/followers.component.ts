@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
+import { Title }        from '@angular/platform-browser';
 
 import { RelationshipService } from '../relationship.service';
 
@@ -12,15 +13,17 @@ export class FollowersComponent implements OnInit, OnDestroy {
   relationshipSubscription: Subscription;
   followers = [];
 
-  constructor(private relationshipService: RelationshipService) { }
+  constructor(
+    private titleService: Title,
+    private relationshipService: RelationshipService) { }
 
   ngOnInit() {
-    this.relationshipSubscription = this.relationshipService.updateRelationships
-                                     .subscribe(
-                                       result => {
-                                         this.followers = Object.keys(result['followers']).map(key => result['followers'][key]);
-                                       }
-                                     )
+    this.titleService.setTitle("Relationships | Followers");
+
+    this.relationshipSubscription = this.relationshipService.updateRelationships.subscribe(
+       result => {
+         this.followers = Object.keys(result['followers']).map(key => result['followers'][key]);
+       })
   }
 
   ngOnDestroy() {

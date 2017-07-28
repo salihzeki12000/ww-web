@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { Title }        from '@angular/platform-browser';
 import { Subscription } from 'rxjs/Rx';
 
 import { ItineraryService }      from '../../itinerary.service';
@@ -27,8 +28,9 @@ export class ItineraryAccommodationComponent implements OnInit, OnDestroy {
   highlightedEvent;
 
   addAccommodation = false;
-  
+
   constructor(
+    private titleService: Title,
     private renderer: Renderer2,
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
@@ -36,15 +38,19 @@ export class ItineraryAccommodationComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.itinDateSubscription = this.itineraryService.updateDate.subscribe(
-                                      result => {
-                                        this.itinDateRange = Object.keys(result).map(key => result[key]);
-                                    })
+      result => {
+        this.itinDateRange = Object.keys(result).map(key => result[key]);
+    })
 
     this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
-                                 result => { this.filterEvent(result); })
+      result => { this.filterEvent(result); })
 
     this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
-                                            result => { this.currentItinerary = result; })
+      result => {
+        this.currentItinerary = result;
+        let title = this.currentItinerary['name'] + " | accommodation"
+        this.titleService.setTitle(title);
+      })
   }
 
   ngOnDestroy() {

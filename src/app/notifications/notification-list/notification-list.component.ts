@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
+import { Title }        from '@angular/platform-browser';
 
 import { NotificationService } from '../notification.service';
 import { UserService }         from '../../user/user.service';
@@ -23,30 +24,29 @@ export class NotificationListComponent implements OnInit, OnDestroy {
   filteredNotifications = [];
 
   constructor(
+    private titleService: Title,
     private notificationService: NotificationService,
     private userService: UserService,
     private loadingService: LoadingService) { }
 
   ngOnInit() {
-    this.currentUserSubscription = this.userService.updateCurrentUser
-                                       .subscribe(
-                                         result =>  {
-                                           this.getNotifications(result['_id'])
-                                         })
-                                         
-    this.notificationSubscription = this.notificationService.updateNotifications
-                                        .subscribe(
-                                          result => {
-                                            this.notifications = Object.keys(result).map(key => result[key]);
+    this.titleService.setTitle("Notifications");
 
-                                            if(this.notificationsLimit)  {
-                                              this.filteredNotifications = this.notifications.slice(0,19);
-                                            } else  {
-                                              this.filteredNotifications = this.notifications;
-                                            }
+    this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
+       result =>  { this.getNotifications(result['_id']) })
 
-                                            this.loadingService.setLoader(false, "");
-                                          })
+    this.notificationSubscription = this.notificationService.updateNotifications.subscribe(
+      result => {
+        this.notifications = Object.keys(result).map(key => result[key]);
+
+        if(this.notificationsLimit)  {
+          this.filteredNotifications = this.notifications.slice(0,19);
+        } else  {
+          this.filteredNotifications = this.notifications;
+        }
+
+        this.loadingService.setLoader(false, "");
+      })
 
   }
 

@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { DaterangePickerComponent } from 'ng2-daterangepicker';
+import { Title }        from '@angular/platform-browser';
 
 import { Itinerary }              from '../itinerary';
 import { ItineraryService }       from '../itinerary.service';
@@ -78,6 +79,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   }
 
   constructor(
+    private titleService: Title,
     private renderer: Renderer2,
     private formBuilder: FormBuilder,
     private userService: UserService,
@@ -103,6 +105,9 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
         this.currentItinerary['date_from'] = result['date_from'].slice(0,10);
         this.currentItinerary['date_to'] = result['date_to'].slice(0,10);
         this.private = result['private'];
+
+        let title = this.currentItinerary['name'] + " | Settings"
+        this.titleService.setTitle(title);
 
         this.getUsers();
         this.sortAdmin();

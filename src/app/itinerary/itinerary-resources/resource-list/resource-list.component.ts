@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
+import { Title }        from '@angular/platform-browser';
 
 import { Resource }         from '../resource';
 import { ResourceService }  from '../resource.service';
@@ -29,6 +30,7 @@ export class ResourceListComponent implements OnInit, OnDestroy {
   addResource = false;
 
   constructor(
+    private titleService: Title,
     private renderer: Renderer2,
     private itineraryService: ItineraryService,
     private resourceService: ResourceService,
@@ -36,14 +38,18 @@ export class ResourceListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.updateResourcesSubscription = this.resourceService.updateResources.subscribe(
-                                             result => {
-                                               this.resources = Object.keys(result).map(key => result[key]);
-                                               this.filteredResources = this.resources;
-                                               this.totalResources = this.resources.length;
-                                             })
+     result => {
+       this.resources = Object.keys(result).map(key => result[key]);
+       this.filteredResources = this.resources;
+       this.totalResources = this.resources.length;
+     })
 
     this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
-                                             result => { this.currentItinerary = result; })
+      result => {
+        this.currentItinerary = result;
+        let title = this.currentItinerary['name'] + " | resource"
+        this.titleService.setTitle(title);
+      })
 
     this.loadingService.setLoader(false, "");
     this.preventScroll(false);

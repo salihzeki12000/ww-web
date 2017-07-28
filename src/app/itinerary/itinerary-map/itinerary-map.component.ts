@@ -1,10 +1,12 @@
 import { Component, OnInit, OnDestroy, ElementRef, ViewChild, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
+import { Title }        from '@angular/platform-browser';
 
 declare var google:any;
 declare var MarkerClusterer:any;
 
+import { ItineraryService }      from '../itinerary.service';
 import { ItineraryEvent }        from '../itinerary-events/itinerary-event';
 import { ItineraryEventService } from '../itinerary-events/itinerary-event.service';
 import { LoadingService }        from '../../loading';
@@ -17,6 +19,8 @@ import { LoadingService }        from '../../loading';
 export class ItineraryMapComponent implements OnInit, OnDestroy {
   @ViewChild('map') map: ElementRef;
   itinMap;
+
+  currentItinerarySubscription: Subscription;
 
   eventSubscription: Subscription;
   events: ItineraryEvent[] = [];
@@ -31,17 +35,25 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
   showMapLegend = false;
 
   constructor(
+    private titleService: Title,
     private renderer: Renderer2,
+    private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
     private route: ActivatedRoute,
     private loadingService: LoadingService) { }
 
   ngOnInit() {
     this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
-                                  result => {
-                                    this.filterEvents(result);
-                                    this.initMap();
-                                  })
+      result => {
+        this.filterEvents(result);
+        this.initMap();
+      })
+
+    this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
+      result => {
+        let title = result['name'] + " | resource"
+        this.titleService.setTitle(title);
+      })
   }
 
   ngOnDestroy() {

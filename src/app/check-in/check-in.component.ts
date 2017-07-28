@@ -1,4 +1,6 @@
 import { Component, OnInit, OnDestroy, ElementRef, ViewChild, Renderer2, HostListener } from '@angular/core';
+import { Title }        from '@angular/platform-browser';
+
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
@@ -37,12 +39,15 @@ export class CheckInComponent implements OnInit, OnDestroy {
   deleteCheckIn = undefined;
 
   constructor(
+    private titleService: Title,
     private renderer: Renderer2,
     private userService: UserService,
     private checkinService: CheckInService,
     private loadingService: LoadingService) { }
 
   ngOnInit() {
+    this.titleService.setTitle("Check in");
+
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
       result => {
         this.currentUser = result;

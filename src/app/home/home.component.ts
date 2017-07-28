@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
+import { Title }        from '@angular/platform-browser';
 import { Subscription } from 'rxjs/Rx';
 
 import { Router } from '@angular/router';
@@ -24,6 +25,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   showItineraryForm = false;
 
   constructor(
+    private titleService: Title,
     private renderer: Renderer2,
     private authService: AuthService,
     private userService: UserService,
@@ -32,6 +34,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     private router: Router) { }
 
   ngOnInit() {
+    this.titleService.setTitle("Home");
+
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
       result => {
         this.user = result;
@@ -50,15 +54,18 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.renderer.removeClass(document.body, 'prevent-scroll');
 
     // work around for issue where fb login cant load page properly
-    let login = this.authService.loginType;
-    if(login === 'facebook')  {
-      this.authService.setLogin("fb");
+    // let login = this.authService.loginType;
+    //
+    // if(login === 'facebook')  {
+    //   this.authService.setLogin("fb");
+    //   this.reload();
+    // }
+  }
 
-      setTimeout(() =>  {
-        window.location.reload();
-      },1000)
-
-    }
+  reload()  {
+    setTimeout(() =>  {
+      window.location.reload();
+    },1000)
   }
 
   ngOnDestroy() {

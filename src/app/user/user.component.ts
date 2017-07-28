@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
+import { Title }        from '@angular/platform-browser';
 
 import { UserService }         from './user.service';
 import { PostService }         from '../post';
@@ -32,6 +33,7 @@ export class UserComponent implements OnInit, OnDestroy {
   checkInSubscription: Subscription;
 
   constructor(
+    private titleService: Title,
     private route: ActivatedRoute,
     private postService: PostService,
     private checkinService: CheckInService,
@@ -51,6 +53,10 @@ export class UserComponent implements OnInit, OnDestroy {
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
       result => {
         this.currentUser = result;
+
+        let title = this.currentUser['username'] + " | Home"
+        this.titleService.setTitle(title);
+
         this.checkFollowStatus();
       }
     )

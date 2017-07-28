@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
+import { Title }        from '@angular/platform-browser';
 
 import { ItineraryService }      from '../../../itinerary.service';
 import { ItineraryEvent }        from '../../itinerary-event';
@@ -28,6 +29,7 @@ export class ActivityListComponent implements OnInit, OnDestroy {
   addActivity = false;
 
   constructor(
+    private titleService: Title,
     private renderer: Renderer2,
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
@@ -35,15 +37,19 @@ export class ActivityListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
-                                  result => { this.filterEvents(result); })
+      result => { this.filterEvents(result); })
 
     this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
-                                             result => { this.currentItinerary = result; })
+      result => {
+        this.currentItinerary = result;
+        let title = this.currentItinerary['name'] + " | activity"
+        this.titleService.setTitle(title);
+      })
 
     this.itinDateSubscription = this.itineraryService.updateDate.subscribe(
-                                      result => {
-                                        this.itinDateRange = Object.keys(result).map(key => result[key]);
-                                    })
+        result => {
+          this.itinDateRange = Object.keys(result).map(key => result[key]);
+      })
   }
 
   ngOnDestroy() {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title }        from '@angular/platform-browser';
 
 import { LoadingService } from '../loading';
 
@@ -9,9 +10,13 @@ import { LoadingService } from '../loading';
 })
 export class PrivacyPolicyComponent implements OnInit {
 
-  constructor(private loadingService: LoadingService) { }
+  constructor(
+    private titleService: Title,
+    private loadingService: LoadingService) { }
 
   ngOnInit() {
+    this.titleService.setTitle("Privacy Policy");
+
     this.loadingService.setLoader(false, "");
   }
 

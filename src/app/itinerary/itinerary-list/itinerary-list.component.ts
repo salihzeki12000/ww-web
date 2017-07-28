@@ -23,13 +23,12 @@ export class ItineraryListComponent implements OnInit, OnDestroy {
     private loadingService: LoadingService) { }
 
   ngOnInit() {
-    this.currentUserSubscription = this.userService.updateCurrentUser
-                                       .subscribe(
-                                         result => {
-                                           this.itineraries = Object.keys(result['itineraries']).map(key => result['itineraries'][key]);
-                                           this.sortItin(this.itineraries);
-                                         }
-                                       )
+    this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
+       result => {
+         this.itineraries = Object.keys(result['itineraries']).map(key => result['itineraries'][key]);
+         this.sortItin(this.itineraries);
+       })
+                                         
     this.loadingService.setLoader(false, "");
     this.renderer.removeClass(document.body, 'prevent-scroll');
   }

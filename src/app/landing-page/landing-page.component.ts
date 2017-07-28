@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
+import { Title }        from '@angular/platform-browser';
 
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -18,7 +19,10 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   showSignin = false;
   showSignup = false;
 
+  rereoute = '/me';
+
   constructor(
+    private titleService: Title,
     private renderer: Renderer2,
     private formBuilder: FormBuilder,
     private authService: AuthService,
@@ -31,6 +35,8 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     }
 
   ngOnInit() {
+    this.titleService.setTitle("wondererwanderer");
+
     this.loadingService.setLoader(false, "");
   }
 

@@ -1,4 +1,4 @@
-import { BrowserModule }                    from '@angular/platform-browser';
+import { BrowserModule, Title }             from '@angular/platform-browser';
 import { BrowserAnimationsModule }          from '@angular/platform-browser/animations'
 import { NgModule }                         from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -135,7 +135,7 @@ import { CapitalisePipe } from './pipes';
     routing,
     Daterangepicker
   ],
-  providers: [ LoadingService, AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, FileuploadService, CommentService, ErrorMessageService, CheckInService, AuthGuard ],
+  providers: [ Title, LoadingService, AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, FileuploadService, CommentService, ErrorMessageService, CheckInService, AuthGuard ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

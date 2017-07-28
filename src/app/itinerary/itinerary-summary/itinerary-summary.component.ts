@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, ElementRef, HostListener } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
+import { Title }        from '@angular/platform-browser';
 
 import { ItineraryService }      from '../itinerary.service';
 import { ItineraryEventService } from '../itinerary-events/itinerary-event.service';
@@ -43,6 +44,7 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
   addActivity = false;
 
   constructor(
+    private titleService: Title,
     private element: ElementRef,
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
@@ -53,6 +55,10 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
     this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
        result => {
          this.currentItinerary = result;
+
+         let title = this.currentItinerary['name'] + " | Summary"
+         this.titleService.setTitle(title);
+
          this.sortDailyNotes();
        })
 

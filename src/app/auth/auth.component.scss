@@ -1,3 +1,26 @@
+#google-login  {
+  background: white;
+  padding: 5px 0 0 110px;
+  font-weight: 500;
+  color: #444;
+  height: 30px;
+  width: 320px;
+  border-radius: 5px;
+  border: thin solid #888;
+  box-shadow: 1px 1px 1px grey;
+  white-space: nowrap;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+img {
+  height: 20px;
+  position: absolute;
+  margin-top: -25px;
+  margin-left: 75px;
+}
+
 .signin-card  {
   @media only screen and (min-width: 850px) {
     padding: 20px;
@@ -29,8 +52,28 @@
   }
 }
 
-i {
-  float: left;
-  padding-top: 4px;
-  padding-left: 7px;
+
+.loading-overlay  {
+  background-color: rgba(0,0,0,0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  max-height: calc(100vh - 1px);
+  z-index: 5000;
+}
+
+.loading-message  {
+  margin-left: calc((100vw - 200px) / 2);
+  margin-top: calc((100vh - 80px) / 2)
+}
+
+.loading-message i  {
+  margin-left: 70px;
+  margin-bottom: 10px;
+}
+
+.loading-message *  {
+  color: white;
 }
