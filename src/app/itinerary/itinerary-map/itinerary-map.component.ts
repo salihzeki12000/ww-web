@@ -28,6 +28,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
 
   markers = [];
   infoWindows = [];
+  flightPath;
 
   month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   dates = [];
@@ -245,6 +246,8 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
   }
 
   filterMarkers(date) {
+    if(this.flightPath !== undefined) this.flightPath.setMap(null);
+
     for (let i = 0; i < this.markers.length; i++) {
       if(this.markers[i]['date'] === date || date === "All dates")  {
         this.markers[i].setVisible(true);
@@ -261,7 +264,24 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
       )
     }
 
-    this.changeCenter(this.filteredEvents[0])
+    this.changeCenter(this.filteredEvents[0]);
+
+    if(date !== "All dates" && this.filteredEvents.length > 1)  {
+      let path = [];
+      for (let i = 0; i < this.filteredEvents.length; i++) {
+        path.push({lat: this.filteredEvents[i]['place']['lat'], lng: this.filteredEvents[i]['place']['lng'] });
+      }
+
+      this.flightPath = new google.maps.Polyline({
+        path: path,
+        geodesic: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+      });
+
+      this.flightPath.setMap(this.itinMap);
+    }
   }
 
   toggleLegend() {
