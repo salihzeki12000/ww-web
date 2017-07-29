@@ -19,8 +19,6 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   showSignin = false;
   showSignup = false;
 
-  rereoute = '/me';
-
   constructor(
     private titleService: Title,
     private renderer: Renderer2,
