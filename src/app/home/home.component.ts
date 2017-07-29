@@ -17,7 +17,12 @@ import { LoadingService }    from '../loading';
 export class HomeComponent implements OnInit, OnDestroy {
   user;
   feed = [];
+
   newUser = false;
+  tourStart = false;
+  tour1 = false;
+  tour2 = false;
+  tour3 = false;
 
   currentUserSubscription: Subscription;
   feedSubscription: Subscription;
@@ -50,6 +55,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       })
 
     this.newUser = this.authService.newUser;
+    if(this.newUser) this.tourStart = true;
+
     this.loadingService.setLoader(false, "");
     this.renderer.removeClass(document.body, 'prevent-scroll');
 
@@ -73,6 +80,40 @@ export class HomeComponent implements OnInit, OnDestroy {
     if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
     this.loadingService.setLoader(true, "");
     this.authService.newUser = false;
+  }
+
+  skipTour()  {
+    this.newUser = false;
+  }
+
+  startTour() {
+    this.tourStart = false;
+    this.tour1 = true;
+  }
+
+  tour1Done() {
+    this.tour1 = false;
+    this.tour2 = true;
+  }
+
+  tour2Done() {
+    this.tour2 = false;
+    this.tour3 = true;
+  }
+
+  backToStart() {
+    this.tourStart = true;
+    this.tour1 = false;
+  }
+
+  backTo1() {
+    this.tour1 = true;
+    this.tour2 = false;
+  }
+
+  backTo2() {
+    this.tour2 = true;
+    this.tour3 = false;
   }
 
   createItinerary() {
