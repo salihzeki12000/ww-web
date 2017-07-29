@@ -74,6 +74,9 @@ export class AuthService  {
                     .map((response: Response) => {
                       this.loginType = 'facebook';
                       localStorage.setItem('token', response.json()['token']);
+
+                      if(response.json().newUser) this.newUser = true;
+
                       return response.json();
                     })
                     .catch((error: Response) => {
@@ -90,6 +93,9 @@ export class AuthService  {
                     .map((response: Response) => {
                       this.loginType = 'google';
                       localStorage.setItem('token', response.json()['token']);
+
+                      if(response.json().newUser) this.newUser = true;
+
                       return response.json();
                     })
                     .catch((error: Response) => {
