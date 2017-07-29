@@ -34,7 +34,7 @@
 
     <h5 class="resource-count">{{ index + 1 }} of {{ totalResources }}</h5>
 
-    <div class="resource-category">
+    <div class="resource-category" *ngIf="resource?.category">
       <i class="fa fa-tags" aria-hidden="true"></i>
       <h5>{{ resource.category }}</h5>
     </div>
