@@ -24,6 +24,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
 
   eventSubscription: Subscription;
   events: ItineraryEvent[] = [];
+  filteredEvents: ItineraryEvent[] = [];
 
   markers = [];
   infoWindows = [];
@@ -65,9 +66,16 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
     this.events = [];
     for (let i = 0; i < events.length; i++) {
       if(events[i]['type'] !== 'transport' && events[i]['location'])  {
+        let date = new Date(events[i]['date'])
+        let converted_date = date.getDate() + " " + this.month[date.getMonth()]
+        events[i]['converted_date'] = converted_date;
+        events[i]['index'] = i + 1;
+
         this.events.push(events[i])
       }
     }
+
+    this.filteredEvents = this.events;
   }
 
   initMap() {
@@ -244,6 +252,16 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
         this.markers[i].setVisible(false);
       }
     }
+
+    if(date === "All dates")  {
+      this.filteredEvents = this.events;
+    } else  {
+      this.filteredEvents = Object.assign([], this.events).filter(
+        event => event.converted_date === date
+      )
+    }
+
+    this.changeCenter(this.filteredEvents[0])
   }
 
   toggleLegend() {

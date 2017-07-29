@@ -1,22 +1,21 @@
 <div class="custom-modal" *ngIf="showMapLegend" (click)="toggleLegend()"></div>
 
 <div class="legend-section" [class.show-legend]="showMapLegend">
-  <!-- <div class="date-filter">
-    <select name="date" [(ngModel)]="selectedDate" (ngModelChange)="filterMarkers($event)">
-      <option *ngFor="let date of dates" [value]="date">
-        <h5>{{ date }}</h5>
-      </option>
-    </select>
-  </div>
-  <i class="fa fa-filter fa-lg" aria-hidden="true"></i> -->
+
   <h4 class="event-summary-header">Map list - {{ events.length }}</h4>
   <h5 class="close-pop-up" (click)="toggleLegend()">X</h5>
 
+  <select class="date-filter" [(ngModel)]="selectedDate" (ngModelChange)="filterMarkers($event)">
+    <option *ngFor="let date of dates" [value]="date">
+      <h5>{{ date }}</h5>
+    </option>
+  </select>
+
   <div class="map-summary">
-    <div *ngFor="let event of events; let i = index" class="map-event" (click)="changeCenter(event)">
+    <div *ngFor="let event of filteredEvents" class="map-event" (click)="changeCenter(event)">
 
       <div class="marker">
-        <h5 class="marker-index">{{ i+1 }}</h5>
+        <h5 class="marker-index">{{ event.index }}</h5>
       </div>
 
       <div class="marker-details">
