@@ -33,6 +33,8 @@ export class ItineraryInviteComponent implements OnInit {
     }
 
   ngOnInit() {
+    this.loadingService.setLoader(true, "Retrieving your invitation");
+
     this.route.params.forEach((params: Params) => {
       let id = params['id'];
       this.reroute = '/me/itinerary/' + id;
