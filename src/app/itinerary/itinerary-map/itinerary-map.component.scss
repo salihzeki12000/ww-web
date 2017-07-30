@@ -53,18 +53,18 @@
 }
 
 .map-summary {
-  max-height: calc(100vh - 130px);
+  max-height: calc(100vh - 160px);
   vertical-align: top;
   background-color: rgba(237, 189, 100, 0.3);
   overflow: auto;
 
   @media only screen and (max-width: 890px) {
-    max-height: calc(100vh - 130px);
+    max-height: calc(100vh - 160px);
     background-color: white;
   }
 
   @media only screen and (min-width: 890px) and (max-width: 1090px) {
-    max-height: calc(100vh - 160px);
+    max-height: calc(100vh - 190px);
   }
 }
 

@@ -65,12 +65,14 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
 
   filterEvents(events)  {
     this.events = [];
+    let index = 1;
     for (let i = 0; i < events.length; i++) {
       if(events[i]['type'] !== 'transport' && events[i]['location'])  {
         let date = new Date(events[i]['date'])
         let converted_date = date.getDate() + " " + this.month[date.getMonth()]
         events[i]['converted_date'] = converted_date;
-        events[i]['index'] = i + 1;
+        events[i]['index'] = index;
+        index += 1;
 
         this.events.push(events[i])
       }
