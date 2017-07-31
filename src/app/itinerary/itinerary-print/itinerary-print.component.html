@@ -1,20 +1,246 @@
-<div class="option" (click)="showCategory()">
-  <i class="fa fa-tasks" aria-hidden="true"></i>
-  <h5>Display by category</h5>
+<div class="page" *ngIf="!pageError">
+
+  <div class="logo">
+    <img src="assets/wondererwanderer_logo.png" alt="">
+  </div>
+
+  <div class="download" (click)="download()">
+    <i class="fa fa-download fa-lg" aria-hidden="true"></i>
+  </div>
+
+  <div class="itinerary-name">
+    <h2>{{ itinerary?.name }}</h2>
+  </div>
+
+  <div class="itinerary-date">
+    <h3>{{ itinerary?.date_from | date: 'dd MMM yyyy'}} to {{ itinerary?.date_to | date: 'dd MMM yyyy'}} - {{ itinDateRange.length - 1 }} {{ itinDateRange.length - 1 > 1 ? 'Days' : 'Day'}}</h3>
+  </div>
+
+  <div *ngFor="let date of itinDateRange; let i = index">
+    <div *ngIf="date === 'any day'" class="day-header">
+      <h3 class="date-display">Any day</h3>
+
+      <div *ngFor="let note of dailyNotes" class="daily-note">
+        <div *ngIf="note.date === date">
+          <i class="fa fa-sticky-note-o fa-fw" aria-hidden="true"></i>
+          <h5>{{ note.note }}</h5>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="date !== 'any day'" class="day-header">
+      <h3 class="date-display">Day {{ i }} - {{ date | date: "dd MMM (EEE)" }}</h3>
+
+      <div *ngFor="let note of dailyNotes" class="daily-note">
+        <div *ngIf="note.date === date">
+          <i class="fa fa-sticky-note-o fa-fw" aria-hidden="true"></i>
+          <h5>{{ note.note }}</h5>
+        </div>
+      </div>
+    </div>
+
+    <div *ngFor="let event of events">
+      <div *ngIf="event.date === date">
+
+        <div *ngIf="event.type === 'transport'" class="event-display">
+          <h4 class="event-time">{{ event.time }}</h4>
+
+          <div class="transport-header">
+            <div [ngSwitch]="event.transport_type" class="transport-type">
+              <h1 *ngSwitchCase="'flight'"><i class="fa fa-plane" aria-hidden="true"></i></h1>
+              <h1 *ngSwitchCase="'train'"><i class="fa fa-train" aria-hidden="true"></i></h1>
+              <h1 *ngSwitchCase="'bus'"><i class="fa fa-bus" aria-hidden="true"></i></h1>
+              <h1 *ngSwitchCase="'cruise'"><i class="fa fa-ship" aria-hidden="true"></i></h1>
+              <h1 *ngSwitchCase="'vehicle rental'"><i class="fa fa-car" aria-hidden="true"></i></h1>
+              <h1 *ngSwitchCase="'others'"><i class="fa fa-rocket" aria-hidden="true"></i></h1>
+            </div>
+
+            <div class="transport-header-text">
+              <h3>{{ event?.transport_type | capitalise }} from {{ event?.dep_city }} to {{ event?.arr_city}}</h3>
+
+              <div *ngIf="event.transport_type === 'flight'" class="flight-airline">
+                <h4>{{ event.reference_number }} - {{ event.transport_company }}</h4>
+                <div *ngIf="event.operating_carrier" class="operating-message operating-message-display">
+                  <h5>*This flight is operated by {{ event.operating_carrier }} ({{ event.operating_flight }}).</h5>
+                </div>
+              </div>
+            </div>
+
+            <h5 class="event-added-by">Added by {{ event.user.username }}</h5>
+
+
+            <div *ngIf="event.transport_type === 'flight'" class="departure-arrival-details">
+
+              <div class="departure-section">
+                <h3>{{ event.dep_city | uppercase }}</h3>
+                <h5 class="approach-details">Departs</h5>
+                <h5 class="date-details">{{ event?.dep_date | date:'dd MMM yyyy' }} - {{ event.dep_time }}</h5>
+                <h5>{{ event.dep_station }}</h5>
+                <h5>{{ event.dep_terminal }}</h5>
+              </div>
+
+              <div class="route-visual">
+                <h3><i class="fa fa-plane" aria-hidden="true"></i></h3>
+              </div>
+
+              <div class="arrival-section">
+                <h3>{{ event.arr_city | uppercase }}</h3>
+                <h5 class="approach-details">Arrives</h5>
+                <h5 class="date-details">{{ event?.arr_date | date:'dd MMM yyyy' }} - {{ event.arr_time }}</h5>
+                <h5>{{ event.arr_station }}</h5>
+                <h5>{{ event.arr_terminal }}</h5>
+              </div>
+
+            </div><!-- end of flight -->
+
+            <div *ngIf="event.transport_type !== 'flight'" class="departure-arrival-details">
+
+              <div *ngIf="event.transport_type !== 'vehicle rental'">
+
+                <div class="departure-section">
+                  <h3>{{ event.dep_city | uppercase }}</h3>
+                  <h5 class="approach-details">Departs</h5>
+                  <h5 class="date-details">{{ event?.dep_date | date:'dd MMM yyyy' }} - {{ event.dep_time }}</h5>
+                  <h5>{{ event.dep_station }}</h5>
+                </div>
+
+                <div class="route-visual">
+                  <div [ngSwitch]="event.transport_type">
+                    <h3 *ngSwitchCase="'train'"><i class="fa fa-train" aria-hidden="true"></i></h3>
+                    <h3 *ngSwitchCase="'bus'"><i class="fa fa-bus" aria-hidden="true"></i></h3>
+                    <h3 *ngSwitchCase="'cruise'"><i class="fa fa-ship" aria-hidden="true"></i></h3>
+                    <h3 *ngSwitchCase="'others'"><i class="fa fa-rocket" aria-hidden="true"></i></h3>
+                  </div>
+                </div>
+
+                <div class="arrival-section">
+                  <h3>{{ event.arr_city | uppercase }}</h3>
+                  <h5 class="approach-details">Arrives</h5>
+                  <h5 class="date-details">{{ event?.arr_date | date:'dd MMM yyyy' }} - {{ event.arr_time }}</h5>
+                  <h5>{{ event.arr_station }}</h5>
+                </div>
+
+              </div>
+
+              <div *ngIf="event.transport_type === 'vehicle rental'">
+
+                <div class="rental-company">
+                  <h5>Rental company</h5>
+                  <h4>{{ event.transport_company }}</h4>
+                </div>
+
+                <div class="rental-contact">
+                  <h5>Contact number</h5>
+                  <h4>{{ event.contact_number }}</h4>
+                </div>
+
+                <div class="departure-section">
+                  <h3>{{ event.dep_city | uppercase }}</h3>
+                  <h5 class="approach-details">Pick up</h5>
+                  <h5 class="date-details">{{ event?.dep_date | date:'dd MMM yyyy' }} - {{ event.dep_time }}</h5>
+                </div>
+
+                <div class="route-visual">
+                  <h3><i class="fa fa-rocket" aria-hidden="true"></i></h3>
+                </div>
+
+                <div class="arrival-section">
+                  <h3>{{ event.arr_city | uppercase }}</h3>
+                  <h5 class="approach-details">Return</h5>
+                  <h5 class="date-details">{{ event?.arr_date | date:'dd MMM yyyy' }} - {{ event.arr_time }}</h5>
+                </div>
+
+              </div><!-- end of vehicle rental -->
+            </div>
+
+            <div class="details-item">
+              <i class="fa fa-sticky-note-o fa-fw" aria-hidden="true"></i>
+              <h5 class="note" [innerHTML]="event?.formatted_note"></h5>
+            </div>
+          </div>
+
+        </div>
+
+        <div *ngIf="event.type !== 'transport'" class="event-display">
+          <h4 class="event-time">{{ event.time }}</h4>
+
+          <div class="event-pic" *ngIf="event?.photo">
+            <img src="{{ event?.photo.url }}" alt="picture of {{ event?.name}}">
+            <h5 class="photo-credit" [innerHTML]="event?.photo.credit"></h5>
+          </div>
+
+          <div class="event-pic" *ngIf="!event?.photo && event?.type === 'activity'">
+            <i class="fa fa-bicycle fa-3x" aria-hidden="true"></i>
+          </div>
+
+          <div class="event-pic" *ngIf="!event?.photo && event?.type === 'accommodation'">
+            <i class="fa fa-home fa-4x" aria-hidden="true"></i>
+          </div>
+
+          <div class="event-content">
+
+            <div *ngIf="event.type === 'accommodation'" class="event-stay-city">
+              <h4><i class="fa fa-bed" aria-hidden="true"></i> {{ event?.stay_city | uppercase }}</h4>
+              <h5>Check out - {{ event?.check_out_date | date: "dd MMM yyyy"}} | {{ event?.check_out_time }}</h5>
+            </div>
+
+            <div class="event-header">
+              <h4 class="event-name">{{ event.name }}</h4>
+              <h5 class="event-added-by">Added by {{ event.user.username }}</h5>
+            </div>
+
+            <div class="details-item" *ngIf="event?.place.formatted_address">
+              <i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>
+              <h5> {{ event?.place.formatted_address }}</h5>
+            </div>
+
+            <div class="details-item" *ngIf="event?.place.international_phone_number">
+              <i class="fa fa-phone fa-fw" aria-hidden="true"></i>
+              <a href="tel:{{ event?.international_phone_number }}">{{ event?.place.international_phone_number }}</a>
+            </div>
+
+            <div class="details-item" *ngIf="event?.formatted_hours">
+              <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>
+              <h5 [innerHTML]="event?.formatted_hours"></h5>
+            </div>
+
+            <div class="details-item" *ngIf="event?.entry_fee">
+              <i class="fa fa-money fa-fw" aria-hidden="true"></i>
+              <h5>{{ event?.entry_fee }}</h5>
+            </div>
+
+            <div class="details-item" *ngIf="event?.website">
+              <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+              <h5 class="truncate">
+                <a href="{{event?.website}}" target="_blank" class="website-link">{{ event?.place.website }}</a>
+              </h5>
+            </div>
+
+            <div class="details-item" *ngIf="event?.formatted_note">
+              <i class="fa fa-sticky-note-o fa-fw" aria-hidden="true"></i>
+              <h5 class="note" [innerHTML]="event?.formatted_note"></h5>
+            </div>
+
+          </div>
+
+          <!-- <div *ngIf="event.location" class="event-map">
+            <ww-location-pin [event]="event"></ww-location-pin>
+          </div> -->
+        </div>
+
+      </div>
+    </div>
+  </div>
+
 </div>
 
-<div class="option" (click)="showDate()">
-  <i class="fa fa-calendar" aria-hidden="true"></i>
-  <h5>Display by date</h5>
+
+<div class="page-error" *ngIf="pageError">
+  <div class="logo">
+    <img src="assets/wondererwanderer_logo.png" alt="">
+  </div>
+
+  <h4>You are attempting to access an itinerary that is not available.</h4>
+
+  <h4>Please try again via the itinerary.</h4>
 </div>
-
-<ww-itinerary-print-category *ngIf="category"
-[itinerary]="itinerary"
-[activities]="activities"
-[accommodations]="accommodations"
-[transports]="transports"
-[resources]="resources"></ww-itinerary-print-category>
-
-<ww-itinerary-print-date *ngIf="date"
-[itinerary]="itinerary"
-[resources]="resources"></ww-itinerary-print-date>

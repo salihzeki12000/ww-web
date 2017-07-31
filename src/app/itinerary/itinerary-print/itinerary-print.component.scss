@@ -1,13 +1,174 @@
-.option {
-  display: inline-block;
+// https://codepen.io/rafaelcastrocouto/pen/LFAes
+.page {
+  background: white;
+  display: block;
+  margin: 0.5cm auto;
+  padding-bottom: 20px;
+  width: 21cm;
+  // height: 29.7cm;
+  box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+}
+
+.page-error {
+  padding: 40px 0;
+  text-align: center;
+}
+
+.logo {
   padding: 20px;
-  cursor: pointer;
+  text-align: center;
+}
+
+.logo img {
+  width: 250px;
+}
+
+.download {
+  float: right;
+  margin-top: -40px;
+  margin-right: 20px;
+
   &:hover {
-    color: #6494ED;
+    cursor: pointer;
+    color: #808080;
   }
 }
 
-.option > i,
-.option > h5  {
+.itinerary-name {
+  padding: 20px 0;
+  text-align: center;
+  border-bottom: 5px solid;
+}
+
+.itinerary-date {
+  padding: 10px 0;
+  text-align: center;
+  border-bottom: 3px solid;
+}
+
+.day-header {
+  margin: 50px 10px 10px 10px;
+  padding: 10px;
+  border-bottom: 5px double;
+}
+
+.date-display  {
   display: inline-block;
+  width: 180px;
+}
+
+.day-header:first-of-type  {
+  margin-top: 20px;
+}
+
+.daily-note  {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.daily-note i,
+.daily-note h5  {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.daily-note h5 {
+  width: 540px;
+}
+
+.event-display  {
+  position: relative;
+  margin: 0 40px;
+  padding: 10px;
+  border-bottom: 1px dashed lightgray;
+}
+
+.event-time {
+  display: inline-block;
+  width: 1.5cm;
+  vertical-align: top;
+}
+
+.transport-header {
+  display: inline-block;
+  padding: 0;
+  width: 16cm;
+}
+
+.transport-type h1  {
+  color: #3A4A4D;
+}
+
+.departure-arrival-details {
+  margin-bottom: 15px;
+}
+
+.event-content  {
+  display: inline-block;
+  width: 13cm;
+}
+
+.event-pic  {
+  display: inline-block;
+  margin-right: 10px;
+  vertical-align: top;
+}
+
+.event-pic img  {
+  height: 120px;
+  width: 120px;
+  border-radius: 5px;
+}
+
+.photo-credit {
+  left: 72px;
+  margin-top: -15px;
+  max-width: 110px;
+}
+
+.event-pic i {
+  height: 120px;
+  width: 120px;
+  border-radius: 5px;
+  background-color: #F5F5FD;
+}
+
+.fa-bicycle {
+  padding: 38.5px 33px;
+}
+
+.fa-home  {
+  padding: 34px;
+}
+
+.event-name {
+  padding-bottom: 5px;
+}
+
+.event-stay-city {
+  display: inline-block;
+  margin-right: 20px;
+  padding-right: 20px;
+  border-right: 1px solid;
+}
+
+.event-stay-city h4 {
+  padding-bottom: 5px;
+}
+
+.event-header {
+  display: inline-block;
+}
+
+.event-added-by {
+  padding-bottom: 20px;
+}
+
+.details-item {
+  margin-bottom: 5px;
+}
+
+.event-map  {
+  display: inline-block;
+  vertical-align: top;
 }

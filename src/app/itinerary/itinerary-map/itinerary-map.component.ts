@@ -53,7 +53,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
 
     this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
       result => {
-        let title = result['name'] + " | resource"
+        let title = result['name'] + " | Map"
         this.titleService.setTitle(title);
       })
   }
@@ -164,6 +164,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
       let marker = new google.maps.Marker({
         position: { lat: event[1], lng: event[2] },
         map: map,
+        // icon: 'https://res.cloudinary.com/wwfileupload/image/upload/v1501394201/lodging-2_jsekp1.png',
         title: event[0],
         label: {
           text: '' + (i + 1),

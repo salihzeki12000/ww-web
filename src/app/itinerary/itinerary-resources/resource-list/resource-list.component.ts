@@ -47,7 +47,7 @@ export class ResourceListComponent implements OnInit, OnDestroy {
     this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
       result => {
         this.currentItinerary = result;
-        let title = this.currentItinerary['name'] + " | resource"
+        let title = this.currentItinerary['name'] + " | Resource"
         this.titleService.setTitle(title);
       })
 

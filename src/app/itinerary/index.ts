@@ -38,10 +38,6 @@ export * from './itinerary-events/itinerary-activity/activity-input/activity-inp
 export * from './itinerary-map/itinerary-map.component';
 
 export * from './itinerary-print/itinerary-print.component';
-export * from './itinerary-print/itinerary-print-date/itinerary-print-date.component';
-export * from './itinerary-print/itinerary-print-category/itinerary-print-category.component';
-export * from './itinerary-print/itinerary-print-date-preview.component';
-export * from './itinerary-print/itinerary-print-category-preview.component';
 
 export * from './itinerary-resources/itinerary-resources.component';
 export * from './itinerary-resources/resource';

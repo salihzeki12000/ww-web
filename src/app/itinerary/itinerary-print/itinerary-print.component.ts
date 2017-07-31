@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
+import { Title }        from '@angular/platform-browser';
 
 import { Itinerary } from '../itinerary';
 import { ItineraryService } from '../itinerary.service';
 
 import { ItineraryEventService } from '../itinerary-events/itinerary-event.service';
 
-import { Resource } from '../itinerary-resources/resource';
-import { ResourceService } from '../itinerary-resources/resource.service';
+import { LoadingService } from '../../loading';
 
 @Component({
   selector: 'ww-itinerary-print',
@@ -17,71 +17,85 @@ import { ResourceService } from '../itinerary-resources/resource.service';
 })
 export class ItineraryPrintComponent implements OnInit {
   itinerary;
-  resources;
-  transports = [];
-  accommodations = [];
-  activities = [];
+  events = [];
 
-  itinerarySubscription: Subscription;
-  eventSubscription: Subscription;
-  resourceSubscription: Subscription;
+  itinDateSubscription: Subscription;
+  itinDateRange = [];
 
-  category = false;
-  date = true;
+  dailyNotes = [];
+
+  pageError = false;
 
   constructor(
+    private titleService: Title,
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
-    private resourceService: ResourceService,
+    private loadingService: LoadingService,
+    private route: ActivatedRoute,
     private router: Router) { }
 
   ngOnInit() {
-    this.itinerarySubscription = this.itineraryService.currentItinerary
-                                     .subscribe(
-                                       result =>  {
-                                         this.itinerary = result;
-                                       }
-                                     )
+    this.route.params.forEach((params: Params) => {
+      let id = params['id'];
 
-    this.resourceSubscription = this.resourceService.updateResources
-                                    .subscribe(
-                                      result => {
-                                        this.resources = result;
-                                      }
-                                    )
+      this.itineraryService.getItin(id).subscribe(
+        result => {
+          if(!result.itinerary) {
+            this.pageError = true;
+          }
 
-    this.eventSubscription = this.itineraryEventService.updateEvent
-                                .subscribe(
-                                  result => {
-                                    this.filterEvents(result);
-                                  }
-                                )
+          this.itinerary = result.itinerary;
+          let title = this.itinerary['name'] + " | Save-print"
+          this.titleService.setTitle(title);
+
+          this.sortDailyNotes();
+        })
+
+      this.itineraryEventService.getEvents(id).subscribe(
+        result => { this.filterEvents(result)})
+    })
+
+    this.itinDateSubscription = this.itineraryService.updateDate.subscribe(
+      result => {
+        this.itinDateRange = Object.keys(result).map(key => result[key]);
+      })
+
+    this.loadingService.setLoader(false, "");
+  }
+
+  ngOnDestroy() {
+    if(this.itinDateSubscription) this.itinDateSubscription.unsubscribe();
+    this.loadingService.setLoader(true, "");
+  }
+
+  sortDailyNotes()  {
+    this.dailyNotes = []
+    let notes = this.itinerary['daily_note'];
+
+    for (let i = 0; i < notes.length; i++) {
+      if(notes[i]['note'] === 'e.g. Day trip to the outskirts') {
+        notes[i]['note'] = '';
+      }
+    }
+
+    this.dailyNotes = notes;
   }
 
   filterEvents(events)  {
-    this.transports = [];
-    this.accommodations = [];
-    this.activities = [];
     for (let i = 0; i < events.length; i++) {
-      if(events[i]['type'] === 'transport') {
-        this.transports.push(events[i]);
-      }
-      if(events[i]['type'] === 'accommodation') {
-        this.accommodations.push(events[i]);
-      }
-      if(events[i]['type'] === 'activity') {
-        this.activities.push(events[i]);
+      if(events[i]['note']) {
+        events[i]['formatted_note'] = events[i]['note'].replace(/\r?\n/g, '<br/> ')
+      };
+
+      if(events[i]['location'] && events[i]['place']['opening_hours']){
+        events[i]['formatted_hours'] = events[i]['place']['opening_hours'].replace(/\r?\n/g, '<br/> ');
       }
     }
+
+    this.events = events
   }
 
-  showCategory()  {
-    this.category = true;
-    this.date = false;
-  }
-
-  showDate()  {
-    this.date = true;
-    this.category = false;
+  download()  {
+    window.print();
   }
 }

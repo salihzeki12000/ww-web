@@ -21,7 +21,7 @@ import { RelationshipService, RelationshipsComponent, FollowingsComponent, Follo
 
 import { PostsComponent, PostComponent, PostInputComponent, PostListComponent, PostService, PostDisplayComponent } from './post';
 
-import { ItineraryComponent, ItineraryListComponent, ItineraryFormComponent, ItineraryInviteComponent, ItineraryAccommodationComponent, ItineraryTransportComponent, ItineraryService, ItineraryActivityComponent, ItineraryResourcesComponent, ResourceInputComponent, ResourceService, ResourceListComponent, ResourceComponent, ItineraryMapComponent, AccommodationFormComponent, TransportFormComponent, ItineraryEventService, ActivityComponent, ActivityListComponent, ActivityInputComponent, AccommodationComponent, TransportComponent, ItineraryPrintComponent, ItineraryPrintDatePreviewComponent, ItineraryPrintCategoryPreviewComponent, ItinerarySummaryComponent, ItinerarySummaryDayComponent, ItinerarySummaryItemComponent, ItineraryPrintCategoryComponent, ItineraryPrintDateComponent, ItinerarySettingsComponent, ItineraryShareComponent, ItineraryListItemComponent, ItineraryAllComponent, ItineraryPastComponent, ItineraryUpcomingComponent } from './itinerary';
+import { ItineraryComponent, ItineraryListComponent, ItineraryFormComponent, ItineraryInviteComponent, ItineraryAccommodationComponent, ItineraryTransportComponent, ItineraryService, ItineraryActivityComponent, ItineraryResourcesComponent, ResourceInputComponent, ResourceService, ResourceListComponent, ResourceComponent, ItineraryMapComponent, AccommodationFormComponent, TransportFormComponent, ItineraryEventService, ActivityComponent, ActivityListComponent, ActivityInputComponent, AccommodationComponent, TransportComponent, ItineraryPrintComponent, ItinerarySummaryComponent, ItinerarySummaryDayComponent, ItinerarySummaryItemComponent, ItinerarySettingsComponent, ItineraryShareComponent, ItineraryListItemComponent, ItineraryAllComponent, ItineraryPastComponent, ItineraryUpcomingComponent } from './itinerary';
 
 import { GooglePlaceSearchComponent, GoogleCheckinComponent } from './google-api';
 
@@ -39,6 +39,7 @@ import { ErrorMessageComponent, ErrorMessageService } from './error-message';
 import { PrivacyPolicyComponent } from './privacy-policy';
 import { CheckInComponent, CheckInService } from './check-in';
 import { CapitalisePipe } from './pipes';
+import { LocationPinComponent } from './location-pin/location-pin.component';
 
 @NgModule({
   declarations: [
@@ -81,10 +82,6 @@ import { CapitalisePipe } from './pipes';
     GooglePlaceSearchComponent,
     GoogleCheckinComponent,
     ItineraryPrintComponent,
-    ItineraryPrintDatePreviewComponent,
-    ItineraryPrintCategoryPreviewComponent,
-    ItineraryPrintCategoryComponent,
-    ItineraryPrintDateComponent,
     ItineraryResourcesComponent,
     ResourceInputComponent,
     ResourceListComponent,
@@ -123,7 +120,8 @@ import { CapitalisePipe } from './pipes';
     ErrorMessageComponent,
     TimePickerComponent,
     PrivacyPolicyComponent,
-    CheckInComponent
+    CheckInComponent,
+    LocationPinComponent
   ],
   imports: [
     BrowserModule,

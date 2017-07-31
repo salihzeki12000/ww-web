@@ -25,26 +25,3 @@
 .form-housing > .content-with-header-name {
   padding: 0 0 20px 10px;
 }
-
-.route-visual {
-  display: inline-block;
-  width: 60px;
-  margin-left: 20px;
-  border-bottom: 3px dotted #C6C6C6;
-
-  @media only screen and (max-width: 650px) {
-    width: 20px;
-  }
-}
-
-.route-visual i  {
-  position: absolute;
-  margin-top: -6px;
-  margin-left: -10px;
-  color: #C6C6C6;
-}
-
-
-.route-visual .fa-plane  {
-  transform: rotate(45deg);
-}

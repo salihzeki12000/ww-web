@@ -24,14 +24,11 @@ export class NotificationListComponent implements OnInit, OnDestroy {
   filteredNotifications = [];
 
   constructor(
-    private titleService: Title,
     private notificationService: NotificationService,
     private userService: UserService,
     private loadingService: LoadingService) { }
 
   ngOnInit() {
-    this.titleService.setTitle("Notifications");
-
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
        result =>  { this.getNotifications(result['_id']) })
 

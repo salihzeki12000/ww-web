@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title }             from '@angular/platform-browser';
 
 @Component({
   selector: 'ww-notifications',
@@ -10,8 +11,9 @@ export class NotificationsComponent implements OnInit {
 
   showNotification = false;
 
-  constructor() { }
+  constructor(private titleService: Title) { }
 
   ngOnInit() {
+    this.titleService.setTitle("Notifications");
   }
 }

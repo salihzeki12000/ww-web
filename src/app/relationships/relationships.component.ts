@@ -22,16 +22,14 @@ export class RelationshipsComponent implements OnInit, OnDestroy {
     private loadingService: LoadingService) { }
 
   ngOnInit() {
-    this.relationshipSubscription = this.relationshipService.updateRelationships
-                                     .subscribe(
-                                       result => {
-                                         this.followers = Object.keys(result['followers']).map(key => result['followers'][key]);;
-                                         this.followings = Object.keys(result['followings']).map(key => result['followings'][key]);;
-                                         this.pendingFollowers = Object.keys(result['pendingFollowers']).map(key => result['pendingFollowers'][key]);;
-                                         this.requestedFollowings = Object.keys(result['requestedFollowings']).map(key => result['requestedFollowings'][key]);
-                                         this.loadingService.setLoader(false, "");
-                                      }
-                                     )
+    this.relationshipSubscription = this.relationshipService.updateRelationships.subscribe(
+      result => {
+        this.followers = Object.keys(result['followers']).map(key => result['followers'][key]);;
+        this.followings = Object.keys(result['followings']).map(key => result['followings'][key]);;
+        this.pendingFollowers = Object.keys(result['pendingFollowers']).map(key => result['pendingFollowers'][key]);;
+        this.requestedFollowings = Object.keys(result['requestedFollowings']).map(key => result['requestedFollowings'][key]);
+        this.loadingService.setLoader(false, "");
+      })
   }
 
   ngOnDestroy() {

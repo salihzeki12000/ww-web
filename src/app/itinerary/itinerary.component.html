@@ -41,7 +41,7 @@
         <li (click)="activateTab()" routerLinkActive="active"><a [routerLink]="['transport']">TRANSPORT</a></li>
         <li (click)="activateTab()" routerLinkActive="active"><a [routerLink]="['activity']">ACTIVITY</a></li>
         <li (click)="activateTab()" routerLinkActive="active"><a [routerLink]="['resource']">RESOURCE</a></li>
-        <!-- <li (click)="activateTab()" routerLinkActive="active"><a [routerLink]="['print']">PRINTABLE VERSION</a></li> -->
+        <li (click)="activateTab()" routerLinkActive="active"><a href="/#/save-print/{{itinerary?._id}}" target="_blank">SAVE / PRINT</a></li>
         <li (click)="activateTab()" routerLinkActive="active"><a [routerLink]="['settings']">SETTINGS</a></li>
       </ul>
     </nav>
