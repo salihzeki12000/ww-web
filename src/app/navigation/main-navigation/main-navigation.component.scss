@@ -41,7 +41,7 @@
 .top-nav-checkin  {
   position: fixed;
   top: 0;
-  right: calc(8% + 170px);
+  right: calc(8% + 133px);
   z-index: 501;
 
   @media only screen and (max-width: 500px) {
@@ -56,7 +56,7 @@
 .top-nav-search  {
   position: fixed;
   top: 0;
-  right: calc(8% + 138px);
+  right: calc(8% + 100px);
   z-index: 501;
 
   @media only screen and (max-width: 890px) {
@@ -67,7 +67,7 @@
 .top-nav-itinerary {
   position: fixed;
   top: 0;
-  right: calc(8% + 107px);
+  right: calc(8% + 70px);
   z-index: 501;
 
   @media only screen and (max-width: 500px) {
@@ -76,17 +76,6 @@
 
   @media only screen and (min-width: 500px) and (max-width: 890px) {
     right: 8%;
-  }
-}
-
-.top-nav-follower-request {
-  position: fixed;
-  top: 0;
-  right: calc(8% + 70px);
-  z-index: 501;
-
-  @media only screen and (max-width: 890px) {
-    display: none;
   }
 }
 
@@ -134,12 +123,6 @@
 .top-nav-search > .top-nav-link {
   &:hover {
     margin-left: -26px;
-  }
-}
-
-.top-nav-follower-request > .top-nav-link {
-  &:hover {
-    margin-left: -30.5px;
   }
 }
 
@@ -193,13 +176,11 @@
   left: 122px;
 }
 
-.top-nav-follower-request >  .top-nav-link:hover > .top-nav-link-dropdown,
 .top-nav-notifications >  .top-nav-link:hover > .top-nav-link-dropdown {
   width: 400px;
   right: 370px;
 }
 
-.top-nav-follower-request >  .top-nav-link:hover > .top-nav-link-dropdown > .dropdown-arrow-up,
 .top-nav-notifications >  .top-nav-link:hover > .top-nav-link-dropdown > .dropdown-arrow-up {
   left: 370px;
 }
@@ -209,6 +190,7 @@
   position: relative;
   margin-top: -8px;
   padding: 3px 0;
+  min-height: 25px;
   letter-spacing: .5px;
   text-align: center;
   background-color: #416099;
@@ -251,8 +233,7 @@
 }
 
 .top-nav-profile .dropdown-item,
-.top-nav-notifications .dropdown-item,
-.top-nav-follower-request .dropdown-item  {
+.top-nav-notifications .dropdown-item  {
   text-align: left;
 }
 
@@ -287,10 +268,6 @@
   width: 5px;
   border-radius: 50%;
   background-color: red;
-}
-
-.top-nav-follower-request .new-indicator  {
-  margin: 1px 0 0 5px;
 }
 
 // fixed itinerary on small screen
@@ -340,20 +317,63 @@ i.fa-sticky-note {
   }
 }
 
+.follower-requests  {
+  position: relative;
+  padding: 10px;
+  text-align: center;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #F6F6F6;
+  }
+}
+
+.follower-requests i,
+.follower-requests h5  {
+  display: inline-block;
+}
+
+.follower-requests i  {
+  padding: 10px 8px;
+  border: 1px solid;
+  border-radius: 50%;
+}
+
+.follower-requests h6:last-of-type {
+  display: block;
+  padding-top: 5px;
+  color: #808080;
+}
+
+.notification-header  {
+  padding: 10px 0 3px 10px;
+}
+
+.pending-count  {
+  position: absolute;
+  margin-left: 148px;
+  margin-top: -2px;
+  padding: 3px 5px 1px 5px;
+  color: #F9FBFB;
+  background-color: red;
+  border-radius: 50%;
+}
+
+.notification-header h5 {
+  display: inline-block;
+  font-weight: 500;
+}
+
 .notifications-view-all {
   display: inline-block;
-  position: absolute;
-  right: 30px;
-  top: 8px;
+  padding-left: 215px;
   font-size: 10px;
   font-weight: 300;
-  color: #f9fbfb;
 
   &:hover {
     text-decoration: underline;
   }
 }
-
 
 ww-notification-list  {
   display: block;

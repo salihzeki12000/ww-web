@@ -36,11 +36,9 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   checkinOptions = false;
   searchOptions = false;
   showItineraries = false;
-  showFollowerRequests = false;
   showNotifications = false;
   profileOptions = false;
 
-  newFollower = false;
   newNotification = false;
 
   // side nav
@@ -85,7 +83,6 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
         this.pendingFollowers = Object.keys(result['pendingFollowers']).map(key => result['pendingFollowers'][key]);;
         this.requestedFollowings = Object.keys(result['requestedFollowings']).map(key => result['requestedFollowings'][key]);;
         this.groupUsers();
-        this.checkNewFollower();
       })
 
     this.notificationSubscription = this.notificationService.updateNotifications.subscribe(
@@ -130,19 +127,6 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
             this.users[i]['following_status'] = this.socialRelationships[j]['relative_status'];
           }
         }
-      }
-    }
-  }
-
-  checkNewFollower()  {
-    let checkDate = new Date(this.currentUser['check_follower']).getTime();
-
-    for (let i = 0; i < this.pendingFollowers.length; i++) {
-      let itemDate = new Date(this.pendingFollowers[i]['created_at']).getTime();
-
-      if( itemDate > checkDate)  {
-        this.newFollower = true;
-        i = this.pendingFollowers.length;
       }
     }
   }
@@ -196,14 +180,6 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     this.showNotifications = true;
     this.currentUser['check_notification'] = new Date();
 
-    this.userService.editUser(this.currentUser).subscribe(
-      result => {})
-  }
-
-  getFollowers()  {
-    this.showFollowerRequests = true;
-
-    this.currentUser['check_follower'] = new Date();
     this.userService.editUser(this.currentUser).subscribe(
       result => {})
   }
@@ -275,23 +251,6 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     this.filteredResult = [];
   }
 
-  // follower requests
-  acceptRequest(following) {
-    following['status'] = 'accepted';
-    following['responded'] = true;
-    following['request_accepted'] = true;
-
-    this.relationshipService.acceptFollow(following)
-        .subscribe( result => {} )
-  }
-
-  ignoreRequest(following) {
-    following['responded'] = true;
-    following['request_ignored'] = true;
-
-    this.relationshipService.deleteFollow(following, "pendingFollower")
-        .subscribe( result => {} )
-  }
 
   // routing to relationships
   routeToFollowers() {
@@ -306,6 +265,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
 
   routeToPendingFollowers() {
     this.sideNav = false;
+    this.showNotifications = false;
     this.router.navigateByUrl('/me/relationships/follow-request');
   }
 

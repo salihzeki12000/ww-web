@@ -73,43 +73,6 @@
   </div>
 </div>
 
-<div class="top-nav-follower-request">
-  <div class="top-nav-link">
-    <i class="fa fa-user-plus fa-lg" aria-hidden="true" (mouseover)="getFollowers()"></i>
-    <div class="new-indicator" *ngIf='newFollower'></div>
-
-    <div class="top-nav-link-dropdown" *ngIf="showFollowerRequests">
-      <div class="dropdown-arrow-up"></div>
-      <div class="top-nav-dropdown-header">
-        <h6>PENDING FOLLOWER REQUEST{{ pendingFollowers.length > 1 ? "S" : "" }}</h6>
-      </div>
-      <div class="follower-requests-list">
-        <div *ngIf="pendingFollowers.length === 0">
-          <h5 class="nil-dropdown-item">No request at the moment</h5>
-        </div>
-        <div *ngFor="let request of pendingFollowers" class="dropdown-item">
-          <!-- <img src="{{ request.user.display_picture }}" alt="" class="user-profile-thumbnail">
-          <div class="user-details">
-            <h5 class="user-username">{{ request.user.username }}</h5>
-            <h6 class="user-search-description">{{ request.user.description }}</h6>
-          </div> -->
-
-          <ww-user-profile-card [user]="request.user" [currentUser]="currentUser"></ww-user-profile-card>
-
-          <div class="action-response" *ngIf="!request.responded">
-            <h5 class="action-response-secondary" (click)="ignoreRequest(request)">IGNORE</h5>
-            <h5 class="action-response-primary" (click)="acceptRequest(request)">ACCEPT</h5>
-          </div>
-          <div class="response-status" *ngIf="request.responded">
-            <h5 *ngIf="request.request_accepted">Request Accepted</h5>
-            <h5 *ngIf="request.request_ignored">Request Ignored</h5>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="top-nav-notifications">
   <div class="top-nav-link">
     <i class="fa fa-bell fa-lg" aria-hidden="true" (mouseover)="getNotifications()"></i>
@@ -117,8 +80,18 @@
 
     <div class="top-nav-link-dropdown" *ngIf="showNotifications">
       <div class="dropdown-arrow-up"></div>
-      <div class="top-nav-dropdown-header">
-        <h6>RECENT NOTIFICATIONS</h6>
+      <div class="top-nav-dropdown-header"></div>
+
+      <div class="follower-requests" (click)="routeToPendingFollowers()">
+        <h6 class="pending-count" *ngIf="pendingFollowers.length > 1">{{ pendingFollowers.length }}</h6>
+        <i class="fa fa-user-plus fa-lg" aria-hidden="true"></i>
+
+        <h5>Follower requests</h5>
+        <h6 *ngIf="pendingFollowers.length === 0">You have no pending request.</h6>
+      </div>
+
+      <div class="notification-header">
+        <h5>RECENT NOTIFICATIONS</h5>
         <p class="notifications-view-all" (click)="routeToNotifications()">see all</p>
       </div>
 
