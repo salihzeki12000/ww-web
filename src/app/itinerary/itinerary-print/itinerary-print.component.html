@@ -209,10 +209,10 @@
               <h5>{{ event?.entry_fee }}</h5>
             </div>
 
-            <div class="details-item" *ngIf="event?.website">
+            <div class="details-item" *ngIf="event?.place.website">
               <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
               <h5 class="truncate">
-                <a href="{{event?.website}}" target="_blank" class="website-link">{{ event?.place.website }}</a>
+                <a href="{{event?.place.website}}" target="_blank" class="website-link">{{ event?.place.website }}</a>
               </h5>
             </div>
 
