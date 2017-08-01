@@ -149,7 +149,12 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
           }
 
           eventMarker.push(
-            [this.events[i]['name'], this.events[i]['place']['lat'], this.events[i]['place']['lng'], eventDate, this.events[i]['time']]
+            [
+              this.events[i]['name'],
+              this.events[i]['place']['lat'],
+              this.events[i]['place']['lng'],
+              eventDate,
+              this.events[i]['time']]
           )
         } else if(!this.events[i]['place']['lat']) {
           this.events.splice(i,1)

@@ -89,7 +89,7 @@ input {
   color: grey;
   letter-spacing: .5px;
   vertical-align: text-top;
-  
+
   @media only screen and (max-width: 610px) {
     padding-bottom: 3px;
   }
@@ -298,27 +298,26 @@ span.info {
   }
 }
 
-.action-response-primary h5 {
-  display: inline-block;
-}
-
-.action-response-primary:hover h5 {
+.action-response-primary:hover * {
   color: #F9FBFB;
 }
 
-.action-response-primary span.info  {
-  display: inline-block;
-  margin: 3px 5px 0 0;
+span.cs-info  {
+  position: absolute;
+  font-size: 10px;
+  margin: 47px 0 0 -90px;
+  color: #808080;
+
   &:hover {
-    color: #F9FBFB;
-    border: 2px solid #F9FBFB;
+    cursor: pointer;
+    text-decoration: underline;
   }
 }
 
 .copy-share-info  {
   position: absolute;
   width: 170px;
-  margin: 28px 0 0 -180px;
+  margin: 68px 0 0 -180px;
   text-align: left;
   background-color: white;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
@@ -345,4 +344,22 @@ span.info {
 
 ._p  {
   padding: 40px 5px 10px 5px;
+  text-align: center;
+
+  @media only screen and (max-width: 450px) {
+    padding: 40px 0 10px 0;
+  }
+}
+
+._p .action-response-primary  {
+  margin: 0 10px;
+
+  @media only screen and (max-width: 450px) {
+    margin: 0 3px;
+  }
+}
+
+._p .action-response-primary i  {
+  display: block;
+  padding-bottom: 10px;
 }

@@ -127,18 +127,24 @@
 
     <div class="action-response _p">
       <div class="action-response-primary">
-        <h5 class="_p5" (click)="share('Copy')">COPY ITINERARY</h5>
-        <span class="info" (click)="copyInfo = true">?</span>
+        <h5 class="_p5" (click)="share('Copy')">
+          <i class="fa fa-clone fa-lg" aria-hidden="true"></i>
+          COPY ITINERARY
+        </h5>
       </div>
+      <span class="cs-info" (click)="copyInfo = true">What is this?</span>
 
       <div class="copy-share-info" *ngIf="copyInfo">
         <h5>Copying to another itinerary of yours. A new itinerary is not created.</h5>
       </div>
 
       <div class="action-response-primary">
-        <h5 class="_p5" (click)="share('Share')">SHARE ITINERARY</h5>
-        <span class="info" (click)="shareInfo = true">?</span>
+        <h5 class="_p5" (click)="share('Share')">
+          <i class="fa fa-share fa-lg" aria-hidden="true"></i>
+          SHARE ITINERARY
+        </h5>
       </div>
+      <span class="cs-info" (click)="shareInfo = true">What is this?</span>
 
       <div class="copy-share-info" *ngIf="shareInfo">
         <h5>Share with other users. A new itinerary is created for each selected user.</h5>
