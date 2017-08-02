@@ -28,7 +28,7 @@
         </div>
 
         <div *ngIf="event.type === 'accommodation'">
-          <h5 class="accommodation-summary-header"><i class="fa fa-bed" aria-hidden="true"></i> {{ event.stay_city | uppercase }}</h5>
+          <h5 class="accommodation-summary-header"><i class="fa fa-bed" aria-hidden="true"></i> {{ event.city | uppercase }}</h5>
         </div>
 
         <h5 class="marker-name">{{ event.name }}</h5>

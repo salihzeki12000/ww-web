@@ -40,6 +40,8 @@ import { PrivacyPolicyComponent } from './privacy-policy';
 import { CheckInComponent, CheckInService } from './check-in';
 import { CapitalisePipe } from './pipes';
 import { LocationPinComponent } from './location-pin/location-pin.component';
+import { RecommendationsComponent, RecommendationComponent, RecommendationService } from './recommendations';
+import { PlaceComponent } from './place';
 
 @NgModule({
   declarations: [
@@ -121,7 +123,10 @@ import { LocationPinComponent } from './location-pin/location-pin.component';
     TimePickerComponent,
     PrivacyPolicyComponent,
     CheckInComponent,
-    LocationPinComponent
+    LocationPinComponent,
+    RecommendationComponent,
+    PlaceComponent,
+    RecommendationsComponent
   ],
   imports: [
     BrowserModule,
@@ -133,7 +138,7 @@ import { LocationPinComponent } from './location-pin/location-pin.component';
     routing,
     Daterangepicker
   ],
-  providers: [ Title, LoadingService, AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, FileuploadService, CommentService, ErrorMessageService, CheckInService, AuthGuard ],
+  providers: [ Title, LoadingService, AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, FileuploadService, CommentService, ErrorMessageService, CheckInService, RecommendationService, AuthGuard ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

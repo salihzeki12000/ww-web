@@ -544,7 +544,7 @@ h5.action-response-primary  {
   display: inline-block;
 }
 
-.slider-images >  img {
+.slider-images > img {
 	position: absolute;
 	transition: all 0.5s;
   height: 200px;
@@ -552,6 +552,10 @@ h5.action-response-primary  {
   left: 5px;
   top: 0;
   object-fit: cover;
+}
+
+.slider-images > h5.photo-credit  {
+  transition: all 0.5s;
 }
 
 .slider-images input[name='slide_switch'] {
@@ -589,14 +593,17 @@ h5.action-response-primary  {
 	opacity: 1;
 }
 
-.slider-images input[name='slide_switch'] ~ img  {
+.slider-images input[name='slide_switch'] ~ img,
+.slider-images input[name='slide_switch'] ~ h5.photo-credit  {
 	opacity: 0;
 	transform: scale(1.1);
 }
 
-.slider-images input[name='slide_switch']:checked+label+img {
+.slider-images input[name='slide_switch']:checked+label+img,
+.slider-images input[name='slide_switch']:checked+label ~ h5.photo-credit {
 	opacity: 1;
 	transform: scale(1);
+  z-index: 10;
 }
 
 /***
@@ -730,6 +737,47 @@ h5.action-response-primary  {
 .user-profile-posts-list  {
   display: flex;
   flex-direction: column-reverse;
+}
+
+/* user search */
+.user-search-header  {
+  margin-top: 10px;
+  padding: 5px;
+  font-weight: 500;
+}
+
+.selected-user  {
+  background-color: #F6F6F6;
+}
+
+.search-result-card {
+  padding: 20px 10px;
+}
+
+.toggle-invite-member {
+  float: right;
+  padding: 5px 10px;
+  color: #6494ED;
+  border: 2px solid #6494ED;
+  border-radius: 5px;
+  &:hover {
+    color: #19CC72;
+    border: 2px solid #19CC72;
+    cursor: pointer;
+  }
+}
+
+.toggle-remove-member {
+  float: right;
+  padding: 5px 10px;
+  color: #19CC72;
+  border: 2px solid #19CC72;
+  border-radius: 5px;
+  &:hover {
+    color: #808080;
+    border: 2px solid #808080;
+    cursor: pointer;
+  }
 }
 
 /********** URL LINK PREVIEW */
@@ -2401,9 +2449,9 @@ ww-itinerary-map  {
   margin-top: 79px;
   width: 40px;
   height: calc(100vh - 190px);
-  background-color: rgba(255,255,255, 0.3);
   &:hover {
     cursor: pointer;
+    background-color: rgba(255,255,255, 0.8);
   }
 
   @media only screen and (max-width: 420px) {
@@ -2417,7 +2465,7 @@ ww-itinerary-map  {
 
 .scroll-left i,
 .scroll-right i {
-  color: #808080;
+  margin-top: 32px;
   padding: 12.7px 14.5px;
 }
 

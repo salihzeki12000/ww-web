@@ -77,8 +77,8 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.currentItinerarySubscription.unsubscribe();
-    this.currentUserSubscription.unsubscribe();
+    if(this.currentItinerarySubscription) this.currentItinerarySubscription.unsubscribe();
+    if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
   }
 
   getAllUsers() {

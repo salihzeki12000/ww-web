@@ -180,7 +180,7 @@
           <div class="event-content">
 
             <div *ngIf="event.type === 'accommodation'" class="event-stay-city">
-              <h4><i class="fa fa-bed" aria-hidden="true"></i> {{ event?.stay_city | uppercase }}</h4>
+              <h4><i class="fa fa-bed" aria-hidden="true"></i> {{ event?.city | uppercase }}</h4>
               <h5>Check out - {{ event?.check_out_date | date: "dd MMM yyyy"}} | {{ event?.check_out_time }}</h5>
             </div>
 
@@ -228,7 +228,7 @@
           </div>
 
           <!-- <div *ngIf="event.location" class="event-map">
-            <ww-location-pin [event]="event"></ww-location-pin>
+            <ww-location-pin [lat]="event.place.lat" [lng]="event.place.lng" [width]="'7.6cm'" [height]="'7.6cm'"></ww-location-pin>
           </div> -->
         </div>
 

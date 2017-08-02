@@ -94,7 +94,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
         'check_out_date': '',
         'check_in_time': this.timeCheckIn,
         'check_out_time': this.timeCheckOut,
-        'stay_city':'',
+        'city':'',
         'note': '',
         'url': '',
         'place_id': '',
@@ -173,9 +173,9 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
 
     for (let i = 0; i < address_components.length; i++) {
       if(address_components[i]['types'][0] === 'locality')  {
-        value['stay_city'] = address_components[i]['long_name'];
+        value['city'] = address_components[i]['long_name'];
       } else if(address_components[i]['types'][0] === 'administrative_area_level_1') {
-        value['stay_city'] += ', ' + address_components[i]['long_name'];
+        value['city'] += ', ' + address_components[i]['long_name'];
       }
     }
 
@@ -193,7 +193,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
       check_out_date: this.lastDay,
       check_in_time: this.timeCheckIn,
       check_out_time: this.timeCheckOut,
-      stay_city: value.stay_city,
+      city: value.city,
       url: value.url,
       place_id: value.place_id,
       note: ""

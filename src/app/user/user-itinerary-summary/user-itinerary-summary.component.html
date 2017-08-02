@@ -21,7 +21,7 @@
       <i class="fa fa-home fa-3x" aria-hidden="true" *ngIf="!event?.photo"></i>
 
       <div class="summary-item-details">
-        <h5 class="event-type">Accommodation ({{event.stay_city}}) <span class="item-list">{{ i + 1 }} of {{events.length}}</span></h5>
+        <h5 class="event-type">Accommodation ({{event.city}}) <span class="item-list">{{ i + 1 }} of {{events.length}}</span></h5>
         <h5 *ngIf="event.date === 'any day'">Check in {{ event.date }} - {{ event.time }}</h5>
         <h5 *ngIf="event.date !== 'any day'">Check in {{ event.date | date: 'dd MMM yyyy (EEE)' }} - {{ event.time }}</h5>
 

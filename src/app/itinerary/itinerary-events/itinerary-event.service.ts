@@ -82,7 +82,7 @@ export class ItineraryEventService  {
                             message: " has added a new " + messageBody + ' to the itinerary ' + itinerary['name'],
                             link: "/me/itinerary/" + itinerary['_id'] + "/" + event['type'],
                             read: false
-                          }).subscribe(date => {});
+                          }).subscribe(result => {});
                         }
                       }
 

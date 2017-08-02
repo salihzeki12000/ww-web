@@ -8,7 +8,11 @@ declare var google:any;
   styleUrls: ['./location-pin.component.scss']
 })
 export class LocationPinComponent implements OnInit {
-  @Input() event;
+  @Input() lat;
+  @Input() lng;
+
+  @Input() width;
+  @Input() height;
 
   @ViewChild('map') map: ElementRef;
   itinMap;
@@ -16,12 +20,14 @@ export class LocationPinComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.initMap()
+    setTimeout(() =>  {
+      this.initMap()
+    }, 2000)
   }
 
   initMap() {
     let mapDiv = this.map.nativeElement;
-    let center = {lat: this.event['place']['lat'], lng: this.event['place']['lng'] };
+    let center = {lat: this.lat, lng: this.lng };
     let zoom = 17;
 
     this.itinMap = new google.maps.Map(mapDiv, {
@@ -37,7 +43,7 @@ export class LocationPinComponent implements OnInit {
 
   setMarkers(map) {
     let marker = new google.maps.Marker({
-      position: {lat: this.event['place']['lat'], lng: this.event['place']['lng'] },
+      position: {lat: this.lat, lng: this.lng },
       map: map,
     })
   }

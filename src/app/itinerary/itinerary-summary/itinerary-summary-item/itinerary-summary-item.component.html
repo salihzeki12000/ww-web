@@ -39,7 +39,7 @@
     <div *ngIf="event?.inOut === 'checkin'" class="event-name">
       <h5>Check in</h5>
       <div>
-        <h5 class="event-stay-city"><i class="fa fa-bed" aria-hidden="true"></i> {{ event?.stay_city | uppercase }} ( {{ event?.numDays }} )</h5>
+        <h5 class="event-stay-city"><i class="fa fa-bed" aria-hidden="true"></i> {{ event?.city | uppercase }} ( {{ event?.numDays }} )</h5>
         <h5>{{ event?.name }}</h5>
         <h5 class="check-out-on">stay till {{ event?.check_out_date | date: 'dd MMM (EEE)' }}</h5>
       </div>

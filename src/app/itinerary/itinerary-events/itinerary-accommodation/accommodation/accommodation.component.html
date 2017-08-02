@@ -19,10 +19,10 @@
 
       <div class="item-menu" *ngIf="showMenu">
         <ul>
-          <!-- <li>
+          <li (click)=recommend()>
             <h5>Recommend</h5>
             <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-          </li> -->
+          </li>
           <li (click)="checkin()" *ngIf="allowCheckin">
             <h5>Check in</h5>
             <i class="fa fa-map-marker" aria-hidden="true"></i>
@@ -53,7 +53,7 @@
     <div class="display-details-housing">
       <h6 class="check-in-note" *ngIf="checkedInDate">You checked in on {{ checkedInDate | date: 'dd MMM yyyy'}}</h6>
 
-      <h4 class="accommodation-city"><i class="fa fa-bed" aria-hidden="true"></i> {{ event?.stay_city | uppercase }}</h4>
+      <h4 class="accommodation-city"><i class="fa fa-bed" aria-hidden="true"></i> {{ event?.city | uppercase }}</h4>
       <h3 class="accommodation-header">{{ event?.name | uppercase }}</h3>
 
       <div class="check-in-details">
@@ -116,6 +116,46 @@
 </div>
 <!-- end of accommodation details view -->
 
+<!-- accommodation recommend modal -->
+<div *ngIf="recommending" class="recommend">
+  <div class="custom-modal">
+    <div class="form-card">
+
+      <div class="form-header">
+        <h3>Recommend {{ event?.name }}</h3>
+        <a (click)="cancelRecommend()">X</a>
+      </div>
+
+      <div class="form-housing">
+        <input class="share-users-search" type="text" placeholder="Search for people..." #text (keyup)="filterSearch(text.value)">
+
+        <div *ngIf="validAddUser">
+          <h5 class="user-search-header">Selected users ({{ selectedUsers.length }})</h5>
+          <div *ngFor="let user of selectedUsers" class="search-result-card selected-user">
+            <ww-user-profile-card [user]="user" [currentUser]="currentUser"></ww-user-profile-card>
+
+            <h5 class="toggle-remove-member" (click)="toggleAdd(user)">Selected</h5>
+          </div>
+        </div>
+
+        <h5 class="user-search-header">Search result ({{ filteredResult.length }})</h5>
+        <div *ngFor="let user of filteredResult" class="search-result-card">
+          <ww-user-profile-card [user]="user" [currentUser]="currentUser"></ww-user-profile-card>
+
+          <h5 class="toggle-invite-member" (click)="toggleAdd(user)">Select</h5>
+        </div>
+      </div>
+
+      <div class="action-response">
+        <h5 class="action-response-secondary" (click)="cancelRecommend()">CANCEL</h5>
+        <button type="button" class="action-response-primary" (click)="recommendTo()" *ngIf="validAddUser"><h5>RECOMMEND</h5></button>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- end of accommodation recommend modal -->
+
 <!-- accommodation copy modal -->
 <div *ngIf="copying">
   <div class="custom-modal">
@@ -142,6 +182,7 @@
     </div>
   </div>
 </div>
+<!-- end of accommodation copy modal -->
 
 <!-- accommodation edit modal -->
 <div *ngIf="editing">
@@ -227,7 +268,7 @@
               *ngIf="editAccommodationForm.get('name').touched && editAccommodationForm.get('name').invalid">Name of accommodation is required</span>
 
             <label>Staying in (City/Town)</label>
-            <input type="text" formControlName="stay_city">
+            <input type="text" formControlName="city">
 
             <label>Address</label>
             <h4>{{ event.place.formatted_address }}</h4>

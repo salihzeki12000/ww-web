@@ -178,6 +178,8 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   // top navigation notification/followers
   getNotifications()  {
     this.showNotifications = true;
+    this.newNotification = false;
+
     this.currentUser['check_notification'] = new Date();
 
     this.userService.editUser(this.currentUser).subscribe(

@@ -69,48 +69,8 @@
 }
 
 /* share itinerary items */
-.user-search-header  {
-  margin-top: 10px;
-  padding: 5px;
-  font-weight: 500;
-}
-
-.selected-user  {
-  background-color: #F6F6F6;
-}
-
-.search-result-card {
-  padding: 20px 10px;
-}
-
 .user-shared-status {
   position: absolute;
   padding: 3px 0 0 38px;
   color: #808080;
-}
-
-.toggle-invite-member {
-  float: right;
-  padding: 5px 10px;
-  color: #6494ED;
-  border: 2px solid #6494ED;
-  border-radius: 5px;
-  &:hover {
-    color: #19CC72;
-    border: 2px solid #19CC72;
-    cursor: pointer;
-  }
-}
-
-.toggle-remove-member {
-  float: right;
-  padding: 5px 10px;
-  color: #19CC72;
-  border: 2px solid #19CC72;
-  border-radius: 5px;
-  &:hover {
-    color: #808080;
-    border: 2px solid #808080;
-    cursor: pointer;
-  }
 }

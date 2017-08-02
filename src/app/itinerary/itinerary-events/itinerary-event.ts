@@ -21,7 +21,6 @@ export class ItineraryEvent {
     check_out_date: string,
     check_in_time: string,
     check_out_time: string,
-    stay_city: string,
     time: string,
     url: string,
     place_id: string,

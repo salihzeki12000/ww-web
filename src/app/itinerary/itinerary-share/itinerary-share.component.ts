@@ -235,7 +235,7 @@ export class ItineraryShareComponent implements OnInit {
         delete this.events[i]['created_at'];
         delete this.events[i]['itinerary'];
 
-        this.events[i]['user']['_Id'] = this.events[i]['user']['_id']
+        // this.events[i]['user']['_Id'] = this.events[i]['user']['_id']
 
         this.itineraryEventService.copyEvent(this.events[i], itinerary).subscribe(
           result => {})
@@ -248,7 +248,7 @@ export class ItineraryShareComponent implements OnInit {
         delete this.resources[i]['created_at'];
         delete this.resources[i]['itinerary'];
 
-        this.resources[i]['user']['_Id'] = this.resources[i]['user']['_id'];
+        // this.resources[i]['user']['_Id'] = this.resources[i]['user']['_id'];
         this.resources[i]['itinerary'] = itinerary;
 
         this.resourceService.copyResource(this.resources[i]).subscribe(

@@ -9,6 +9,8 @@ import { FlashMessageService }   from '../../../../flash-message';
 import { UserService }           from '../../../../user';
 import { LoadingService }        from '../../../../loading';
 import { CheckInService }        from '../../../../check-in';
+import { RelationshipService }   from '../../../../relationships';
+import { RecommendationService } from '../../../../recommendations';
 
 @Component({
   selector: 'ww-accommodation',
@@ -54,6 +56,16 @@ export class AccommodationComponent implements OnInit, OnDestroy {
   hourOut = "";
   minuteOut = "";
 
+  // recommend
+  relationshipSubscription: Subscription;
+  followings = [];
+  recommending = false;
+  users = [];
+  filteredResult = [];
+  selectedUsers = []
+  validAddUser = false;
+  message;
+
   constructor(
     private renderer: Renderer2,
     private router: Router,
@@ -61,6 +73,8 @@ export class AccommodationComponent implements OnInit, OnDestroy {
     private checkinService: CheckInService,
     private itineraryEventService: ItineraryEventService,
     private loadingService: LoadingService,
+    private relationshipService: RelationshipService,
+    private recommendationService: RecommendationService,
     private flashMessageService: FlashMessageService,
     private formBuilder: FormBuilder) {
       this.editAccommodationForm = this.formBuilder.group({
@@ -72,23 +86,30 @@ export class AccommodationComponent implements OnInit, OnDestroy {
         'check_out_date': '',
         'check_in_time': '',
         'check_out_time': '',
-        'stay_city':'',
+        'city':'',
         'note': '',
       })
     }
 
   ngOnInit()  {
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
-                                       result => {
-                                         this.currentUser = result;
-                                         this.checkSameUser();
-                                         this.filterItineraries();
-                                         this.checkCheckIn();
-                                       })
+      result => {
+        this.currentUser = result;
+        this.checkSameUser();
+        this.filterItineraries();
+        this.checkCheckIn();
+      })
 
     this.event['formatted_note'] = this.event['note'].replace(/\r?\n/g, '<br/> ');
 
     this.initTime();
+
+    this.relationshipSubscription = this.relationshipService.updateRelationships.subscribe(
+     result => {
+       this.filterFollowings(result['followings']);
+
+       this.followings = Object.keys(result['followings']).map(key => result['followings'][key]);
+     })
   }
 
   @HostListener('document:click', ['$event'])
@@ -181,6 +202,77 @@ export class AccommodationComponent implements OnInit, OnDestroy {
     }
   }
 
+  filterFollowings(followings)  {
+    this.filteredResult = [];
+    this.users = [];
+    for (let i = 0; i < followings.length; i++) {
+      this.users.push(followings[i].following);
+    }
+
+    this.filteredResult = this.users;
+  }
+
+  //recommend section
+  recommend() {
+    this.recommending = true;
+    this.preventScroll(true);
+  }
+
+  cancelRecommend()  {
+    this.recommending = false;
+    this.selectedUsers = [];
+    this.filteredResult = this.users;
+    this.preventScroll(false);
+  }
+
+  filterSearch(text)  {
+    if(!text)   {
+      this.filteredResult = this.users;
+    } else  {
+      this.filteredResult = Object.assign([], this.users).filter(
+        user => user.username.toLowerCase().indexOf(text.toLowerCase()) > -1
+      )
+    }
+  }
+
+  toggleAdd(user) {
+    let index = this.selectedUsers.indexOf(user);
+    if(index > -1 ) {
+      this.selectedUsers.splice(index, 1);
+      this.filteredResult.push(user);
+    }
+
+    if(index < 0 )  {
+      this.selectedUsers.push(user);
+      this.filteredResult.splice(this.filteredResult.indexOf(user),1)
+    }
+
+    if(this.selectedUsers.length > 0) {
+      this.validAddUser = true;
+    }
+
+    if(this.selectedUsers.length < 1) {
+      this.validAddUser = false;
+    }
+  }
+
+  recommendTo() {
+    for (let i = 0; i < this.selectedUsers.length; i++) {
+      let recommendation = {
+        recipient: this.selectedUsers[i]["_id"],
+        originator: this.currentUser['_id'],
+        place: this.event['place'],
+        message: this.message,
+        note: this.event['note'],
+      }
+
+      this.recommendationService.addRecommendation(recommendation).subscribe(
+        result =>{ })
+    }
+
+    this.cancelRecommend();
+  }
+
   //check in section
   checkin() {
     this.loadingService.setLoader(true, "Checking you in...");
@@ -258,7 +350,7 @@ export class AccommodationComponent implements OnInit, OnDestroy {
       international_phone_number: this.event['place']['international_phone_number'],
       check_in_date: this.event['check_in_date'],
       check_out_date: this.event['check_out_date'],
-      stay_city: this.event['stay_city'],
+      city: this.event['city'],
       note: this.event['note'],
     })
   }

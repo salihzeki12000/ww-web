@@ -31,7 +31,6 @@ export class CheckInService {
   }
 
   addCheckin(checkin) {
-    console.log(checkin)
     const body = JSON.stringify(checkin);
     const headers = new Headers({ 'Content-Type': 'application/json' });
     const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
