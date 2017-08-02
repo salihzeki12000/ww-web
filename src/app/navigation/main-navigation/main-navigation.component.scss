@@ -38,11 +38,15 @@
   color: #6494ED;
 }
 
-.top-nav-checkin  {
+.top-nav-bookmark  {
   position: fixed;
   top: 0;
   right: calc(8% + 133px);
   z-index: 501;
+
+  &:hover {
+    cursor: pointer;
+  }
 
   @media only screen and (max-width: 500px) {
     right: 45px;
@@ -59,6 +63,10 @@
   right: calc(8% + 100px);
   z-index: 501;
 
+  &:hover {
+    cursor: pointer;
+  }
+
   @media only screen and (max-width: 890px) {
     display: none;
   }
@@ -69,6 +77,10 @@
   top: 0;
   right: calc(8% + 70px);
   z-index: 501;
+
+  &:hover {
+    cursor: pointer;
+  }
 
   @media only screen and (max-width: 500px) {
     right: 0;
@@ -85,6 +97,10 @@
   top: 0px;
   z-index: 501;
 
+  &:hover {
+    cursor: pointer;
+  }
+
   @media only screen and (max-width: 890px) {
     display: none;
   }
@@ -95,6 +111,10 @@
   top: 9px;
   right: 8%;
   z-index: 501;
+
+  &:hover {
+    cursor: pointer;
+  }
 
   @media only screen and (max-width: 890px) {
     display: none;
@@ -109,14 +129,13 @@
   &:hover {
     width: 20px;
     margin-left: -25px;
-    cursor: pointer;
     color: #416099;
   }
 }
 
-.top-nav-checkin > .top-nav-link {
+.top-nav-bookmark > .top-nav-link {
   &:hover {
-    margin-left: -17px;
+    margin-left: -22px;
   }
 }
 
@@ -162,8 +181,8 @@
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
 }
 
-.top-nav-checkin > .top-nav-link:hover > .top-nav-link-dropdown {
-  right: 178.5px;
+.top-nav-bookmark > .top-nav-link:hover > .top-nav-link-dropdown {
+  right: 177.5px;
 }
 
 .top-nav-profile >  .top-nav-link:hover > .top-nav-link-dropdown {
@@ -219,6 +238,7 @@
   color: #6494ED;
   text-align: center;
   &:hover  {
+    cursor: pointer;
     color: #808080;
   }
 }
@@ -232,6 +252,7 @@
   }
 }
 
+.top-nav-bookmark .dropdown-item,
 .top-nav-profile .dropdown-item,
 .top-nav-notifications .dropdown-item  {
   text-align: left;
@@ -345,8 +366,13 @@ i.fa-sticky-note {
   color: #808080;
 }
 
-.notification-header  {
-  padding: 10px 0 3px 10px;
+.nav-sub-header  {
+  padding: 10px 0 0 5px;
+}
+
+.nav-sub-header h5 {
+  display: inline-block;
+  color: #808080;
 }
 
 .pending-count  {
@@ -359,11 +385,6 @@ i.fa-sticky-note {
   border-radius: 50%;
 }
 
-.notification-header h5 {
-  display: inline-block;
-  font-weight: 500;
-}
-
 .notifications-view-all {
   display: inline-block;
   padding-left: 215px;
@@ -371,6 +392,7 @@ i.fa-sticky-note {
   font-weight: 300;
 
   &:hover {
+    cursor: pointer;
     text-decoration: underline;
   }
 }
@@ -378,7 +400,7 @@ i.fa-sticky-note {
 ww-notification-list  {
   display: block;
   position: relative;
-  max-height: calc(100vh - 100px);
+  max-height: calc(100vh - 200px);
   border-bottom: 1px solid lightgray;
   overflow: overlay;
 }

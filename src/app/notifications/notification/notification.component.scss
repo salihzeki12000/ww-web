@@ -1,6 +1,11 @@
 .notification {
   padding: 10px;
   border-top: 1px solid lightgray;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #F6F6F6;
+  }
 }
 
 .unread {

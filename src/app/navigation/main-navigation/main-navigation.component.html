@@ -7,21 +7,28 @@
   </nav>
 </div>
 
-<div class="top-nav-checkin">
+<div class="top-nav-bookmark">
   <div class="top-nav-link">
-    <i class="fa fa-map-marker fa-lg" aria-hidden="true" (mouseover)="checkinOptions = true"></i>
+    <i class="fa fa-bookmark fa-lg" aria-hidden="true" (mouseover)="bookmarkOptions = true"></i>
 
-    <div class="top-nav-link-dropdown" *ngIf="checkinOptions">
+    <div class="top-nav-link-dropdown" *ngIf="bookmarkOptions">
       <div class="dropdown-arrow-up"></div>
-      <div class="top-nav-dropdown-header">
-        <h6>CHECK IN OPTIONS</h6>
+      <div class="top-nav-dropdown-header"></div>
+
+      <div class="dropdown-item" (click)="viewRecommendations()">
+        <h5><i class="fa fa-thumbs-up fa-fw fa-lg" aria-hidden="true"></i> Recommendations</h5>
       </div>
+
+      <div class="nav-sub-header">
+        <h5>CHECK IN OPTIONS</h5>
+      </div>
+
       <div class="dropdown-item" (click)="checkIn()">
-        <h5>Check in now</h5>
+        <h5><i class="fa fa-map-marker fa-fw fa-lg" aria-hidden="true"></i> Check in now</h5>
       </div>
 
       <div class="dropdown-item" (click)="viewCheckinMap()">
-        <h5>View check in map</h5>
+        <h5><i class="fa fa-globe fa-fw fa-lg" aria-hidden="true"></i> View check in map</h5>
       </div>
     </div>
   </div>
@@ -90,7 +97,7 @@
         <h6 *ngIf="pendingFollowers.length === 0">You have no pending request.</h6>
       </div>
 
-      <div class="notification-header">
+      <div class="nav-sub-header">
         <h5>RECENT NOTIFICATIONS</h5>
         <p class="notifications-view-all" (click)="routeToNotifications()">see all</p>
       </div>
@@ -111,15 +118,15 @@
       </div>
 
       <div class="dropdown-item" (click)="profileOptions = false" [routerLink]="['/me/profile']">
-        <h5><i class="fa fa-user fa-fw" aria-hidden="true"></i> Profile home</h5>
+        <h5><i class="fa fa-user fa-fw fa-lg" aria-hidden="true"></i> Profile home</h5>
       </div>
 
       <div class="dropdown-item" (click)="profileOptions = false" [routerLink]="['/me/profile-edit']">
-        <h5><i class="fa fa-pencil fa-fw" aria-hidden="true"></i> Edit profile</h5>
+        <h5><i class="fa fa-pencil fa-fw fa-lg" aria-hidden="true"></i> Edit profile</h5>
       </div>
 
       <div class="dropdown-item" (click)="logout()" >
-        <h5><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> Log out</h5>
+        <h5><i class="fa fa-sign-out fa-fw fa-lg" aria-hidden="true"></i> Log out</h5>
       </div>
     </div>
   </div>
