@@ -555,7 +555,14 @@ h5.action-response-primary  {
 }
 
 .slider-images > h5.photo-credit  {
+  margin-top: -100px;
+  margin-left: -10px;
   transition: all 0.5s;
+
+  @media only screen and (max-width: 650px) {
+    margin-top: -21px;
+    margin-left: 3px;
+  }
 }
 
 .slider-images input[name='slide_switch'] {
@@ -1084,7 +1091,7 @@ span.dragged-location {
   width: 600px;
   padding: 15px 20px 5px 20px;
   background-color: #567FCC;
-  z-index: 2;
+  z-index: 11;
 
   @media only screen and (max-width: 650px) {
     width: 100%;

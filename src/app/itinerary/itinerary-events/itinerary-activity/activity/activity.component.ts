@@ -290,7 +290,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
         place: this.activity['place'],
         message: this.message,
         note: this.activity['note'],
-        type: this.event['type'],
+        type: this.activity['type'],
       }
 
       this.recommendationService.addRecommendation(recommendation).subscribe(
