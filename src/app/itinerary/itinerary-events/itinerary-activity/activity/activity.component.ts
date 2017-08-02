@@ -10,6 +10,8 @@ import { FlashMessageService }   from '../../../../flash-message';
 import { UserService }           from '../../../../user';
 import { LoadingService }        from '../../../../loading';
 import { CheckInService }        from '../../../../check-in';
+import { RelationshipService }   from '../../../../relationships';
+import { RecommendationService } from '../../../../recommendations';
 
 @Component({
   selector: 'ww-activity',
@@ -51,6 +53,17 @@ export class ActivityComponent implements OnInit, OnDestroy {
   hour = "";
   minute = "";
 
+  // recommend
+  relationshipSubscription: Subscription;
+  followings = [];
+  recommending = false;
+  users = [];
+  filteredResult = [];
+  selectedUsers = []
+  validAddUser = false;
+  message = '';
+  usersSelected = false;
+
   constructor(
     private formBuilder: FormBuilder,
     private renderer: Renderer2,
@@ -58,6 +71,8 @@ export class ActivityComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private checkinService: CheckInService,
     private itineraryEventService: ItineraryEventService,
+    private relationshipService: RelationshipService,
+    private recommendationService: RecommendationService,
     private loadingService: LoadingService,
     private flashMessageService: FlashMessageService,
     private itineraryService: ItineraryService) {
@@ -95,6 +110,13 @@ export class ActivityComponent implements OnInit, OnDestroy {
     this.activity['formatted_note'] = this.activity['note'].replace(/\r?\n/g, '<br/> ');
 
     this.initTime();
+
+    this.relationshipSubscription = this.relationshipService.updateRelationships.subscribe(
+     result => {
+       this.filterFollowings(result['followings']);
+
+       this.followings = Object.keys(result['followings']).map(key => result['followings'][key]);
+     })
   }
 
   @HostListener('document:click', ['$event'])
@@ -198,6 +220,87 @@ export class ActivityComponent implements OnInit, OnDestroy {
         this.allowCheckin = true;
       }
     }
+  }
+
+  filterFollowings(followings)  {
+    this.filteredResult = [];
+    this.users = [];
+    for (let i = 0; i < followings.length; i++) {
+      this.users.push(followings[i].following);
+    }
+
+    this.filteredResult = this.users;
+  }
+
+  //recommend section
+  recommend() {
+    this.recommending = true;
+    this.preventScroll(true);
+  }
+
+  cancelRecommend()  {
+    this.recommending = false;
+    this.usersSelected = false;
+    this.validAddUser = false;
+    this.users.push.apply(this.users, this.selectedUsers);
+    this.selectedUsers = [];
+    this.preventScroll(false);
+  }
+
+  filterSearch(text)  {
+    if(!text)   {
+      this.filteredResult = this.users;
+    } else  {
+      this.filteredResult = Object.assign([], this.users).filter(
+        user => user.username.toLowerCase().indexOf(text.toLowerCase()) > -1
+      )
+    }
+  }
+
+  toggleAdd(user) {
+    let index = this.selectedUsers.indexOf(user);
+    if(index > -1 ) {
+      this.selectedUsers.splice(index, 1);
+      this.filteredResult.push(user);
+    }
+
+    if(index < 0 )  {
+      this.selectedUsers.push(user);
+      this.filteredResult.splice(this.filteredResult.indexOf(user),1);
+    }
+
+    if(this.selectedUsers.length > 0) {
+      this.validAddUser = true;
+    }
+
+    if(this.selectedUsers.length < 1) {
+      this.validAddUser = false;
+    }
+  }
+
+  logMessage(msg) {
+    this.message = msg;
+  }
+
+  recommendTo() {
+    for (let i = 0; i < this.selectedUsers.length; i++) {
+      let recommendation = {
+        recipient: this.selectedUsers[i]["_id"],
+        originator: this.currentUser['_id'],
+        place: this.activity['place'],
+        message: this.message,
+        note: this.activity['note'],
+      }
+
+      this.recommendationService.addRecommendation(recommendation).subscribe(
+        result =>{ })
+    }
+
+    this.cancelRecommend();
+  }
+
+  backToSelectUsers() {
+    this.usersSelected = false;
   }
 
   //check in section
@@ -342,7 +445,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
     if(originalActivity['place']['opening_hours'])  {
       this.activity['formatted_hours'] = originalActivity['place']['opening_hours'].replace(/\r?\n/g, '<br/> ');
     }
-    
+
     this.activity['formatted_note'] = originalActivity['note'].replace(/\r?\n/g, '<br/> ');
 
     this.itineraryEventService.editEvent(originalActivity).subscribe(

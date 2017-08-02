@@ -51,6 +51,11 @@
     <h4 class="event-out-of-range" *ngIf="event.out_of_range">Out of itinerary date range</h4>
 
     <div class="display-details-housing">
+
+      <h6 class="recommended-by-note" *ngIf="event?.recommended_by" (click)="routeToUser(event?.recommended_by._id)">
+        Recommended by {{ event?.recommended_by.username }}
+      </h6>
+
       <h6 class="check-in-note" *ngIf="checkedInDate">You checked in on {{ checkedInDate | date: 'dd MMM yyyy'}}</h6>
 
       <h4 class="accommodation-city"><i class="fa fa-bed" aria-hidden="true"></i> {{ event?.city | uppercase }}</h4>
@@ -127,28 +132,44 @@
       </div>
 
       <div class="form-housing">
-        <input class="share-users-search" type="text" placeholder="Search for people..." #text (keyup)="filterSearch(text.value)">
 
-        <div *ngIf="validAddUser">
-          <h5 class="user-search-header">Selected users ({{ selectedUsers.length }})</h5>
-          <div *ngFor="let user of selectedUsers" class="search-result-card selected-user">
+        <div class="progress-tracker-section">
+          <ul class="progress-tracker">
+            <li class="progress-title" (click)="backToSelectUsers()" [class.progress-done]="usersSelected">SELECT USERS</li><li class="progress-title">ADD A MESSAGE</li>
+          </ul>
+        </div>
+
+        <div *ngIf="!usersSelected">
+          <input class="share-users-search" type="text" placeholder="Search for people..." #text (keyup)="filterSearch(text.value)">
+
+          <div *ngIf="validAddUser">
+            <h5 class="user-search-header">Selected users ({{ selectedUsers.length }})</h5>
+            <div *ngFor="let user of selectedUsers" class="search-result-card selected-user">
+              <ww-user-profile-card [user]="user" [currentUser]="currentUser"></ww-user-profile-card>
+
+              <h5 class="toggle-remove-member" (click)="toggleAdd(user)">Selected</h5>
+            </div>
+          </div>
+
+          <h5 class="user-search-header">Search result ({{ filteredResult.length }})</h5>
+          <div *ngFor="let user of filteredResult" class="search-result-card">
             <ww-user-profile-card [user]="user" [currentUser]="currentUser"></ww-user-profile-card>
 
-            <h5 class="toggle-remove-member" (click)="toggleAdd(user)">Selected</h5>
+            <h5 class="toggle-invite-member" (click)="toggleAdd(user)">Select</h5>
           </div>
         </div>
 
-        <h5 class="user-search-header">Search result ({{ filteredResult.length }})</h5>
-        <div *ngFor="let user of filteredResult" class="search-result-card">
-          <ww-user-profile-card [user]="user" [currentUser]="currentUser"></ww-user-profile-card>
-
-          <h5 class="toggle-invite-member" (click)="toggleAdd(user)">Select</h5>
+        <div *ngIf="usersSelected">
+          <h4>Craft a message to go with your recommendation:</h4>
+          <textarea rows="2" #msg (keyup)="logMessage(msg.value)"></textarea>
         </div>
+
       </div>
 
       <div class="action-response">
         <h5 class="action-response-secondary" (click)="cancelRecommend()">CANCEL</h5>
-        <button type="button" class="action-response-primary" (click)="recommendTo()" *ngIf="validAddUser"><h5>RECOMMEND</h5></button>
+        <h5 *ngIf="!usersSelected && validAddUser" class="action-response-primary" (click)="usersSelected = true">NEXT</h5>
+        <h5 *ngIf="usersSelected" class="action-response-primary" (click)="recommendTo()">RECOMMEND</h5>
       </div>
     </div>
   </div>

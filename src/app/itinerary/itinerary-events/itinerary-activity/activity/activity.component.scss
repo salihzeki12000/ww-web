@@ -35,3 +35,17 @@
 .form-section-details > div > h4  {
   margin-bottom: 20px;
 }
+
+
+/* recommend */
+.recommend .form-housing  {
+  margin-top: 40px;
+}
+
+.progress-tracker li {
+  width: 50%;
+
+  @media only screen and (max-width: 500px) {
+    width: 100%;
+  }
+}

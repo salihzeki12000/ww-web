@@ -64,7 +64,8 @@ export class AccommodationComponent implements OnInit, OnDestroy {
   filteredResult = [];
   selectedUsers = []
   validAddUser = false;
-  message;
+  message = '';
+  usersSelected = false
 
   constructor(
     private renderer: Renderer2,
@@ -220,8 +221,10 @@ export class AccommodationComponent implements OnInit, OnDestroy {
 
   cancelRecommend()  {
     this.recommending = false;
+    this.usersSelected = false;
+    this.validAddUser = false;
+    this.users.push.apply(this.users, this.selectedUsers);
     this.selectedUsers = [];
-    this.filteredResult = this.users;
     this.preventScroll(false);
   }
 
@@ -256,6 +259,10 @@ export class AccommodationComponent implements OnInit, OnDestroy {
     }
   }
 
+  logMessage(msg) {
+    this.message = msg;
+  }
+
   recommendTo() {
     for (let i = 0; i < this.selectedUsers.length; i++) {
       let recommendation = {
@@ -271,6 +278,10 @@ export class AccommodationComponent implements OnInit, OnDestroy {
     }
 
     this.cancelRecommend();
+  }
+
+  backToSelectUsers() {
+    this.usersSelected = false;
   }
 
   //check in section
