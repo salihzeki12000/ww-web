@@ -271,6 +271,8 @@ export class AccommodationComponent implements OnInit, OnDestroy {
         place: this.event['place'],
         message: this.message,
         note: this.event['note'],
+        type: this.event['type'],
+        city: this.event['city'],
       }
 
       this.recommendationService.addRecommendation(recommendation).subscribe(
