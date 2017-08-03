@@ -1,3 +1,16 @@
-<p>
-  recommendations works!
-</p>
+<div class="recommendations-container">
+  <div class="recommendations-header">
+    <h3>Recommendations for you</h3>
+  </div>
+
+  <div class="recommendations-list">
+    <ww-recommendation
+      *ngFor="let recommendation of recommendations"
+      [currentUser]="currentUser"
+      [recommendation]="recommendation"></ww-recommendation>
+  </div>
+
+  <div *ngIf="recommendations?.length === 0" class="nil-message-main">
+    <h4>There is no recommendation for you at the moment.</h4>
+  </div>
+</div>

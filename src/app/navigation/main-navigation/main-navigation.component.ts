@@ -155,6 +155,11 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     this.preventScroll(false);
   }
 
+  viewRecommendations() {
+    this.bookmarkOptions = false;
+    this.router.navigateByUrl('/me/recommendations');
+  }
+
   viewCheckinMap()  {
     this.bookmarkOptions = false;
     this.router.navigateByUrl('/me/check-in');

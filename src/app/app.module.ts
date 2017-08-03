@@ -40,7 +40,7 @@ import { PrivacyPolicyComponent } from './privacy-policy';
 import { CheckInComponent, CheckInService } from './check-in';
 import { CapitalisePipe } from './pipes';
 import { LocationPinComponent } from './location-pin/location-pin.component';
-import { RecommendationsComponent, RecommendationComponent, RecommendationService } from './recommendations';
+import { RecommendationsComponent, RecommendationComponent, RecommendationDisplayComponent, RecommendationService, AddRecommendationComponent } from './recommendations';
 import { PlaceComponent } from './place';
 
 @NgModule({
@@ -124,9 +124,11 @@ import { PlaceComponent } from './place';
     PrivacyPolicyComponent,
     CheckInComponent,
     LocationPinComponent,
-    RecommendationComponent,
+    RecommendationDisplayComponent,
     PlaceComponent,
-    RecommendationsComponent
+    RecommendationsComponent,
+    RecommendationComponent,
+    AddRecommendationComponent
   ],
   imports: [
     BrowserModule,

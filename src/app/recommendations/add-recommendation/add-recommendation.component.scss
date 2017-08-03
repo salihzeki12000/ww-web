@@ -1,0 +1,35 @@
+/* add to itinerary form */
+.progress-tracker li {
+  width: 50%;
+
+  @media only screen and (max-width: 500px) {
+    width: 100%;
+  }
+}
+
+.slider {
+  margin-bottom: 30px;
+  padding-top: 225px;
+  text-align: center;
+}
+
+.slider-images > img  {
+  left: 150px;
+  margin-top: 15px;
+  border: 2px solid grey;
+
+  @media only screen and (max-width: 650px) {
+    left: calc((100vw - 300px)/2);
+  }
+}
+
+.slider-images > h5.photo-credit  {
+  margin-top: -105px;
+  margin-left: 135px;
+
+  @media only screen and (max-width: 650px) {
+    margin-top: -30px;
+    margin-left: 0;
+    left: calc((100vw - 290px)/2);
+  }
+}

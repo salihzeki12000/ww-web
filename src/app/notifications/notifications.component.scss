@@ -16,7 +16,7 @@
   position: fixed;
   width: 600px;
 
-  @media only screen and (max-width: 670px) {
+  @media only screen and (max-width: 610px) {
     width: 100%;
     min-width: 300px;
   }
@@ -37,7 +37,7 @@ ww-notification-list  {
   width: 600px;
   overflow: auto;
 
-  @media only screen and (max-width: 670px) {
+  @media only screen and (max-width: 610px) {
     width: 100%;
     min-width: 300px;
   }

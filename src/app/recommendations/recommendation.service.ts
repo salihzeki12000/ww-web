@@ -18,6 +18,20 @@ export class RecommendationService {
     private notificationService: NotificationService,
     private errorMessageService: ErrorMessageService)  {}
 
+  getRecommendations(id)  {
+    const currentUser = '?currentUserId=' + id;
+
+    return this.http.get(this.url + '/recommendation' + currentUser)
+                    .map((response: Response) => {
+                      this.recommendations = response.json().recommendations
+                      this.timeAgo(this.recommendations)
+                      return response.json();
+                    })
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
+  }
 
   getRecommendation(id) {
     const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
@@ -61,10 +75,45 @@ export class RecommendationService {
     const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
 
     return this.http.patch( this.url + "/recommendation/" + recommendation['_id'] + token, body, { headers: headers })
-                    .map((response: Response) => response.json())
+                    .map((response: Response) => {
+                      let index = this.recommendations.indexOf(recommendation);
+                      this.recommendations[index] = recommendation;
+
+                      this.updateRecommendations.next(this.recommendations);
+
+                      return response.json()
+                    })
                     .catch((error: Response) => {
                       this.errorMessageService.handleErrorMessage(error.json());
                       return Observable.throw(error.json())
                     });
+  }
+
+  timeAgo(recommendations) {
+    for (let i = 0; i < recommendations.length; i++) {
+      let timePosted = new Date(recommendations[i]['created_at']).getTime();
+      let timeDiff = (Date.now() - timePosted) / 1000;
+
+      let units = [
+        { name: "minute", in_seconds: 60, limit: 3600 },
+        { name: "hour", in_seconds: 3600, limit: 86400 },
+        { name: "day", in_seconds: 86400, limit: 604800 }
+      ];
+
+      if(timeDiff < 60) {
+        recommendations[i]['time_ago'] = "Less than a minute ago"
+      } else if(timeDiff > 604800) {
+        recommendations[i]['time_ago'] = '';
+      } else {
+        for (let j = 0; j < units.length; j++) {
+          if(timeDiff < units[j]['limit'])  {
+            let timeAgo =  Math.floor(timeDiff / units[j].in_seconds);
+            recommendations[i]['time_ago'] = timeAgo + " " + units[j].name + (timeAgo > 1 ? "s" : "") + " ago";
+            j = units.length;
+          };
+        }
+      }
+    }
+    this.updateRecommendations.next(recommendations);
   }
 }

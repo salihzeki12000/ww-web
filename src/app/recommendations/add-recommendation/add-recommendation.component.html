@@ -1,0 +1,45 @@
+<div class="form-card">
+  <div class="form-header">
+    <h3>Add to itinerary - {{ recommendation?.place.name }}</h3>
+    <a (click)="cancel()">X</a>
+  </div>
+
+  <div class="form-housing">
+
+    <div class="progress-tracker-section">
+      <ul class="progress-tracker">
+        <li class="progress-title" (click)="backToSelectItinerary()" [class.progress-done]="itinerarySelected">SELECT ITINERARY</li><li class="progress-title">SELECT DISPLAY PICTURE</li>
+      </ul>
+    </div>
+
+    <div *ngIf="!itinerarySelected">
+      <h4>Please select itinerary to add to:</h4>
+      <div class="copy-to-itinerary-list">
+        <div *ngFor="let itinerary of itineraries" class="copy-to-itinerary" (click)="selectItinerary(itinerary)">
+          <h4>{{ itinerary.name }} - ({{ itinerary.date_from | date:"dd MMM yy" }} to {{ itinerary.date_to | date:"dd MMM yy" }})</h4>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="itinerarySelected">
+      <h4>Please select a display picture:</h4>
+      <div class="slider" *ngIf="recommendation?.place.photos">
+        <div class="slider-images" *ngFor="let image of recommendation?.place.photos; let i = index">
+          <input type="radio" name="slide_switch" id="image-{{i}}" (click)="selectPic(image)" checked>
+          <label for="image-{{i}}">
+            <img src="{{ image.url }}" alt="">
+          </label>
+          <img src="{{ image.url }}" alt="">
+          <h5 class="photo-credit" [innerHTML]="image.credit"></h5>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="action-response">
+    <h5 class="action-response-secondary" (click)="cancel()">CANCEL</h5>
+    <h5 *ngIf="itinerarySelected" class="action-response-primary" (click)="save()"> <i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5>
+
+  </div>
+</div>
