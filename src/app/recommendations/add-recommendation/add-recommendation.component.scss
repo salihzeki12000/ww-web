@@ -14,7 +14,7 @@
 }
 
 .slider-images > img  {
-  left: 150px;
+  left: 130px;
   margin-top: 15px;
   border: 2px solid grey;
 
@@ -32,4 +32,10 @@
     margin-left: 0;
     left: calc((100vw - 290px)/2);
   }
+}
+
+.copy-to-itinerary h5 {
+  padding-top: 5px;
+  color: #808080;
+  font-style: italic;
 }

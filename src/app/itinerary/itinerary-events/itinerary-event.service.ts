@@ -76,6 +76,7 @@ export class ItineraryEventService  {
 
                       for (let i = 0; i < itinerary['members'].length; i++) {
                         if(itinerary['members'][i]['_id'] !== event['user']._id)  {
+                          console.log(itinerary['members'][i]['_id'])
                           this.notificationService.newNotification({
                             recipient: itinerary['members'][i]['_id'],
                             originator: event['user']._id,

@@ -21,7 +21,7 @@
 .recommend-header > h4  {
   display: inline-block;
   padding: 5px 10px;
-  margin: 0 10px 40px 10px;
+  margin: 40px 10px;
   color: #6494ED;
   border: 2px solid #6494ED;
 
@@ -33,7 +33,7 @@
 }
 
 .added-message  {
-  padding: 20px 10px;
+  padding: 20px 10px 0 10px;
   text-align: left;
 }
 
@@ -113,7 +113,7 @@
 }
 
 .slider-images > img  {
-  left: 150px;
+  left: 130px;
   margin-top: 15px;
   border: 2px solid grey;
 

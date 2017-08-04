@@ -1,49 +1,10 @@
-<div class="custom-modal" *ngIf="showItineraries">
-  <div class="form-card">
-    <div class="form-header">
-      <h3>Add to itinerary - {{ recommendation?.place.name }}</h3>
-      <a (click)="cancel()">X</a>
-    </div>
-
-    <div class="form-housing">
-
-      <div class="progress-tracker-section">
-        <ul class="progress-tracker">
-          <li class="progress-title" (click)="backToSelectItinerary()" [class.progress-done]="itinerarySelected">SELECT ITINERARY</li><li class="progress-title">SELECT DISPLAY PICTURE</li>
-        </ul>
-      </div>
-
-      <div *ngIf="!itinerarySelected">
-        <h4>Please select itinerary to add to:</h4>
-        <div class="copy-to-itinerary-list">
-          <div *ngFor="let itinerary of itineraries" class="copy-to-itinerary" (click)="selectItinerary(itinerary)">
-            <h4>{{ itinerary.name }} - ({{ itinerary.date_from | date:"dd MMM yy" }} to {{ itinerary.date_to | date:"dd MMM yy" }})</h4>
-          </div>
-        </div>
-      </div>
-
-      <div *ngIf="itinerarySelected">
-        <h4>Please select a display picture:</h4>
-        <div class="slider" *ngIf="recommendation?.place.photos">
-          <div class="slider-images" *ngFor="let image of recommendation?.place.photos; let i = index">
-            <input type="radio" name="slide_switch" id="image-{{i}}" (click)="selectPic(image)" checked>
-            <label for="image-{{i}}">
-              <img src="{{ image.url }}" alt="">
-            </label>
-            <img src="{{ image.url }}" alt="">
-            <h5 class="photo-credit" [innerHTML]="image.credit"></h5>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="action-response">
-      <h5 class="action-response-secondary" (click)="cancel()">CANCEL</h5>
-      <h5 *ngIf="itinerarySelected" class="action-response-primary" (click)="save()"> <i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5>
-
-    </div>
-  </div>
+<!-- add to itinerary modal -->
+<div *ngIf="addRecommendation" class="custom-modal">
+  <ww-add-recommendation
+    [recommendation]="recommendation"
+    [currentUser]="currentUser"
+    (updateAdd)="updateAdd($event)"
+    (cancelAdd)="cancelAdd($event)"></ww-add-recommendation>
 </div>
 
 <div class="main">
@@ -51,7 +12,7 @@
   <div class="recommend-header">
     <h3>{{ recommendation?.originator.username }} recommended {{ recommendation?.place.name }}</h3>
 
-    <div class="added-message" *ngIf="recommendation?.itinerary">
+    <div class="added-message" *ngIf="recommendation?.itinerary.length > 0">
       <h5><i class="fa fa-check fa-lg" aria-hidden="true"></i> You have added this recommendation to the itineraries:</h5>
 
       <div *ngFor="let itinerary of recommendation?.itinerary">
@@ -60,7 +21,7 @@
     </div>
 
     <h4 (click)="addToItinerary()">Add to itinerary</h4>
-    <h4>Ignore</h4>
+    <h4 (click)="delete()">Delete</h4>
   </div>
 
   <div class="recommendation-message">
@@ -125,5 +86,30 @@
     [width]="'300px'"
     [height]="'300px'"></ww-location-pin>
   </div>
+</div>
 
+
+<!-- recommendation delete modal -->
+<div class="custom-modal" *ngIf="deleteRecommendation">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>Delete recommendation?</h3>
+      <a (click)="cancelDelete()">X</a>
+    </div>
+
+    <div class="form-header-name-delete">
+      <h4>{{ recommendation?.place.name }} recommended by {{ recommendation?.originator.username }}</h4>
+    </div>
+
+    <div class="content-with-header-name">
+      <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
+      <h4>Deleting recommendation {{ recommendation?.place.name  }} will permanently remove it from your list of recommendations.</h4>
+    </div>
+
+    <div class="action-response">
+      <h5 class="action-response-primary" (click)="cancelDelete()">CANCEL</h5>
+      <h5 class="action-response-warning" (click)="confirmDelete()">DELETE</h5>
+    </div>
+
+  </div>
 </div>

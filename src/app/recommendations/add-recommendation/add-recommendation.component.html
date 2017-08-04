@@ -17,6 +17,7 @@
       <div class="copy-to-itinerary-list">
         <div *ngFor="let itinerary of itineraries" class="copy-to-itinerary" (click)="selectItinerary(itinerary)">
           <h4>{{ itinerary.name }} - ({{ itinerary.date_from | date:"dd MMM yy" }} to {{ itinerary.date_to | date:"dd MMM yy" }})</h4>
+          <h5 *ngIf="itinerary.added">Recommendation has already been added to this itinerary.</h5>
         </div>
       </div>
     </div>

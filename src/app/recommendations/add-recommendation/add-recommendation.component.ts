@@ -15,6 +15,7 @@ export class AddRecommendationComponent implements OnInit {
   @Input() currentUser;
 
   @Output() cancelAdd = new EventEmitter();
+  @Output() updateAdd = new EventEmitter();
 
   itineraries;
   itinerarySelected = false;
@@ -29,11 +30,35 @@ export class AddRecommendationComponent implements OnInit {
 
   ngOnInit() {
     this.itineraries = this.currentUser['itineraries'];
+
+    this.checkAdded();
+  }
+
+  checkAdded()  {
+    for (let i = 0; i < this.recommendation['itinerary'].length; i++) {
+      for (let j = 0; j < this.itineraries.length; j++) {
+
+        if(this.recommendation['itinerary'][i]['_id'] === this.itineraries[j]['_id'])  {
+          this.itineraries[j]['added'] = true;
+        }
+      }
+    }
+    console.log(this.itineraries);
   }
 
   selectItinerary(itinerary)  {
     this.itinerary = itinerary;
+
+    this.formatItinMembers();
     this.itinerarySelected = true;
+  }
+
+  formatItinMembers() {
+    for (let i = 0; i < this.itinerary['members'].length; i++) {
+      this.itinerary['members'][i] = {
+        _id: this.itinerary['members'][i]
+      }
+    }
   }
 
   selectPic(image)  {
@@ -83,10 +108,16 @@ export class AddRecommendationComponent implements OnInit {
       username: this.currentUser['username'],
     }
 
+
+    let addedItin = {
+      _id: this.itinerary['_id'],
+      name: this.itinerary['name']
+    }
+
     if(this.recommendation['itinerary'] === undefined || this.recommendation['itinerary'] === '')  {
-      this.recommendation['itinerary'] = [this.itinerary['_id']]
+      this.recommendation['itinerary'] = [addedItin]
     } else  {
-      this.recommendation['itinerary'].push(this.itinerary['_id']);
+      this.recommendation['itinerary'].push(addedItin);
     }
 
     this.itineraryEventService.addEvent(newItem, this.itinerary).subscribe(
@@ -94,10 +125,11 @@ export class AddRecommendationComponent implements OnInit {
         this.loadingService.setLoader(false, "");
         this.flashMessageService.handleFlashMessage(result.message);
 
-        this.cancelAdd.emit(false)
-
         this.recommendationService.updateRecommendation(this.recommendation).subscribe(
-          result =>{})
+          result =>{
+            this.updateAdd.emit(this.recommendation['itinerary']);
+            this.cancelAdd.emit(false);
+          })
       })
   }
 

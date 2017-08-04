@@ -1,6 +1,7 @@
 .recommendation {
   padding: 10px 40px;
-  border-top: 1px solid lightgray;
+  border: 1px solid lightgray;
+  background-color: white;
 
   &:hover {
     background-color: #F6F6F6;
@@ -28,10 +29,6 @@
 
 .recommendation-header h4 {
   padding-bottom: 5px;
-
-  &:hover {
-    cursor: pointer;
-  }
 }
 
 .details-item {

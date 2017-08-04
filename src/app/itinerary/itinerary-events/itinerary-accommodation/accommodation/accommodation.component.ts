@@ -474,8 +474,7 @@ export class AccommodationComponent implements OnInit, OnDestroy {
             this.flashMessageService.handleFlashMessage(result.message);
           })
 
-    this.deleteAccommodation = false;
-    this.preventScroll(false);
+    this.cancelDelete();
   }
 
   // others

@@ -89,6 +89,22 @@ export class RecommendationService {
                     });
   }
 
+  deleteRecommendation(recommendation)  {
+    const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
+
+    return this.http.delete( this.url + "/recommendation/" + recommendation['_id'] + token)
+                    .map((response: Response) => {
+                      this.recommendations.splice(this.recommendations.indexOf(recommendation), 1);
+                      this.updateRecommendations.next(this.recommendations);
+
+                      return response.json()
+                    })
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
+  }
+
   timeAgo(recommendations) {
     for (let i = 0; i < recommendations.length; i++) {
       let timePosted = new Date(recommendations[i]['created_at']).getTime();

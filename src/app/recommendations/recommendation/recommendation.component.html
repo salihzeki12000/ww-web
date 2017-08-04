@@ -27,7 +27,7 @@
     </div>
   </div>
 
-  <div class="added-message" *ngIf="recommendation?.itinerary">
+  <div class="added-message" *ngIf="recommendation?.itinerary.length > 0">
     <h5><i class="fa fa-check fa-lg" aria-hidden="true"></i> You have added this recommendation to the itineraries:</h5>
 
     <div *ngFor="let itinerary of recommendation?.itinerary">
@@ -42,9 +42,38 @@
 
 </div>
 
+
+<!-- add to itinerary modal -->
 <div *ngIf="addRecommendation" class="custom-modal">
   <ww-add-recommendation
     [recommendation]="recommendation"
     [currentUser]="currentUser"
+    (updateAdd)="updateAdd($event)"
     (cancelAdd)="cancelAdd($event)"></ww-add-recommendation>
+</div>
+
+
+<!-- recommendation delete modal -->
+<div class="custom-modal" *ngIf="deleteRecommendation">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>Delete recommendation?</h3>
+      <a (click)="cancelDelete()">X</a>
+    </div>
+
+    <div class="form-header-name-delete">
+      <h4>{{ recommendation?.place.name }} recommended by {{ recommendation?.originator.username }}</h4>
+    </div>
+
+    <div class="content-with-header-name">
+      <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
+      <h4>Deleting recommendation {{ recommendation?.place.name  }} will permanently remove it from your list of recommendations.</h4>
+    </div>
+
+    <div class="action-response">
+      <h5 class="action-response-primary" (click)="cancelDelete()">CANCEL</h5>
+      <h5 class="action-response-warning" (click)="confirmDelete()">DELETE</h5>
+    </div>
+
+  </div>
 </div>

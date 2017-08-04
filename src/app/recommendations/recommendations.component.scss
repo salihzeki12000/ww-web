@@ -32,5 +32,14 @@
 
 .recommendations-list,
 .nil-message-main {
-  margin-top: 59px;
+  position: absolute;
+  top: 59.09px;
+  max-height: calc(100vh - 135px);
+  width: 600px;
+  overflow: auto;
+
+  @media only screen and (max-width: 610px) {
+    width: 100%;
+    min-width: 300px;
+  }
 }
