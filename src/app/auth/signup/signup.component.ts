@@ -48,7 +48,7 @@ export class SignupComponent implements OnInit {
           data => {
             this.userService.getCurrentUser().subscribe(
                   data => {});
-                  
+
             if(this.reroute !== '/me')  {
               let user = {_id: data.userId};
               this.addToItin(user);
@@ -71,6 +71,12 @@ export class SignupComponent implements OnInit {
           this.router.navigateByUrl(this.reroute);
         }, 1000)
       })
+  }
+
+  copyUsername(value)  {
+    this.signupForm.patchValue({
+      username: value.split('@')[0]
+    })
   }
 
   validEmail(control: FormControl): {[s: string]: boolean} {

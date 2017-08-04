@@ -9,12 +9,8 @@ h5  {
 }
 
 a.cancel-auth {
-  display: none;
-  @media only screen and (max-width: 850px) {
-    display: block;
-    float: right;
-    color: grey;
-  }
+  float: right;
+  color: grey;
 }
 
 .sign-up-header {

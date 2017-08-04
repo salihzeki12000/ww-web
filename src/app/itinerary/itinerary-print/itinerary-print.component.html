@@ -193,31 +193,35 @@
               </div>
             </div>
 
-            <div class="details-item" *ngIf="event?.place.formatted_address">
-              <i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>
-              <h5> {{ event?.place.formatted_address }}</h5>
-            </div>
+            <div *ngIf="event?.place">
 
-            <div class="details-item" *ngIf="event?.place.international_phone_number">
-              <i class="fa fa-phone fa-fw" aria-hidden="true"></i>
-              <a href="tel:{{ event?.international_phone_number }}">{{ event?.place.international_phone_number }}</a>
-            </div>
+              <div class="details-item" *ngIf="event?.place.formatted_address">
+                <i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>
+                <h5> {{ event?.place.formatted_address }}</h5>
+              </div>
 
-            <div class="details-item" *ngIf="event?.formatted_hours">
-              <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>
-              <h5 [innerHTML]="event?.formatted_hours"></h5>
-            </div>
+              <div class="details-item" *ngIf="event?.place.international_phone_number">
+                <i class="fa fa-phone fa-fw" aria-hidden="true"></i>
+                <a href="tel:{{ event?.international_phone_number }}">{{ event?.place.international_phone_number }}</a>
+              </div>
 
-            <div class="details-item" *ngIf="event?.entry_fee">
-              <i class="fa fa-money fa-fw" aria-hidden="true"></i>
-              <h5>{{ event?.entry_fee }}</h5>
-            </div>
+              <div class="details-item" *ngIf="event?.formatted_hours">
+                <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>
+                <h5 [innerHTML]="event?.formatted_hours"></h5>
+              </div>
 
-            <div class="details-item" *ngIf="event?.place.website">
-              <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
-              <h5 class="truncate">
-                <a href="{{event?.place.website}}" target="_blank" class="website-link">{{ event?.place.website }}</a>
-              </h5>
+              <div class="details-item" *ngIf="event?.entry_fee">
+                <i class="fa fa-money fa-fw" aria-hidden="true"></i>
+                <h5>{{ event?.entry_fee }}</h5>
+              </div>
+
+              <div class="details-item" *ngIf="event?.place.website">
+                <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                <h5 class="truncate">
+                  <a href="{{event?.place.website}}" target="_blank" class="website-link">{{ event?.place.website }}</a>
+                </h5>
+              </div>
+              
             </div>
 
             <div class="details-item" *ngIf="event?.formatted_note">

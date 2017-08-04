@@ -1,5 +1,5 @@
 <a class="cancel-auth" (click)="cancelAuth()">X</a>
-<h3 class="sign-up-form-header">Experience the ease of travel planning now!</h3>
+<h3 class="sign-up-form-header">Experience the ease of travel planning</h3>
 
 <ww-auth
   [reroute]="reroute"
@@ -7,19 +7,19 @@
 
 <h5>--- or ---</h5>
 
-<h3 class="sign-up-header">Sign up with us now!</h3>
+<h3 class="sign-up-header">Sign up with us!</h3>
 
 <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+
+  <label>Email</label>
+  <input type="text" #email formControlName="email" (keyup)="copyUsername(email.value)">
+  <span class="form-validator"
+    *ngIf="signupForm.get('email').touched && signupForm.get('email').invalid">Invalid email address</span>
 
   <label>Username</label>
   <input type="text" formControlName="username">
   <span class="form-validator"
     *ngIf="signupForm.get('username').touched && signupForm.get('username').invalid">Username is required</span>
-
-  <label>Email</label>
-  <input type="text" #email formControlName="email">
-  <span class="form-validator"
-    *ngIf="signupForm.get('email').touched && signupForm.get('email').invalid">Invalid email address</span>
 
   <label>Password <span class="label-note"> ( at least 6 characters )</span></label>
   <input type="password" #password formControlName="password">

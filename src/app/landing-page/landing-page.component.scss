@@ -96,20 +96,6 @@ span.form-validator-message {
   }
 }
 
-.get-sign-up  {
-  display: none;
-  @media only screen and (max-width: 850px) {
-    display: block;
-    position: absolute;
-    top: 28px;
-    right: 50px;
-    color: #F9FBFB;
-    &:hover {
-      cursor: pointer;
-    }
-  }
-}
-
 .get-sign-in  {
   display: none;
   @media only screen and (max-width: 850px) {
@@ -155,37 +141,16 @@ span.form-validator-message {
   }
 }
 
-ww-signup {
-  display: inline-block;
-  margin-left: 30px;
-  padding: 20px;
-  width: 360px;
-  background-color: rgba(255,255,255, 0.6);
-  border-radius: 5px;
-
-  @media only screen and (max-width: 850px) {
-    display: none;
-  }
-}
-
 .landing-page-tagline {
-  display: inline-block;
   margin-top: 100px;
-  margin-left: calc((100vw - 1100px) / 2);
-  max-width: calc(100vw - 450px);
+  width: 100vw;
   color: #F9FBFB;
+  text-align: center;
   vertical-align: top;
   font-family: 'Fira Sans', sans-serif;
 
-  @media only screen and (max-width: 850px) {
-    display: block;
-    width: calc(100vw - 60px);
-    max-width: none;
-    text-align: center;
-  }
-
-  @media only screen and (max-width: 1150px) {
-    margin-left: 30px; //(450-360-30)/2
+  @media only screen and (max-width: 750px) {
+    padding: 0 20px;
   }
 }
 
@@ -202,14 +167,39 @@ ww-signup {
   color: #F9FBFB;
 }
 
+.call-to-action {
+  margin-top: 220px;
+  margin-left: calc((100vw - 200px )/2);
+  width: 200px;
+  padding: 20px;
+  text-align: center;
+  color: #F9FBFB;
+  background-color: #6494ED;
+  border-radius: 5px;
+  border: 2px solid #F9FBFB;
+
+  &:hover {
+    cursor: pointer;
+    opacity: .7;
+  }
+
+  @media only screen and (max-width: 450px) {
+    margin-top: 60px;
+  }
+
+  @media only screen and (min-width: 450px) and (max-width: 720px) {
+    margin-top: 150px;
+  }
+}
+
 .fa-arrow-circle-o-down {
   position: absolute;
   top: 620px;
   left: calc((100vw - 36px)/2);
   color: rgba(255,255,255,.5);
 
-  @media only screen and (max-width: 850px) {
-    top: 350px;
+  @media only screen and (max-width: 450px) {
+    top: 520px;
   }
 }
 
