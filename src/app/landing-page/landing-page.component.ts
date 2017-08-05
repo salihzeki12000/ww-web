@@ -19,6 +19,9 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   showSignin = false;
   showSignup = false;
 
+
+// preview/itinerary/5971d919773bea000429a120/summary
+
   constructor(
     private titleService: Title,
     private renderer: Renderer2,
@@ -39,6 +42,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.loadingService.setLoader(true, "");
   }
 
   onSubmit()  {
@@ -79,6 +83,12 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   hideSignup(event)  {
     this.showSignup = false;
     this.preventScroll(false);
+  }
+
+  goToSample()  {
+    this.loadingService.setLoader(true, "Retrieving itinerary details...");
+
+    this.router.navigateByUrl('/preview/itinerary/5971d919773bea000429a120/summary')
   }
 
   preventScroll(value)  {
