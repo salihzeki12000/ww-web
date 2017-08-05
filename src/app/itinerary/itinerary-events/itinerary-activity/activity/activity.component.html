@@ -13,7 +13,7 @@
 
   <div class="display-photo-housing">
 
-    <div class="dots-menu" (click)="showMenu = true">
+    <div class="dots-menu" (click)="showMenu = true" *ngIf="!preview">
       <div class="dots-menu-hint">
         <h6>Click to edit or delete</h6>
       </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy, ElementRef, HostListener } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { Title }        from '@angular/platform-browser';
 
@@ -12,6 +13,8 @@ import { LoadingService }        from '../../loading';
   styleUrls: ['./itinerary-summary.component.scss'],
 })
 export class ItinerarySummaryComponent implements OnInit, OnDestroy {
+  preview;
+  
   eventSubscription: Subscription;
   events = [];
   totalEvents = 1;
@@ -46,11 +49,15 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
   constructor(
     private titleService: Title,
     private element: ElementRef,
+    private route: ActivatedRoute,
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
     private loadingService: LoadingService) { }
 
   ngOnInit() {
+    let segments = this.route.snapshot['_urlSegment'].segments;
+    if(segments[0]['path'] === 'preview') this.preview = true;
+
     this.events = [];
     this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
        result => {

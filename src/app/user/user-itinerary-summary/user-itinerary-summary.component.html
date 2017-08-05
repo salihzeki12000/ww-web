@@ -1,58 +1,75 @@
 <h4 class="header">You are viewing the summary of the itinerary - {{ currentItinerary?.name }}</h4>
-<h5 class="header-note">Items are arrange in chronological order where applicable</h5>
 
 <div class="summary-container">
-  <div *ngFor="let event of events; let i = index" class="event-item-card">
+  <div *ngFor="let date of itinDateRange; let i = index">
+    <div *ngIf="date === 'any day'" class="day-header">
+      <h3 class="date-display">Any day</h3>
 
-    <div *ngIf="event.type === 'activity'" class="event-details-card">
-      <img src="{{ event.photo.url }}" alt="" *ngIf="event?.photo">
-      <i class="fa fa-bicycle fa-3x" aria-hidden="true" *ngIf="!event?.photo"></i>
-
-      <div class="summary-item-details">
-        <h5 class="event-type">Activity <span class="item-list">{{ i + 1 }} of {{events.length}}</span></h5>
-        <h5 *ngIf="event.date === 'any day'">{{ event.date }} - {{ event.time }}</h5>
-        <h5 *ngIf="event.date !== 'any day'">{{ event.date | date: 'dd MMM yyyy (EEE)' }} - {{ event.time }}</h5>
-        <h4>{{ event.name }}</h4>
+      <div *ngFor="let note of dailyNotes" class="daily-note">
+        <div *ngIf="note.date === date">
+          <i class="fa fa-sticky-note-o fa-fw" aria-hidden="true"></i>
+          <h5>{{ note.note }}</h5>
+        </div>
       </div>
     </div>
 
-    <div *ngIf="event.type === 'accommodation'" class="event-details-card">
-      <img src="{{ event.photo.url }}" alt="" *ngIf="event?.photo">
-      <i class="fa fa-home fa-3x" aria-hidden="true" *ngIf="!event?.photo"></i>
+    <div *ngIf="date !== 'any day'" class="day-header">
+      <h3 class="date-display">Day {{ i }} - {{ date | date: "dd MMM (EEE)" }}</h3>
 
-      <div class="summary-item-details">
-        <h5 class="event-type">Accommodation ({{event.city}}) <span class="item-list">{{ i + 1 }} of {{events.length}}</span></h5>
-        <h5 *ngIf="event.date === 'any day'">Check in {{ event.date }} - {{ event.time }}</h5>
-        <h5 *ngIf="event.date !== 'any day'">Check in {{ event.date | date: 'dd MMM yyyy (EEE)' }} - {{ event.time }}</h5>
-
-        <h5 *ngIf="event.date === 'any day'">Check out {{ event.check_out_date }} - {{ event.check_out_time }}</h5>
-        <h5 *ngIf="event.date !== 'any day'">Check out {{ event.check_out_date | date: 'dd MMM yyyy (EEE)' }} - {{ event.time }}</h5>
-
-        <h4>{{ event.name }}</h4>
+      <div *ngFor="let note of dailyNotes" class="daily-note">
+        <div *ngIf="note.date === date">
+          <i class="fa fa-sticky-note-o fa-fw" aria-hidden="true"></i>
+          <h5>{{ note.note }}</h5>
+        </div>
       </div>
     </div>
 
-    <div *ngIf="event.type === 'transport'" class="event-details-card">
-      <div [ngSwitch]="event.transport_type" class="transport-switch">
-        <i *ngSwitchCase="'flight'" class="fa fa-plane fa-3x" aria-hidden="true"></i>
-        <i *ngSwitchCase="'train'" class="fa fa-train fa-3x" aria-hidden="true"></i>
-        <i *ngSwitchCase="'bus'" class="fa fa-bus fa-3x" aria-hidden="true"></i>
-        <i *ngSwitchCase="'cruise'" class="fa fa-ship fa-3x" aria-hidden="true"></i>
-        <i *ngSwitchCase="'vehicle rental'" class="fa fa-car fa-3x" aria-hidden="true"></i>
-        <i *ngSwitchCase="'others'" class="fa fa-rocket fa-3x" aria-hidden="true"></i>
+
+    <div *ngFor="let event of events; let i = index">
+
+      <div *ngIf="event.date === date" class="event-item-card">
+        <h4 class="event-time">{{ event.time }}</h4>
+
+        <div *ngIf="event.type === 'activity'" class="event-details-card">
+          <img src="{{ event.photo.url }}" alt="" *ngIf="event?.photo">
+          <i class="fa fa-bicycle fa-3x" aria-hidden="true" *ngIf="!event?.photo"></i>
+
+          <div class="summary-item-details">
+            <h4>{{ event.name }}</h4>
+          </div>
+        </div>
+
+        <div *ngIf="event.type === 'accommodation'" class="event-details-card">
+          <img src="{{ event.photo.url }}" alt="" *ngIf="event?.photo">
+          <i class="fa fa-home fa-3x" aria-hidden="true" *ngIf="!event?.photo"></i>
+
+          <div class="summary-item-details">
+            <h4><i class="fa fa-bed" aria-hidden="true"></i> {{ event?.city | uppercase }}</h4>
+            <h4>{{ event.name }}</h4>
+
+            <h5>Check out - {{ event.check_out_date | date: 'dd MMM yyyy (EEE)' }} - {{ event.check_out_time }}</h5>
+
+          </div>
+        </div>
+
+        <div *ngIf="event.type === 'transport'" class="event-details-card">
+          <div [ngSwitch]="event.transport_type" class="transport-switch">
+            <i *ngSwitchCase="'flight'" class="fa fa-plane fa-3x" aria-hidden="true"></i>
+            <i *ngSwitchCase="'train'" class="fa fa-train fa-3x" aria-hidden="true"></i>
+            <i *ngSwitchCase="'bus'" class="fa fa-bus fa-3x" aria-hidden="true"></i>
+            <i *ngSwitchCase="'cruise'" class="fa fa-ship fa-3x" aria-hidden="true"></i>
+            <i *ngSwitchCase="'vehicle rental'" class="fa fa-car fa-3x" aria-hidden="true"></i>
+            <i *ngSwitchCase="'others'" class="fa fa-rocket fa-3x" aria-hidden="true"></i>
+          </div>
+
+          <div class="summary-item-details">
+            <h4>{{ event?.transport_type | capitalise }} from {{ event?.dep_city }} to {{ event?.arr_city}}</h4>
+            <h4 *ngIf="event.transport_type === 'flight'">{{ event.reference_number }} - {{ event.transport_company }}</h4>
+          </div>
+
+        </div>
       </div>
-
-      <div class="summary-item-details">
-        <h5 class="event-type">{{ event?.transport_type | capitalise }} from {{ event?.dep_city }} to {{ event?.arr_city}} <span class="item-list">{{ i + 1 }} of {{events.length}}</span></h5>
-        <h5 *ngIf="event.transport_type === 'flight'">{{ event.reference_number }} - {{ event.transport_company }}</h5>
-
-        <h5 *ngIf="event.dep_date === 'any day'">Departs {{ event.dep_date }} - {{ event.dep_time }}</h5>
-        <h5 *ngIf="event.dep_date !== 'any day'">Departs {{ event.dep_date | date: 'dd MMM yyyy (EEE)' }} - {{ event.dep_time }}</h5>
-      </div>
-
     </div>
-
 
   </div>
-
 </div>

@@ -1,5 +1,6 @@
 import { Routes } from "@angular/router";
 
+import { ItineraryDescriptionComponent }            from './itinerary-description/itinerary-description.component';
 import { ItinerarySummaryComponent }                from './itinerary-summary/itinerary-summary.component';
 import { ItineraryAccommodationComponent }          from './itinerary-events/itinerary-accommodation/itinerary-accommodation.component';
 import { ItineraryTransportComponent }              from './itinerary-events/itinerary-transport/itinerary-transport.component';
@@ -13,6 +14,7 @@ import { ItinerarySettingsComponent }               from './itinerary-settings/i
 
 export const ITINERARY_ROUTES: Routes = [
   { path: '', redirectTo: 'summary', pathMatch: 'full' },
+  { path: 'description', component: ItineraryDescriptionComponent },
   { path: 'summary', component: ItinerarySummaryComponent },
   { path: 'accommodation', component: ItineraryAccommodationComponent },
   { path: 'transport', component: ItineraryTransportComponent },

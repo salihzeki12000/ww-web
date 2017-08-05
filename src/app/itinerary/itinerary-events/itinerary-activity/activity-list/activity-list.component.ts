@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 import { Title }        from '@angular/platform-browser';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { ItineraryService }      from '../../../itinerary.service';
 import { ItineraryEvent }        from '../../itinerary-event';
@@ -13,6 +14,8 @@ import { LoadingService }        from '../../../../loading';
   styleUrls: ['./activity-list.component.scss']
 })
 export class ActivityListComponent implements OnInit, OnDestroy {
+  preview;
+  
   eventSubscription: Subscription;
   activities = [];
   totalActivities = 1;
@@ -31,11 +34,15 @@ export class ActivityListComponent implements OnInit, OnDestroy {
   constructor(
     private titleService: Title,
     private renderer: Renderer2,
+    private route: ActivatedRoute,
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
     private loadingService: LoadingService) { }
 
   ngOnInit() {
+    let segments = this.route.snapshot['_urlSegment'].segments;
+    if(segments[0]['path'] === 'preview') this.preview = true;
+
     this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
       result => { this.filterEvents(result); })
 

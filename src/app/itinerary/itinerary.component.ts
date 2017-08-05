@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, Output, EventEmitter, Renderer2, ElementR
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
+import { AuthService }           from '../auth/auth.service';
 import { Itinerary }             from './itinerary';
 import { ItineraryService }      from './itinerary.service';
 import { ItineraryEventService } from './itinerary-events/itinerary-event.service';
@@ -16,12 +17,19 @@ import { NotificationService }   from '../notifications';
   styleUrls: ['./itinerary.component.scss']
 })
 export class ItineraryComponent implements OnInit, OnDestroy {
+  isLoggedIn = false;
+  viewOnly = false;
+  preview = false;
+  validUser = false;
+  validAccess = true;
+
   currentItinerarySubscription: Subscription;
   itinerary;
+  events = [];
+  resources = [];
 
   currentUserSubscription: Subscription;
   currentUser: User;
-
   showUsersSearchModal = false;
   users: User[] = [];
   filteredResult;
@@ -39,6 +47,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   inviteLink = '';
 
   constructor(
+    private authService: AuthService,
     private element: ElementRef,
     private renderer: Renderer2,
     private itineraryService: ItineraryService,
@@ -50,30 +59,50 @@ export class ItineraryComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router) { }
 
+
+  // log in / preview -> can see / cannot edit (log in + preview = can see itin ) + can add itin
+  // log in / not preview -> only valid user in itinerary can see and edit (log in + not preview + valid user = can see/edit itin)
+  // not log in / preview -> can see / cannot edit (log in + preview = can see itin ) + cannot add itin
+  // not log in / not preview -> cannot see
+
   ngOnInit() {
+    this.isLoggedIn = this.authService.isLoggedIn();
+
+    let segments = this.route.snapshot['_urlSegment'].segments;
+    if(segments[0]['path'] === 'preview') this.preview = true;
+
     this.route.params.forEach((params: Params) => {
       let id = params['id'];
 
       this.itineraryService.getItin(id).subscribe(
         result => {
           this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
-                                             result =>  {
-                                               this.itinerary = result;
-                                               this.getAllUsers();
-                                               this.setInviteLink();
-                                             })
+              result =>  {
+                this.itinerary = result;
+                this.viewOnly = this.itinerary['view_only'];
+                this.checkAccess();
+
+                if(!this.preview && this.isLoggedIn)  {
+                  this.getAllUsers();
+                  this.setInviteLink();
+                }
+              })
 
           this.itineraryEventService.getEvents(id).subscribe(
-               eventResult => {})
+               eventResult => { this.events = eventResult })
 
           this.resourceService.getResources(id).subscribe(
-               resourceResult => {})
+               resourceResult => { this.resources = resourceResult })
         }
       )
     })
 
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
-                                         result => { this.currentUser = result; })
+      result => {
+        this.currentUser = result;
+        this.checkAccess();
+      })
+
   }
 
   ngOnDestroy() {
@@ -81,11 +110,33 @@ export class ItineraryComponent implements OnInit, OnDestroy {
     if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
   }
 
+  checkAccess() {
+    this.validUser = false
+
+    if(this.currentUser && this.itinerary)  {
+      for (let i = 0; i < this.itinerary['members'].length; i++) {
+        if(this.itinerary['members'][i]['_id'] === this.currentUser['_id']) {
+          this.validUser = true;
+        };
+      }
+    }
+
+    if(this.preview)  {
+      this.validAccess = true;
+    } else if(!this.preview && !this.isLoggedIn) {
+      this.validAccess = false;
+    } else if(!this.preview && this.isLoggedIn && this.validUser) {
+      this.validAccess = true;
+    } else if(!this.preview && this.isLoggedIn && !this.validUser) {
+      this.validAccess = false;
+    }
+  }
+
   getAllUsers() {
     this.userService.getAllUsers()
         .subscribe(
-          userResult => {
-            this.filterUsers(userResult.users);
+          result => {
+            this.filterUsers(result.users);
           }
         )
   }
@@ -269,6 +320,15 @@ export class ItineraryComponent implements OnInit, OnDestroy {
     this.showCurrentMembers = false;
     this.showUsersSearchModal = false;
     this.preventScroll(false);
+  }
+
+  // copy a preview itinerary
+  copy()  {
+    if(this.isLoggedIn) {
+      console.log("ok to copy")
+    } else if(!this.isLoggedIn) {
+      console.log("get sign in")
+    }
   }
 
   // others

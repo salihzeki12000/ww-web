@@ -21,7 +21,8 @@ export class TransportComponent implements OnInit, OnDestroy {
   @Input() totalTransports;
   @Input() index;
   @Input() summary;
-
+  @Input() preview;
+  
   currentUserSubscription: Subscription;
   currentUser;
   sameUser;

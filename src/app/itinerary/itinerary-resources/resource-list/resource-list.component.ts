@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { Title }        from '@angular/platform-browser';
 
@@ -13,6 +14,8 @@ import { LoadingService }   from '../../../loading';
   styleUrls: ['./resource-list.component.scss']
 })
 export class ResourceListComponent implements OnInit, OnDestroy {
+  preview;
+
   updateResourcesSubscription: Subscription;
   resources = [];
   filteredResources = [];
@@ -32,11 +35,15 @@ export class ResourceListComponent implements OnInit, OnDestroy {
   constructor(
     private titleService: Title,
     private renderer: Renderer2,
+    private route: ActivatedRoute,
     private itineraryService: ItineraryService,
     private resourceService: ResourceService,
     private loadingService: LoadingService) { }
 
   ngOnInit() {
+    let segments = this.route.snapshot['_urlSegment'].segments;
+    if(segments[0]['path'] === 'preview') this.preview = true;
+
     this.updateResourcesSubscription = this.resourceService.updateResources.subscribe(
      result => {
        this.resources = Object.keys(result).map(key => result[key]);

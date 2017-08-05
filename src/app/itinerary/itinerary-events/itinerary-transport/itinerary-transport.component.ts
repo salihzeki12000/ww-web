@@ -1,5 +1,6 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Title }        from '@angular/platform-browser';
 import { Subscription } from 'rxjs/Rx';
 
@@ -14,6 +15,8 @@ import { LoadingService }        from '../../../loading';
   styleUrls: ['./itinerary-transport.component.scss']
 })
 export class ItineraryTransportComponent implements OnInit {
+  preview;
+
   eventSubscription: Subscription;
   transports = [];
   totalTransports = 1;
@@ -32,18 +35,22 @@ export class ItineraryTransportComponent implements OnInit {
   constructor(
     private titleService: Title,
     private renderer: Renderer2,
+    private route: ActivatedRoute,
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
     private loadingService: LoadingService) { }
 
   ngOnInit() {
+    let segments = this.route.snapshot['_urlSegment'].segments;
+    if(segments[0]['path'] === 'preview') this.preview = true;
+
     this.itinDateSubscription = this.itineraryService.updateDate.subscribe(
-                                      result => {
-                                        this.itinDateRange = Object.keys(result).map(key => result[key]);
-                                    })
+      result => {
+        this.itinDateRange = Object.keys(result).map(key => result[key]);
+      })
 
     this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
-                                 result => { this.filterEvent(result); })
+      result => { this.filterEvent(result); })
 
     this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
       result => {

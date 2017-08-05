@@ -25,6 +25,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
   @Input() totalActivities;
   @Input() index;
   @Input() summary;
+  @Input() preview;
 
   currentUserSubscription: Subscription;
   currentUser;

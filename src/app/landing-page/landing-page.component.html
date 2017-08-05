@@ -129,12 +129,12 @@
 
 <div class="custom-modal" *ngIf="showSignin">
   <ww-signin
-    [reroute]="'/me'"
+    [reroute]="reroute"
     (hideSignin)="hideSignin($event)"></ww-signin>
 </div>
 
 <div class="custom-modal" *ngIf="showSignup">
   <ww-signup
-    [reroute]="'/me'"
+    [reroute]="reroute"
     (hideSignup)="hideSignup($event)"></ww-signup>
 </div>

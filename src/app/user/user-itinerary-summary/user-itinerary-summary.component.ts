@@ -79,11 +79,16 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
   }
 
   sortDailyNotes()  {
-    this.dailyNotes = [];
+    this.dailyNotes = []
+    let notes = this.currentItinerary['daily_note'];
 
-    for (let i = 0; i < this.currentItinerary['daily_note'].length; i++) {
-      this.dailyNotes.push(this.currentItinerary['daily_note'][i]['note'].replace(/\r?\n/g, '<br/> '));
+    for (let i = 0; i < notes.length; i++) {
+      if(notes[i]['note'] === 'e.g. Day trip to the outskirts') {
+        notes[i]['note'] = '';
+      }
     }
+
+    this.dailyNotes = notes;
   }
 
   filterEvents(events)  {

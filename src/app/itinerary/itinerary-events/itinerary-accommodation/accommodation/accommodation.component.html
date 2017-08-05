@@ -12,7 +12,7 @@
   <div class="display-header-background"></div>
 
   <div class="display-photo-housing">
-    <div class="dots-menu" (click)="showMenu = true">
+    <div class="dots-menu" (click)="showMenu = true" *ngIf="!preview">
       <div class="dots-menu-hint">
         <h6>Click to view options</h6>
       </div>

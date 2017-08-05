@@ -38,6 +38,25 @@
   color: #6494ED;
 }
 
+.auth {
+  position: absolute;
+  right: 0;
+  top: 15px;
+  z-index: 501;
+}
+
+.get-sign-in,
+.get-sign-up  {
+  float: right;
+  margin-right: 20px;
+  font-weight: 500;
+
+  &:hover {
+    cursor: pointer;
+    color: #6494ED;
+  }
+}
+
 .top-nav-bookmark  {
   position: fixed;
   top: 0;
@@ -606,4 +625,24 @@ ww-notification-list  {
  *************************/
 .user-profile-thumbnail {
   display: inline-block;
+}
+
+
+ww-signin,
+ww-signup {
+  display: block;
+  margin-top: 100px;
+  margin-left: calc((100vw - 360px)/2);
+  padding: 20px;
+  width: 360px;
+  background-color: white;
+  -webkit-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+
+  @media only screen and (max-width: 450px) {
+    display: block;
+    width: 100%;
+    margin: 80px 0 0 0;
+  }
 }

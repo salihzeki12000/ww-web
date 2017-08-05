@@ -5,33 +5,77 @@
   text-align: center;
 }
 
-.header-note  {
-  padding-left: 10px;
-  color: #808080;
+.summary-container  {
+  margin-bottom: 40px;
+}
+
+.day-header {
+  margin: 50px 0 10px 0;
+  padding: 10px;
+  border-bottom: 5px double;
+}
+
+.date-display  {
+  display: inline-block;
+  width: 170px;
+}
+
+.day-header:first-of-type  {
+  margin-top: 20px;
+}
+
+.daily-note  {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.daily-note i,
+.daily-note h5  {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.daily-note h5 {
+  width: 370px;
+}
+
+.event-item-card  {
+  border-bottom: 1px dashed lightgray;
+}
+
+.event-time {
+  display: inline-block;
+  padding-top: 15px;
+  width: 70px;
+  text-align: right;
+  vertical-align: top;
 }
 
 .event-details-card  {
-  border-bottom: 1px solid lightgray;
+  display: inline-block;
+  width: 525px;
 }
 
-.event-item-cardmg,
-.event-item-card i,
-.event-item-card .summary-item-details  {
+.event-details-card > img,
+.event-details-card > i,
+.event-details-card > .summary-item-details  {
   display: inline-block;
   vertical-align: top;
   margin-top: 15px;
 }
 
-.event-item-card .transport-switch  {
+.event-details-card .transport-switch  {
   display: inline-block;
   vertical-align: top;
 }
 
-.event-item-card img,
-.event-item-card i  {
+.event-details-card > img,
+.event-details-card > i,
+.event-details-card .transport-switch i  {
   height: 80px;
   width: 80px;
   margin: 10px;
+  background-color: #EAEAFB;
 }
 
 
@@ -44,7 +88,7 @@
 .fa-train,
 .fa-bus,
 .fa-rocket  {
-  padding: 20px;
+  padding: 23px;
 }
 
 .fa-car,
@@ -68,10 +112,4 @@
 
 .event-type {
   color: #567FCC;
-}
-
-span.item-list  {
-  padding: 3px 10px;
-  border: 1px solid lightgray;
-  border-radius: 10px;
 }

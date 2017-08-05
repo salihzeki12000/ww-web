@@ -19,7 +19,8 @@ export class ResourceComponent implements OnInit, OnDestroy {
   @Input() currentItinerary;
   @Input() totalResources;
   @Input() index;
-
+  @Input() preview;
+  
   currentUserSubscription: Subscription;
   currentUser;
   sameUser;

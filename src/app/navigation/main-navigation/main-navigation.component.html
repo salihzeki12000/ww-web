@@ -1,219 +1,232 @@
 <div class="main-nav">
   <nav>
-    <div class="logo" [routerLink]="['/me']">
+    <div class="logo" (click)="routeToHome()">
       <!-- <h2>wondererwanderer</h2> -->
       <img src="assets/wondererwanderer_logo.png" alt="">
     </div>
   </nav>
 </div>
 
-<div class="top-nav-bookmark">
-  <div class="top-nav-link">
-    <i class="fa fa-bookmark fa-lg" aria-hidden="true" (mouseover)="bookmarkOptions = true"></i>
+<div *ngIf="!isLoggedIn" class="auth">
 
-    <div class="top-nav-link-dropdown" *ngIf="bookmarkOptions">
-      <div class="dropdown-arrow-up"></div>
-      <div class="top-nav-dropdown-header"></div>
+  <h5 class="get-sign-in" (click)="getSignin()">LOG IN</h5>
+  <h5 class="get-sign-up" (click)="getSignup()">SIGN UP</h5>
 
-      <div class="dropdown-item" (click)="viewRecommendations()">
-        <h5><i class="fa fa-thumbs-up fa-fw fa-lg" aria-hidden="true"></i> Recommendations</h5>
-      </div>
-
-      <div class="nav-sub-header">
-        <h5>CHECK IN OPTIONS</h5>
-      </div>
-
-      <div class="dropdown-item" (click)="checkIn()">
-        <h5><i class="fa fa-map-marker fa-fw fa-lg" aria-hidden="true"></i> Check in now</h5>
-      </div>
-
-      <div class="dropdown-item" (click)="viewCheckinMap()">
-        <h5><i class="fa fa-globe fa-fw fa-lg" aria-hidden="true"></i> View check in map</h5>
-      </div>
-    </div>
-  </div>
 </div>
 
-<div class="top-nav-search">
-  <div class="top-nav-link">
-    <i class="fa fa-search fa-lg" aria-hidden="true" (mouseover)="searchOptions = true"></i>
 
-    <div class="top-nav-link-dropdown" *ngIf="searchOptions">
-      <div class="dropdown-arrow-up"></div>
-      <div class="top-nav-dropdown-header">
-        <h6>SELECT SEARCH CATEGORY</h6>
-      </div>
-      <div class="dropdown-item" (click)="getUsers()">
-        <h5>Search for people</h5>
-      </div>
-    </div>
-  </div>
-</div>
+<div *ngIf="isLoggedIn">
 
-<div class="top-nav-itinerary">
-  <div class="top-nav-link">
-    <i class="fa fa-sticky-note fa-lg" aria-hidden="true" (mouseover)="showItineraries = true"></i>
+  <div class="top-nav-bookmark">
+    <div class="top-nav-link">
+      <i class="fa fa-bookmark fa-lg" aria-hidden="true" (mouseover)="bookmarkOptions = true"></i>
 
-    <div class="top-nav-link-dropdown" *ngIf="showItineraries">
-      <div class="dropdown-arrow-up"></div>
-      <div class="top-nav-dropdown-header">
-        <h6>{{ currentUser?.itineraries.length > 1 ? 'ITINERARIES' : 'ITINERARY'}}</h6>
-      </div>
-      <h5 class="dropdown-new-itinerary" (click)="newItin()"><i class="fa fa-plus" aria-hidden="true"></i> Plan a new itinerary</h5>
-      <div>
-        <div *ngIf="currentUser?.itineraries.length === 0">
-          <h5 class="nil-dropdown-item">No itinerary at the moment</h5>
+      <div class="top-nav-link-dropdown" *ngIf="bookmarkOptions">
+        <div class="dropdown-arrow-up"></div>
+        <div class="top-nav-dropdown-header"></div>
+
+        <div class="dropdown-item" (click)="viewRecommendations()">
+          <h5><i class="fa fa-thumbs-up fa-fw fa-lg" aria-hidden="true"></i> Recommendations</h5>
         </div>
-        <div *ngFor="let itinerary of currentUser?.itineraries | slice:0:10" class="dropdown-item">
-          <div [routerLink]="['/me/itinerary/', itinerary._id]" (click)="routeToItinerary(itinerary._id)">
-            <h5>{{ itinerary.name }}</h5>
-            <h6>( {{ itinerary.date_from | date:'dd MMM yy' }} to {{ itinerary.date_to | date:'dd MMM yy' }} )</h6>
+
+        <div class="nav-sub-header">
+          <h5>CHECK IN OPTIONS</h5>
+        </div>
+
+        <div class="dropdown-item" (click)="checkIn()">
+          <h5><i class="fa fa-map-marker fa-fw fa-lg" aria-hidden="true"></i> Check in now</h5>
+        </div>
+
+        <div class="dropdown-item" (click)="viewCheckinMap()">
+          <h5><i class="fa fa-globe fa-fw fa-lg" aria-hidden="true"></i> View check in map</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="top-nav-search">
+    <div class="top-nav-link">
+      <i class="fa fa-search fa-lg" aria-hidden="true" (mouseover)="searchOptions = true"></i>
+
+      <div class="top-nav-link-dropdown" *ngIf="searchOptions">
+        <div class="dropdown-arrow-up"></div>
+        <div class="top-nav-dropdown-header">
+          <h6>SELECT SEARCH CATEGORY</h6>
+        </div>
+        <div class="dropdown-item" (click)="getUsers()">
+          <h5>Search for people</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="top-nav-itinerary">
+    <div class="top-nav-link">
+      <i class="fa fa-sticky-note fa-lg" aria-hidden="true" (mouseover)="showItineraries = true"></i>
+
+      <div class="top-nav-link-dropdown" *ngIf="showItineraries">
+        <div class="dropdown-arrow-up"></div>
+        <div class="top-nav-dropdown-header">
+          <h6>{{ currentUser?.itineraries.length > 1 ? 'ITINERARIES' : 'ITINERARY'}}</h6>
+        </div>
+        <h5 class="dropdown-new-itinerary" (click)="newItin()"><i class="fa fa-plus" aria-hidden="true"></i> Plan a new itinerary</h5>
+        <div>
+          <div *ngIf="currentUser?.itineraries.length === 0">
+            <h5 class="nil-dropdown-item">No itinerary at the moment</h5>
           </div>
-        </div>
-      </div>
-      <div *ngIf="currentUser?.itineraries.length > 10" class="view-all" [routerLink]="['/me/itinerary']">
-        <h5>See all</h5>
-      </div>
-
-      <h4 class="exit-itinerary-view" (click)="showItineraries = false">EXIT</h4>
-    </div>
-  </div>
-</div>
-
-<div class="top-nav-notifications">
-  <div class="top-nav-link">
-    <i class="fa fa-bell fa-lg" aria-hidden="true" (mouseover)="getNotifications()"></i>
-    <div class="new-indicator" *ngIf='newNotification'></div>
-
-    <div class="top-nav-link-dropdown" *ngIf="showNotifications">
-      <div class="dropdown-arrow-up"></div>
-      <div class="top-nav-dropdown-header"></div>
-
-      <div class="follower-requests" (click)="routeToPendingFollowers()">
-        <h6 class="pending-count" *ngIf="pendingFollowers.length > 1">{{ pendingFollowers.length }}</h6>
-        <i class="fa fa-user-plus fa-lg" aria-hidden="true"></i>
-
-        <h5>Follower requests</h5>
-        <h6 *ngIf="pendingFollowers.length === 0">You have no pending request.</h6>
-      </div>
-
-      <div class="nav-sub-header">
-        <h5>RECENT NOTIFICATIONS</h5>
-        <p class="notifications-view-all" (click)="routeToNotifications()">see all</p>
-      </div>
-
-      <ww-notification-list [notificationsLimit]="notificationsLimit"></ww-notification-list>
-    </div>
-  </div>
-</div>
-
-<div class="top-nav-profile">
-  <div class="top-nav-link">
-    <img src="{{ currentUser?.display_picture }}" class="user-profile-thumbnail" [routerLink]="['/me/profile']" (mouseover)="profileOptions = true">
-
-    <div class="top-nav-link-dropdown" *ngIf="profileOptions">
-      <div class="dropdown-arrow-up"></div>
-      <div class="top-nav-dropdown-header">
-        <h6>PROFILE SETTINGS</h6>
-      </div>
-
-      <div class="dropdown-item" (click)="profileOptions = false" [routerLink]="['/me/profile']">
-        <h5><i class="fa fa-user fa-fw fa-lg" aria-hidden="true"></i> Profile home</h5>
-      </div>
-
-      <div class="dropdown-item" (click)="profileOptions = false" [routerLink]="['/me/profile-edit']">
-        <h5><i class="fa fa-pencil fa-fw fa-lg" aria-hidden="true"></i> Edit profile</h5>
-      </div>
-
-      <div class="dropdown-item" (click)="logout()" >
-        <h5><i class="fa fa-sign-out fa-fw fa-lg" aria-hidden="true"></i> Log out</h5>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="side-nav">
-  <div class="custom-modal" *ngIf="sideNav" (click)="showSideNav()"></div>
-
-  <div class="side-nav-bars" (click)="showSideNav()">
-    <i class="fa fa-bars fa-2x" aria-hidden="true"></i>
-  </div>
-
-  <div *ngIf="sideNav">
-
-    <div class="side-nav-profile">
-      <img src="{{ currentUser?.display_picture }}" alt="" [routerLink]="['/me/profile']" (click)="exitSideNav()">
-      <div class="edit-profile" [routerLink]="['/me/profile-edit']" (click)="exitSideNav()">
-        <i class="fa fa-pencil" aria-hidden="true"></i>
-      </div>
-      <div class="username">
-        <h4 [routerLink]="['/me/profile']" (click)="exitSideNav()">{{ currentUser?.username }}</h4>
-      </div>
-      <h5 class="user-description">{{ currentUser?.description }}</h5>
-    </div>
-
-    <div class="side-nav-menu">
-      <div class="side-nav-menu-arrow-down"></div>
-      <div>
-        <div class="category-header" (click)="connectionsSection = !connectionsSection">
-          <h4 *ngIf="!connectionsSection">Connections <i class="fa fa-caret-down" aria-hidden="true"></i></h4>
-          <h4 *ngIf="connectionsSection">Connections <i class="fa fa-caret-up" aria-hidden="true"></i></h4>
-        </div>
-
-        <div *ngIf="connectionsSection">
-
-          <div class="category-item" (click)="getUsers()">
-            <h5 class="search-connection">People search <i class="fa fa-search" aria-hidden="true"></i></h5>
-          </div>
-
-          <div class="follower-following-counter">
-            <div class="follower-counter" (click)="routeToFollowers()">
-              <h4>{{ followers.length }}</h4>
-              <h5>FOLLOWERS</h5>
-            </div>
-            <div class="following-counter" (click)="routeToFollowings()">
-              <h4>{{ followings.length }}</h4>
-              <h5>FOLLOWING</h5>
+          <div *ngFor="let itinerary of currentUser?.itineraries | slice:0:10" class="dropdown-item">
+            <div [routerLink]="['/me/itinerary/', itinerary._id]" (click)="routeToItinerary(itinerary._id)">
+              <h5>{{ itinerary.name }}</h5>
+              <h6>( {{ itinerary.date_from | date:'dd MMM yy' }} to {{ itinerary.date_to | date:'dd MMM yy' }} )</h6>
             </div>
           </div>
-
-          <div class="category-item" (click)="routeToPendingFollowers()">
-            <h5>Follow requests</h5>
-          </div>
         </div>
+        <div *ngIf="currentUser?.itineraries.length > 10" class="view-all" [routerLink]="['/me/itinerary']">
+          <h5>See all</h5>
+        </div>
+
+        <h4 class="exit-itinerary-view" (click)="showItineraries = false">EXIT</h4>
       </div>
-
-      <div>
-        <div class="category-header" (click)="quickLinksSection = !quickLinksSection">
-          <h4 *ngIf="!quickLinksSection">Quick links <i class="fa fa-caret-down" aria-hidden="true"></i></h4>
-          <h4 *ngIf="quickLinksSection">Quick links <i class="fa fa-caret-up" aria-hidden="true"></i></h4>
-        </div>
-
-        <div *ngIf="quickLinksSection">
-          <div class="category-item">
-            <h5 (click)="routeToNotifications()">View all notifications</h5>
-          </div>
-
-          <div class="category-item">
-            <h5 (click)="routeToCheckins()">View all check ins</h5>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <div class="category-header" (click)="settingsSection = !settingsSection">
-          <h4 *ngIf="!settingsSection">Settings <i class="fa fa-caret-down" aria-hidden="true"></i></h4>
-          <h4 *ngIf="settingsSection">Settings <i class="fa fa-caret-up" aria-hidden="true"></i></h4>
-        </div>
-
-        <div *ngIf="settingsSection">
-          <div class="category-item" (click)="logout()">
-            <h5><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</h5>
-          </div>
-        </div>
-      </div>
-
     </div>
+  </div>
+
+  <div class="top-nav-notifications">
+    <div class="top-nav-link">
+      <i class="fa fa-bell fa-lg" aria-hidden="true" (mouseover)="getNotifications()"></i>
+      <div class="new-indicator" *ngIf='newNotification'></div>
+
+      <div class="top-nav-link-dropdown" *ngIf="showNotifications">
+        <div class="dropdown-arrow-up"></div>
+        <div class="top-nav-dropdown-header"></div>
+
+        <div class="follower-requests" (click)="routeToPendingFollowers()">
+          <h6 class="pending-count" *ngIf="pendingFollowers.length > 1">{{ pendingFollowers.length }}</h6>
+          <i class="fa fa-user-plus fa-lg" aria-hidden="true"></i>
+
+          <h5>Follower requests</h5>
+          <h6 *ngIf="pendingFollowers.length === 0">You have no pending request.</h6>
+        </div>
+
+        <div class="nav-sub-header">
+          <h5>RECENT NOTIFICATIONS</h5>
+          <p class="notifications-view-all" (click)="routeToNotifications()">see all</p>
+        </div>
+
+        <ww-notification-list [notificationsLimit]="notificationsLimit"></ww-notification-list>
+      </div>
+    </div>
+  </div>
+
+  <div class="top-nav-profile">
+    <div class="top-nav-link">
+      <img src="{{ currentUser?.display_picture }}" class="user-profile-thumbnail" [routerLink]="['/me/profile']" (mouseover)="profileOptions = true">
+
+      <div class="top-nav-link-dropdown" *ngIf="profileOptions">
+        <div class="dropdown-arrow-up"></div>
+        <div class="top-nav-dropdown-header">
+          <h6>PROFILE SETTINGS</h6>
+        </div>
+
+        <div class="dropdown-item" (click)="profileOptions = false" [routerLink]="['/me/profile']">
+          <h5><i class="fa fa-user fa-fw fa-lg" aria-hidden="true"></i> Profile home</h5>
+        </div>
+
+        <div class="dropdown-item" (click)="profileOptions = false" [routerLink]="['/me/profile-edit']">
+          <h5><i class="fa fa-pencil fa-fw fa-lg" aria-hidden="true"></i> Edit profile</h5>
+        </div>
+
+        <div class="dropdown-item" (click)="logout()" >
+          <h5><i class="fa fa-sign-out fa-fw fa-lg" aria-hidden="true"></i> Log out</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="side-nav">
+    <div class="custom-modal" *ngIf="sideNav" (click)="showSideNav()"></div>
+
+    <div class="side-nav-bars" (click)="showSideNav()">
+      <i class="fa fa-bars fa-2x" aria-hidden="true"></i>
+    </div>
+
+    <div *ngIf="sideNav">
+
+      <div class="side-nav-profile">
+        <img src="{{ currentUser?.display_picture }}" alt="" [routerLink]="['/me/profile']" (click)="exitSideNav()">
+        <div class="edit-profile" [routerLink]="['/me/profile-edit']" (click)="exitSideNav()">
+          <i class="fa fa-pencil" aria-hidden="true"></i>
+        </div>
+        <div class="username">
+          <h4 [routerLink]="['/me/profile']" (click)="exitSideNav()">{{ currentUser?.username }}</h4>
+        </div>
+        <h5 class="user-description">{{ currentUser?.description }}</h5>
+      </div>
+
+      <div class="side-nav-menu">
+        <div class="side-nav-menu-arrow-down"></div>
+        <div>
+          <div class="category-header" (click)="connectionsSection = !connectionsSection">
+            <h4 *ngIf="!connectionsSection">Connections <i class="fa fa-caret-down" aria-hidden="true"></i></h4>
+            <h4 *ngIf="connectionsSection">Connections <i class="fa fa-caret-up" aria-hidden="true"></i></h4>
+          </div>
+
+          <div *ngIf="connectionsSection">
+
+            <div class="category-item" (click)="getUsers()">
+              <h5 class="search-connection">People search <i class="fa fa-search" aria-hidden="true"></i></h5>
+            </div>
+
+            <div class="follower-following-counter">
+              <div class="follower-counter" (click)="routeToFollowers()">
+                <h4>{{ followers.length }}</h4>
+                <h5>FOLLOWERS</h5>
+              </div>
+              <div class="following-counter" (click)="routeToFollowings()">
+                <h4>{{ followings.length }}</h4>
+                <h5>FOLLOWING</h5>
+              </div>
+            </div>
+
+            <div class="category-item" (click)="routeToPendingFollowers()">
+              <h5>Follow requests</h5>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="category-header" (click)="quickLinksSection = !quickLinksSection">
+            <h4 *ngIf="!quickLinksSection">Quick links <i class="fa fa-caret-down" aria-hidden="true"></i></h4>
+            <h4 *ngIf="quickLinksSection">Quick links <i class="fa fa-caret-up" aria-hidden="true"></i></h4>
+          </div>
+
+          <div *ngIf="quickLinksSection">
+            <div class="category-item">
+              <h5 (click)="routeToNotifications()">View all notifications</h5>
+            </div>
+
+            <div class="category-item">
+              <h5 (click)="routeToCheckins()">View all check ins</h5>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="category-header" (click)="settingsSection = !settingsSection">
+            <h4 *ngIf="!settingsSection">Settings <i class="fa fa-caret-down" aria-hidden="true"></i></h4>
+            <h4 *ngIf="settingsSection">Settings <i class="fa fa-caret-up" aria-hidden="true"></i></h4>
+          </div>
+
+          <div *ngIf="settingsSection">
+            <div class="category-item" (click)="logout()">
+              <h5><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</h5>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 
 </div>
@@ -269,4 +282,17 @@
       <ww-google-checkin (cancelCheckIn)="cancelCheckin()"></ww-google-checkin>
     </div>
   </div>
+</div>
+
+
+<div class="custom-modal" *ngIf="showSignin">
+  <ww-signin
+    [reroute]="'/me'"
+    (hideSignin)="hideSignin($event)"></ww-signin>
+</div>
+
+<div class="custom-modal" *ngIf="showSignup">
+  <ww-signup
+    [reroute]="'/me'"
+    (hideSignup)="hideSignup($event)"></ww-signup>
 </div>

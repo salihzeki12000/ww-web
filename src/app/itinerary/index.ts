@@ -15,6 +15,8 @@ export * from './itinerary-list/itinerary-upcoming/itinerary-upcoming.component'
 export * from './itinerary-form/itinerary-form.component';
 export * from './itinerary-invite/itinerary-invite.component';
 
+export * from './itinerary-description/itinerary-description.component';
+
 export * from './itinerary-summary/itinerary-summary.component';
 export * from './itinerary-summary/itinerary-summary-day/itinerary-summary-day.component';
 export * from './itinerary-summary/itinerary-summary-item/itinerary-summary-item.component';
@@ -38,6 +40,9 @@ export * from './itinerary-events/itinerary-activity/activity-input/activity-inp
 export * from './itinerary-map/itinerary-map.component';
 
 export * from './itinerary-print/itinerary-print.component';
+
+export * from './itinerary-preview/itinerary-preview.component';
+export * from './itinerary-preview/itinerary-preview.routes';
 
 export * from './itinerary-resources/itinerary-resources.component';
 export * from './itinerary-resources/resource';

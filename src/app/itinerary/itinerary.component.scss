@@ -58,6 +58,10 @@
   font-size: .8em;
 }
 
+.preview-message  {
+  font-size: 10px;
+}
+
 /* members section */
 .members-section  {
   position: fixed;
@@ -102,6 +106,15 @@ img.user-profile-thumbnail  {
     cursor: pointer;
     text-decoration: underline;
   }
+}
+
+// if preview is true
+.mt {
+  margin-top: 30px;
+}
+
+.bt {
+  bottom: 70%
 }
 
 .member {

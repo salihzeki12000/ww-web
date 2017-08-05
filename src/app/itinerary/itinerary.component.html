@@ -1,16 +1,24 @@
-<div class="itinerary">
+<div *ngIf="!validAccess">
+  <h1>You are not allowed to access this itinerary!</h1>
+</div>
+
+<div class="itinerary" *ngIf="validAccess">
 
   <div class="itinerary-header">
-    <h2 class="itinerary-name">{{ itinerary?.name }}<span class="itinerary-date">{{ itinerary?.date_from | date:'dd MMM yyyy' }} to {{ itinerary?.date_to | date:'dd MMM yyyy' }}</span></h2>
+    <h2 class="itinerary-name">
+      <span class="preview-message">PREVIEW : </span>
+      {{ itinerary?.name }}
+      <span class="itinerary-date">{{ itinerary?.date_from | date:'dd MMM yyyy' }} to {{ itinerary?.date_to | date:'dd MMM yyyy' }}</span>
+    </h2>
   </div>
 
   <div class="members-section">
-    <h6 (click)="getUsers()" class="invite-members-header">INVITE MEMBERS</h6>
+    <h6 (click)="getUsers()" class="invite-members-header" *ngIf="!preview">INVITE MEMBERS</h6>
 
-    <div *ngFor="let member of itinerary?.members | slice:0:5" class="member">
+    <div *ngFor="let member of itinerary?.members | slice:0:5" class="member" [class.mt]="preview">
       <div class="tool-tip">
         <img src="{{ member.display_picture }}" alt="" class="user-profile-thumbnail" (click)="routeToUser(member._id)">
-        <span class="tool-tiptext">{{ member.username }}</span>
+        <span class="tool-tiptext" [class.bt]="preview">{{ member.username }}</span>
       </div>
     </div>
     <div class="show-more-members" *ngIf="itinerary?.members.length > 5">
@@ -29,20 +37,22 @@
   <header>
     <nav>
       <ul class="itinerary-nav-tabs">
-        <li class="members-icon-mobile" (click)="showMembers()">
+        <li class="members-icon-mobile" (click)="showMembers()" *ngIf="!preview">
           <i class="fa fa-users fa-lg" aria-hidden="true"></i>
         </li>
-        <li (click)="showAddNewOptions()">
+        <li (click)="showAddNewOptions()" *ngIf="!preview">
           <a><i class="fa fa-plus" aria-hidden="true"></i> ADD NEW</a>
         </li>
+        <li (click)="copy()" *ngIf="preview"><a>COPY ITINERARY</a></li>
+        <li (click)="activateTab()" routerLinkActive="active" *ngIf="itinerary?.description"><a [routerLink]="['description']">DESCRIPTION</a></li>
         <li (click)="activateTab()" routerLinkActive="active"><a [routerLink]="['summary']">SUMMARY</a></li>
         <li (click)="activateTab()" routerLinkActive="active"><a [routerLink]="['map']">MAP VIEW</a></li>
         <li (click)="activateTab()" routerLinkActive="active"><a [routerLink]="['accommodation']">ACCOMMODATION</a></li>
         <li (click)="activateTab()" routerLinkActive="active"><a [routerLink]="['transport']">TRANSPORT</a></li>
         <li (click)="activateTab()" routerLinkActive="active"><a [routerLink]="['activity']">ACTIVITY</a></li>
         <li (click)="activateTab()" routerLinkActive="active"><a [routerLink]="['resource']">RESOURCE</a></li>
-        <li (click)="activateTab()" routerLinkActive="active"><a href="/#/save-print/{{itinerary?._id}}" target="_blank">SAVE / PRINT</a></li>
-        <li (click)="activateTab()" routerLinkActive="active"><a [routerLink]="['settings']">SETTINGS</a></li>
+        <li (click)="activateTab()" routerLinkActive="active" *ngIf="!preview"><a href="/#/save-print/{{itinerary?._id}}" target="_blank">SAVE / PRINT</a></li>
+        <li (click)="activateTab()" routerLinkActive="active" *ngIf="!preview"><a [routerLink]="['settings']">SETTINGS</a></li>
       </ul>
     </nav>
   </header>

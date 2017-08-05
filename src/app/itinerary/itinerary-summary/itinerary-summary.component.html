@@ -82,6 +82,7 @@
     <div *ngIf="chosenEvent?.type === 'transport'" class="details-in-summary">
       <ww-transport
         [event]="chosenEvent"
+        [preview]="preview"
         [itinDateRange]="itinDateRange"
         [currentItinerary]="currentItinerary"
         [summary]="true"></ww-transport>
@@ -90,6 +91,7 @@
     <div *ngIf="chosenEvent?.type === 'activity'" class="details-in-summary">
       <ww-activity
         [activity]="chosenEvent"
+        [preview]="preview"
         [itinDateRange]="itinDateRange"
         [currentItinerary]="currentItinerary"
         [summary]="true"></ww-activity>
@@ -98,6 +100,7 @@
     <div *ngIf="chosenEvent?.type === 'accommodation'" class="details-in-summary">
       <ww-accommodation
         [event]="chosenEvent"
+        [preview]="preview"
         [itinDateRange]="itinDateRange"
         [currentItinerary]="currentItinerary"
         [summary]="true"></ww-accommodation>

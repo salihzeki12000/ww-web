@@ -16,6 +16,8 @@ import { NotificationService }                     from '../../notifications';
   styleUrls: ['./main-navigation.component.scss']
 })
 export class MainNavigationComponent implements OnInit, OnDestroy {
+  isLoggedIn = false;
+
   currentUserSubscription: Subscription;
   currentUser;
 
@@ -31,6 +33,11 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
 
   showItineraryForm = false;
   checkin = false;
+
+  // auth
+  showSignin = false;
+  showSignup = false;
+  reroute;
 
   // top nav
   bookmarkOptions = false;
@@ -67,6 +74,8 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     private loadingService: LoadingService) { }
 
   ngOnInit() {
+    this.isLoggedIn = this.authService.isLoggedIn();
+
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
       result => {
         this.currentUser = result;
@@ -91,22 +100,32 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
         this.checkNewNotification();
       })
 
-    this.userService.getAllUsers().subscribe(
-          result => {
-            this.users = result.users;
-          })
+    if(this.isLoggedIn) {
+      this.userService.getAllUsers().subscribe(
+        result => { this.users = result.users; })
+    }
 
+
+    if(!this.isLoggedIn)  {
+      let segments = this.route.snapshot['_urlSegment'].segments;
+
+      for (let i = 0; i < segments.length; i++) {
+        this.reroute = "/" + segments[i]['path'];
+      }
+    }
   }
 
   ngOnDestroy() {
-    this.currentUserSubscription.unsubscribe();
-    this.relationshipSubscription.unsubscribe();
-    this.notificationSubscription.unsubscribe();
+    if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
+    if(this.relationshipSubscription) this.relationshipSubscription.unsubscribe();
+    if(this.notificationSubscription) this.notificationSubscription.unsubscribe();
   }
 
   getFollowings(currentUser) {
-    this.relationshipService.getRelationships(currentUser).subscribe(
-          result => {})
+    if(this.isLoggedIn) {
+      this.relationshipService.getRelationships(currentUser).subscribe(
+            result => {})
+    }
   }
 
   groupUsers()  {
@@ -142,6 +161,27 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
         i = this.notifications.length;
       }
     }
+  }
+
+  // sign up / log in
+  getSignin() {
+    this.showSignin = true;
+    this.preventScroll(true);
+  }
+
+  getSignup() {
+    this.showSignup = true;
+    this.preventScroll(true);
+  }
+
+  hideSignin()  {
+    this.showSignin = false;
+    this.preventScroll(false);
+  }
+
+  hideSignup()  {
+    this.showSignup = false;
+    this.preventScroll(false);
   }
 
   // top navigation check in
@@ -308,6 +348,14 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
       this.renderer.addClass(document.body, 'prevent-scroll');
     } else  {
       this.renderer.removeClass(document.body, 'prevent-scroll');
+    }
+  }
+
+  routeToHome() {
+    if(this.isLoggedIn) {
+      this.router.navigateByUrl('/me')
+    } else  {
+      this.router.navigateByUrl('/')
     }
   }
 
