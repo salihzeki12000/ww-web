@@ -637,11 +637,10 @@ h5.action-response-primary  {
   }
 }
 
-.user-profile-header > h4  {
+.user-profile-header > .user-profile-details  {
   position: absolute;
   margin-top: 85px;
-  font-weight: 400;
-  color: #808080;
+  width: 360px;
   left: calc(((100vw - 600px)/2) + 190px);;
 
   @media only screen and (max-width: 670px) {
@@ -654,6 +653,12 @@ h5.action-response-primary  {
   @media only screen and (min-width: 670px) and (max-width: 890px) {
     left: calc(((100vw - 600px) / 2) + 179px);
   }
+}
+
+.user-profile-details * {
+  padding: 5px 0;
+  font-weight: 400;
+  color: #808080;
 }
 
 .user-profile-background  {

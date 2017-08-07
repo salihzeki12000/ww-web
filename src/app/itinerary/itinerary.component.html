@@ -1,12 +1,12 @@
-<div *ngIf="!validAccess">
-  <h1>You are not allowed to access this itinerary!</h1>
+<div class="not-valid-access" *ngIf="!validAccess">
+  <h2>You are not authorised to access this itinerary.</h2>
 </div>
 
 <div class="itinerary" *ngIf="validAccess">
 
   <div class="itinerary-header">
     <h2 class="itinerary-name">
-      <span class="preview-message">PREVIEW : </span>
+      <span class="preview-message" *ngIf="preview">PREVIEW : </span>
       {{ itinerary?.name }}
       <span class="itinerary-date">{{ itinerary?.date_from | date:'dd MMM yyyy' }} to {{ itinerary?.date_to | date:'dd MMM yyyy' }}</span>
     </h2>
@@ -43,7 +43,7 @@
         <li (click)="showAddNewOptions()" *ngIf="!preview">
           <a><i class="fa fa-plus" aria-hidden="true"></i> ADD NEW</a>
         </li>
-        <li (click)="copy()" *ngIf="preview"><a>COPY ITINERARY</a></li>
+        <li (click)="copy()" *ngIf="preview && !creator"><a>COPY ITINERARY</a></li>
         <li (click)="activateTab()" routerLinkActive="active" *ngIf="itinerary?.description"><a [routerLink]="['description']">DESCRIPTION</a></li>
         <li (click)="activateTab()" routerLinkActive="active"><a [routerLink]="['summary']">SUMMARY</a></li>
         <li (click)="activateTab()" routerLinkActive="active"><a [routerLink]="['map']">MAP VIEW</a></li>
@@ -160,4 +160,47 @@
       <h4 (click)="newResource()">NEW RESOURCE</h4>
     </div>
   </div>
+</div>
+
+
+
+<div class="custom-modal" *ngIf="authOptions">
+  <div class="form-card auth-card">
+    <div class="form-header">
+      <h3>You are not logged in.</h3>
+      <a (click)="cancelAuth()">X</a>
+    </div>
+
+    <div class="content-without-header-name">
+      <div class="auth-message">
+        <h4>You need to be logged in to copy the itinerary.</h4>
+      </div>
+
+      <div>
+        <div class="get-sign-in" (click)="getSignin()">
+          <h4>LOG IN</h4>
+        </div>
+
+        <div class="get-sign-up" (click)="getSignup()">
+          <h4>SIGN UP</h4>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<div class="custom-modal" *ngIf="showSignin">
+  <ww-signin
+    [reload]="reload"
+    (hideSignin)="hideSignin($event)"></ww-signin>
+</div>
+
+<div class="custom-modal" *ngIf="showSignup">
+  <ww-signup
+    [reload]="reload"
+    (hideSignup)="hideSignup($event)"></ww-signup>
 </div>

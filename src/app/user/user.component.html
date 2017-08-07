@@ -19,7 +19,12 @@
   <div class="user-profile-header">
     <img src="{{ user?.display_picture }}" alt="" [routerLink]="['/wondererwanderer', user?._id]">
     <h1>{{ user?.username }}</h1>
-    <h4>{{ user?.description }}</h4>
+
+    <div class="user-profile-details">
+      <h4>{{ user?.description }}</h4>
+      <h4 *ngIf="user?.corporate"><i class="fa fa-envelope" aria-hidden="true"></i> <a href="mailto:{{user?.email}}">{{ user?.email }}</a></h4>
+    </div>
+
   </div>
 
   <div class="user-profile-background"></div>

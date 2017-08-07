@@ -15,7 +15,7 @@ import { LoadingService }        from '../../../../loading';
 })
 export class ActivityListComponent implements OnInit, OnDestroy {
   preview;
-  
+
   eventSubscription: Subscription;
   activities = [];
   totalActivities = 1;
@@ -49,7 +49,12 @@ export class ActivityListComponent implements OnInit, OnDestroy {
     this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
       result => {
         this.currentItinerary = result;
-        let title = this.currentItinerary['name'] + " | Activity"
+
+        let header = ''
+        if(this.preview) header = "Preview : ";
+
+        let title = header + this.currentItinerary['name'] + " | Activity";
+
         this.titleService.setTitle(title);
       })
 

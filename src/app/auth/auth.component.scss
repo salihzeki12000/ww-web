@@ -4,13 +4,18 @@
   font-weight: 500;
   color: #444;
   height: 30px;
-  width: 320px;
+  width: 100%;
   border-radius: 5px;
   border: thin solid #888;
   box-shadow: 1px 1px 1px grey;
   white-space: nowrap;
+
   &:hover {
     cursor: pointer;
+  }
+
+  @media only screen and (max-width: 450px) {
+    padding-left: calc(((100vw - 190px) / 2) + 30px);
   }
 }
 
@@ -19,6 +24,10 @@ img {
   position: absolute;
   margin-top: -25px;
   margin-left: 75px;
+
+  @media only screen and (max-width: 450px) {
+    margin-left: calc((100vw - 190px) / 2);
+  }
 }
 
 .signin-card  {

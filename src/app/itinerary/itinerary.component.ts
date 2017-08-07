@@ -10,6 +10,7 @@ import { FlashMessageService }   from '../flash-message';
 import { User, UserService }     from '../user';
 import { ResourceService }       from './itinerary-resources/resource.service';
 import { NotificationService }   from '../notifications';
+import { LoadingService }        from '../loading';
 
 @Component({
   selector: 'ww-itinerary',
@@ -21,6 +22,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   viewOnly = false;
   preview = false;
   validUser = false;
+  creator = false;
   validAccess = true;
 
   currentItinerarySubscription: Subscription;
@@ -46,10 +48,16 @@ export class ItineraryComponent implements OnInit, OnDestroy {
 
   inviteLink = '';
 
+  authOptions = false;
+  showSignin = false;
+  showSignup = false;
+  reload = false;
+
   constructor(
     private authService: AuthService,
     private element: ElementRef,
     private renderer: Renderer2,
+    private loadingService: LoadingService,
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
     private resourceService: ResourceService,
@@ -69,7 +77,10 @@ export class ItineraryComponent implements OnInit, OnDestroy {
     this.isLoggedIn = this.authService.isLoggedIn();
 
     let segments = this.route.snapshot['_urlSegment'].segments;
-    if(segments[0]['path'] === 'preview') this.preview = true;
+    if(segments[0]['path'] === 'preview') {
+      this.preview = true;
+      this.reload = true;
+    }
 
     this.route.params.forEach((params: Params) => {
       let id = params['id'];
@@ -79,8 +90,8 @@ export class ItineraryComponent implements OnInit, OnDestroy {
           this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
               result =>  {
                 this.itinerary = result;
+
                 this.viewOnly = this.itinerary['view_only'];
-                this.checkAccess();
 
                 if(!this.preview && this.isLoggedIn)  {
                   this.getAllUsers();
@@ -111,13 +122,17 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   }
 
   checkAccess() {
-    this.validUser = false
+    this.validUser = false;
 
     if(this.currentUser && this.itinerary)  {
       for (let i = 0; i < this.itinerary['members'].length; i++) {
         if(this.itinerary['members'][i]['_id'] === this.currentUser['_id']) {
           this.validUser = true;
         };
+      }
+
+      if(this.currentUser['_id'] === this.itinerary['created_by']['_id']) {
+        this.creator = true;
       }
     }
 
@@ -130,6 +145,8 @@ export class ItineraryComponent implements OnInit, OnDestroy {
     } else if(!this.preview && this.isLoggedIn && !this.validUser) {
       this.validAccess = false;
     }
+
+    this.loadingService.setLoader(false, "");
   }
 
   getAllUsers() {
@@ -326,9 +343,93 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   copy()  {
     if(this.isLoggedIn) {
       console.log("ok to copy")
+      this.duplicate();
     } else if(!this.isLoggedIn) {
-      console.log("get sign in")
+      this.authOptions = true;
+      this.preventScroll(true);
     }
+  }
+
+  duplicate() {
+    this.loadingService.setLoader(true, "Saving to your list of itineraries");
+
+    let newItinerary = {
+      name: this.itinerary['name'] + " - created by " + this.itinerary['created_by']['username'],
+      date_from: this.itinerary['date_from'],
+      date_to: this.itinerary['date_to'],
+      daily_note: this.itinerary['daily_note'],
+      private: this.currentUser['privacy']['itinerary'],
+      members: [this.currentUser['_id']],
+      admin: [this.currentUser['_id']],
+      created_by: this.itinerary['created_by'],
+      taken_from: this.itinerary['created_by']
+    }
+
+    this.itineraryService.addItin(newItinerary).subscribe(
+      result => {
+        this.shareEvents(result.itinerary);
+      })
+
+    if(this.itinerary['taken_by'])  {
+      this.itinerary['taken_by'].push(this.currentUser['_id']);
+    } else  {
+      this.itinerary['taken_by'] = [this.currentUser['_id']];
+    }
+
+    this.itineraryService.editItin(this.itinerary, '').subscribe(
+      result =>{})
+  }
+
+  shareEvents(itinerary) {
+    for (let i = 0; i < this.events.length; i++) {
+      delete this.events[i]['_id'];
+      delete this.events[i]['created_at'];
+      delete this.events[i]['itinerary'];
+
+      this.itineraryEventService.copyEvent(this.events[i], itinerary).subscribe(
+        result => {})
+    }
+
+    for (let i = 0; i < this.resources.length; i++) {
+      delete this.resources[i]['_id'];
+      delete this.resources[i]['created_at'];
+      delete this.resources[i]['itinerary'];
+
+      this.resources[i]['itinerary'] = itinerary;
+
+      this.resourceService.copyResource(this.resources[i]).subscribe(
+        result => {})
+    }
+
+    this.router.navigateByUrl('/me/itinerary/' + itinerary['_id'])
+  }
+
+  // sign up / log in
+  cancelAuth()  {
+    this.authOptions = false;
+    this.preventScroll(false);
+  }
+
+  getSignin() {
+    this.authOptions = false;
+    this.showSignin = true;
+    this.preventScroll(true);
+  }
+
+  getSignup() {
+    this.authOptions = false;
+    this.showSignup = true;
+    this.preventScroll(true);
+  }
+
+  hideSignin()  {
+    this.showSignin = false;
+    this.preventScroll(false);
+  }
+
+  hideSignup()  {
+    this.showSignup = false;
+    this.preventScroll(false);
   }
 
   // others

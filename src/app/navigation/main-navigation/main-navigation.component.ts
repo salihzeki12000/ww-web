@@ -37,9 +37,10 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   // auth
   showSignin = false;
   showSignup = false;
-  reroute;
+  reload = false;
 
   // top nav
+  authOptions = false;
   bookmarkOptions = false;
   searchOptions = false;
   showItineraries = false;
@@ -107,11 +108,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
 
 
     if(!this.isLoggedIn)  {
-      let segments = this.route.snapshot['_urlSegment'].segments;
-
-      for (let i = 0; i < segments.length; i++) {
-        this.reroute = "/" + segments[i]['path'];
-      }
+      this.reload = true;
     }
   }
 
@@ -165,11 +162,13 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
 
   // sign up / log in
   getSignin() {
+    this.authOptions = false;
     this.showSignin = true;
     this.preventScroll(true);
   }
 
   getSignup() {
+    this.authOptions = false;
     this.showSignup = true;
     this.preventScroll(true);
   }

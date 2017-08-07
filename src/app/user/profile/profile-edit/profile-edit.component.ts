@@ -100,10 +100,10 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
 
        setTimeout(() => {
          this.updateDateRange();
+         this.loadingService.setLoader(false, "");
        },1000)
      })
 
-    this.loadingService.setLoader(false, "");
     this.preventScroll(false);
   }
 

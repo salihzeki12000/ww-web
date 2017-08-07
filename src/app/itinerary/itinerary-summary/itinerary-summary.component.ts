@@ -14,7 +14,7 @@ import { LoadingService }        from '../../loading';
 })
 export class ItinerarySummaryComponent implements OnInit, OnDestroy {
   preview;
-  
+
   eventSubscription: Subscription;
   events = [];
   totalEvents = 1;
@@ -63,7 +63,10 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
        result => {
          this.currentItinerary = result;
 
-         let title = this.currentItinerary['name'] + " | Summary"
+         let header = ''
+         if(this.preview) header = "Preview : ";
+
+         let title = header + this.currentItinerary['name'] + " | Summary"
          this.titleService.setTitle(title);
 
          this.sortDailyNotes();

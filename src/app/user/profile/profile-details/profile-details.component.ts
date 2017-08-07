@@ -67,9 +67,9 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
     this.checkInSubscription = this.checkinService.updateCheckIns.subscribe(
       result => {
         this.checkins = Object.keys(result).map(key => result[key]);
+        this.loadingService.setLoader(false, "");
       })
 
-    this.loadingService.setLoader(false, "");
     this.renderer.removeClass(document.body, 'prevent-scroll');
   }
 

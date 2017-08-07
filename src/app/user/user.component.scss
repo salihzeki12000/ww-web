@@ -30,7 +30,7 @@
 
 .user-profile-header > h1 {
   position: absolute;
-  margin-top: -10px;
+  margin-top: -25px;
   left: calc(((100vw - 600px)/2) + 170px);
   font-family: 'Alice', serif;
   color: #f9fbfb;
@@ -54,7 +54,7 @@
   }
 }
 
-.user-profile-header > h4 {
+.user-profile-header > .user-profile-details {
   @media only screen and (min-width: 670px) {
     left: calc(((100vw - 600px)/2) + 180px);
   }
@@ -72,7 +72,7 @@
 
 .user-profile-counters {
   @media only screen and (min-width: 670px) {
-    left: calc(((100vw - 600px)/2) + 150px);
+    left: calc(((100vw - 600px)/2) + 170px);
   }
 
   @media only screen and (max-width: 670px) {

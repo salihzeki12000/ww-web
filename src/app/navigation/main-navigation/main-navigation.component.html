@@ -12,6 +12,29 @@
   <h5 class="get-sign-in" (click)="getSignin()">LOG IN</h5>
   <h5 class="get-sign-up" (click)="getSignup()">SIGN UP</h5>
 
+  <div class="sign-in">
+    <div class="top-nav-link">
+      <i class="fa fa-sign-in fa-lg" aria-hidden="true" (mouseover)="authOptions = true"></i>
+
+      <div class="top-nav-link-dropdown" *ngIf="authOptions">
+        <div class="dropdown-arrow-up"></div>
+        <div class="top-nav-dropdown-header">
+          <h6>JOIN WONDERERWANDERER</h6>
+        </div>
+
+        <div class="dropdown-item" (click)="getSignin()">
+          <h5>LOG IN</h5>
+        </div>
+
+        <div class="dropdown-item" (click)="getSignup()">
+          <h5>SIGN UP</h5>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
 </div>
 
 
@@ -287,12 +310,12 @@
 
 <div class="custom-modal" *ngIf="showSignin">
   <ww-signin
-    [reroute]="'/me'"
+    [reload]="reload"
     (hideSignin)="hideSignin($event)"></ww-signin>
 </div>
 
 <div class="custom-modal" *ngIf="showSignup">
   <ww-signup
-    [reroute]="'/me'"
+    [reload]="reload"
     (hideSignup)="hideSignup($event)"></ww-signup>
 </div>

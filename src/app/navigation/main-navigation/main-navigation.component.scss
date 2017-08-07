@@ -55,6 +55,23 @@
     cursor: pointer;
     color: #6494ED;
   }
+
+  @media only screen and (max-width: 600px) {
+    display: none;
+  }
+}
+
+.sign-in  {
+  display: none;
+
+  @media only screen and (max-width: 600px) {
+    display: block;
+    position: fixed;
+    top: 2px;
+    right: 3%;
+    z-index: 501;
+
+  }
 }
 
 .top-nav-bookmark  {

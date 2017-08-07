@@ -161,7 +161,11 @@
 }
 
 .meals-display h5  {
-  margin: 10px 2px 10px 0;
+  margin: 10px 2px 0 0;
+}
+
+.details-item:first-of-type {
+  margin-top: 10px;
 }
 
 .details-item {

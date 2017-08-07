@@ -55,7 +55,12 @@ export class ItineraryAccommodationComponent implements OnInit, OnDestroy {
     this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
       result => {
         this.currentItinerary = result;
-        let title = this.currentItinerary['name'] + " | Accommodation"
+
+        let header = ''
+        if(this.preview) header = "Preview : ";
+
+        let title = header + this.currentItinerary['name'] + " | Accommodation";
+
         this.titleService.setTitle(title);
       })
   }

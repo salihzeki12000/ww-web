@@ -17,6 +17,7 @@ export class SignupComponent implements OnInit {
   avatar = 'https://res.cloudinary.com/wwfileupload/image/upload/v1495091346/avatar_neutral_d43pub.png';
 
   @Input() reroute;
+  @Input() reload;
   @Input() itinerary;
   @Output() hideSignup = new EventEmitter();
 
@@ -49,10 +50,12 @@ export class SignupComponent implements OnInit {
             this.userService.getCurrentUser().subscribe(
                   data => {});
 
-            if(this.reroute !== '/me')  {
+            if(this.itinerary)  {
               let user = {_id: data.userId};
               this.addToItin(user);
-            } else  {
+            } else if(this.reload) {
+              window.location.reload();
+            } else {
               setTimeout(() =>  {
                 this.router.navigateByUrl(this.reroute);
               }, 1000)

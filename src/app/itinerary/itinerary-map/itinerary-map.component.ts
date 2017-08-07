@@ -20,6 +20,8 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
   @ViewChild('map') map: ElementRef;
   itinMap;
 
+  preview;
+  
   currentItinerarySubscription: Subscription;
 
   eventSubscription: Subscription;
@@ -45,6 +47,9 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
     private loadingService: LoadingService) { }
 
   ngOnInit() {
+    let segments = this.route.snapshot['_urlSegment'].segments;
+    if(segments[0]['path'] === 'preview') this.preview = true;
+
     this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
       result => {
         this.filterEvents(result);
@@ -53,7 +58,10 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
 
     this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
       result => {
-        let title = result['name'] + " | Map"
+        let header = ''
+        if(this.preview) header = "Preview : ";
+
+        let title = header + result['name'] + " | Map";
         this.titleService.setTitle(title);
       })
   }

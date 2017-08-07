@@ -1,3 +1,7 @@
+.not-valid-access {
+  text-align: center;
+}
+
 .itinerary  {
   @media only screen and (min-width: 1090.1px)  {
     position: absolute;
@@ -459,4 +463,55 @@ header {
 
 .selected-user  {
   background-color: #F6F6F6;
+}
+
+
+// sign in / sign up
+.auth-card  .content-without-header-name * {
+  text-align: center;
+}
+
+.auth-message {
+  padding: 20px;
+}
+
+.get-sign-in,
+.get-sign-up {
+  display: inline-block;
+  padding: 10px;
+  margin: 10px;
+  width: 100px;
+  text-align: center;
+  background-color: #6494ED;
+  border-radius: 2px;
+  border: 2px solid #6494ED;
+
+  &:hover {
+    cursor: pointer;
+    opacity: .7;
+  }
+}
+
+.get-sign-in h4,
+.get-sign-up h4 {
+  color: #F9FBFB;
+}
+
+ww-signin,
+ww-signup {
+  display: block;
+  margin-top: 100px;
+  margin-left: calc((100vw - 360px)/2);
+  padding: 20px;
+  width: 360px;
+  background-color: white;
+  -webkit-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+
+  @media only screen and (max-width: 450px) {
+    display: block;
+    width: 100%;
+    margin: 80px 0 0 0;
+  }
 }

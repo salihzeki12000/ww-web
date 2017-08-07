@@ -14,6 +14,7 @@ import { ItineraryService }  from '../../itinerary';
 })
 export class SigninComponent implements OnInit {
   @Input() reroute;
+  @Input() reload;
   @Input() itinerary;
   @Output() hideSignin = new EventEmitter();
 
@@ -45,14 +46,16 @@ export class SigninComponent implements OnInit {
             this.userService.getCurrentUser().subscribe(
                   data => {});
 
-            if(this.reroute !== '/me')  {
-              let user = {_id: data.userId};
-              this.addToItin(user);
-            } else  {
-              setTimeout(() =>  {
-                this.router.navigateByUrl(this.reroute);
-              }, 1000)
-            }
+                  if(this.itinerary)  {
+                    let user = {_id: data.userId};
+                    this.addToItin(user);
+                  } else if(this.reload) {
+                    window.location.reload();
+                  } else {
+                    setTimeout(() =>  {
+                      this.router.navigateByUrl(this.reroute);
+                    }, 1000)
+                  }
           },
           error => console.error(error)
         )

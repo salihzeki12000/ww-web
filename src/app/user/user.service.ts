@@ -96,6 +96,7 @@ export class UserService  {
   }
 
   handleItinChange(itinerary)  {
+    console.log(itinerary)
     let method = itinerary['method'];
     let itineraries = this.currentUser['itineraries'];
     let index = -1;

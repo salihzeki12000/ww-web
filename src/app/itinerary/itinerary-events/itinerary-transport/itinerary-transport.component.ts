@@ -55,7 +55,12 @@ export class ItineraryTransportComponent implements OnInit {
     this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
       result => {
         this.currentItinerary = result;
-        let title = this.currentItinerary['name'] + " | Transport"
+
+        let header = ''
+        if(this.preview) header = "Preview : ";
+
+        let title = header + this.currentItinerary['name'] + " | Transport";
+
         this.titleService.setTitle(title);
       })
   }

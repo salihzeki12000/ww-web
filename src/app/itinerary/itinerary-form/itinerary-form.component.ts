@@ -87,7 +87,7 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
       let newDate = new Date(addDate);
       dateRange.push(newDate.toISOString());
     }
-    
+
     itinerary["daily_note"] = [];
     for (let i = 0; i < dateRange.length; i++) {
       itinerary['daily_note'].push({
@@ -99,6 +99,7 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
     itinerary.private = this.private;
     itinerary.members = [this.currentUser['_id']];
     itinerary.admin = [this.currentUser['_id']];
+    itinerary.created_by = this.currentUser['_id'];
 
     this.itineraryService.addItin(itinerary).subscribe(
       data => {

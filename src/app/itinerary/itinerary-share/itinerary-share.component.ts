@@ -192,7 +192,7 @@ export class ItineraryShareComponent implements OnInit {
         date_from: this.currentItinerary['date_from'],
         date_to: this.currentItinerary['date_to'],
         daily_note: this.currentItinerary['daily_note'],
-        private: this.currentItinerary['private'],
+        private: this.selectedUsers[i]['privacy']['itinerary'],
         members: [this.selectedUsers[i]['_id']],
         admin: [this.selectedUsers[i]['_id']],
         created_by: this.currentItinerary['created_by'],
@@ -208,14 +208,14 @@ export class ItineraryShareComponent implements OnInit {
       this.currentItinerary['shares'].push(newShare);
 
       this.itineraryService.copyItin(newItinerary).subscribe(
-        data => {
-          this.shareEvents(data.itinerary);
+        result => {
+          this.shareEvents(result.itinerary);
 
           this.notificationService.newNotification({
             recipient: this.selectedUsers[i]['_id'],
             originator: this.currentUser['_id'],
             message: " has shared with you the itinerary - " + this.currentItinerary['name'],
-            link: "/me/itinerary/" + data.itinerary['_id'],
+            link: "/me/itinerary/" + result.itinerary['_id'],
             read: false
           }).subscribe(data => {})
         }
