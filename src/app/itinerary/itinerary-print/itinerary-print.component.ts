@@ -49,6 +49,10 @@ export class ItineraryPrintComponent implements OnInit {
           this.titleService.setTitle(title);
 
           this.sortDailyNotes();
+
+          if(this.itinerary['description']) {
+            this.itinerary['formatted_description'] = this.itinerary['description']['content'].replace(/\r?\n/g, '<br/> ');
+          }
         })
 
       this.itineraryEventService.getEvents(id).subscribe(

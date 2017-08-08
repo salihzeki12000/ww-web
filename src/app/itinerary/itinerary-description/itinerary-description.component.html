@@ -1,3 +1,27 @@
-<p>
-  itinerary-description works!
-</p>
+
+<div class="description-main">
+
+  <div class="description-photo">
+
+  </div>
+
+  <div class="description-content">
+    <div *ngIf="!editing">
+      <i *ngIf="validUser" class="fa fa-pencil" aria-hidden="true" (click)="editing = true"></i>
+
+      <h4 [innerHTML]="currentItinerary?.formatted_description"></h4>
+      <h4 *ngIf="currentItinerary?.formatted_description === ''">You do not have any description at the moment. The description can be a story of your trip, capturing the memories of your travel. You can add this after your trip. Tihs description will appear in the PDF version of your itinerary.</h4>
+    </div>
+
+    <div *ngIf="editing">
+      <textarea #content rows="8"
+        [value]="currentItinerary?.description.content"></textarea>
+
+      <div class="action-response">
+        <h5 class="action-response-secondary" (click)="editing = false">CANCEL</h5>
+        <h5 class="action-response-primary" (click)="save(content.value)">SAVE</h5>
+      </div>
+    </div>
+
+  </div>
+</div>

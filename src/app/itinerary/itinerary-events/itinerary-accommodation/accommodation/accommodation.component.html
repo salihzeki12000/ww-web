@@ -81,23 +81,23 @@
       </div>
 
       <div *ngIf="showContactDetails">
-        <div class="details-item">
+        <div class="details-item" *ngIf="event?.place.formatted_address">
           <i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>
           <h5>{{ event?.place.formatted_address }}</h5>
         </div>
 
-        <div class="details-item">
+        <div class="details-item" *ngIf="event?.place.international_phone_number">
           <i class="fa fa-phone fa-fw" aria-hidden="true"></i>
           <h5>
-            <a href="tel:{{ event?.international_phone_number }}">{{ event?.place.international_phone_number }}</a>
+            <a href="tel:{{ event?.place.international_phone_number }}">{{ event?.place.international_phone_number }}</a>
           </h5>
         </div>
       </div>
 
-      <div class="details-item">
+      <div class="details-item" *ngIf="event?.place.website">
         <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
         <h5 class="truncate">
-          <a href="{{ event?.website }}" target="_blank" class="website-link">{{ event?.place.website }}</a>
+          <a href="{{ event?.place.website }}" target="_blank" class="website-link">{{ event?.place.website }}</a>
         </h5>
       </div>
 

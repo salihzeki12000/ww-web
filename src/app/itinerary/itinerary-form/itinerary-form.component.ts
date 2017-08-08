@@ -100,7 +100,8 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
     itinerary.members = [this.currentUser['_id']];
     itinerary.admin = [this.currentUser['_id']];
     itinerary.created_by = this.currentUser['_id'];
-
+    itinerary.description = { content: "" };
+    
     this.itineraryService.addItin(itinerary).subscribe(
       data => {
         this.loadingService.setLoader(false, "");

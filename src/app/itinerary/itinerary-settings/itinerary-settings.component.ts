@@ -495,25 +495,34 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   }
 
   confirmLeave()  {
+    this.loadingService.setLoader(true, "Removing you from the itinerary...");
+
     let members = this.currentItinerary['members'];
     let admin = this.currentItinerary['admin'];
 
     for (let i = 0; i < members.length; i++) {
       if(members[i]['_id'] === this.currentUser['_id']) {
+
         if(members[i]['admin'])  {
           for (let j = 0; j < admin.length; j++) {
             if(admin[j] === this.currentUser['_id']) {
-              admin.splice(j,1);
               members.splice(i,1);
-            } else  {
-              members.splice(i,1)
+              admin.splice(j,1);
             }
           }
+        } else  {
+          members.splice(i,1);
         }
       }
     }
 
-    this.itineraryService.editItin(this.currentItinerary, 'delete').subscribe(
+    for (let i = 0; i < this.currentUser['itineraries'].length; i++) {
+      if(this.currentUser['itineraries'][i]['_id'] === this.currentItinerary["_id"])  {
+        this.currentUser['itineraries'].splice(i,1);
+      }
+    }
+
+    this.itineraryService.editItin(this.currentItinerary, '').subscribe(
         data => {
           for (let i = 0; i < this.currentItinerary['members'].length; i++) {
             this.notificationService.newNotification({

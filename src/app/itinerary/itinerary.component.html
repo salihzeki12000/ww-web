@@ -2,11 +2,17 @@
   <h2>You are not authorised to access this itinerary.</h2>
 </div>
 
+<div class="preview-message" *ngIf="previewMessage">
+  <h5 (click)="previewMessage = false">X</h5>
+  <h4>You are viewing a preview version of the itinerary. You need to be logged in to save and make changes to this itinerary.</h4>
+</div>
+
+
 <div class="itinerary" *ngIf="validAccess">
 
   <div class="itinerary-header">
     <h2 class="itinerary-name">
-      <span class="preview-message" *ngIf="preview">PREVIEW : </span>
+      <span class="preview-header" *ngIf="preview">PREVIEW : </span>
       {{ itinerary?.name }}
       <span class="itinerary-date">{{ itinerary?.date_from | date:'dd MMM yyyy' }} to {{ itinerary?.date_to | date:'dd MMM yyyy' }}</span>
     </h2>
@@ -43,8 +49,8 @@
         <li (click)="showAddNewOptions()" *ngIf="!preview">
           <a><i class="fa fa-plus" aria-hidden="true"></i> ADD NEW</a>
         </li>
-        <li (click)="copy()" *ngIf="preview && !creator"><a>COPY ITINERARY</a></li>
-        <li (click)="activateTab()" routerLinkActive="active" *ngIf="itinerary?.description"><a [routerLink]="['description']">DESCRIPTION</a></li>
+        <li (click)="copy()" class="copy-itinerary" *ngIf="preview && !creator"><a>COPY ITINERARY</a></li>
+        <li (click)="activateTab()" routerLinkActive="active"><a [routerLink]="['description']">DESCRIPTION</a></li>
         <li (click)="activateTab()" routerLinkActive="active"><a [routerLink]="['summary']">SUMMARY</a></li>
         <li (click)="activateTab()" routerLinkActive="active"><a [routerLink]="['map']">MAP VIEW</a></li>
         <li (click)="activateTab()" routerLinkActive="active"><a [routerLink]="['accommodation']">ACCOMMODATION</a></li>

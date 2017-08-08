@@ -21,6 +21,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   isLoggedIn = false;
   viewOnly = false;
   preview = false;
+  previewMessage = false;
   validUser = false;
   creator = false;
   validAccess = true;
@@ -79,7 +80,12 @@ export class ItineraryComponent implements OnInit, OnDestroy {
     let segments = this.route.snapshot['_urlSegment'].segments;
     if(segments[0]['path'] === 'preview') {
       this.preview = true;
+      this.previewMessage = true;
       this.reload = true;
+
+      setTimeout(() => {
+        this.previewMessage = false;
+      }, 8000)
     }
 
     this.route.params.forEach((params: Params) => {
@@ -90,8 +96,11 @@ export class ItineraryComponent implements OnInit, OnDestroy {
           this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
               result =>  {
                 this.itinerary = result;
-
                 this.viewOnly = this.itinerary['view_only'];
+
+                setTimeout(() =>  {
+                  this.checkAccess();
+                },1500)
 
                 if(!this.preview && this.isLoggedIn)  {
                   this.getAllUsers();
@@ -111,7 +120,6 @@ export class ItineraryComponent implements OnInit, OnDestroy {
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
       result => {
         this.currentUser = result;
-        this.checkAccess();
       })
 
   }
@@ -245,6 +253,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
             }
           })
 
+    this.flashMessageService.handleFlashMessage("Users added to the itinerary");
     this.showUsersSearchModal = false;
     this.preventScroll(false);
     this.newMembers = [];

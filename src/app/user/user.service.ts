@@ -96,7 +96,6 @@ export class UserService  {
   }
 
   handleItinChange(itinerary)  {
-    console.log(itinerary)
     let method = itinerary['method'];
     let itineraries = this.currentUser['itineraries'];
     let index = -1;
@@ -107,13 +106,16 @@ export class UserService  {
       };
     }
 
-    if(method === 'add')  {
-     itineraries.push(itinerary);
-    } else if (method === 'edit') {
-      itineraries[index] = itinerary;
-    } else if (method === 'delete') {
-      itineraries.splice(index, 1);
+    if(index > -1)  {
+      if(method === 'add')  {
+       itineraries.push(itinerary);
+      } else if (method === 'edit') {
+        itineraries[index] = itinerary;
+      } else if (method === 'delete') {
+        itineraries.splice(index, 1);
+      }
     }
+
     this.sortItin(this.currentUser)
   }
 

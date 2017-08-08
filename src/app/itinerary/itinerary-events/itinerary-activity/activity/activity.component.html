@@ -77,31 +77,31 @@
         </div>
 
         <div *ngIf="showContactDetails">
-          <div class="details-item">
+          <div class="details-item" *ngIf="activity?.place.formatted_address">
             <i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>
             <h5> {{ activity?.place.formatted_address }}</h5>
           </div>
 
-          <div class="details-item">
+          <div class="details-item" *ngIf="activity?.place.international_phone_number">
             <i class="fa fa-phone fa-fw" aria-hidden="true"></i>
-            <a href="tel:{{ activity?.international_phone_number }}">{{ activity?.place.international_phone_number }}</a>
+            <a href="tel:{{ activity?.place.international_phone_number }}">{{ activity?.place.international_phone_number }}</a>
           </div>
         </div>
 
-        <div class="details-item">
+        <div class="details-item" *ngIf="activity?.place.opening_hours">
           <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>
           <h5 [innerHTML]="activity?.formatted_hours"></h5>
         </div>
 
-        <div class="details-item">
+        <div class="details-item" *ngIf="activity?.entry_fee">
           <i class="fa fa-money fa-fw" aria-hidden="true"></i>
           <h5>{{ activity?.entry_fee }}</h5>
         </div>
 
-        <div class="details-item">
+        <div class="details-item" *ngIf="activity?.place.website">
           <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
           <h5 class="truncate">
-            <a href="{{activity?.website}}" target="_blank" class="website-link">{{ activity?.place.website }}</a>
+            <a href="{{ activity?.place.website }}" target="_blank" class="website-link">{{ activity?.place.website }}</a>
           </h5>
         </div>
 
