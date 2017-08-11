@@ -66,21 +66,23 @@
         (searching)="searching($event)"></ww-google-place-search>
       </div>
 
-      <div class="profile-edit-item">
-        <h5>Date of Birth</h5>
-        <div class="date-picker date-picker-single" daterangepicker [options]="birthDatePicker" (selected)="selectedDate($event)">
-          <i class="fa fa-calendar" aria-hidden="true"></i>
-          <h4>{{ displayDate | date: 'dd MMM yyyy'}}</h4>
+      <div *ngIf="!currentUser?.corporate">
+        <div class="profile-edit-item">
+          <h5>Date of Birth</h5>
+          <div class="date-picker date-picker-single" daterangepicker [options]="birthDatePicker" (selected)="selectedDate($event)">
+            <i class="fa fa-calendar" aria-hidden="true"></i>
+            <h4>{{ displayDate | date: 'dd MMM yyyy'}}</h4>
+          </div>
         </div>
-      </div>
 
-      <div class="profile-edit-item">
-        <h5>Gender</h5>
-        <select class="profile-gender-select" name="gender" formControlName="gender" [value]="currentUser?.gender">
-          <option *ngFor="let gender of genders">
-            <h5>{{ gender }}</h5>
-          </option>
-        </select>
+        <div class="profile-edit-item">
+          <h5>Gender</h5>
+          <select class="profile-gender-select" name="gender" formControlName="gender" [value]="currentUser?.gender">
+            <option *ngFor="let gender of genders">
+              <h5>{{ gender }}</h5>
+            </option>
+          </select>
+        </div>
       </div>
 
       <h5 class="change-pw" (click)="changePassword()">Change password</h5>

@@ -65,7 +65,7 @@ export class PostInputComponent implements OnInit, OnDestroy {
     if(this.newImageFile !== '') {
       this.fileuploadService.uploadFile(this.newImageFile, "post").subscribe(
             result => {
-              this.addPost(result.secure_url)
+              this.addPost(result)
             })
     } else  {
       this.addPost("");
@@ -73,11 +73,12 @@ export class PostInputComponent implements OnInit, OnDestroy {
 
   }
 
-  addPost(imgUrl) {
+  addPost(result) {
     this.postService.addPost({
       content: this.postForm.value.content,
       created_at: Date.now(),
-      img: imgUrl,
+      img: result.secure_url,
+      public_id: result.public_id,
       link_title: this.link_title,
       link_url: this.link_url,
       link_img: this.link_img,

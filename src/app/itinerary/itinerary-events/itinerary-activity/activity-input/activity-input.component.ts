@@ -433,16 +433,16 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     newActivity['location'] = !this.noLocation;
 
     if(this.newImageFile !== '')  {
-      this.fileuploadService.uploadFile(this.newImageFile, "event")
-          .subscribe(
-            result => {
-              newActivity['photo'] = {
-                url: result.secure_url,
-                credit: ""
-              };
+      this.fileuploadService.uploadFile(this.newImageFile, "event").subscribe(
+        result => {
+          newActivity['photo'] = {
+            url: result.secure_url,
+            public_id: result.public_id,
+            credit: ""
+          };
 
-              this.addActivity(newActivity);
-          })
+          this.addActivity(newActivity);
+        })
     } else  {
       this.addActivity(newActivity);
     }

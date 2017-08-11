@@ -118,7 +118,7 @@
   <h4 class="itinerary-edit-section-header">Share Details</h4>
   <div class="itinerary-edit-section-details">
     <div *ngIf="!shared">
-      <h5 class="itinerary-edit-item">This itinerary has not been shared with anyone</h5>
+      <h5>This itinerary has not been shared with anyone</h5>
     </div>
     <div *ngFor="let share of currentItinerary?.shares">
       <h4 class="share-date">{{ share.shared_on | date: 'dd MMM yyyy'}}</h4>

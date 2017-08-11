@@ -19,7 +19,6 @@ import { LoadingService }        from '../loading';
 })
 export class ItineraryComponent implements OnInit, OnDestroy {
   isLoggedIn = false;
-  viewOnly = false;
   preview = false;
   previewMessage = false;
   validUser = false;
@@ -96,11 +95,10 @@ export class ItineraryComponent implements OnInit, OnDestroy {
           this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
               result =>  {
                 this.itinerary = result;
-                this.viewOnly = this.itinerary['view_only'];
 
                 setTimeout(() =>  {
                   this.checkAccess();
-                },1500)
+                },2000)
 
                 if(!this.preview && this.isLoggedIn)  {
                   this.getAllUsers();
@@ -132,17 +130,21 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   checkAccess() {
     this.validUser = false;
 
-    if(this.currentUser && this.itinerary)  {
-      for (let i = 0; i < this.itinerary['members'].length; i++) {
-        if(this.itinerary['members'][i]['_id'] === this.currentUser['_id']) {
-          this.validUser = true;
-        };
-      }
-
-      if(this.currentUser['_id'] === this.itinerary['created_by']['_id']) {
-        this.creator = true;
-      }
+    for (let i = 0; i < this.itinerary['members'].length; i++) {
+      // console.log(this.itinerary['members'][i]['_id'])
+      // console.log(this.currentUser['_id'])
+      if(this.itinerary['members'][i]['_id'] === this.currentUser['_id']) {
+        this.validUser = true;
+      };
     }
+
+    if(this.currentUser['_id'] === this.itinerary['created_by']['_id']) {
+      this.creator = true;
+    }
+
+    console.log("preview: " + this.preview)
+    console.log("log in: " + this.isLoggedIn)
+    console.log("validUser: " + this.validUser)
 
     if(this.preview)  {
       this.validAccess = true;
@@ -464,6 +466,10 @@ export class ItineraryComponent implements OnInit, OnDestroy {
     } else  {
       this.router.navigateByUrl('/wondererwanderer/' + id)
     }
+  }
+
+  routeToPreview()  {
+    this.router.navigateByUrl('/preview/itinerary/' + this.itinerary['_id'])
   }
 
 }

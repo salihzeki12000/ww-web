@@ -30,6 +30,7 @@ export class UserService  {
                       return this.currentUser;
                     })
                     .catch((error: Response) => {
+                      console.log(error);
                       this.errorMessageService.handleErrorMessage(error.json());
                       return Observable.throw(error.json())
                     });

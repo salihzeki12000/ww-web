@@ -413,6 +413,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
             result => {
               newAccommodation['photo'] = {
                 url:result.secure_url,
+                public_id: result.public_id,
                 credit: ""
               };
 

@@ -22,6 +22,7 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
   dateFrom;
   dateTo;
   private = false;
+  corporate = false;
 
   options: any = {
     locale: { format: 'DD-MMM-YYYY' },
@@ -43,11 +44,19 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
-                                        result => { this.currentUser = result; })
+      result => {
+        this.currentUser = result;
+        this.checkStatus();
+      })
   }
 
   ngOnDestroy() {
     this.currentUserSubscription.unsubscribe();
+  }
+
+  checkStatus() {
+    if(this.currentUser['corporate']) this.corporate = true;
+    this.private = this.currentUser['privacy']['itinerary'];
   }
 
   selectedDate(value) {
@@ -96,12 +105,13 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
       })
     }
 
+    itinerary.corporate = this.currentUser['corporate'];
     itinerary.private = this.private;
     itinerary.members = [this.currentUser['_id']];
     itinerary.admin = [this.currentUser['_id']];
     itinerary.created_by = this.currentUser['_id'];
     itinerary.description = { content: "" };
-    
+
     this.itineraryService.addItin(itinerary).subscribe(
       data => {
         this.loadingService.setLoader(false, "");

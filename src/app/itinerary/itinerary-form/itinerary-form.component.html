@@ -22,11 +22,13 @@
       </div>
 
       <label>Privacy</label>
-      <h5 *ngIf="private" class="label-note">Only members of this itinerary can view.</h5>
+      <h5 *ngIf="private && corporate" class="label-note">Only you can view this itinerary.</h5>
+      <h5 *ngIf="private && !corporate" class="label-note">Only members of this itinerary can view.</h5>
       <h4 *ngIf="private" class="check-in-private" (click)="private = false">Yes</h4>
       <h4 *ngIf="private" class="toggle-button-private" (click)="private = false"></h4>
 
-      <h5 *ngIf="!private" class="label-note">Followers of members of this itinerary can view.</h5>
+      <h5 *ngIf="!private && corporate" class="label-note">Your followers can view this itinerary.</h5>
+      <h5 *ngIf="!private && !corporate" class="label-note">Followers of members of this itinerary can view.</h5>
       <h4 *ngIf="!private" class="check-in-public" (click)="private = true">No</h4>
       <h4 *ngIf="!private" class="toggle-button-public" (click)="private = true"></h4>
 

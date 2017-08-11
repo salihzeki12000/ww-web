@@ -99,7 +99,9 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
        }
 
        setTimeout(() => {
-         this.updateDateRange();
+         if(!this.currentUser['corporate'])  {
+           this.updateDateRange();
+         }
          this.loadingService.setLoader(false, "");
        },1000)
      })
