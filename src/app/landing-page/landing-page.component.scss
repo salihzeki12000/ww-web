@@ -47,84 +47,19 @@
   }
 }
 
-.landing-page-sign-in {
+.get-sign-in  {
+  display: block;
   position: absolute;
-  top: 0;
+  top: 24px;
   right: 0;
-
-  @media only screen and (max-width: 850px) {
-    display: none;
-  }
-}
-
-.sign-in-input  {
-  display: inline-block;
-}
-
-.sign-in-input > input  {
-  width: 160px;
-  margin-bottom: 3px;
-  height: 25px;
   color: #F9FBFB;
-  font-size: 13px;
-  background-color: transparent;
-  border: 1px solid rgba(255,255,255,.3);
-  border-radius: 2px;
-  &:focus {
-    background-color: rgba(0,0,0,.2);
-  }
-}
-
-.sign-in-input > label  {
-  margin-bottom: 0;
-  color: #F9FBFB;
-  font-size: 10px;
-}
-
-span.form-validator-message {
-  color: #F9FBFB;
-  font-size: 9px;
-}
-
-.signin-button  {
-  color: #F9FBFB;
-  font-size: 11px;
-  background-color: transparent;
-  border: none;
   &:hover {
     cursor: pointer;
   }
-}
 
-.get-sign-in  {
-  display: none;
-  @media only screen and (max-width: 850px) {
-    display: block;
-    position: absolute;
+  @media only screen and (max-width: 500px) {
     top: 28px;
-    right: 0;
-    color: #F9FBFB;
-    &:hover {
-      cursor: pointer;
-    }
-  }
-}
-
-.custom-modal * {
-  display: block;
-  margin-top: 100px;
-  margin-left: calc((100vw - 360px)/2);
-  padding: 20px;
-  width: 360px;
-  background-color: white;
-  -webkit-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
-  -moz-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
-  box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
-
-  @media only screen and (max-width: 450px) {
-    display: block;
-    width: 100%;
-    margin: 80px 0 0 0;
+    font-size: 0.83em;
   }
 }
 
@@ -134,6 +69,7 @@ span.form-validator-message {
   padding-top: 100px;
   width: 100vw;
   height: 665px;
+  text-align: center;
   background-color: rgba(0,0,0,.2);
 
   @media only screen and (max-width: 450px) {
@@ -193,27 +129,65 @@ span.form-validator-message {
 }
 
 .fa-arrow-circle-o-down {
-  position: absolute;
-  top: 620px;
-  left: calc((100vw - 36px)/2);
-  color: rgba(255,255,255,.5);
+  margin: 40px 0 15px 0;
+  color: black;
+  opacity: .5;
+}
 
-  @media only screen and (max-width: 450px) {
-    top: 520px;
+/* how it works section */
+#how-it-works {
+  font-family: 'Fira Sans', sans-serif;
+  text-align: center;
+}
+
+#how-it-works h1  {
+  padding: 70px 0 20px 0;
+  color: #6494ED;
+}
+
+#how-it-works > .sub {
+  padding: 0 100px 30px 100px;
+
+  @media only screen and (max-width: 500px) {
+    padding: 0 12px 30px 12px;
   }
 }
 
-// a[id="slideShow"]:target ~ .landing-page-slideshow  {
-//   -webkit-transform: translateY( -665px );
-//   transform: translateY(-665px);
-// }
+#how-it-works > .leading  {
+  padding: 60px 100px 0 100px;
 
-/* landing page section */
+  @media only screen and (max-width: 500px) {
+    padding: 60px 20px 0 20px;
+  }
+}
 
-.landing-page-slideshow {
-  padding: 120px 0 50px 0;
+.hiw-example  {
+  display: inline-block;
+  width: 400px;
+  margin: 20px;
+
+  @media only screen and (max-width: 400px) {
+    width: calc(100vw - 20px);
+    min-width: 300px;
+  }
+
+  @media only screen and (max-width: 500px) {
+    margin: 20px 10px;
+  }
+}
+
+.hiw-example h3 {
+  padding-bottom: 10px;
+}
+
+.gif  {
   width: 100%;
-  height: 700px;
+}
+
+/* slide show section */
+.landing-page-slideshow {
+  padding-top: 120px;
+  width: 100%;
   text-align: center;
   background-color: white;
   -webkit-transform: translateZ( 0 );
@@ -263,13 +237,6 @@ span.form-validator-message {
   }
 }
 
-.img-mobile {
-  height: 410px;
-}
-
-.img-laptop {
-  height: 350px;
-}
 
 .slider-wrapper {
   position: absolute;
@@ -339,38 +306,91 @@ span.form-validator-message {
   color: #F9FBFB;
 }
 
-/* value add section */
+/* share section */
+#share {
+  font-family: 'Fira Sans', sans-serif;
+  text-align: center;
+}
 
-.landing-page-value {
-  padding: 50px 0;
-  width: 100%;
+#share h1  {
+  padding: 70px 0 20px 0;
+  color: #6494ED;
+}
+
+#share > .sub {
+  padding: 10px 100px 30px 100px;
+
+  @media only screen and (max-width: 500px) {
+    padding: 10px 20px 30px 20px;
+  }
+}
+
+#share > .leading  {
+  padding: 60px 100px 0 100px;
+
+  @media only screen and (max-width: 500px) {
+    padding: 60px 20px 0 20px;
+  }
+}
+
+/* value add section */
+#benefit {
+  font-family: 'Fira Sans', sans-serif;
   text-align: center;
   background-color: #1A1A1A;
 }
 
-.sub-section {
-  display: inline-block;
-  width: 450px;
-  height: 220px;
-  margin: 20px;
-  padding: 0 20px;
-  text-align: center;
-
-  @media only screen and (max-width: 750px) {
-    width: 100%;
-    margin: 20px 0;
-  }
-}
-
-.sub-section h3 {
+#benefit h1  {
+  padding: 70px 0 20px 0;
   color: #6494ED;
 }
 
+.sub-section {
+  width: 600px;
+  padding: 20px 0 60px 0;
+  margin-left: calc((100vw - 600px) / 2);
+  text-align: left;
+
+  @media only screen and (max-width: 610px) {
+    width: 100%;
+    margin: 0;
+    padding: 20px 10px 60px 10px;
+    text-align: center;
+  }
+}
+
 .sub-section img  {
-  position: absolute;
-  margin: 10px 0 0 -80px;
-  height: 150px;
-  width: 150px;
+  display: inline-block;
+  margin: 0 20px;
+  height: 120px;
+  width: 120px;
+
+  @media only screen and (max-width: 610px) {
+    text-align: center;
+  }
+}
+
+.explain  {
+  display: inline-block;
+  vertical-align: top;
+
+  @media only screen and (max-width: 610px) {
+    display: block;
+  }
+}
+
+.explain h3 {
+  padding: 20px 0 10px 0;
+  color: #6494ED;
+
+  @media only screen and (max-width: 610px) {
+    padding-top: 30px;
+  }
+}
+
+.explain h4 {
+  padding: 5px 0;
+  color: #F9FBFB;
 }
 
 .landing-page-teaser  {
@@ -406,5 +426,23 @@ span.form-validator-message {
   @media only screen and (max-width: 850px) {
     margin: 20px 0 10px 0;
     text-align: center;
+  }
+}
+
+.custom-modal * {
+  display: block;
+  margin-top: 100px;
+  margin-left: calc((100vw - 360px)/2);
+  padding: 20px;
+  width: 360px;
+  background-color: white;
+  -webkit-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+
+  @media only screen and (max-width: 450px) {
+    display: block;
+    width: 100%;
+    margin: 80px 0 0 0;
   }
 }

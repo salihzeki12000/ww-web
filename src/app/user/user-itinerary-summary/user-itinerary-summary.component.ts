@@ -19,7 +19,7 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
   itinDateRange = [];
 
   currentItinerarySubscription: Subscription;
-  currentItinerary;
+  itinerary;
   dailyNotes = [];
 
   scroll = false;
@@ -56,7 +56,7 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
     this.events = [];
     this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
        result => {
-         this.currentItinerary = result;
+         this.itinerary = result;
          this.sortDailyNotes();
        })
 
@@ -80,7 +80,7 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
 
   sortDailyNotes()  {
     this.dailyNotes = []
-    let notes = this.currentItinerary['daily_note'];
+    let notes = this.itinerary['daily_note'];
 
     for (let i = 0; i < notes.length; i++) {
       if(notes[i]['note'] === 'e.g. Day trip to the outskirts') {
@@ -188,6 +188,10 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
     })
 
     return events;
+  }
+
+  viewPreview() {
+
   }
 
   preventScroll(value)  {

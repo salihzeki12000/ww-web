@@ -1,10 +1,7 @@
 import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
-import { Title }        from '@angular/platform-browser';
-
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { Title }  from '@angular/platform-browser';
 import { Router } from '@angular/router';
 
-import { AuthService }    from '../auth';
 import { LoadingService } from '../loading';
 
 @Component({
@@ -13,27 +10,18 @@ import { LoadingService } from '../loading';
   styleUrls: ['./landing-page.component.scss']
 })
 export class LandingPageComponent implements OnInit, OnDestroy {
-  signinForm: FormGroup;
-
+  reroute = '/me';
   showAuth = false;
   showSignin = false;
   showSignup = false;
-
 
 // preview/itinerary/5971d919773bea000429a120/summary
 
   constructor(
     private titleService: Title,
     private renderer: Renderer2,
-    private formBuilder: FormBuilder,
-    private authService: AuthService,
     private loadingService: LoadingService,
-    private router: Router) {
-      this.signinForm = formBuilder.group({
-        'email' : ['', Validators.compose([ Validators.required, this.validEmail ])],
-        'password' : ['', Validators.required]
-      })
-    }
+    private router: Router) {}
 
   ngOnInit() {
     this.titleService.setTitle("wondererwanderer");
@@ -45,25 +33,6 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     this.loadingService.setLoader(true, "");
   }
 
-  onSubmit()  {
-    this.loadingService.setLoader(true, "get ready to wonder wander");
-
-    this.authService.signin(this.signinForm.value)
-        .subscribe(
-          data => {
-            setTimeout(() =>  {
-              this.router.navigateByUrl('/me');
-            }, 1000)
-          },
-          error => console.error(error)
-        )
-  }
-
-  validEmail(control: FormControl): {[s: string]: boolean} {
-      if (!control.value.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-          return {invalidEmail: true};
-      }
-  }
 
   getSignin() {
     this.showSignin = true;

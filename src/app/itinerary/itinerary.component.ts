@@ -130,23 +130,27 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   checkAccess() {
     this.validUser = false;
 
-    for (let i = 0; i < this.itinerary['members'].length; i++) {
-      // console.log(this.itinerary['members'][i]['_id'])
-      // console.log(this.currentUser['_id'])
-      if(this.itinerary['members'][i]['_id'] === this.currentUser['_id']) {
-        this.validUser = true;
-      };
-    }
+    if(this.isLoggedIn) {
+      for (let i = 0; i < this.itinerary['members'].length; i++) {
+        // console.log(this.itinerary['members'][i]['_id'])
+        // console.log(this.currentUser['_id'])
+        if(this.itinerary['members'][i]['_id'] === this.currentUser['_id']) {
+          this.validUser = true;
+        };
+      }
 
-    if(this.currentUser['_id'] === this.itinerary['created_by']['_id']) {
-      this.creator = true;
+      if(this.currentUser['_id'] === this.itinerary['created_by']['_id']) {
+        this.creator = true;
+      }
     }
 
     console.log("preview: " + this.preview)
     console.log("log in: " + this.isLoggedIn)
     console.log("validUser: " + this.validUser)
 
-    if(this.preview)  {
+    if(this.itinerary['corporate']['status'] && !this.itinerary['corporate']['publish'])  {
+      this.validAccess = false;
+    } else if(this.preview)  {
       this.validAccess = true;
     } else if(!this.preview && !this.isLoggedIn) {
       this.validAccess = false;

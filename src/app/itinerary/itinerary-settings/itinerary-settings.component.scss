@@ -184,6 +184,23 @@ span.form-validator {
   }
 }
 
+/* toggle */
+.toggle-button-true  {
+  margin: 2px 0 0 -60px;
+
+  @media only screen and (max-width: 610px) {
+    margin: -22.5px 0 0 3px;
+  }
+}
+
+.toggle-button-false  {
+  margin: 2px 0 0 -26px;
+
+  @media only screen and (max-width: 610px) {
+    margin: -22.5px 0 0 38px;
+  }
+}
+
 /* member details section */
 .itinerary-member-list  {
   position: relative;

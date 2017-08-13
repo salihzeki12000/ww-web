@@ -28,30 +28,37 @@
       <div class="created-details">
         <div class="itinerary-edit-item">
           <h5>Created By</h5>
-          <h4 class="username" (click)="routeToUser(currentItinerary?.created_by._id)">{{ currentItinerary?.created_by.username }}</h4>
+          <h4 class="username" (click)="routeToUser(itinerary?.created_by._id)">{{ itinerary?.created_by.username }}</h4>
         </div>
       </div>
 
-      <div class="created-details" *ngIf="currentItinerary?.shared_by">
+      <div class="created-details" *ngIf="itinerary?.shared_by">
         <div class="itinerary-edit-item">
           <h5>Shared By</h5>
-          <h4 class="username" (click)="routeToUser(currentItinerary?.shared_by._id)">{{ currentItinerary?.shared_by.username }}</h4>
+          <h4 class="username" (click)="routeToUser(itinerary?.shared_by._id)">{{ itinerary?.shared_by.username }}</h4>
         </div>
       </div>
 
       <div class="created-details">
         <div class="itinerary-edit-item">
           <h5>Master Admin</h5>
-          <h4 class="username" (click)="routeToUser(currentItinerary?.created_by._id)">{{ currentItinerary?.members[0].username }}</h4>
+          <h4 class="username" (click)="routeToUser(itinerary?.created_by._id)">{{ itinerary?.members[0].username }}</h4>
         </div>
       </div>
 
       <div class="itinerary-edit-item" *ngIf="masterAdmin">
         <h5>Private</h5>
-        <h4 *ngIf="private" class="check-in-private" (click)="private = false">Yes</h4>
-        <h4 *ngIf="private" class="toggle-button-private" (click)="private = false"></h4>
-        <h4 *ngIf="!private" class="check-in-public" (click)="private = true">No</h4>
-        <h4 *ngIf="!private" class="toggle-button-public" (click)="private = true"></h4>
+
+        <h4 *ngIf="private" class="toggle-true" (click)="private = false">Yes</h4>
+        <h4 *ngIf="private" class="toggle-button-true" (click)="private = false"></h4>
+        <h6 *ngIf="private && itinerary?.corporate.status">Only your followers can view.</h6>
+        <h6 *ngIf="private && !itinerary?.corporate.status">Only itinerary members can view.</h6>
+
+        <h4 *ngIf="!private" class="toggle-false" (click)="private = true">No</h4>
+        <h4 *ngIf="!private" class="toggle-button-false" (click)="private = true"></h4>
+        <h6 *ngIf="!private && itinerary?.corporate.status">Any one can view.</h6>
+        <h6 *ngIf="!private && !itinerary?.corporate.status">Followers of itinerary members can view.</h6>
+
       </div>
 
       <div class="created-details" *ngIf="!masterAdmin">
@@ -62,8 +69,19 @@
         </div>
       </div>
 
+      <div class="itinerary-edit-item" *ngIf="itinerary?.corporate.status">
+        <h5>Publish</h5>
 
-      <div class="itinerary-edit-item" *ngIf="currentUserAdmin">
+        <h4 *ngIf="publish" class="toggle-true" (click)="publish = false">Yes</h4>
+        <h4 *ngIf="publish" class="toggle-button-true" (click)="publish = false"></h4>
+        <h6 *ngIf="publish">Preview is available for public to view.</h6>
+
+        <h4 *ngIf="!publish" class="toggle-false" (click)="publish = true">No</h4>
+        <h4 *ngIf="!publish" class="toggle-button-false" (click)="publish = true"></h4>
+        <h6 *ngIf="!publish">Preview is not available for public to view.</h6>
+      </div>
+
+      <div class="itinerary-edit-item" *ngIf="currentUserAdmin && !itinerary?.corporate.status">
         <h5>Invitation Password <br> (Admin can amend)</h5>
         <div>
           <input type="text" formControlName="invite_password">
@@ -73,7 +91,7 @@
       <div class="created-details" *ngIf="!currentUserAdmin">
         <div class="itinerary-edit-item">
           <h5>Invitation Password <br> (Admin can amend)</h5>
-          <h4>{{ currentItinerary?.invite_password }}</h4>
+          <h4>{{ itinerary?.invite_password }}</h4>
         </div>
       </div>
 
@@ -89,7 +107,7 @@
 
   <h4 class="itinerary-edit-section-header">Member Details</h4>
   <div class="itinerary-edit-section-details">
-    <div *ngFor="let member of currentItinerary?.members; let i = index" class="itinerary-member-list">
+    <div *ngFor="let member of itinerary?.members; let i = index" class="itinerary-member-list">
       <ww-user-profile-card [user]="member" [currentUser]="currentUser"></ww-user-profile-card>
 
       <div class="itinerary-member-option" (click)="showMemberOption(i)" *ngIf="currentUserAdmin">
@@ -120,7 +138,7 @@
     <div *ngIf="!shared">
       <h5>This itinerary has not been shared with anyone</h5>
     </div>
-    <div *ngFor="let share of currentItinerary?.shares">
+    <div *ngFor="let share of itinerary?.shares">
       <h4 class="share-date">{{ share.shared_on | date: 'dd MMM yyyy'}}</h4>
       <h4 class="share-details"><span class="username-bold" (click)="routeToUser(share.shared_by._id)">{{ share.shared_by.username }}</span> shared with <span class="username-bold" (click)="routeToUser(share.shared_with._id)">{{ share.shared_with.username }}</span></h4>
     </div>
@@ -167,12 +185,12 @@
     </div>
 
     <div class="form-header-name-delete">
-      <h4>{{ currentItinerary?.name }}</h4>
+      <h4>{{ itinerary?.name }}</h4>
     </div>
 
     <div class="content-with-header-name">
       <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
-      <h4>Leaving itinerary {{ currentItinerary?.name }} will permanently remove it from your list of itineraries. You will not be able to participate in the itinerary further. You will also lose all information associated with the itinerary.</h4>
+      <h4>Leaving itinerary {{ itinerary?.name }} will permanently remove it from your list of itineraries. You will not be able to participate in the itinerary further. You will also lose all information associated with the itinerary.</h4>
     </div>
 
     <div class="action-response">
@@ -192,12 +210,12 @@
     </div>
 
     <div class="form-header-name-delete">
-      <h4>{{ currentItinerary?.name }}</h4>
+      <h4>{{ itinerary?.name }}</h4>
     </div>
 
     <div class="content-with-header-name">
       <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
-      <h4>Deleting itinerary {{ currentItinerary?.name }} will permanently remove it from your list of itineraries.  You will lose all information associated with the itinerary.</h4>
+      <h4>Deleting itinerary {{ itinerary?.name }} will permanently remove it from your list of itineraries.  You will lose all information associated with the itinerary.</h4>
     </div>
 
     <div class="action-response">
@@ -243,7 +261,7 @@
 
     <div class="form-housing change-date-content">
       <h4>Date range for itinerary has been amended.</h4>
-      <h5>From ( {{currentItinerary.date_from | date: 'dd MMM yyyy'}} - {{currentItinerary.date_to | date: 'dd MMM yyyy'}} ) to ( {{editItineraryForm.value.date_from | date: 'dd MMM yyyy'}} - {{editItineraryForm.value.date_to | date: 'dd MMM yyyy'}} )</h5>
+      <h5>From ( {{itinerary.date_from | date: 'dd MMM yyyy'}} - {{itinerary.date_to | date: 'dd MMM yyyy'}} ) to ( {{editItineraryForm.value.date_from | date: 'dd MMM yyyy'}} - {{editItineraryForm.value.date_to | date: 'dd MMM yyyy'}} )</h5>
       <h5>Dates for accommodation and transport arrangements will remain the same.</h5>
       <h5>Dates for activities can be adjusted as below.</h5>
       <h4>Please select how would you like dated activities to be adjusted:</h4>

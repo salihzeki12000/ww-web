@@ -19,9 +19,9 @@
   </div>
 
   <div class="members-section">
-    <h6 (click)="getUsers()" class="invite-members-header" *ngIf="!preview">INVITE MEMBERS</h6>
+    <h6 (click)="getUsers()" class="invite-members-header" *ngIf="!preview && !itinerary?.corporate.status">INVITE MEMBERS</h6>
 
-    <div *ngFor="let member of itinerary?.members | slice:0:5" class="member" [class.mt]="preview">
+    <div *ngFor="let member of itinerary?.members | slice:0:5" class="member" [class.mt]="itinerary?.corporate.status">
       <div class="tool-tip">
         <img src="{{ member.display_picture }}" alt="" class="user-profile-thumbnail" (click)="routeToUser(member._id)">
         <span class="tool-tiptext" [class.bt]="preview">{{ member.username }}</span>
@@ -43,7 +43,7 @@
   <header>
     <nav>
       <ul class="itinerary-nav-tabs">
-        <li class="members-icon-mobile" (click)="showMembers()" *ngIf="!preview">
+        <li class="members-icon-mobile" (click)="showMembers()" *ngIf="!itinerary?.corporate.status">
           <i class="fa fa-users fa-lg" aria-hidden="true"></i>
         </li>
         <li (click)="showAddNewOptions()" *ngIf="!preview">

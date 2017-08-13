@@ -1,9 +1,9 @@
 <div class="description-main">
 
-  <div class="description-photo" *ngIf="!currentItinerary?.description.photos"></div>
+  <div class="description-photo" *ngIf="!itinerary?.description.photos"></div>
 
-  <div *ngIf="currentItinerary?.description.photos" class="description-slider">
-    <div *ngFor="let photo of currentItinerary?.description.photos; let i = index" class="description-images">
+  <div *ngIf="itinerary?.description.photos" class="description-slider">
+    <div *ngFor="let photo of itinerary?.description.photos; let i = index" class="description-images">
       <input type="radio" name="slide_switch" id="image-{{i}}" checked>
       <label for="image-{{i}}">
         <h5>{{ i + 1 }}</h5>
@@ -24,9 +24,9 @@
     <div *ngIf="!editing">
       <i *ngIf="validUser && !preview" class="fa fa-pencil" aria-hidden="true" (click)="editing = true"></i>
 
-      <h4 [innerHTML]="currentItinerary?.formatted_description"></h4>
+      <h4 [innerHTML]="itinerary?.formatted_description"></h4>
 
-      <div *ngIf="currentItinerary?.formatted_description === ''">
+      <div *ngIf="itinerary?.formatted_description === ''">
         <h4>You do not have a description at the moment.</h4>
         <h4>Is there a story to this trip? Pen it down so that you will never forget about it!</h4>
         <h4>This description will also appear in the PDF version of your itinerary.</h4>
@@ -35,7 +35,7 @@
 
     <div *ngIf="editing">
       <textarea #content rows="8"
-        [value]="currentItinerary?.description.content"></textarea>
+        [value]="itinerary?.description.content"></textarea>
 
       <div class="action-response">
         <h5 class="action-response-secondary" (click)="editing = false">CANCEL</h5>
@@ -55,7 +55,7 @@
 
     <div class="content-without-header-name">
 
-      <div *ngFor="let image of currentItinerary?.description.photos; let i = index">
+      <div *ngFor="let image of itinerary?.description.photos; let i = index">
         <img src="{{image.url}}" alt="" [class.blur]="!image.status">
         <h4 class="remove" *ngIf="image.status" (click)="image.status = !image.status">Remove</h4>
         <h4 *ngIf="!image.status" (click)="image.status = !image.status">Add</h4>
@@ -65,7 +65,7 @@
         <img [src]="pic.url" [class.blur]="!pic.status">
         <h4 class="remove" *ngIf="pic.status" (click)="pic.status = !pic.status">Remove</h4>
         <h4 *ngIf="!pic.status" (click)="pic.status = !pic.status">Add</h4>
-        <h5 class="new-pic"><i class="fa fa-check" aria-hidden="true"></i> NEW</h5>      
+        <h5 class="new-pic"><i class="fa fa-check" aria-hidden="true"></i> NEW</h5>
       </div>
 
     </div>

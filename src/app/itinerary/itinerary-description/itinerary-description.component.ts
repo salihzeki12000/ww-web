@@ -15,7 +15,7 @@ import { FileuploadService }     from '../../shared';
 export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
 
   currentItinerarySubscription: Subscription;
-  currentItinerary;
+  itinerary;
 
   currentUserSubscription: Subscription;
   currentUser;
@@ -42,12 +42,12 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
 
     this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
       result =>{
-        this.currentItinerary = result;
+        this.itinerary = result;
 
-        if(this.currentItinerary['description'])  {
-          this.currentItinerary['formatted_description'] = this.currentItinerary['description']['content'].replace(/\r?\n/g, '<br/> ');
+        if(this.itinerary['description'])  {
+          this.itinerary['formatted_description'] = this.itinerary['description']['content'].replace(/\r?\n/g, '<br/> ');
         } else  {
-          this.currentItinerary['formatted_description'] = '';
+          this.itinerary['formatted_description'] = '';
         }
 
         this.sortPhotos()
@@ -70,13 +70,15 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
   }
 
   sortPhotos()  {
-    for (let i = 0; i < this.currentItinerary['description']['photos'].length; i++) {
-      this.currentItinerary['description']['photos'][i]['status'] = true;
+    if(this.itinerary['description']['photos'])  {
+      for (let i = 0; i < this.itinerary['description']['photos'].length; i++) {
+        this.itinerary['description']['photos'][i]['status'] = true;
+      }
     }
   }
 
   checkSameUser() {
-    if(this.currentItinerary['created_by']['_id'] === this.currentUser['_id'])  {
+    if(this.itinerary['created_by']['_id'] === this.currentUser['_id'])  {
       this.validUser = true;
     }
   }
@@ -111,9 +113,9 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
     this.loadingService.setLoader(true, "Saving pictures...");
     this.confirmPics = false;
 
-    for (let i = 0; i < this.currentItinerary['description']['photos'].length; i++) {
-      if(!this.currentItinerary['description']['photos'][i]['status'])  {
-        this.currentItinerary['description']['photos'].splice(i,1);
+    for (let i = 0; i < this.itinerary['description']['photos'].length; i++) {
+      if(!this.itinerary['description']['photos'][i]['status'])  {
+        this.itinerary['description']['photos'].splice(i,1);
       }
     }
 
@@ -126,7 +128,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
             this.uploadedPics[i]['public_id'] = result.public_id;
             this.uploadedPics[i]['credit'] = '';
 
-            this.currentItinerary['description']['photos'].push(this.uploadedPics[i])
+            this.itinerary['description']['photos'].push(this.uploadedPics[i])
           }
         )
       }
@@ -138,7 +140,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
   }
 
   updateEdit()  {
-    this.itineraryService.editItin(this.currentItinerary, 'edit').subscribe(
+    this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
       result => {
         this.loadingService.setLoader(false, "");
         this.uploadedPics = []
@@ -148,10 +150,10 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
   save(content) {
     this.editing = false;
 
-    this.currentItinerary['formatted_description'] = content.replace(/\r?\n/g, '<br/> ');
-    this.currentItinerary['description']['content'] = content;
+    this.itinerary['formatted_description'] = content.replace(/\r?\n/g, '<br/> ');
+    this.itinerary['description']['content'] = content;
 
-    this.itineraryService.editItin(this.currentItinerary, 'edit').subscribe(
+    this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
       result => {})
   }
 

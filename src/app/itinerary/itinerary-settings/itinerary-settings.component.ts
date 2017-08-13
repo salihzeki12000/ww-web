@@ -35,8 +35,9 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   leaveItinerary = false;
 
   currentItinerarySubscription: Subscription;
-  currentItinerary;
+  itinerary;
   private = false;
+  publish = false;
 
   currentUserSubscription: Subscription;
   currentUser;
@@ -101,12 +102,13 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
       result => {
-        this.currentItinerary = result;
-        this.currentItinerary['date_from'] = result['date_from'].slice(0,10);
-        this.currentItinerary['date_to'] = result['date_to'].slice(0,10);
+        this.itinerary = result;
+        this.itinerary['date_from'] = result['date_from'].slice(0,10);
+        this.itinerary['date_to'] = result['date_to'].slice(0,10);
         this.private = result['private'];
+        this.publish = result['corporate']['publish']
 
-        let title = this.currentItinerary['name'] + " | Settings"
+        let title = this.itinerary['name'] + " | Settings"
         this.titleService.setTitle(title);
 
         this.getUsers();
@@ -177,39 +179,39 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   }
 
   sortAdmin() {
-    for (let i = 0; i < this.currentItinerary['members'].length; i++) {
+    for (let i = 0; i < this.itinerary['members'].length; i++) {
       this.showOptions.push(false);
 
-      for (let j = 0; j < this.currentItinerary['admin'].length; j++) {
-        if(this.currentItinerary['members'][i]['_id'] === this.currentItinerary['admin'][j])  {
-          this.currentItinerary['members'][i]['admin'] = true;
+      for (let j = 0; j < this.itinerary['admin'].length; j++) {
+        if(this.itinerary['members'][i]['_id'] === this.itinerary['admin'][j])  {
+          this.itinerary['members'][i]['admin'] = true;
         }
       }
     }
   }
 
   checkStatus()  {
-    for (let i = 0; i < this.currentItinerary['admin'].length; i++) {
-      if(this.currentItinerary['admin'][i] === this.currentUser['_id']) {
+    for (let i = 0; i < this.itinerary['admin'].length; i++) {
+      if(this.itinerary['admin'][i] === this.currentUser['_id']) {
         this.currentUserAdmin = true;
       }
     }
 
-    for (let i = 0; i < this.currentItinerary['members'].length; i++) {
-      if(this.currentItinerary['members'][i]['_id'] === this.currentUser['_id'])  {
-        this.currentItinerary['members'][i]['hide_option'] = true;
+    for (let i = 0; i < this.itinerary['members'].length; i++) {
+      if(this.itinerary['members'][i]['_id'] === this.currentUser['_id'])  {
+        this.itinerary['members'][i]['hide_option'] = true;
       }
 
-      if(this.currentItinerary['members'][i]['_id'] === this.currentItinerary['created_by']['_id']) {
-        this.currentItinerary['members'][i]['hide_option'] = true;
+      if(this.itinerary['members'][i]['_id'] === this.itinerary['created_by']['_id']) {
+        this.itinerary['members'][i]['hide_option'] = true;
       }
     }
 
-    if(this.currentUser['_id'] === this.currentItinerary['members'][0]['_id']) {
+    if(this.currentUser['_id'] === this.itinerary['members'][0]['_id']) {
       this.masterAdmin = true;
     }
 
-    if(this.currentItinerary['shares'].length !== 0) {
+    if(this.itinerary['shares'].length !== 0) {
       this.shared = true;
     }
 
@@ -221,10 +223,10 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
 
   patchValue()  {
     this.editItineraryForm.patchValue({
-      name: this.currentItinerary['name'],
-      date_from: this.formatDate(this.currentItinerary['date_from']),
-      date_to: this.formatDate(this.currentItinerary['date_to']),
-      invite_password: this.currentItinerary['invite_password'],
+      name: this.itinerary['name'],
+      date_from: this.formatDate(this.itinerary['date_from']),
+      date_to: this.formatDate(this.itinerary['date_to']),
+      invite_password: this.itinerary['invite_password'],
     })
 
     this.updateDateRange();
@@ -243,8 +245,8 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   }
 
   updateDateRange() {
-    this.dateFrom = this.currentItinerary['date_from'];
-    this.dateTo = this.currentItinerary['date_to'];
+    this.dateFrom = this.itinerary['date_from'];
+    this.dateTo = this.itinerary['date_to'];
 
     setTimeout(() =>  {
       this.picker.datePicker.setStartDate(this.dateFrom);
@@ -255,9 +257,9 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   filterUsers(users)  {
     this.users = users;
 
-    for (let i = 0; i < this.currentItinerary['members'].length; i++) {
+    for (let i = 0; i < this.itinerary['members'].length; i++) {
       for (let j = 0; j < this.users.length; j++) {
-        if(this.currentItinerary['members'][i]['_id'] === this.users[j]['_id']) {
+        if(this.itinerary['members'][i]['_id'] === this.users[j]['_id']) {
           this.users.splice(j,1);
           j--
         }
@@ -268,7 +270,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   filterItineraries() {
     this.itineraries = [];
     for (let i = 0; i < this.currentUser['itineraries'].length; i++) {
-      if(this.currentUser['itineraries'][i]['_id'] !== this.currentItinerary['_id'])  {
+      if(this.currentUser['itineraries'][i]['_id'] !== this.itinerary['_id'])  {
         this.itineraries.push(this.currentUser['itineraries'][i])
       }
     }
@@ -293,9 +295,9 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     member['admin'] = true;
     this.showOptions[i] = false;
 
-    this.currentItinerary['admin'].push(member['_id'])
+    this.itinerary['admin'].push(member['_id'])
 
-    this.itineraryService.editItin(this.currentItinerary, 'edit')
+    this.itineraryService.editItin(this.itinerary, 'edit')
         .subscribe(data => {})
   }
 
@@ -303,22 +305,22 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     member['admin'] = false;
     this.showOptions[i] = false;
 
-    this.currentItinerary['admin'].splice(this.currentItinerary['admin'].indexOf(member['_id']), 1);
+    this.itinerary['admin'].splice(this.itinerary['admin'].indexOf(member['_id']), 1);
 
-    this.itineraryService.editItin(this.currentItinerary, 'edit').subscribe(
+    this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
          data => {})
   }
 
   removeFromItin(member, i) {
     this.showOptions[i] = false;
 
-    this.currentItinerary['members'].splice(i, 1)
+    this.itinerary['members'].splice(i, 1)
 
     if(member['admin']) {
-      this.currentItinerary['admin'].splice(this.currentItinerary['admin'].indexOf(member['_id']), 1);
+      this.itinerary['admin'].splice(this.itinerary['admin'].indexOf(member['_id']), 1);
     }
 
-    this.itineraryService.editItin(this.currentItinerary, 'edit').subscribe(
+    this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
          data => {})
   }
 
@@ -352,14 +354,14 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
 
   undoEdit()  {
     this.patchValue();
-    this.private = this.currentItinerary['private'];
+    this.private = this.itinerary['private'];
   }
 
   checkEdit() {
     this.preventScroll(true);
 
-    if(this.currentItinerary['date_from'] === this.editItineraryForm.value['date_from'] &&
-       this.currentItinerary['date_to'] === this.editItineraryForm.value['date_to'])  {
+    if(this.itinerary['date_from'] === this.editItineraryForm.value['date_from'] &&
+       this.itinerary['date_to'] === this.editItineraryForm.value['date_to'])  {
       this.saveEdit()
     } else  {
       this.dateChanged = true;
@@ -410,15 +412,15 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
       }
     }
 
-    for (let i = 0; i < this.currentItinerary['daily_note'].length; i++) {
-      let index = this.newDateRange.indexOf(this.currentItinerary['daily_note'][i]['date']);
+    for (let i = 0; i < this.itinerary['daily_note'].length; i++) {
+      let index = this.newDateRange.indexOf(this.itinerary['daily_note'][i]['date']);
 
       if(index > -1)  {
-        this.newDailyNote[index]['note'] = this.currentItinerary['daily_note'][i]['note'];
+        this.newDailyNote[index]['note'] = this.itinerary['daily_note'][i]['note'];
       }
     }
 
-    this.currentItinerary['daily_note'] = this.newDailyNote;
+    this.itinerary['daily_note'] = this.newDailyNote;
     this.saveEdit();
   }
 
@@ -441,15 +443,15 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
 
     if(this.newDateRange.length <= this.dateRange.length)  {
       for (let i = 0; i < this.newDailyNote.length; i++) {
-        this.newDailyNote[i]['note'] = this.currentItinerary['daily_note'][i]['note'];
+        this.newDailyNote[i]['note'] = this.itinerary['daily_note'][i]['note'];
       }
     } else if(this.newDateRange.length > this.dateRange.length)  {
-      for (let i = 0; i < this.currentItinerary['daily_note'].length; i++) {
-        this.newDailyNote[i]['note'] = this.currentItinerary['daily_note'][i]['note'];
+      for (let i = 0; i < this.itinerary['daily_note'].length; i++) {
+        this.newDailyNote[i]['note'] = this.itinerary['daily_note'][i]['note'];
       }
     }
 
-    this.currentItinerary['daily_note'] = this.newDailyNote;
+    this.itinerary['daily_note'] = this.newDailyNote;
     this.saveEdit();
   }
 
@@ -469,12 +471,13 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     let editedDetails = this.editItineraryForm.value;
 
     for (let value in editedDetails)  {
-      this.currentItinerary[value] = editedDetails[value]
+      this.itinerary[value] = editedDetails[value]
     }
 
-    this.currentItinerary['private'] = this.private;
-
-    this.itineraryService.editItin(this.currentItinerary, 'edit').subscribe(
+    this.itinerary['private'] = this.private;
+    this.itinerary['corporate']['publish'] = this.publish;
+    
+    this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
           data => {
             this.loadingService.setLoader(false, "");
             this.preventScroll(false);
@@ -485,7 +488,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
 
   // delete section
   confirmDelete()  {
-    this.itineraryService.deleteItin(this.currentItinerary)
+    this.itineraryService.deleteItin(this.itinerary)
         .subscribe(
           data => {
             this.router.navigateByUrl('/me');
@@ -497,8 +500,8 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   confirmLeave()  {
     this.loadingService.setLoader(true, "Removing you from the itinerary...");
 
-    let members = this.currentItinerary['members'];
-    let admin = this.currentItinerary['admin'];
+    let members = this.itinerary['members'];
+    let admin = this.itinerary['admin'];
 
     for (let i = 0; i < members.length; i++) {
       if(members[i]['_id'] === this.currentUser['_id']) {
@@ -517,19 +520,19 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     }
 
     for (let i = 0; i < this.currentUser['itineraries'].length; i++) {
-      if(this.currentUser['itineraries'][i]['_id'] === this.currentItinerary["_id"])  {
+      if(this.currentUser['itineraries'][i]['_id'] === this.itinerary["_id"])  {
         this.currentUser['itineraries'].splice(i,1);
       }
     }
 
-    this.itineraryService.editItin(this.currentItinerary, '').subscribe(
+    this.itineraryService.editItin(this.itinerary, '').subscribe(
         data => {
-          for (let i = 0; i < this.currentItinerary['members'].length; i++) {
+          for (let i = 0; i < this.itinerary['members'].length; i++) {
             this.notificationService.newNotification({
-              recipient: this.currentItinerary['members'][i]['_id'],
+              recipient: this.itinerary['members'][i]['_id'],
               originator: this.currentUser['_id'],
-              message: " has left the itinerary - " + this.currentItinerary['name'],
-              link: "/me/itinerary/" + this.currentItinerary['_id'],
+              message: " has left the itinerary - " + this.itinerary['name'],
+              link: "/me/itinerary/" + this.itinerary['_id'],
               read: false
             }).subscribe(data => {})
           }
