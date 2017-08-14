@@ -63,9 +63,138 @@
   font-size: 11px;
 }
 
-p.edit-note  {
-  position: absolute;
-  font-size: 9px !important;
+h5.edit-note  {
+  font-size: 9px;
   font-style: italic;
   color: #808080;
+}
+
+/* item */
+
+.view > .event-time {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+
+.event-time  {
+  padding: 10px 0 0 5px;
+  color: grey;
+}
+
+.edit-time  {
+  position: absolute;
+  margin: 0 0 0 110px;
+  padding: 5px 10px;
+  height: 74px;
+  background-color: #E6E6E6;
+  z-index: 3;
+}
+
+.edit-time h5 {
+  padding: 8px;
+  text-align: center;
+}
+
+.summary-item-container {
+  &:hover {
+    background-color: rgba(100, 148, 237, 0.2);
+  }
+}
+
+.summary-item {
+  display: inline-block;
+  margin: 5px 20px 0 20px;
+  padding-bottom: 10px;
+  width: 240px;
+  border-bottom: 1px solid lightgray;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  @media only screen and (max-width: 420px) {
+    min-width: 240px;
+    width: calc(100vw - 40px)
+  }
+}
+
+.meals-display  {
+  display: inline-block;
+}
+
+.meals-display h6  {
+  display: inline-block;
+  margin: 0 2px 5px 0;
+  padding: 2px 5px 1px 5px;
+  color: #19CC72;
+  border: 1px solid #19cc72;
+  border-radius: 15px;
+}
+
+.pill {
+  display: inline-block;
+  height: 36px;
+  width: 5px;
+  vertical-align: top;
+  border-radius: 5px;
+}
+
+.accommodation-indicator  {
+  background-color: rgba(100,235,219,.8);
+}
+
+.activity-indicator  {
+  background-color: rgba(237,189,100,.8);
+}
+
+.transport-indicator  {
+  background-color: rgba(237,100,148,.8);
+}
+
+.summary-item > div > img {
+  width: 36px;
+  height: 36px;
+}
+
+.fa-bicycle {
+  width: 36px;
+  height: 36px;
+  padding: 11px 6px;
+}
+
+.event-name  {
+  display: inline-block;
+  width: 230px;
+  vertical-align: top;
+  padding-left: 0;
+  padding-bottom: 0;
+  overflow-wrap: break-word;
+
+  @media only screen and (max-width: 420px) {
+    width: calc(100vw - 50px)
+  }
+}
+
+.event-name h5  {
+  font-weight: 500;
+}
+
+.activity-indicator ~ .event-name {
+  width: 190px;
+
+  @media only screen and (max-width: 420px) {
+    width: calc(100vw - 90px)
+  }
+}
+
+h5.check-out-on {
+  color: grey;
+  font-weight: 400 !important;
+}
+
+.event-stay-city  {
+  padding-bottom: 10px;
+  color: #6494ED;
 }

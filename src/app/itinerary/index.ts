@@ -19,7 +19,6 @@ export * from './itinerary-description/itinerary-description.component';
 
 export * from './itinerary-summary/itinerary-summary.component';
 export * from './itinerary-summary/itinerary-summary-day/itinerary-summary-day.component';
-export * from './itinerary-summary/itinerary-summary-item/itinerary-summary-item.component';
 
 export * from './itinerary-events/itinerary-event.service';
 export * from './itinerary-events/itinerary-event';
