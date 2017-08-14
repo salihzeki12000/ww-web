@@ -21,7 +21,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
   itinMap;
 
   preview;
-  
+
   currentItinerarySubscription: Subscription;
 
   eventSubscription: Subscription;
@@ -162,7 +162,8 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
               this.events[i]['place']['lat'],
               this.events[i]['place']['lng'],
               eventDate,
-              this.events[i]['time']]
+              this.events[i]['time'],
+              this.events[i]['note']]
           )
         } else if(!this.events[i]['place']['lat']) {
           this.events.splice(i,1)
@@ -190,7 +191,11 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
       this.markers.push(marker);
 
       let infoWindow = new google.maps.InfoWindow({
-        content: '<div class="info-window"><p>' + event[0] + '</p><br/><p>' + event[3] + " - " + event[4] + '</p></div>'
+        content: '<div id="iw-container">' +
+                    '<h5>' + event[3] + " - " + event[4] + '</h5>' +
+                    '<p style="padding: 10px 5px; font-weight: bold; text-align: center;">' + event[0] + '</p>' +
+                    '<p style="padding-bottom: 15px; color: #808080; text-align: center;">' + event[5] + '</p>' +
+                  '</div>'
       })
 
       this.infoWindows.push(infoWindow);
