@@ -27,6 +27,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
   inputValue = '';
   uploadedPics = [];
   confirmPics = false;
+  tracker = 0;
 
   constructor(
     private element: ElementRef,
@@ -73,6 +74,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
     if(this.itinerary['description']['photos'])  {
       for (let i = 0; i < this.itinerary['description']['photos'].length; i++) {
         this.itinerary['description']['photos'][i]['status'] = true;
+        this.itinerary['description']['photos'][i]['order'] = i + 1;
       }
     }
   }
@@ -94,7 +96,8 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
         this.uploadedPics.push({
           file: files[i],
           url: event['target']['result'],
-          status: true
+          status: true,
+          order: i + 1 + this.itinerary['description']['photos'].length
         });
       }
 
@@ -110,6 +113,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
   }
 
   savePics()  {
+    this.tracker = 0;
     this.loadingService.setLoader(true, "Saving pictures...");
     this.confirmPics = false;
 
@@ -123,28 +127,30 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
       if(this.uploadedPics[i]['status'])  {
         this.fileuploadService.uploadFile(this.uploadedPics[i]['file'], "description").subscribe(
           result => {
-            console.log(result)
             this.uploadedPics[i]['url'] = result.secure_url;
             this.uploadedPics[i]['public_id'] = result.public_id;
             this.uploadedPics[i]['credit'] = '';
 
-            this.itinerary['description']['photos'].push(this.uploadedPics[i])
+            this.itinerary['description']['photos'].push(this.uploadedPics[i]);
+
+            this.tracker += 1;
+            this.updateEdit();
           }
         )
-      }
-
-      if(i === this.uploadedPics.length - 1)  {
-        this.updateEdit();
       }
     }
   }
 
   updateEdit()  {
-    this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
-      result => {
-        this.loadingService.setLoader(false, "");
-        this.uploadedPics = []
-      })
+    if(this.tracker === this.uploadedPics.length) {
+
+      this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
+        result => {
+          this.loadingService.setLoader(false, "");
+          this.uploadedPics = []
+        })
+
+    }
   }
 
   save(content) {

@@ -1,8 +1,11 @@
 <div class="description-main">
 
-  <div class="description-photo" *ngIf="!itinerary?.description.photos"></div>
+  <div class="description-photo" *ngIf="itinerary?.description.photos.length === 0">
+    <img src="assets/description_photo.png" alt="">
+    <a href="http://www.freepik.com/free-vector/world-tourism-day-background-with-monuments_915535.htm">Designed by Freepik</a>
+  </div>
 
-  <div *ngIf="itinerary?.description.photos" class="description-slider">
+  <div *ngIf="itinerary?.description.photos.length > 0" class="description-slider">
     <div *ngFor="let photo of itinerary?.description.photos; let i = index" class="description-images">
       <input type="radio" name="slide_switch" id="image-{{i}}" checked>
       <label for="image-{{i}}">
@@ -14,7 +17,7 @@
 
   <div class="upload-picture" *ngIf="validUser && !preview">
     <label class="file-upload">
-      Upload images
+      Upload images (max 10)
       <input type="file" (change)="fileUploaded($event)" [value]="inputValue" accept="image/*" multiple>
     </label>
   </div>
@@ -57,15 +60,27 @@
 
       <div *ngFor="let image of itinerary?.description.photos; let i = index">
         <img src="{{image.url}}" alt="" [class.blur]="!image.status">
-        <h4 class="remove" *ngIf="image.status" (click)="image.status = !image.status">Remove</h4>
-        <h4 *ngIf="!image.status" (click)="image.status = !image.status">Add</h4>
+
+        <div class="status">
+          <!-- <h5>Display order</h5>
+          <h4>{{image.order}}</h4> -->
+          <h4 class="remove" *ngIf="image.status" (click)="image.status = !image.status">Remove</h4>
+          <h4 *ngIf="!image.status" (click)="image.status = !image.status">Add</h4>
+        </div>
+
       </div>
 
       <div *ngFor="let pic of uploadedPics; let i = index">
         <img [src]="pic.url" [class.blur]="!pic.status">
-        <h4 class="remove" *ngIf="pic.status" (click)="pic.status = !pic.status">Remove</h4>
-        <h4 *ngIf="!pic.status" (click)="pic.status = !pic.status">Add</h4>
-        <h5 class="new-pic"><i class="fa fa-check" aria-hidden="true"></i> NEW</h5>
+
+        <div class="status">
+          <!-- <h5>Display order</h5>
+          <h4>{{pic.order}}</h4> -->
+          <h4 class="remove" *ngIf="pic.status" (click)="pic.status = !pic.status">Remove</h4>
+          <h4 *ngIf="!pic.status" (click)="pic.status = !pic.status">Add</h4>
+          <h5 class="new-pic"><i class="fa fa-check" aria-hidden="true"></i> NEW</h5>
+        </div>
+
       </div>
 
     </div>
