@@ -1,0 +1,41 @@
+.itinerary-photo  {
+  position: relative;
+  display: inline-block;
+  margin-right: 10px;
+  vertical-align: top;
+}
+
+.itinerary-photo a {
+  position: absolute;
+  margin: -9px 0 0 2px;
+  font-size: 7px;
+}
+
+img {
+  height: 120px;
+  width: 120px;
+
+  @media only screen and (max-width: 500px) {
+    height: 80px;
+    width: 80px;
+  }
+}
+
+.itinerary-details  {
+  display: inline-block;
+
+  @media only screen and (max-width: 500px) {
+    max-width: calc(100vw - 150px);
+  }
+
+  @media only screen and (min-width: 500px) and (max-width: 600px) {
+    max-width: calc(100vw - 210px);
+  }
+}
+
+
+.itinerary-created-by  {
+  @media only screen and (max-width: 500px) {
+    font-size: .7em;
+  }
+}

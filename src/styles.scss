@@ -2289,10 +2289,15 @@ ww-itinerary-map  {
 .itinerary-list {
   padding: 10px 20px;
   border-top: 1px solid lightgray;
+
   &:hover {
     cursor: pointer;
     background-color: #F6F6F6;
     opacity: 1;
+  }
+
+  @media only screen and (max-width: 500px) {
+    padding: 10px;
   }
 }
 

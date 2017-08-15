@@ -9,10 +9,14 @@ import { Router } from '@angular/router';
 export class ItineraryListItemComponent implements OnInit {
   @Input() itinerary;
   @Input() currentUser;
-
+  displayPic = '';
   constructor(private router: Router) { }
 
   ngOnInit() {
+    console.log(this.itinerary)
+    if(this.itinerary.description.photos.length > 0)  {
+      this.displayPic = this.itinerary.description.photos[0];
+    }
   }
 
   routeToUser(id) {
