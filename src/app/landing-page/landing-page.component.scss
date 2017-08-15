@@ -16,8 +16,8 @@
   font-family: 'Roboto Condensed', sans-serif;
   z-index: 1;
 
-  @media only screen and (max-width: 500px) {
-    width: 90%;
+  @media only screen and (max-width: 550px) {
+    width: 93%;
     margin-left: 5%;
   }
 }
@@ -26,40 +26,42 @@
   height: 20px;
   margin-top: 20px;
 
-  @media only screen and (max-width: 500px) {
+  @media only screen and (max-width: 550px) {
     height: 15px;
     margin-top: 25px;
   }
 }
 
-.landing-page-logo  > h2  {
-  padding: 18px 0 0 40px;
-  color: #F9FBFB;
 
-  @media only screen and (max-width: 450px) {
-    padding-left: 0;
-    border-bottom: 1px solid rgba(255,255,255,.2);
+.auth-header  {
+  display: inline-block;
+  margin: 25px 5px 0 5px;
+  color: #F9FBFB;
+  float: right;
+
+  &:hover {
+    cursor: pointer;
+    color: #3A4A4D;
   }
 
-  @media only screen and (min-width: 450px) and (max-width: 850px) {
-    padding: 18px 0 3px 0;
-    border-bottom: 1px solid rgba(255,255,255,.2);
+  @media only screen and (max-width: 550px) {
+    margin-top: 28px;
+    font-size: 0.83em;
   }
 }
 
-.get-sign-in  {
-  display: block;
-  position: absolute;
-  top: 24px;
-  right: 0;
-  color: #F9FBFB;
+.log-in {
+  margin-top: 18px;
+  padding: 5px 10px;
+  border: 2px solid;
+  border-radius: 5px;
+
   &:hover {
-    cursor: pointer;
+    border: 2px solid #3A4A4D;
   }
 
-  @media only screen and (max-width: 500px) {
-    top: 28px;
-    font-size: 0.83em;
+  @media only screen and (max-width: 550px) {
+    margin-top: 21px;
   }
 }
 

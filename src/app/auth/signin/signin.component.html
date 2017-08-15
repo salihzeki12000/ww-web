@@ -7,7 +7,7 @@
 
 <h5>--- or ---</h5>
 
-<h3 class="sign-in-header">Enter email and password to sign in.</h3>
+<h3 class="sign-in-header">Enter email and password to log in.</h3>
 
 <form [formGroup]="signinForm" (ngSubmit)="onSubmit()">
 
@@ -21,6 +21,6 @@
   <span class="form-validator"
     *ngIf="signinForm.get('password').touched && signinForm.get('password').invalid">Password is not valid. Please enter at least 6 characters</span>
 
-  <button type="submit" class="action-response-primary" [disabled]="!signinForm.valid"><h4>Sign In Now</h4></button>
+  <button type="submit" class="action-response-primary" [disabled]="!signinForm.valid"><h4>Log In Now</h4></button>
 
 </form>
