@@ -18,8 +18,7 @@ export class ItineraryPreviewComponent implements OnInit {
     let isLoggedIn = this.authService.isLoggedIn();
 
     if(isLoggedIn)  {
-      this.userService.getCurrentUser()
-        .subscribe( data => {} );
+      this.userService.getCurrentUser().subscribe(data => {} );
     }
 
   }

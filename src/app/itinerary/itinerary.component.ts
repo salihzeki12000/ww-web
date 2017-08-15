@@ -21,9 +21,12 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   isLoggedIn = false;
   preview = false;
   previewMessage = false;
-  validUser = false;
   creator = false;
-  validAccess = true;
+
+  invalidPreview = false; // preview not avail for non-corporate/non-publish itin
+  validUser = false; // user not valid if not a member of itinerary
+  validAccess = false; // not valid when preview invalid && user not valid
+  loadingMessage = "";
 
   currentItinerarySubscription: Subscription;
   itinerary;
@@ -79,12 +82,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
     let segments = this.route.snapshot['_urlSegment'].segments;
     if(segments[0]['path'] === 'preview') {
       this.preview = true;
-      this.previewMessage = true;
       this.reload = true;
-
-      setTimeout(() => {
-        this.previewMessage = false;
-      }, 8000)
     }
 
     this.route.params.forEach((params: Params) => {
@@ -96,9 +94,12 @@ export class ItineraryComponent implements OnInit, OnDestroy {
               result =>  {
                 this.itinerary = result;
 
-                setTimeout(() =>  {
-                  this.checkAccess();
-                },2000)
+                this.invalidPreview = false;
+                this.validUser = false;
+                this.validAccess = false;
+                this.creator = false;
+
+                if(id === this.itinerary['_id']) this.checkPreview();
 
                 if(!this.preview && this.isLoggedIn)  {
                   this.getAllUsers();
@@ -116,10 +117,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
     })
 
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
-      result => {
-        this.currentUser = result;
-      })
-
+      result => { this.currentUser = result; })
   }
 
   ngOnDestroy() {
@@ -127,16 +125,31 @@ export class ItineraryComponent implements OnInit, OnDestroy {
     if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
   }
 
-  checkAccess() {
-    this.validUser = false;
+  checkPreview()  {
+    // invalid preview for non-corporate itinerary or corporate itinerary not published
+    if((this.preview && !this.itinerary['corporate']['status']) ||
+       (this.preview && this.itinerary['corporate']['status'] && !this.itinerary['corporate']['publish']))  {
+      this.invalidPreview = true;
 
+      setTimeout(() =>  {
+        this.loadingService.setLoader(false, "");
+      }, 300)
+
+    } else  {
+      setTimeout(() =>  {
+        this.checkAccess();
+      },2000)
+    }
+  }
+
+  checkAccess() {
+    // valid access if preview, corporate & published
+    // valid access for non preview, logged in and valid user
     if(this.isLoggedIn) {
       for (let i = 0; i < this.itinerary['members'].length; i++) {
-        // console.log(this.itinerary['members'][i]['_id'])
-        // console.log(this.currentUser['_id'])
         if(this.itinerary['members'][i]['_id'] === this.currentUser['_id']) {
           this.validUser = true;
-        };
+        }
       }
 
       if(this.currentUser['_id'] === this.itinerary['created_by']['_id']) {
@@ -144,32 +157,30 @@ export class ItineraryComponent implements OnInit, OnDestroy {
       }
     }
 
-    console.log("preview: " + this.preview)
-    console.log("log in: " + this.isLoggedIn)
     console.log("validUser: " + this.validUser)
 
-    if(this.itinerary['corporate']['status'] && !this.itinerary['corporate']['publish'])  {
-      this.validAccess = false;
-    } else if(this.preview)  {
+    if((this.preview && this.itinerary['corporate']['status'] && this.itinerary['corporate']['publish']) ||
+       (!this.preview && this.isLoggedIn && this.validUser))  {
+
       this.validAccess = true;
-    } else if(!this.preview && !this.isLoggedIn) {
-      this.validAccess = false;
-    } else if(!this.preview && this.isLoggedIn && this.validUser) {
-      this.validAccess = true;
-    } else if(!this.preview && this.isLoggedIn && !this.validUser) {
-      this.validAccess = false;
+      
+    } else if(this.preview && !this.invalidPreview) {
+
+      this.previewMessage = true;
+
+      setTimeout(() => {
+        this.previewMessage = false;
+      }, 8000)
+    } else if(!this.validAccess) {
+      this.loadingMessage = 'You are not authorised to access selected itinerary.';
     }
 
     this.loadingService.setLoader(false, "");
   }
 
   getAllUsers() {
-    this.userService.getAllUsers()
-        .subscribe(
-          result => {
-            this.filterUsers(result.users);
-          }
-        )
+    this.userService.getAllUsers().subscribe(
+      result => { this.filterUsers(result.users); })
   }
 
   filterUsers(users)  {
@@ -179,7 +190,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
       for (let j = 0; j < this.users.length; j++) {
         if(this.itinerary['members'][i]['_id'] === this.users[j]['_id']) {
           this.users.splice(j,1);
-          j--
+          j--;
         }
       }
     }

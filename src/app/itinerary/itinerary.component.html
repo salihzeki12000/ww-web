@@ -1,5 +1,6 @@
 <div class="not-valid-access" *ngIf="!validAccess">
-  <h2>You are not authorised to access this itinerary.</h2>
+  <h2 *ngIf="!invalidPreview">{{ loadingMessage }}</h2>
+  <h2 *ngIf="invalidPreview">Preview is not available for selected itinerary.</h2>
 </div>
 
 <div class="preview-message" *ngIf="previewMessage">

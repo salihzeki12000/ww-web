@@ -13,7 +13,6 @@ export class ItineraryListItemComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
-    console.log(this.itinerary)
     if(this.itinerary.description.photos.length > 0)  {
       this.displayPic = this.itinerary.description.photos[0];
     }
