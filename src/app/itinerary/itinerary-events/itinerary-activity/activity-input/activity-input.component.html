@@ -16,12 +16,18 @@
 
         <div *ngIf="!selected" class="select-activity-type">
 
-          <div class="select-activity"  (click)="search()">
+          <div class="select-activity location"  (click)="search()">
+
+            <i class="fa fa-map-marker fa-2x" aria-hidden="true"></i>
+
             <h4>Activity with location</h4>
             <h5>Activity will be pinned to map</h5>
           </div>
 
           <div class="select-activity" (click)="getForm()">
+
+            <i class="fa fa-sticky-note-o fa-2x" aria-hidden="true"></i>
+
             <h4>Activity without location</h4>
             <h5>e.g. meet at hotel lobby at 6pm</h5>
           </div>
@@ -103,7 +109,7 @@
 
               <div class="slider" [class.slider-exist]="displayPic">
                 <div class="slider-images" *ngFor="let image of pictureOptions; let i = index">
-                  <input type="radio" name="slide_switch" id="image-{{i}}" (click)="selectPic(image)" checked>
+                  <input type="radio" name="slide_switch" id="image-{{i}}" (click)="selectPic(image)" [checked]="i === 0">
                   <label for="image-{{i}}">
                     <img src="{{ image.url }}" alt="">
                   </label>

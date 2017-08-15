@@ -132,7 +132,11 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
             this.uploadedPics[i]['public_id'] = result.public_id;
             this.uploadedPics[i]['credit'] = '';
 
-            this.itinerary['description']['photos'].push(this.uploadedPics[i]);
+            if(this.itinerary['description']['photos'].length < 10) {
+              this.itinerary['description']['photos'].push(this.uploadedPics[i]);
+            } else  {
+              i = this.uploadedPics.length
+            }
           }
         )
       }

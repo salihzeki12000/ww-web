@@ -14,6 +14,10 @@
   }
 }
 
+
+
+/* select activity type */
+
 .select-activity-type {
   text-align: center;
 }
@@ -23,7 +27,7 @@
   margin: 10px;
   padding: 10px;
   vertical-align: top;
-  border: 2px solid #6494ED;
+  border: 2px solid;
   border-radius: 5px;
 
   &:hover {
@@ -31,14 +35,25 @@
   }
 }
 
-.select-activity h4 {
+.location i  {
   color: #6494ED;
+}
+
+.select-activity h4 {
+  padding: 10px 0 3px 0;
 }
 
 .select-activity h5  {
   color: #808080;
 }
 
+.location {
+  border: 2px solid #6494ED;
+}
+
+.location h4  {
+  color: #6494ED;
+}
 
 
 .search-activity  .action-response  {

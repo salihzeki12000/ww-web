@@ -216,7 +216,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
       this.pictureOptions = [];
       for (let i = 0; i < index; i++) {
         let c = value.photos[i].html_attributions[0]
-        this.pictureOptions.unshift({
+        this.pictureOptions.push({
           url: value.photos[i].getUrl({'maxWidth': 300, 'maxHeight': 250}),
           credit: c.slice(0,3) + 'target="_blank" ' + c.slice(3,c.length)
         });
