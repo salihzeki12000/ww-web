@@ -21,21 +21,23 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   isLoggedIn = false;
   preview = false;
   previewMessage = false;
-  creator = false;
 
   invalidPreview = false; // preview not avail for non-corporate/non-publish itin
-  validUser = false; // user not valid if not a member of itinerary
-  validAccess = false; // not valid when preview invalid && user not valid
+  validUser = false;      // user not valid if not a member of itinerary
+  validAccess = false;    // not valid when preview invalid && user not valid
   loadingMessage = "";
 
-  currentItinerarySubscription: Subscription;
+  creator = false; // to hide copy option if creator view preview
+
+  itinerarySubscription: Subscription;
   itinerary;
   events = [];
   resources = [];
 
   currentUserSubscription: Subscription;
   currentUser: User;
-  showUsersSearchModal = false;
+
+  showUsersSearch = false;
   users: User[] = [];
   filteredResult;
   newMembers = [];
@@ -90,7 +92,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
 
       this.itineraryService.getItin(id).subscribe(
         result => {
-          this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
+          this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
               result =>  {
                 this.itinerary = result;
 
@@ -121,7 +123,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if(this.currentItinerarySubscription) this.currentItinerarySubscription.unsubscribe();
+    if(this.itinerarySubscription) this.itinerarySubscription.unsubscribe();
     if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
   }
 
@@ -163,7 +165,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
        (!this.preview && this.isLoggedIn && this.validUser))  {
 
       this.validAccess = true;
-      
+
     } else if(this.preview && !this.invalidPreview) {
 
       this.previewMessage = true;
@@ -172,7 +174,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
         this.previewMessage = false;
       }, 8000)
     } else if(!this.validAccess) {
-      this.loadingMessage = 'You are not authorised to access selected itinerary.';
+      this.loadingMessage = 'You are not authorised to access the selected itinerary.';
     }
 
     this.loadingService.setLoader(false, "");
@@ -201,8 +203,8 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   }
 
   // show add members modal
-  getUsers()  {
-    this.showUsersSearchModal = true;
+  inviteUsers()  {
+    this.showUsersSearch = true;
     this.showAddNew = false;
     this.showCurrentMembers = false;
     this.preventScroll(true);
@@ -220,7 +222,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   }
 
   cancelShowUsers() {
-    this.showUsersSearchModal = false;
+    this.showUsersSearch = false;
     this.preventScroll(false);
     this.filteredResult = [];
     this.users.push.apply(this.users, this.newMembers);
@@ -230,6 +232,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
 
   toggleAdd(user) {
     let index = this.newMembers.indexOf(user);
+
     if(index > -1 ) {
       this.newMembers.splice(index, 1);
       this.users.push(user);
@@ -256,32 +259,31 @@ export class ItineraryComponent implements OnInit, OnDestroy {
       this.itinerary['members'].push(this.newMembers[i]);
     }
 
-    this.itineraryService.editItin(this.itinerary, 'edit')
-        .subscribe(
-          data => {
-            for (let i = 0; i < this.newMembers.length; i++) {
-              this.notificationService.newNotification({
-                recipient: this.newMembers[i],
-                originator: this.currentUser,
-                message: " has included you to the itinerary" + this.itinerary['name'],
-                link: "/me/itinerary/" + this.itinerary['_id'],
-                read: false
-              })
-            }
+    this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
+      data => {
+        for (let i = 0; i < this.newMembers.length; i++) {
+
+          this.notificationService.newNotification({
+            recipient: this.newMembers[i],
+            originator: this.currentUser,
+            message: " has included you to the itinerary" + this.itinerary['name'],
+            link: "/me/itinerary/" + this.itinerary['_id'],
+            read: false
           })
 
+        }
+      })
+
     this.flashMessageService.handleFlashMessage("Users added to the itinerary");
-    this.showUsersSearchModal = false;
-    this.preventScroll(false);
-    this.newMembers = [];
-    this.filteredResult = [];
+
+    this.cancelShowUsers();
   }
 
-  // show and hide current members in small screen
+  // show and hide current members
   showMembers() {
-    this.showCurrentMembers = !this.showCurrentMembers;
+    this.showCurrentMembers = true;
     this.showAddNew = false;
-    this.preventScroll(this.showCurrentMembers);
+    this.preventScroll(true);
   }
 
   hideMembers() {
@@ -302,8 +304,9 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   }
 
   newAccommodation()  {
-    this.showAddNew = false;
     this.addAccommodation = true;
+
+    this.showAddNew = false;
     this.addTransport = false;
     this.addActivity = false;
     this.addResource = false;
@@ -311,29 +314,32 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   }
 
   newTransport()  {
+    this.addTransport = true;
+
     this.showAddNew = false;
     this.addAccommodation = false;
-    this.addTransport = true;
     this.addActivity = false;
     this.addResource = false;
     this.preventScroll(true);
   }
 
   newActivity()  {
+    this.addActivity = true;
+
     this.showAddNew = false;
     this.addAccommodation = false;
     this.addTransport = false;
-    this.addActivity = true;
     this.addResource = false;
     this.preventScroll(true);
   }
 
   newResource()  {
+    this.addResource = true;
+
     this.showAddNew = false;
     this.addAccommodation = false;
     this.addTransport = false;
     this.addActivity = false;
-    this.addResource = true;
     this.preventScroll(true);
   }
 
@@ -361,14 +367,13 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   activateTab() {
     this.showAddNew = false;
     this.showCurrentMembers = false;
-    this.showUsersSearchModal = false;
+    this.showUsersSearch = false;
     this.preventScroll(false);
   }
 
   // copy a preview itinerary
   copy()  {
     if(this.isLoggedIn) {
-      console.log("ok to copy")
       this.duplicate();
     } else if(!this.isLoggedIn) {
       this.authOptions = true;
