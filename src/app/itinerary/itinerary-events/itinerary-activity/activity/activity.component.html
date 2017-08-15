@@ -234,10 +234,10 @@
       <form [formGroup]="editActivityForm" (ngSubmit)="saveEdit()">
 
         <div class="form-housing">
-          <h4 class="form-section-header">Visit Date &amp; Time Details</h4>
+          <h4 class="form-section-header">Date &amp; Time Details</h4>
           <div class="form-section-details">
 
-            <label>Date To Visit</label>
+            <label>Date</label>
             <select class="select-date" name="date" formControlName="date">
               <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
                 <div *ngIf="itinDate === 'any day'">
@@ -249,7 +249,7 @@
               </option>
             </select>
 
-            <label>Time To Visit (24hrs)</label>
+            <label>Time (24hrs)</label>
             <ww-time-picker
             [timePicker]="timePicker"
             [ats]="ats"

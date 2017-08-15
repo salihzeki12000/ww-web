@@ -41,6 +41,8 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   meals;
   categories;
 
+  selected = false;
+  searchActivity = false;
   searchDone = false;
 
   itinDateSubscription: Subscription;
@@ -103,8 +105,6 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
                                       result => {
                                         this.itinDateRange  = Object.keys(result).map(key => result[key]);
                                     })
-
-    setTimeout(() => {this.initMap()},100);
   }
 
   @HostListener('document:click', ['$event'])
@@ -157,9 +157,24 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   }
 
   // progress bar
+  backToSelect()  {
+    this.selected = false;
+    this.noLocation = false;
+    this.searchDone = false;
+    this.searchActivity = false;
+
+    this.addActivityForm.reset();
+    this.initMeals();
+    this.displayPic = undefined;
+    this.pictureOptions = [];
+    this.dragAddress = '';
+    this.marker = undefined;
+    this.details = undefined;
+  }
+
   backToSearch() {
     this.searchDone = false;
-    this.noLocation = false;
+
     this.addActivityForm.reset();
     this.initMeals();
     this.displayPic = undefined;
@@ -172,12 +187,20 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   }
 
   getForm() {
+    this.selected = true;
     this.searchDone = true;
     this.noLocation = true;
 
     this.addActivityForm.patchValue({
       date: 'any day',
     })
+  }
+
+  search()  {
+    this.selected = true;
+    this.searchActivity = true;
+
+    setTimeout(() => {this.initMap()},100);
   }
 
   //get activity details from Google

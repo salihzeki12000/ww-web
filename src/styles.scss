@@ -930,24 +930,6 @@ label.label-note  {
   color: #6494ED;
 }
 
-label.activity-no-location  {
-  margin-bottom: 2px;
-  padding: 3px 10px;
-  color: #6494ED;
-  border: 2px solid #6494ED;
-
-  &:hover {
-    cursor: pointer;
-    text-decoration: underline;
-  }
-}
-
-.activity-no-location-note  {
-  margin-bottom: 20px;
-  padding-left: 5px;
-  color: #808080;
-}
-
 /* form validators */
 span.form-validator {
   position: absolute;

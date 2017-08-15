@@ -9,14 +9,26 @@
 
       <div class="form-housing">
         <div class="progress-tracker-section">
-          <ul class="progress-tracker">
-            <li class="progress-title" (click)="backToSearch()" [class.progress-done]="searchDone">SELECT ACTIVITY</li><li class="progress-title">CONFIRM VISIT DATE &amp; TIME DETAILS</li>
+          <ul class="progress-tracker" [class.search-active]="searchActivity">
+            <li class="progress-title" (click)="backToSelect()" [class.progress-done]="selected">SELECT ACTIVITY TYPE</li><li class="progress-title" *ngIf="searchActivity" (click)="backToSearch()" [class.progress-done]="searchDone">SEARCH FOR ACTIVITY</li><li class="progress-title">CONFIRM DATE &amp; TIME DETAILS</li>
           </ul>
         </div>
 
-        <div *ngIf="!searchDone" class="search-activity">
-          <label class="activity-no-location" (click)="getForm()">Click here to add activity without a location</label>
-          <h5 class="activity-no-location-note">e.g. meet at hotel lobby at 6pm</h5>
+        <div *ngIf="!selected" class="select-activity-type">
+
+          <div class="select-activity"  (click)="search()">
+            <h4>Activity with location</h4>
+            <h5>Activity will be pinned to map</h5>
+          </div>
+
+          <div class="select-activity" (click)="getForm()">
+            <h4>Activity without location</h4>
+            <h5>e.g. meet at hotel lobby at 6pm</h5>
+          </div>
+
+        </div>
+
+        <div *ngIf="searchActivity && !searchDone" class="search-activity">
 
           <label>Search activity location by name or adddress <span class="label-note"> - local name or address may be required</span></label>
           <ww-google-place-search [populate]="''" (placeDetail)="getActivityDetails($event)"></ww-google-place-search>
@@ -38,10 +50,10 @@
         </div>
 
         <div *ngIf="searchDone">
-          <h4 class="form-section-header">Visit Date &amp; Time Details</h4>
+          <h4 class="form-section-header">Date &amp; Time Details</h4>
           <div class="form-section-details">
 
-            <label>Date To Visit</label>
+            <label>Date</label>
             <select class="select-date" name="date" formControlName="date">
               <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
                 <div *ngIf="itinDate === 'any day'">
@@ -53,7 +65,7 @@
               </option>
             </select>
 
-            <label>Time To Visit (24hrs)</label>
+            <label>Time (24hrs)</label>
             <ww-time-picker
             [timePicker]="timePicker"
             [ats]="ats"
@@ -81,7 +93,7 @@
             <span class="form-validator"
               *ngIf="addActivityForm.get('name').touched && addActivityForm.get('name').invalid">Name of activity is required</span>
 
-            <h5>e.g. meet at hotel lobby at 6pm</h5>
+            <h5 class="no-location-note">e.g. meet at hotel lobby at 6pm</h5>
           </div>
 
           <div class="form-section-details" *ngIf="!noLocation">
