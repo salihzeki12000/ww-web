@@ -44,25 +44,24 @@ export class SignupComponent implements OnInit {
   onSubmit()  {
     this.loadingService.setLoader(true, "get ready to wonder wander");
 
-    this.authService.signup(this.signupForm.value)
-        .subscribe(
-          data => {
-            this.userService.getCurrentUser().subscribe(
-                  data => {});
+    this.authService.signup(this.signupForm.value).subscribe(
+      data => {
+        this.userService.getCurrentUser().subscribe(
+          data => {});
 
-            if(this.itinerary)  {
-              let user = {_id: data.userId};
-              this.addToItin(user);
-            } else if(this.reload) {
-              window.location.reload();
-            } else {
-              setTimeout(() =>  {
-                this.router.navigateByUrl(this.reroute);
-              }, 1000)
-            }
-          },
-          error => console.error(error)
-        )
+        if(this.itinerary)  {
+          let user = {_id: data.userId};
+          this.addToItin(user);
+        } else if(this.reload) {
+          window.location.reload();
+        } else {
+          setTimeout(() =>  {
+            this.router.navigateByUrl(this.reroute);
+          }, 1000)
+        }
+      },
+      error => console.error(error)
+    )
   }
 
   addToItin(user) {

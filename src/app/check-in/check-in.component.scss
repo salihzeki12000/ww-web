@@ -22,10 +22,6 @@
   vertical-align: text-top;
 }
 
-.fa-search-plus {
-  vertical-align: 0;
-}
-
 .select-checkins,
 .select-country {
   &:hover {
@@ -33,6 +29,12 @@
     cursor: pointer;
   }
 }
+
+.fa-search-plus {
+  vertical-align: 0;
+}
+
+/* drop down */
 
 .country-dropdown,
 .checkin-dropdown {

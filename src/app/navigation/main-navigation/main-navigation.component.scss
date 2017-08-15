@@ -34,10 +34,7 @@
   }
 }
 
-.logo h2  {
-  color: #6494ED;
-}
-
+/* auth section when not logged in */
 .auth {
   position: fixed;
   right: 0;
@@ -70,9 +67,11 @@
     top: 2px;
     right: 3%;
     z-index: 501;
-
   }
 }
+
+
+/* top nav section when logged in */
 
 .top-nav-bookmark  {
   position: fixed;

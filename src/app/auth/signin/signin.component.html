@@ -3,11 +3,12 @@
 
 <ww-auth
   [reroute]="reroute"
+  [reload]="reload"
   [itinerary]="itinerary"></ww-auth>
 
 <h5>--- or ---</h5>
 
-<h3 class="sign-in-header">Enter email and password to log in.</h3>
+<h3 class="sign-in-header">Enter email and password to log in</h3>
 
 <form [formGroup]="signinForm" (ngSubmit)="onSubmit()">
 

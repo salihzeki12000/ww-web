@@ -1,7 +1,6 @@
 <div class="main-nav">
   <nav>
     <div class="logo" (click)="routeToHome()">
-      <!-- <h2>wondererwanderer</h2> -->
       <img src="assets/wondererwanderer_logo.png" alt="">
     </div>
   </nav>
@@ -12,6 +11,7 @@
   <h5 class="get-sign-in" (click)="getSignin()">LOG IN</h5>
   <h5 class="get-sign-up" (click)="getSignup()">SIGN UP</h5>
 
+  <!-- for mobile -->
   <div class="sign-in">
     <div class="top-nav-link">
       <i class="fa fa-sign-in fa-lg" aria-hidden="true" (mouseover)="authOptions = true"></i>
@@ -32,7 +32,6 @@
 
       </div>
     </div>
-
   </div>
 
 </div>
@@ -177,17 +176,21 @@
 
       <div class="side-nav-profile">
         <img src="{{ currentUser?.display_picture }}" alt="" [routerLink]="['/me/profile']" (click)="exitSideNav()">
+
         <div class="edit-profile" [routerLink]="['/me/profile-edit']" (click)="exitSideNav()">
           <i class="fa fa-pencil" aria-hidden="true"></i>
         </div>
+
         <div class="username">
           <h4 [routerLink]="['/me/profile']" (click)="exitSideNav()">{{ currentUser?.username }}</h4>
         </div>
+
         <h5 class="user-description">{{ currentUser?.description }}</h5>
       </div>
 
       <div class="side-nav-menu">
         <div class="side-nav-menu-arrow-down"></div>
+
         <div>
           <div class="category-header" (click)="connectionsSection = !connectionsSection">
             <h4 *ngIf="!connectionsSection">Connections <i class="fa fa-caret-down" aria-hidden="true"></i></h4>
@@ -205,6 +208,7 @@
                 <h4>{{ followers.length }}</h4>
                 <h5>FOLLOWERS</h5>
               </div>
+
               <div class="following-counter" (click)="routeToFollowings()">
                 <h4>{{ followings.length }}</h4>
                 <h5>FOLLOWING</h5>
@@ -249,9 +253,7 @@
 
       </div>
     </div>
-
   </div>
-
 </div>
 
 

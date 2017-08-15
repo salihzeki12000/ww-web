@@ -1,10 +1,15 @@
 <div class="notification" (click)="navigate()" [class.unread]="unread">
+
   <img src="{{ notification.originator.display_picture }}" alt="" class="user-profile-thumbnail">
+
   <div class="notification-message">
+
     <h5><span class="username-bold" (click)="routeToUser(notification.originator._id)">{{ notification.originator.username }}</span> {{ notification?.message }}</h5>
+
     <div class="time-ago">
       <p *ngIf="notification?.time_ago !== ''">{{ notification?.time_ago }}</p>
       <p *ngIf="notification?.time_ago === ''">{{ notification?.created_at | date: 'dd MMM yyyy (EEE)' }}</p>
     </div>
+    
   </div>
 </div>

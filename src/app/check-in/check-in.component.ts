@@ -188,10 +188,10 @@ export class CheckInComponent implements OnInit, OnDestroy {
       }
 
       let content = '<div>' +
-        '<h4>' + l['name'] + '</h4>' +
-        '<h5>' +  l['formatted_address'] + '</h5>' +
-        '<h6>' + created_at_string + '</h6>' +
-        '</div>';
+                      '<h4 style="padding: 5px 0;">' + l['name'] + '</h4>' +
+                      '<h5 style="padding: 5px 0;">' +  l['formatted_address'] + '</h5>' +
+                      '<h6 style="padding: 5px 0;">' + created_at_string + '</h6>' +
+                    '</div>';
 
       let infoWindow = new google.maps.InfoWindow({
         content: content

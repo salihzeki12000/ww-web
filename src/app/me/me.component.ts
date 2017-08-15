@@ -12,7 +12,7 @@ export class MeComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   ngOnInit() {
-    this.userService.getCurrentUser()
-      .subscribe( data => {} );
+    this.userService.getCurrentUser().subscribe(
+      data => {} );
   }
 }

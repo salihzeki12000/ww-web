@@ -16,6 +16,7 @@ import { ItineraryService }  from '../itinerary';
 export class AuthComponent implements OnInit, AfterViewInit {
 
   @Input() reroute;
+  @Input() reload;
   @Input() itinerary;
 
   public auth2: any;
@@ -28,12 +29,12 @@ export class AuthComponent implements OnInit, AfterViewInit {
     private loadingService: LoadingService,
     private _zone: NgZone,
     private router: Router)  {
-      FB.init({
-            appId      : '1751057965157438', //1751057965157438 - 1751163758480192
-            cookie     : false,  // enable cookies to allow the server to access the session
-            xfbml      : true,  // parse social plugins on this page
-            version    : 'v2.5' // use graph api version 2.5
-        });
+      // FB.init({
+      //       appId      : '1751057965157438', //1751057965157438 - 1751163758480192
+      //       cookie     : false,  // enable cookies to allow the server to access the session
+      //       xfbml      : true,  // parse social plugins on this page
+      //       version    : 'v2.5' // use graph api version 2.5
+      //   });
     }
 
   ngOnInit()  {
@@ -142,11 +143,13 @@ export class AuthComponent implements OnInit, AfterViewInit {
     this.userService.getCurrentUser().subscribe(
       data => {
 
-        if(this.reroute !== '/me')  {
+        if(this.itinerary)  {
           this.addToItin(user);
+        } else if(this.reload)  {
+          window.location.reload();
         } else  {
           setTimeout(() =>  {
-            this.router.navigateByUrl('/me');
+            this.router.navigateByUrl(this.reroute);
             window.location.reload();
           }, 500)
         }

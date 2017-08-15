@@ -3,15 +3,6 @@
   margin-bottom: 20px;
 }
 
-.sign-in-header  {
-  margin-bottom: 10px;
-  text-align: center;
-}
-
-button.action-response-primary  {
-  width: 100%;
-}
-
 a.cancel-auth {
   float: right;
   color: grey;
@@ -20,4 +11,13 @@ a.cancel-auth {
 h5  {
   margin: 20px 0;
   text-align: center;
+}
+
+.sign-in-header  {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+button.action-response-primary  {
+  width: 100%;
 }

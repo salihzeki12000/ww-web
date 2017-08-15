@@ -12,19 +12,21 @@
   }
 }
 
-
 .home-posts  {
   position: absolute;
   right: calc((100vw - 600px)/2);
   width: 600px;
+
   @media only screen and (max-width: 670px) {
     width: 100%;
     min-width: 300px;
     right: 0;
   }
+
   @media only screen and (min-width: 670px) and (max-width: 890px) {
     right: calc((100vw - 600px)/2);
   }
+
   @media only screen and (min-width: 890px) and (max-width: 1200px) {
     right: calc((100vw - 890px)/2);
   }
@@ -38,12 +40,20 @@
 
 /****************
 
-  for new user
+  for new user tour
 
 *********************/
 .desktop  {
   @media only screen and (max-width: 890px) {
     display: none;
+  }
+}
+
+.mobile {
+  display: none;
+
+  @media only screen and (max-width: 890px) {
+    display: block;
   }
 }
 
@@ -63,9 +73,11 @@
     min-width: 300px;
     right: 0;
   }
+
   @media only screen and (min-width: 670px) and (max-width: 890px) {
     right: calc((100vw - 600px)/2);
   }
+
   @media only screen and (min-width: 890px) and (max-width: 1200px) {
     right: calc((100vw - 890px)/2);
   }
@@ -73,11 +85,6 @@
 
 .message-box h3,
 .message-box h4 {
-  padding-bottom: 20px;
-}
-
-.message-box h5 {
-  display: inline-block;
   padding-bottom: 20px;
 }
 
@@ -98,6 +105,11 @@
     color: #3A4A4D;
     border: 2px solid #3A4A4D;
   }
+}
+
+.message-box h5 {
+  display: inline-block;
+  padding-bottom: 20px;
 }
 
 .back-tour  {
@@ -123,9 +135,11 @@
     min-width: 300px;
     right: 0;
   }
+
   @media only screen and (min-width: 670px) and (max-width: 890px) {
     right: calc((100vw - 600px)/2);
   }
+
   @media only screen and (min-width: 890px) and (max-width: 1200px) {
     right: calc((100vw - 890px)/2);
   }
@@ -154,6 +168,7 @@
   @media only screen and (max-width: 890px) {
     display: none;
   }
+
   @media only screen and (min-width: 890px) and (max-width: 1200px) {
     right: calc(((100vw - 890px)/2) + 620px);
   }
@@ -181,14 +196,6 @@
   @media only screen and (min-width: 400px) and (max-width: 600px) {
     left: 3.5%;
   }
-
-  @media only screen and (max-width: 890px) {
-    display: block;
-  }
-}
-
-.mobile {
-  display: none;
 
   @media only screen and (max-width: 890px) {
     display: block;

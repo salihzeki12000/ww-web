@@ -10,17 +10,17 @@
 <div class="check-in-privacy">
   <label>Keep check in private?</label>
 
-  <h4 *ngIf="private" class="check-in-private" (click)="private = false">Yes</h4>
-  <h4 *ngIf="private" class="toggle-button-private" (click)="private = false"></h4>
+  <h4 *ngIf="private" class="toggle-true" (click)="private = false">Yes</h4>
+  <h4 *ngIf="private" class="toggle-button-true" (click)="private = false"></h4>
   <h6 *ngIf="private">Only you can see</h6>
 
-  <h4 *ngIf="!private" class="check-in-public" (click)="private = true">No</h4>
-  <h4 *ngIf="!private" class="toggle-button-public" (click)="private = true"></h4>
+  <h4 *ngIf="!private" class="toggle-false" (click)="private = true">No</h4>
+  <h4 *ngIf="!private" class="toggle-button-false" (click)="private = true"></h4>
   <h6 *ngIf="!private">You and your followers can see</h6>
 </div>
 
 <div class="action-response">
-  <h5 class="action-response-primary" (click)="getLocation()">Get current location</h5>
+  <h5 class="action-response-primary" (click)="getLocation()" [class.current-loc]="locationType === 'Current'">Get current location</h5>
   <h5 class="action-response-primary" (click)="checkin()">Check in now</h5>
 </div>
 
