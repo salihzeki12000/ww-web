@@ -14,18 +14,19 @@ import { FileuploadService }     from '../../shared';
 })
 export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
 
-  currentItinerarySubscription: Subscription;
+  itinerarySubscription: Subscription;
   itinerary;
 
   currentUserSubscription: Subscription;
   currentUser;
-  validUser = false;
 
   preview = false;
   editing = false;
 
   inputValue = '';
   uploadedPics = [];
+  limitMsg = false;
+  exceedMsg = false;
   confirmPics = false;
   tracker = 0;
 
@@ -41,7 +42,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
     let segments = this.route.snapshot['_urlSegment'].segments;
     if(segments[0]['path'] === 'preview') this.preview = true;
 
-    this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
+    this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
       result =>{
         this.itinerary = result;
 
@@ -51,23 +52,18 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
           this.itinerary['formatted_description'] = '';
         }
 
-        this.sortPhotos()
-;      })
+        this.sortPhotos();
+      })
 
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
-      result => {
-        this.currentUser = result;
-
-        setTimeout(() =>  {
-          this.checkSameUser();
-        }, 1000)
-      })
+      result => { this.currentUser = result; })
 
     this.loadingService.setLoader(false, "");
   }
 
   ngOnDestroy() {
-    if(this.currentItinerarySubscription) this.currentItinerarySubscription.unsubscribe();
+    if(this.itinerarySubscription) this.itinerarySubscription.unsubscribe();
+    if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
   }
 
   sortPhotos()  {
@@ -79,17 +75,21 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
     }
   }
 
-  checkSameUser() {
-    if(this.itinerary['created_by']['_id'] === this.currentUser['_id'])  {
-      this.validUser = true;
-    }
-  }
-
   fileUploaded(event) {
     this.uploadedPics = [];
     let files = event.target.files;
+    let limit = files.length;
 
-    for (let i = 0; i < files.length; i++) {
+    if(limit > 10) {
+      limit = 10;
+      this.limitMsg = true;
+    }
+
+    if(this.itinerary['description']['photos'].length + limit > 10) {
+      this.exceedMsg = true;
+    }
+
+    for (let i = 0; i < limit; i++) {
       let reader = new FileReader();
 
       reader.onload = (event) =>  {
@@ -99,6 +99,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
           status: true,
           order: i + 1 + this.itinerary['description']['photos'].length
         });
+
       }
 
       reader.readAsDataURL(files[i]);
@@ -132,13 +133,17 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
             this.uploadedPics[i]['credit'] = '';
 
             this.itinerary['description']['photos'].push(this.uploadedPics[i]);
-
-            this.tracker += 1;
-            this.updateEdit();
           }
         )
       }
+
+      this.tracker += 1;
     }
+
+    let delay = this.uploadedPics.length * 1200;
+    setTimeout(() =>  {
+      this.updateEdit();
+    }, delay)
   }
 
   updateEdit()  {
