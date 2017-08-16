@@ -161,7 +161,7 @@
 
         <div *ngIf="usersSelected">
           <h4>Craft a message to go with your recommendation:</h4>
-          <textarea rows="2" #msg (keyup)="logMessage(msg.value)"></textarea>
+          <textarea rows="2" #msg (keyup)="logRecMessage(msg.value)"></textarea>
         </div>
 
       </div>
@@ -230,7 +230,7 @@
               <div class="date-to-visit">
                 <label>Check In Date <span class="required"> - required</span></label>
                 <select class="select-date" name="check_in_date" formControlName="check_in_date">
-                  <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
+                  <option *ngFor="let itinDate of dateRange; let i = index" [value]="itinDate">
                     <div *ngIf="itinDate !== 'any day'">
                       <h5>Day {{ i }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
                     </div>
@@ -256,7 +256,7 @@
               <div class="date-to-visit">
                 <label>Check Out Date <span class="required"> - required</span></label>
                 <select class="select-date" name="check_out_date" formControlName="check_out_date">
-                  <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
+                  <option *ngFor="let itinDate of dateRange; let i = index" [value]="itinDate">
                     <div *ngIf="itinDate !== 'any day'">
                       <h5>Day {{ i }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
                     </div>

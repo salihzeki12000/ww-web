@@ -63,15 +63,15 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   hourArr = "anytime";
   minuteArr = "00";
 
-  itinDateSubscription: Subscription;
-  itinDateRange = [];
+  dateSubscription: Subscription;
+  dateRange = [];
   firstDay;
 
   currentUserSubscription: Subscription;
   currentUser;
 
-  currentItinerarySubscription: Subscription;
-  currentItinerary;
+  itinerarySubscription: Subscription;
+  itinerary;
 
   constructor(
     private itineraryService: ItineraryService,
@@ -112,16 +112,16 @@ export class TransportFormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
-                                        result => { this.currentUser = result; })
+      result => { this.currentUser = result; })
 
-    this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
-                                             result => { this.currentItinerary = result; })
+    this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
+      result => { this.itinerary = result; })
 
-    this.itinDateSubscription = this.itineraryService.updateDate.subscribe(
-                                      result => {
-                                        this.itinDateRange  = Object.keys(result).map(key => result[key]);
-                                        this.firstDay = this.itinDateRange[1];
-                                    })
+    this.dateSubscription = this.itineraryService.updateDate.subscribe(
+      result => {
+        this.dateRange  = Object.keys(result).map(key => result[key]);
+        this.firstDay = this.dateRange[1];
+    })
   }
 
   @HostListener('document:click', ['$event'])
@@ -136,9 +136,9 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.currentItinerarySubscription.unsubscribe();
-    this.itinDateSubscription.unsubscribe();
-    this.currentUserSubscription.unsubscribe();
+    if(this.itinerarySubscription) this.itinerarySubscription.unsubscribe();
+    if(this.dateSubscription) this.dateSubscription.unsubscribe();
+    if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
   }
   // progress bar
   selectTransport() {
@@ -163,10 +163,6 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     this.airportsChoosen = false;
   }
 
-  // skipSearch()  {
-  //   this.selectDone = true;
-  // }
-
   selectTransportType(transport)  {
     this.transportOption = transport;
     this.addTransportForm.patchValue({
@@ -189,8 +185,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
 
     let criteria = 'flight/' + airlineCode + '/' + flightNumber + '/departing/' + year + '/' + month + '/' + day;
 
-    this.itineraryEventService.getFlightDetails(criteria)
-        .subscribe(
+    this.itineraryEventService.getFlightDetails(criteria).subscribe(
           data => {
             if(data['scheduledFlights'].length === 0) {
               this.flightNotFound = true;
@@ -624,16 +619,15 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     }
     newTransport['created_at'] = new Date();
 
-    this.itineraryEventService.addEvent(newTransport, this.currentItinerary)
-        .subscribe(
-          result => {
-            if(this.route.snapshot['_urlSegment'].segments[3].path !== 'summary' &&
-               this.route.snapshot['_urlSegment'].segments[3].path !== 'transport') {
-              let id = this.route.snapshot['_urlSegment'].segments[2].path;
-              this.router.navigateByUrl('/me/itinerary/' + id + '/transport');
-            }
-            this.flashMessageService.handleFlashMessage(result.message);
-          })
+    this.itineraryEventService.addEvent(newTransport, this.itinerary).subscribe(
+      result => {
+        if(this.route.snapshot['_urlSegment'].segments[3].path !== 'summary' &&
+           this.route.snapshot['_urlSegment'].segments[3].path !== 'transport') {
+          let id = this.route.snapshot['_urlSegment'].segments[2].path;
+          this.router.navigateByUrl('/me/itinerary/' + id + '/transport');
+        }
+        this.flashMessageService.handleFlashMessage(result.message);
+      })
 
     this.hideTransportForm.emit(false)
   }

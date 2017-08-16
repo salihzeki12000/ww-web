@@ -41,7 +41,7 @@
               <div class="date-to-visit">
                 <label>Check In Date</label>
                 <select class="select-date" name="check_in_date" formControlName="check_in_date">
-                  <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
+                  <option *ngFor="let itinDate of dateRange; let i = index" [value]="itinDate">
                     <div *ngIf="itinDate !== 'any day'">
                       <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
                     </div>
@@ -56,7 +56,9 @@
                 [ats]="ats"
                 [initHour]="initHourIn"
                 [initMinute]="initMinuteIn"
-                (hourSelected)="selectHourIn($event)" (minuteSelected)="selectMinuteIn($event)" (pickerSelected)="selectPickerIn($event)"></ww-time-picker>
+                (hourSelected)="selectHourIn($event)"
+                (minuteSelected)="selectMinuteIn($event)"
+                (pickerSelected)="selectPickerIn($event)"></ww-time-picker>
               </div>
             </div><!-- end of check in -->
 
@@ -64,7 +66,7 @@
               <div class="date-to-visit">
                 <label>Check Out Date</label>
                 <select class="select-date" name="check_out_date" formControlName="check_out_date">
-                  <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
+                  <option *ngFor="let itinDate of dateRange; let i = index" [value]="itinDate">
                     <div *ngIf="itinDate !== 'any day'">
                       <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
                     </div>
@@ -79,7 +81,9 @@
                 [ats]="ats"
                 [initHour]="initHourOut"
                 [initMinute]="initMinuteOut"
-                (hourSelected)="selectHourOut($event)" (minuteSelected)="selectMinuteOut($event)" (pickerSelected)="selectPickerOut($event)"></ww-time-picker>
+                (hourSelected)="selectHourOut($event)"
+                (minuteSelected)="selectMinuteOut($event)"
+                (pickerSelected)="selectPickerOut($event)"></ww-time-picker>
               </div>
             </div><!-- end of check out -->
 

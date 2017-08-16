@@ -20,8 +20,8 @@ import { RecommendationService } from '../../../../recommendations';
 })
 export class ActivityComponent implements OnInit, OnDestroy {
   @Input() activity;
-  @Input() itinDateRange;
-  @Input() currentItinerary;
+  @Input() dateRange;
+  @Input() itinerary;
   @Input() totalActivities;
   @Input() index;
   @Input() summary;
@@ -142,7 +142,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
     if(this.currentUser['_id'] === this.activity['user']['_id']) {
       this.sameUser = true;
     } else  {
-      let admin = this.currentItinerary['admin'];
+      let admin = this.itinerary['admin'];
       for (let i = 0; i < admin.length; i++) {
         if(this.currentUser['_id'] === admin[i]) {
           this.sameUser = true;
@@ -155,7 +155,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
   filterItineraries() {
     this.itineraries = [];
     for (let i = 0; i < this.currentUser['itineraries'].length; i++) {
-      if(this.currentUser['itineraries'][i]['_id'] !== this.currentItinerary['_id'])  {
+      if(this.currentUser['itineraries'][i]['_id'] !== this.itinerary['_id'])  {
         this.itineraries.push(this.currentUser['itineraries'][i])
       }
     }
@@ -208,7 +208,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
 
   checkCheckIn()  {
     let today = new Date();
-    let start = new Date(this.currentItinerary['date_from'])
+    let start = new Date(this.itinerary['date_from'])
 
     for (let i = 0; i < this.activity['checked_in'].length; i++) {
       if(this.currentUser['_id'] === this.activity['checked_in'][i]['user'])  {
@@ -316,7 +316,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
       address: this.activity['place']['formatted_address'],
       country: this.activity['place']['country'],
       place_id: this.activity['place']['place_id'],
-      itinerary: this.currentItinerary['_id'],
+      itinerary: this.itinerary['_id'],
       user: this.currentUser['_id']
     }
 
@@ -451,10 +451,10 @@ export class ActivityComponent implements OnInit, OnDestroy {
     this.activity['formatted_note'] = originalActivity['note'].replace(/\r?\n/g, '<br/> ');
 
     this.itineraryEventService.editEvent(originalActivity).subscribe(
-          result => {
-            this.loadingService.setLoader(false, "");
-            this.flashMessageService.handleFlashMessage(result.message);
-          })
+      result => {
+        this.loadingService.setLoader(false, "");
+        this.flashMessageService.handleFlashMessage(result.message);
+      })
 
     this.editing = false;
     this.preventScroll(false);
@@ -473,11 +473,11 @@ export class ActivityComponent implements OnInit, OnDestroy {
   }
 
   confirmDelete()  {
-    this.itineraryEventService.deleteEvent(this.activity)
-        .subscribe(
-          result => {
-            this.flashMessageService.handleFlashMessage(result.message);
-          })
+    this.itineraryEventService.deleteEvent(this.activity).subscribe(
+      result => {
+        this.flashMessageService.handleFlashMessage(result.message);
+      })
+      
     this.deleteActivity = false;
     this.preventScroll(false);
   }

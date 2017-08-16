@@ -6,7 +6,7 @@
   </div>
 
   <div *ngIf="editing">
-    <textarea rows="2" [ngClass]="[uniqueClass]" [value]="currentItinerary?.daily_note[index]['note']" (keyup.enter)="updateNote(editedNote.value)" (blur)="editing = false" #editedNote></textarea>
+    <textarea rows="2" [ngClass]="[uniqueClass]" [value]="itinerary?.daily_note[index]['note']" (keyup.enter)="updateNote(editedNote.value)" (blur)="editing = false" #editedNote></textarea>
     <h5 class="edit-note">Enter to save, click anywhere else to cancel</h5>
   </div>
 
@@ -20,7 +20,7 @@
   </div>
 
   <div *ngIf="editing">
-    <textarea rows="2" [ngClass]="[uniqueClass]" [value]="currentItinerary?.daily_note[index]['note']" (keyup.enter)="updateNote(editedNote.value)" (blur)="editing = false" #editedNote></textarea>
+    <textarea rows="2" [ngClass]="[uniqueClass]" [value]="itinerary?.daily_note[index]['note']" (keyup.enter)="updateNote(editedNote.value)" (blur)="editing = false" #editedNote></textarea>
     <h5 class="edit-note">Enter to save, click anywhere else to cancel</h5>
   </div>
 </div>

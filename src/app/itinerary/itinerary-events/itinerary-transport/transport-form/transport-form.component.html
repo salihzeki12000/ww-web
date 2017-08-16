@@ -70,7 +70,7 @@
             <div class="search-dep-date">
               <label>Date of Departure</label>
               <select class="select-date" name="searchDepDate" formControlName="searchDepDate">
-                <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
+                <option *ngFor="let itinDate of dateRange; let i = index" [value]="itinDate">
                   <div *ngIf="itinDate !== 'any day'">
                     <h5>Day {{ i }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
                   </div>
@@ -243,7 +243,7 @@
 
             <label>Departure Date <span class="required"> - required</span></label>
             <select class="select-date" name="dep_date" formControlName="dep_date">
-              <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
+              <option *ngFor="let itinDate of dateRange; let i = index" [value]="itinDate">
                 <div *ngIf="itinDate === 'any day'">
                   <h5>{{ itinDate }}</h5>
                 </div>
@@ -257,13 +257,15 @@
             <ww-time-picker
             [timePicker]="timePickerDep"
             [ats]="ats"
-            (hourSelected)="selectHourDep($event)" (minuteSelected)="selectMinuteDep($event)" (pickerSelected)="selectPickerDep($event)"></ww-time-picker>
+            (hourSelected)="selectHourDep($event)"
+            (minuteSelected)="selectMinuteDep($event)"
+            (pickerSelected)="selectPickerDep($event)"></ww-time-picker>
           </div>
 
           <div *ngIf="transportOption === 'vehicle rental'">
             <label>Pick Up Date <span class="required"> - required</span></label>
             <select class="select-date" name="dep_date" formControlName="dep_date">
-              <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
+              <option *ngFor="let itinDate of dateRange; let i = index" [value]="itinDate">
                 <div *ngIf="itinDate === 'any day'">
                   <h5>{{ itinDate }}</h5>
                 </div>
@@ -277,7 +279,11 @@
             <ww-time-picker
             [timePicker]="timePickerDep"
             [ats]="ats"
-            (hourSelected)="selectHourDep($event)" (minuteSelected)="selectMinuteDep($event)" (pickerSelected)="selectPickerDep($event)"></ww-time-picker>          </div>
+            (hourSelected)="selectHourDep($event)"
+            (minuteSelected)="selectMinuteDep($event)"
+            (pickerSelected)="selectPickerDep($event)"></ww-time-picker>
+          </div>
+
         </div>
         <!-- end of departure details -->
 
@@ -300,7 +306,7 @@
 
             <label>Arrival Date</label>
             <select class="select-date" name="arr_date" formControlName="arr_date">
-              <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
+              <option *ngFor="let itinDate of dateRange; let i = index" [value]="itinDate">
                 <div *ngIf="itinDate === 'any day'">
                   <h5>{{ itinDate }}</h5>
                 </div>
@@ -314,13 +320,15 @@
             <ww-time-picker
             [timePicker]="timePickerArr"
             [ats]="ats"
-            (hourSelected)="selectHourArr($event)" (minuteSelected)="selectMinuteArr($event)" (pickerSelected)="selectPickerArr($event)"></ww-time-picker>
+            (hourSelected)="selectHourArr($event)"
+            (minuteSelected)="selectMinuteArr($event)"
+            (pickerSelected)="selectPickerArr($event)"></ww-time-picker>
           </div>
 
           <div *ngIf="transportOption === 'vehicle rental'">
             <label>Return Date</label>
             <select class="select-date" name="arr_date" formControlName="arr_date">
-              <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
+              <option *ngFor="let itinDate of dateRange; let i = index" [value]="itinDate">
                 <div *ngIf="itinDate === 'any day'">
                   <h5>{{ itinDate }}</h5>
                 </div>
@@ -334,7 +342,9 @@
             <ww-time-picker
             [timePicker]="timePickerArr"
             [ats]="ats"
-            (hourSelected)="selectHourArr($event)" (minuteSelected)="selectMinuteArr($event)" (pickerSelected)="selectPickerArr($event)"></ww-time-picker>
+            (hourSelected)="selectHourArr($event)"
+            (minuteSelected)="selectMinuteArr($event)"
+            (pickerSelected)="selectPickerArr($event)"></ww-time-picker>
           </div>
 
         </div>

@@ -158,7 +158,6 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
           this.loadingService.setLoader(false, "");
           this.uploadedPics = []
         })
-
     }
   }
 

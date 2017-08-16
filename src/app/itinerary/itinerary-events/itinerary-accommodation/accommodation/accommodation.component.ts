@@ -19,13 +19,13 @@ import { RecommendationService } from '../../../../recommendations';
 })
 export class AccommodationComponent implements OnInit, OnDestroy {
   @Input() event;
-  @Input() itinDateRange;
-  @Input() currentItinerary;
+  @Input() dateRange;
+  @Input() itinerary;
   @Input() totalAccommodations;
   @Input() index;
   @Input() summary;
   @Input() preview;
-  
+
   currentUserSubscription: Subscription;
   currentUser;
   sameUser;
@@ -143,7 +143,8 @@ export class AccommodationComponent implements OnInit, OnDestroy {
     if(this.currentUser['_id'] === this.event['user']['_id']) {
       this.sameUser = true;
     } else  {
-      let admin = this.currentItinerary['admin'];
+      let admin = this.itinerary['admin'];
+
       for (let i = 0; i < admin.length; i++) {
         if(this.currentUser['_id'] === admin[i]) {
           this.sameUser = true;
@@ -156,7 +157,7 @@ export class AccommodationComponent implements OnInit, OnDestroy {
   filterItineraries() {
     this.itineraries = [];
     for (let i = 0; i < this.currentUser['itineraries'].length; i++) {
-      if(this.currentUser['itineraries'][i]['_id'] !== this.currentItinerary['_id'])  {
+      if(this.currentUser['itineraries'][i]['_id'] !== this.itinerary['_id'])  {
         this.itineraries.push(this.currentUser['itineraries'][i])
       }
     }
@@ -174,7 +175,6 @@ export class AccommodationComponent implements OnInit, OnDestroy {
     this.initHourIn = this.hourIn;
     this.initMinuteIn = this.minuteIn;
 
-
     if(this.event['check_out_time'] === 'anytime')  {
       this.hourOut = 'anytime';
       this.minuteOut = "00";
@@ -189,7 +189,7 @@ export class AccommodationComponent implements OnInit, OnDestroy {
 
   checkCheckIn()  {
     let today = new Date();
-    let start = new Date(this.currentItinerary['date_from'])
+    let start = new Date(this.itinerary['date_from'])
 
     for (let i = 0; i < this.event['checked_in'].length; i++) {
       if(this.currentUser['_id'] === this.event['checked_in'][i]['user'])  {
@@ -260,7 +260,7 @@ export class AccommodationComponent implements OnInit, OnDestroy {
     }
   }
 
-  logMessage(msg) {
+  logRecMessage(msg) {
     this.message = msg;
   }
 
@@ -298,7 +298,7 @@ export class AccommodationComponent implements OnInit, OnDestroy {
       address: this.event['place']['formatted_address'],
       country: this.event['place']['country'],
       place_id: this.event['place']['place_id'],
-      itinerary: this.currentItinerary['_id'],
+      itinerary: this.itinerary['_id'],
       user: this.currentUser['_id']
     }
 
@@ -446,12 +446,11 @@ export class AccommodationComponent implements OnInit, OnDestroy {
     originalAccommodation['date'] = originalAccommodation['check_in_date'];
     originalAccommodation['time'] = originalAccommodation['check_in_time'];
 
-    this.itineraryEventService.editEvent(originalAccommodation)
-        .subscribe(
-          result => {
-            this.loadingService.setLoader(false, "");
-            this.flashMessageService.handleFlashMessage(result.message);
-          })
+    this.itineraryEventService.editEvent(originalAccommodation).subscribe(
+      result => {
+        this.loadingService.setLoader(false, "");
+        this.flashMessageService.handleFlashMessage(result.message);
+      })
 
     this.editing = false;
     this.preventScroll(false);
@@ -471,9 +470,9 @@ export class AccommodationComponent implements OnInit, OnDestroy {
 
   confirmDelete() {
     this.itineraryEventService.deleteEvent(this.event).subscribe(
-          result => {
-            this.flashMessageService.handleFlashMessage(result.message);
-          })
+      result => {
+        this.flashMessageService.handleFlashMessage(result.message);
+      })
 
     this.cancelDelete();
   }

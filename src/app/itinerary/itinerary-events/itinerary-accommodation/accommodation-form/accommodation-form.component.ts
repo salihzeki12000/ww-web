@@ -50,8 +50,8 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
 
   searchDone = false;
 
-  itinDateSubscription: Subscription;
-  itinDateRange = [];
+  dateSubscription: Subscription;
+  dateRange = [];
   firstDay;
   lastDay;
   timeCheckIn = "15:00";
@@ -60,8 +60,8 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
   currentUserSubscription: Subscription;
   currentUser;
 
-  currentItinerarySubscription: Subscription;
-  currentItinerary;
+  itinerarySubscription: Subscription;
+  itinerary;
 
   pictureOptions = [];
   displayPic;
@@ -103,18 +103,18 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
-                                        result => { this.currentUser = result; })
+      result => { this.currentUser = result; })
 
-    this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
-                                             result => { this.currentItinerary = result; })
+    this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
+      result => { this.itinerary = result; })
 
-    this.itinDateSubscription = this.itineraryService.updateDate.subscribe(
-                                      result => {
-                                        this.itinDateRange  = Object.keys(result).map(key => result[key]);
-                                        this.itinDateRange.splice(0,1)
-                                        this.firstDay = this.itinDateRange[0];
-                                        this.lastDay = this.itinDateRange[this.itinDateRange.length - 1];
-                                    })
+    this.dateSubscription = this.itineraryService.updateDate.subscribe(
+      result => {
+        this.dateRange  = Object.keys(result).map(key => result[key]);
+        this.dateRange.splice(0,1);
+        this.firstDay = this.dateRange[0];
+        this.lastDay = this.dateRange[this.dateRange.length - 1];
+    })
 
     setTimeout(() => {this.initMap()},100);
   }
@@ -131,9 +131,9 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.currentUserSubscription.unsubscribe();
-    this.currentItinerarySubscription.unsubscribe();
-    this.itinDateSubscription.unsubscribe();
+    if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
+    if(this.itinerarySubscription) this.itinerarySubscription.unsubscribe();
+    if(this.dateSubscription) this.dateSubscription.unsubscribe();
   }
 
   initMap() {
@@ -408,17 +408,16 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
     }
 
     if(this.newImageFile !== '')  {
-      this.fileuploadService.uploadFile(this.newImageFile, "event")
-          .subscribe(
-            result => {
-              newAccommodation['photo'] = {
-                url:result.secure_url,
-                public_id: result.public_id,
-                credit: ""
-              };
+      this.fileuploadService.uploadFile(this.newImageFile, "event").subscribe(
+        result => {
+          newAccommodation['photo'] = {
+            url:result.secure_url,
+            public_id: result.public_id,
+            credit: ""
+          };
 
-              this.addEvent(newAccommodation);
-            })
+          this.addEvent(newAccommodation);
+        })
     } else  {
       this.addEvent(newAccommodation);
     }
@@ -427,19 +426,19 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
   }
 
   addEvent(accommodation)  {
-    this.itineraryEventService.addEvent(accommodation, this.currentItinerary)
-        .subscribe(
-          result => {
-            if(this.route.snapshot['_urlSegment'].segments[3].path !== 'summary' &&
-               this.route.snapshot['_urlSegment'].segments[3].path !== 'accommodation') {
-              let id = this.route.snapshot['_urlSegment'].segments[2].path;
-              this.router.navigateByUrl('/me/itinerary/' + id + '/accommodation');
-            }
-            this.flashMessageService.handleFlashMessage(result.message);
-            this.inputValue = null;
-            this.uploadPic = '';
-            this.newImageFile = '';
-          })
+    this.itineraryEventService.addEvent(accommodation, this.itinerary).subscribe(
+      result => {
+        if(this.route.snapshot['_urlSegment'].segments[3].path !== 'summary' &&
+           this.route.snapshot['_urlSegment'].segments[3].path !== 'accommodation') {
+          let id = this.route.snapshot['_urlSegment'].segments[2].path;
+          this.router.navigateByUrl('/me/itinerary/' + id + '/accommodation');
+        }
+        
+        this.flashMessageService.handleFlashMessage(result.message);
+        this.inputValue = null;
+        this.uploadPic = '';
+        this.newImageFile = '';
+      })
   }
 
   cancelForm()  {

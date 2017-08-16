@@ -11,7 +11,7 @@ export class ItinerarySummaryDayComponent implements OnInit {
   @Input() date;
   @Input() index;
   @Input() events;
-  @Input() currentItinerary;
+  @Input() itinerary;
   @Input() dailyNote;
   @Output() showEventDetails = new EventEmitter();
   @Output() sectionPosition = new EventEmitter();
@@ -48,9 +48,9 @@ export class ItinerarySummaryDayComponent implements OnInit {
     editedNote = editedNote.trim();
 
     this.dailyNote = editedNote.replace(/\r?\n/g, '<br/> ');
-    this.currentItinerary['daily_note'][this.index]['note'] = editedNote;
+    this.itinerary['daily_note'][this.index]['note'] = editedNote;
 
-    this.itineraryService.editItin(this.currentItinerary, 'edit').subscribe(
+    this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
       result => {}
     )
 

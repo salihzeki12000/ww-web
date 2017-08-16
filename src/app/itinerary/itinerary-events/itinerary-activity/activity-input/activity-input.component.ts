@@ -45,14 +45,14 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   searchActivity = false;
   searchDone = false;
 
-  itinDateSubscription: Subscription;
-  itinDateRange = [];
+  dateSubscription: Subscription;
+  dateRange = [];
 
   currentUserSubscription: Subscription;
   currentUser;
 
-  currentItinerarySubscription: Subscription;
-  currentItinerary;
+  itinerarySubscription: Subscription;
+  itinerary;
 
   pictureOptions = [];
   displayPic;
@@ -96,15 +96,13 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
-                                        result => { this.currentUser = result; })
+      result => { this.currentUser = result; })
 
-    this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
-                                             result => { this.currentItinerary = result; })
+    this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
+      result => { this.itinerary = result; })
 
-    this.itinDateSubscription = this.itineraryService.updateDate.subscribe(
-                                      result => {
-                                        this.itinDateRange  = Object.keys(result).map(key => result[key]);
-                                    })
+    this.dateSubscription = this.itineraryService.updateDate.subscribe(
+      result => { this.dateRange  = Object.keys(result).map(key => result[key]); })
   }
 
   @HostListener('document:click', ['$event'])
@@ -118,9 +116,9 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.currentUserSubscription.unsubscribe();
-    this.currentItinerarySubscription.unsubscribe();
-    this.itinDateSubscription.unsubscribe();
+    if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
+    if(this.itinerarySubscription) this.itinerarySubscription.unsubscribe();
+    if(this.dateSubscription) this.dateSubscription.unsubscribe();
   }
 
   initMap() {
@@ -474,20 +472,19 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   }
 
   addActivity(activity) {
-    this.itineraryEventService.addEvent(activity, this.currentItinerary)
-        .subscribe(
-          result => {
-            if(this.route.snapshot['_urlSegment'].segments[3].path !== 'summary' &&
-               this.route.snapshot['_urlSegment'].segments[3].path !== 'activities') {
-              let id = this.route.snapshot['_urlSegment'].segments[2].path;
-              this.router.navigateByUrl('/me/itinerary/' + id + '/activity');
-            }
-            this.flashMessageService.handleFlashMessage(result.message);
-            this.inputValue = null;
-            this.uploadPic = '';
-            this.newImageFile = '';
-          }
-        );
+    this.itineraryEventService.addEvent(activity, this.itinerary).subscribe(
+      result => {
+        if(this.route.snapshot['_urlSegment'].segments[3].path !== 'summary' &&
+           this.route.snapshot['_urlSegment'].segments[3].path !== 'activities') {
+          let id = this.route.snapshot['_urlSegment'].segments[2].path;
+          this.router.navigateByUrl('/me/itinerary/' + id + '/activity');
+        }
+        
+        this.flashMessageService.handleFlashMessage(result.message);
+        this.inputValue = null;
+        this.uploadPic = '';
+        this.newImageFile = '';
+      });
   }
 
   cancelForm()  {

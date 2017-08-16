@@ -19,11 +19,11 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
   events = [];
   totalEvents = 1;
 
-  itinDateSubscription: Subscription;
-  itinDateRange = [];
+  dateSubscription: Subscription;
+  dateRange = [];
 
-  currentItinerarySubscription: Subscription;
-  currentItinerary;
+  itinerarySubscription: Subscription;
+  itinerary;
   dailyNotes = [];
 
   showDetailsInSummary = false;
@@ -59,24 +59,24 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
     if(segments[0]['path'] === 'preview') this.preview = true;
 
     this.events = [];
-    this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
+    this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
        result => {
-         this.currentItinerary = result;
+         this.itinerary = result;
 
          let header = ''
          if(this.preview) header = "Preview : ";
 
-         let title = header + this.currentItinerary['name'] + " | Summary"
+         let title = header + this.itinerary['name'] + " | Summary"
          this.titleService.setTitle(title);
 
          this.sortDailyNotes();
        })
 
-    this.itinDateSubscription = this.itineraryService.updateDate.subscribe(
-        result => {
-          this.itinDateRange = Object.keys(result).map(key => result[key]);
-          this.checkScroll();
-        })
+    this.dateSubscription = this.itineraryService.updateDate.subscribe(
+      result => {
+        this.dateRange = Object.keys(result).map(key => result[key]);
+        this.checkScroll();
+      })
 
     this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
       result => {
@@ -86,8 +86,10 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.itinDateSubscription.unsubscribe();
-    this.eventSubscription.unsubscribe();
+    if(this.dateSubscription) this.dateSubscription.unsubscribe();
+    if(this.eventSubscription) this.eventSubscription.unsubscribe();
+    if(this.itinerarySubscription) this.itinerarySubscription.unsubscribe();
+
     this.loadingService.setLoader(true, "");
   }
 
@@ -108,8 +110,8 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
   sortDailyNotes()  {
     this.dailyNotes = [];
 
-    for (let i = 0; i < this.currentItinerary['daily_note'].length; i++) {
-      this.dailyNotes.push(this.currentItinerary['daily_note'][i]['note'].replace(/\r?\n/g, '<br/> '));
+    for (let i = 0; i < this.itinerary['daily_note'].length; i++) {
+      this.dailyNotes.push(this.itinerary['daily_note'][i]['note'].replace(/\r?\n/g, '<br/> '));
     }
   }
 

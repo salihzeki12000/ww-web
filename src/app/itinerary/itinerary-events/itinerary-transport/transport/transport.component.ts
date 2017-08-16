@@ -16,13 +16,13 @@ import { LoadingService }        from '../../../../loading';
 })
 export class TransportComponent implements OnInit, OnDestroy {
   @Input() event;
-  @Input() itinDateRange;
-  @Input() currentItinerary;
+  @Input() dateRange;
+  @Input() itinerary;
   @Input() totalTransports;
   @Input() index;
   @Input() summary;
   @Input() preview;
-  
+
   currentUserSubscription: Subscription;
   currentUser;
   sameUser;
@@ -78,11 +78,11 @@ export class TransportComponent implements OnInit, OnDestroy {
 
   ngOnInit()  {
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
-                                       result => {
-                                         this.currentUser = result;
-                                         this.checkSameUser();
-                                         this.filterItineraries();
-                                       })
+      result => {
+        this.currentUser = result;
+        this.checkSameUser();
+        this.filterItineraries();
+      })
 
     this.event['formatted_note'] = this.event['note'].replace(/\r?\n/g, '<br/> ');
     this.initTime();
@@ -104,14 +104,14 @@ export class TransportComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.currentUserSubscription.unsubscribe();
+    if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
   }
 
   checkSameUser() {
     if(this.currentUser['_id'] === this.event['user']['_id']) {
       this.sameUser = true;
     } else  {
-      let admin = this.currentItinerary['admin'];
+      let admin = this.itinerary['admin'];
       for (let i = 0; i < admin.length; i++) {
         if(this.currentUser['_id'] === admin[i]) {
           this.sameUser = true;
@@ -124,7 +124,7 @@ export class TransportComponent implements OnInit, OnDestroy {
   filterItineraries() {
     this.itineraries = [];
     for (let i = 0; i < this.currentUser['itineraries'].length; i++) {
-      if(this.currentUser['itineraries'][i]['_id'] !== this.currentItinerary['_id'])  {
+      if(this.currentUser['itineraries'][i]['_id'] !== this.itinerary['_id'])  {
         this.itineraries.push(this.currentUser['itineraries'][i])
       }
     }
@@ -274,12 +274,11 @@ export class TransportComponent implements OnInit, OnDestroy {
     originalTransport['date'] = originalTransport['dep_date'];
     originalTransport['time'] = originalTransport['dep_time'];
 
-    this.itineraryEventService.editEvent(originalTransport)
-        .subscribe(
-          result => {
-            this.loadingService.setLoader(false, "");
-            this.flashMessageService.handleFlashMessage(result.message);
-          })
+    this.itineraryEventService.editEvent(originalTransport).subscribe(
+      result => {
+        this.loadingService.setLoader(false, "");
+        this.flashMessageService.handleFlashMessage(result.message);
+      })
 
     this.editing = false;
     this.preventScroll(false);
@@ -298,11 +297,11 @@ export class TransportComponent implements OnInit, OnDestroy {
   }
 
   confirmDelete()  {
-    this.itineraryEventService.deleteEvent(this.event)
-        .subscribe(
-          result => {
-            this.flashMessageService.handleFlashMessage(result.message);
-          })
+    this.itineraryEventService.deleteEvent(this.event).subscribe(
+      result => {
+        this.flashMessageService.handleFlashMessage(result.message);
+      })
+      
     this.deleteTransport = false;
     this.preventScroll(false);
   }

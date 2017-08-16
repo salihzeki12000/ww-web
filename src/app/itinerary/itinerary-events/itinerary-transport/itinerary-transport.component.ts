@@ -21,11 +21,11 @@ export class ItineraryTransportComponent implements OnInit {
   transports = [];
   totalTransports = 1;
 
-  itinDateSubscription: Subscription;
-  itinDateRange = [];
+  dateSubscription: Subscription;
+  dateRange = [];
 
-  currentItinerarySubscription: Subscription;
-  currentItinerary;
+  itinerarySubscription: Subscription;
+  itinerary;
 
   showTransportSummary = false;
   highlightedEvent;
@@ -44,31 +44,32 @@ export class ItineraryTransportComponent implements OnInit {
     let segments = this.route.snapshot['_urlSegment'].segments;
     if(segments[0]['path'] === 'preview') this.preview = true;
 
-    this.itinDateSubscription = this.itineraryService.updateDate.subscribe(
+    this.dateSubscription = this.itineraryService.updateDate.subscribe(
       result => {
-        this.itinDateRange = Object.keys(result).map(key => result[key]);
+        this.dateRange = Object.keys(result).map(key => result[key]);
       })
 
     this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
       result => { this.filterEvent(result); })
 
-    this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
+    this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
       result => {
-        this.currentItinerary = result;
+        this.itinerary = result;
 
         let header = ''
         if(this.preview) header = "Preview : ";
 
-        let title = header + this.currentItinerary['name'] + " | Transport";
+        let title = header + this.itinerary['name'] + " | Transport";
 
         this.titleService.setTitle(title);
       })
   }
 
   ngOnDestroy() {
-    this.itinDateSubscription.unsubscribe();
-    this.eventSubscription.unsubscribe();
-    this.currentItinerarySubscription.unsubscribe();
+    if(this.dateSubscription) this.dateSubscription.unsubscribe();
+    if(this.eventSubscription) this.eventSubscription.unsubscribe();
+    if(this.itinerarySubscription) this.itinerarySubscription.unsubscribe();
+
     this.loadingService.setLoader(true, "");
   }
 
@@ -76,8 +77,8 @@ export class ItineraryTransportComponent implements OnInit {
     this.transports = [];
     for (let i = 0; i < events.length; i++) {
       if(events[i]['type'] === 'transport') {
-        let index = this.itinDateRange.indexOf(events[i]['dep_date'])
-        let outIndex = this.itinDateRange.indexOf(events[i]['arr_date'])
+        let index = this.dateRange.indexOf(events[i]['dep_date'])
+        let outIndex = this.dateRange.indexOf(events[i]['arr_date'])
 
         if(index < 0 || outIndex < 0) {
           events[i]['out_of_range'] = true;
@@ -88,6 +89,7 @@ export class ItineraryTransportComponent implements OnInit {
         this.transports.push(events[i])
       }
     }
+    
     this.totalTransports = this.transports.length
     this.loadingService.setLoader(false, "");
     this.preventScroll(false);

@@ -61,7 +61,7 @@
 
             <label>Date</label>
             <select class="select-date" name="date" formControlName="date">
-              <option *ngFor="let itinDate of itinDateRange; let i = index" [value]="itinDate">
+              <option *ngFor="let itinDate of dateRange; let i = index" [value]="itinDate">
                 <div *ngIf="itinDate === 'any day'">
                   <h5>{{ itinDate }}</h5>
                 </div>

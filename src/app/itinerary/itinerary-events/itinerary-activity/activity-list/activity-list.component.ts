@@ -20,11 +20,11 @@ export class ActivityListComponent implements OnInit, OnDestroy {
   activities = [];
   totalActivities = 1;
 
-  itinDateSubscription: Subscription;
-  itinDateRange = [];
+  dateSubscription: Subscription;
+  dateRange = [];
 
-  currentItinerarySubscription: Subscription;
-  currentItinerary;
+  itinerarySubscription: Subscription;
+  itinerary;
 
   showActivitySummary = false;
   highlightedEvent;
@@ -46,28 +46,29 @@ export class ActivityListComponent implements OnInit, OnDestroy {
     this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
       result => { this.filterEvents(result); })
 
-    this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
+    this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
       result => {
-        this.currentItinerary = result;
+        this.itinerary = result;
 
         let header = ''
         if(this.preview) header = "Preview : ";
 
-        let title = header + this.currentItinerary['name'] + " | Activity";
+        let title = header + this.itinerary['name'] + " | Activity";
 
         this.titleService.setTitle(title);
       })
 
-    this.itinDateSubscription = this.itineraryService.updateDate.subscribe(
+    this.dateSubscription = this.itineraryService.updateDate.subscribe(
         result => {
-          this.itinDateRange = Object.keys(result).map(key => result[key]);
+          this.dateRange = Object.keys(result).map(key => result[key]);
       })
   }
 
   ngOnDestroy() {
-    this.itinDateSubscription.unsubscribe();
-    this.eventSubscription.unsubscribe();
-    this.currentItinerarySubscription.unsubscribe();
+    if(this.dateSubscription) this.dateSubscription.unsubscribe();
+    if(this.eventSubscription) this.eventSubscription.unsubscribe();
+    if(this.itinerarySubscription) this.itinerarySubscription.unsubscribe();
+    
     this.loadingService.setLoader(true, "");
   }
 
