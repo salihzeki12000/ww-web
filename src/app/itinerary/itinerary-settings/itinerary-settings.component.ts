@@ -28,13 +28,13 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   dateRange = [];
   newDateRange = [];
   newDailyNote = [];
-  itinDateSubscription: Subscription;
+  dateSubscription: Subscription;
 
   showOptions = [];
   deleteItinerary = false;
   leaveItinerary = false;
 
-  currentItinerarySubscription: Subscription;
+  itinerarySubscription: Subscription;
   itinerary;
   private = false;
   publish = false;
@@ -54,7 +54,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   eventSubscription: Subscription;
   events = [];
 
-  updateResourcesSubscription: Subscription;
+  resourcesSubscription: Subscription;
   resources = [];
 
   itemsSelected = false;
@@ -100,7 +100,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     }
 
   ngOnInit() {
-    this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
+    this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
       result => {
         this.itinerary = result;
         this.itinerary['date_from'] = result['date_from'].slice(0,10);
@@ -132,7 +132,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
         this.filterEvents(result);
       })
 
-    this.updateResourcesSubscription = this.resourceService.updateResources.subscribe(
+    this.resourcesSubscription = this.resourceService.updateResources.subscribe(
       result => {
         this.resources = Object.keys(result).map(key => result[key]);
         for (let i = 0; i < this.resources.length; i++) {
@@ -140,7 +140,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
         }
       })
 
-    this.itinDateSubscription = this.itineraryService.updateDate.subscribe(
+    this.dateSubscription = this.itineraryService.updateDate.subscribe(
       result => {
         this.dateRange = Object.keys(result).map(key => result[key]);
     })
@@ -171,10 +171,11 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
-    if(this.currentItinerarySubscription) this.currentItinerarySubscription.unsubscribe();
+    if(this.itinerarySubscription) this.itinerarySubscription.unsubscribe();
     if(this.eventSubscription) this.eventSubscription.unsubscribe();
-    if(this.updateResourcesSubscription) this.updateResourcesSubscription.unsubscribe();
-    if(this.itinDateSubscription) this.itinDateSubscription.unsubscribe();
+    if(this.resourcesSubscription) this.resourcesSubscription.unsubscribe();
+    if(this.dateSubscription) this.dateSubscription.unsubscribe();
+
     this.loadingService.setLoader(true, "");
   }
 
@@ -328,14 +329,10 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   selectedDate(value) {
     let startDate = value.start._d;
     let startDay = startDate.getDate();
-    if(startDay < 10) {
-      startDay = "0" + startDay;
-    }
+    if(startDay < 10) startDay = "0" + startDay;
 
     let startMonth = startDate.getMonth() + 1;
-    if(startMonth < 10) {
-      startMonth = "0" + startMonth;
-    }
+    if(startMonth < 10) startMonth = "0" + startMonth;
 
     let startYear = startDate.getFullYear();
     this.dateFrom = startYear + "-" + startMonth + "-" + startDay + "T00:00:00.000Z";
@@ -476,24 +473,24 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
 
     this.itinerary['private'] = this.private;
     this.itinerary['corporate']['publish'] = this.publish;
-    
-    this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
-          data => {
-            this.loadingService.setLoader(false, "");
-            this.preventScroll(false);
 
-            this.flashMessageService.handleFlashMessage(data.message);
-          })
+    this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
+      data => {
+        this.loadingService.setLoader(false, "");
+        this.preventScroll(false);
+
+        this.flashMessageService.handleFlashMessage(data.message);
+      })
   }
 
   // delete section
   confirmDelete()  {
-    this.itineraryService.deleteItin(this.itinerary)
-        .subscribe(
-          data => {
-            this.router.navigateByUrl('/me');
-            this.flashMessageService.handleFlashMessage(data.message);
-        })
+    this.itineraryService.deleteItin(this.itinerary).subscribe(
+      data => {
+        this.router.navigateByUrl('/me');
+        this.flashMessageService.handleFlashMessage(data.message);
+    })
+    
     this.deleteItinerary = false;
   }
 

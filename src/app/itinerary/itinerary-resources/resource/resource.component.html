@@ -44,16 +44,19 @@
     <h5 class="resource-content" [innerHTML]="resource?.formatted_content"></h5>
 
     <div class="resource-link-preview" *ngIf="resource?.link_url">
+
       <a href="{{ resource?.link_url }}" target="_blank">
         <img class="resource-link-img" src="{{ resource?.link_img }}" alt="" *ngIf="resource.link_img">
         <h3 class="resource-link-title">{{ resource?.link_title }}</h3>
         <h4 class="resource-link-description">{{ resource?.link_description }}</h4>
         <h5 class="resource-link-url truncate">{{ resource?.link_url }}</h5>
       </a>
+
     </div>
 
     <div class="created-by">
       <h5 class="username" (click)="routeToUser(resource?.user._Id)">{{ resource?.user.username }}</h5>
+
       <div class="time-ago">
         <p *ngIf="resource?.time_ago !== ''">{{ resource?.time_ago }}</p>
         <p *ngIf="resource?.time_ago === ''">{{ resource?.created_at | date: 'dd MMM yyyy (EEE)' }}</p>

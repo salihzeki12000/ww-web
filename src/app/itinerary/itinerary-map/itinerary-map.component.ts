@@ -22,7 +22,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
 
   preview;
 
-  currentItinerarySubscription: Subscription;
+  itinerarySubscription: Subscription;
 
   eventSubscription: Subscription;
   events: ItineraryEvent[] = [];
@@ -56,7 +56,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
         this.initMap();
       })
 
-    this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
+    this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
       result => {
         let header = ''
         if(this.preview) header = "Preview : ";
@@ -67,17 +67,21 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.eventSubscription.unsubscribe();
+    if(this.itinerarySubscription) this.itinerarySubscription.unsubscribe();
+    if(this.eventSubscription) this.eventSubscription.unsubscribe();
+
     this.loadingService.setLoader(true, "");
   }
 
   filterEvents(events)  {
     this.events = [];
     let index = 1;
+
     for (let i = 0; i < events.length; i++) {
       if(events[i]['type'] !== 'transport' && events[i]['location'])  {
-        let date = new Date(events[i]['date'])
-        let converted_date = date.getDate() + " " + this.month[date.getMonth()]
+        let date = new Date(events[i]['date']);
+        let converted_date = date.getDate() + " " + this.month[date.getMonth()];
+
         events[i]['converted_date'] = converted_date;
         events[i]['index'] = index;
         index += 1;
@@ -117,10 +121,12 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
   getCurrentLocation(map)  {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
+
         let pos = {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         }
+
         let marker = new google.maps.Marker({
           position: { lat: pos['lat'], lng: pos['lng'] },
           map: map,
@@ -157,8 +163,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
           }
 
           eventMarker.push(
-            [
-              this.events[i]['name'],
+            [ this.events[i]['name'],
               this.events[i]['place']['lat'],
               this.events[i]['place']['lng'],
               eventDate,
@@ -171,6 +176,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
         }
       }
     }
+    
     this.setDate(eventMarker);
 
     for (let i = 0; i < eventMarker.length; i++) {

@@ -1,45 +1,3 @@
-form  {
-  margin-bottom: 20px;
-  border-bottom: 1px solid rgba(0,0,0,.1);
-}
-
-input {
-  padding-left: 0;
-  border: none;
-  border-bottom: 1px solid lightgray;
-  border-radius: 0;
-}
-
-.change-date-content > h5 {
-  line-height: 1.8;
-}
-
-.change-date-content > h5:last-of-type  {
-  margin-bottom: 30px;
-}
-
-.change-date-option {
-  margin: 20px 0;
-}
-
-.change-date-option h4  {
-  display: inline-block;
-  margin-bottom: 5px;
-  padding: 5px 10px;
-  color: #6494ED;
-  border: 2px solid #6494ED;
-  &:hover {
-    cursor: pointer;
-    color: #F9FBFB;
-    background-color: #6494ED;
-  }
-}
-
-.change-date-option h5  {
-  padding: 0 10px;
-  line-height: 1.8;
-}
-
 .itinerary-edit-main  {
   width: 600px;
   margin-top: 20px;
@@ -60,6 +18,24 @@ input {
     margin-left: calc((100vw - 600px) / 2 );
   }
 }
+
+
+form  {
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(0,0,0,.1);
+}
+
+input {
+  padding-left: 0;
+  border: none;
+  border-bottom: 1px solid lightgray;
+  border-radius: 0;
+}
+
+
+
+
+/* itinerary edit section */
 
 .itinerary-edit-section-header  {
   padding: 10px 0 0 20px;
@@ -125,66 +101,10 @@ span.form-validator {
   height: 40px;
 }
 
-/* privacy */
-.check-in-private,
-.check-in-public {
-  display: inline-block;
-  width: 60px;
-  color: #F9FBFB;
-  border-radius: 25px;
-  &:hover {
-    cursor: pointer;
-  }
-}
 
-.check-in-private *,
-.check-in-public *  {
-  color: #F9FBFB;
-}
-
-.check-in-private {
-  padding: 2px 8px 2px 2px;
-  text-align: right;
-  border: 2px solid #19CC72;
-  background-color: #19CC72;
-}
-
-.check-in-public  {
-  padding: 2px 2px 2px 10px;
-  text-align: left;
-  border: 2px solid #A6A6A6;
-  background-color: #A6A6A6;
-}
-
-.toggle-button-private,
-.toggle-button-public  {
-  position: absolute;
-  height: 20px;
-  width: 20px;
-  background-color: white;
-  border-radius: 50%;
-  &:hover {
-    cursor: pointer;
-  }
-}
-
-.toggle-button-private  {
-  margin: 2px 0 0 -57px;
-
-  @media only screen and (max-width: 610px) {
-    margin: -22.5px 0 0 3px;
-  }
-}
-
-.toggle-button-public  {
-  margin: 2px 0 0 -23px;
-
-  @media only screen and (max-width: 610px) {
-    margin: -22.5px 0 0 38px;
-  }
-}
 
 /* toggle */
+
 .toggle-button-true  {
   margin: 2px 0 0 -60px;
 
@@ -201,17 +121,18 @@ span.form-validator {
   }
 }
 
+
+
 /* member details section */
+
 .itinerary-member-list  {
   position: relative;
   padding: 10px 10px 10px 0;
 }
 
-.user-profile-thumbnail {
-  vertical-align: top;
-}
 
 /* individual member hover options */
+
 .itinerary-member-option  {
   position: relative;
   display: inline-block;
@@ -264,29 +185,6 @@ span.form-validator {
   }
 }
 
-.itinerary-member-option-menu > ul > li:hover *  {
-  color: grey;
-}
-
-.itinerary-member-option-menu > ul > li > h5  {
-  display: inline-block;
-  letter-spacing: .5px;
-}
-
-/* admin styles */
-.itinerary-admin  {
-  display: inline-block;
-  position: absolute;
-  right: 30px;
-}
-
-.itinerary-admin > h5 {
-  padding: 2px 5px;
-  color: #19CC72;
-  border: 2px solid #19CC72;
-  border-radius: 5px;
-}
-
 span.info {
   float: right;
   padding: 2px 3px 0 3px;
@@ -302,7 +200,36 @@ span.info {
   }
 }
 
+.itinerary-member-option-menu > ul > li:hover *  {
+  color: grey;
+}
+
+.itinerary-member-option-menu > ul > li > h5  {
+  display: inline-block;
+  letter-spacing: .5px;
+}
+
+
+
+/* admin styles */
+
+.itinerary-admin  {
+  display: inline-block;
+  position: absolute;
+  right: 30px;
+}
+
+.itinerary-admin > h5 {
+  padding: 2px 5px;
+  color: #19CC72;
+  border: 2px solid #19CC72;
+  border-radius: 5px;
+}
+
+
+
 /* share details */
+
 .share-date {
   display: inline-block;
   width: 100px;
@@ -330,6 +257,8 @@ span.info {
   color: #F9FBFB;
 }
 
+
+/* hint for copy / share */
 span.cs-info  {
   position: absolute;
   font-size: 10px;
@@ -350,6 +279,10 @@ span.cs-info  {
   background-color: white;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
 }
+
+
+
+/* delete itinerary */
 
 .delete-itinerary  {
   width: 160px;
@@ -390,4 +323,38 @@ span.cs-info  {
 ._p .action-response-primary i  {
   display: block;
   padding-bottom: 10px;
+}
+
+
+
+/* modal when itin date is changed */
+
+.change-date-content > h5 {
+  line-height: 1.8;
+}
+
+.change-date-content > h5:last-of-type  {
+  margin-bottom: 30px;
+}
+
+.change-date-option {
+  margin: 20px 0;
+}
+
+.change-date-option h4  {
+  display: inline-block;
+  margin-bottom: 5px;
+  padding: 5px 10px;
+  color: #6494ED;
+  border: 2px solid #6494ED;
+  &:hover {
+    cursor: pointer;
+    color: #F9FBFB;
+    background-color: #6494ED;
+  }
+}
+
+.change-date-option h5  {
+  padding: 0 10px;
+  line-height: 1.8;
 }

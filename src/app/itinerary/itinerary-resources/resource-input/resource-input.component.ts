@@ -31,8 +31,8 @@ export class ResourceInputComponent implements OnInit, OnDestroy {
   currentUserSubscription: Subscription;
   currentUser;
 
-  currentItinerarySubscription: Subscription;
-  currentItinerary;
+  itinerarySubscription: Subscription;
+  itinerary;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -52,15 +52,15 @@ export class ResourceInputComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
-                                        result => { this.currentUser = result; })
+      result => { this.currentUser = result; })
 
-    this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
-                                             result => { this.currentItinerary = result; })
+    this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
+      result => { this.itinerary = result; })
   }
 
   ngOnDestroy() {
-    this.currentUserSubscription.unsubscribe();
-    this.currentItinerarySubscription.unsubscribe();
+    if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
+    if(this.itinerarySubscription) this.itinerarySubscription.unsubscribe();
   }
 
   // link preview
@@ -70,26 +70,21 @@ export class ResourceInputComponent implements OnInit, OnDestroy {
     for (let i = 0; i < texts.length; i++) {
       if(texts[i].match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g)) {
         this.fetchLink = true;
-        this.postService.getPreview({link:texts[i]})
-                        .subscribe(
-                          result => {
-                            this.linkExist = true;
-                            this.link_url = texts[i];
-                            if(result.title)  {
-                              this.link_title = result.title.trim();
-                            }
 
-                            if(result.description)  {
-                              this.link_description = result.description.trim();
-                            }
+        this.postService.getPreview({link:texts[i]}).subscribe(
+          result => {
+            this.linkExist = true;
+            this.link_url = texts[i];
 
-                            if(result.meta_img) {
-                              this.link_img = result.meta_img.trim();
-                            }
+            if(result.title)  this.link_title = result.title.trim();
 
-                            this.fetchLink = false;
-                          }
-                        );
+            if(result.description)  this.link_description = result.description.trim();
+
+            if(result.meta_img) this.link_img = result.meta_img.trim();
+
+            this.fetchLink = false;
+          }
+        );
       }
     }
 
@@ -106,12 +101,15 @@ export class ResourceInputComponent implements OnInit, OnDestroy {
   // save
   saveNew()  {
     let resourceTitle;
+
     if(this.link_title && this.resourceForm.value.title === "") {
       resourceTitle = this.link_title;
     }
+
     if(this.resourceForm.value.title !== "")  {
       resourceTitle = this.resourceForm.value.title;
     }
+
     this.resourceService.addResource({
       content: this.resourceForm.value.content,
       title: resourceTitle,
@@ -119,7 +117,7 @@ export class ResourceInputComponent implements OnInit, OnDestroy {
       link_title: this.link_title,
       link_description: this.link_description,
       link_img: this.link_img,
-      itinerary: this.currentItinerary,
+      itinerary: this.itinerary,
       category: this.resourceForm.value.category,
       user: {
         _id: this.currentUser['_id'],

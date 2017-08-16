@@ -16,11 +16,11 @@ import { LoadingService }      from '../../../loading';
 })
 export class ResourceComponent implements OnInit, OnDestroy {
   @Input() resource;
-  @Input() currentItinerary;
+  @Input() itinerary;
   @Input() totalResources;
   @Input() index;
   @Input() preview;
-  
+
   currentUserSubscription: Subscription;
   currentUser;
   sameUser;
@@ -52,11 +52,11 @@ export class ResourceComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
-                                       result => {
-                                         this.currentUser = result;
-                                         this.checkSameUser();
-                                         this.filterItineraries();
-                                     })
+        result => {
+        this.currentUser = result;
+        this.checkSameUser();
+        this.filterItineraries();
+      })
 
     this.resource['formatted_content'] = this.resource['content'].replace(/\r?\n/g, '<br/> ');
   }
@@ -69,14 +69,14 @@ export class ResourceComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.currentUserSubscription.unsubscribe();
+    if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
   }
 
   checkSameUser() {
     if(this.currentUser['_id'] === this.resource['user']['_id']) {
       this.sameUser = true;
     } else  {
-      let admin = this.currentItinerary['admin'];
+      let admin = this.itinerary['admin'];
       for (let i = 0; i < admin.length; i++) {
         if(this.currentUser['_id'] === admin[i]) {
           this.sameUser = true;
@@ -89,7 +89,7 @@ export class ResourceComponent implements OnInit, OnDestroy {
   filterItineraries() {
     this.itineraries = [];
     for (let i = 0; i < this.currentUser['itineraries'].length; i++) {
-      if(this.currentUser['itineraries'][i]['_id'] !== this.currentItinerary['_id'])  {
+      if(this.currentUser['itineraries'][i]['_id'] !== this.itinerary['_id'])  {
         this.itineraries.push(this.currentUser['itineraries'][i])
       }
     }
@@ -164,12 +164,12 @@ export class ResourceComponent implements OnInit, OnDestroy {
       this.resource[value] = editedResource[value];
     }
 
-    this.resourceService.editResource(this.resource)
-        .subscribe(
-          result => {
-            this.loadingService.setLoader(false, "");
-            this.flashMessageService.handleFlashMessage(result.message);
-          })
+    this.resourceService.editResource(this.resource).subscribe(
+      result => {
+        this.loadingService.setLoader(false, "");
+        this.flashMessageService.handleFlashMessage(result.message);
+      })
+
     this.editing = false;
     this.preventScroll(false);
   }
@@ -186,11 +186,11 @@ export class ResourceComponent implements OnInit, OnDestroy {
   }
 
   confirmDelete()  {
-    this.resourceService.deleteResource(this.resource)
-        .subscribe(
-          result => {
-            this.flashMessageService.handleFlashMessage(result.message);
-          })
+    this.resourceService.deleteResource(this.resource).subscribe(
+      result => {
+        this.flashMessageService.handleFlashMessage(result.message);
+      })
+      
     this.deleteResource = false;
     this.preventScroll(false);
   }

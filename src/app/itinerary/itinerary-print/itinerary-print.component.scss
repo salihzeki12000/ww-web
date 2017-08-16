@@ -34,6 +34,10 @@
   }
 }
 
+
+
+/* itinerary details */
+
 .itinerary-name {
   padding: 20px 0;
   text-align: center;
@@ -55,6 +59,10 @@
   text-align: justify;
 }
 
+
+
+/* day display */
+
 .day-header {
   margin: 50px 10px 10px 10px;
   padding: 10px;
@@ -69,6 +77,11 @@
 .day-header:first-of-type  {
   margin-top: 20px;
 }
+
+
+
+
+/* daily note */
 
 .daily-note  {
   display: inline-block;
@@ -85,6 +98,11 @@
   width: 540px;
 }
 
+
+
+
+/* individual event display */
+
 .event-display  {
   position: relative;
   margin: 0 40px;
@@ -97,6 +115,10 @@
   width: 1.5cm;
   vertical-align: top;
 }
+
+
+
+/* specifics to transport display */
 
 .transport-header {
   display: inline-block;
@@ -112,10 +134,11 @@
   margin: 15px 0 ;
 }
 
-.event-content  {
-  display: inline-block;
-  width: 13cm;
-}
+
+
+/* non transport display */
+
+/* pic display */
 
 .event-pic  {
   display: inline-block;
@@ -150,9 +173,17 @@
   padding: 34px;
 }
 
-.event-name {
-  padding-bottom: 5px;
+
+
+/* content display */
+
+.event-content  {
+  display: inline-block;
+  width: 13cm;
 }
+
+
+/* stay city for accommodation */
 
 .event-stay-city {
   display: inline-block;
@@ -165,13 +196,23 @@
   padding-bottom: 5px;
 }
 
+/* header display */
+
 .event-header {
   display: inline-block;
+}
+
+.event-name {
+  padding-bottom: 5px;
 }
 
 .meals-display h5  {
   margin: 10px 2px 0 0;
 }
+
+
+
+/* details display */
 
 .details-item:first-of-type {
   margin-top: 10px;
@@ -181,7 +222,7 @@
   margin-bottom: 5px;
 }
 
-.event-map  {
-  display: inline-block;
-  vertical-align: top;
-}
+// .event-map  {
+//   display: inline-block;
+//   vertical-align: top;
+// }

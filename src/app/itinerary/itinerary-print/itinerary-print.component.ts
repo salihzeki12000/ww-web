@@ -19,8 +19,8 @@ export class ItineraryPrintComponent implements OnInit {
   itinerary;
   events = [];
 
-  itinDateSubscription: Subscription;
-  itinDateRange = [];
+  dateSubscription: Subscription;
+  dateRange = [];
 
   dailyNotes = [];
 
@@ -45,6 +45,7 @@ export class ItineraryPrintComponent implements OnInit {
           }
 
           this.itinerary = result.itinerary;
+
           let title = this.itinerary['name'] + " | Save-print"
           this.titleService.setTitle(title);
 
@@ -59,16 +60,17 @@ export class ItineraryPrintComponent implements OnInit {
         result => { this.filterEvents(result)})
     })
 
-    this.itinDateSubscription = this.itineraryService.updateDate.subscribe(
+    this.dateSubscription = this.itineraryService.updateDate.subscribe(
       result => {
-        this.itinDateRange = Object.keys(result).map(key => result[key]);
+        this.dateRange = Object.keys(result).map(key => result[key]);
       })
 
     this.loadingService.setLoader(false, "");
   }
 
   ngOnDestroy() {
-    if(this.itinDateSubscription) this.itinDateSubscription.unsubscribe();
+    if(this.dateSubscription) this.dateSubscription.unsubscribe();
+    
     this.loadingService.setLoader(true, "");
   }
 

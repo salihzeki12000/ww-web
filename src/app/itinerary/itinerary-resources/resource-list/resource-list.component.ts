@@ -16,7 +16,7 @@ import { LoadingService }   from '../../../loading';
 export class ResourceListComponent implements OnInit, OnDestroy {
   preview;
 
-  updateResourcesSubscription: Subscription;
+  resourcesSubscription: Subscription;
   resources = [];
   filteredResources = [];
 
@@ -24,8 +24,8 @@ export class ResourceListComponent implements OnInit, OnDestroy {
   categories = ['See all', 'Food', 'Accommodation', 'Transport', 'Activity'];
   selectedCategory = "See all";
 
-  currentItinerarySubscription: Subscription;
-  currentItinerary;
+  itinerarySubscription: Subscription;
+  itinerary;
 
   showResourceSummary = false;
   highlightedEvent;
@@ -44,21 +44,21 @@ export class ResourceListComponent implements OnInit, OnDestroy {
     let segments = this.route.snapshot['_urlSegment'].segments;
     if(segments[0]['path'] === 'preview') this.preview = true;
 
-    this.updateResourcesSubscription = this.resourceService.updateResources.subscribe(
+    this.resourcesSubscription = this.resourceService.updateResources.subscribe(
      result => {
        this.resources = Object.keys(result).map(key => result[key]);
        this.filteredResources = this.resources;
        this.totalResources = this.resources.length;
      })
 
-    this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
+    this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
       result => {
-        this.currentItinerary = result;
+        this.itinerary = result;
 
         let header = ''
         if(this.preview) header = "Preview : ";
 
-        let title = header + this.currentItinerary['name'] + " | Resource";
+        let title = header + this.itinerary['name'] + " | Resource";
         this.titleService.setTitle(title);
       })
 
@@ -67,8 +67,9 @@ export class ResourceListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.updateResourcesSubscription.unsubscribe();
-    this.currentItinerarySubscription.unsubscribe();
+    if(this.resourcesSubscription) this.resourcesSubscription.unsubscribe();
+    if(this.itinerarySubscription) this.itinerarySubscription.unsubscribe();
+
     this.loadingService.setLoader(true, "");
   }
 

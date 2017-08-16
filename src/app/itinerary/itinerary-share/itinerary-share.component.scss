@@ -3,25 +3,26 @@
   padding: 20px 20px 0 20px;
 }
 
+.progress-tracker li {
+  width: 50%;
+
+  @media only screen and (max-width: 500px) {
+    width: 100%;
+  }
+}
+
 .form-housing {
   margin-top: 0;
   padding-top: 0;
 }
 
-/* share itinerary items */
-.share-itinerary  {
-  width: 160px;
-  padding: 10px 20px;
-  font-weight: 400;
-  &:hover {
-    cursor: pointer;
-    color: #6494ED;
-  }
-}
-
 .share-itineary-header  {
   border-bottom: 1px solid lightgray;
 }
+
+
+
+/* select share items */
 
 .share-all > *  {
   display: inline-block;
@@ -59,16 +60,10 @@
   padding: 3px 0;
 }
 
-/* share itinerary */
-.progress-tracker li {
-  width: 50%;
 
-  @media only screen and (max-width: 500px) {
-    width: 100%;
-  }
-}
 
-/* share itinerary items */
+/* select users to share to */
+
 .user-shared-status {
   position: absolute;
   padding: 3px 0 0 38px;

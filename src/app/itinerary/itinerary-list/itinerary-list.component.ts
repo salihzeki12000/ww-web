@@ -28,7 +28,7 @@ export class ItineraryListComponent implements OnInit, OnDestroy {
          this.itineraries = Object.keys(result['itineraries']).map(key => result['itineraries'][key]);
          this.sortItin(this.itineraries);
        })
-                                         
+
     this.loadingService.setLoader(false, "");
     this.renderer.removeClass(document.body, 'prevent-scroll');
   }
@@ -47,7 +47,8 @@ export class ItineraryListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.currentUserSubscription.unsubscribe();
+    if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
+    
     this.loadingService.setLoader(true, "");
   }
 

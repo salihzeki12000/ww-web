@@ -1,6 +1,5 @@
 <div class="custom-modal" *ngIf="showResourceSummary" (click)="showSummary()"></div>
 
-
 <div *ngIf="totalResources" class="event-summary-section" [class.show-summary]="showResourceSummary">
 
   <h4 class="event-summary-header">Quick reference - {{ totalResources }}</h4>
@@ -13,6 +12,7 @@
 
   <div class="event-summary">
     <div *ngFor="let resource of filteredResources; let i = index" class="event-summary-item" (click)="centerItem(resource)" [class.highlighted-item]="highlightedEvent === resource">
+
       <a href="#resource{{i}}">
         <div class="resource-summary-category" *ngIf="resource?.category">
           <i class="fa fa-tags" aria-hidden="true"></i>
@@ -24,6 +24,7 @@
         <h5 class="resource-summary-content"> {{ resource.content }}</h5>
         <h5 class="resource-summary-link truncate"><a class="website-link" href="{{ resource?.link_url }}" target="_blank">{{ resource.link_url }}</a></h5>
       </a>
+
     </div>
   </div>
 
@@ -45,7 +46,7 @@
     [resource]="resource"
     [preview]="preview"
     [class.highlighted-event]="highlightedEvent === resource"
-    [currentItinerary]="currentItinerary"
+    [itinerary]="itinerary"
     [totalResources]="totalResources">
   </ww-resource>
 </div>

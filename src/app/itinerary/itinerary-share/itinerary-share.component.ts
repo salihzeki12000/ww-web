@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
@@ -15,13 +15,13 @@ import { FlashMessageService }    from '../../flash-message';
   templateUrl: './itinerary-share.component.html',
   styleUrls: ['./itinerary-share.component.scss']
 })
-export class ItineraryShareComponent implements OnInit {
+export class ItineraryShareComponent implements OnInit, OnDestroy {
   @Input() shareType;
   @Input() itineraries;
   @Output() cancelShare = new EventEmitter();
 
-  currentItinerarySubscription: Subscription;
-  currentItinerary: Itinerary;
+  itinerarySubscription: Subscription;
+  itinerary: Itinerary;
 
   currentUserSubscription: Subscription;
   currentUser;
@@ -29,7 +29,7 @@ export class ItineraryShareComponent implements OnInit {
   eventSubscription: Subscription;
   events = [];
 
-  updateResourcesSubscription: Subscription;
+  resourcesSubscription: Subscription;
   resources = [];
 
   itemsSelected = false;
@@ -59,36 +59,34 @@ export class ItineraryShareComponent implements OnInit {
     private notificationService: NotificationService) { }
 
   ngOnInit() {
-    this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
-                                             result => {
-                                               this.currentItinerary = result;
-                                             })
+    this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
+      result => { this.itinerary = result; })
 
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
-                                        result => {
-                                          this.currentUser = result;
-                                        })
+      result => { this.currentUser = result; })
 
     this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
-                                  result => {
-                                    this.filterEvents(result);
-                                  }
-                                )
+      result => { this.filterEvents(result); })
 
-    this.updateResourcesSubscription = this.resourceService.updateResources.subscribe(
-                                             result => {
-                                               this.resources = Object.keys(result).map(key => result[key]);
-                                               for (let i = 0; i < this.resources.length; i++) {
-                                                 this.shareIndexResource.push(true);
-                                               }
+    this.resourcesSubscription = this.resourceService.updateResources.subscribe(
+      result => {
+        this.resources = Object.keys(result).map(key => result[key]);
 
-                                             })
+        for (let i = 0; i < this.resources.length; i++) {
+          this.shareIndexResource.push(true);
+        }
+      })
 
     this.userService.getAllUsers().subscribe(
-          result => {
-            this.filterUsers(result.users);
-          })
+      result => { this.filterUsers(result.users); })
 
+  }
+
+  ngOnDestroy() {
+    if(this.itinerarySubscription) this.itinerarySubscription.unsubscribe();
+    if(this.eventSubscription) this.eventSubscription.unsubscribe();
+    if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
+    if(this.resourcesSubscription) this.resourcesSubscription.unsubscribe();
   }
 
   filterEvents(events)  {
@@ -105,18 +103,18 @@ export class ItineraryShareComponent implements OnInit {
   filterUsers(users)  {
     this.users = users;
 
-    for (let i = 0; i < this.currentItinerary['members'].length; i++) {
+    for (let i = 0; i < this.itinerary['members'].length; i++) {
       for (let j = 0; j < this.users.length; j++) {
-        if(this.currentItinerary['members'][i]['_id'] === this.users[j]['_id']) {
+        if(this.itinerary['members'][i]['_id'] === this.users[j]['_id']) {
           this.users[j]['status'] = 'Member of itinerary';
         }
       }
     }
 
-    for (let i = 0; i < this.currentItinerary['shares'].length; i++) {
+    for (let i = 0; i < this.itinerary['shares'].length; i++) {
       for (let j = 0; j < this.users.length; j++) {
-        if(this.currentItinerary['shares'][i]['shared_with']['_id'] === this.users[j]['_id']) {
-          let sharedBy = this.currentItinerary['shares'][i]['shared_by']['username'];
+        if(this.itinerary['shares'][i]['shared_with']['_id'] === this.users[j]['_id']) {
+          let sharedBy = this.itinerary['shares'][i]['shared_by']['username'];
           this.users[j]['status'] = 'Shared by ' + sharedBy;
         }
       }
@@ -125,6 +123,7 @@ export class ItineraryShareComponent implements OnInit {
 
   toggleShareAll()  {
     this.shareAll = !this.shareAll;
+
     for (let i = 0; i < this.shareIndex.length; i++) {
       this.shareIndex[i] = this.shareAll;
     }
@@ -154,6 +153,7 @@ export class ItineraryShareComponent implements OnInit {
 
   toggleAdd(user) {
     let index = this.selectedUsers.indexOf(user);
+
     if(index > -1 ) {
       this.selectedUsers.splice(index, 1);
       this.users.push(user);
@@ -188,14 +188,14 @@ export class ItineraryShareComponent implements OnInit {
 
     for (let i = 0; i < this.selectedUsers.length; i++) {
       let newItinerary = {
-        name: this.currentItinerary['name'] + " - shared by " + this.currentUser['username'],
-        date_from: this.currentItinerary['date_from'],
-        date_to: this.currentItinerary['date_to'],
-        daily_note: this.currentItinerary['daily_note'],
+        name: this.itinerary['name'] + " - shared by " + this.currentUser['username'],
+        date_from: this.itinerary['date_from'],
+        date_to: this.itinerary['date_to'],
+        daily_note: this.itinerary['daily_note'],
         private: this.selectedUsers[i]['privacy']['itinerary'],
         members: [this.selectedUsers[i]['_id']],
         admin: [this.selectedUsers[i]['_id']],
-        created_by: this.currentItinerary['created_by'],
+        created_by: this.itinerary['created_by'],
         shared_by: this.currentUser['_id']
       }
 
@@ -205,7 +205,7 @@ export class ItineraryShareComponent implements OnInit {
         shared_on: new Date()
       }
 
-      this.currentItinerary['shares'].push(newShare);
+      this.itinerary['shares'].push(newShare);
 
       this.itineraryService.copyItin(newItinerary).subscribe(
         result => {
@@ -214,7 +214,7 @@ export class ItineraryShareComponent implements OnInit {
           this.notificationService.newNotification({
             recipient: this.selectedUsers[i]['_id'],
             originator: this.currentUser['_id'],
-            message: " has shared with you the itinerary - " + this.currentItinerary['name'],
+            message: " has shared with you the itinerary - " + this.itinerary['name'],
             link: "/me/itinerary/" + result.itinerary['_id'],
             read: false
           }).subscribe(data => {})
@@ -223,7 +223,7 @@ export class ItineraryShareComponent implements OnInit {
     }
     // this.selectedUsers = [];
 
-    this.itineraryService.editItin(this.currentItinerary, 'edit').subscribe(
+    this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
       result => {})
   }
 
@@ -281,7 +281,8 @@ export class ItineraryShareComponent implements OnInit {
   }
 
   confirmShareMessage() {
-    let message = "Itinerary " + this.currentItinerary['name'] + " has been shared"
+    let message = "Itinerary " + this.itinerary['name'] + " has been shared";
+    
     this.flashMessageService.handleFlashMessage(message);
     this.cancelShare.emit(false);
   }

@@ -18,6 +18,10 @@
   }
 }
 
+
+
+/* legend section */
+
 .legend-section {
   position: absolute;
   display: inline-block;
@@ -52,6 +56,10 @@
   border-radius: 0;
 }
 
+
+
+/* map summary container */
+
 .map-summary {
   max-height: calc(100vh - 160px);
   vertical-align: top;
@@ -85,6 +93,10 @@
   }
 }
 
+
+
+/* individual map events */
+
 .map-event  {
   position: relative;
   padding: 15px 5px;
@@ -102,11 +114,27 @@
   margin-bottom: 0;
 }
 
+
+
+/* marker */
+
 .marker,
 .marker-details {
   display: inline-block;
   vertical-align: text-top;
 }
+
+.marker-index {
+  margin: 10px 5px;
+  padding: 3px 5px;
+  font-weight: 600;
+  border: 2px solid;
+  border-radius: 50%;
+  float: left;
+}
+
+
+/* marker details */
 
 .marker-details {
   width: 78%;
@@ -115,6 +143,13 @@
     width: 85%;
     font-size: 120%;
   }
+}
+
+.marker-date {
+  margin-bottom: 5px;
+  padding-left: 5px;
+  color: grey;
+  font-weight: 500;
 }
 
 .accommodation-summary-header {
@@ -133,25 +168,13 @@
   overflow-wrap: break-word;
 }
 
-.marker-index {
-  margin: 10px 5px;
-  padding: 3px 5px;
-  font-weight: 600;
-  border: 2px solid;
-  border-radius: 50%;
-  float: left;
-}
-
-.marker-date {
-  margin-bottom: 5px;
-  padding-left: 5px;
-  color: grey;
-  font-weight: 500;
-}
-
 .event-summary-note  {
   padding: 5px 0 0 5px;
 }
+
+
+
+/* pop up button in mobile screen */
 
 .map-legend-popup  {
   display: none;

@@ -10,6 +10,7 @@ export class ItineraryListItemComponent implements OnInit {
   @Input() itinerary;
   @Input() currentUser;
   displayPic = '';
+  
   constructor(private router: Router) { }
 
   ngOnInit() {
