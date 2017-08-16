@@ -43,7 +43,6 @@ export class AddRecommendationComponent implements OnInit {
         }
       }
     }
-    console.log(this.itineraries);
   }
 
   selectItinerary(itinerary)  {
@@ -107,7 +106,6 @@ export class AddRecommendationComponent implements OnInit {
       _id: this.currentUser['_id'],
       username: this.currentUser['username'],
     }
-
 
     let addedItin = {
       _id: this.itinerary['_id'],

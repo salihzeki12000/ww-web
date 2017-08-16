@@ -121,7 +121,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   getFollowings(currentUser) {
     if(this.isLoggedIn) {
       this.relationshipService.getRelationships(currentUser).subscribe(
-            result => {})
+        result => {})
     }
   }
 

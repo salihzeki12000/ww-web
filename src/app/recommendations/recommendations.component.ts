@@ -33,11 +33,7 @@ export class RecommendationsComponent implements OnInit, OnDestroy {
        })
 
     this.recommendationsSubscription = this.recommendationService.updateRecommendations.subscribe(
-      result => {
-        this.recommendations = result;
-      }
-    )
-
+      result => { this.recommendations = result; })
 
     this.titleService.setTitle("Recommendations");
     this.loadingService.setLoader(false, "");
@@ -45,13 +41,12 @@ export class RecommendationsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
+    if(this.recommendationsSubscription) this.recommendationsSubscription.unsubscribe();
   }
 
   getRecommendations(id)  {
-    this.recommendationService.getRecommendations(id)
-        .subscribe(
-          result =>  {}
-        )
+    this.recommendationService.getRecommendations(id).subscribe(
+      result =>  {})
   }
 
 }

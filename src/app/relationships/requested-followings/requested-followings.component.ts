@@ -27,7 +27,7 @@ export class RequestedFollowingsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.relationshipSubscription.unsubscribe();
+    if(this.relationshipSubscription) this.relationshipSubscription.unsubscribe();
   }
 
 }

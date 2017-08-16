@@ -48,16 +48,15 @@ export class NotificationListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.currentUserSubscription.unsubscribe();
-    this.notificationSubscription.unsubscribe();
+    if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
+    if(this.notificationSubscription) this.notificationSubscription.unsubscribe();
+
     this.loadingService.setLoader(true, "");
   }
 
   getNotifications(id)  {
-    this.notificationService.getNotifications(id)
-        .subscribe(
-          result =>  {}
-        )
+    this.notificationService.getNotifications(id).subscribe(
+      result =>  {})
   }
 
 }

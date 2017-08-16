@@ -13,7 +13,7 @@ export class PendingFollowerComponent implements OnInit {
   currentUser = {
     _id: 0
   }
-  
+
   constructor(
     private notificationService: NotificationService,
     private relationshipService: RelationshipService) { }
@@ -26,16 +26,15 @@ export class PendingFollowerComponent implements OnInit {
     this.pendingFollower['responded'] = true;
     this.pendingFollower['request_accepted'] = true;
 
-    this.relationshipService.acceptFollow(this.pendingFollower)
-        .subscribe( result => {
-          this.notificationService.newNotification({
-            recipient: this.pendingFollower['user']['_id'],
-            originator: this.pendingFollower['following']['_id'],
-            message: " has accepted your follow request",
-            link: "/wondererwanderer" + this.pendingFollower['following']['_id'],
-            read: false
-          }).subscribe(data => {})
-        } )
+    this.relationshipService.acceptFollow(this.pendingFollower).subscribe( result => {
+      this.notificationService.newNotification({
+        recipient: this.pendingFollower['user']['_id'],
+        originator: this.pendingFollower['following']['_id'],
+        message: " has accepted your follow request",
+        link: "/wondererwanderer" + this.pendingFollower['following']['_id'],
+        read: false
+      }).subscribe(data => {})
+    })
   }
 
   ignoreRequest() {

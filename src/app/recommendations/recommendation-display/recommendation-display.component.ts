@@ -120,8 +120,7 @@ export class RecommendationDisplayComponent implements OnInit, OnDestroy {
     this.recommendationService.deleteRecommendation(this.recommendation).subscribe(
       result => {
         this.flashMessageService.handleFlashMessage(result.message);
-      }
-    )
+      })
 
     this.cancelDelete()
   }

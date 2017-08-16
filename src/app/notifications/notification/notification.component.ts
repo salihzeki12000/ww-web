@@ -30,10 +30,7 @@ export class NotificationComponent implements OnInit {
     }
 
     this.notificationService.editNotification(this.notification).subscribe(
-      result => {
-        console.log(result);
-      }
-    )
+      result => {})
   }
 
   routeToUser(id) {
