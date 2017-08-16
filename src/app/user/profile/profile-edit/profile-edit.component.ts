@@ -110,7 +110,8 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.currentUserSubscription.unsubscribe();
+    if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
+
     this.loadingService.setLoader(true, "");
   }
 
@@ -166,12 +167,11 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     }
 
     if(this.newImageFile !== '')  {
-      this.fileuploadService.uploadFile(this.newImageFile, "profile")
-          .subscribe(
-            result => {
-              this.currentUser['display_picture'] = result.secure_url;
-              this.updateProfile();
-          })
+      this.fileuploadService.uploadFile(this.newImageFile, "profile").subscribe(
+        result => {
+          this.currentUser['display_picture'] = result.secure_url;
+          this.updateProfile();
+      })
     } else  {
       this.updateProfile();
     }
@@ -179,17 +179,15 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
 
   updateProfile() {
     this.loadingService.setLoader(true, "Saving your profile...");
-    this.userService.editUser(this.currentUser)
-                    .subscribe(
-                      result => {
-                        this.loadingService.setLoader(false, "");
-                        this.flashMessageService.handleFlashMessage(result.message);
-                        this.inputValue = null;
-                        this.newProfilePic = '';
-                        this.newImageFile = '';
-                        this.thumbnailImage = this.currentUser['display_picture'];
-                      }
-                    )
+    this.userService.editUser(this.currentUser).subscribe(
+      result => {
+        this.loadingService.setLoader(false, "");
+        this.flashMessageService.handleFlashMessage(result.message);
+        this.inputValue = null;
+        this.newProfilePic = '';
+        this.newImageFile = '';
+        this.thumbnailImage = this.currentUser['display_picture'];
+      })
   }
 
   searching(event) {

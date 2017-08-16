@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
 import { RelationshipService } from '../../relationships/relationship.service';
@@ -18,7 +17,6 @@ export class UserFollowingsComponent implements OnInit, OnDestroy {
   currentUserSubscription: Subscription;
 
   constructor(
-    private router: Router,
     private userService: UserService,
     private relationshipService: RelationshipService) { }
 
@@ -26,18 +24,15 @@ export class UserFollowingsComponent implements OnInit, OnDestroy {
     this.followingsSubscription = this.relationshipService.updateUserRelationships.subscribe(
       result => {
        this.followings = Object.keys(result['followings']).map(key => result['followings'][key]);
-      }
-    )
+      })
 
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
-      result => {
-        this.currentUser = result;
-      }
-    )
+      result => { this.currentUser = result; })
   }
 
   ngOnDestroy() {
-    this.followingsSubscription.unsubscribe();
+    if(this.followingsSubscription) this.followingsSubscription.unsubscribe();
+    if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
   }
 
 }

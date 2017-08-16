@@ -94,9 +94,9 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
     this.postService.getPosts(userId).subscribe(
       result => {
         this.postsSubscription = this.postService.updatePost.subscribe(
-                                       result =>  {
-                                         this.posts = Object.keys(result).map(key => result[key]);
-                                       })
+          result =>  {
+            this.posts = Object.keys(result).map(key => result[key]);
+          })
       })
   }
 

@@ -94,8 +94,8 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.relationshipsSubscription.unsubscribe();
-    this.currentUserSubscription.unsubscribe();
+    if(this.relationshipsSubscription) this.relationshipsSubscription.unsubscribe();
+    if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
   }
 
   checkFollowStatus() {

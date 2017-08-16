@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 
 import { Post, PostService }   from '../../post';
@@ -8,7 +8,7 @@ import { Post, PostService }   from '../../post';
   templateUrl: './user-posts.component.html',
   styleUrls: ['./user-posts.component.scss']
 })
-export class UserPostsComponent implements OnInit {
+export class UserPostsComponent implements OnInit, OnDestroy {
   posts: Post[] = [];
   postsSubscription: Subscription;
 
@@ -16,9 +16,13 @@ export class UserPostsComponent implements OnInit {
 
   ngOnInit() {
     this.postsSubscription = this.postService.updatePost.subscribe(
-                                   result =>  {
-                                     this.posts = Object.keys(result).map(key => result[key]);
-                                   })
+      result =>  {
+        this.posts = Object.keys(result).map(key => result[key]);
+      })
+  }
+
+  ngOnDestroy() {
+    if(this.postsSubscription) this.postsSubscription.unsubscribe();
   }
 
 }

@@ -32,39 +32,6 @@ input {
   border-radius: 50%;
 }
 
-.new-profile-picture  {
-  position: absolute;
-  top: 100px;
-  // left: calc(((100vw - 600px) / 2) + 400px);
-  margin-left: 420px;
-
-  @media only screen and (max-width: 610px) {
-    position: relative;
-    top: 0;
-    margin-left: 0;
-    padding-bottom: 10px;
-    text-align: center;
-    background-color: #FAFAFA;
-  }
-}
-
-.new-profile-picture > img  {
-  height: 150px;
-  width: 150px;
-  border-radius: 50%;
-}
-
-.new-profile-picture > h5 {
-  margin-top: 9px;
-  width: 150px;
-  text-align: center;
-  font-weight: 500;
-
-  @media only screen and (max-width: 610px) {
-    width: auto;
-  }
-}
-
 .change-profile-picture {
   text-align: left;
 
@@ -98,6 +65,10 @@ input {
   }
 }
 
+
+
+/* file upload */
+
 .fileUpload {
   overflow: hidden;
   position: absolute;
@@ -124,6 +95,44 @@ input {
   cursor: pointer;
 }
 
+
+
+/* new profile picture display */
+
+.new-profile-picture  {
+  position: absolute;
+  top: 100px;
+  // left: calc(((100vw - 600px) / 2) + 400px);
+  margin-left: 420px;
+
+  @media only screen and (max-width: 610px) {
+    position: relative;
+    top: 0;
+    margin-left: 0;
+    padding-bottom: 10px;
+    text-align: center;
+    background-color: #FAFAFA;
+  }
+}
+
+.new-profile-picture > img  {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+}
+
+.new-profile-picture > h5 {
+  margin-top: 9px;
+  width: 150px;
+  text-align: center;
+  font-weight: 500;
+
+  @media only screen and (max-width: 610px) {
+    width: auto;
+  }
+}
+
+
 .profile-date-join  {
   text-align: left;
   margin-bottom: 10px;
@@ -133,16 +142,10 @@ input {
   background-color: #6494ED;
 }
 
-// .edit-profile {
-//   padding-right: 10px;
-//   color: grey;
-//   letter-spacing: .5px;
-//   text-align: right;
-//   &:hover {
-//     cursor: pointer;
-//     color: #3A4A4D;
-//   }
-// }
+
+
+
+/* edit profile section */
 
 .profile-edit-section-header  {
   padding: 10px 0 0 20px;
@@ -182,9 +185,6 @@ input {
   }
 }
 
-// .profile-edit-item > h4 {
-//   padding-left: 15px;
-// }
 
 .profile-edit-item input,
 ww-google-place-search  {
@@ -195,20 +195,13 @@ ww-google-place-search  {
   }
 }
 
-// .new-city {
-//   position: absolute;
-//   display: block;
-//   margin-top: -18px;
-//   margin-left: 135px;
-//
-//   @media only screen and (max-width: 610px) {
-//     margin-left: 5px;
-//   }
-// }
-
 .profile-edit-section-details span.form-validator {
   margin-top: 0;
 }
+
+
+
+/* preview of user profile card */
 
 .profile-preview  {
   margin: 10px auto 0 auto;
@@ -219,6 +212,10 @@ ww-google-place-search  {
     margin: 10px 0 0 0;
   }
 }
+
+
+
+/* other edits */
 
 select.profile-gender-select  {
   width: 100px;

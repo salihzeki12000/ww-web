@@ -38,9 +38,7 @@ export class UserCheckInComponent implements OnInit, OnDestroy {
     }, 100)
 
     this.checkInSubscription = this.checkinService.updateCheckIns.subscribe(
-      result => {
-        this.filterCheckIn(result);
-      })
+      result => { this.filterCheckIn(result); })
   }
 
   ngOnDestroy() {
@@ -79,6 +77,7 @@ export class UserCheckInComponent implements OnInit, OnDestroy {
         i--
       };
     }
+
     this.checkins = checkins;
     this.setLocations();
     this.setCountries();
@@ -118,6 +117,7 @@ export class UserCheckInComponent implements OnInit, OnDestroy {
         countryName.push(this.checkins[i]['place']['country']['name']);
       }
     }
+
     this.countries = this.sortCountries();
     this.countries.unshift({name: 'Global view', lat: 25, lng: 0, zoom: 3})
   }
@@ -128,6 +128,7 @@ export class UserCheckInComponent implements OnInit, OnDestroy {
       if(a['name'] > b['name']) return 1;
       return 0;
     })
+    
     return this.countries;
   }
 

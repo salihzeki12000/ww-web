@@ -15,10 +15,10 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
   events = [];
   totalEvents = 1;
 
-  itinDateSubscription: Subscription;
-  itinDateRange = [];
+  dateSubscription: Subscription;
+  dateRange = [];
 
-  currentItinerarySubscription: Subscription;
+  itinerarySubscription: Subscription;
   itinerary;
   dailyNotes = [];
 
@@ -54,28 +54,28 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
     })
 
     this.events = [];
-    this.currentItinerarySubscription = this.itineraryService.currentItinerary.subscribe(
+    this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
        result => {
          this.itinerary = result;
          this.sortDailyNotes();
        })
 
-    this.itinDateSubscription = this.itineraryService.updateDate.subscribe(
+    this.dateSubscription = this.itineraryService.updateDate.subscribe(
       result => {
-        this.itinDateRange = Object.keys(result).map(key => result[key]);
+        this.dateRange = Object.keys(result).map(key => result[key]);
       })
 
     this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
       result => {
         this.events = Object.keys(result).map(key => result[key]);
-        // this.filterEvents(result);
         this.loadingService.setLoader(false, "")
       })
   }
 
   ngOnDestroy() {
-    this.itinDateSubscription.unsubscribe();
-    this.eventSubscription.unsubscribe();
+    if(this.dateSubscription) this.dateSubscription.unsubscribe();
+    if(this.eventSubscription) this.eventSubscription.unsubscribe();
+    if(this.itinerarySubscription) this.itinerarySubscription.unsubscribe();
   }
 
   sortDailyNotes()  {
@@ -89,109 +89,6 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
     }
 
     this.dailyNotes = notes;
-  }
-
-  filterEvents(events)  {
-    this.events = [];
-    this.totalEvents = events.length;
-
-    let summaryEvents = [];
-    let copyEvents = [];
-
-    for (let i = 0; i < events.length; i++) {
-
-      if(events[i]['type'] === 'activity')  {
-        events[i]['summary_date'] = events[i]['date'];
-        events[i]['summary_time'] = events[i]['time'];
-      }
-
-      if(events[i]['type'] === 'accommodation') {
-        let oneDay = 24*60*60*1000;
-        let inDate = new Date(events[i]['check_in_date']);
-        let outDate = new Date(events[i]['check_out_date']);
-        let numDaysDiff = Math.round(Math.abs((inDate.getTime() - outDate.getTime())/oneDay));
-        let numDays = numDaysDiff + " night" + (numDaysDiff > 1 ? "s" : "");
-
-        let copy = Object.assign({}, events[i]);
-
-        events[i]['inOut'] = "checkin";
-        events[i]['numDays'] = numDays;
-        events[i]['summary_date'] = events[i]['check_in_date'];
-        events[i]['summary_time'] = events[i]['check_in_time'];
-
-        copy['inOut'] = "checkout";
-        copy['summary_date'] = events[i]['check_out_date'];
-        copy['summary_time'] = events[i]['check_out_time'];
-
-        copyEvents.push(copy);
-      }
-
-      if(events[i]['type'] === 'transport') {
-        let copy = Object.assign({}, events[i]);
-
-        events[i]['approach'] = 'departure';
-        events[i]['summary_date'] = events[i]['dep_date'];
-        events[i]['summary_time'] = events[i]['dep_time'];
-
-        copy['approach'] = 'arrival';
-        copy['summary_date'] = events[i]['arr_date'];
-        copy['summary_time'] = events[i]['arr_time'];
-
-        copyEvents.push(copy);
-      }
-    }
-
-    summaryEvents = events.concat(copyEvents);
-    this.sortEvents(summaryEvents);
-  }
-
-  sortEvents(events)  {
-    let flex = [];
-    let dated = [];
-
-    for (let i = 0; i < events.length; i++) {
-      if(events[i]['summary_time'] === 'anytime') {
-        events[i]['sort_time'] = "25:00"
-      } else  {
-        events[i]['sort_time'] = events[i]['summary_time']
-      }
-
-      if(events[i]['summary_date'] === 'any day') {
-        flex.push(events[i]);
-      } else  {
-        dated.push(events[i])
-      }
-    }
-
-    flex = this.sort(flex);
-    dated = this.sort(dated);
-
-    this.events = dated.concat(flex);
-
-    setTimeout(() =>  {this.loadingService.setLoader(false, "")}, 1000);
-  }
-
-  sort(events)  {
-    events.sort((a,b) =>  {
-      let dateA = new Date(a['summary_date']).getTime();
-      let dateB = new Date(b['summary_date']).getTime();
-
-      let timeA = parseInt((a['sort_time'].replace(a['sort_time'].substring(2,3), "")));
-      let timeB = parseInt((b['sort_time'].replace(b['sort_time'].substring(2,3), "")));
-
-      if (dateA < dateB) return -1;
-      if (dateA > dateB) return 1;
-      if (timeA < timeB) return -1;
-      if (timeA > timeB) return 1;
-
-      return 0;
-    })
-
-    return events;
-  }
-
-  viewPreview() {
-
   }
 
   preventScroll(value)  {
