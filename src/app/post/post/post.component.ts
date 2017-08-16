@@ -51,21 +51,18 @@ export class PostComponent implements OnInit, OnDestroy {
     }
 
   ngOnInit() {
-    this.currentUserSubscription = this.userService.updateCurrentUser
-                                       .subscribe(
-                                         result => {
-                                           this.currentUser = result;
+    this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
+      result => {
+        this.currentUser = result;
 
-                                           setTimeout(()  =>  {
-                                             this.checkSameUser();
-                                             this.checkLikePost();
-                                             this.checkCommentSameUser();
-                                             this.post['formatted_content'] = this.post['content'].replace(/\r?\n/g, '<br/> ');
+        setTimeout(()  =>  {
+          this.checkSameUser();
+          this.checkLikePost();
+          this.checkCommentSameUser();
+          this.post['formatted_content'] = this.post['content'].replace(/\r?\n/g, '<br/> ');
+        },500)
 
-                                           },500)
-
-                                         })
-
+      })
   }
 
   @HostListener('document:click', ['$event'])
@@ -76,7 +73,7 @@ export class PostComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.currentUserSubscription.unsubscribe();
+    if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
   }
 
   checkSameUser() {
@@ -159,68 +156,62 @@ export class PostComponent implements OnInit, OnDestroy {
 
     this.commentCount = "Comment" + (this.post['comments'].length > 1 ? "s" : "")
 
-    this.commentService.addComment(newComment)
-        .subscribe(
-          result => {
-            this.post['comments'].push(result);
+    this.commentService.addComment(newComment).subscribe(
+      result => {
+        this.post['comments'].push(result);
 
-            for (let i = 0; i < this.post['comments'].length; i++) {
-              let units = [
-                { name: "minute", in_seconds: 60, limit: 3600 },
-                { name: "hour", in_seconds: 3600, limit: 86400 },
-                { name: "day", in_seconds: 86400, limit: 604800 }
-              ];
+        for (let i = 0; i < this.post['comments'].length; i++) {
+          let units = [
+            { name: "minute", in_seconds: 60, limit: 3600 },
+            { name: "hour", in_seconds: 3600, limit: 86400 },
+            { name: "day", in_seconds: 86400, limit: 604800 }
+          ];
 
-              let timePosted = new Date(this.post['comments'][i]['created_at']).getTime();
-              let timeDiff = (Date.now() - timePosted) / 1000;
+          let timePosted = new Date(this.post['comments'][i]['created_at']).getTime();
+          let timeDiff = (Date.now() - timePosted) / 1000;
 
-              if(timeDiff < 60) {
-                this.post['comments'][i]['time_ago'] = "Less than a minute ago";
-              } else if(timeDiff > 604800) {
-                this.post['comments'][i]['time_ago'] = "";
-              } else  {
-                for (let j = 0; j < units.length; j++) {
-                  if(timeDiff < units[j]['limit'])  {
-                    let timeAgo = Math.floor(timeDiff / units[j].in_seconds);
-                    this.post['comments'][i]['time_ago'] = timeAgo + " " + units[j].name + (timeAgo > 1 ? "s" : "") + " ago";
-                    j = units.length;
-                  }
-                }
+          if(timeDiff < 60) {
+            this.post['comments'][i]['time_ago'] = "Less than a minute ago";
+          } else if(timeDiff > 604800) {
+            this.post['comments'][i]['time_ago'] = "";
+          } else  {
+            for (let j = 0; j < units.length; j++) {
+              if(timeDiff < units[j]['limit'])  {
+                let timeAgo = Math.floor(timeDiff / units[j].in_seconds);
+                this.post['comments'][i]['time_ago'] = timeAgo + " " + units[j].name + (timeAgo > 1 ? "s" : "") + " ago";
+                j = units.length;
               }
             }
+          }
+        }
 
-            if(!this.sameUser)  {
-              this.notificationService.newNotification({
-                recipient: this.post['user']['_id'],
-                originator: this.currentUser['_id'],
-                message: " has comment on your post",
-                link: "/me/post/" + this.post['_id'],
-                read: false
-              }).subscribe(data => {})
-            }
+        if(!this.sameUser)  {
+          this.notificationService.newNotification({
+            recipient: this.post['user']['_id'],
+            originator: this.currentUser['_id'],
+            message: " has comment on your post",
+            link: "/me/post/" + this.post['_id'],
+            read: false
+          }).subscribe(data => {})
+        }
 
-
-            this.seeComments = true;
-          })
+        this.seeComments = true;
+      })
 
     this.commentForm.reset();
   }
 
   editPost()  {
-    this.postService.editPost(this.post)
-        .subscribe(
-          data =>  {
-          }
-        )
+    this.postService.editPost(this.post).subscribe(
+      data => {})
   }
 
   onDelete()  {
-    this.postService.deletePost(this.post)
-        .subscribe(
-          data =>  {
-            this.flashMessageService.handleFlashMessage(data.message);
-          }
-        )
+    this.postService.deletePost(this.post).subscribe(
+      data =>  {
+        this.flashMessageService.handleFlashMessage(data.message);
+      })
+
     this.deletePost = false;
   }
 
@@ -239,11 +230,10 @@ export class PostComponent implements OnInit, OnDestroy {
     this.deleteComment = -1;
 
     this.postService.editPost(this.post).subscribe(
-          data => {
-            this.commentService.deleteComment(comment).subscribe(
-              data => { }
-            )
-        })
+      data => {
+        this.commentService.deleteComment(comment).subscribe(
+          data => {})
+    })
   }
 
   routeToUser(id) {

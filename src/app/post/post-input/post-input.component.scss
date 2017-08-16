@@ -1,9 +1,3 @@
-.post-input-box > h4 {
-  padding-left: 20px;
-  color: grey;
-  text-align: left;
-}
-
 .post-form  {
   position: relative;
   padding-top: 20px;
@@ -11,6 +5,17 @@
   background-color: white;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
 }
+
+.post-input-box > h4 {
+  padding-left: 20px;
+  color: grey;
+  text-align: left;
+}
+
+
+
+
+/* user thumbnail display */
 
 .user-postby  {
   height: 35px;
@@ -41,6 +46,11 @@
   font-style: italic;
 }
 
+
+
+
+/* post form */
+
 textarea {
   padding: 0 30px;
   resize: vertical;
@@ -62,10 +72,6 @@ textarea {
   }
 }
 
-// .file-upload-textarea {
-//   bottom: 25px;
-// }
-
 .file-upload [type=file] {
   display: block;
   position: absolute;
@@ -73,6 +79,10 @@ textarea {
   opacity: 0;
   cursor: pointer;
 }
+
+
+
+/*  uploaded picture */
 
 .post-picture  {
   position: relative;

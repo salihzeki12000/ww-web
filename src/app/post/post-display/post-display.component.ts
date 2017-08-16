@@ -26,9 +26,7 @@ export class PostDisplayComponent implements OnInit, OnDestroy {
       let id = params['id'];
 
       this.postService.getPost(id).subscribe(
-        result => {
-          this.timeAgo(result.post)
-        })
+        result =>  {this.timeAgo(result.post) })
     })
 
     this.loadingService.setLoader(false, "");

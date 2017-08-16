@@ -8,14 +8,19 @@
   box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
 }
 
+.dots-menu:after {
+  margin-right: 20px;
+}
+
 .item-menu,
 .dots-menu-hint  {
   top: 38px;
 }
 
-.username  {
-  margin-top: 2px;
-}
+
+
+
+/* content of post */
 
 .content  {
   margin: 10px 0;
@@ -36,9 +41,28 @@ textarea  {
   text-align: right;
 }
 
+.post-img {
+  margin: 0 20px;
+  width: 560px;
+
+  @media only screen and (max-width: 670px) {
+    width: calc(100% - 40px);
+    min-width: 260px;
+  }
+}
+
+
+
+
+/* link preview */
+
 .link-preview {
   margin: 0 20px;
 }
+
+
+
+/* post reaction */
 
 .post-reaction  {
   margin: 0 25px 10px 0;
@@ -51,6 +75,24 @@ textarea  {
   font-weight: 600;
   vertical-align: bottom;
 }
+
+.post-reaction p  {
+  padding-left: 3px;
+  font-size: 11px;
+  font-weight: 400;
+  color: #808080;
+  letter-spacing: .5px;
+  vertical-align: bottom;
+  &:hover {
+    color: #3A4A4D;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
+
+
+/* post likes */
 
 .post-reaction > .fa-heart-o  {
   margin-left: 20px;
@@ -78,6 +120,10 @@ textarea  {
   color: #F9FBFB;
 }
 
+
+
+/* hover to show who likes */
+
 .post-reaction-likes:hover .like-user-list  {
   display: block;
 }
@@ -91,35 +137,19 @@ textarea  {
   background-color: #808080;
 }
 
+
+/* post reaction comments */
+
 .post-reaction > .fa-comment-o  {
   margin-left: 20px;
   color: grey;
   vertical-align: text-bottom;
 }
 
-.post-reaction p  {
-  padding-left: 3px;
-  font-size: 11px;
-  font-weight: 400;
-  color: #808080;
-  letter-spacing: .5px;
-  vertical-align: bottom;
-  &:hover {
-    color: #3A4A4D;
-    text-decoration: underline;
-    cursor: pointer;
-  }
-}
 
-.post-img {
-  margin: 0 20px;
-  width: 560px;
 
-  @media only screen and (max-width: 670px) {
-    width: calc(100% - 40px);
-    min-width: 260px;
-  }
-}
+
+/* post comments */
 
 .post-comments  {
   padding: 10px 20px;
@@ -139,10 +169,6 @@ textarea  {
 .post-comments > form > *  {
   display: inline-block;
   vertical-align: middle;
-}
-
-.dots-menu:after {
-  margin-right: 20px;
 }
 
 .post-comments-section  {
