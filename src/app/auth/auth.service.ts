@@ -25,12 +25,12 @@ export class AuthService  {
     private router: Router,
     private userService: UserService,
     private errorMessageService: ErrorMessageService)  {
-      FB.init({
-            appId      : '1751163758480192',
-            cookie     : false,  // enable cookies to allow the server to access the session
-            xfbml      : true,  // parse social plugins on this page
-            version    : 'v2.5' // use graph api version 2.5
-        });
+      // FB.init({
+      //       appId      : '1751163758480192',
+      //       cookie     : false,  // enable cookies to allow the server to access the session
+      //       xfbml      : true,  // parse social plugins on this page
+      //       version    : 'v2.5' // use graph api version 2.5
+      //   });
     }
 
   signup(user: User)  {

@@ -1,5 +1,5 @@
 /* display details pop up */
-.show-details-in-summary {
+.details-in-summary-container {
   position: fixed;
   top: 40px;
   right: 0;
@@ -21,22 +21,35 @@
   height: 40px;
   padding: 14px 0 0 13px;
   z-index: 3;
+
   &:hover {
     cursor: pointer;
   }
 
   @media only screen and (max-width: 420px) {
     width: 100vw;
-    background-color: black;
+    padding: 8px 0;
+    text-align: center;
+    background-color: white;
+    border: 5px solid #6494ED;
     z-index: 1000;
   }
 }
 
 .hide-details > h4  {
   color: #F9FBFB;
+
   &:hover {
     color: #6494ED;
     cursor: pointer;
+  }
+
+  @media only screen and (max-width: 420px) {
+    color: #6494ED;
+
+    &:hover {
+      color: #3A4A4D;
+    }
   }
 }
 
@@ -48,7 +61,7 @@
 
   @media only screen and (max-width: 420px) {
     top: 25px;
-    max-height: calc(100vh - 130px);
+    height: 100vh;
     width: 100vw;
     padding-left: calc((100vw - 330px)/2);
     overflow: auto;

@@ -1531,8 +1531,8 @@ ww-resource {
   z-index: 2;
 
   @media only screen and (max-width: 400px) {
-    margin: 15px 0;
-    width: 100vw;
+    margin: 15px 10px;
+    width: calc(100vw - 20px);
     min-width: 300px;
   }
 
@@ -1553,8 +1553,8 @@ ww-resource {
   z-index: 2;
 
   @media only screen and (max-width: 400px) {
-    margin: 15px 0;
-    width: 100vw;
+    margin: 15px 10px;
+    width: calc(100vw - 20px);
     min-width: 300px;
   }
 
@@ -1580,7 +1580,7 @@ ww-resource {
   box-shadow: 0px 0px 8px rgba(0,0,0,.3);
 
   @media only screen and (max-width: 400px) {
-    width: 100vw;
+    width: calc(100vw - 20px);
     margin: 0;
     height: calc(100vw * 0.66);
     min-width: 300px;
@@ -1611,7 +1611,7 @@ ww-resource {
 
   @media only screen and (max-width: 400px) {
     margin: 0;
-    width: 100vw;
+    width: calc(100vw - 20px);
     height: calc(100vw * 0.66);
     min-width: 300px;
     min-height: 200px;
@@ -1876,7 +1876,7 @@ ww-resource {
   background-color: #F6F6F6;
 
   @media only screen  and (max-width: 400px) {
-    padding-left: calc((100vw - 300px) / 2 );
+    padding: 20px 5px;
   }
 
   @media only screen and (min-width: 400px) and (max-width: 650px) {
@@ -1890,7 +1890,12 @@ ww-resource {
   width: 250px;
   vertical-align: top;
 
-  @media only screen and (max-width: 650px) {
+  @media only screen  and (max-width: 400px) {
+    width: calc((100vw - 80px) / 2);
+    min-width: 120px;
+  }
+
+  @media only screen and (min-width: 400px) and (max-width: 650px) {
     width: 120px;
   }
 }
