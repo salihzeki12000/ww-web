@@ -98,7 +98,7 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
   onWindowScroll() {
     for (let i = 0; i < this.itemPosition.length; i++) {
       let offset = this.element.nativeElement.offsetParent.scrollTop;
-      let item = this.itemPosition[i]['position'] - 30;
+      let item = this.itemPosition[i]['position'] - 45;
       let diff = item - offset;
 
       if(diff < 0)  {
