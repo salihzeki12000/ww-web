@@ -6,7 +6,12 @@
   </div>
 
   <div *ngIf="editing">
-    <textarea rows="2" [ngClass]="[uniqueClass]" [value]="itinerary?.daily_note[index]['note']" (keyup.enter)="updateNote(editedNote.value)" (blur)="editing = false" #editedNote></textarea>
+    <textarea rows="2"
+      [ngClass]="[uniqueClass]"
+      [value]="itinerary?.daily_note[index]['note']"
+      (keyup.enter)="updateNote(editedNote.value)"
+      (blur)="editing = false" #editedNote></textarea>
+
     <h5 class="edit-note">Enter to save, click anywhere else to cancel</h5>
   </div>
 
@@ -20,17 +25,22 @@
   </div>
 
   <div *ngIf="editing">
-    <textarea rows="2" [ngClass]="[uniqueClass]" [value]="itinerary?.daily_note[index]['note']" (keyup.enter)="updateNote(editedNote.value)" (blur)="editing = false" #editedNote></textarea>
+    <textarea rows="2"
+      [ngClass]="[uniqueClass]"
+      [value]="itinerary?.daily_note[index]['note']"
+      (keyup.enter)="updateNote(editedNote.value)"
+      (blur)="editing = false" #editedNote></textarea>
+
     <h5 class="edit-note">Enter to save, click anywhere else to cancel</h5>
   </div>
 </div>
 
 <div *ngIf="date === 'any day'">
-  <h5 class="date">Any day</h5>
+  <h5 class="event-date">Any day</h5>
 </div>
 
 <div *ngIf="date !== 'any day'">
-  <h5 class="date">Day {{ index }} - {{ date | date: "dd MMM (EEE)" }}</h5>
+  <h5 class="event-date">Day {{ index }} - {{ date | date: "dd MMM (EEE)" }}</h5>
 </div>
 
 <div *ngFor="let event of events">
@@ -41,19 +51,25 @@
     <div *ngIf="event?.type === 'accommodation'" class="summary-item" (click)="showDetails(event)">
       <div class="accommodation-indicator pill"></div>
 
-      <div *ngIf="event?.inOut === 'checkout'" class="event-name">
+      <div *ngIf="event?.inOut === 'checkout'" class="event-content">
         <h5>Check out</h5>
         <h5>{{ event?.name }}</h5>
       </div>
 
-      <div *ngIf="event?.inOut === 'checkin'" class="event-name">
+
+      <div *ngIf="event?.inOut === 'checkin'" class="event-content">
         <h5>Check in</h5>
+
         <div>
-          <h5 class="event-stay-city"><i class="fa fa-bed" aria-hidden="true"></i> {{ event?.city | uppercase }} ( {{ event?.numDays }} )</h5>
+          <h5 class="event-stay-city">
+            <i class="fa fa-bed" aria-hidden="true"></i> {{ event?.city | uppercase }} ( {{ event?.numDays }} )
+          </h5>
+
           <h5>{{ event?.name }}</h5>
           <h5 class="check-out-on">stay till {{ event?.check_out_date | date: 'dd MMM (EEE)' }}</h5>
         </div>
       </div>
+
     </div>
 
     <div *ngIf="event?.type === 'activity'" class="summary-item" (click)="showDetails(event)">
@@ -68,7 +84,7 @@
         <img src="{{ event?.photo.url }}" alt="picture of {{ event?.name}}" *ngIf="event?.photo">
         <i class="fa fa-bicycle fa-lg" aria-hidden="true" *ngIf="!event?.photo"></i>
 
-        <div class="event-name">
+        <div class="event-content">
           <h5>{{ event?.name }}</h5>
         </div>
       </div>
@@ -78,7 +94,7 @@
     <div *ngIf="event?.type === 'transport'" class="summary-item" (click)="showDetails(event)">
       <div class="transport-indicator pill"></div>
 
-      <div *ngIf="event?.approach === 'departure'" class="event-name">
+      <div *ngIf="event?.approach === 'departure'" class="event-content">
         <div [ngSwitch]="event?.transport_type">
           <h5 *ngSwitchCase="'flight'"><i class="fa fa-plane" aria-hidden="true"></i> {{ event?.reference_number | uppercase }}</h5>
           <h5 *ngSwitchCase="'train'"><i class="fa fa-train" aria-hidden="true"></i> Train</h5>
@@ -91,7 +107,7 @@
         <h5>departs {{ event?.dep_city }} for {{ event?.arr_city}}</h5>
       </div>
 
-      <div *ngIf="event?.approach === 'arrival'" class="event-name">
+      <div *ngIf="event?.approach === 'arrival'" class="event-content">
         <div [ngSwitch]="event?.transport_type">
           <h5 *ngSwitchCase="'flight'"><i class="fa fa-plane" aria-hidden="true"></i> {{ event?.reference_number | uppercase }} arrives {{ event?.arr_city}}</h5>
           <h5 *ngSwitchCase="'train'"><i class="fa fa-train" aria-hidden="true"></i> Train arrives {{ event?.arr_city}}</h5>
@@ -101,6 +117,7 @@
           <h5 *ngSwitchCase="'others'"><i class="fa fa-rocket" aria-hidden="true"></i> Transport arrives {{ event?.arr_city}}</h5>
         </div>
       </div>
+
     </div>
 
   </div>
