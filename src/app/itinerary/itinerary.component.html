@@ -42,29 +42,42 @@
     <i class="fa fa-chevron-right" aria-hidden="true"></i>
   </div>
 
-  <header>
+  <header [class.show-nav]="showNav">
     <nav>
       <ul class="itinerary-nav-tabs">
         <li class="members-icon-mobile" (click)="showMembers()" *ngIf="!itinerary?.corporate.status">
-          <i class="fa fa-users fa-lg" aria-hidden="true"></i>
+          <a><i class="fa fa-users fa-lg" aria-hidden="true"></i> MEMBERS</a>
         </li>
-        <li (click)="showAddNewOptions()" *ngIf="!preview">
+        <li class="add-new" (click)="showAddNewOptions()" *ngIf="!preview">
           <a><i class="fa fa-plus" aria-hidden="true"></i> ADD NEW</a>
         </li>
         <li (click)="copy()" class="copy-itinerary" *ngIf="preview && !creator"><a>COPY ITINERARY</a></li>
         <li (click)="routeToPreview()" *ngIf="!preview && itinerary?.corporate.status"><a>PREVIEW</a></li>
-        <li (click)="activateTab()" routerLinkActive="active"><a [routerLink]="['description']">DESCRIPTION</a></li>
-        <li (click)="activateTab()" routerLinkActive="active"><a [routerLink]="['summary']">SUMMARY</a></li>
-        <li (click)="activateTab()" routerLinkActive="active"><a [routerLink]="['map']">MAP VIEW</a></li>
-        <li (click)="activateTab()" routerLinkActive="active"><a [routerLink]="['accommodation']">ACCOMMODATION</a></li>
-        <li (click)="activateTab()" routerLinkActive="active"><a [routerLink]="['transport']">TRANSPORT</a></li>
-        <li (click)="activateTab()" routerLinkActive="active"><a [routerLink]="['activity']">ACTIVITY</a></li>
-        <li (click)="activateTab()" routerLinkActive="active"><a [routerLink]="['resource']">RESOURCE</a></li>
-        <li (click)="activateTab()" routerLinkActive="active" *ngIf="!preview"><a href="/#/save-print/{{itinerary?._id}}" target="_blank">SAVE / PRINT</a></li>
-        <li (click)="activateTab()" routerLinkActive="active" *ngIf="!preview"><a [routerLink]="['settings']">SETTINGS</a></li>
+        <li (click)="activateTab('DESCRIPTION')" routerLinkActive="active"><a [routerLink]="['description']">DESCRIPTION</a></li>
+        <li (click)="activateTab('SUMMARY')" routerLinkActive="active"><a [routerLink]="['summary']">SUMMARY</a></li>
+        <li (click)="activateTab('MAP VIEW')" routerLinkActive="active"><a [routerLink]="['map']">MAP VIEW</a></li>
+        <li (click)="activateTab('ACCOMMODATION')" routerLinkActive="active"><a [routerLink]="['accommodation']">ACCOMMODATION</a></li>
+        <li (click)="activateTab('TRANSPORT')" routerLinkActive="active"><a [routerLink]="['transport']">TRANSPORT</a></li>
+        <li (click)="activateTab('ACTIVITY')" routerLinkActive="active"><a [routerLink]="['activity']">ACTIVITY</a></li>
+        <li (click)="activateTab('RESOURCE')" routerLinkActive="active"><a [routerLink]="['resource']">RESOURCE</a></li>
+        <li (click)="activateTab('')" routerLinkActive="active" *ngIf="!preview"><a href="/#/save-print/{{itinerary?._id}}" target="_blank">SAVE / PRINT</a></li>
+        <li (click)="activateTab('SETTINGS')" routerLinkActive="active" *ngIf="!preview"><a [routerLink]="['settings']">SETTINGS</a></li>
       </ul>
     </nav>
   </header>
+
+  <div class="show-nav-menu" (click)="showNav = !showNav" [class.nav-active]="showNav">
+    <i *ngIf="!showNav" class="fa fa-ellipsis-h fa-lg" aria-hidden="true"></i>
+    <i *ngIf="showNav" class="fa fa-minus fa-lg" aria-hidden="true"></i>
+  </div>
+
+  <div class="add-new-button" (click)="showAddNewOptions()" *ngIf="!preview">
+    <a><i class="fa fa-plus" aria-hidden="true"></i> ADD NEW</a>
+  </div>
+
+  <div class="current-route">
+    <h4>{{ currentRoute | uppercase }}</h4>
+  </div>
 
   <router-outlet></router-outlet>
 

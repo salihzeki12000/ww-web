@@ -43,8 +43,6 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   newMembers = [];
   validAddUser = false;
 
-  showCurrentMembers = false;
-
   showAddNew = false;
   addAccommodation = false;
   addTransport = false;
@@ -57,6 +55,12 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   showSignin = false;
   showSignup = false;
   reload = false;
+
+
+  // toggle show in mobile
+  showNav = false;
+  showCurrentMembers = false;
+  currentRoute = '';
 
   constructor(
     private authService: AuthService,
@@ -86,6 +90,8 @@ export class ItineraryComponent implements OnInit, OnDestroy {
       this.preview = true;
       this.reload = true;
     }
+
+    this.currentRoute = segments[3]['path']
 
     this.route.params.forEach((params: Params) => {
       let id = params['id'];
@@ -282,6 +288,8 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   // show and hide current members
   showMembers() {
     this.showCurrentMembers = true;
+
+    this.showNav = false;
     this.showAddNew = false;
     this.preventScroll(true);
   }
@@ -294,6 +302,8 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   // itinerary nav tabs to access forms
   showAddNewOptions() {
     this.showAddNew = true;
+
+    this.showNav = false;
     this.showCurrentMembers = false;
     this.preventScroll(true);
   }
@@ -364,7 +374,12 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   }
 
   // to close any open modal when navigate to child routes
-  activateTab() {
+  activateTab(route) {
+    if(route !== '')  {
+      this.currentRoute = route;
+    }
+
+    this.showNav = false;
     this.showAddNew = false;
     this.showCurrentMembers = false;
     this.showUsersSearch = false;
@@ -379,6 +394,8 @@ export class ItineraryComponent implements OnInit, OnDestroy {
       this.authOptions = true;
       this.preventScroll(true);
     }
+
+    this.showNav = false;
   }
 
   duplicate() {

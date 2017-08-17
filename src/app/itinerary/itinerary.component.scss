@@ -285,7 +285,11 @@ img.user-profile-thumbnail  {
 /* Itinerary navigation */
 
 header {
-  @media only screen and (max-width: 1090px) {
+  @media only screen and (max-width: 420px) {
+    display: none;
+  }
+
+  @media only screen and (min-width: 420px) and (max-width: 1090px) {
     position: fixed;
     display: block;
     bottom: -4px;
@@ -296,13 +300,51 @@ header {
   }
 }
 
+.show-nav {
+  position: fixed;
+  display: block;
+  top: 80px;
+  height: calc(100vh - 80px);
+  width: 100vw;
+  z-index: 1000;
+}
+
+.show-nav-menu  {
+  display: none;
+  @media only screen and (max-width: 420px) {
+    position: fixed;
+    display: block;
+    right: 0;
+    bottom: 0;
+    width: 50px;
+    height: 40px;
+    padding: 10px 18px;
+    background-color: white;
+    border-top: 1px solid lightgray;
+    z-index: 1001;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.nav-active {
+  background-color: firebrick;
+  border-top: 1px solid firebrick;
+}
+
+.fa-minus {
+  color: #F9FBFB;
+}
+
 
 /* left/right nav scoll in mobile */
 
 .scroll-left,
 .scroll-right {
   display: none;
-  @media only screen and (max-width: 1091px) {
+  @media only screen and (min-width: 420px) and (max-width: 1091px) {
     position: fixed;
     display: block;
     bottom: 0;
@@ -354,13 +396,22 @@ header {
     border: none;
     border-top: 1px solid lightgray;
   }
+
+  @media only screen and (max-width: 420px) {
+    height: calc(100vh - 80px);
+    padding-top: 10px;
+  }
 }
 
 .itinerary-nav-tabs > li  {
   padding: 10px 0 10px 10px;
   text-align: right;
 
-  @media only screen and (max-width: 1090px) {
+  @media only screen and (max-width: 420px) {
+    display: block;
+  }
+
+  @media only screen and (min-width: 420px) and (max-width: 1090px) {
     display: inline-block;
     padding: 10px;
   }
@@ -390,6 +441,7 @@ header {
   color: #6494ED;
   font-weight: bold;
   border-right: 6px solid #6494ED;
+
   &:hover {
     background-color: white;
   }
@@ -398,12 +450,18 @@ header {
     border-top: 6px solid #6494ED;
     border-right: none;
   }
+
+  @media only screen and (max-width: 420px) {
+    border: none;
+  }
 }
 
 .members-icon-mobile {
   display: none;
+
   @media only screen and (max-width: 1090px) {
     display: block;
+
     &:hover {
       cursor: pointer;
       color: white;
@@ -416,6 +474,57 @@ header {
 .copy-itinerary > a {
   color: firebrick !important;
   font-weight: 500;
+}
+
+
+
+/* display in mobile < 420px */
+
+.add-new  {
+  @media only screen and (max-width: 420px) {
+    display: none !important;
+  }
+}
+
+.add-new-button {
+  display: none;
+
+  @media only screen and (max-width: 420px) {
+    position: fixed;
+    display: block;
+    padding: 10px;
+    bottom: 0;
+    left: 0;
+    height: 40px;
+    width: 100px;
+    z-index: 1001;
+    background-color: white;
+    border-top: 1px solid lightgray;
+  }
+}
+
+.add-new-button a {
+  color: #3A4A4D;
+}
+
+.current-route  {
+  display: none;
+
+  @media only screen and (max-width: 420px) {
+    position: fixed;
+    display: block;
+    padding: 10px;
+    bottom: 0;
+    left: 100px;
+    height: 40px;
+    width: calc(100vw - 150px);
+    text-align: center;
+    letter-spacing: 1px;
+    color: #567FCC;
+    background-color: white;
+    border-top: 5px solid #567FCC;
+    z-index: 1001;
+  }
 }
 
 
