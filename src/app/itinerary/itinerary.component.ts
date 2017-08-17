@@ -373,6 +373,8 @@ export class ItineraryComponent implements OnInit, OnDestroy {
     this.preventScroll(false);
   }
 
+
+
   // to close any open modal when navigate to child routes
   activateTab(route) {
     if(route !== '')  {
@@ -384,6 +386,18 @@ export class ItineraryComponent implements OnInit, OnDestroy {
     this.showCurrentMembers = false;
     this.showUsersSearch = false;
     this.preventScroll(false);
+  }
+
+
+  // to toggle nav and close any open modal
+  toggleNav() {
+    this.showNav = !this.showNav;
+
+    if(this.showNav)  {
+      this.showAddNew = false;
+      this.showCurrentMembers = false;
+      this.showUsersSearch = false;
+    }
   }
 
   // copy a preview itinerary
@@ -451,6 +465,8 @@ export class ItineraryComponent implements OnInit, OnDestroy {
 
     this.router.navigateByUrl('/me/itinerary/' + itinerary['_id'])
   }
+
+
 
   // sign up / log in
   cancelAuth()  {

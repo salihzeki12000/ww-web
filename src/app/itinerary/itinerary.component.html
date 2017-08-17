@@ -66,7 +66,12 @@
     </nav>
   </header>
 
-  <div class="show-nav-menu" (click)="showNav = !showNav" [class.nav-active]="showNav">
+
+
+
+  <!-- show nav in mobile < 420px -->
+
+  <div class="show-nav-menu" (click)="toggleNav()" [class.nav-active]="showNav">
     <i *ngIf="!showNav" class="fa fa-ellipsis-h fa-lg" aria-hidden="true"></i>
     <i *ngIf="showNav" class="fa fa-minus fa-lg" aria-hidden="true"></i>
   </div>
@@ -75,9 +80,19 @@
     <a><i class="fa fa-plus" aria-hidden="true"></i> ADD NEW</a>
   </div>
 
-  <div class="current-route">
+  <div (click)="copy()" class="copy-button" *ngIf="preview && !creator">
+    <h5>COPY ITINERARY</h5>
+  </div>
+
+  <div class="current-route" (click)="toggleNav()">
     <h4>{{ currentRoute | uppercase }}</h4>
   </div>
+
+  <!-- end of show nav in mobile < 420px -->
+
+
+
+
 
   <router-outlet></router-outlet>
 
@@ -100,7 +115,7 @@
 </div>
 
 <!-- show members list in media screen max-width: 1090px-->
-<div class="custom-modal" *ngIf="showCurrentMembers">
+<div class="custom-modal show-members" *ngIf="showCurrentMembers">
   <div class="form-card">
     <div class="form-header">
       <h3> Members list ({{ itinerary?.members.length }})</h3>
