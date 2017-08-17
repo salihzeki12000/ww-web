@@ -12,13 +12,13 @@
   <h5 class="get-sign-up" (click)="getSignup()">SIGN UP</h5>
 
   <!-- for mobile -->
-  <div class="sign-in">
-    <div class="top-nav-link">
+  <div class="nav-sign-in">
+    <div class="nav-link">
       <i class="fa fa-sign-in fa-lg" aria-hidden="true" (mouseover)="authOptions = true"></i>
 
-      <div class="top-nav-link-dropdown" *ngIf="authOptions">
-        <div class="dropdown-arrow-up"></div>
-        <div class="top-nav-dropdown-header">
+      <div class="nav-dropdown" *ngIf="authOptions">
+        <div class="dropdown-arrow"></div>
+        <div class="nav-dropdown-header">
           <h6>JOIN WONDERERWANDERER</h6>
         </div>
 
@@ -39,13 +39,15 @@
 
 <div *ngIf="isLoggedIn">
 
-  <div class="top-nav-bookmark">
-    <div class="top-nav-link">
+  <div class="nav-bookmark">
+    <div class="nav-link">
       <i class="fa fa-bookmark fa-lg" aria-hidden="true" (mouseover)="bookmarkOptions = true"></i>
 
-      <div class="top-nav-link-dropdown" *ngIf="bookmarkOptions">
-        <div class="dropdown-arrow-up"></div>
-        <div class="top-nav-dropdown-header"></div>
+      <div class="nav-dropdown" *ngIf="bookmarkOptions">
+        <div class="dropdown-arrow"></div>
+        <div class="nav-dropdown-header">
+          <h5 class="exit-nav-view" (click)="bookmarkOptions = false">X</h5>
+        </div>
 
         <div class="dropdown-item" (click)="viewRecommendations()">
           <h5><i class="fa fa-thumbs-up fa-fw fa-lg" aria-hidden="true"></i> Recommendations</h5>
@@ -66,13 +68,13 @@
     </div>
   </div>
 
-  <div class="top-nav-search">
-    <div class="top-nav-link">
+  <div class="nav-search">
+    <div class="nav-link">
       <i class="fa fa-search fa-lg" aria-hidden="true" (mouseover)="searchOptions = true"></i>
 
-      <div class="top-nav-link-dropdown" *ngIf="searchOptions">
-        <div class="dropdown-arrow-up"></div>
-        <div class="top-nav-dropdown-header">
+      <div class="nav-dropdown" *ngIf="searchOptions">
+        <div class="dropdown-arrow"></div>
+        <div class="nav-dropdown-header">
           <h6>SELECT SEARCH CATEGORY</h6>
         </div>
         <div class="dropdown-item" (click)="getUsers()">
@@ -82,14 +84,15 @@
     </div>
   </div>
 
-  <div class="top-nav-itinerary">
-    <div class="top-nav-link">
+  <div class="nav-itinerary">
+    <div class="nav-link">
       <i class="fa fa-sticky-note fa-lg" aria-hidden="true" (mouseover)="showItineraries = true"></i>
 
-      <div class="top-nav-link-dropdown" *ngIf="showItineraries">
-        <div class="dropdown-arrow-up"></div>
-        <div class="top-nav-dropdown-header">
+      <div class="nav-dropdown" *ngIf="showItineraries">
+        <div class="dropdown-arrow"></div>
+        <div class="nav-dropdown-header">
           <h6>{{ currentUser?.itineraries.length > 1 ? 'ITINERARIES' : 'ITINERARY'}}</h6>
+          <h5 class="exit-nav-view" (click)="showItineraries = false">X</h5>
         </div>
         <h5 class="dropdown-new-itinerary" (click)="newItin()"><i class="fa fa-plus" aria-hidden="true"></i> Plan a new itinerary</h5>
         <div>
@@ -107,19 +110,18 @@
           <h5>See all</h5>
         </div>
 
-        <h4 class="exit-itinerary-view" (click)="showItineraries = false">EXIT</h4>
       </div>
     </div>
   </div>
 
-  <div class="top-nav-notifications">
-    <div class="top-nav-link">
+  <div class="nav-notifications">
+    <div class="nav-link">
       <i class="fa fa-bell fa-lg" aria-hidden="true" (mouseover)="getNotifications()"></i>
       <div class="new-indicator" *ngIf='newNotification'></div>
 
-      <div class="top-nav-link-dropdown" *ngIf="showNotifications">
-        <div class="dropdown-arrow-up"></div>
-        <div class="top-nav-dropdown-header"></div>
+      <div class="nav-dropdown" *ngIf="showNotifications">
+        <div class="dropdown-arrow"></div>
+        <div class="nav-dropdown-header"></div>
 
         <div class="follower-requests" (click)="routeToPendingFollowers()">
           <h6 class="pending-count" *ngIf="pendingFollowers.length > 1">{{ pendingFollowers.length }}</h6>
@@ -139,13 +141,13 @@
     </div>
   </div>
 
-  <div class="top-nav-profile">
-    <div class="top-nav-link">
+  <div class="nav-profile">
+    <div class="nav-link">
       <img src="{{ currentUser?.display_picture }}" class="user-profile-thumbnail" [routerLink]="['/me/profile']" (mouseover)="profileOptions = true">
 
-      <div class="top-nav-link-dropdown" *ngIf="profileOptions">
-        <div class="dropdown-arrow-up"></div>
-        <div class="top-nav-dropdown-header">
+      <div class="nav-dropdown" *ngIf="profileOptions">
+        <div class="dropdown-arrow"></div>
+        <div class="nav-dropdown-header">
           <h6>PROFILE SETTINGS</h6>
         </div>
 
@@ -189,12 +191,12 @@
       </div>
 
       <div class="side-nav-menu">
-        <div class="side-nav-menu-arrow-down"></div>
+        <div class="side-nav-menu-arrow"></div>
 
         <div>
           <div class="category-header" (click)="connectionsSection = !connectionsSection">
-            <h4 *ngIf="!connectionsSection">Connections <i class="fa fa-caret-down" aria-hidden="true"></i></h4>
-            <h4 *ngIf="connectionsSection">Connections <i class="fa fa-caret-up" aria-hidden="true"></i></h4>
+            <h4 *ngIf="!connectionsSection">Connections <i class="fa fa-plus" aria-hidden="true"></i></h4>
+            <h4 *ngIf="connectionsSection">Connections <i class="fa fa-minus" aria-hidden="true"></i></h4>
           </div>
 
           <div *ngIf="connectionsSection">
@@ -223,8 +225,8 @@
 
         <div>
           <div class="category-header" (click)="quickLinksSection = !quickLinksSection">
-            <h4 *ngIf="!quickLinksSection">Quick links <i class="fa fa-caret-down" aria-hidden="true"></i></h4>
-            <h4 *ngIf="quickLinksSection">Quick links <i class="fa fa-caret-up" aria-hidden="true"></i></h4>
+            <h4 *ngIf="!quickLinksSection">Quick links <i class="fa fa-plus" aria-hidden="true"></i></h4>
+            <h4 *ngIf="quickLinksSection">Quick links <i class="fa fa-minus" aria-hidden="true"></i></h4>
           </div>
 
           <div *ngIf="quickLinksSection">
@@ -240,8 +242,8 @@
 
         <div>
           <div class="category-header" (click)="settingsSection = !settingsSection">
-            <h4 *ngIf="!settingsSection">Settings <i class="fa fa-caret-down" aria-hidden="true"></i></h4>
-            <h4 *ngIf="settingsSection">Settings <i class="fa fa-caret-up" aria-hidden="true"></i></h4>
+            <h4 *ngIf="!settingsSection">Settings <i class="fa fa-plus" aria-hidden="true"></i></h4>
+            <h4 *ngIf="settingsSection">Settings <i class="fa fa-minus" aria-hidden="true"></i></h4>
           </div>
 
           <div *ngIf="settingsSection">
