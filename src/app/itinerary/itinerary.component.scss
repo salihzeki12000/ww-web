@@ -520,14 +520,15 @@ header {
     width: calc(100vw - 150px);
     text-align: center;
     letter-spacing: 1px;
-    color: #567FCC;
     background-color: white;
     border-top: 5px solid #567FCC;
     z-index: 1001;
   }
 }
 
-
+.current-route h4 {
+  color: #567FCC;
+}
 
 /* to display horizontal scrollbar */
 .itinerary-nav-tabs::-webkit-scrollbar {

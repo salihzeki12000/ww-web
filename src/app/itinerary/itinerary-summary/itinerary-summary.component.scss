@@ -27,12 +27,15 @@
   }
 
   @media only screen and (max-width: 420px) {
-    width: 100vw;
-    padding: 8px 0;
+    bottom: 60px;
+    right: 0;
+    width: 100px;
+    padding: 12px 0;
     text-align: center;
-    background-color: white;
-    border: 5px solid #6494ED;
+    background-color: #E6E6E6;
+    border-radius: 10px 0 0 10px;
     z-index: 1000;
+    opacity: .5;
   }
 }
 
@@ -45,11 +48,8 @@
   }
 
   @media only screen and (max-width: 420px) {
-    color: #6494ED;
-
-    &:hover {
-      color: #3A4A4D;
-    }
+    color: #3A4A4D;
+    font-size: 1.1em;
   }
 }
 
@@ -60,8 +60,8 @@
   background-color: rgba(0,0,0,.3);
 
   @media only screen and (max-width: 420px) {
-    top: 25px;
-    height: 100vh;
+    top: 0;
+    height: calc(100vh - 40px);
     width: 100vw;
     padding-left: calc((100vw - 330px)/2);
     overflow: auto;

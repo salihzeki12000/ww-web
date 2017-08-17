@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2, ElementRef, HostListener } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { Title }        from '@angular/platform-browser';
@@ -49,6 +49,7 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
   constructor(
     private titleService: Title,
     private element: ElementRef,
+    private renderer: Renderer2,
     private route: ActivatedRoute,
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
@@ -285,12 +286,25 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
     } else  {
       this.showDetailsInSummary = true;
       this.chosenEvent = event;
+
+      if(this.element.nativeElement.offsetParent.clientWidth < 421) {
+        this.preventScroll(true);
+      }
     }
   }
 
   hideDetailsInSummary()  {
     this.showDetailsInSummary = false;
     this.chosenEvent = '';
+    this.preventScroll(false);
+  }
+
+  preventScroll(value)  {
+    if(value) {
+      this.renderer.addClass(document.body, 'prevent-scroll');
+    } else  {
+      this.renderer.removeClass(document.body, 'prevent-scroll');
+    }
   }
 
 }
