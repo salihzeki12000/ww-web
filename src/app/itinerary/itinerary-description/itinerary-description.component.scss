@@ -41,6 +41,8 @@
 }
 
 
+
+
 /* uploaded photos */
 
 .description-slider {
@@ -118,59 +120,33 @@
 }
 
 
-/* upload picture button */
 
-.upload-picture {
+
+/* manage pictures button */
+
+.manage-pics {
   position: absolute;
-  margin-top: -35px;
-  margin-left: 430px;
+  margin-top: -25px;
+  margin-left: 480px;
+  padding: 3px 10px;
+  background-color: #6494ED;
+  border-radius: 5px;
+  border: 1px solid #F9FBFB;
   z-index: 3;
 
   &:hover {
     cursor: pointer;
+    opacity: .7;
   }
 
   @media only screen and (max-width: 610px) {
-    margin-left: calc(100vw - 170px);
+    margin-left: calc(100vw - 125px);
   }
 }
 
-.upload-picture h5 {
-  display: block;
-  margin-top: -7px;
-  font-size: 8px;
-  text-align: center;
-  background-color: rgba(255,255,255,.5);
-}
-
-.file-upload {
-  overflow: hidden;
-  position: relative;
-  padding: 1px 10px;
+.manage-pics h5 {
   color: #F9FBFB;
-  background-color: #6494ED;
-  border: 2px solid #F9FBFB;
-  border-radius: 25px;
-  &:hover {
-    cursor: pointer;
-    opacity: .7;
-  }
 }
-
-.file-upload [type=file] {
-  display: block;
-  position: absolute;
-  top: 0;
-  opacity: 0;
-  cursor: pointer;
-}
-
-.file-upload input  {
-  &:hover {
-    cursor: pointer;
-  }
-}
-
 
 
 /* description content */
@@ -205,35 +181,79 @@
 
 
 
-/* modal for uploading photos */
+
+
+/* modals */
+
+.form-card  {
+  @media only screen and (min-width: 450px) {
+    width: 450px;
+    left: calc((100vw - 450px) /2);
+  }
+}
+
+.form-header  {
+  @media only screen and (min-width: 450px) {
+    width: 450px;
+  }
+}
 
 .custom-modal img {
   display: inline-block;
-  margin-bottom: 40px;
-  width: 300px;
-  height: 150px;
-}
+  margin: 0 0 20px 20px;
+  width: 200px;
+  height: 100px;
 
-.limit-msg  {
-  margin-bottom: 30px;
-  width: 100%;
-  text-align: left;
+  @media only screen and (max-width: 450px) {
+    margin-left: 0;
+    width: 180px;
+    height: 90px;
+  }
 }
 
 .content-without-header-name  {
-  text-align: center;
+  @media only screen and (max-width: 450px) {
+    padding: 40px 20px;
+  }
 }
+
+
+
+.manage-pic-header {
+  padding: 10px 0 5px 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid lightgray;
+}
+
+// .reorder  {
+//   position: absolute;
+//   width: auto;
+//   margin-top: -40px;
+//   margin-left: 235px;
+// }
 
 .content-without-header-name .status {
   display: inline-block;
   vertical-align: top;
 }
 
+// .status h5  {
+//   margin: 5px 10px 0 10px;
+//   text-align: center;
+// }
+//
+// .status h3  {
+//   margin: 0 10px;
+//   padding: 5px 0 15px 0 ;
+//   text-align: center;
+// }
+
 .status h4 {
-  margin: 0 10px;
+  margin: 5px 10px;
   padding: 5px 10px;
   width: 75px;
   vertical-align: top;
+  text-align: center;
   border: 2px solid;
   border-radius: 5px;
 
@@ -242,20 +262,82 @@
   }
 }
 
-/* blur when remove */
+
+
+
+
+
+/* modal for managing photos */
+
+
+/* upload picture button */
+
+.upload-picture {
+  margin-bottom: 40px;
+}
+
+.upload-picture h5 {
+  padding: 0 0 5px 10px;
+}
+
+.file-upload {
+  overflow: hidden;
+  position: relative;
+  padding: 1px 10px;
+  color: #F9FBFB;
+  font-size: 13px;
+  background-color: #6494ED;
+  border: 2px solid #F9FBFB;
+  border-radius: 25px;
+  &:hover {
+    cursor: pointer;
+    opacity: .7;
+  }
+}
+
+.file-upload [type=file] {
+  display: block;
+  position: absolute;
+  top: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.file-upload input  {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+
+/* display existing pictures */
+
+
+
+
+
+
+/* modal for uploading photos */
+
+.limit-msg  {
+  margin-bottom: 30px;
+  width: 100%;
+  text-align: left;
+}
+
+
+
+
+/* add / remove display */
+
 .blur {
   opacity: .3;
 }
 
 .remove {
   color: red;
-  border: 2px solid red;
 }
 
-
-/* new pic indicator */
-.new-pic  {
-  margin-top: 10px;
+.add  {
   color: #19CC72;
-  font-weight: bold;
 }

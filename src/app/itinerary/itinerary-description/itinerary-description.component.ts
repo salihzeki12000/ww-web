@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2, ElementRef } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 import { ActivatedRoute } from '@angular/router';
 
@@ -22,6 +22,8 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
 
   preview = false;
   editing = false;
+  managePics = false;
+  picDeleted = false;
 
   inputValue = '';
   uploadedPics = [];
@@ -34,6 +36,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
     private element: ElementRef,
     private userService: UserService,
     private route: ActivatedRoute,
+    private renderer: Renderer2,
     private fileuploadService: FileuploadService,
     private itineraryService: ItineraryService,
     private loadingService: LoadingService) { }
@@ -75,6 +78,58 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
     }
   }
 
+
+
+  // manage pictures
+
+  managePictures()  {
+    this.managePics = true;
+    this.preventScroll(true);
+  }
+
+  cancelManage()  {
+    this.managePics = false;
+    this.preventScroll(false);
+  }
+
+  updateStatus(image) {
+    image.status = !image.status;
+
+    for (let i = 0; i < this.itinerary['description']['photos'].length; i++) {
+      if(!this.itinerary['description']['photos'][i]['status'])  {
+        this.picDeleted = true;
+        i = this.itinerary['description']['photos'].length;
+      } else  {
+        this.picDeleted = false;
+      }
+    }
+
+  }
+
+  saveChanges() {
+    this.loadingService.setLoader(true, "Saving changes...");
+
+    for (let i = 0; i < this.itinerary['description']['photos'].length; i++) {
+      if(!this.itinerary['description']['photos'][i]['status'])  {
+        this.itinerary['description']['photos'].splice(i,1);
+        i--;
+      }
+    }
+
+    this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
+      result => {
+        this.loadingService.setLoader(false, "");
+      })
+
+    this.managePics = false;
+    this.sortPhotos();
+  }
+
+
+
+
+  // upload pictures
+
   fileUploaded(event) {
     this.uploadedPics = [];
     let files = event.target.files;
@@ -97,7 +152,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
           file: files[i],
           url: event['target']['result'],
           status: true,
-          order: i + 1 + this.itinerary['description']['photos'].length
+          order: this.itinerary['description']['photos'].length + i + 1,
         });
 
       }
@@ -106,6 +161,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
     }
 
     this.confirmPics = true;
+    this.managePics = false;
   }
 
   cancelPics()  {
@@ -121,6 +177,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.itinerary['description']['photos'].length; i++) {
       if(!this.itinerary['description']['photos'][i]['status'])  {
         this.itinerary['description']['photos'].splice(i,1);
+        i--;
       }
     }
 
@@ -128,14 +185,17 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
       if(this.uploadedPics[i]['status'])  {
         this.fileuploadService.uploadFile(this.uploadedPics[i]['file'], "description").subscribe(
           result => {
-            this.uploadedPics[i]['url'] = result.secure_url;
-            this.uploadedPics[i]['public_id'] = result.public_id;
-            this.uploadedPics[i]['credit'] = '';
+
+            let newPic = {
+              url: result.secure_url,
+              public_id: result.public_id,
+              credit: '',
+            }
 
             if(this.itinerary['description']['photos'].length < 10) {
-              this.itinerary['description']['photos'].push(this.uploadedPics[i]);
+              this.itinerary['description']['photos'].push(newPic);
             } else  {
-              i = this.uploadedPics.length
+              i = this.uploadedPics.length;
             }
           }
         )
@@ -156,10 +216,16 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
       this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
         result => {
           this.loadingService.setLoader(false, "");
-          this.uploadedPics = []
         })
     }
+
+    this.sortPhotos();
   }
+
+
+
+
+  // edit description
 
   save(content) {
     this.editing = false;
@@ -169,6 +235,16 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
 
     this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
       result => {})
+  }
+
+
+  // others
+  preventScroll(value)  {
+    if(value) {
+      this.renderer.addClass(document.body, 'prevent-scroll');
+    } else  {
+      this.renderer.removeClass(document.body, 'prevent-scroll');
+    }
   }
 
 }

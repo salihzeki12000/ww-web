@@ -15,12 +15,8 @@
     </div>
   </div>
 
-  <div class="upload-picture" *ngIf="!preview">
-    <label class="file-upload">
-      Upload images (max 10)
-      <input type="file" (change)="fileUploaded($event)" [value]="inputValue" accept="image/*" multiple>
-    </label>
-    <h5>optimal w600px x h300px</h5>
+  <div class="manage-pics" (click)="managePictures()">
+    <h5>Manage pictures</h5>
   </div>
 
 
@@ -50,6 +46,51 @@
   </div>
 </div>
 
+<div class="custom-modal" *ngIf="managePics">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>Manage pictures</h3>
+      <a (click)="cancelManage()">X</a>
+    </div>
+
+    <div class="content-without-header-name">
+
+      <div class="upload-picture" *ngIf="!preview">
+        <label class="file-upload">
+          Upload new pictures
+          <input type="file" (change)="fileUploaded($event)" [value]="inputValue" accept="image/*" multiple>
+        </label>
+
+        <h5>Maximum of 10 pictures for each itinerary</h5>
+        <h5>If more than 10 pictures are uploaded, only the first 10 will be saved</h5>
+        <!-- <h5>Optimal dimension for each pictures is w600px x h300px</h5> -->
+      </div>
+
+
+      <h3 class="manage-pic-header">Existing pictures</h3>
+      <!-- <h4 class="reorder">Reorder</h4> -->
+
+      <div *ngFor="let image of itinerary?.description.photos; let i = index">
+        <img src="{{image.url}}" alt="" [class.blur]="!image.status">
+
+        <div class="status">
+          <!-- <h5>Display order</h5>
+          <h3>{{ image.order }}</h3> -->
+          <h4 class="remove" *ngIf="image.status" (click)="updateStatus(image)">Remove</h4>
+          <h4 class="add" *ngIf="!image.status" (click)="updateStatus(image)">Add</h4>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="action-response">
+      <h5 class="action-response-secondary" (click)="cancelManage()">Cancel</h5>
+      <h5 class="action-response-primary" (click)="saveChanges()" *ngIf="picDeleted">Save</h5>
+    </div>
+
+  </div>
+</div>
+
 <div class="custom-modal" *ngIf="confirmPics">
   <div class="form-card">
     <div class="form-header">
@@ -62,27 +103,33 @@
       <h4 class="limit-msg" *ngIf="limitMsg">* You have uploaded more than 10 pictures. Only the first 10 are selected.</h4>
       <h4 class="limit-msg" *ngIf="exceedMsg">* You have more than 10 pictures. Please select only 10 which you like to be displayed in the description.</h4>
 
+
+      <h3 class="manage-pic-header">Existing pictures</h3>
+      <!-- <h4 class="reorder">Reorder</h4> -->
+
       <div *ngFor="let image of itinerary?.description.photos; let i = index">
         <img src="{{image.url}}" alt="" [class.blur]="!image.status">
 
         <div class="status">
           <!-- <h5>Display order</h5>
-          <h4>{{ image.order }}</h4> -->
+          <h3>{{ image.order }}</h3> -->
           <h4 class="remove" *ngIf="image.status" (click)="image.status = !image.status">Remove</h4>
-          <h4 *ngIf="!image.status" (click)="image.status = !image.status">Add</h4>
+          <h4 class="add" *ngIf="!image.status" (click)="image.status = !image.status">Add</h4>
         </div>
 
       </div>
+
+
+      <h3 class="manage-pic-header">New pictures</h3>
 
       <div *ngFor="let pic of uploadedPics; let i = index">
         <img [src]="pic.url" [class.blur]="!pic.status">
 
         <div class="status">
           <!-- <h5>Display order</h5>
-          <h4>{{ pic.order }}</h4> -->
+          <h3>{{ pic.order }}</h3> -->
           <h4 class="remove" *ngIf="pic.status" (click)="pic.status = !pic.status">Remove</h4>
-          <h4 *ngIf="!pic.status" (click)="pic.status = !pic.status">Add</h4>
-          <h5 class="new-pic"><i class="fa fa-check" aria-hidden="true"></i> NEW</h5>
+          <h4 class="add" *ngIf="!pic.status" (click)="pic.status = !pic.status">Add</h4>
         </div>
 
       </div>
