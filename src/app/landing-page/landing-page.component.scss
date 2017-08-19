@@ -211,8 +211,8 @@
   width: 680px;
   opacity: 0;
   font-family: 'Fira Sans', sans-serif;
-  animation:fade 36s infinite;
-  -webkit-animation:fade 36s infinite;
+  animation:fade 42s infinite;
+  -webkit-animation:fade 42s infinite;
 
   @media only screen and (max-width: 750px) {
     margin: 0 10px;
@@ -254,8 +254,8 @@
   margin-top: 50px;
   height: 380px;
   opacity: 0;
-  animation:fade 36s infinite;
-  -webkit-animation:fade 36s infinite;
+  animation:fade 42s infinite;
+  -webkit-animation:fade 42s infinite;
   border-radius: 10px;
   border: 1px solid lightgray;
 
@@ -278,6 +278,7 @@
 .eg-delay:nth-of-type(4) { animation-delay: 18s }
 .eg-delay:nth-of-type(5) { animation-delay: 24s }
 .eg-delay:nth-of-type(6) { animation-delay: 30s }
+.eg-delay:nth-of-type(7) { animation-delay: 36s }
 
 @keyframes fade
 {

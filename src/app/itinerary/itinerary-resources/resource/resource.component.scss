@@ -1,7 +1,7 @@
 .display-header-background  {
   @media only screen and (max-width: 400px) {
     display: block;
-    width: 100vw;
+    width: calc(100vw - 20px);
     min-width: 300px;
   }
 

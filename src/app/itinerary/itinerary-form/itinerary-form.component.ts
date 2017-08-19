@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter, Renderer2 } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
@@ -31,14 +31,16 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
+    private renderer: Renderer2,
     private loadingService: LoadingService,
     private formBuilder: FormBuilder,
     private userService: UserService,
     private itineraryService: ItineraryService) {
       this.itineraryForm = this.formBuilder.group({
         'name': ['', Validators.required],
-        'date_from': ['', Validators.required],
-        'date_to': ['', Validators.required]
+        'date_from': '',
+        'date_to': '',
+        'num_days': '',
       });
     }
 
@@ -82,19 +84,25 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
     this.loadingService.setLoader(true, "Saving new itinerary...");
 
     let itinerary = this.itineraryForm.value;
-    let oneDay = 24*60*60*1000;
-
-    let startDate = new Date(itinerary['date_from']);
-    let endDate = new Date(itinerary['date_to']);
     let dateRange = [];
-
     dateRange.push('any day');
-    dateRange.push((new Date(itinerary['date_from'])).toISOString());
 
-    while(startDate < endDate){
-      let addDate = startDate.setDate(startDate.getDate() + 1);
-      let newDate = new Date(addDate);
-      dateRange.push(newDate.toISOString());
+    if(itinerary['date_from'] !== "") {
+      let startDate = new Date(itinerary['date_from']);
+      let endDate = new Date(itinerary['date_to']);
+
+      dateRange.push((new Date(itinerary['date_from'])).toISOString());
+
+      while(startDate < endDate){
+        let addDate = startDate.setDate(startDate.getDate() + 1);
+        let newDate = new Date(addDate);
+        dateRange.push(newDate.toISOString());
+      }
+    } else  {
+      for (let i = 0; i < itinerary['num_days']; i++) {
+        let day = i + 1;
+        dateRange.push("Day " + day);
+      }
     }
 
     itinerary["daily_note"] = [];
@@ -118,10 +126,19 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
         this.router.navigate(['/me/itinerary', data.itinerary._id]);
     });
 
-    this.hideItineraryForm.emit(false);
+    this.cancelForm();
   }
 
   cancelForm() {
     this.hideItineraryForm.emit(false);
+    this.preventScroll(false);
+  }
+
+  preventScroll(value)  {
+    if(value) {
+      this.renderer.addClass(document.body, 'prevent-scroll');
+    } else  {
+      this.renderer.removeClass(document.body, 'prevent-scroll');
+    }
   }
 }

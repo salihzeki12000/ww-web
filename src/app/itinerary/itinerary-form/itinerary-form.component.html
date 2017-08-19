@@ -13,12 +13,21 @@
       <span class="form-validator"
         *ngIf="itineraryForm.get('name').touched && itineraryForm.get('name').invalid">Name of itinerary is required</span>
 
+
+      <h5 *ngIf="corporate" class="select-days">* Select either travel dates or number of days</h5>
+
       <label>Travel date from - Travel date to</label>
       <h5 class="label-note">Do include your date of departure and arrival for details to show up in the itinerary summary</h5>
+
       <div class="date-picker" daterangepicker [options]="options" (selected)="selectedDate($event)">
         <i class="fa fa-calendar" aria-hidden="true"></i>
         <h4><span>From:</span> {{ dateFrom | date: 'dd MMM yyyy'}}</h4>
         <h4><span>To:</span> {{ dateTo | date: 'dd MMM yyyy'}}</h4>
+      </div>
+
+      <div *ngIf="corporate" class="num-days">
+        <label>Number of days</label>
+        <input type="number" formControlName="num_days">
       </div>
 
       <label>Privacy</label>

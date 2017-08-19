@@ -84,6 +84,10 @@
     <h5>COPY ITINERARY</h5>
   </div>
 
+  <div class="copy-button" *ngIf="preview && creator">
+    <h5>COPY ITINERARY</h5>
+  </div>
+
   <div class="current-route" (click)="toggleNav()">
     <h4>{{ currentRoute | uppercase }}</h4>
   </div>

@@ -522,6 +522,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   }
 
   routeToPreview()  {
+    this.loadingService.setLoader(true, "Routing to preview...");
     this.router.navigateByUrl('/preview/itinerary/' + this.itinerary['_id'])
   }
 

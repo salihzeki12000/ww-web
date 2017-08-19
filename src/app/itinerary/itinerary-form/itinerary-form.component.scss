@@ -1,5 +1,21 @@
+.select-days  {
+  margin: 40px 0 10px 0;
+  font-weight: 500;
+  color: firebrick;
+}
+
 .date-picker  {
   margin-bottom: 20px;
+}
+
+.num-days input {
+  margin-bottom: 40px;
+  width: 90px;
+  text-align: center;
+}
+
+.label-note  {
+  padding-bottom: 3px;
 }
 
 /* privacy */
