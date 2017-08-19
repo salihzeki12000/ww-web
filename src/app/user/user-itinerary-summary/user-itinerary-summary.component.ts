@@ -57,6 +57,13 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
     this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
        result => {
          this.itinerary = result;
+
+         if(this.itinerary['description'])  {
+           this.itinerary['formatted_description'] = this.itinerary['description']['content'].replace(/\r?\n/g, '<br/> ');
+         } else  {
+           this.itinerary['formatted_description'] = '';
+         }
+
          this.sortDailyNotes();
        })
 

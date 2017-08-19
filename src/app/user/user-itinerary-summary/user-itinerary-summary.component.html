@@ -4,6 +4,8 @@
   View preview
 </h4>
 
+<h4 class="description" [innerHTML]="itinerary?.formatted_description"></h4>
+
 <div class="summary-container">
   <div *ngFor="let date of dateRange; let i = index">
     <div *ngIf="date === 'any day'" class="day-header">
