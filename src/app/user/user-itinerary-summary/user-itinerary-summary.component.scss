@@ -1,6 +1,7 @@
 .header {
   width: 100%;
   margin-bottom: 20px;
+  padding: 0 10px;
   color: #6494ED;
   text-align: center;
 }
@@ -18,6 +19,11 @@
 .summary-container  {
   margin-bottom: 40px;
 }
+
+
+
+
+/* day header */
 
 .day-header {
   margin: 50px 0 10px 0;
@@ -37,6 +43,11 @@
 .daily-note  {
   display: inline-block;
   vertical-align: top;
+
+  @media only screen and (max-width: 450px) {
+    display: block;
+    margin-top: 10px;
+  }
 }
 
 .daily-note i,
@@ -47,7 +58,21 @@
 
 .daily-note h5 {
   width: 370px;
+
+  @media only screen and (max-width: 450px) {
+    width: calc(100vw - 50px);
+  }
+
+  @media only screen and (min-width: 450px) and (max-width: 670px) {
+    width: calc(100vw - 220px);
+  }
+
 }
+
+
+
+
+/* individual event item */
 
 .event-item-card  {
   border-bottom: 1px dashed lightgray;
@@ -61,10 +86,26 @@
   vertical-align: top;
 }
 
+
+
+/* details of each item */
+
 .event-details-card  {
   display: inline-block;
   width: 525px;
+
+  @media only screen and (max-width: 450px) {
+    display: block;
+    width: 100vw;
+  }
+
+  @media only screen and (min-width: 450px) and (max-width: 670px) {
+    width: calc((100vw - 100px));
+  }
 }
+
+
+/* image related */
 
 .event-details-card > img,
 .event-details-card > i,
@@ -88,7 +129,6 @@
   background-color: #EAEAFB;
 }
 
-
 .fa-bicycle  {
   padding: 20px 13px;
 }
@@ -106,9 +146,16 @@
   padding: 20px 16px;
 }
 
+
+/* summary of details */
+
 .summary-item-details {
-  @media only screen and (max-width: 670px) {
+  @media only screen and (max-width: 450px) {
     width: calc((100vw - 120px))
+  }
+
+  @media only screen and (min-width: 450px) and (max-width: 670px) {
+    width: calc((100vw - 210px))
   }
 }
 

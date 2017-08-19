@@ -128,7 +128,7 @@ export class UserCheckInComponent implements OnInit, OnDestroy {
       if(a['name'] > b['name']) return 1;
       return 0;
     })
-    
+
     return this.countries;
   }
 
