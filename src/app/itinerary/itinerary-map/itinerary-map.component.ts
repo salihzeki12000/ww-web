@@ -41,6 +41,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
   constructor(
     private titleService: Title,
     private renderer: Renderer2,
+    private element: ElementRef,
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
     private route: ActivatedRoute,
@@ -176,7 +177,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
         }
       }
     }
-    
+
     this.setDate(eventMarker);
 
     for (let i = 0; i < eventMarker.length; i++) {
@@ -308,6 +309,10 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
       });
 
       this.flightPath.setMap(this.itinMap);
+    }
+
+    if(this.element.nativeElement.offsetParent.clientWidth < 891) {
+      this.showMapLegend = true;
     }
   }
 

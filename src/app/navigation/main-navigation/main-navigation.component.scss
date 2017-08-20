@@ -336,13 +336,18 @@
   padding: 10px;
   color: #6494ED;
   text-align: center;
+  font-weight: 500;
+
   &:hover  {
     cursor: pointer;
     color: #808080;
   }
 }
 
-
+.nav-itinerary .dropdown-item h5  {
+  padding-bottom: 5px;
+  font-weight: 500;
+}
 
 /* top nav notification */
 
@@ -441,7 +446,7 @@ i.fa-bookmark {
   @media only screen and (max-width: 500px) {
     position: fixed;
     top: 0;
-    right: 35px;
+    right: 40px;
   }
 }
 
@@ -470,6 +475,7 @@ i.fa-sticky-note {
   }
 }
 
+.nav-bookmark .nav-dropdown-header > h6,
 .nav-itinerary .nav-dropdown-header > h6  {
   @media only screen and (max-width: 500px) {
     font-size: .83em;

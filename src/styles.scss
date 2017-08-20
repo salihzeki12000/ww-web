@@ -30,7 +30,7 @@
 // empty div to push down highlighted item - 1
 // display-card - 2
 // item-menu - 2 (above link preview for resource)
-// event summary short cut button - 999
+// event summary short cut button - 499
 // event summary list - 1001
 
 
@@ -1341,16 +1341,29 @@ span.dragged-location {
     color: #F9FBFB;
     background-color: #6494ED;
   }
+
+  @media only screen and (max-width: 420px) {
+    padding: 15px 0 10px 0;
+    text-align: center;
+  }
 }
 
 .close-pop-up {
   display: none;
+
+  &:hover {
+    cursor: pointer;
+  }
 
   @media only screen and (max-width: 890px) {
     display: block;
     margin: -20px 12px 0 0;
     color: #F9FBFB;
     float: right;
+  }
+
+  @media only screen and (max-width: 420px) {
+    margin-top: -25px;
   }
 }
 
@@ -1364,6 +1377,7 @@ span.dragged-location {
   @media only screen and (max-width: 420px) {
     width: 100%;
     min-width: 300px;
+    max-height: calc(100vh - 80px);
     background-color: white;
   }
 
@@ -1455,14 +1469,14 @@ span.dragged-location {
   @media only screen and (max-width: 890px) {
     display: block;
     position: fixed;
-    top: calc(100vh - 110px);
+    bottom: 50px;
     right: 10px;
     padding: 15px;
     background-color: lightgray;
     border: 1px solid lightgray;
     border-radius: 50%;
     opacity: .5;
-    z-index: 999;
+    z-index: 499;
     &:hover {
       cursor: pointer;
     }

@@ -3,6 +3,7 @@
 <div *ngIf="totalResources" class="event-summary-section" [class.show-summary]="showResourceSummary">
 
   <h4 class="event-summary-header">Quick reference - {{ totalResources }}</h4>
+  <h5 class="close-pop-up" (click)="showSummary()">X</h5>
 
   <select class="category-filter" [(ngModel)]="selectedCategory" (ngModelChange)="filter($event)">
     <option *ngFor="let category of categories" [value]="category">

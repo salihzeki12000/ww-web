@@ -309,7 +309,7 @@ header {
   top: 80px;
   height: calc(100vh - 80px);
   width: 100vw;
-  z-index: 1000;
+  z-index: 500;
 }
 
 .show-nav-menu  {
@@ -324,7 +324,7 @@ header {
     padding: 10px 18px;
     background-color: white;
     border-top: 1px solid lightgray;
-    z-index: 1001;
+    z-index: 500;
 
     &:hover {
       cursor: pointer;
@@ -502,7 +502,7 @@ header {
     left: 0;
     height: 40px;
     width: 100px;
-    z-index: 1001;
+    z-index: 500;
     background-color: white;
     border-top: 1px solid lightgray;
   }
@@ -537,7 +537,7 @@ header {
     letter-spacing: 1px;
     background-color: white;
     border-top: 5px solid #567FCC;
-    z-index: 1001;
+    z-index: 500;
   }
 }
 
