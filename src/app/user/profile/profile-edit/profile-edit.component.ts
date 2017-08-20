@@ -125,7 +125,12 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       gender: this.currentUser['gender'],
     })
 
-    this.defaultCity = this.currentUser['city']['name'];
+    if(this.currentUser['city'])  {
+      this.defaultCity = this.currentUser['city']['name'];
+    } else  {
+      this.defaultCity = '';
+    }
+    
     this.checkinPrivacy = this.currentUser['privacy']['check_in'];
     this.itinPrivacy = this.currentUser['privacy']['itinerary'];
   }
