@@ -68,6 +68,7 @@ export class CheckInComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
     if(this.checkInSubscription) this.checkInSubscription.unsubscribe();
+
     this.loadingService.setLoader(true, "");
   }
 
@@ -138,6 +139,7 @@ export class CheckInComponent implements OnInit, OnDestroy {
         countryName.push(this.checkins[i]['place']['country']['name']);
       }
     }
+
     this.countries = this.sortCountries();
     this.countries.unshift({name: 'Show all', lat: 0, lng: this.checkins[0]['place']['lng'], zoom: 2})
 
@@ -150,6 +152,7 @@ export class CheckInComponent implements OnInit, OnDestroy {
       if(a['name'] > b['name']) return 1;
       return 0;
     })
+
     return this.countries;
   }
 
@@ -207,6 +210,7 @@ export class CheckInComponent implements OnInit, OnDestroy {
         map.setZoom(17);
       })
     }
+    
     let imagePath = 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
 
     let markerCluster = new MarkerClusterer(map, this.markers, {

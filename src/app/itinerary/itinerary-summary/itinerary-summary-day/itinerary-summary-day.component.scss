@@ -100,7 +100,7 @@ h5.edit-note  {
 
   @media only screen and (max-width: 420px) {
     min-width: 240px;
-    width: calc(100vw - 40px)
+    width: calc(100vw - 40px);
   }
 }
 
@@ -139,12 +139,17 @@ h5.edit-note  {
   overflow-wrap: break-word;
 
   @media only screen and (max-width: 420px) {
-    width: calc(100vw - 50px)
+    width: calc(100vw - 50px);
   }
 }
 
 .event-content h5  {
   font-weight: 500;
+
+  @media only screen and (max-width: 420px) {
+    padding-left: 5px;
+    font-size: 1em;
+  }
 }
 
 
@@ -178,6 +183,10 @@ h5.check-out-on {
   color: #19CC72;
   border: 1px solid #19cc72;
   border-radius: 15px;
+
+  @media only screen and (max-width: 420px) {
+    font-size: .83em;
+  }
 }
 
 .summary-item > div > img {
