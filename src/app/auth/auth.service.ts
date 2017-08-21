@@ -50,6 +50,28 @@ export class AuthService  {
                     });
   }
 
+  forget(email)  {
+    const body = JSON.stringify(email);
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+
+    return this.http.post(this.url + '/users/forget/', body, { headers: headers })
+                    .map((response: Response) => response.json())
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
+  }
+
+  reset(token) {
+    return this.http.get(this.url + '/users/reset/' + token)
+                    .map((response: Response) => response.json())
+                    .catch((error: Response) => {
+                      console.log(error)
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
+  }
+
   signin(user: User)  {
     const body = JSON.stringify(user);
     const headers = new Headers({ 'Content-Type': 'application/json' });

@@ -1,0 +1,53 @@
+<div class="logo" [routerLink]="['/']">
+  <img src="assets/wondererwanderer_logo.png" alt="">
+</div>
+
+<div class="reset-container">
+
+  <div class="reset-invalid" *ngIf="resetInvalid">
+    <h3>Your reset password link is invalid or has expired.</h3>
+
+    <h4 class="navigate" [routerLink]="['/forgot-password']">Request for new reset</h4>
+    <h4 class="navigate" [routerLink]="['/']">Back to home page</h4>
+  </div>
+
+  <div class="reset-valid" *ngIf="resetValid">
+
+    <h3>Hi {{ username }}, please reset your password:</h3>
+
+    <form [formGroup]="resetForm" (ngSubmit)="resetPassword()">
+      <div class="form-housing">
+
+        <label>New Password <span class="label-note"> ( at least 6 characters )</span></label>
+        <input type="password" formControlName="newPassword">
+        <span class="form-validator"
+          *ngIf="resetForm.get('newPassword').touched && resetForm.get('newPassword').invalid">Password is not valid. Please enter at least 6 characters</span>
+
+
+        <label>Confirm New Password</label>
+        <input type="password" formControlName="confirmNewPassword">
+        <span class="form-validator"
+          *ngIf="resetForm.get('confirmNewPassword').dirty && resetForm.get('confirmNewPassword').invalid">Passwords do not match</span>
+      </div>
+
+      <div class="action-response">
+        <button type="submit" class="action-response-primary" [disabled]="!resetForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> RESET</h5></button>
+      </div>
+    </form>
+
+  </div>
+
+</div>
+
+<div class="custom-modal" *ngIf="resetSuccess">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>Reset password success</h3>
+    </div>
+
+    <div class="content-without-header-name">
+      <h4>Your password has been reset successfully. We are logging you in now.</h4>
+    </div>
+  </div>
+
+</div>

@@ -8,7 +8,7 @@ import { Daterangepicker }                  from 'ng2-daterangepicker';
 
 import { AppComponent } from './app.component';
 import { LandingPageComponent } from './landing-page';
-import { AuthComponent, AuthService, SignupComponent, SigninComponent } from './auth';
+import { AuthComponent, AuthService, SignupComponent, SigninComponent, ResetComponent, ForgotPasswordComponent } from './auth';
 import { AuthGuard } from './_guards/auth.guard';
 
 import { HomeComponent } from './home';
@@ -50,6 +50,8 @@ import { PlaceComponent } from './place';
     AuthComponent,
     SignupComponent,
     SigninComponent,
+    ResetComponent,
+    ForgotPasswordComponent,
     UserComponent,
     UserProfileCardComponent,
     UserCheckInComponent,

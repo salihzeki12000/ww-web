@@ -17,3 +17,14 @@ h5  {
 button.action-response-primary  {
   width: 100%;
 }
+
+.reset  {
+  text-align: left;
+  color: #6494ED;
+  font-style: italic;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}

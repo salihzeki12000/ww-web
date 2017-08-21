@@ -11,10 +11,13 @@ import { ItineraryPreviewComponent,
          ItineraryPrintComponent,
          PREVIEW_ROUTES } from './itinerary';
 
+import { ResetComponent, ForgotPasswordComponent }  from './auth';
 import { AuthGuard } from './_guards/auth.guard';
 
 const APP_ROUTES: Routes = [
   { path: '', component: LandingPageComponent },
+  { path: 'reset/:id', component: ResetComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
   { path: 'admin', component: AdminComponent, children: ADMIN_ROUTES },
   { path: 'me', component: MeComponent, children: HOME_ROUTES, canActivate: [AuthGuard] },

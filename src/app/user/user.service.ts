@@ -73,6 +73,18 @@ export class UserService  {
                     });
   }
 
+  resetPassword(password) {
+    const body = JSON.stringify(password);
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+
+    return this.http.patch( this.url + '/users/resetPassword', body, {headers: headers})
+                    .map((response: Response) => response.json())
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
+  }
+
   changePassword(password)  {
     const body = JSON.stringify(password);
     const headers = new Headers({ 'Content-Type': 'application/json' });

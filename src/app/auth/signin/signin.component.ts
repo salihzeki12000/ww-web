@@ -40,25 +40,24 @@ export class SigninComponent implements OnInit {
   onSubmit()  {
     this.loadingService.setLoader(true, "get ready to wonder wander");
 
-    this.authService.signin(this.signinForm.value)
-        .subscribe(
-          data => {
-            this.userService.getCurrentUser().subscribe(
-                  data => {});
+    this.authService.signin(this.signinForm.value).subscribe(
+      data => {
+        this.userService.getCurrentUser().subscribe(
+              data => {});
 
-                  if(this.itinerary)  {
-                    let user = {_id: data.userId};
-                    this.addToItin(user);
-                  } else if(this.reload) {
-                    window.location.reload();
-                  } else {
-                    setTimeout(() =>  {
-                      this.router.navigateByUrl(this.reroute);
-                    }, 1000)
-                  }
-          },
-          error => console.error(error)
-        )
+              if(this.itinerary)  {
+                let user = {_id: data.userId};
+                this.addToItin(user);
+              } else if(this.reload) {
+                window.location.reload();
+              } else {
+                setTimeout(() =>  {
+                  this.router.navigateByUrl(this.reroute);
+                }, 1000)
+              }
+      },
+      error => console.error(error)
+    )
   }
 
   addToItin(user) {
