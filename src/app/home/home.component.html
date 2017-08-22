@@ -20,6 +20,26 @@
   </div>
 </div>
 
+<div class="custom-modal verify-message" *ngIf="verifyMsg">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>Verify your account</h3>
+      <a (click)="verifyMsg = false">X</a>
+    </div>
+
+    <div class="content-without-header-name">
+      <h4>A verification link has been sent to the email address that you registered this account with.</h4>
+      <h4>Please access the link to validate your account.</h4>
+      <h4>Please check your spam/junk folder if you do not find the email.</h4>
+      <h4>You will not be able to access your account further if you do not validate within 03 days.</h4>
+    </div>
+
+    <div class="action-response">
+      <h5 class="action-response-primary" (click)="verifyMsg = false">OK</h5>
+    </div>
+  </div>
+</div>
+
 <!-- new user tour -->
 <div class="custom-modal" *ngIf="newUser">
   <div class="message-box" *ngIf="tourStart">

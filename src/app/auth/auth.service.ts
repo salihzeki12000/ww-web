@@ -66,7 +66,6 @@ export class AuthService  {
     return this.http.get(this.url + '/users/reset/' + token)
                     .map((response: Response) => response.json())
                     .catch((error: Response) => {
-                      console.log(error)
                       this.errorMessageService.handleErrorMessage(error.json());
                       return Observable.throw(error.json())
                     });
@@ -77,6 +76,22 @@ export class AuthService  {
     const headers = new Headers({ 'Content-Type': 'application/json' });
 
     return this.http.post(this.url + '/users/signin/', body, { headers: headers })
+                    .map((response: Response) => {
+                      this.loginType = 'local';
+                      localStorage.setItem('token', response.json()['token']);
+                      return response.json();
+                    })
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
+  }
+
+  verify(verify) {
+    const body = JSON.stringify(verify);
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+
+    return this.http.patch(this.url + '/users/verify/', body, { headers: headers })
                     .map((response: Response) => {
                       this.loginType = 'local';
                       localStorage.setItem('token', response.json()['token']);

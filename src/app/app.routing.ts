@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent, ADMIN_ROUTES } from './admin';
 import { LandingPageComponent }         from './landing-page';
 import { MeComponent, HOME_ROUTES }     from './me';
-import { UserComponent, USER_ROUTES }   from './user';
 import { PrivacyPolicyComponent }       from './privacy-policy';
 import { PlaceComponent }               from './place';
 import { ItineraryPreviewComponent,
@@ -11,12 +10,14 @@ import { ItineraryPreviewComponent,
          ItineraryPrintComponent,
          PREVIEW_ROUTES } from './itinerary';
 
-import { ResetComponent, ForgotPasswordComponent }  from './auth';
+import { UserComponent, UserVerifyComponent, USER_ROUTES }   from './user';
+import { ResetComponent, ForgotPasswordComponent }           from './auth';
 import { AuthGuard } from './_guards/auth.guard';
 
 const APP_ROUTES: Routes = [
   { path: '', component: LandingPageComponent },
   { path: 'reset/:id', component: ResetComponent },
+  { path: 'verify/:token/:id', component: UserVerifyComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
   { path: 'admin', component: AdminComponent, children: ADMIN_ROUTES },

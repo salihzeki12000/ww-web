@@ -18,6 +18,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   user;
   feed = [];
 
+  verifyMsg = false;
+
   newUser = false;
   tourStart = false;
   tour1 = false;
@@ -55,7 +57,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       })
 
     this.newUser = this.authService.newUser;
-    if(this.newUser) this.tourStart = true;
+    if(this.newUser) {
+      this.verifyMsg = true;
+      this.tourStart = true;
+    }
 
     this.loadingService.setLoader(false, "");
     this.renderer.removeClass(document.body, 'prevent-scroll');

@@ -15,7 +15,7 @@ import { HomeComponent } from './home';
 import { MeComponent } from './me';
 import { MainNavigationComponent } from './navigation';
 
-import { UserComponent, UserProfileCardComponent, UserCheckInComponent, UserFollowersComponent, UserFollowingsComponent, UserItinerariesComponent, UserItinerarySummaryComponent, UserPostsComponent, UserService, ProfileComponent, ProfileDetailsComponent, ProfileEditComponent } from './user';
+import { UserComponent, UserVerifyComponent, UserProfileCardComponent, UserCheckInComponent, UserFollowersComponent, UserFollowingsComponent, UserItinerariesComponent, UserItinerarySummaryComponent, UserPostsComponent, UserService, ProfileComponent, ProfileDetailsComponent, ProfileEditComponent } from './user';
 
 import { RelationshipService, RelationshipsComponent, FollowingsComponent, FollowingComponent, FollowersComponent, FollowerComponent, RequestedFollowingsComponent, RequestedFollowingComponent, PendingFollowerComponent, PendingFollowersComponent } from './relationships';
 
@@ -53,6 +53,7 @@ import { PlaceComponent } from './place';
     ResetComponent,
     ForgotPasswordComponent,
     UserComponent,
+    UserVerifyComponent,
     UserProfileCardComponent,
     UserCheckInComponent,
     UserFollowersComponent,
