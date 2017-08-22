@@ -24,6 +24,10 @@
 
 /* select share items */
 
+.share-all  {
+  margin-bottom: -20px;
+}
+
 .share-all > *  {
   display: inline-block;
 }
@@ -33,12 +37,18 @@
 }
 
 .category-header  {
-  margin: 10px 0;
-  padding: 3px 20px;
+  margin: 40px 0 10px 0;
+  padding: 3px 20px 3px 0;
   background-color: #567FCC;
 }
 
+.category-header input  {
+  display: inline-block;
+  width: 30px;
+}
+
 .category-header > h4 {
+  display: inline-block;
   font-weight: 400;
   color: #F9FBFB;
   letter-spacing: 1px;

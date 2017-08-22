@@ -18,11 +18,12 @@
     <div class="form-housing">
 
       <div class="share-all">
-        <input type="checkbox" (click)="toggleShareAll()" checked>
+        <input type="checkbox" (click)="toggleShareAll()" [checked]="shareAll">
         <h4>{{ shareType }} all</h4>
       </div>
 
       <div class="category-header">
+        <input type="checkbox" (click)="toggleShareAccommodation()" [checked]="allAccommodation">
         <h4>Accommodation</h4>
       </div>
       <div *ngFor="let event of events; let i = index" class="category-item">
@@ -33,6 +34,7 @@
       </div>
 
       <div class="category-header">
+        <input type="checkbox" (click)="toggleShareActivity()" [checked]="allActivity">
         <h4>Activity</h4>
       </div>
       <div *ngFor="let event of events; let i = index" class="category-item">
@@ -43,6 +45,7 @@
       </div>
 
       <div class="category-header">
+        <input type="checkbox" (click)="toggleShareTransport()" [checked]="allTransport">
         <h4>Transport</h4>
       </div>
       <div *ngFor="let event of events; let i = index" class="category-item">
@@ -53,6 +56,7 @@
       </div>
 
       <div class="category-header">
+        <input type="checkbox" (click)="toggleShareResources()" [checked]="allResources">
         <h4>Resource</h4>
       </div>
       <div *ngFor="let resource of resources; let i = index" class="category-item">

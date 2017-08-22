@@ -40,6 +40,11 @@ export class ItineraryShareComponent implements OnInit, OnDestroy {
   shareIndex = [];
   shareIndexResource = [];
 
+  allAccommodation = true;
+  allActivity = true;
+  allTransport = true;
+  allResources = true;
+
   showUsers = false;
   users = [];
   filteredResult = [];
@@ -72,6 +77,8 @@ export class ItineraryShareComponent implements OnInit, OnDestroy {
       result => {
         this.resources = Object.keys(result).map(key => result[key]);
 
+        this.shareIndexResource = [];
+
         for (let i = 0; i < this.resources.length; i++) {
           this.shareIndexResource.push(true);
         }
@@ -90,6 +97,8 @@ export class ItineraryShareComponent implements OnInit, OnDestroy {
   }
 
   filterEvents(events)  {
+    this.shareIndex = [];
+
     for (let i = 0; i < events.length; i++) {
       this.shareIndex.push(true);
 
@@ -121,6 +130,10 @@ export class ItineraryShareComponent implements OnInit, OnDestroy {
     }
   }
 
+
+
+  // toggle share items by group
+
   toggleShareAll()  {
     this.shareAll = !this.shareAll;
 
@@ -131,15 +144,152 @@ export class ItineraryShareComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.shareIndexResource.length; i++) {
       this.shareIndexResource[i] = this.shareAll;
     }
+
+    this.allAccommodation = this.shareAll;
+    this.allActivity = this.shareAll;
+    this.allTransport = this.shareAll;
+    this.allResources = this.shareAll;
   }
 
+  toggleShareAccommodation()  {
+    this.allAccommodation = !this.allAccommodation;
+    if(!this.allAccommodation) this.shareAll = false;
+
+    for (let i = 0; i < this.events.length; i++) {
+      if(this.events[i]['type'] === 'accommodation')  {
+        this.shareIndex[i] = this.allAccommodation;
+      };
+    }
+
+    if(this.allAccommodation) this.checkAll();
+  }
+
+  toggleShareActivity()  {
+    this.allActivity = !this.allActivity;
+    if(!this.allActivity) this.shareAll = false;
+
+    for (let i = 0; i < this.events.length; i++) {
+      if(this.events[i]['type'] === 'activity')  {
+        this.shareIndex[i] = this.allActivity;
+      };
+    }
+
+    if(this.allActivity) this.checkAll();
+  }
+
+  toggleShareTransport()  {
+    this.allTransport = !this.allTransport;
+    if(!this.allTransport) this.shareAll = false;
+
+    for (let i = 0; i < this.events.length; i++) {
+      if(this.events[i]['type'] === 'transport')  {
+        this.shareIndex[i] = this.allTransport;
+      };
+    }
+
+    if(this.allTransport) this.checkAll();
+  }
+
+  checkAll()  {
+    this.shareAll = true;
+
+    for (let i = 0; i < this.shareIndex.length; i++) {
+      if(!this.shareIndex[i]) {
+        this.shareAll = false;
+        break;
+      };
+    }
+
+    for (let i = 0; i < this.shareIndexResource.length; i++) {
+      if(!this.shareIndexResource[i]) {
+        this.shareAll = false;
+        break;
+      };
+    }
+
+  }
+
+  toggleShareResources()  {
+    this.allResources = !this.allResources;
+    if(!this.allResources) this.shareAll = false;
+
+    for (let i = 0; i < this.shareIndexResource.length; i++) {
+      this.shareIndexResource[i] = this.allResources;
+    }
+
+    if(this.allResources) this.checkAll();
+  }
+
+
+
+  // toggle share individual item
+
   toggleShare(index)  {
-    this.shareIndex[index] = !this.shareIndex[index]
+    this.shareIndex[index] = !this.shareIndex[index];
+
+    if(!this.shareIndex[index]) {
+      this.shareAll = false;
+
+      if(this.events[index]['type'] === 'accommodation')  {
+        this.allAccommodation = false;
+      } else if(this.events[index]['type'] === 'activity')  {
+        this.allActivity = false;
+      } else if(this.events[index]['type'] === 'transport') {
+        this.allTransport = false;
+      }
+    } else  {
+
+      this.shareAll = true;
+
+      for (let i = 0; i < this.shareIndex.length; i++) {
+        if(!this.shareIndex[i]) {
+          this.shareAll = false;
+          break;
+        }
+      }
+
+      let type = this.events[index]['type'];
+
+      if(type === "accommodation") this.allAccommodation = true;
+      if(type === "activity") this.allActivity = true;
+      if(type === "transport") this.allTransport = true;
+
+      for (let i = 0; i < this.events.length; i++) {
+        if(this.events[i]['type'] === type) {
+          if(!this.shareIndex[i]) {
+            if(type === "accommodation") this.allAccommodation = false;
+            if(type === "activity") this.allActivity = false;
+            if(type === "transport") this.allTransport = false;
+
+            break;
+          }
+        };
+      }
+    }
   }
 
   toggleShareResource(index)  {
-    this.shareIndexResource[index] = !this.shareIndexResource[index]
+    this.shareIndexResource[index] = !this.shareIndexResource[index];
+
+    if(!this.shareIndexResource[index]) {
+      this.shareAll = false;
+      this.allResources = false;
+    } else  {
+
+      this.allResources = true;
+
+      for (let i = 0; i < this.shareIndexResource.length; i++) {
+        if(!this.shareIndexResource[i]) {
+          this.allResources = false;
+          break;
+        }
+      }
+    }
   }
+
+
+
+  // search for users
 
   filterSearch(text)  {
     if(!text)   {
@@ -150,6 +300,9 @@ export class ItineraryShareComponent implements OnInit, OnDestroy {
       )
     }
   }
+
+
+  // toggle add user
 
   toggleAdd(user) {
     let index = this.selectedUsers.indexOf(user);
@@ -175,6 +328,10 @@ export class ItineraryShareComponent implements OnInit, OnDestroy {
     }
   }
 
+
+
+  // cancel share
+
   cancel()  {
     this.cancelShare.emit(false);
     this.itemsSelected = false;
@@ -182,6 +339,10 @@ export class ItineraryShareComponent implements OnInit, OnDestroy {
     this.filteredResult = [];
     this.users.push.apply(this.users, this.selectedUsers);
   }
+
+
+
+  // share itinerary
 
   shareItinerary()  {
     this.shareItin = false;
@@ -227,6 +388,11 @@ export class ItineraryShareComponent implements OnInit, OnDestroy {
       result => {})
   }
 
+
+
+
+  // share / copy individual events
+
   shareEvents(itinerary) {
     this.selectedItinerary = itinerary;
     for (let i = 0; i < this.shareIndex.length; i++) {
@@ -268,6 +434,10 @@ export class ItineraryShareComponent implements OnInit, OnDestroy {
     }
   }
 
+
+
+  // stay at current itinerary or redirect after copying
+
   stay()  {
     this.copied = false;
     this.cancelShare.emit(false);
@@ -280,9 +450,13 @@ export class ItineraryShareComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/me/itinerary/' + this.selectedItinerary['_id']);
   }
 
+
+
+  // message to acknowledge itinerary shared
+
   confirmShareMessage() {
     let message = "Itinerary " + this.itinerary['name'] + " has been shared";
-    
+
     this.flashMessageService.handleFlashMessage(message);
     this.cancelShare.emit(false);
   }
