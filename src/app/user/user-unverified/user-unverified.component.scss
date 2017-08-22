@@ -33,3 +33,18 @@
 .container h4 {
   padding-bottom: 20px;
 }
+
+
+.request  {
+  color: #6494ED;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+
+.content-without-header-name h4 {
+  padding-bottom: 20px;
+}

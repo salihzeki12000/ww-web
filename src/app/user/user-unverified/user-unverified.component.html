@@ -8,4 +8,22 @@
   <h4>You are unable to proceed because your account has not been verified.</h4>
   <h4>Please verify your account by accessing the link sent to the email you registered this account with.</h4>
 
+  <h5 class="request" (click)="request()">Request for new verification link</h5>
+</div>
+
+
+<div class="custom-modal" *ngIf="requested">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>New verification link requested</h3>
+    </div>
+
+    <div class="content-without-header-name">
+      <h4>An email with the new verification link has been sent to {{ user.email }}.</h4>
+      <h4>Please access the link to validate your account.</h4>
+      <h4>Please check your spam/junk folder if you do not find the email.</h4>
+
+      <h4>We will be redirecting you to the home page.</h4>
+    </div>
+  </div>
 </div>

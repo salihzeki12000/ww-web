@@ -103,6 +103,18 @@ export class AuthService  {
                     });
   }
 
+  newVerification(user) {
+    const body = JSON.stringify(user);
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+
+    return this.http.patch( this.url + '/users/new-verify/', body, { headers: headers})
+                    .map((response: Response) => response.json())
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
+  }
+
   loginFacebook(user) {
     const body = JSON.stringify(user);
     const headers = new Headers({ 'Content-Type': 'application/json' });

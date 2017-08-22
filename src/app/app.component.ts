@@ -12,7 +12,6 @@ import { UserService }  from './user';
 })
 export class AppComponent implements OnInit {
   currentUserSubscription: Subscription;
-  validated = true;
 
   constructor(
     private router: Router,
@@ -25,9 +24,14 @@ export class AppComponent implements OnInit {
     if(isLoggedIn)  {
       this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
         result => {
-          // this.validated = result['validated'];
+          let threeDays = 259200000;
+          let today = new Date();
+          let join = new Date(result['created_at']).getTime();
+
           if(!result['validated'])  {
-            this.router.navigateByUrl('/account-not-verified')
+            if(today.getTime() >= (join + threeDays) )  {
+              this.router.navigateByUrl('/account-not-verified')
+            }
           }
       })
     }
