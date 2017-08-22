@@ -4,6 +4,7 @@ export * from './user.routes';
 export * from './user';
 export * from './user.component';
 export * from './user-verify/user-verify.component';
+export * from './user-unverified/user-unverified.component';
 
 export * from './user-profile-card/user-profile-card.component';
 

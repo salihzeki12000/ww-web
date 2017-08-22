@@ -10,7 +10,7 @@ import { ItineraryPreviewComponent,
          ItineraryPrintComponent,
          PREVIEW_ROUTES } from './itinerary';
 
-import { UserComponent, UserVerifyComponent, USER_ROUTES }   from './user';
+import { UserComponent, UserVerifyComponent, USER_ROUTES, UserUnverifiedComponent }   from './user';
 import { ResetComponent, ForgotPasswordComponent }           from './auth';
 import { AuthGuard } from './_guards/auth.guard';
 
@@ -18,6 +18,7 @@ const APP_ROUTES: Routes = [
   { path: '', component: LandingPageComponent },
   { path: 'reset/:id', component: ResetComponent },
   { path: 'verify/:token/:id', component: UserVerifyComponent },
+  { path: 'account-not-verified', component: UserUnverifiedComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
   { path: 'admin', component: AdminComponent, children: ADMIN_ROUTES },

@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {
-    Router,
-    Event as RouterEvent,
-    NavigationStart,
-    NavigationEnd,
-    NavigationCancel,
-    NavigationError
-} from '@angular/router';
+import { Router }            from '@angular/router';
+import { Subscription } from 'rxjs/Rx';
+
+import { AuthService }  from './auth';
+import { UserService }  from './user';
 
 @Component({
   selector: 'ww-root',
@@ -14,15 +11,25 @@ import {
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  currentUserSubscription: Subscription;
+  validated = true;
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private userService: UserService) { }
 
   ngOnInit()  {
-    this.router.events.subscribe((evt) => {
-        if (!(evt instanceof NavigationEnd)) {
-            return;
-        }
-        window.scrollTo(0, 0)
-    });
+    let isLoggedIn = this.authService.isLoggedIn();
+
+    if(isLoggedIn)  {
+      this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
+        result => {
+          // this.validated = result['validated'];
+          if(!result['validated'])  {
+            this.router.navigateByUrl('/account-not-verified')
+          }
+      })
+    }
   }
 }
