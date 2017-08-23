@@ -347,6 +347,7 @@ header {
 .scroll-left,
 .scroll-right {
   display: none;
+
   @media only screen and (min-width: 420px) and (max-width: 1091px) {
     position: fixed;
     display: block;
@@ -355,25 +356,18 @@ header {
     height: 40px;
     background-color: white;
     border-top: 1px solid lightgray;
-    z-index: 501;
+    z-index: 500;
     &:hover {
       cursor: pointer;
     }
   }
 }
 
-.scroll-left i,
-.scroll-right i {
-  padding: 12.7px 14.5px;
-}
 
 .scroll-left  {
   left: 0;
 }
 
-.scroll-right {
-  right: 0;
-}
 
 
 /* nav  tabs */

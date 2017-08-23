@@ -5,11 +5,13 @@
   <h4 class="event-summary-header">Quick reference - {{ totalResources }}</h4>
   <h5 class="close-pop-up" (click)="showSummary()">X</h5>
 
-  <select class="category-filter" [(ngModel)]="selectedCategory" (ngModelChange)="filter($event)">
+  <select class="event-summary-filter" [(ngModel)]="selectedCategory" (ngModelChange)="filter($event)">
     <option *ngFor="let category of categories" [value]="category">
       <h5>{{ category }}</h5>
     </option>
   </select>
+  <i class="fa fa-sort-desc" aria-hidden="true"></i>
+
 
   <div class="event-summary">
     <div *ngFor="let resource of filteredResources; let i = index" class="event-summary-item" (click)="centerItem(resource)" [class.highlighted-item]="highlightedEvent === resource">

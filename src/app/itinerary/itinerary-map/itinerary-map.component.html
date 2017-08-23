@@ -5,11 +5,12 @@
   <h4 class="event-summary-header">Map list - {{ events.length }}</h4>
   <h5 class="close-pop-up" (click)="toggleLegend()">X</h5>
 
-  <select class="date-filter" [(ngModel)]="selectedDate" (ngModelChange)="filterMarkers($event)">
+  <select class="event-summary-filter" [(ngModel)]="selectedDate" (ngModelChange)="filterMarkers($event)">
     <option *ngFor="let date of dates" [value]="date">
       <h5>{{ date }}</h5>
     </option>
   </select>
+  <i class="fa fa-sort-desc" aria-hidden="true"></i>
 
   <div class="map-summary">
     <div *ngFor="let event of filteredEvents" class="map-event" (click)="changeCenter(event)">
@@ -39,7 +40,7 @@
   </div>
 </div>
 
-<div class="map-legend-popup" (click)="toggleLegend()">
+<div class="event-summary-popup" (click)="toggleLegend()">
   <i class="fa fa-list" aria-hidden="true"></i>
 </div>
 

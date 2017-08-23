@@ -146,7 +146,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
     } else  {
       setTimeout(() =>  {
         this.checkAccess();
-      },2000)
+      },3000)
     }
   }
 

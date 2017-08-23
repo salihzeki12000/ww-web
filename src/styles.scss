@@ -12,7 +12,7 @@
 // #FFC65C - accent color
 // #19CC72 - light green
 // #3C763D - dark green
-// #FF8A5C - orange
+// #FFA15C - orange (255,161,92)
 // #DC143C - crimson(red)
 // #3A4A4D - dark grey
 // #C0C0C0 - light grey
@@ -1396,7 +1396,7 @@ span.dragged-location {
 
 .event-summary-header {
   padding: 10px 10px 5px 10px;
-  background-color: rgb(237, 189, 100);
+  background-color: rgb(255,161,92);
 
   @media only screen and (max-width: 890px) {
     color: #F9FBFB;
@@ -1430,13 +1430,43 @@ span.dragged-location {
 
 
 
+/* summary filter */
+
+.event-summary-filter {
+  margin-bottom: 0;
+  border-radius: 0;
+  -webkit-appearance: none;
+  border: 1px solid rgba(255,161,92,.9);
+
+  @media only screen and (max-width: 890px) {
+    border: 1px solid rgba(100, 148, 237, 0.9);
+  }
+}
+
+.legend-section > .fa-sort-desc,
+.event-summary-section > .fa-sort-desc  {
+  position: absolute;
+  margin-top: -25px;
+  margin-left: 190px;
+
+  @media only screen and (max-width: 420px) {
+    margin-left: 0;
+    right: 10px;
+  }
+
+  @media only screen and (min-width: 420px) and (max-width: 890px) {
+    margin-left: 360px;
+  }
+}
+
+
 /* summary list */
 
 .event-summary  {
   position: fixed;
   width: 210px;
   max-height: calc(100vh - 150px);
-  background-color: rgba(237, 189, 100, 0.3);
+  background-color: rgba(255,161,92, 0.3);
   overflow: auto;
 
   @media only screen and (max-width: 420px) {
@@ -1457,7 +1487,7 @@ span.dragged-location {
 }
 
 .event-summary::-webkit-scrollbar {
-  background-color: rgba(237, 189, 100, 0.3);
+  background-color: rgba(255,161,92, 0.3);
   width: 8px;
 
   @media only screen and (max-width: 890px) {
@@ -1466,7 +1496,7 @@ span.dragged-location {
 }
 
 .event-summary::-webkit-scrollbar-thumb {
-  background-color: rgba(237, 189, 100, 0.9);
+  background-color: rgba(255,161,92, 0.9);
 
   @media only screen and (max-width: 890px) {
     background-color: rgba(100, 148, 237, 0.9);
@@ -1531,7 +1561,7 @@ span.dragged-location {
 }
 
 .highlighted-item {
-  background-color: rgba(237, 189, 100, .5) !important;
+  background-color: rgba(255,161,92, .5) !important;
 }
 
 
@@ -2581,6 +2611,7 @@ ww-itinerary-map  {
   margin-top: 79px;
   width: 40px;
   height: calc(100vh - 190px);
+
   &:hover {
     cursor: pointer;
     background-color: rgba(255,255,255, 0.8);

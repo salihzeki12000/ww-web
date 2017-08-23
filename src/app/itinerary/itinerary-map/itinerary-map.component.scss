@@ -51,10 +51,6 @@
   }
 }
 
-.date-filter  {
-  margin-bottom: 0;
-  border-radius: 0;
-}
 
 
 
@@ -63,7 +59,7 @@
 .map-summary {
   max-height: calc(100vh - 160px);
   vertical-align: top;
-  background-color: rgba(237, 189, 100, 0.3);
+  background-color: rgba(255,161,92, 0.3);
   overflow: auto;
 
   @media only screen and (max-width: 420px) {
@@ -82,7 +78,7 @@
 }
 
 .map-summary::-webkit-scrollbar  {
-  background-color: rgba(237, 189, 100, 0.3);
+  background-color: rgba(255,161,92, 0.3);
   width: 8px;
 
   @media only screen and (max-width: 890px) {
@@ -91,10 +87,20 @@
 }
 
 .map-summary::-webkit-scrollbar-thumb  {
-  background-color: rgba(237, 189, 100, 0.9);
+  background-color: rgba(255,161,92, 0.9);
 
   @media only screen and (max-width: 890px) {
     background-color: rgba(100, 148, 237, 0.9);
+  }
+}
+
+
+
+/* date filter */
+
+.legend-section > .fa-sort-desc {
+  @media only screen and (min-width: 890px) {
+    margin-left: 200px;
   }
 }
 
@@ -181,22 +187,10 @@
 
 /* pop up button in mobile screen */
 
-.map-legend-popup  {
-  display: none;
+.event-summary-popup  {
 
   @media only screen and (max-width: 890px) {
-    display: block;
-    position: fixed;
     bottom: 65px;
     right: 50px;
-    padding: 15px;
-    background-color: lightgray;
-    border: 1px solid lightgray;
-    border-radius: 50%;
-    opacity: .7;
-    z-index: 999;
-    &:hover {
-      cursor: pointer;
-    }
   }
 }
