@@ -360,36 +360,54 @@
 
 .sub-section {
   width: 600px;
-  padding: 20px 0 60px 0;
+  padding: 20px 0 50px 0;
   margin-left: calc((100vw - 600px) / 2);
-  text-align: left;
 
   @media only screen and (max-width: 610px) {
     width: 100%;
     margin: 0;
+    padding: 20px 10px 50px 10px;
+  }
+}
+
+.sec-B,
+.sec-C  {
+  display: inline-block;
+  width: 400px;
+  margin-left: calc((100vw - 805px) /4);
+  margin-right: calc((100vw - 805px) /4);
+
+  @media only screen and (max-width: 610px) {
+    display: block;
+    width: 100%;
+    margin: 0;
     padding: 20px 10px 60px 10px;
-    text-align: center;
+  }
+
+  @media only screen and (min-width: 610px) and (max-width: 810px) {
+    display: block;
+    width: 600px;
+    margin-left: calc((100vw - 600px) / 2);
+    margin-right: 0;
   }
 }
 
 .sub-section img  {
-  display: inline-block;
   margin: 0 20px;
-  height: 120px;
-  width: 120px;
+  height: 60px;
+  width: 60px;
 
-  @media only screen and (max-width: 610px) {
-    text-align: center;
-  }
+  // @media only screen and (max-width: 610px) {
+  //   text-align: center;
+  // }
 }
 
 .explanation  {
-  display: inline-block;
   vertical-align: top;
 
-  @media only screen and (max-width: 610px) {
-    display: block;
-  }
+  // @media only screen and (max-width: 610px) {
+  //   display: block;
+  // }
 }
 
 .explanation h3 {
