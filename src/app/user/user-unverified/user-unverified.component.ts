@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router }            from '@angular/router';
-import { Title }        from '@angular/platform-browser';
-import { Subscription } from 'rxjs/Rx';
+import { Title }             from '@angular/platform-browser';
+import { Subscription }      from 'rxjs/Rx';
 
 import { LoadingService } from '../../loading';
 import { AuthService }    from '../../auth';

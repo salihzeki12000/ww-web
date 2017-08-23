@@ -73,7 +73,7 @@
 
   <div *ngIf="itemsSelected && shareType === 'Share'">
     <div class="form-housing">
-      <input class="share-users-search" type="text" placeholder="Search for people..." #text (keyup)="filterSearch(text.value)">
+      <input type="text" placeholder="Search for people..." #text (keyup)="filterSearch(text.value)">
 
       <div *ngIf="validAddUser">
         <h5 class="user-search-header">Selected users ({{ selectedUsers.length }})</h5>

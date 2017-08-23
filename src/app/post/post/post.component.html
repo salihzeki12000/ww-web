@@ -34,6 +34,8 @@
     </div>
   </div>
 
+
+
   <div class="content">
     <div [class.editing]="editing">
       <div class="view">
@@ -45,12 +47,15 @@
       <textarea rows="4" [value]="post.content" class="edit" (keyup.enter)="updatePost(editedPost.value)" (blur)="editing = false" #editedPost autofocus></textarea>
       <p class="edit-note">Enter to save, click anywhere else to cancel</p>
     </div>
-
   </div>
+
+
 
   <div *ngIf="post?.img">
     <img class="post-img" src="{{ post?.img }}" alt="" (dblclick)="likePost()">
   </div>
+
+
 
   <div *ngIf="post?.link_url">
     <div class="link-preview">
@@ -61,6 +66,8 @@
       </a>
     </div>
   </div>
+
+
 
   <div class="post-reaction">
     <i class="fa fa-heart fa-lg" aria-hidden="true" (click)="likePost()" *ngIf="userLike"></i>
@@ -78,6 +85,9 @@
     <p class="post-reaction-stats" *ngIf="post?.comments.length > 0" (click)="seeComments = !seeComments">{{ post.comments.length }} {{ commentCount }}</p>
   </div>
 
+
+
+
   <div class="post-comments">
     <form [formGroup]="commentForm">
       <img src="{{ currentUser?.display_picture }}" alt="" class="user-post-thumbnail">
@@ -94,13 +104,16 @@
             <p *ngIf="comment?.time_ago !== ''">{{ comment?.time_ago }}</p>
             <p *ngIf="comment?.time_ago === ''">{{ comment?.created_at | date: 'dd MMM yyyy (EEE)' }}</p>
           </div>
-          
+
         </div>
         <h6 class="post-comment-delete" (click)="confirmDeleteComment(i)">x</h6>
       </div>
     </div>
   </div>
 </div>
+
+
+
 
 <!-- delete post -->
 <div class="custom-modal" *ngIf="deletePost">
@@ -121,6 +134,8 @@
     </div>
   </div>
 </div>
+
+
 
 
 <!-- delete comment -->

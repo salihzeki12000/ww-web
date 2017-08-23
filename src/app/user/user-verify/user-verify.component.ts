@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Title }        from '@angular/platform-browser';
+import { Title }  from '@angular/platform-browser';
 
 import { LoadingService } from '../../loading';
 import { AuthService }    from '../../auth';

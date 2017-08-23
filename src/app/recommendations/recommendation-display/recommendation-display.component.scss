@@ -10,6 +10,10 @@
   }
 }
 
+
+
+/* header */
+
 .recommend-header {
   text-align: center;
 
@@ -46,6 +50,11 @@
   }
 }
 
+
+
+
+/* message from user who recommended */
+
 .recommendation-message {
   text-align: left;
   padding: 40px 20px 20px 20px;
@@ -66,41 +75,10 @@
   text-align: justify;
 }
 
-.details {
-  display: inline-block;
-  width: 290px;
-  padding-top: 15px;
-  text-align: left;
-  vertical-align: top;
 
-  @media only screen and (max-width: 400px) {
-    display: block;
-    width: calc(100vw - 20px);
-    min-width: 300px;
-    margin-left: 10px;
-    padding-bottom: 20px;
-  }
 
-  @media only screen and (min-width: 400px) and (max-width: 600px) {
-    display: block;
-    width: calc(100vw - 40px);
-    margin-left: 20px;
-    padding-bottom: 20px;
-  }
-}
 
-.map  {
-  display: inline-block;
-
-  @media only screen and (max-width: 300px) {
-    margin-left: 0;
-  }
-
-  @media only screen and (min-width: 300px) and (max-width: 600px) {
-    display: block;
-    margin-left: calc((100vw - 300px) /2);
-  }
-}
+/* pictures of place */
 
 .main > .slider {
   background-color: black;
@@ -134,11 +112,48 @@
 }
 
 
-/* add to itinerary form */
-.progress-tracker li {
-  width: 50%;
 
-  @media only screen and (max-width: 500px) {
-    width: 100%;
+
+
+/* details of the place */
+
+.details {
+  display: inline-block;
+  width: 290px;
+  padding-top: 15px;
+  text-align: left;
+  vertical-align: top;
+
+  @media only screen and (max-width: 400px) {
+    display: block;
+    width: calc(100vw - 20px);
+    min-width: 300px;
+    margin-left: 10px;
+    padding-bottom: 20px;
+  }
+
+  @media only screen and (min-width: 400px) and (max-width: 600px) {
+    display: block;
+    width: calc(100vw - 40px);
+    margin-left: 20px;
+    padding-bottom: 20px;
+  }
+}
+
+
+
+
+/* map of place */
+
+.map  {
+  display: inline-block;
+
+  @media only screen and (max-width: 300px) {
+    margin-left: 0;
+  }
+
+  @media only screen and (min-width: 300px) and (max-width: 600px) {
+    display: block;
+    margin-left: calc((100vw - 300px) /2);
   }
 }

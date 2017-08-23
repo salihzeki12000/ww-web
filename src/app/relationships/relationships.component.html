@@ -1,9 +1,9 @@
-<div class="sub-route-container">
-  <div class="sub-route-header">
+<div class="box-container">
+  <div class="box-container-header">
     <h3>Your connections</h3>
     <header>
       <nav>
-        <ul class="sub-route-nav-tabs">
+        <ul class="box-container-nav-tabs">
           <li routerLinkActive="active"><a [routerLink]="['followers']">Followers<span class="tab-count">{{ followers?.length }}</span></a></li>
           <li routerLinkActive="active"><a [routerLink]="['following']">Following<span class="tab-count">{{ followings?.length }}</span></a></li>
           <li routerLinkActive="active"><a [routerLink]="['follow-request']">Follow requests<span class="tab-count">{{ pendingFollowers?.length }}</span></a></li>

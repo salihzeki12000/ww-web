@@ -5,8 +5,8 @@
 
   <form [formGroup]="editItineraryForm" (ngSubmit)="checkEdit()">
 
-    <h4 class="itinerary-edit-section-header">Basic Details</h4>
-    <div class="itinerary-edit-section-details">
+    <h4 class="form-section-header">Basic Details</h4>
+    <div class="form-section-details">
       <div class="itinerary-edit-item">
         <h5>Itinerary Name</h5>
         <div>
@@ -105,8 +105,8 @@
   </form>
 
 
-  <h4 class="itinerary-edit-section-header">Member Details</h4>
-  <div class="itinerary-edit-section-details">
+  <h4 class="form-section-header">Member Details</h4>
+  <div class="form-section-details">
     <div *ngFor="let member of itinerary?.members; let i = index" class="itinerary-member-list">
       <ww-user-profile-card [user]="member" [currentUser]="currentUser"></ww-user-profile-card>
 
@@ -133,8 +133,8 @@
     </div>
   </div>
 
-  <h4 class="itinerary-edit-section-header">Share Details</h4>
-  <div class="itinerary-edit-section-details">
+  <h4 class="form-section-header">Share Details</h4>
+  <div class="form-section-details">
     <div *ngIf="!shared">
       <h5>This itinerary has not been shared with anyone</h5>
     </div>
@@ -170,7 +170,7 @@
     </div>
   </div>
 
-  <h4 class="itinerary-edit-section-header">Others</h4>
+  <h4 class="form-section-header">Others</h4>
   <h4 *ngIf="masterAdmin" class="delete-itinerary" (click)="deleteItinerary = true">Delete this itinerary</h4>
   <h4 *ngIf="!masterAdmin" class="delete-itinerary" (click)="leaveItinerary = true">Leave itinerary</h4>
 

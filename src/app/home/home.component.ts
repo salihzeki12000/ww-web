@@ -44,9 +44,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.titleService.setTitle("Home");
 
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
-      result => {
-        this.user = result;
-      })
+      result => { this.user = result; })
 
     this.postService.getFeed().subscribe(
       result  => {
@@ -57,6 +55,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       })
 
     this.newUser = this.authService.newUser;
+
     if(this.newUser) {
       this.verifyMsg = true;
       this.tourStart = true;
@@ -74,18 +73,23 @@ export class HomeComponent implements OnInit, OnDestroy {
     // }
   }
 
-  reload()  {
-    setTimeout(() =>  {
-      window.location.reload();
-    },1000)
-  }
+  // reload()  {
+  //   setTimeout(() =>  {
+  //     window.location.reload();
+  //   },1000)
+  // }
 
   ngOnDestroy() {
     if(this.feedSubscription) this.feedSubscription.unsubscribe();
     if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
+
     this.loadingService.setLoader(true, "");
     this.authService.newUser = false;
   }
+
+
+
+  // tour related
 
   skipTour()  {
     this.newUser = false;
@@ -120,6 +124,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.tour2 = true;
     this.tour3 = false;
   }
+
+
+
+
+  // itinerary related
 
   createItinerary() {
     this.showItineraryForm = true;

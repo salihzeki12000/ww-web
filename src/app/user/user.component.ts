@@ -86,6 +86,7 @@ export class UserComponent implements OnInit, OnDestroy {
               this.relationships = Object.keys(result['relationships']).map(key => result['relationships'][key])
               this.followers = Object.keys(result['followers']).map(key => result['followers'][key]);
               this.followings = Object.keys(result['followings']).map(key => result['followings'][key]);
+
               this.checkFollowStatus();
             }
           )
@@ -96,10 +97,12 @@ export class UserComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if(this.relationshipsSubscription) this.relationshipsSubscription.unsubscribe();
     if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
+    if(this.checkInSubscription) this.checkInSubscription.unsubscribe();
   }
 
   checkFollowStatus() {
     this.followStatus = '';
+
     if(this.currentUser !== undefined && this.relationships.length > 0)  {
       for (let i = 0; i < this.relationships.length; i++) {
         if(this.relationships[i]['user']['_id'] === this.currentUser['_id'])  {
@@ -141,8 +144,8 @@ export class UserComponent implements OnInit, OnDestroy {
       status = "requestedFollowing"
     }
 
-    this.relationshipService.deleteFollow(this.relationship, status)
-        .subscribe( result => {} )
+    this.relationshipService.deleteFollow(this.relationship, status).subscribe(
+      result => {} )
   }
 
 }

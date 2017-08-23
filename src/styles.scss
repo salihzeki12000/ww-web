@@ -135,6 +135,26 @@ button[disabled] h5 {
 span.italic {
   font-style: italic;
 }
+
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* to display website link */
+
+.website-link {
+  text-decoration: underline;
+  color: #6494ED;
+  margin-bottom: 10px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 /***
 
   Date picker
@@ -169,6 +189,7 @@ span.italic {
 .date-picker h4 span {
   font-weight: 500;
 }
+
 
 
 /***
@@ -218,6 +239,9 @@ span.italic {
   }
 }
 
+
+
+
 /***
 
   Home and profile page itinerary shortcut
@@ -256,6 +280,13 @@ span.italic {
 }
 
 
+
+
+/***
+
+  View all option
+
+*********************************************/
 .view-all {
   padding: 10px;
   text-align: center;
@@ -271,7 +302,14 @@ span.italic {
   color: #567FCC;
 }
 
-/* USER NAME */
+
+
+
+/***
+
+  User name display
+
+*********************************************/
 .username {
   &:hover {
     cursor: pointer;
@@ -287,7 +325,13 @@ span.italic {
   }
 }
 
-/* USER THUMBNAIL IMAGE */
+
+
+/***
+
+  User thumbnail photo
+
+*********************************************/
 .user-profile-thumbnail  {
   height: 30px;
   width: 30px;
@@ -304,7 +348,15 @@ span.italic {
   overflow: hidden;
 }
 
-/* ACTION BUTTONS */
+
+
+
+
+/***
+
+  Response buttons
+
+*********************************************/
 .action-response  {
   padding: 10px 20px;
   text-align: right;
@@ -369,14 +421,13 @@ h5.action-response-primary  {
   }
 }
 
-.response-status > *  {
-  padding: 5px;
-  color: #3C763D;
-  border: 2px solid #3C763D;
-  border-radius: 2px;
-}
 
-/* display of users and followings status */
+
+/*************************
+
+ display of users and followings status
+
+******************************************/
 .already-following  {
   padding: 6px 10px;
   font-weight: 500;
@@ -436,16 +487,14 @@ h5.action-response-primary  {
   }
 }
 
-.cancel-request {
-  color: lightgray;
-  text-align: right;
-  &:hover {
-    cursor: pointer;
-    color: #6494ED;
-  }
-}
 
-/* HOVER MENU */
+
+
+/*****************
+
+ HOVER MENU
+
+********************/
 
 .dots-menu  {
   &:hover {
@@ -467,7 +516,7 @@ h5.action-response-primary  {
 }
 
 .display-card .dots-menu::after,
-.display-photo-housing .dots-menu::after {
+.display-content-housing .dots-menu::after {
   margin-top: 0;
   padding-top: 5px;
   padding-right: 20px;
@@ -533,7 +582,14 @@ h5.action-response-primary  {
 }
 
 
-/********** SLIDER FOR IMAGES */
+
+
+/*******************
+
+ SLIDER FOR IMAGES
+
+************************/
+
 .slider {
   position: relative;
 	margin: 5px auto 15px auto;
@@ -617,9 +673,12 @@ h5.action-response-primary  {
   z-index: 10;
 }
 
-/***
 
-      USER PROFILE DISPLAY
+
+
+/************************
+
+  USER PROFILE DISPLAY
 
 *****************************/
 
@@ -635,7 +694,7 @@ h5.action-response-primary  {
   background-color: white;
   overflow: hidden;
 
-  @media only screen and (max-width: 670px) {
+  @media only screen and (max-width: 650px) {
     margin-top: -30px;
     left: calc((100vw - 150px) /2);
   }
@@ -647,14 +706,14 @@ h5.action-response-primary  {
   width: 360px;
   left: calc(((100vw - 600px)/2) + 190px);;
 
-  @media only screen and (max-width: 670px) {
+  @media only screen and (max-width: 650px) {
     margin-top: 185px;
     left: 10px;
     width: calc(100% - 20px);
     text-align: center;
   }
 
-  @media only screen and (min-width: 670px) and (max-width: 890px) {
+  @media only screen and (min-width: 650px) and (max-width: 890px) {
     left: calc(((100vw - 600px) / 2) + 179px);
   }
 }
@@ -675,7 +734,7 @@ h5.action-response-primary  {
   background: linear-gradient(to right, #2F80ED, #56CCF2);
   z-index: -1;
 
-  @media only screen and (max-width: 670px) {
+  @media only screen and (max-width: 650px) {
     height: 215px;
   }
 }
@@ -686,14 +745,14 @@ h5.action-response-primary  {
   margin-top: 20px;
   left: calc(((100vw - 600px)/2) + 180px);
 
-  @media only screen and (max-width: 670px) {
+  @media only screen and (max-width: 650px) {
     left: 0;
     width: 100%;
     min-width: 300px;
     margin-top: 115px;
   }
 
-  @media only screen and (min-width: 670px) and (max-width: 890px) {
+  @media only screen and (min-width: 650px) and (max-width: 890px) {
     left: calc(((100vw - 600px) / 2) + 170px);
   }
 }
@@ -728,34 +787,13 @@ h5.action-response-primary  {
   text-align: center;
 }
 
-.user-profile-posts  {
-  position: absolute;
-  right: calc((100vw - 600px)/2);
-  width: 600px;
-  margin-top: 180px;
 
-  @media only screen and (max-width: 670px) {
-    width: 100%;
-    min-width: 300px;
-    margin-top: 245px;
-    right: 0;
-  }
 
-  @media only screen and (min-width: 670px) and (max-width: 890px) {
-    right: calc((100vw - 600px)/2);
-  }
+/*****************
 
-  @media only screen and (min-width: 890px) and (max-width: 1200px) {
-    right: calc((100vw - 890px)/2);
-  }
-}
+ User search
 
-.user-profile-posts-list  {
-  display: flex;
-  flex-direction: column-reverse;
-}
-
-/* user search */
+*********************/
 .user-search-header  {
   margin-top: 10px;
   padding: 5px;
@@ -766,16 +804,13 @@ h5.action-response-primary  {
   background-color: #F6F6F6;
 }
 
-.search-result-card {
-  padding: 20px 10px;
-}
-
 .toggle-invite-member {
   float: right;
   padding: 5px 10px;
   color: #6494ED;
   border: 2px solid #6494ED;
   border-radius: 5px;
+
   &:hover {
     color: #19CC72;
     border: 2px solid #19CC72;
@@ -789,6 +824,7 @@ h5.action-response-primary  {
   color: #19CC72;
   border: 2px solid #19CC72;
   border-radius: 5px;
+
   &:hover {
     color: #808080;
     border: 2px solid #808080;
@@ -796,7 +832,11 @@ h5.action-response-primary  {
   }
 }
 
-/********** URL LINK PREVIEW */
+/*****************
+
+ URL LINK PREVIEW
+
+*********************/
 .delete-link  {
   position: absolute;
   top:0;
@@ -843,7 +883,11 @@ h5.action-response-primary  {
   background-color: #567FCC;
 }
 
-/********** FORM STYLES */
+/***************
+
+ FORM STYLES
+
+***********************/
 label {
   margin-bottom: 3px;
   padding-left: 1px;
@@ -944,12 +988,23 @@ textarea.ng-invalid.ng-touched {
   border: 2px solid red;
 }
 
-/* form display */
+.fields-required  {
+  margin-bottom: 10px;
+  text-decoration: underline;
+}
+
+
+/********************
+
+ Form display
+
+*********************/
+
 .form-card {
   position: fixed;
+  top: 40px;
   left: calc((100vw - 600px) /2);
   width: 600px;
-  top: 40px;
   max-height: calc(100vh - 80px);
   background-color: white;
   -webkit-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
@@ -965,6 +1020,99 @@ textarea.ng-invalid.ng-touched {
     left: 0;
   }
 }
+
+
+
+/* form header */
+
+.form-header {
+  position: fixed;
+  width: 600px;
+  padding: 15px 20px 5px 20px;
+  background-color: #567FCC;
+  z-index: 11;
+
+  @media only screen and (max-width: 650px) {
+    width: 100%;
+    min-width: 300px;
+  }
+}
+
+.form-header > h3 {
+  display: inline-block;
+  color: #F9FBFB;
+
+  @media only screen and (max-width: 650px) {
+    font-size: 1em;
+  }
+}
+
+.form-header > a {
+  float: right;
+  width: 15px;
+  height: 15px;
+  text-align: center;
+  color: #CCC;
+  border-radius: 50%;
+  &:hover {
+    color: white;
+    text-decoration: none;
+    background-color: #CCC;
+  }
+}
+
+.form-header-name {
+  margin-top: 5px;
+  padding: 10px 0 5px 0;
+  border-top: 1px solid lightgray;
+}
+
+.form-header-name-delete {
+  margin-top: 40px;
+  padding: 10px 20px;
+  background-color: red;
+}
+
+.form-header-name > h4,
+.form-header-name-delete > h4  {
+  font-weight: 400;
+  color: $whiteText;
+  letter-spacing: 1px;
+}
+
+.form-housing {
+  margin-top: 40px;
+  padding: 20px;
+
+  @media only screen and (max-width: 500px) {
+    padding: 20px 10px;
+  }
+}
+
+
+
+/* form section */
+
+.form-section-header  {
+  padding-bottom: 2px;
+  font-weight: bold;
+  letter-spacing: .5px;
+}
+
+.form-section-details {
+  margin-bottom: 40px;
+  padding: 5px 10px;
+
+  @media only screen and (max-width: 500px) {
+    padding: 5px;
+  }
+}
+
+.form-section-details > h4  {
+  margin-bottom: 20px;
+}
+
+
 
 /* progress tracker */
 .progress-tracker-section {
@@ -1066,6 +1214,13 @@ textarea.ng-invalid.ng-touched {
   }
 }
 
+
+
+/*************
+
+ Dragged location
+
+********************/
 .dragged-address  {
   margin: 10px 0;
   padding: 10px 5px;
@@ -1076,99 +1231,14 @@ span.dragged-location {
   font-weight: 500;
 }
 
-/* form & edit header for form and edit modal display*/
-.form-header {
-  position: fixed;
-  width: 600px;
-  padding: 15px 20px 5px 20px;
-  background-color: #567FCC;
-  z-index: 11;
 
-  @media only screen and (max-width: 650px) {
-    width: 100%;
-    min-width: 300px;
-  }
-}
 
-.form-header > h3 {
-  display: inline-block;
-  color: #F9FBFB;
 
-  @media only screen and (max-width: 650px) {
-    font-size: 1em;
-  }
-}
+/*******
 
-.form-header > a {
-  float: right;
-  width: 15px;
-  height: 15px;
-  text-align: center;
-  color: #CCC;
-  border-radius: 50%;
-  &:hover {
-    color: white;
-    text-decoration: none;
-    background-color: #CCC;
-  }
-}
+  for accommodation form
 
-.form-header-name {
-  margin-top: 5px;
-  padding: 10px 0 5px 0;
-  border-top: 1px solid lightgray;
-}
-
-.form-header-name-delete {
-  margin-top: 40px;
-  padding: 10px 20px;
-  background-color: red;
-}
-
-.form-header-name > h4,
-.form-header-name-delete > h4  {
-  font-weight: 400;
-  color: $whiteText;
-  letter-spacing: 1px;
-}
-
-.form-housing {
-  margin-top: 40px;
-  padding: 20px;
-
-  @media only screen and (max-width: 500px) {
-    padding: 20px 10px;
-  }
-}
-
-.form-section-header,
-.profile-edit-section-header,
-.itinerary-edit-section-header  {
-  padding-bottom: 2px;
-  font-weight: bold;
-  letter-spacing: .5px;
-}
-
-.form-section-details,
-.profile-edit-section-details,
-.itinerary-edit-section-details {
-  margin-bottom: 40px;
-  padding: 5px 10px;
-
-  @media only screen and (max-width: 500px) {
-    padding: 5px;
-  }
-}
-
-.form-section-details > h4  {
-  margin-bottom: 20px;
-}
-
-.fields-required  {
-  margin-bottom: 10px;
-  text-decoration: underline;
-}
-
+*******************************/
 .date-to-visit,
 .time-to-visit  {
   display: inline-block;
@@ -1176,9 +1246,13 @@ span.dragged-location {
   vertical-align: top;
 }
 
-.anytime-input > label {
-  margin-bottom: 0;
-}
+
+
+/*************
+
+  for activity form
+
+***************************/
 
 /* meal tags for activity */
 .meal-tags > label {
@@ -1212,35 +1286,57 @@ span.dragged-location {
   border: 1px solid #19CC72;
 }
 
-/* show editing view for post */
-.editing > .view{
-  display: none;
-}
 
 
-/***************************************************************
- Copy itinerary list style
- **************************************************************/
-.copy-to-itinerary-list {
-  margin-top: 15px;
-}
 
-.copy-to-itinerary  {
-  padding: 15px 10px;
-  border: 1px solid lightgray;
-  &:hover {
-    background-color: #F6F6F6;
-    cursor: pointer;
+
+/*************
+
+  for transport form
+
+***************************/
+
+/* to display flight details in form - prevent edit */
+.flight-details {
+  height: 40px;
+  @media only screen and (max-width: 700px) {
+    margin-bottom: 20px;
+    height: auto;
   }
 }
 
-.copy-to-itinerary h4  {
-  font-weight: 400;
+.flight-details > * {
+  display: inline-block;
+  @media only screen and (max-width: 700px) {
+    display: block;
+  }
 }
 
+.flight-details > h5 {
+  width: 150px;
+  color: grey;
+  letter-spacing: .5px;
+  @media only screen and (max-width: 700px) {
+    padding-bottom: 3px;
+  }
+}
+
+.flight-details > input {
+  width: 400px;
+  margin-bottom: 0;
+  @media only screen and (max-width: 450px) {
+    width: 100%;
+  }
+}
+
+
+
 /***************************************************************
- ACCOMMODATION / TRANSPORT / ACTIVITY / RESOURCE CARDS SUMMARY
- **************************************************************/
+
+ ACCOMMODATION / TRANSPORT / ACTIVITY / RESOURCE SUMMARY
+
+**************************************************************/
+
 .event-summary-section  {
   position: fixed;
   margin: 15px 0 0 10px;
@@ -1250,6 +1346,197 @@ span.dragged-location {
     display: none;
   }
 }
+
+
+/* show summary as pop up in smaller screens < 890px */
+
+.show-summary {
+  position: fixed;
+  display: block;
+  top: 40px;
+  left: 10px;
+  width: 380px;
+  background-color: white;
+  z-index: 1001;
+
+  @media only screen and (max-width: 420px) {
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-width: 300px;
+  }
+
+  @media only screen and (max-width: 890px) {
+    margin: 0;
+  }
+}
+
+.event-summary-popup {
+  display: none;
+
+  @media only screen and (max-width: 890px) {
+    display: block;
+    position: fixed;
+    bottom: 50px;
+    right: 10px;
+    padding: 15px;
+    background-color: lightgray;
+    border: 1px solid lightgray;
+    border-radius: 50%;
+    opacity: .5;
+    z-index: 499;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+
+/* summary header */
+
+.event-summary-header {
+  padding: 10px 10px 5px 10px;
+  background-color: rgb(237, 189, 100);
+
+  @media only screen and (max-width: 890px) {
+    color: #F9FBFB;
+    background-color: #6494ED;
+  }
+
+  @media only screen and (max-width: 420px) {
+    padding: 15px 0 10px 0;
+    text-align: center;
+  }
+}
+
+.close-pop-up {
+  display: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  @media only screen and (max-width: 890px) {
+    display: block;
+    margin: -20px 12px 0 0;
+    color: #F9FBFB;
+    float: right;
+  }
+
+  @media only screen and (max-width: 420px) {
+    margin-top: -25px;
+  }
+}
+
+
+
+/* summary list */
+
+.event-summary  {
+  position: fixed;
+  width: 210px;
+  max-height: calc(100vh - 150px);
+  background-color: rgba(237, 189, 100, 0.3);
+  overflow: auto;
+
+  @media only screen and (max-width: 420px) {
+    width: 100%;
+    min-width: 300px;
+    max-height: calc(100vh - 80px);
+    background-color: white;
+  }
+
+  @media only screen and (min-width: 420px) and (max-width: 890px) {
+    width: 380px;
+    background-color: white;
+  }
+
+  @media only screen and (min-width: 890px) and (max-width: 1090px) {
+    max-height: calc(100vh - 190px);
+  }
+}
+
+.event-summary::-webkit-scrollbar {
+  background-color: rgba(237, 189, 100, 0.3);
+  width: 8px;
+
+  @media only screen and (max-width: 890px) {
+    background-color: rgba(100, 148, 237, 0.3);
+  }
+}
+
+.event-summary::-webkit-scrollbar-thumb {
+  background-color: rgba(237, 189, 100, 0.9);
+
+  @media only screen and (max-width: 890px) {
+    background-color: rgba(100, 148, 237, 0.9);
+  }
+}
+
+
+/* each summary item */
+
+.event-summary-item {
+  text-align: right;
+  border-top: 1px solid lightgray;
+  // box-shadow: inset 0px 0px 1px 1.5px rgba(0, 0, 0, 0.2);
+  // background-color: white;
+  &:hover {
+    background-color: white;
+    cursor: pointer;
+  }
+
+  @media only screen and (max-width: 890px) {
+    font-size: 120%;
+    border: none;
+    border-bottom: 1px solid lightgrey;
+  }
+}
+
+.event-summary-item .index {
+  margin: 10px 5px;
+  padding: 3px 5px;
+  font-weight: 600;
+  border: 2px solid;
+  border-radius: 50%;
+  float: left;
+}
+
+.event-summary-item > a {
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.event-summary-item > a > * {
+  font-size: 11.62px;
+}
+
+.event-summary-item .date {
+  margin-bottom: 5px;
+  padding: 20px 10px 0 10px;
+  color: grey;
+  font-weight: 500;
+}
+
+.event-summary-note  {
+  padding: 0 10px 10px 10px;
+  color: #808080;
+}
+
+.event-out-of-range {
+  text-align: center;
+  color: #F9FBFB;
+  background-color: red;
+}
+
+.highlighted-item {
+  background-color: rgba(237, 189, 100, .5) !important;
+}
+
+
+
+/* when there is no item for each category */
 
 .nil-event-message  {
   position: fixed;
@@ -1312,185 +1599,14 @@ span.dragged-location {
   }
 }
 
-.show-summary {
-  position: fixed;
-  display: block;
-  top: 40px;
-  left: 10px;
-  width: 380px;
-  background-color: white;
-  z-index: 1001;
-
-  @media only screen and (max-width: 420px) {
-    top: 0;
-    left: 0;
-    width: 100%;
-    min-width: 300px;
-  }
-
-  @media only screen and (max-width: 890px) {
-    margin: 0;
-  }
-}
-
-.event-summary-header {
-  padding: 10px 10px 5px 10px;
-  background-color: rgb(237, 189, 100);
-
-  @media only screen and (max-width: 890px) {
-    color: #F9FBFB;
-    background-color: #6494ED;
-  }
-
-  @media only screen and (max-width: 420px) {
-    padding: 15px 0 10px 0;
-    text-align: center;
-  }
-}
-
-.close-pop-up {
-  display: none;
-
-  &:hover {
-    cursor: pointer;
-  }
-
-  @media only screen and (max-width: 890px) {
-    display: block;
-    margin: -20px 12px 0 0;
-    color: #F9FBFB;
-    float: right;
-  }
-
-  @media only screen and (max-width: 420px) {
-    margin-top: -25px;
-  }
-}
-
-.event-summary  {
-  position: fixed;
-  width: 210px;
-  max-height: calc(100vh - 150px);
-  background-color: rgba(237, 189, 100, 0.3);
-  overflow: auto;
-
-  @media only screen and (max-width: 420px) {
-    width: 100%;
-    min-width: 300px;
-    max-height: calc(100vh - 80px);
-    background-color: white;
-  }
-
-  @media only screen and (min-width: 420px) and (max-width: 890px) {
-    width: 380px;
-    background-color: white;
-  }
-
-  @media only screen and (min-width: 890px) and (max-width: 1090px) {
-    max-height: calc(100vh - 190px);
-  }
-}
-
-.event-summary::-webkit-scrollbar {
-  background-color: rgba(237, 189, 100, 0.3);
-  width: 8px;
-
-  @media only screen and (max-width: 890px) {
-    background-color: rgba(100, 148, 237, 0.3);
-  }
-}
-
-.event-summary::-webkit-scrollbar-thumb {
-  background-color: rgba(237, 189, 100, 0.9);
-
-  @media only screen and (max-width: 890px) {
-    background-color: rgba(100, 148, 237, 0.9);
-  }
-}
-
-.event-out-of-range {
-  text-align: center;
-  color: #F9FBFB;
-  background-color: red;
-}
 
 
-.event-summary-item {
-  text-align: right;
-  border-top: 1px solid lightgray;
-  // box-shadow: inset 0px 0px 1px 1.5px rgba(0, 0, 0, 0.2);
-  // background-color: white;
-  &:hover {
-    background-color: white;
-    cursor: pointer;
-  }
+/***************************************
 
-  @media only screen and (max-width: 890px) {
-    font-size: 120%;
-    border: none;
-    border-bottom: 1px solid lightgrey;
-  }
-}
-
-.event-summary-item .index {
-  margin: 10px 5px;
-  padding: 3px 5px;
-  font-weight: 600;
-  border: 2px solid;
-  border-radius: 50%;
-  float: left;
-}
-
-.event-summary-item > a {
-  &:hover {
-    text-decoration: none;
-  }
-}
-
-.event-summary-item > a > * {
-  font-size: 11.62px;
-}
-
-.event-summary-item .date {
-  margin-bottom: 5px;
-  padding: 20px 10px 0 10px;
-  color: grey;
-  font-weight: 500;
-}
-
-.event-summary-note  {
-  padding: 0 10px 10px 10px;
-  color: #808080;
-}
-
-.event-summary-popup {
-  display: none;
-
-  @media only screen and (max-width: 890px) {
-    display: block;
-    position: fixed;
-    bottom: 50px;
-    right: 10px;
-    padding: 15px;
-    background-color: lightgray;
-    border: 1px solid lightgray;
-    border-radius: 50%;
-    opacity: .5;
-    z-index: 499;
-    &:hover {
-      cursor: pointer;
-    }
-  }
-}
-
-.highlighted-item {
-  // border-right: 8px solid rgb(237, 189, 100);
-  background-color: rgba(237, 189, 100, .5) !important;
-}
-
-/***************************************************************
  ACCOMMODATION / TRANSPORT / ACTIVITY / RESOURCE LIST
- **************************************************************/
+
+**************************************************************/
+
 .event-list {
   display: flex;
   flex-direction: column;
@@ -1507,9 +1623,15 @@ span.dragged-location {
   }
 }
 
-/***************************************************************
+
+
+
+/**********************************************
+
  ACCOMMODATION / TRANSPORT / ACTIVITY / RESOURCE CARDS DISPLAY
- **************************************************************/
+
+**************************************************************/
+
 ww-activity,
 ww-accommodation,
 ww-transport,
@@ -1528,9 +1650,11 @@ ww-resource {
   }
 }
 
+
+/* main card housing */
+
 .display-card {
   position: relative;
-  display: inline-block;
   margin: 15px;
   padding: 0 0 20px 0;
   width: 600px;
@@ -1574,6 +1698,9 @@ ww-resource {
   }
 }
 
+
+/* image for card display */
+
 .display-card-image {
   display: inline-block;
   vertical-align: top;
@@ -1591,8 +1718,8 @@ ww-resource {
   box-shadow: 0px 0px 8px rgba(0,0,0,.3);
 
   @media only screen and (max-width: 400px) {
-    width: calc(100vw - 20px);
     margin: 0;
+    width: calc(100vw - 20px);
     height: calc(100vw * 0.66);
     min-width: 300px;
     min-height: 200px;
@@ -1609,6 +1736,27 @@ ww-resource {
     box-shadow: none;
   }
 }
+
+.photo-credit {
+  position: absolute;
+  margin-top: -30px;
+  max-width: 165px;
+  left: 17px;
+  padding: 0 3px;
+  background-color: rgba(255,255,255,.8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @media only screen and (max-width: 650px) {
+    max-width: 290px;
+    margin-top: -15px;
+    left: 5px;
+  }
+}
+
+
+/* placeholder when image does not exist */
 
 .display-card-image-placeholder {
   display: inline-block;
@@ -1636,25 +1784,10 @@ ww-resource {
   }
 }
 
-.photo-credit {
-  position: absolute;
-  margin-top: -30px;
-  max-width: 165px;
-  left: 17px;
-  padding: 0 3px;
-  background-color: rgba(255,255,255,.8);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 
-  @media only screen and (max-width: 650px) {
-    max-width: 290px;
-    margin-top: -15px;
-    left: 5px;
-  }
-}
+/* housings to display content with photo */
 
-.display-photo-housing  {
+.display-content-housing  {
   display: inline-block;
   width: 406.56px;
 
@@ -1667,6 +1800,10 @@ ww-resource {
 .display-details-housing  {
   padding: 0 20px;
 }
+
+
+
+/* highlight card when selected from summary */
 
 .highlighted-event  {
   background-color: rgba(100,148,237,.5);
@@ -1690,13 +1827,18 @@ ww-resource {
   }
 }
 
-.truncate {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
 
-/* accommodation/transport/activity display */
+
+
+/***********************************
+
+ accommodation/transport/activity/resource details display
+
+**************************************************************/
+
+
+/* header background for activity / accommodation / resource */
+
 .display-header-background  {
   position: absolute;
   top: 0;
@@ -1709,6 +1851,10 @@ ww-resource {
     display: none;
   }
 }
+
+
+
+/* date header for activity / accommodation / transport */
 
 .display-date-header  {
   padding: 7px 20px;
@@ -1732,6 +1878,63 @@ ww-resource {
   border-radius: 25px;
 }
 
+
+
+/* display individual item for events / print / recommendation */
+
+.details-item  {
+  margin-bottom: 10px;
+}
+
+.details-item > i {
+  vertical-align: top;
+  color: grey;
+}
+
+.details-item > h5 {
+  display: inline-block;
+  width: 90%;
+  vertical-align: top;
+  color: grey;
+  line-height: 1.5;
+}
+
+
+
+/* display note in events / print / recommendation */
+
+.note  {
+  color: grey;
+  line-height: 1.5;
+  overflow-wrap: break-word;
+}
+
+.note > h6  {
+  white-space: pre-line;
+}
+
+
+
+
+
+/**********************
+
+ activity / accommodation display
+
+***********************************/
+
+/*  activity / accommodation name header */
+
+.accommodation-header,
+.activity-header {
+  @include headerText;
+  margin: 10px 0;
+}
+
+
+
+/* recommended by for activity / accommodation */
+
 .recommended-by-note,
 .check-in-note  {
   color: #808080;
@@ -1745,10 +1948,53 @@ ww-resource {
   }
 }
 
-.accommodation-city {
-  margin-top: 10px;
-  color: #6494ED;
+/* toggle contact display for activity / accommodation */
+
+.toggle-contact-details {
+  margin-bottom: 5px;
+  &:hover {
+    cursor: pointer;
+  }
 }
+.toggle-contact-details > h5 > i {
+  text-align: right;
+}
+
+.toggle-contact-details > * {
+  display: inline-block;
+}
+
+
+
+
+/***********
+
+ activity display
+
+********************/
+
+/* meal display in activity / print / summary */
+
+.meals-display  {
+  display: inline-block;
+}
+
+.meals-display h5  {
+  margin: 10px 2px 0 0;
+  padding: 2px 10px;
+  border: 1px solid #19CC72;
+  border-radius: 15px;
+  color: #19CC72;
+}
+
+
+
+
+/***********
+
+ transport display
+
+********************/
 
 .transport-header {
   padding: 20px;
@@ -1774,114 +2020,25 @@ ww-resource {
   }
 }
 
-.route-visual {
-  display: inline-block;
-  width: 60px;
-  margin-left: 20px;
-  border-bottom: 3px dotted #C6C6C6;
-
-  @media only screen and (max-width: 650px) {
-    width: 20px;
-  }
-}
-
-.route-visual i  {
-  position: absolute;
-  margin-top: -6px;
-  margin-left: -10px;
-  color: #C6C6C6;
-}
-
-.route-visual .fa-plane  {
-  transform: rotate(45deg);
+/* airline details */
+.flight-airline {
+  padding: 5px 0;
 }
 
 
-.accommodation-header,
-.activity-header {
-  @include headerText;
-  margin: 10px 0;
+/* if codeshare is true */
+.operating-message  {
+  padding: 5px 0 10px 0;
 }
 
-.meals-display  {
-  display: inline-block;
-}
-
-.meals-display h5  {
-  margin: 10px 2px 0 0;
-  padding: 2px 10px;
-  border: 1px solid #19CC72;
-  border-radius: 15px;
-  color: #19CC72;
+.operating-message > h5 {
+  color: red;
 }
 
 
-.transport-details {
-  padding: 0 10px;
-}
 
-.website-link {
-  text-decoration: underline;
-  color: #6494ED;
-  margin-bottom: 10px;
-  &:hover {
-    cursor: pointer;
-  }
-}
+/* transport details display */
 
-.note{
-  color: grey;
-  line-height: 1.5;
-  overflow-wrap: break-word;
-}
-
-.note > h6  {
-  white-space: pre-line;
-}
-
-/* ACCOMODATION & ACTIVITY DISPLAY */
-.toggle-contact-details {
-  margin-bottom: 5px;
-  &:hover {
-    cursor: pointer;
-  }
-}
-.toggle-contact-details > h5 > i {
-  text-align: right;
-}
-
-.toggle-contact-details > * {
-  display: inline-block;
-}
-
-.details-item  {
-  margin-bottom: 10px;
-}
-
-.details-item > i {
-  vertical-align: top;
-  color: grey;
-}
-
-.details-item > h5 {
-  display: inline-block;
-  width: 90%;
-  vertical-align: top;
-  color: grey;
-  line-height: 1.5;
-}
-
-.activity-tags {
-  position: absolute;
-  bottom: 30px;
-  color: grey;
-}
-
-.activity-category  {
-  display: inline-block;
-}
-
-/* transport display */
 .departure-arrival-details {
   padding: 20px 0;
   background-color: #F6F6F6;
@@ -1932,7 +2089,7 @@ ww-resource {
 }
 
 h5.approach-details,
-h5.date-details  {
+h5.transport-date-details  {
   display: inline-block;
   font-weight: 600;
   color: #3A4A4D;
@@ -1942,6 +2099,34 @@ h5.date-details  {
   }
 }
 
+
+/* visual from departure to arrival */
+
+.route-visual {
+  display: inline-block;
+  width: 60px;
+  margin-left: 20px;
+  border-bottom: 3px dotted #C6C6C6;
+
+  @media only screen and (max-width: 650px) {
+    width: 20px;
+  }
+}
+
+.route-visual i  {
+  position: absolute;
+  margin-top: -6px;
+  margin-left: -10px;
+  color: #C6C6C6;
+}
+
+.route-visual .fa-plane  {
+  transform: rotate(45deg);
+}
+
+
+/* rental display */
+
 .rental-company,
 .rental-contact {
   display: inline-block;
@@ -1949,56 +2134,16 @@ h5.date-details  {
   margin-bottom: 20px;
 }
 
-/* flight details display */
-.flight-airline {
-  padding: 5px 0;
-}
-
-.flight-details {
-  height: 40px;
-  @media only screen and (max-width: 700px) {
-    margin-bottom: 20px;
-    height: auto;
-  }
-}
-
-.flight-details > * {
-  display: inline-block;
-  @media only screen and (max-width: 700px) {
-    display: block;
-  }
-}
-
-.flight-details > h5 {
-  width: 150px;
-  color: grey;
-  letter-spacing: .5px;
-  @media only screen and (max-width: 700px) {
-    padding-bottom: 3px;
-  }
-}
-
-.flight-details > input {
-  width: 400px;
-  margin-bottom: 0;
-  @media only screen and (max-width: 450px) {
-    width: 100%;
-  }
-}
-/* if codeshare is true */
-.operating-message  {
-  padding: 5px 0 10px 0;
-}
-
-.operating-message > h5 {
-  color: red;
-}
 
 
 
-/********************************
-  RESOURCE DISPLAY
- *******************************/
+
+/***********
+
+  resource display
+
+ ********************/
+
 .resource-link-preview {
   position: relative;
   margin-bottom: 15px;
@@ -2023,9 +2168,6 @@ h5.date-details  {
   word-wrap: break-word;
 }
 
-.resource-content  {
-  margin-bottom: 15px;
-}
 
 .resource-link-img {
   display: inline-block;
@@ -2033,11 +2175,6 @@ h5.date-details  {
   height: 50px;
 }
 
-// .resource-link-content  {
-//   display: inline-block;
-//   width: 200px;
-//   vertical-align: top;
-// }
 
 .resource-link-title  {
   display: inline-block;
@@ -2059,7 +2196,10 @@ h5.date-details  {
   color: grey;
 }
 
-/***
+
+
+
+/************
 
   CREATED BY DISPLAY
 
@@ -2080,7 +2220,10 @@ h5.date-details  {
   font-size: 0.9em;
 }
 
-/***
+
+
+
+/**************
 
   POST BY DISPLAY
 
@@ -2104,7 +2247,10 @@ h5.date-details  {
   margin-top: 3px;
 }
 
-/***
+
+
+
+/****************
 
   Time ago
 
@@ -2118,56 +2264,42 @@ h5.date-details  {
   }
 }
 
-/******************
-   ALL MODALS
-*******************/
-.custom-modal {
-  background-color: rgba(0,0,0,0.3);
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  max-height: calc(100vh - 1px);
-  overflow-y: auto;
-  z-index: 1000;
+
+
+/************
+
+ Copy itinerary list style
+
+ ****************************/
+.copy-to-itinerary-list {
+  margin-top: 15px;
+}
+
+.copy-to-itinerary  {
+  padding: 15px 10px;
+  border: 1px solid lightgray;
+  &:hover {
+    background-color: #F6F6F6;
+    cursor: pointer;
+  }
+}
+
+.copy-to-itinerary h4  {
+  font-weight: 400;
 }
 
 
-/***************************
- add members/find user modal
- ***************************/
-.users-search  {
-  width: 600px;
-  position: fixed;
-  top: 40px;
-  left: calc((100vw - 600px)/2);
-  background-color: white;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
-  z-index: 1001;
-
- @media only screen and (max-width: 650px) {
-  width: 100%;
-  min-width: 300px;
-  left: 0;
- }
-}
 
 
-.users-search > input {
- width: 560px;
- margin:  60px 20px 20px 20px;
- border-radius: 0;
+/**********
 
- @media only screen and (max-width: 650px) {
-  width: calc(100% - 40px);
-  min-width: 300px;
- }
-}
+ User profile display card
+
+****************************/
 
 .search-result-card  {
   min-width: 300px;
-  padding: 10px;
+  padding: 20px;
   border-bottom: 1px solid lightgray;
 }
 
@@ -2187,9 +2319,36 @@ h5.date-details  {
   color: gray;
 }
 
-/****************
-  delete modal
-****************/
+
+
+
+/************
+
+ ALL MODALS
+
+*******************/
+
+.custom-modal {
+  background-color: rgba(0,0,0,0.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  max-height: calc(100vh - 1px);
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+
+
+
+/**********
+
+  modal structure
+
+*******************/
+
 .content-with-header-name {
   padding: 40px;
 }
@@ -2207,22 +2366,45 @@ h5.date-details  {
   vertical-align: -webkit-baseline-middle;
 }
 
+
+
+
+/*************
+
+  delete modal
+
+*********************/
+
 .fa-exclamation-triangle {
   color: red;
   vertical-align: -webkit-baseline-middle !important;
 }
 
+
+
+
 /*********************
+
   ITINERARY MAP VIEW
+
 *********************/
+
 ww-itinerary-map  {
   position: relative;
 }
 
+
+
+
+
+
 /*********************
-  Sub routing
+
+  box container
+
 *********************/
-.sub-route-container  {
+
+.box-container  {
   position: absolute;
   right: calc((100vw - 600px)/2);
   width: 600px;
@@ -2230,36 +2412,35 @@ ww-itinerary-map  {
   background-color: white;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
 
-  @media only screen and (max-width: 670px) {
+  @media only screen and (max-width: 650px) {
     width: 100%;
     min-width: 300px;
     right: 0;
   }
-
-  @media only screen and (min-width: 670px) and (max-width: 1090px) {
-    right: calc((100vw - 600px)/2);
-  }
 }
 
-.sub-route-header {
+.box-container-header {
   position: fixed;
   width: 600px;
   padding-bottom: 3px;
 
-  @media only screen and (max-width: 670px) {
+  @media only screen and (max-width: 650px) {
     width: 100%;
     min-width: 300px;
   }
 }
 
-.sub-route-header > h3  {
+.box-container-header > h3  {
   padding: 20px;
   font-weight: 400;
   color: #F9FBFB;
   background-color: #6494ED;
 }
 
-.sub-route-nav-tabs {
+
+/* box container nav tabs */
+
+.box-container-nav-tabs {
   margin: 0;
   padding: 5px 0 3px 10px;
   height: 47px;
@@ -2267,11 +2448,11 @@ ww-itinerary-map  {
   white-space: nowrap;
 }
 
-.sub-route-nav-tabs > li  {
+.box-container-nav-tabs > li  {
   display: inline-block;
 }
 
-.sub-route-nav-tabs > li > a {
+.box-container-nav-tabs > li > a {
   padding: 5px 10px;
   color: #3A4A4D;
   text-decoration: none;
@@ -2282,25 +2463,33 @@ ww-itinerary-map  {
   }
 }
 
-.sub-route-nav-tabs > li.active > a {
+.box-container-nav-tabs > li.active > a {
   color: #6494ED;
   font-weight: bold;
   border-bottom: 3px solid #6494ED;
 }
 
-.sub-route-nav-tabs span.tab-count {
+.box-container-nav-tabs span.tab-count {
   padding-left: 5px;
   color: grey;
   font-weight: 400;
 }
 
+
+
 /* to display horizontal scrollbar */
-.sub-route-nav-tabs::-webkit-scrollbar {
+
+.box-container-nav-tabs::-webkit-scrollbar {
     -webkit-appearance: none;
 }
 
+
+
+
 /*********************
-  ITINERARY List
+
+  Itinerary List
+
 *********************/
 .itinerary-list {
   padding: 10px 20px;
@@ -2345,6 +2534,10 @@ ww-itinerary-map  {
   margin: 15px;
   text-align: center;
 }
+
+
+
+
 
 /*********************
 

@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy, ElementRef, ViewChild, Renderer2, HostListener } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription }   from 'rxjs/Rx';
 
 declare var google:any;
 declare var MarkerClusterer:any;
 
-import { CheckInService }     from '../../check-in';
+import { CheckInService } from '../../check-in';
 
 @Component({
   selector: 'ww-user-check-in',
@@ -14,7 +14,7 @@ import { CheckInService }     from '../../check-in';
 })
 export class UserCheckInComponent implements OnInit, OnDestroy {
   @ViewChild('map') map: ElementRef;
-  itinMap;
+  checkinMap;
   checkins;
   locations = [];
   locationIds = [];
@@ -63,7 +63,7 @@ export class UserCheckInComponent implements OnInit, OnDestroy {
     let center = {lat: 25, lng: 0};
     let zoom = 3;
 
-    this.itinMap = new google.maps.Map(mapDiv, {
+    this.checkinMap = new google.maps.Map(mapDiv, {
       center: center,
       zoom: zoom,
       styles: [{"stylers": [{ "saturation": -20 }]}]
@@ -148,7 +148,7 @@ export class UserCheckInComponent implements OnInit, OnDestroy {
 
       let marker = new google.maps.Marker({
         position: { lat: l['lat'], lng: l['lng']},
-        map: this.itinMap,
+        map: this.checkinMap,
         title: title,
         zIndex: i
       })
@@ -179,16 +179,17 @@ export class UserCheckInComponent implements OnInit, OnDestroy {
       this.infoWindows.push(infoWindow);
 
       marker.addListener('click', () => {
-        infoWindow.open(this.itinMap, marker)
+        infoWindow.open(this.checkinMap, marker)
         let center = new google.maps.LatLng(l['lat'], l['lng'])
 
-        this.itinMap.panTo(center);
-        this.itinMap.setZoom(17);
+        this.checkinMap.panTo(center);
+        this.checkinMap.setZoom(17);
       })
     }
+
     let imagePath = 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
 
-    let markerCluster = new MarkerClusterer(this.itinMap, this.markers, {
+    let markerCluster = new MarkerClusterer(this.checkinMap, this.markers, {
             maxZoom: 15,
             imagePath: imagePath
           });
@@ -196,21 +197,28 @@ export class UserCheckInComponent implements OnInit, OnDestroy {
     this.preventScroll(false);
   }
 
+
+
+  // change center to country
+
   changeCenter(country) {
     let center = new google.maps.LatLng(country['lat'], country['lng']);
 
-    this.itinMap.panTo(center);
-    this.itinMap.setZoom(country['zoom']);
+    this.checkinMap.panTo(center);
+    this.checkinMap.setZoom(country['zoom']);
 
     this.showCountry = false;
   }
+
+
+  // zoom to check in location
 
   zoomTo(place) {
     let center = new google.maps.LatLng(place['lat'], place['lng']);
 
     this.openInfoWindow(place['lat'], place['lng'])
-    this.itinMap.panTo(center);
-    this.itinMap.setZoom(17);
+    this.checkinMap.panTo(center);
+    this.checkinMap.setZoom(17);
 
     this.showCheckIn = false;
   }
@@ -231,6 +239,10 @@ export class UserCheckInComponent implements OnInit, OnDestroy {
       }
     }
   }
+
+
+
+  // others
 
   preventScroll(value)  {
     if(value) {

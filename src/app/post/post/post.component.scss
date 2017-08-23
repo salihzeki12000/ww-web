@@ -45,7 +45,7 @@ textarea  {
   margin: 0 20px;
   width: 560px;
 
-  @media only screen and (max-width: 670px) {
+  @media only screen and (max-width: 650px) {
     width: calc(100% - 40px);
     min-width: 260px;
   }
@@ -161,7 +161,7 @@ textarea  {
   width: 510px;
   border-radius: 0;
 
-  @media only screen and (max-width: 670px) {
+  @media only screen and (max-width: 650px) {
     width: calc(100% - 50px);
   }
 }
@@ -190,7 +190,7 @@ textarea  {
   width: 510px;
   padding-left: 6px;
 
-  @media only screen and (max-width: 670px) {
+  @media only screen and (max-width: 650px) {
     width: calc(100% - 45px);
   }
 }
@@ -211,4 +211,11 @@ textarea  {
     color: #3A4A4D;
     cursor: pointer;
   }
+}
+
+
+/* show editing view for post */
+
+.editing > .view{
+  display: none;
 }

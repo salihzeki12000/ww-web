@@ -17,3 +17,32 @@
   position: fixed;
   top: 80px;
 }
+
+
+/* user posts */
+.user-profile-posts  {
+  position: absolute;
+  right: calc((100vw - 600px)/2);
+  width: 600px;
+  margin-top: 180px;
+
+  @media only screen and (max-width: 650px) {
+    width: 100%;
+    min-width: 300px;
+    margin-top: 245px;
+    right: 0;
+  }
+
+  @media only screen and (min-width: 650px) and (max-width: 890px) {
+    right: calc((100vw - 600px)/2);
+  }
+
+  @media only screen and (min-width: 890px) and (max-width: 1200px) {
+    right: calc((100vw - 890px)/2);
+  }
+}
+
+.user-profile-posts-list  {
+  display: flex;
+  flex-direction: column-reverse;
+}

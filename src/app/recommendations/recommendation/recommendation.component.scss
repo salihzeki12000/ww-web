@@ -23,6 +23,11 @@
   }
 }
 
+
+
+
+/* header */
+
 .recommendation-header {
   padding: 10px 0 20px 0;
 }
@@ -31,14 +36,26 @@
   padding-bottom: 5px;
 }
 
+
+
+/* details of place */
+
 .details-item {
   margin-bottom: 0;
 }
+
+
+
+/* message from user who recommended */
 
 .message  {
   padding: 10px 10px 10px 40px;
   text-align: justify;
 }
+
+
+
+/* message if recommendation already added */
 
 .added-message  {
   padding: 20px 10px;
@@ -52,6 +69,10 @@
     cursor: pointer;
   }
 }
+
+
+
+/* add to itinerary buttons */
 
 .response {
   text-align: center;

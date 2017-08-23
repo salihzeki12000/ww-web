@@ -12,6 +12,7 @@
       </ul>
     </div>
 
+
     <div *ngIf="!itinerarySelected">
       <h4>Please select itinerary to add to:</h4>
       <div class="copy-to-itinerary-list">
@@ -21,6 +22,7 @@
         </div>
       </div>
     </div>
+
 
     <div *ngIf="itinerarySelected">
       <h4>Please select a display picture:</h4>
@@ -38,9 +40,11 @@
 
   </div>
 
+
   <div class="action-response">
     <h5 class="action-response-secondary" (click)="cancel()">CANCEL</h5>
     <h5 *ngIf="itinerarySelected" class="action-response-primary" (click)="save()"> <i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5>
-
   </div>
+
+
 </div>

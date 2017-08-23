@@ -41,6 +41,8 @@ export class RecommendationComponent implements OnInit {
       result => {})
   }
 
+
+
   // add to itinerary
   addToItinerary()  {
     this.addRecommendation = true;
@@ -55,6 +57,8 @@ export class RecommendationComponent implements OnInit {
   updateAdd(itinerary) {
     this.recommendation['itinerary'] = itinerary;
   }
+
+
 
   // delete recommendation
   delete()  {
@@ -75,6 +79,8 @@ export class RecommendationComponent implements OnInit {
 
     this.cancelDelete()
   }
+
+
 
   // others
   preventScroll(value)  {

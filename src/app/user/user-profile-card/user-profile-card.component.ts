@@ -9,18 +9,23 @@ import { Router } from '@angular/router';
 export class UserProfileCardComponent implements OnInit {
   @Input() user;
   @Input() currentUser;
-  
+
   constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
   routeToUser(id) {
-    if(id === this.currentUser['_id']) {
-      this.router.navigateByUrl('/me/profile');
-    } else  {
-      this.router.navigateByUrl('/wondererwanderer/' + id)
+    if(this.currentUser)  {
+
+      if(id === this.currentUser['_id']) {
+        this.router.navigateByUrl('/me/profile');
+      } else  {
+        this.router.navigateByUrl('/wondererwanderer/' + id)
+      }
+      
     }
+
   }
 
 }

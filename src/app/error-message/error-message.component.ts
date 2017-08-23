@@ -18,19 +18,21 @@ export class ErrorMessageComponent implements OnInit {
     private loadingService: LoadingService) { }
 
   ngOnInit() {
-    this.errorMessageService.errorMessageActivated
-        .subscribe(
-            (errorMessage: ErrorMessage) => {
-              this.errorMessage = errorMessage;
-              if(this.errorMessage['error'] === undefined)  {
-                this.errorMessage['title'] = "An error has occurred"
-                this.errorMessage['error'] = {
-                  message: "An error has occurred. Please refresh your browser."
-                }
-              }
-              this.error = true;
-            }
-        );
+    this.errorMessageService.errorMessageActivated.subscribe(
+      (errorMessage: ErrorMessage) => {
+
+        this.errorMessage = errorMessage;
+
+        if(this.errorMessage['error'] === undefined)  {
+          this.errorMessage['title'] = "An error has occurred"
+          this.errorMessage['error'] = {
+            message: "An error has occurred. Please refresh your browser."
+          }
+        }
+        
+        this.error = true;
+      }
+    );
   }
 
   exitError() {

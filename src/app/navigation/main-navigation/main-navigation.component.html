@@ -261,33 +261,35 @@
 
 
 <!-- user search -->
-<div class="custom-modal" *ngIf="showUsers" (click)="cancelShowUsers()"></div>
-<div class="users-search" *ngIf="showUsers">
+<div class="custom-modal" *ngIf="showUsers">
+  <div class="form-card">
 
-  <div class="form-header">
-    <h3>People search</h3>
-  </div>
+    <div class="form-header">
+      <h3>People search</h3>
+      <a (click)="cancelShowUsers()">X</a>
+    </div>
 
-  <input type="text" placeholder="Search for people..." #text (keyup)="filterSearch(text.value)">
+    <input type="text" placeholder="Search for people..." #text (keyup)="filterSearch(text.value)">
 
-  <div *ngFor="let user of filteredResult" class="search-result-card">
-    <ww-user-profile-card [user]="user" [currentUser]="currentUser"></ww-user-profile-card>
+    <div *ngFor="let user of filteredResult" class="search-result-card">
+      <ww-user-profile-card [user]="user" [currentUser]="currentUser"></ww-user-profile-card>
 
-    <div class="follow-button">
-      <div *ngIf="user.following_status === 'following'">
-        <div class="following-response">
-          <h5 class="already-following">Following</h5>
-          <h5 class="unfollow" (click)="unfollow(user)">Stop following</h5>
+      <div class="follow-button">
+        <div *ngIf="user.following_status === 'following'">
+          <div class="following-response">
+            <h5 class="already-following">Following</h5>
+            <h5 class="unfollow" (click)="unfollow(user)">Stop following</h5>
+          </div>
         </div>
-      </div>
-      <div *ngIf="user.following_status === 'requestedFollowing'">
-        <div class="following-response">
-          <h5 class="requested-following">Requested</h5>
-          <h5 class="unfollow" (click)="unfollow(user)">Cancel request</h5>
+        <div *ngIf="user.following_status === 'requestedFollowing'">
+          <div class="following-response">
+            <h5 class="requested-following">Requested</h5>
+            <h5 class="unfollow" (click)="unfollow(user)">Cancel request</h5>
+          </div>
         </div>
-      </div>
-      <div *ngIf="user.following_status === ''">
-        <button type="button" class="follow-button" (click)="follow(user)"><h5>Follow</h5></button>
+        <div *ngIf="user.following_status === ''">
+          <button type="button" class="follow-button" (click)="follow(user)"><h5>Follow</h5></button>
+        </div>
       </div>
     </div>
   </div>

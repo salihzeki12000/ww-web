@@ -1,8 +1,7 @@
 import { Component, OnInit, OnDestroy, ElementRef, ViewChild, Renderer2, HostListener } from '@angular/core';
-import { Title }        from '@angular/platform-browser';
-
+import { Title }          from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription }   from 'rxjs/Rx';
 
 declare var google:any;
 declare var MarkerClusterer:any;
@@ -18,7 +17,7 @@ import { LoadingService }     from '../loading';
 })
 export class CheckInComponent implements OnInit, OnDestroy {
   @ViewChild('map') map: ElementRef;
-  itinMap;
+  checkinMap;
   checkins;
   displayCheckins;
   locations = [];
@@ -91,7 +90,7 @@ export class CheckInComponent implements OnInit, OnDestroy {
     let center = {lat: 25, lng: 0};
     let zoom = 3;
 
-    this.itinMap = new google.maps.Map(mapDiv, {
+    this.checkinMap = new google.maps.Map(mapDiv, {
       center: center,
       zoom: zoom,
       styles: [{"stylers": [{ "saturation": -20 }]}]
@@ -123,7 +122,7 @@ export class CheckInComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.setMarkers(this.itinMap);
+    this.setMarkers(this.checkinMap);
   }
 
   setCountries()  {
@@ -210,7 +209,7 @@ export class CheckInComponent implements OnInit, OnDestroy {
         map.setZoom(17);
       })
     }
-    
+
     let imagePath = 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
 
     let markerCluster = new MarkerClusterer(map, this.markers, {
@@ -222,6 +221,11 @@ export class CheckInComponent implements OnInit, OnDestroy {
     this.preventScroll(false);
   }
 
+
+
+
+  // filter check in by country
+
   filterCheckins(country) {
     if(country === 'Show all')  {
       this.displayCheckins = this.checkins;
@@ -232,21 +236,31 @@ export class CheckInComponent implements OnInit, OnDestroy {
     }
   }
 
+
+
+
+  // center map base on country
+
   changeCenter(country) {
     let center = new google.maps.LatLng(country['lat'], country['lng']);
 
-    this.itinMap.panTo(center);
-    this.itinMap.setZoom(country['zoom']);
+    this.checkinMap.panTo(center);
+    this.checkinMap.setZoom(country['zoom']);
 
     this.showCountry = false;
   }
+
+
+
+
+  // zoom to particular location
 
   zoomTo(place) {
     let center = new google.maps.LatLng(place['lat'], place['lng']);
 
     this.openInfoWindow(place['lat'], place['lng'])
-    this.itinMap.panTo(center);
-    this.itinMap.setZoom(17);
+    this.checkinMap.panTo(center);
+    this.checkinMap.setZoom(17);
 
     this.showCheckIn = false;
   }
@@ -267,6 +281,11 @@ export class CheckInComponent implements OnInit, OnDestroy {
       }
     }
   }
+
+
+
+
+  // delete check in
 
   delete(checkin)  {
     this.deleteCheckIn = checkin;
@@ -289,6 +308,10 @@ export class CheckInComponent implements OnInit, OnDestroy {
     this.loadingService.setLoader(false, "");
     this.preventScroll(false);
   }
+
+
+
+  // others
 
   preventScroll(value)  {
     if(value) {

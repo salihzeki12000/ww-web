@@ -17,14 +17,13 @@ export class NotificationComponent implements OnInit {
     private notificationService: NotificationService) { }
 
   ngOnInit() {
-    if(!this.notification.read) {
-      this.unread = true;
-    }
+    if(!this.notification.read) this.unread = true;
   }
 
   navigate()  {
     this.unread = false;
     this.notification.read = true;
+
     if(this.notification.link) {
       this.router.navigateByUrl(this.notification.link);
     }

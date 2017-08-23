@@ -15,8 +15,6 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   showSignin = false;
   showSignup = false;
 
-// preview/itinerary/5971d919773bea000429a120/summary
-
   constructor(
     private titleService: Title,
     private renderer: Renderer2,

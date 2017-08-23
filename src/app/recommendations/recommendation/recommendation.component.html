@@ -18,6 +18,8 @@
     </div>
   </div>
 
+
+
   <div class="recommendation-message">
     <ww-user-profile-card [user]="recommendation?.originator" [currentUser]="recommendation?.recipient"></ww-user-profile-card>
 
@@ -27,6 +29,8 @@
     </div>
   </div>
 
+
+
   <div class="added-message" *ngIf="recommendation?.itinerary.length > 0">
     <h5><i class="fa fa-check fa-lg" aria-hidden="true"></i> You have added this recommendation to the itineraries:</h5>
 
@@ -35,12 +39,16 @@
     </div>
   </div>
 
+
+
   <div class="response">
     <h4 (click)="addToItinerary()">Add to itinerary</h4>
     <h4 (click)="delete()">Delete</h4>
   </div>
 
 </div>
+
+
 
 
 <!-- add to itinerary modal -->

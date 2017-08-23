@@ -160,6 +160,8 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     }
   }
 
+
+
   // sign up / log in
   getSignin() {
     this.authOptions = false;
@@ -183,6 +185,9 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     this.preventScroll(false);
   }
 
+
+
+
   // top navigation check in
   checkIn() {
     this.checkin = true;
@@ -204,6 +209,9 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/me/check-in');
   }
 
+
+
+
   // top navigation itinerary
   newItin() {
     this.showItineraryForm = true;
@@ -220,6 +228,9 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     }
   }
 
+
+
+
   // top navigation notification/followers
   getNotifications()  {
     this.showNotifications = true;
@@ -231,6 +242,9 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
       result => {})
   }
 
+
+
+
   // side navigation
   showSideNav()  {
     this.sideNav = !this.sideNav;
@@ -241,6 +255,9 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     this.sideNav = false;
     this.preventScroll(false);
   }
+
+
+
 
   // user search
   getUsers()  {
@@ -299,6 +316,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   }
 
 
+
   // routing to relationships
   routeToFollowers() {
     this.sideNav = false;
@@ -316,11 +334,17 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/me/relationships/follow-request');
   }
 
+
+
+
   // new itinerary
   hideItineraryForm(hide) {
     this.showItineraryForm = false;
     this.preventScroll(false);
   }
+
+
+
 
   // route to all notifications
   routeToNotifications()  {
@@ -334,6 +358,9 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/me/check-in');
   }
 
+
+
+
   // profile options
   logout()  {
     this.authService.logout();
@@ -341,6 +368,9 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     this.profileOptions = false;
     this.preventScroll(false);
   }
+
+
+
 
   // prevent scroll
   preventScroll(value)  {

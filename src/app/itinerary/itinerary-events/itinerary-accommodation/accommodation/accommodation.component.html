@@ -11,7 +11,7 @@
 
   <div class="display-header-background"></div>
 
-  <div class="display-photo-housing">
+  <div class="display-content-housing">
     <div class="dots-menu" (click)="showMenu = true" *ngIf="!preview">
       <div class="dots-menu-hint">
         <h6>Click to view options</h6>
@@ -140,7 +140,7 @@
         </div>
 
         <div *ngIf="!usersSelected">
-          <input class="share-users-search" type="text" placeholder="Search for people..." #text (keyup)="filterSearch(text.value)">
+          <input type="text" placeholder="Search for people..." #text (keyup)="filterSearch(text.value)">
 
           <div *ngIf="validAddUser">
             <h5 class="user-search-header">Selected users ({{ selectedUsers.length }})</h5>

@@ -20,11 +20,6 @@
 }
 
 
-form  {
-  margin-bottom: 20px;
-  border-bottom: 1px solid rgba(0,0,0,.1);
-}
-
 input {
   padding-left: 0;
   border: none;
@@ -37,15 +32,18 @@ input {
 
 /* itinerary edit section */
 
-.itinerary-edit-section-header  {
-  padding: 10px 0 0 20px;
+.form-section-header  {
+  padding: 30px 0 0 20px;
+  border-top: 1px solid rgba(0,0,0,.1);
+
   @media only screen and (max-width: 450px) {
-    padding: 10px 0 0 5px;
+    padding: 30px 0 0 5px;
   }
 }
 
-.itinerary-edit-section-details {
+.form-section-details {
   padding: 5px 35px;
+
   @media only screen and (max-width: 450px) {
     padding: 5px 10px;
   }
@@ -53,6 +51,7 @@ input {
 
 .itinerary-edit-item  {
   height: 50px;
+  
   @media only screen and (max-width: 610px) {
     margin-bottom: 20px;
     height: auto;

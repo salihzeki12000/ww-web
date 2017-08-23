@@ -13,12 +13,15 @@
 </div>
 
 
+
 <div class="home-posts">
   <ww-post-input></ww-post-input>
   <div class="home-posts-list">
     <ww-post-list [posts]="feed"></ww-post-list>
   </div>
 </div>
+
+
 
 <div class="custom-modal verify-message" *ngIf="verifyMsg">
   <div class="form-card">
@@ -39,6 +42,9 @@
     </div>
   </div>
 </div>
+
+
+
 
 <!-- new user tour -->
 <div class="custom-modal" *ngIf="newUser">
@@ -146,6 +152,9 @@
   </div>
 
 </div>
+
+
+
 
 <!-- new itin form -->
 <div class="custom-modal" *ngIf="showItineraryForm">

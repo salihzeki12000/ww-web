@@ -147,15 +147,17 @@ input {
 
 /* edit profile section */
 
-.profile-edit-section-header  {
+.form-section-header  {
   padding: 10px 0 0 20px;
+
   @media only screen and (max-width: 450px) {
     padding: 10px 0 0 5px;
   }
 }
 
-.profile-edit-section-details {
+.form-section-details {
   padding: 10px 10px 5px 35px;
+
   @media only screen and (max-width: 450px) {
     padding: 5px 10px;
   }
@@ -195,7 +197,7 @@ ww-google-place-search  {
   }
 }
 
-.profile-edit-section-details span.form-validator {
+.form-section-details span.form-validator {
   margin-top: 0;
 }
 

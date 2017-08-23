@@ -89,6 +89,9 @@ export class RecommendationDisplayComponent implements OnInit, OnDestroy {
     }
   }
 
+
+
+
   // add to itinerary
   addToItinerary()  {
     this.addRecommendation = true;
@@ -103,6 +106,7 @@ export class RecommendationDisplayComponent implements OnInit, OnDestroy {
   updateAdd(itinerary) {
     this.recommendation['itinerary'] = itinerary;
   }
+
 
 
   // delete recommendation
@@ -124,6 +128,9 @@ export class RecommendationDisplayComponent implements OnInit, OnDestroy {
 
     this.cancelDelete()
   }
+
+
+
 
   // others
   preventScroll(value)  {

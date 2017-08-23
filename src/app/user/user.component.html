@@ -16,6 +16,8 @@
     <button *ngIf="followStatus === ''" type="button" class="follow-button" (click)="follow()"><h5>Follow</h5></button>
   </div>
 
+
+
   <div class="user-profile-header">
     <img src="{{ user?.display_picture }}" alt="" [routerLink]="['/wondererwanderer', user?._id]">
     <h1>{{ user?.username }}</h1>
@@ -24,8 +26,9 @@
       <h4>{{ user?.description }}</h4>
       <h4 *ngIf="user?.corporate"><i class="fa fa-envelope" aria-hidden="true"></i> <a href="mailto:{{user?.email}}">{{ user?.email }}</a></h4>
     </div>
-
   </div>
+
+
 
   <div class="user-profile-background"></div>
   <div class="user-profile-counters">
@@ -47,9 +50,13 @@
     </div>
   </div>
 
+
+
   <div class="router-outlet" [class.hide]="followStatus !== 'accepted'">
     <router-outlet></router-outlet>
   </div>
+
+
 
   <div class="router-outlet nil-message-main" *ngIf="followStatus !== 'accepted'">
     <h4>You need to follow {{ user?.username }} to view their details.</h4>

@@ -24,11 +24,7 @@
   <div class="current-members">
     <h4>Current members in the itinerary</h4>
     <div *ngFor="let member of itinerary?.members" class="member-list">
-      <img src="{{ member.display_picture }}" alt="" class="user-profile-thumbnail">
-      <div class="user-details">
-        <h4 class="username-bold">{{ member.username }}</h4>
-        <h5 class="user-description">{{ member.description }}</h5>
-      </div>
+      <ww-user-profile-card [user]="member"></ww-user-profile-card>
     </div>
   </div>
 </div>

@@ -17,13 +17,13 @@
   right: calc((100vw - 600px)/2);
   width: 600px;
 
-  @media only screen and (max-width: 670px) {
+  @media only screen and (max-width: 650px) {
     width: 100%;
     min-width: 300px;
     right: 0;
   }
 
-  @media only screen and (min-width: 670px) and (max-width: 890px) {
+  @media only screen and (min-width: 650px) and (max-width: 890px) {
     right: calc((100vw - 600px)/2);
   }
 
@@ -53,6 +53,9 @@
   width: 100%;
   padding-bottom: 10px;
 }
+
+
+
 
 /****************
 
@@ -84,13 +87,13 @@
   -moz-box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
   box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
 
-  @media only screen and (max-width: 670px) {
+  @media only screen and (max-width: 650px) {
     width: 100%;
     min-width: 300px;
     right: 0;
   }
 
-  @media only screen and (min-width: 670px) and (max-width: 890px) {
+  @media only screen and (min-width: 650px) and (max-width: 890px) {
     right: calc((100vw - 600px)/2);
   }
 
@@ -139,6 +142,8 @@
   }
 }
 
+
+
 // step 1 of tour
 .tour-post  {
   position: absolute;
@@ -146,13 +151,13 @@
   right: calc((100vw - 600px)/2);
   width: 600px;
 
-  @media only screen and (max-width: 670px) {
+  @media only screen and (max-width: 650px) {
     width: 100%;
     min-width: 300px;
     right: 0;
   }
 
-  @media only screen and (min-width: 670px) and (max-width: 890px) {
+  @media only screen and (min-width: 650px) and (max-width: 890px) {
     right: calc((100vw - 600px)/2);
   }
 
@@ -168,11 +173,13 @@
   border: 5px dashed white;
   border-radius: 5px;
 
-  @media only screen and (max-width: 670px) {
+  @media only screen and (max-width: 650px) {
     width: 100%;
     min-width: 300px;
   }
 }
+
+
 
 // step 2 of tour desktop
 .tour-add-itin  {
@@ -197,6 +204,8 @@
   border: 5px dashed white;
   border-radius: 5px;
 }
+
+
 
 // step 2 of tour mobile
 .tour-menu  {
@@ -225,6 +234,8 @@
   border: 5px dashed white;
   border-radius: 5px;
 }
+
+
 
 // step 3 of tour
 .tour-nav {

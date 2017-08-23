@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, Renderer2, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { Subscription } from 'rxjs/Rx';
-import { Router } from '@angular/router';
 import { DaterangePickerComponent } from 'ng2-daterangepicker';
+import { Subscription } from 'rxjs/Rx';
+import { Router }       from '@angular/router';
 import { Title }        from '@angular/platform-browser';
 
 import { User }                from '../../user';
@@ -130,7 +130,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     } else  {
       this.defaultCity = '';
     }
-    
+
     this.checkinPrivacy = this.currentUser['privacy']['check_in'];
     this.itinPrivacy = this.currentUser['privacy']['itinerary'];
   }
@@ -139,6 +139,72 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     this.picker.datePicker.setStartDate(this.birthDate);
     this.picker.datePicker.setEndDate(this.birthDate);
   }
+
+
+
+  // change profile pic
+
+  fileUploaded(event) {
+    let file = event.target.files[0];
+    let type = file['type'].split('/')[0]
+
+    if (type !== 'image') {
+      this.fileTypeError = true;
+    } else  {
+      if(event.target.files[0]) {
+        this.newImageFile = event.target.files[0];
+        let reader = new FileReader();
+
+        reader.onload = (event) =>  {
+          this.newProfilePic = event['target']['result'];
+          this.thumbnailImage = event['target']['result'];
+          this.uploadText = "Upload another picture"
+        }
+
+        reader.readAsDataURL(event.target.files[0]);
+        return;
+      }
+    }
+  }
+
+  keepOriginal()  {
+    this.inputValue = null;
+    this.newProfilePic = '';
+    this.newImageFile = '';
+    this.uploadText = "Change profile picture"
+    this.thumbnailImage = this.currentUser['display_picture'];
+  }
+
+
+
+  // set city of residence
+
+  searching(event) {
+    setTimeout(() =>  {
+      if(!this.city)  {
+        this.errorMessageService.handleErrorMessage({
+          title: "Error while selecting new city",
+          error:  {
+            message: "You have pressed the enter key without selecting a city from the dropdown. Please try again."
+          }
+        })
+      }
+    }, 1000)
+  }
+
+  setCity(data) {
+    this.defaultCity = data['formatted_address'];
+
+    this.city = {
+      name: data['formatted_address'],
+      lat: data['geometry'].location.lat(),
+      lng: data['geometry'].location.lng(),
+    }
+  }
+
+
+
+  // update birth date
 
   selectedDate(value) {
     let date = value.start._d;
@@ -152,6 +218,55 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       birth_date: this.birthDate,
     })
   }
+
+
+
+  // change password
+
+  changePassword()  {
+    this.changePw = true;
+    this.preventScroll(true);
+  }
+
+  cancelChangePassword()  {
+    this.changePw = false;
+    this.preventScroll(false);
+  }
+
+  saveNewPassword() {
+    this.loadingService.setLoader(true, "Updating your password...");
+
+    this.userService.changePassword(this.changePasswordForm.value).subscribe(
+      result => {
+        this.loadingService.setLoader(false, "");
+        this.flashMessageService.handleFlashMessage(result.message);
+        this.changePw = false;
+      }
+    )
+  }
+
+
+
+
+  // deactivate account
+  confirmDeactivate() {
+    this.deactivate = true;
+    this.preventScroll(true);
+  }
+
+  cancelDeactivate() {
+    this.deactivate = false;
+    this.preventScroll(false);
+  }
+
+  deactivateAccount() {
+    this.deactivate = false;
+  }
+
+
+
+
+  // save / undo profile
 
   undo()  {
     this.patchValue();
@@ -195,81 +310,9 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       })
   }
 
-  searching(event) {
-    setTimeout(() =>  {
-      if(!this.city)  {
-        this.errorMessageService.handleErrorMessage({
-          title: "Error while selecting new city",
-          error:  {
-            message: "You have pressed the enter key without selecting a city from the dropdown. Please try again."
-          }
-        })
-      }
-    }, 1000)
-  }
 
-  setCity(data) {
-    this.defaultCity = data['formatted_address'];
 
-    this.city = {
-      name: data['formatted_address'],
-      lat: data['geometry'].location.lat(),
-      lng: data['geometry'].location.lng(),
-    }
-  }
-
-  fileUploaded(event) {
-    let file = event.target.files[0];
-    let type = file['type'].split('/')[0]
-
-    if (type !== 'image') {
-      this.fileTypeError = true;
-    } else  {
-      if(event.target.files[0]) {
-        this.newImageFile = event.target.files[0];
-        let reader = new FileReader();
-
-        reader.onload = (event) =>  {
-          this.newProfilePic = event['target']['result'];
-          this.thumbnailImage = event['target']['result'];
-          this.uploadText = "Upload another picture"
-        }
-
-        reader.readAsDataURL(event.target.files[0]);
-        return;
-      }
-    }
-  }
-
-  keepOriginal()  {
-    this.inputValue = null;
-    this.newProfilePic = '';
-    this.newImageFile = '';
-    this.uploadText = "Change profile picture"
-    this.thumbnailImage = this.currentUser['display_picture'];
-  }
-
-  changePassword()  {
-    this.changePw = true;
-    this.preventScroll(true);
-  }
-
-  cancelChangePassword()  {
-    this.changePw = false;
-    this.preventScroll(false);
-  }
-
-  saveNewPassword() {
-    this.loadingService.setLoader(true, "Updating your password...");
-
-    this.userService.changePassword(this.changePasswordForm.value).subscribe(
-      result => {
-        this.loadingService.setLoader(false, "");
-        this.flashMessageService.handleFlashMessage(result.message);
-        this.changePw = false;
-      }
-    )
-  }
+  // others
 
   validEmail(control: FormControl): {[s: string]: boolean} {
       if (!control.value.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
@@ -279,26 +322,11 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
 
   passwordsAreEqual(control: FormControl): {[s: string]: boolean} {
       if (!this.changePasswordForm) {
-          return {notMatch: true};
+        return {notMatch: true};
       }
       if (control.value !== this.changePasswordForm.controls['newPassword'].value) {
-          return {notMatch: true};
+        return {notMatch: true};
       }
-  }
-
-  // deactivate account
-  confirmDeactivate() {
-    this.deactivate = true;
-    this.preventScroll(true);
-  }
-
-  cancelDeactivate() {
-    this.deactivate = false;
-    this.preventScroll(false);
-  }
-
-  deactivateAccount() {
-    this.deactivate = false;
   }
 
   preventScroll(value)  {

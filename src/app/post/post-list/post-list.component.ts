@@ -1,8 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Subscription } from 'rxjs/Rx';
 
 import { Post } from '../post';
-import { PostService } from '../post.service';
 
 @Component({
   selector: 'ww-post-list',
@@ -12,7 +10,7 @@ import { PostService } from '../post.service';
 export class PostListComponent implements OnInit {
   @Input() posts = [];
 
-  constructor(private postService: PostService) { }
+  constructor() { }
 
   ngOnInit() {
   }

@@ -2,12 +2,17 @@
   margin-top: 80px;
 }
 
+
+
+
+/* follow status */
+
 .user-profile-follow-status  {
   position: absolute;
   top: 45px;
   right: calc((100vw - 600px) /2);
 
-  @media only screen and (max-width: 670px) {
+  @media only screen and (max-width: 650px) {
     right: 10px;
   }
 }
@@ -28,6 +33,22 @@
   }
 }
 
+
+
+
+/* profile header */
+
+.user-profile-header > img  {
+  &:hover{
+    cursor: pointer;
+  }
+
+  @media only screen and (min-width: 650px) {
+    right: 0;
+    left: calc((100vw - 600px) /2);
+  }
+}
+
 .user-profile-header > h1 {
   position: absolute;
   margin-top: -25px;
@@ -35,7 +56,7 @@
   font-family: 'Alice', serif;
   color: #f9fbfb;
 
-  @media only screen and (max-width: 670px) {
+  @media only screen and (max-width: 650px) {
     left: 0;
     margin-top: 130px;
     width: 100vw;
@@ -43,42 +64,43 @@
   }
 }
 
-.user-profile-header > img  {
-  &:hover{
-    cursor: pointer;
-  }
-
-  @media only screen and (min-width: 670px) {
-    right: 0;
-    left: calc((100vw - 600px) /2);
-  }
-}
-
 .user-profile-header > .user-profile-details {
-  @media only screen and (min-width: 670px) {
+  @media only screen and (min-width: 650px) {
     left: calc(((100vw - 600px)/2) + 180px);
   }
 
-  @media only screen and (max-width: 670px) {
+  @media only screen and (max-width: 650px) {
     margin-top: 240px;
   }
 }
 
+
+
+/* profile background */
+
 .user-profile-background  {
-  @media only screen and (max-width: 670px) {
+  @media only screen and (max-width: 650px) {
     height: 270px;
   }
 }
 
+
+
+
+/* profile counters */
+
 .user-profile-counters {
-  @media only screen and (min-width: 670px) {
+  @media only screen and (min-width: 650px) {
     left: calc(((100vw - 600px)/2) + 170px);
   }
 
-  @media only screen and (max-width: 670px) {
+  @media only screen and (max-width: 650px) {
     margin-top: 170px;
   }
 }
+
+
+/* others */
 
 .router-outlet  {
   position: absolute;
@@ -86,7 +108,7 @@
   width: 600px;
   margin-top: 180px;
 
-  @media only screen and (max-width: 670px) {
+  @media only screen and (max-width: 650px) {
     width: 100%;
     min-width: 300px;
     margin-top: 300px;

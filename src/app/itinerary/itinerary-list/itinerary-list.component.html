@@ -1,9 +1,9 @@
-<div class="sub-route-container">
-  <div class="sub-route-header">
+<div class="box-container">
+  <div class="box-container-header">
     <h3>Your itineraries</h3>
     <header>
       <nav>
-        <ul class="sub-route-nav-tabs">
+        <ul class="box-container-nav-tabs">
           <li routerLinkActive="active"><a [routerLink]="['all']">All<span class="tab-count">{{ itineraries?.length }}</span></a></li>
           <li routerLinkActive="active"><a [routerLink]="['upcoming']">Upcoming<span class="tab-count">{{ upcoming?.length }}</span></a></li>
           <li routerLinkActive="active"><a [routerLink]="['past']">Past<span class="tab-count">{{ past?.length }}</span></a></li>

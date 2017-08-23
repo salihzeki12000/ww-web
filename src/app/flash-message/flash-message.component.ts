@@ -29,15 +29,16 @@ export class FlashMessageComponent implements OnInit {
   constructor(private flashMessageService: FlashMessageService) {}
 
   ngOnInit() {
-      this.flashMessageService.flashMessageActivated
-          .subscribe(
-              (flashMessage: FlashMessage) => {
-                  this.flashMessage = flashMessage;
-                  this.messageState = 'in';
-                  setTimeout(()  =>  {
-                    this.messageState = 'out';
-                  }, 3000);
-              }
-          );
+    this.flashMessageService.flashMessageActivated.subscribe(
+      (flashMessage: FlashMessage) => {
+
+        this.flashMessage = flashMessage;
+        this.messageState = 'in';
+        
+        setTimeout(()  =>  {
+          this.messageState = 'out';
+        }, 3000);
+    }
+    );
   }
 }

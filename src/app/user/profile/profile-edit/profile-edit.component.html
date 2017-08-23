@@ -13,15 +13,18 @@
       </label>
     </div>
 
+
     <div class="new-profile-picture" *ngIf="newProfilePic">
       <img [src]="newProfilePic">
       <h5>New profile picture</h5>
     </div>
 
+
     <h5 class="profile-date-join">A wonderer wanderer since {{ currentUser?.created_at | date:'dd MMMM y'}}</h5>
 
-    <h4 class="profile-edit-section-header">Public Details</h4>
-    <div class="profile-edit-section-details">
+
+    <h4 class="form-section-header">Public Details</h4>
+    <div class="form-section-details">
       <div class="profile-edit-item">
         <h5>Username</h5>
         <div class="">
@@ -38,15 +41,19 @@
 
       <div class="profile-preview">
         <img src="{{ thumbnailImage }}" alt="" class="user-profile-thumbnail">
+
         <div class="user-details">
-          <h4 class="user-username">{{ username.value }}</h4>
+          <h4 class="username-bold">{{ username.value }}</h4>
           <h5 class="user-description">{{ description.value }}</h5>
         </div>
+
       </div>
     </div>
 
-    <h4 class="profile-edit-section-header">Private Details</h4>
-    <div class="profile-edit-section-details">
+
+
+    <h4 class="form-section-header">Private Details</h4>
+    <div class="form-section-details">
       <div class="profile-edit-item">
         <h5>Email</h5>
         <div>
@@ -58,6 +65,7 @@
 
       <div class="profile-edit-item">
         <h5>City of Residence</h5>
+
         <ww-google-place-search
         [settings]="'true'"
         [options]="options"
@@ -69,6 +77,7 @@
       <div *ngIf="!currentUser?.corporate">
         <div class="profile-edit-item">
           <h5>Date of Birth</h5>
+
           <div class="date-picker date-picker-single" daterangepicker [options]="birthDatePicker" (selected)="selectedDate($event)">
             <i class="fa fa-calendar" aria-hidden="true"></i>
             <h4>{{ displayDate | date: 'dd MMM yyyy'}}</h4>
@@ -77,6 +86,7 @@
 
         <div class="profile-edit-item">
           <h5>Gender</h5>
+
           <select class="profile-gender-select" name="gender" formControlName="gender" [value]="currentUser?.gender">
             <option *ngFor="let gender of genders">
               <h5>{{ gender }}</h5>
@@ -89,8 +99,10 @@
 
     </div>
 
-    <h4 class="profile-edit-section-header">Default Privacy Settings</h4>
-    <div class="profile-edit-section-details">
+
+
+    <h4 class="form-section-header">Default Privacy Settings</h4>
+    <div class="form-section-details">
       <div class="profile-edit-item">
         <h5>New itinerary</h5>
 
@@ -116,8 +128,11 @@
       </div>
     </div>
 
-    <h4 class="profile-edit-section-header">Others</h4>
+
+
+    <h4 class="form-section-header">Others</h4>
     <h5 class="deactivate-account" (click)="confirmDeactivate()">Deactivate your account</h5>
+
 
     <div class="action-response">
       <h5 class="action-response-secondary" (click)="undo()">UNDO</h5>
@@ -127,6 +142,9 @@
 
 </div>
 
+
+
+<!-- file error -->
 <div class="custom-modal" *ngIf="fileTypeError" (click)="fileTypeError = false">
   <div class="form-card">
     <div class="form-header">
@@ -145,6 +163,9 @@
   </div>
 </div>
 
+
+
+<!-- change password -->
 <div class="custom-modal" *ngIf="changePw">
   <div class="form-card">
     <div class="form-header">
@@ -180,6 +201,10 @@
   </div>
 </div>
 
+
+
+
+<!-- deactivate account -->
 <div class="custom-modal" *ngIf="deactivate">
   <div class="form-card">
     <div class="form-header">

@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy, Renderer2, ElementRef, HostListener } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+
 import { Subscription } from 'rxjs/Rx';
 import { Title }        from '@angular/platform-browser';
-
-import { Router } from '@angular/router';
+import { Router }       from '@angular/router';
 
 import { User }                from '../../user';
 import { UserService }         from '../../user.service';
@@ -87,6 +87,7 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
     if(this.relationshipSubscription) this.relationshipSubscription.unsubscribe();
     if(this.postsSubscription) this.postsSubscription.unsubscribe();
     if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
+    
     this.loadingService.setLoader(true, "");
   }
 

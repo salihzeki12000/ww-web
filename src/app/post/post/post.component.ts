@@ -101,6 +101,10 @@ export class PostComponent implements OnInit, OnDestroy {
     }
   }
 
+
+
+  // edit post
+
   updatePost(editedPost: string)  {
     editedPost = editedPost.trim();
 
@@ -124,6 +128,10 @@ export class PostComponent implements OnInit, OnDestroy {
     }
 
   }
+
+
+
+  // post reaction
 
   likePost()  {
     if(this.userLike) {
@@ -201,11 +209,17 @@ export class PostComponent implements OnInit, OnDestroy {
     this.commentForm.reset();
   }
 
+
+
+  // send post to server
   editPost()  {
     this.postService.editPost(this.post).subscribe(
       data => {})
   }
 
+
+
+  // delete post
   onDelete()  {
     this.postService.deletePost(this.post).subscribe(
       data =>  {
@@ -215,6 +229,9 @@ export class PostComponent implements OnInit, OnDestroy {
     this.deletePost = false;
   }
 
+
+
+  // delete comment
   confirmDeleteComment(i)  {
     this.deleteComment = i;
   }
@@ -236,6 +253,9 @@ export class PostComponent implements OnInit, OnDestroy {
     })
   }
 
+
+
+  // route to users
   routeToUser(id) {
     if(id === this.currentUser['_id']) {
       this.router.navigateByUrl('/me/profile');
