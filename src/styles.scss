@@ -1734,9 +1734,11 @@ ww-resource {
 .display-card-image {
   display: inline-block;
   vertical-align: top;
+  width: 190px;
 
   @media only screen and (max-width: 650px) {
     display: block;
+    width: auto;
   }
 }
 
