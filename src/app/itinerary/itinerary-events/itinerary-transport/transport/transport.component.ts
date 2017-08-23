@@ -155,6 +155,7 @@ export class TransportComponent implements OnInit, OnDestroy {
     this.initMinuteArr = this.minuteArr;
   }
 
+
   // copy section
   copy()  {
     this.copying = true;
@@ -187,6 +188,7 @@ export class TransportComponent implements OnInit, OnDestroy {
     this.copying = false;
     this.preventScroll(false);
   }
+
 
   // edit section
   patchValue()  {
@@ -223,6 +225,7 @@ export class TransportComponent implements OnInit, OnDestroy {
     this.preventScroll(false);
   }
 
+
   // select departure time
   selectPickerDep()  {
     this.timePickerDep = true;
@@ -248,6 +251,7 @@ export class TransportComponent implements OnInit, OnDestroy {
   selectMinuteArr(m) {
     this.minuteArr = m;
   }
+
 
   saveEdit()  {
     this.loadingService.setLoader(true, "Saving...");
@@ -285,6 +289,7 @@ export class TransportComponent implements OnInit, OnDestroy {
     this.initTime()
   }
 
+
   // delete section
   delete() {
     this.deleteTransport = true;
@@ -301,10 +306,11 @@ export class TransportComponent implements OnInit, OnDestroy {
       result => {
         this.flashMessageService.handleFlashMessage(result.message);
       })
-      
+
     this.deleteTransport = false;
     this.preventScroll(false);
   }
+
 
   // others
   preventScroll(value)  {

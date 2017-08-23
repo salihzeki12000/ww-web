@@ -21,6 +21,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   @Output() hideTransportForm = new EventEmitter();
 
   addTransportForm: FormGroup;
+  transportOption = '';
   transportType = [
     { name:'flight', icon: 'plane' },
     { name:'train', icon: 'train' },
@@ -28,7 +29,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     { name:'cruise', icon: 'ship'},
     { name:'vehicle rental', icon: 'car'},
     { name:'others', icon: 'rocket'} ];
-  transportOption = '';
+
 
   // to influence progress bar
   populateFlightDetails = false;
@@ -140,6 +141,8 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     if(this.dateSubscription) this.dateSubscription.unsubscribe();
     if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
   }
+
+
   // progress bar
   selectTransport() {
     this.transportOption = '';
@@ -170,6 +173,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       arr_date: this.firstDay,
     })
   }
+
 
   // get flight details from flightstats.com
   searchFlightDetails()  {
@@ -464,6 +468,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     })
   }
 
+
   // google search
   searchingDep(event) {
     this.depCity = event;
@@ -507,6 +512,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     })
   }
 
+
   searchingArr(event) {
     this.arrCity = event;
 
@@ -548,6 +554,8 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     })
   }
 
+
+
   // select departure time
   selectPickerDep()  {
     this.timePickerDep = true;
@@ -574,6 +582,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     this.minuteArr = m;
   }
 
+
   saveNew()  {
     let newTransport = this.addTransportForm.value;
 
@@ -583,6 +592,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
           newTransport[value] = this.flightSearchDetail[value];
         }
       }
+      
       newTransport['dep_station_location'] = this.flightSearchDetail['dep_station_location'];
       newTransport['arr_station_location'] = this.flightSearchDetail['arr_station_location'];
       newTransport['reference_number'] = this.flightSearchDetail['carrierCode'] + this.flightSearchDetail['reference_number'];

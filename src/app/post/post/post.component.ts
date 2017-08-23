@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Input, HostListener } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router }       from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
 import { Post }                from '../post';
@@ -116,7 +116,7 @@ export class PostComponent implements OnInit, OnDestroy {
       this.errorMessageService.handleErrorMessage({
         title: "Error: Empty content",
         error:  {
-          message: "You do not have any content in your edited post. If you want to delete it, please select the delete option."
+          message: "You do not have any content in your edited post. If you would like to delete it, please select the delete option."
         }
       });
       this.editing = false;
@@ -194,6 +194,7 @@ export class PostComponent implements OnInit, OnDestroy {
         }
 
         if(!this.sameUser)  {
+
           this.notificationService.newNotification({
             recipient: this.post['user']['_id'],
             originator: this.currentUser['_id'],
@@ -201,6 +202,7 @@ export class PostComponent implements OnInit, OnDestroy {
             link: "/me/post/" + this.post['_id'],
             read: false
           }).subscribe(data => {})
+
         }
 
         this.seeComments = true;

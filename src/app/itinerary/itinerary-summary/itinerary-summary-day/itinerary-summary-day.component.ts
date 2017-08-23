@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter, ElementRef, HostListener } from '@angular/core';
 
 import { ItineraryService } from '../../itinerary.service';
+import { FlashMessageService } from '../../../flash-message';
 
 @Component({
   selector: 'ww-itinerary-summary-day',
@@ -21,6 +22,7 @@ export class ItinerarySummaryDayComponent implements OnInit {
 
   constructor(
     private element: ElementRef,
+    private flashMessageService: FlashMessageService,
     private itineraryService: ItineraryService) { }
 
   ngOnInit() {
@@ -51,7 +53,9 @@ export class ItinerarySummaryDayComponent implements OnInit {
     this.itinerary['daily_note'][this.index]['note'] = editedNote;
 
     this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
-      result => {}
+      result => {
+        this.flashMessageService.handleFlashMessage("Note updated");
+      }
     )
 
     this.editing = false;

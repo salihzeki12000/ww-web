@@ -15,7 +15,7 @@ export class LocationPinComponent implements OnInit {
   @Input() height;
 
   @ViewChild('map') map: ElementRef;
-  itinMap;
+  displayMap;
 
   constructor() { }
 
@@ -30,7 +30,7 @@ export class LocationPinComponent implements OnInit {
     let center = {lat: this.lat, lng: this.lng };
     let zoom = 17;
 
-    this.itinMap = new google.maps.Map(mapDiv, {
+    this.displayMap = new google.maps.Map(mapDiv, {
       center: center,
       zoom: zoom,
       mapTypeControl: false,
@@ -38,7 +38,7 @@ export class LocationPinComponent implements OnInit {
       styles: [{"stylers": [{ "saturation": -20 }]}]
     });
 
-    this.setMarkers(this.itinMap);
+    this.setMarkers(this.displayMap);
   }
 
   setMarkers(map) {

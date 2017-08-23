@@ -169,6 +169,8 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
     this.element.nativeElement.lastElementChild.scrollLeft += 280;
   }
 
+
+  // sort events into individual timing
   filterEvents(events)  {
     this.events = [];
     this.totalEvents = events.length;
@@ -268,6 +270,8 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
     return events;
   }
 
+
+  // hide forms
   hideAccommodationForm(hide)  {
     this.addAccommodation = false;
   }
@@ -280,6 +284,8 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
     this.addActivity = false;
   }
 
+
+  // show details of item
   showEventDetails(event)  {
     if(this.chosenEvent === event)  {
       this.hideDetailsInSummary();
@@ -299,6 +305,8 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
     this.preventScroll(false);
   }
 
+
+  // others
   preventScroll(value)  {
     if(value) {
       this.renderer.addClass(document.body, 'prevent-scroll');

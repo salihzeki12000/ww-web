@@ -154,6 +154,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     return this.categories;
   }
 
+
   // progress bar
   backToSelect()  {
     this.selected = false;
@@ -200,6 +201,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
 
     setTimeout(() => {this.initMap()},100);
   }
+
 
   //get activity details from Google
   getActivityDetails(value)  {
@@ -383,6 +385,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     })
   }
 
+
   // select time
   selectPicker()  {
     this.timePicker = true;
@@ -395,6 +398,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   selectMinute(m) {
     this.minute = m;
   }
+
 
   // select picture as display pic
   selectPic(image)  {
@@ -427,6 +431,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     this.uploadPic = '';
     this.newImageFile = '';
   }
+
 
   // save
   saveNew()  {
@@ -479,7 +484,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
           let id = this.route.snapshot['_urlSegment'].segments[2].path;
           this.router.navigateByUrl('/me/itinerary/' + id + '/activity');
         }
-        
+
         this.flashMessageService.handleFlashMessage(result.message);
         this.inputValue = null;
         this.uploadPic = '';

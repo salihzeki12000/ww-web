@@ -159,6 +159,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
     setTimeout(() => {this.initMap()}, 100)
   }
 
+
   // get place details from Google
   getAccommodationDetails(value)  {
     this.details = value;
@@ -318,6 +319,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
     })
   }
 
+
   // select check in time
   selectPickerIn()  {
     this.timePickerIn = true;
@@ -343,6 +345,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
   selectMinuteOut(m) {
     this.minuteOut = m;
   }
+
 
   // select picture as display pic
   selectPic(image)  {
@@ -375,6 +378,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
     this.uploadPic = '';
     this.newImageFile = '';
   }
+
 
   // save
   saveNew()  {
@@ -433,7 +437,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
           let id = this.route.snapshot['_urlSegment'].segments[2].path;
           this.router.navigateByUrl('/me/itinerary/' + id + '/accommodation');
         }
-        
+
         this.flashMessageService.handleFlashMessage(result.message);
         this.inputValue = null;
         this.uploadPic = '';

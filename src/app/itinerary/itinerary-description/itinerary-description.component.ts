@@ -6,6 +6,7 @@ import { UserService }           from '../../user';
 import { ItineraryService }      from '../itinerary.service';
 import { LoadingService }        from '../../loading';
 import { FileuploadService }     from '../../shared';
+import { FlashMessageService }   from '../../flash-message';
 
 @Component({
   selector: 'ww-itinerary-description',
@@ -37,6 +38,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private route: ActivatedRoute,
     private renderer: Renderer2,
+    private flashMessageService: FlashMessageService,
     private fileuploadService: FileuploadService,
     private itineraryService: ItineraryService,
     private loadingService: LoadingService) { }
@@ -92,6 +94,9 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
     this.preventScroll(false);
   }
 
+
+  // update existing
+
   updateStatus(image) {
     image.status = !image.status;
 
@@ -119,6 +124,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
     this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
       result => {
         this.loadingService.setLoader(false, "");
+        this.flashMessageService.handleFlashMessage("Changes to pictures updated");
       })
 
     this.managePics = false;
@@ -216,6 +222,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
       this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
         result => {
           this.loadingService.setLoader(false, "");
+          this.flashMessageService.handleFlashMessage("Changes to pictures updated");
         })
     }
 
@@ -234,7 +241,9 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
     this.itinerary['description']['content'] = content;
 
     this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
-      result => {})
+      result => {
+        this.flashMessageService.handleFlashMessage("Description updated");
+      })
   }
 
 

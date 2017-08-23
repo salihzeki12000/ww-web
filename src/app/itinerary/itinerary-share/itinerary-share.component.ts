@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router }       from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
 import { Itinerary }              from '../itinerary';

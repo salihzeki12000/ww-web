@@ -62,8 +62,10 @@ export class RelationshipService  {
       following: following.following["_id"],
       status: "requested"
     });
+
     const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
     const headers = new Headers({ 'Content-Type': 'application/json' });
+    
     return this.http.post(this.url + '/following/new' + token, body, { headers: headers })
                     .map((response: Response) => {
                       let newFollowing = response.json().following;

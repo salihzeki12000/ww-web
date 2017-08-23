@@ -6,9 +6,10 @@ import { Subscription }   from 'rxjs/Rx';
 declare var google:any;
 declare var MarkerClusterer:any;
 
-import { CheckInService }     from './check-in.service';
-import { User, UserService }  from '../user';
-import { LoadingService }     from '../loading';
+import { CheckInService }       from './check-in.service';
+import { User, UserService }    from '../user';
+import { LoadingService }       from '../loading';
+import { FlashMessageService }  from '../flash-message';
 
 @Component({
   selector: 'ww-check-in',
@@ -42,6 +43,7 @@ export class CheckInComponent implements OnInit, OnDestroy {
     private renderer: Renderer2,
     private userService: UserService,
     private checkinService: CheckInService,
+    private flashMessageService: FlashMessageService,
     private loadingService: LoadingService) { }
 
   ngOnInit() {
@@ -303,6 +305,7 @@ export class CheckInComponent implements OnInit, OnDestroy {
     this.checkinService.deleteCheckin(this.deleteCheckIn).subscribe(
       result =>{
         this.deleteCheckIn = undefined;
+        this.flashMessageService.handleFlashMessage("Check in deleted");
       })
 
     this.loadingService.setLoader(false, "");

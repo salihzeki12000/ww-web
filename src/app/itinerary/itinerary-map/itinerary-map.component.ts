@@ -232,6 +232,19 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
     this.preventScroll(false);
   }
 
+  setDate(events) {
+    this.dates = [];
+    for (let i = 0; i < events.length; i++) {
+      if(this.dates.indexOf(events[i][3]) < 0) {
+        this.dates.push(events[i][3])
+      }
+    }
+    this.dates.unshift("All dates");
+    this.selectedDate = this.dates[0];
+  }
+
+
+  // change center
   changeCenter(event)  {
     if(event['place']['lat'])  {
       let center = new google.maps.LatLng(event['place']['lat'], event['place']['lng']);
@@ -262,17 +275,10 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
     }
   }
 
-  setDate(events) {
-    this.dates = [];
-    for (let i = 0; i < events.length; i++) {
-      if(this.dates.indexOf(events[i][3]) < 0) {
-        this.dates.push(events[i][3])
-      }
-    }
-    this.dates.unshift("All dates");
-    this.selectedDate = this.dates[0];
-  }
 
+
+  // filter by date
+  
   filterMarkers(date) {
     if(this.flightPath !== undefined) this.flightPath.setMap(null);
 
@@ -315,6 +321,9 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
       this.showMapLegend = true;
     }
   }
+
+
+  // others
 
   toggleLegend() {
     this.showMapLegend = !this.showMapLegend;

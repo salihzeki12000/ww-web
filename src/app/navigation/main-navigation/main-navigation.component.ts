@@ -277,10 +277,13 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   }
 
   follow(user)  {
-    this.relationshipService.requestFollow({
+    let following = {
       user: this.currentUser,
       following: user,
-    }).subscribe( result => {} )
+    }
+
+    this.relationshipService.requestFollow(following).subscribe(
+      result => { } )
   }
 
   unfollow(user)  {
@@ -306,7 +309,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     }
 
     this.relationshipService.deleteFollow(relationship, status)
-        .subscribe( result => {} )
+        .subscribe( result => { } )
   }
 
   cancelShowUsers() {

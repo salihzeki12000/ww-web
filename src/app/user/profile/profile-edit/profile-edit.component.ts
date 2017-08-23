@@ -303,6 +303,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       result => {
         this.loadingService.setLoader(false, "");
         this.flashMessageService.handleFlashMessage(result.message);
+        
         this.inputValue = null;
         this.newProfilePic = '';
         this.newImageFile = '';

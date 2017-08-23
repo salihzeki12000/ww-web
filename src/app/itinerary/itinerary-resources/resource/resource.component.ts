@@ -95,6 +95,7 @@ export class ResourceComponent implements OnInit, OnDestroy {
     }
   }
 
+
   // copy section
   copy()  {
     this.copying = true;
@@ -174,6 +175,7 @@ export class ResourceComponent implements OnInit, OnDestroy {
     this.preventScroll(false);
   }
 
+
   // delete section
   delete() {
     this.deleteResource = true;
@@ -190,11 +192,13 @@ export class ResourceComponent implements OnInit, OnDestroy {
       result => {
         this.flashMessageService.handleFlashMessage(result.message);
       })
-      
+
     this.deleteResource = false;
     this.preventScroll(false);
   }
 
+
+  // others
   preventScroll(value)  {
     if(value) {
       this.renderer.addClass(document.body, 'prevent-scroll');

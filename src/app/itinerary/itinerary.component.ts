@@ -208,6 +208,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
     this.inviteLink = 'https://wondererwanderer.herokuapp.com/#/invite/me/' + this.itinerary['_id'];
   }
 
+
   // show add members modal
   inviteUsers()  {
     this.showUsersSearch = true;
@@ -285,6 +286,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
     this.cancelShowUsers();
   }
 
+
   // show and hide current members
   showMembers() {
     this.showCurrentMembers = true;
@@ -298,6 +300,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
     this.showCurrentMembers = false;
     this.preventScroll(false);
   }
+
 
   // itinerary nav tabs to access forms
   showAddNewOptions() {
@@ -353,6 +356,8 @@ export class ItineraryComponent implements OnInit, OnDestroy {
     this.preventScroll(true);
   }
 
+
+  // hide forms
   hideAccommodationForm(hide)  {
     this.addAccommodation = false;
     this.preventScroll(false);
@@ -389,7 +394,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   }
 
 
-  // to toggle nav and close any open modal
+  // to toggle nav and close any open modal in mobile < 420px
   toggleNav() {
     this.showNav = !this.showNav;
 
@@ -399,6 +404,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
       this.showUsersSearch = false;
     }
   }
+
 
   // copy a preview itinerary
   copy()  {
@@ -495,6 +501,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
     this.showSignup = false;
     this.preventScroll(false);
   }
+
 
   // others
   preventScroll(value)  {

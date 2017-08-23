@@ -146,13 +146,6 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     })
   }
 
-  getUsers()  {
-    this.userService.getAllUsers().subscribe(
-      result => {
-        this.filterUsers(result.users);
-      })
-  }
-
   @HostListener('document:click', ['$event'])
   checkClick(event) {
     if(!event.target.classList.contains("fa-cog")) {
@@ -177,6 +170,13 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     if(this.dateSubscription) this.dateSubscription.unsubscribe();
 
     this.loadingService.setLoader(true, "");
+  }
+
+  getUsers()  {
+    this.userService.getAllUsers().subscribe(
+      result => {
+        this.filterUsers(result.users);
+      })
   }
 
   sortAdmin() {
@@ -287,6 +287,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     }
   }
 
+
   // display dropdown option for each member
   showMemberOption(i)  {
     this.showOptions[i] = true;
@@ -322,8 +323,9 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     }
 
     this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
-         data => {})
+        data => {})
   }
+
 
   // edit section
   selectedDate(value) {
@@ -483,6 +485,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
       })
   }
 
+
   // delete section
   confirmDelete()  {
     this.itineraryService.deleteItin(this.itinerary).subscribe(
@@ -490,7 +493,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
         this.router.navigateByUrl('/me');
         this.flashMessageService.handleFlashMessage(data.message);
     })
-    
+
     this.deleteItinerary = false;
   }
 
@@ -521,10 +524,12 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
         this.currentUser['itineraries'].splice(i,1);
       }
     }
+    // itinerary remove from user in server
 
     this.itineraryService.editItin(this.itinerary, '').subscribe(
         data => {
           for (let i = 0; i < this.itinerary['members'].length; i++) {
+
             this.notificationService.newNotification({
               recipient: this.itinerary['members'][i]['_id'],
               originator: this.currentUser['_id'],
@@ -532,10 +537,12 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
               link: "/me/itinerary/" + this.itinerary['_id'],
               read: false
             }).subscribe(data => {})
+
           }
           this.router.navigateByUrl('/me');
         })
   }
+
 
   // share section
   share(type) {
@@ -554,6 +561,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
       this.router.navigateByUrl('/wondererwanderer/' + id)
     }
   }
+
 
   // others
   preventScroll(value)  {

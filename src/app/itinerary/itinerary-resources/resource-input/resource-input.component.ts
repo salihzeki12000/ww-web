@@ -87,7 +87,6 @@ export class ResourceInputComponent implements OnInit, OnDestroy {
         );
       }
     }
-
   }
 
   deleteLink()  {
@@ -97,6 +96,7 @@ export class ResourceInputComponent implements OnInit, OnDestroy {
     this.link_description = '';
     this.link_img = '';
   }
+
 
   // save
   saveNew()  {

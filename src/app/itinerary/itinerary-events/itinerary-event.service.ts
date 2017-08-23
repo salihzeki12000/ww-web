@@ -66,17 +66,20 @@ export class ItineraryEventService  {
     return this.http.post( this.url + "/event/new/" + itinerary['_id'] + token, body, { headers: headers })
                     .map((response: Response) => {
                       let newEvent = response.json().eventItem;
+
                       newEvent.user = {
                         _id: event['user']._id,
                         username: event['user'].username
                       }
+
                       newEvent.sameUser = true;
+
                       this.events.push(newEvent);
                       this.sortEventByDate(this.events);
 
                       for (let i = 0; i < itinerary['members'].length; i++) {
                         if(itinerary['members'][i]['_id'] !== event['user']._id)  {
-                          console.log(itinerary['members'][i]['_id'])
+
                           this.notificationService.newNotification({
                             recipient: itinerary['members'][i]['_id'],
                             originator: event['user']._id,
@@ -84,6 +87,7 @@ export class ItineraryEventService  {
                             link: "/me/itinerary/" + itinerary['_id'] + "/" + event['type'],
                             read: false
                           }).subscribe(result => {});
+                          
                         }
                       }
 

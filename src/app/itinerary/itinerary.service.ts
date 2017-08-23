@@ -100,6 +100,7 @@ export class ItineraryService {
 
                       this.itinerary['method'] = method;
                       this.userService.handleItinChange(this.itinerary);
+                      
                       return response.json();
                     })
                     .catch((error: Response) => {

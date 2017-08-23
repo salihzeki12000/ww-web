@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Input, Renderer2, HostListener } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router }       from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
 import { ItineraryService }      from '../../../itinerary.service';
@@ -96,12 +96,12 @@ export class ActivityComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
-                                        result => {
-                                          this.currentUser = result;
-                                          this.checkSameUser();
-                                          this.filterItineraries();
-                                          this.checkCheckIn();
-                                        })
+      result => {
+        this.currentUser = result;
+        this.checkSameUser();
+        this.filterItineraries();
+        this.checkCheckIn();
+      })
 
     if(this.activity['location'] && this.activity['place']['opening_hours']){
       this.activity['formatted_hours'] = this.activity['place']['opening_hours'].replace(/\r?\n/g, '<br/> ');
@@ -233,6 +233,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
     this.filteredResult = this.users;
   }
 
+
   //recommend section
   recommend() {
     this.recommending = true;
@@ -299,11 +300,14 @@ export class ActivityComponent implements OnInit, OnDestroy {
     }
 
     this.cancelRecommend();
+
+    this.flashMessageService.handleFlashMessage("Recommendation sent");
   }
 
   backToSelectUsers() {
     this.usersSelected = false;
   }
+
 
   //check in section
   checkin() {
@@ -323,6 +327,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
     this.checkinService.addCheckin(checkin).subscribe(
       result  =>  {
         this.loadingService.setLoader(false, "");
+        this.flashMessageService.handleFlashMessage(result.message);
       })
 
     this.activity['checked_in'].push({
@@ -336,6 +341,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
     this.itineraryEventService.editEvent(this.activity).subscribe(
       result => {})
   }
+
 
   // copy section
   copy()  {
@@ -371,6 +377,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
     this.copying = false;
     this.preventScroll(false);
   }
+
 
   // edit section
   patchValue()  {
@@ -461,6 +468,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
     this.initTime();
   }
 
+
   // delete section
   delete() {
     this.deleteActivity = true;
@@ -477,7 +485,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
       result => {
         this.flashMessageService.handleFlashMessage(result.message);
       })
-      
+
     this.deleteActivity = false;
     this.preventScroll(false);
   }

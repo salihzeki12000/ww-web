@@ -280,12 +280,16 @@ export class AccommodationComponent implements OnInit, OnDestroy {
         result =>{ })
     }
 
+    this.flashMessageService.handleFlashMessage("Recommendation sent");
+
     this.cancelRecommend();
   }
 
   backToSelectUsers() {
     this.usersSelected = false;
   }
+
+
 
   //check in section
   checkin() {
@@ -305,6 +309,7 @@ export class AccommodationComponent implements OnInit, OnDestroy {
     this.checkinService.addCheckin(checkin).subscribe(
       result  =>  {
         this.loadingService.setLoader(false, "");
+        this.flashMessageService.handleFlashMessage(result.message);
       })
 
     this.event['checked_in'].push({
@@ -318,6 +323,8 @@ export class AccommodationComponent implements OnInit, OnDestroy {
     this.itineraryEventService.editEvent(this.event).subscribe(
       result => {})
   }
+
+
 
   // copy section
   copy()  {
@@ -417,6 +424,8 @@ export class AccommodationComponent implements OnInit, OnDestroy {
     let editedAccommodation = this.editAccommodationForm.value;
     let originalAccommodation = this.event;
 
+    // date and time
+
     if(this.hourIn === 'anytime') {
       editedAccommodation['check_in_time'] = 'anytime';
     } else  {
@@ -437,6 +446,9 @@ export class AccommodationComponent implements OnInit, OnDestroy {
       editedAccommodation['check_out_date'] = originalAccommodation['check_out_date'];
     }
 
+
+    // others
+    
     for(let value in editedAccommodation) {
       originalAccommodation[value] = editedAccommodation[value];
     }
