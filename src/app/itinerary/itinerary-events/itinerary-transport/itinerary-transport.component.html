@@ -8,9 +8,10 @@
   <div class="event-summary">
     <div *ngFor="let event of transports; let i = index" class="event-summary-item" (click)="centerItem(event)" [class.highlighted-item]="highlightedEvent === event">
       <a href="#transport{{i}}">
-        <h5 class="index">{{i+1}}</h5>
+        <h5 class="index">{{ i+1 }}</h5>
 
-        <h5 class="date">{{ event?.dep_date | date: 'dd MMM yyyy' }} - {{ event?.dep_time }}</h5>
+        <h5 class="date" *ngIf="itinerary?.num_days">{{ event?.dep_date }} - {{ event?.dep_time }}</h5>
+        <h5 class="date" *ngIf="!itinerary?.num_days">{{ event?.dep_date | date: 'dd MMM yyyy' }} - {{ event?.dep_time }}</h5>
 
         <div [ngSwitch]="event.transport_type">
           <h5 class="transport-summary-header" *ngSwitchCase="'flight'"><i class="fa fa-plane" aria-hidden="true"></i> {{ event.reference_number | uppercase }}</h5>

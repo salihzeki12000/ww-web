@@ -28,7 +28,9 @@
   </div>
 
   <div class="display-date-header">
-    <h5>{{ event?.dep_date | date: 'dd MMM yyyy (EEE)' }} - {{ event?.dep_time }}</h5>
+    <h5 *ngIf="itinerary?.num_days">{{ event?.dep_date }} - {{ event?.dep_time }}</h5>
+    <h5 *ngIf="!itinerary?.num_days">{{ event?.dep_date | date: 'dd MMM yyyy (EEE)' }} - {{ event?.dep_time }}</h5>
+
     <h5 *ngIf="!summary">{{ index + 1 }} of {{ totalTransports }}</h5>
   </div>
 
@@ -62,7 +64,10 @@
     <div class="departure-section">
       <h3>{{ event.dep_city | uppercase }}</h3>
       <h5 class="approach-details">Departs</h5>
-      <h5 class="transport-date-details">{{ event?.dep_date | date:'dd MMM yyyy' }} - {{ event.dep_time }}</h5>
+
+      <h5 class="transport-date-details" *ngIf="itinerary?.num_days">{{ event?.dep_date }} - {{ event.dep_time }}</h5>
+      <h5 class="transport-date-details" *ngIf="!itinerary?.num_days">{{ event?.dep_date | date:'dd MMM yyyy' }} - {{ event.dep_time }}</h5>
+
       <h5>{{ event.dep_station }}</h5>
       <h5>{{ event.dep_terminal }}</h5>
     </div>
@@ -74,7 +79,10 @@
     <div class="arrival-section">
       <h3>{{ event.arr_city | uppercase }}</h3>
       <h5 class="approach-details">Arrives</h5>
-      <h5 class="transport-date-details">{{ event?.arr_date | date:'dd MMM yyyy' }} - {{ event.arr_time }}</h5>
+
+      <h5 class="transport-date-details" *ngIf="itinerary?.num_days">{{ event?.arr_date }} - {{ event.arr_time }}</h5>
+      <h5 class="transport-date-details" *ngIf="!itinerary?.num_days">{{ event?.arr_date | date:'dd MMM yyyy' }} - {{ event.arr_time }}</h5>
+
       <h5>{{ event.arr_station }}</h5>
       <h5>{{ event.arr_terminal }}</h5>
     </div>
@@ -88,7 +96,10 @@
       <div class="departure-section">
         <h3>{{ event.dep_city | uppercase }}</h3>
         <h5 class="approach-details">Departs</h5>
-        <h5 class="transport-date-details">{{ event?.dep_date | date:'dd MMM yyyy' }} - {{ event.dep_time }}</h5>
+
+        <h5 class="transport-date-details" *ngIf="itinerary?.num_days">{{ event?.dep_date }} - {{ event.dep_time }}</h5>
+        <h5 class="transport-date-details" *ngIf="!itinerary?.num_days">{{ event?.dep_date | date:'dd MMM yyyy' }} - {{ event.dep_time }}</h5>
+
         <h5>{{ event.dep_station }}</h5>
       </div>
 
@@ -104,7 +115,10 @@
       <div class="arrival-section">
         <h3>{{ event.arr_city | uppercase }}</h3>
         <h5 class="approach-details">Arrives</h5>
-        <h5 class="transport-date-details">{{ event?.arr_date | date:'dd MMM yyyy' }} - {{ event.arr_time }}</h5>
+
+        <h5 class="transport-date-details" *ngIf="itinerary?.num_days">{{ event?.arr_date }} - {{ event.arr_time }}</h5>
+        <h5 class="transport-date-details" *ngIf="!itinerary?.num_days">{{ event?.arr_date | date:'dd MMM yyyy' }} - {{ event.arr_time }}</h5>
+
         <h5>{{ event.arr_station }}</h5>
       </div>
 
@@ -125,7 +139,9 @@
       <div class="departure-section">
         <h3>{{ event.dep_city | uppercase }}</h3>
         <h5 class="approach-details">Pick up</h5>
-        <h5 class="transport-date-details">{{ event?.dep_date | date:'dd MMM yyyy' }} - {{ event.dep_time }}</h5>
+
+        <h5 class="transport-date-details" *ngIf="itinerary?.num_days">{{ event?.dep_date }} - {{ event.dep_time }}</h5>
+        <h5 class="transport-date-details" *ngIf="!itinerary?.num_days">{{ event?.dep_date | date:'dd MMM yyyy' }} - {{ event.dep_time }}</h5>
       </div>
 
       <div class="route-visual">
@@ -135,7 +151,9 @@
       <div class="arrival-section">
         <h3>{{ event.arr_city | uppercase }}</h3>
         <h5 class="approach-details">Return</h5>
-        <h5 class="transport-date-details">{{ event?.arr_date | date:'dd MMM yyyy' }} - {{ event.arr_time }}</h5>
+
+        <h5 class="transport-date-details" *ngIf="itinerary?.num_days">{{ event?.arr_date }} - {{ event.arr_time }}</h5>
+        <h5 class="transport-date-details" *ngIf="!itinerary?.num_days">{{ event?.arr_date | date:'dd MMM yyyy' }} - {{ event.arr_time }}</h5>
       </div>
 
     </div><!-- end of vehicle rental -->
@@ -246,7 +264,8 @@
 
                 <div class="flight-details">
                   <h5>Departure Date</h5>
-                  <h4>{{ event.dep_date | date: "dd MMM yyyy (EEEE)" }}</h4>
+                  <h4 *ngIf="itinerary?.num_days">{{ event.dep_date }}</h4>
+                  <h4 *ngIf="!itinerary?.num_days">{{ event.dep_date | date: "dd MMM yyyy (EEEE)" }}</h4>
                 </div>
 
                 <div class="flight-details">
@@ -275,12 +294,15 @@
                   <label>Departure Date (DD/MM/YYYY)</label>
                   <select class="select-date" name="dep_date" formControlName="dep_date">
                     <option *ngFor="let itinDate of dateRange; let i = index" [value]="itinDate">
-                      <div *ngIf="itinDate === 'any day'">
+
+                      <div *ngIf="itinDate === 'any day' || itinerary?.num_days">
                         <h5>{{ itinDate }}</h5>
                       </div>
-                      <div *ngIf="itinDate !== 'any day'">
-                        <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+
+                      <div *ngIf="itinDate !== 'any day' && !itinerary?.num_days">
+                        <h5>Day {{ i }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
                       </div>
+
                     </option>
                   </select>
 
@@ -299,12 +321,15 @@
                   <label>Pick Up Date (DD/MM/YYYY)</label>
                   <select class="select-date" name="dep_date" formControlName="dep_date">
                     <option *ngFor="let itinDate of dateRange; let i = index" [value]="itinDate">
-                      <div *ngIf="itinDate === 'any day'">
+
+                      <div *ngIf="itinDate === 'any day' || itinerary?.num_days">
                         <h5>{{ itinDate }}</h5>
                       </div>
-                      <div *ngIf="itinDate !== 'any day'">
-                        <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+
+                      <div *ngIf="itinDate !== 'any day' && !itinerary?.num_days">
+                        <h5>Day {{ i }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
                       </div>
+
                     </option>
                   </select>
 
@@ -345,7 +370,8 @@
 
                 <div class="flight-details">
                   <h5>Arrival Date</h5>
-                  <h4>{{ event.arr_date | date: "dd MMM yyyy (EEEE)" }}</h4>
+                  <h4 *ngIf="itinerary?.num_days">{{ event.arr_date }}</h4>
+                  <h4 *ngIf="!itinerary?.num_days">{{ event.arr_date | date: "dd MMM yyyy (EEEE)" }}</h4>
                 </div>
 
                 <div class="flight-details">
@@ -369,12 +395,15 @@
                   <label>Arrival Date (DD/MM/YYYY)</label>
                   <select class="select-date" name="arr_date" formControlName="arr_date">
                     <option *ngFor="let itinDate of dateRange; let i = index" [value]="itinDate">
-                      <div *ngIf="itinDate === 'any day'">
+
+                      <div *ngIf="itinDate === 'any day' || itinerary?.num_days">
                         <h5>{{ itinDate }}</h5>
                       </div>
-                      <div *ngIf="itinDate !== 'any day'">
+
+                      <div *ngIf="itinDate !== 'any day' && !itinerary?.num_days">
                         <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
                       </div>
+
                     </option>
                   </select>
 
@@ -393,12 +422,15 @@
                   <label>Return Date (DD/MM/YYYY)</label>
                   <select class="select-date" name="arr_date" formControlName="arr_date">
                     <option *ngFor="let itinDate of dateRange; let i = index" [value]="itinDate">
-                      <div *ngIf="itinDate === 'any day'">
+
+                      <div *ngIf="itinDate === 'any day' || itinerary?.num_days">
                         <h5>{{ itinDate }}</h5>
                       </div>
-                      <div *ngIf="itinDate !== 'any day'">
-                        <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+
+                      <div *ngIf="itinDate !== 'any day' && !itinerary?.num_days">
+                        <h5>Day {{ i }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
                       </div>
+
                     </option>
                   </select>
 

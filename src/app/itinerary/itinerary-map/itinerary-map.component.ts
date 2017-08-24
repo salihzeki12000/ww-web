@@ -23,6 +23,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
   preview;
 
   itinerarySubscription: Subscription;
+  itinerary;
 
   eventSubscription: Subscription;
   events: ItineraryEvent[] = [];
@@ -54,11 +55,16 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
     this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
       result => {
         this.filterEvents(result);
-        this.initMap();
+
+        setTimeout(() =>  {
+          this.initMap();
+        }, 1000)
       })
 
     this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
       result => {
+        this.itinerary = result;
+
         let header = ''
         if(this.preview) header = "Preview : ";
 
@@ -156,11 +162,11 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
           let date;
           let eventDate;
 
-          if(this.events[i]['date'] !== 'any day')  {
+          if(this.events[i]['date'] !== 'any day' && !this.itinerary['num_days'])  {
             date = new Date(this.events[i]['date'])
             eventDate = date.getDate() + " " + this.month[date.getMonth()];
-          } else if(this.events[i]['date'] === 'any day') {
-            eventDate = 'any day';
+          } else if(this.events[i]['date'] === 'any day' || this.itinerary['num_days']) {
+            eventDate = this.events[i]['date'];
           }
 
           eventMarker.push(
@@ -278,7 +284,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
 
 
   // filter by date
-  
+
   filterMarkers(date) {
     if(this.flightPath !== undefined) this.flightPath.setMap(null);
 

@@ -9,7 +9,10 @@
     <div *ngFor="let event of accommodations; let i = index" class="event-summary-item" (click)="centerItem(event)" [class.highlighted-item]="highlightedEvent === event">
       <a href="#accommodation{{i}}">
         <h5 class="index">{{i+1}}</h5>
-        <h5 class="date">{{ event?.check_in_date | date:'dd MMM yy' }} - {{ event?.check_out_date | date:'dd MMM yy' }}</h5>
+
+        <h5 class="date" *ngIf="itinerary?.num_days">{{ event?.check_in_date }} - {{ event?.check_out_date }}</h5>
+        <h5 class="date" *ngIf="!itinerary?.num_days">{{ event?.check_in_date | date:'dd MMM yy' }} - {{ event?.check_out_date | date:'dd MMM yy' }}</h5>
+
         <h5 class="accommodation-summary-header"><i class="fa fa-bed" aria-hidden="true"></i> {{ event?.city | uppercase }}</h5>
         <h5 class="accommodation-summary-name">{{ event?.name }}</h5>
         <h5 class="event-summary-note truncate">{{ event?.note }}</h5>

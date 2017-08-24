@@ -15,7 +15,7 @@
     <h2 class="itinerary-name">
       <span class="preview-header" *ngIf="preview">PREVIEW : </span>
       {{ itinerary?.name }}
-      <span class="itinerary-date">{{ itinerary?.date_from | date:'dd MMM yyyy' }} to {{ itinerary?.date_to | date:'dd MMM yyyy' }}</span>
+      <span class="itinerary-date" *ngIf="!itinerary?.num_days">{{ itinerary?.date_from | date:'dd MMM yyyy' }} to {{ itinerary?.date_to | date:'dd MMM yyyy' }}</span>
     </h2>
   </div>
 

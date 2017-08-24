@@ -20,12 +20,12 @@
       </div>
 
       <div class="marker-details">
-        <div *ngIf="event.date !== 'any day'">
-          <h5 class="marker-date">{{ event.date | date: 'dd MMM'}} - {{ event.time }}</h5>
+        <div *ngIf="event.date === 'any day' || itinerary?.num_days">
+          <h5 class="marker-date">{{ event.date }} - {{ event.time }}</h5>
         </div>
 
-        <div *ngIf="event.date === 'any day'">
-          <h5 class="marker-date">Any day - {{ event.time }}</h5>
+        <div *ngIf="event.date !== 'any day' && !itinerary?.num_days">
+          <h5 class="marker-date">{{ event.date | date: 'dd MMM'}} - {{ event.time }}</h5>
         </div>
 
         <div *ngIf="event.type === 'accommodation'">

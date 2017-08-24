@@ -16,8 +16,9 @@
           </div>
         </div>
 
-        <h5 class="date" *ngIf="activity?.date === 'any day'">{{ activity?.date }} - {{ activity?.time }}</h5>
-        <h5 class="date" *ngIf="activity?.date !== 'any day'">{{ activity?.date | date: 'dd MMM yyyy' }} - {{ activity?.time }}</h5>
+        <h5 class="date" *ngIf="activity?.date === 'any day' || itinerary?.num_days">{{ activity?.date }} - {{ activity?.time }}</h5>
+        <h5 class="date" *ngIf="activity?.date !== 'any day' && !itinerary?.num_days">{{ activity?.date | date: 'dd MMM yyyy' }} - {{ activity?.time }}</h5>
+
         <h5 class='activity-summary-name'>{{ activity?.name }}</h5>
         <h5 class="event-summary-note truncate">{{ activity?.note }}</h5>
       </a>

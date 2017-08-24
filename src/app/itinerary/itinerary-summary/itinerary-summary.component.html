@@ -32,22 +32,22 @@
   <div class="date-bar" [style.left]="left">
     <div *ngFor="let date of dateRange; let i = index">
 
-      <div *ngIf="date === 'any day'">
-        <h5 class="date">Any day</h5>
+      <div *ngIf="date === 'any day' || itinerary?.num_days">
+        <h5 class="date">{{ date }}</h5>
       </div>
 
-      <div *ngIf="date !== 'any day'">
+      <div *ngIf="date !== 'any day' && !itinerary?.num_days">
         <h5 class="date">Day {{ i }} - {{ date | date: "dd MMM (EEE)" }}</h5>
       </div>
 
     </div>
   </div>
 
-  <div *ngIf="currentDate === 'any day'">
+  <div *ngIf="currentDate === 'any day' || itinerary?.num_days">
     <h4 class="fixed-date-header">Any day</h4>
   </div>
 
-  <div *ngIf="currentDate !== 'any day'">
+  <div *ngIf="currentDate !== 'any day' && !itinerary?.num_days">
     <h4 class="fixed-date-header">Day {{ index }} - {{ currentDate | date: 'dd MMM (EEE)'}}</h4>
   </div>
 
@@ -109,7 +109,7 @@
         [itinerary]="itinerary"
         [summary]="true"></ww-accommodation>
     </div>
-    
+
   </div>
 </div>
 

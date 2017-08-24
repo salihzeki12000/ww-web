@@ -39,20 +39,29 @@ export class ItineraryService {
   }
 
   setDateRange(itinerary)  {
-    let startDate = new Date(itinerary['date_from']);
-    let endDate = new Date(itinerary['date_to']);
     let dateRange = [];
-
     dateRange.push('any day');
-    dateRange.push((new Date(itinerary['date_from'])).toISOString());
 
-    while(startDate < endDate){
-      let addDate = startDate.setDate(startDate.getDate() + 1);
-      let newDate = new Date(addDate);
-      dateRange.push(newDate.toISOString());
+    if(!itinerary['num_days']) {
+      let startDate = new Date(itinerary['date_from']);
+      let endDate = new Date(itinerary['date_to']);
+
+      dateRange.push((new Date(itinerary['date_from'])).toISOString());
+
+      while(startDate < endDate){
+        let addDate = startDate.setDate(startDate.getDate() + 1);
+        let newDate = new Date(addDate);
+        dateRange.push(newDate.toISOString());
+      }
+    } else {
+      for (let i = 0; i < itinerary['num_days']; i++) {
+        let day = i + 1;
+        dateRange.push("Day " + day);
+      }
    }
 
-   return dateRange;
+    return dateRange;
+
   }
 
   addItin(itinerary: Itinerary) {
@@ -100,7 +109,7 @@ export class ItineraryService {
 
                       this.itinerary['method'] = method;
                       this.userService.handleItinChange(this.itinerary);
-                      
+
                       return response.json();
                     })
                     .catch((error: Response) => {

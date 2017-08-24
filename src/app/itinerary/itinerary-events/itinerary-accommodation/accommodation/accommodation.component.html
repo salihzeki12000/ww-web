@@ -44,7 +44,9 @@
     </div>
 
     <div class="display-date-header">
-      <h5>{{ event?.check_in_date | date: 'dd MMM yyyy (EEE)' }} - {{ event?.check_in_time }}</h5>
+      <h5 *ngIf="itinerary?.num_days">{{ event?.check_in_date }} - {{ event?.check_in_time }}</h5>
+      <h5 *ngIf="!itinerary?.num_days">{{ event?.check_in_date | date: 'dd MMM yyyy (EEE)' }} - {{ event?.check_in_time }}</h5>
+
       <h5 *ngIf="!summary">{{ index + 1 }} of {{ totalAccommodations }}</h5>
     </div>
 
@@ -63,15 +65,17 @@
 
       <div class="check-in-details">
         <h5>Check in</h5>
-        <h2>{{ event?.check_in_date | date:'dd MMM yy' }}</h2>
-        <h5>{{ event?.check_in_date | date: 'EEEE'}}</h5>
+        <h2 *ngIf="itinerary?.num_days">{{ event?.check_in_date }}</h2>
+        <h2 *ngIf="!itinerary?.num_days">{{ event?.check_in_date | date:'dd MMM yy' }}</h2>
+        <h5 *ngIf="!itinerary?.num_days">{{ event?.check_in_date | date: 'EEEE'}}</h5>
         <h5>{{ event.check_in_time }}</h5>
       </div>
 
       <div class="check-out-details">
         <h5>Check out</h5>
-        <h2>{{ event?.check_out_date | date:'dd MMM yy' }}</h2>
-        <h5>{{ event?.check_out_date | date: 'EEEE'}}</h5>
+        <h2 *ngIf="itinerary?.num_days">{{ event?.check_out_date }}</h2>
+        <h2 *ngIf="!itinerary?.num_days">{{ event?.check_out_date | date:'dd MMM yy' }}</h2>
+        <h5 *ngIf="!itinerary?.num_days">{{ event?.check_out_date | date: 'EEEE'}}</h5>
         <h5>{{ event.check_out_time }}</h5>
       </div>
 
@@ -231,9 +235,15 @@
                 <label>Check In Date <span class="required"> - required</span></label>
                 <select class="select-date" name="check_in_date" formControlName="check_in_date">
                   <option *ngFor="let itinDate of dateRange; let i = index" [value]="itinDate">
-                    <div *ngIf="itinDate !== 'any day'">
-                      <h5>Day {{ i }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+
+                    <div *ngIf="itinerary?.num_days">
+                      <h5>{{ itinDate }}</h5>
                     </div>
+
+                    <div *ngIf="!itinerary?.num_days && itinDate !== 'any day'">
+                      <h5>Day {{ i + 1}}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+                    </div>
+
                   </option>
                 </select>
               </div>
@@ -257,9 +267,15 @@
                 <label>Check Out Date <span class="required"> - required</span></label>
                 <select class="select-date" name="check_out_date" formControlName="check_out_date">
                   <option *ngFor="let itinDate of dateRange; let i = index" [value]="itinDate">
-                    <div *ngIf="itinDate !== 'any day'">
-                      <h5>Day {{ i }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+
+                    <div *ngIf="itinerary?.num_days">
+                      <h5>{{ itinDate }}</h5>
                     </div>
+
+                    <div *ngIf="!itinerary?.num_days && itinDate !== 'any day'">
+                      <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+                    </div>
+
                   </option>
                 </select>
               </div>

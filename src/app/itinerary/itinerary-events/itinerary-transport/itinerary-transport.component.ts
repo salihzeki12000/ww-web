@@ -50,7 +50,13 @@ export class ItineraryTransportComponent implements OnInit {
       })
 
     this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
-      result => { this.filterEvent(result); })
+      result => {
+
+        setTimeout(() =>  {
+          this.filterEvent(result);
+        }, 1000)
+
+      })
 
     this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
       result => {
@@ -77,19 +83,24 @@ export class ItineraryTransportComponent implements OnInit {
     this.transports = [];
     for (let i = 0; i < events.length; i++) {
       if(events[i]['type'] === 'transport') {
-        let index = this.dateRange.indexOf(events[i]['dep_date'])
-        let outIndex = this.dateRange.indexOf(events[i]['arr_date'])
 
-        if(index < 0 || outIndex < 0) {
-          events[i]['out_of_range'] = true;
-        } else  {
-          events[i]['out_of_range'] = false;
+        if(!this.itinerary['num_days']) {
+
+          let index = this.dateRange.indexOf(events[i]['dep_date'])
+          let outIndex = this.dateRange.indexOf(events[i]['arr_date'])
+
+          if(index < 0 || outIndex < 0) {
+            events[i]['out_of_range'] = true;
+          } else  {
+            events[i]['out_of_range'] = false;
+          }
+
         }
 
         this.transports.push(events[i])
       }
     }
-    
+
     this.totalTransports = this.transports.length
     this.loadingService.setLoader(false, "");
     this.preventScroll(false);

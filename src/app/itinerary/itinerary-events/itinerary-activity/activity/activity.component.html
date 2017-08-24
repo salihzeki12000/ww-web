@@ -43,12 +43,12 @@
       </div>
     </div>
 
-    <div class="display-date-header" *ngIf="activity?.date === 'any day'">
+    <div class="display-date-header" *ngIf="activity?.date === 'any day' || itinerary?.num_days">
       <h5>{{ activity?.date }} - {{ activity?.time }}</h5>
       <h5 *ngIf="!summary">{{ index + 1 }} of {{ totalActivities }}</h5>
     </div>
 
-    <div class="display-date-header" *ngIf="activity?.date !== 'any day'">
+    <div class="display-date-header" *ngIf="activity?.date !== 'any day' && !itinerary?.num_days">
       <h5>{{ activity?.date | date: 'dd MMM yyyy (EEE)' }} - {{ activity?.time }}</h5>
       <h5 *ngIf="!summary">{{ index + 1 }} of {{ totalActivities }}</h5>
     </div>
@@ -240,12 +240,15 @@
             <label>Date</label>
             <select class="select-date" name="date" formControlName="date">
               <option *ngFor="let itinDate of dateRange; let i = index" [value]="itinDate">
-                <div *ngIf="itinDate === 'any day'">
+
+                <div *ngIf="itinDate === 'any day' || itinerary?.num_days">
                   <h5>{{ itinDate }}</h5>
                 </div>
-                <div *ngIf="itinDate !== 'any day'">
+
+                <div *ngIf="itinDate !== 'any day' && !itinerary?.num_days">
                   <h5>Day {{ i }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
                 </div>
+                
               </option>
             </select>
 

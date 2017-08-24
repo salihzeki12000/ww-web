@@ -15,7 +15,7 @@ import { FlashMessageService } from './flash-message.service';
   animations: [
     trigger('slideInOut', [
       state('in', style({ transform: 'translate3d(0, 0, 0)' })),
-      state('out', style({ transform: 'translate3d(0, -100%, 0)' })),
+      state('out', style({ transform: 'translate3d(0, -200%, 0)' })),
       transition('in => out', animate('800ms ease-in-out')),
       transition('out => in', animate('800ms ease-in-out'))
     ]),
@@ -34,10 +34,10 @@ export class FlashMessageComponent implements OnInit {
 
         this.flashMessage = flashMessage;
         this.messageState = 'in';
-        
+
         setTimeout(()  =>  {
           this.messageState = 'out';
-        }, 3000);
+        }, 4000);
     }
     );
   }
