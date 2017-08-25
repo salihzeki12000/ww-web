@@ -54,7 +54,10 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
 
     this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
       result => {
-        this.filterEvents(result);
+        console.log('event')
+        setTimeout(() =>  {
+          this.filterEvents(result);
+        }, 500)
 
         setTimeout(() =>  {
           this.initMap();
@@ -64,6 +67,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
     this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
       result => {
         this.itinerary = result;
+        console.log('itin')
 
         let header = ''
         if(this.preview) header = "Preview : ";
@@ -86,10 +90,16 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
 
     for (let i = 0; i < events.length; i++) {
       if(events[i]['type'] !== 'transport' && events[i]['location'])  {
-        let date = new Date(events[i]['date']);
-        let converted_date = date.getDate() + " " + this.month[date.getMonth()];
 
-        events[i]['converted_date'] = converted_date;
+        if(this.itinerary['num_days'])  {
+          events[i]['converted_date'] = events[i]['date']
+        } else  {
+          let date = new Date(events[i]['date']);
+          let converted_date = date.getDate() + " " + this.month[date.getMonth()];
+
+          events[i]['converted_date'] = converted_date;
+        }
+
         events[i]['index'] = index;
         index += 1;
 
