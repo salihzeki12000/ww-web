@@ -88,6 +88,8 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
     dateRange.push('any day');
 
     if(itinerary['date_from'] !== "") {
+      itinerary['num_day'] = undefined;
+      
       let startDate = new Date(itinerary['date_from']);
       let endDate = new Date(itinerary['date_to']);
 

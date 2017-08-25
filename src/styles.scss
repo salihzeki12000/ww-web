@@ -136,6 +136,9 @@ span.italic {
   font-style: italic;
 }
 
+span.bold {
+  font-weight: bold;
+}
 
 .truncate {
   white-space: nowrap;
@@ -2396,6 +2399,7 @@ h5.transport-date-details  {
   width: 90%;
   padding-left: 10px;
   vertical-align: -webkit-baseline-middle;
+  text-align: justify;
 }
 
 

@@ -7,92 +7,117 @@
 
     <h4 class="form-section-header">Basic Details</h4>
     <div class="form-section-details">
-      <div class="itinerary-edit-item">
-        <h5>Itinerary Name</h5>
-        <div>
-          <input type="text" formControlName="name">
-          <span class="form-validator"
-            *ngIf="editItineraryForm.get('name').touched && editItineraryForm.get('name').invalid">Name of itinerary is required</span>
-        </div>
-      </div>
 
-      <div class="itinerary-edit-item">
-        <h5>Travel Dates</h5>
-        <div class="date-picker" daterangepicker [options]="options" (selected)="selectedDate($event)">
-          <i class="fa fa-calendar" aria-hidden="true"></i>
-          <h4><span>From:</span> {{ dateFrom | date: 'dd MMM yyyy'}}</h4>
-          <h4><span>To:</span> {{ dateTo | date: 'dd MMM yyyy'}}</h4>
-        </div>
-      </div>
+      <div class="sub-section">
 
-      <div class="created-details">
         <div class="itinerary-edit-item">
-          <h5>Created By</h5>
-          <h4 class="username" (click)="routeToUser(itinerary?.created_by._id)">{{ itinerary?.created_by.username }}</h4>
+          <h5>Itinerary name</h5>
+          <div>
+            <input type="text" formControlName="name">
+            <span class="form-validator"
+              *ngIf="editItineraryForm.get('name').touched && editItineraryForm.get('name').invalid">Name of itinerary is required</span>
+          </div>
         </div>
-      </div>
 
-      <div class="created-details" *ngIf="itinerary?.shared_by">
-        <div class="itinerary-edit-item">
-          <h5>Shared By</h5>
-          <h4 class="username" (click)="routeToUser(itinerary?.shared_by._id)">{{ itinerary?.shared_by.username }}</h4>
+        <div class="day-note">
+          <h4>Please select either travel dates or number of days for the itinerary</h4>
+          <h5>Currently active: <span class="bold">{{ dateType }}</span></h5>
         </div>
-      </div>
 
-      <div class="created-details">
         <div class="itinerary-edit-item">
-          <h5>Master Admin</h5>
-          <h4 class="username" (click)="routeToUser(itinerary?.created_by._id)">{{ itinerary?.members[0].username }}</h4>
+          <h5>Travel dates</h5>
+          <div class="date-picker" daterangepicker [options]="options" (selected)="selectedDate($event)">
+            <i class="fa fa-calendar" aria-hidden="true"></i>
+            <h4><span>From:</span> {{ dateFrom | date: 'dd MMM yyyy'}}</h4>
+            <h4><span>To:</span> {{ dateTo | date: 'dd MMM yyyy'}}</h4>
+          </div>
         </div>
-      </div>
 
-      <div class="itinerary-edit-item" *ngIf="masterAdmin">
-        <h5>Private</h5>
-
-        <h4 *ngIf="private" class="toggle-true" (click)="private = false">Yes</h4>
-        <h4 *ngIf="private" class="toggle-button-true" (click)="private = false"></h4>
-        <h6 *ngIf="private && itinerary?.corporate.status">Only your followers can view.</h6>
-        <h6 *ngIf="private && !itinerary?.corporate.status">Only itinerary members can view.</h6>
-
-        <h4 *ngIf="!private" class="toggle-false" (click)="private = true">No</h4>
-        <h4 *ngIf="!private" class="toggle-button-false" (click)="private = true"></h4>
-        <h6 *ngIf="!private && itinerary?.corporate.status">Any one can view.</h6>
-        <h6 *ngIf="!private && !itinerary?.corporate.status">Followers of itinerary members can view.</h6>
+        <div class="itinerary-edit-item num-days" *ngIf="itinerary.corporate">
+          <h5>Number of days</h5>
+          <input type="text" formControlName="num_days" #days (keyup)="logDays(days.value)" min="1">
+        </div>
 
       </div>
 
-      <div class="created-details" *ngIf="!masterAdmin">
-        <div class="itinerary-edit-item">
+
+      <div class="sub-section">
+
+        <div class="itinerary-edit-item" *ngIf="masterAdmin">
           <h5>Private</h5>
-          <h4 *ngIf="private">Yes</h4>
-          <h4 *ngIf="!private">No</h4>
+
+          <h4 *ngIf="private" class="toggle-true" (click)="private = false">Yes</h4>
+          <h4 *ngIf="private" class="toggle-button-true" (click)="private = false"></h4>
+          <h6 *ngIf="private && itinerary?.corporate.status">Only your followers can view.</h6>
+          <h6 *ngIf="private && !itinerary?.corporate.status">Only itinerary members can view.</h6>
+
+          <h4 *ngIf="!private" class="toggle-false" (click)="private = true">No</h4>
+          <h4 *ngIf="!private" class="toggle-button-false" (click)="private = true"></h4>
+          <h6 *ngIf="!private && itinerary?.corporate.status">Any one can view.</h6>
+          <h6 *ngIf="!private && !itinerary?.corporate.status">Followers of itinerary members can view.</h6>
+
         </div>
+
+        <div class="created-details" *ngIf="!masterAdmin">
+          <div class="itinerary-edit-item">
+            <h5>Private</h5>
+            <h4 *ngIf="private">Yes</h4>
+            <h4 *ngIf="!private">No</h4>
+          </div>
+        </div>
+
+        <div class="itinerary-edit-item" *ngIf="itinerary?.corporate.status">
+          <h5>Publish</h5>
+
+          <h4 *ngIf="publish" class="toggle-true" (click)="publish = false">Yes</h4>
+          <h4 *ngIf="publish" class="toggle-button-true" (click)="publish = false"></h4>
+          <h6 *ngIf="publish">Preview is available for public to view.</h6>
+
+          <h4 *ngIf="!publish" class="toggle-false" (click)="publish = true">No</h4>
+          <h4 *ngIf="!publish" class="toggle-button-false" (click)="publish = true"></h4>
+          <h6 *ngIf="!publish">Preview is not available for public to view.</h6>
+        </div>
+
+        <div class="itinerary-edit-item" *ngIf="currentUserAdmin && !itinerary?.corporate.status">
+          <h5>Invitation password <br> (Admin can amend)</h5>
+          <div>
+            <input type="text" formControlName="invite_password">
+          </div>
+        </div>
+
+        <div class="created-details" *ngIf="!currentUserAdmin">
+          <div class="itinerary-edit-item">
+            <h5>Invitation password <br> (Admin can amend)</h5>
+            <h4>{{ itinerary?.invite_password }}</h4>
+          </div>
+        </div>
+
       </div>
 
-      <div class="itinerary-edit-item" *ngIf="itinerary?.corporate.status">
-        <h5>Publish</h5>
 
-        <h4 *ngIf="publish" class="toggle-true" (click)="publish = false">Yes</h4>
-        <h4 *ngIf="publish" class="toggle-button-true" (click)="publish = false"></h4>
-        <h6 *ngIf="publish">Preview is available for public to view.</h6>
+      <div class="sub-section">
 
-        <h4 *ngIf="!publish" class="toggle-false" (click)="publish = true">No</h4>
-        <h4 *ngIf="!publish" class="toggle-button-false" (click)="publish = true"></h4>
-        <h6 *ngIf="!publish">Preview is not available for public to view.</h6>
-      </div>
-
-      <div class="itinerary-edit-item" *ngIf="currentUserAdmin && !itinerary?.corporate.status">
-        <h5>Invitation Password <br> (Admin can amend)</h5>
-        <div>
-          <input type="text" formControlName="invite_password">
+        <div class="created-details">
+          <div class="itinerary-edit-item">
+            <h5>Created by</h5>
+            <h4 class="username" (click)="routeToUser(itinerary?.created_by._id)">{{ itinerary?.created_by.username }}</h4>
+          </div>
         </div>
-      </div>
 
-      <div class="created-details" *ngIf="!currentUserAdmin">
-        <div class="itinerary-edit-item">
-          <h5>Invitation Password <br> (Admin can amend)</h5>
-          <h4>{{ itinerary?.invite_password }}</h4>
+        <div class="created-details" *ngIf="itinerary?.shared_by">
+          <div class="itinerary-edit-item">
+            <h5>Shared by</h5>
+            <h4 class="username" (click)="routeToUser(itinerary?.shared_by._id)">{{ itinerary?.shared_by.username }}</h4>
+          </div>
         </div>
+
+        <div class="created-details">
+          <div class="itinerary-edit-item">
+            <h5>Master admin</h5>
+            <h4 class="username" (click)="routeToUser(itinerary?.created_by._id)">{{ itinerary?.members[0].username }}</h4>
+          </div>
+        </div>
+
       </div>
 
 
@@ -273,7 +298,7 @@
       </div>
 
       <div class="change-date-option">
-        <h4 (click)="sameDays()">Keep to same day of itinerary</h4>
+        <h4 (click)="sameIndex()">Keep to same day of itinerary</h4>
         <h5>Activity  and summary note on 05 June 2017 (Day 01) will be amended to the new Day 01 date.</h5>
         <h5>For example, itinerary start date change to 07 June 2017, activity and summary note on 05 June 2017 will be moved to 07 June 2017.</h5>
         <h5>Any activity not included in the new date range will be amended to "any day", summary note will be deleted.</h5>
@@ -286,6 +311,27 @@
     </div>
   </div>
 </div>
+
+<!-- date type changed -->
+<div class="custom-modal" *ngIf="dateTypeChanged">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>Date type changed</h3>
+      <a (click)="cancelEdit()">X</a>
+    </div>
+
+    <div class="content-without-header-name">
+      <h4>{{ dateTypeChangedMsg }}</h4>
+    </div>
+
+    <div class="action-response">
+      <h5 class="action-response-secondary" (click)="cancelEdit()">CANCEL EDIT</h5>
+      <h5 class="action-response-primary" (click)="confirmTypeChange()">CONFIRM EDIT</h5>
+    </div>
+  </div>
+
+</div>
+
 
 <!-- copy/share itinerary -->
 <div class="custom-modal" *ngIf="shareItin">

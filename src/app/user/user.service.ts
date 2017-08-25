@@ -137,16 +137,25 @@ export class UserService  {
     let today = new Date();
     let past = [];
     let upcoming = [];
+    let undated = [];
 
     for (let i = 0; i < itineraries.length; i++) {
-      let date = new Date(itineraries[i]['date_to']);
 
-      if( date.getTime() < today.getTime()) {
-        itineraries[i]['past'] = true;
-        past.push(itineraries[i]);
-      } else if (date.getTime() >= today.getTime()) {
-        upcoming.push(itineraries[i]);
+      if(itineraries[i]['num_days'])  {
+        undated.push(itineraries[i])
+      } else  {
+
+        let date = new Date(itineraries[i]['date_to']);
+
+        if( date.getTime() < today.getTime()) {
+          itineraries[i]['past'] = true;
+          past.push(itineraries[i]);
+        } else if (date.getTime() >= today.getTime()) {
+          upcoming.push(itineraries[i]);
+        }
+
       }
+
     }
 
     past.sort((a,b)  =>  {
@@ -157,7 +166,7 @@ export class UserService  {
       return new Date(a['date_to']).getTime() - new Date(b['date_to']).getTime();
     })
 
-    currentUser['itineraries'] = upcoming.concat(past);
+    currentUser['itineraries'] = undated.concat(upcoming, past);
 
     this.updateCurrentUser.next(currentUser)
   }

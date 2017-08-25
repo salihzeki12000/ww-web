@@ -105,7 +105,8 @@
       <h4>Please select itinerary to copy to:</h4>
       <div class="copy-to-itinerary-list">
         <div *ngFor="let itinerary of itineraries" class="copy-to-itinerary" (click)="shareEvents(itinerary)">
-          <h4>{{ itinerary.name }} - ({{ itinerary.date_from | date:"dd MMM yy" }} to {{ itinerary.date_to | date:"dd MMM yy" }})</h4>
+          <h4 *ngIf="!itinerary.num_days">{{ itinerary.name }} - ({{ itinerary.date_from | date:"dd MMM yy" }} to {{ itinerary.date_to | date:"dd MMM yy" }})</h4>
+          <h4 *ngIf="itinerary.num_days">{{ itinerary.name }} - ({{ itinerary.num_days }} days )</h4>
         </div>
       </div>
     </div>

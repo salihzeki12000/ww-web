@@ -101,7 +101,7 @@ export class AccommodationComponent implements OnInit, OnDestroy {
         this.filterItineraries();
         this.checkCheckIn();
       })
-
+      console.log(this.dateRange)
     this.event['formatted_note'] = this.event['note'].replace(/\r?\n/g, '<br/> ');
 
     this.initTime();
@@ -344,8 +344,14 @@ export class AccommodationComponent implements OnInit, OnDestroy {
     delete copiedEvent['created_at'];
     delete copiedEvent['itinerary'];
 
-    copiedEvent['check_in_date'] = itinerary['date_from'];
-    copiedEvent['check_out_date'] = itinerary['date_to'];
+    if(!itinerary['num_days']) {
+      copiedEvent['check_in_date'] = itinerary['date_from'];
+      copiedEvent['check_out_date'] = itinerary['date_to'];
+    } else  {
+      copiedEvent['check_in_date'] = this.dateRange[0];
+      copiedEvent['check_out_date'] = this.dateRange[this.dateRange.length - 1];
+    }
+
     copiedEvent['date'] = copiedEvent['check_in_date'];
     copiedEvent['user'] ={
       _id: this.currentUser['_id'],

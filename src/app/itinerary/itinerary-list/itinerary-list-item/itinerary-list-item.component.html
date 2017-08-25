@@ -10,7 +10,9 @@
 <div class="itinerary-details">
   <h3>{{ itinerary.name }}</h3>
   <h6 class="private-indicator" *ngIf="itinerary.private">PRIVATE</h6>
-  <h5>{{ itinerary.date_from | date:'dd MMM yy' }} to {{ itinerary.date_to | date:'dd MMM yy' }}</h5>
+
+  <h5 *ngIf="!itinerary.num_days">{{ itinerary.num_days }} days</h5>
+  <h5 *ngIf="!itinerary.num_days">{{ itinerary.date_from | date:'dd MMM yy' }} to {{ itinerary.date_to | date:'dd MMM yy' }}</h5>
 
   <div class="itinerary-list-stats">
     <h3>{{ itinerary.members.length }}</h3>

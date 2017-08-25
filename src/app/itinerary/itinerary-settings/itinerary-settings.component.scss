@@ -49,9 +49,18 @@ input {
   }
 }
 
+.sub-section  {
+  margin-bottom: 30px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+
+
+/* individual items */
+
 .itinerary-edit-item  {
   height: 50px;
-  
+
   @media only screen and (max-width: 610px) {
     margin-bottom: 20px;
     height: auto;
@@ -100,6 +109,22 @@ span.form-validator {
   height: 40px;
 }
 
+
+/* length of itinerary */
+
+.day-note  {
+  padding: 20px 0;
+}
+
+.day-note  h4 {
+  padding-bottom: 5px;
+  font-weight: 400;
+}
+
+.num-days input {
+  width: 50px;
+  text-align: center;
+}
 
 
 /* toggle */
@@ -294,7 +319,7 @@ span.cs-info  {
   }
 }
 
-.action-response  {
+.itinerary-edit-main .action-response  {
   background-color: transparent;
 }
 

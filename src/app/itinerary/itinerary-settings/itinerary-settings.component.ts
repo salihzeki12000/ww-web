@@ -29,6 +29,9 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   newDateRange = [];
   newDailyNote = [];
   dateSubscription: Subscription;
+  dateType;
+  dateTypeChanged = false;
+  dateTypeChangedMsg = '';
 
   showOptions = [];
   deleteItinerary = false;
@@ -93,8 +96,9 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     private router: Router) {
       this.editItineraryForm = this.formBuilder.group({
         'name': ['', Validators.required],
-        'date_from': ['', Validators.required],
-        'date_to': ['', Validators.required],
+        'date_from': '',
+        'date_to': '',
+        'num_days': '',
         'invite_password': '',
       })
     }
@@ -103,14 +107,8 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
       result => {
         this.itinerary = result;
-        this.itinerary['date_from'] = result['date_from'].slice(0,10);
-        this.itinerary['date_to'] = result['date_to'].slice(0,10);
-        this.private = result['private'];
-        this.publish = result['corporate']['publish']
 
-        let title = this.itinerary['name'] + " | Settings"
-        this.titleService.setTitle(title);
-
+        this.sortStatus();
         this.getUsers();
         this.sortAdmin();
 
@@ -128,9 +126,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
       })
 
     this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
-      result => {
-        this.filterEvents(result);
-      })
+      result => { this.filterEvents(result); })
 
     this.resourcesSubscription = this.resourceService.updateResources.subscribe(
       result => {
@@ -170,6 +166,23 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     if(this.dateSubscription) this.dateSubscription.unsubscribe();
 
     this.loadingService.setLoader(true, "");
+  }
+
+  sortStatus()  {
+    if(!this.itinerary['num_days'])  {
+      this.dateType = "Travel dates";
+
+      this.itinerary['date_from'] = this.itinerary['date_from'].slice(0,10);
+      this.itinerary['date_to'] = this.itinerary['date_to'].slice(0,10);
+    } else  {
+      this.dateType = "Number of days"
+    }
+
+    this.private = this.itinerary['private'];
+    this.publish = this.itinerary['corporate']['publish']
+
+    let title = this.itinerary['name'] + " | Settings"
+    this.titleService.setTitle(title);
   }
 
   getUsers()  {
@@ -227,8 +240,15 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
       name: this.itinerary['name'],
       date_from: this.formatDate(this.itinerary['date_from']),
       date_to: this.formatDate(this.itinerary['date_to']),
+      num_days: this.itinerary['num_days'],
       invite_password: this.itinerary['invite_password'],
     })
+
+    if(this.itinerary['num_days'])  {
+      this.dateType = "Number of days";
+    } else  {
+      this.dateType = "Travel dates"
+    }
 
     this.updateDateRange();
   }
@@ -347,7 +367,27 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
 
     this.editItineraryForm.patchValue({
       date_from: this.dateFrom,
-      date_to: this.dateTo
+      date_to: this.dateTo,
+      num_days: undefined,
+    })
+
+    this.dateType = "Travel dates"
+  }
+
+  logDays(days) {
+    if(days > 0)  {
+      this.dateType = "Number of days";
+
+      this.dateFrom = undefined;
+      this.dateTo = undefined;
+
+      this.picker.datePicker.setStartDate(this.dateFrom);
+      this.picker.datePicker.setEndDate(this.dateTo);
+    }
+
+    this.editItineraryForm.patchValue({
+      date_from: this.dateFrom,
+      date_to: this.dateTo,
     })
   }
 
@@ -359,30 +399,67 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   checkEdit() {
     this.preventScroll(true);
 
-    if(this.itinerary['date_from'] === this.editItineraryForm.value['date_from'] &&
-       this.itinerary['date_to'] === this.editItineraryForm.value['date_to'])  {
-      this.saveEdit()
-    } else  {
-      this.dateChanged = true;
-      this.setDateRange();
+    // if all same, then no change, then save edit
+    // if num_days same and date change, then dateChanged
+    // if num_days change and date no change, then dayChanged
+    // if all change - means change from date to day or vv.
+
+    if(this.itinerary['num_days'] === this.editItineraryForm.value['num_days']) {
+
+      if(this.itinerary['date_from'] === this.editItineraryForm.value['date_from'] &&
+         this.itinerary['date_to'] === this.editItineraryForm.value['date_to']) {
+
+        this.saveEdit()
+
+      } else  {
+        this.dateChanged = true;
+        this.setDateRange("date", "");
+      }
+
+    } else if(this.itinerary['num_days'] !== this.editItineraryForm.value['num_days']) {
+
+      if(this.itinerary['date_from'] === this.editItineraryForm.value['date_from'] &&
+         this.itinerary['date_to'] === this.editItineraryForm.value['date_to']) {
+
+        this.setDateRange("day", "numChange");
+
+      } else  {
+        this.checkDateType();
+      }
+
     }
+
   }
 
-  setDateRange()  {
+  // date range changed
+
+  setDateRange(type, method)  {
+    this.newDateRange = [];
+    this.newDateRange.push('any day');
     let editedDetails = this.editItineraryForm.value;
 
-    let startDate = new Date(editedDetails['date_from']);
-    let endDate = new Date(editedDetails['date_to']);
+    if(type === 'date') {
 
-    this.newDateRange = [];
+      let startDate = new Date(editedDetails['date_from']);
+      let endDate = new Date(editedDetails['date_to']);
 
-    this.newDateRange.push('any day');
-    this.newDateRange.push((new Date(editedDetails['date_from'])).toISOString());
+      this.newDateRange.push((new Date(editedDetails['date_from'])).toISOString());
 
-    while(startDate < endDate){
-      let addDate = startDate.setDate(startDate.getDate() + 1);
-      let newDate = new Date(addDate);
-      this.newDateRange.push(newDate.toISOString());
+      while(startDate < endDate){
+        let addDate = startDate.setDate(startDate.getDate() + 1);
+        let newDate = new Date(addDate);
+        this.newDateRange.push(newDate.toISOString());
+      }
+
+    } else if(type === 'day') {
+
+      for (let i = 0; i < editedDetails['num_days']; i++) {
+        let day = i + 1;
+        this.newDateRange.push("Day " + day);
+      }
+
+      if(method === "numChange")  this.sameDates();
+
     }
 
     this.setDailyNotes();
@@ -423,7 +500,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     this.saveEdit();
   }
 
-  sameDays()  {
+  sameIndex()  {
     this.dateChanged = false;
 
     for (let i = 0; i < this.events.length; i++) {
@@ -440,22 +517,43 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
       }
     }
 
-    if(this.newDateRange.length <= this.dateRange.length)  {
-      for (let i = 0; i < this.newDailyNote.length; i++) {
-        this.newDailyNote[i]['note'] = this.itinerary['daily_note'][i]['note'];
-      }
-    } else if(this.newDateRange.length > this.dateRange.length)  {
-      for (let i = 0; i < this.itinerary['daily_note'].length; i++) {
-        this.newDailyNote[i]['note'] = this.itinerary['daily_note'][i]['note'];
-      }
+    let dateLength = Math.min(this.newDateRange.length, this.dateRange.length);
+
+    for (let i = 0; i < dateLength; i++) {
+      this.newDailyNote[i]['note'] = this.itinerary['daily_note'][i]['note'];
     }
 
     this.itinerary['daily_note'] = this.newDailyNote;
     this.saveEdit();
   }
 
+
+  // check whether change to dates or days
+  checkDateType() {
+    let edited = this.editItineraryForm.value;
+
+    if(this.dateType === "Travel dates")  {
+
+      this.setDateRange("date", "");
+      this.dateTypeChanged = true;
+      this.dateTypeChangedMsg = "Itinerary date type has change from number of days to specific travel dates. Activities in the itinerary will be adjusted in sequence - Day 1 activities to first date."
+
+    } else if(this.dateType === "Number of days") {
+
+      this.setDateRange("day", "");
+      this.dateTypeChanged = true;
+      this.dateTypeChangedMsg = "Itinerary date type has change from specific travel dates to number of days. Activities in the itinerary will be adjusted in sequence - first date activities to Day 1."
+
+    }
+  }
+
+  confirmTypeChange() {
+    this.sameIndex();
+  }
+
   cancelEdit()  {
     this.dateChanged = false;
+    this.dateTypeChanged = false;
     this.preventScroll(false);
   }
 

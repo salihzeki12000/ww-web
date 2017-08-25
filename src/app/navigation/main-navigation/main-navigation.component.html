@@ -103,7 +103,8 @@
           <div *ngFor="let itinerary of currentUser?.itineraries | slice:0:10" class="dropdown-item">
             <div [routerLink]="['/me/itinerary/', itinerary._id]" (click)="routeToItinerary(itinerary._id)">
               <h5>{{ itinerary.name }}</h5>
-              <h6>( {{ itinerary.date_from | date:'dd MMM yy' }} to {{ itinerary.date_to | date:'dd MMM yy' }} )</h6>
+              <h6 *ngIf="!itinerary?.num_days">( {{ itinerary.date_from | date:'dd MMM yy' }} to {{ itinerary.date_to | date:'dd MMM yy' }} )</h6>
+              <h6 *ngIf="itinerary?.num_days">( {{ itinerary.num_days }} days )</h6>
             </div>
           </div>
         </div>
