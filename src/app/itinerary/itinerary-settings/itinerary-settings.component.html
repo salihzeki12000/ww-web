@@ -19,7 +19,7 @@
           </div>
         </div>
 
-        <div class="day-note">
+        <div class="day-note" *ngIf="itinerary?.corporate.status">
           <h4>Please select either travel dates or number of days for the itinerary</h4>
           <h5>Currently active: <span class="bold">{{ dateType }}</span></h5>
         </div>
@@ -33,7 +33,7 @@
           </div>
         </div>
 
-        <div class="itinerary-edit-item num-days" *ngIf="itinerary.corporate">
+        <div class="itinerary-edit-item num-days" *ngIf="itinerary?.corporate.status">
           <h5>Number of days</h5>
           <input type="text" formControlName="num_days" #days (keyup)="logDays(days.value)" min="1">
         </div>
@@ -287,9 +287,10 @@
     <div class="form-housing change-date-content">
       <h4>Date range for itinerary has been amended.</h4>
       <h5>From ( {{itinerary.date_from | date: 'dd MMM yyyy'}} - {{itinerary.date_to | date: 'dd MMM yyyy'}} ) to ( {{editItineraryForm.value.date_from | date: 'dd MMM yyyy'}} - {{editItineraryForm.value.date_to | date: 'dd MMM yyyy'}} )</h5>
-      <h5>Dates for accommodation and transport arrangements will remain the same.</h5>
-      <h5>Dates for activities can be adjusted as below.</h5>
-      <h4>Please select how would you like dated activities to be adjusted:</h4>
+      <h5>Dates for activities may be adjusted depending on your method of adjustment below.</h5>
+      <h5>Dates for accommodation arrangements will be adjusted in sequence. If the original dates are not available in the new date range, it will be adjusted to check in on the first day and check out on the last day.</h5>
+      <h5>Dates for transport arrangements will remain the same as they may not be operating on the adjusted dates.</h5>
+      <h4>Please select your method of adjustment:</h4>
 
       <div class="change-date-option">
         <h4 (click)="sameDates()">Keep to same date</h4>
@@ -299,7 +300,7 @@
 
       <div class="change-date-option">
         <h4 (click)="sameIndex()">Keep to same day of itinerary</h4>
-        <h5>Activity  and summary note on 05 June 2017 (Day 01) will be amended to the new Day 01 date.</h5>
+        <h5>Activity and summary note on 05 June 2017 (Day 01) will be amended to the new Day 01 date.</h5>
         <h5>For example, itinerary start date change to 07 June 2017, activity and summary note on 05 June 2017 will be moved to 07 June 2017.</h5>
         <h5>Any activity not included in the new date range will be amended to "any day", summary note will be deleted.</h5>
       </div>
@@ -331,7 +332,6 @@
   </div>
 
 </div>
-
 
 <!-- copy/share itinerary -->
 <div class="custom-modal" *ngIf="shareItin">

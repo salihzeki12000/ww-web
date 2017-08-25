@@ -107,7 +107,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
       result => {
         this.itinerary = result;
-
+        console.log(this.itinerary)
         this.sortStatus();
         this.getUsers();
         this.sortAdmin();
@@ -171,7 +171,6 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   sortStatus()  {
     if(!this.itinerary['num_days'])  {
       this.dateType = "Travel dates";
-
       this.itinerary['date_from'] = this.itinerary['date_from'].slice(0,10);
       this.itinerary['date_to'] = this.itinerary['date_to'].slice(0,10);
     } else  {
@@ -301,7 +300,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     this.events = []
 
     for (let i = 0; i < events.length; i++) {
-      if(events[i]['type'] === 'activity')  {
+      if(events[i]['type'] !== 'transport')  {
         this.events.push(events[i])
       }
     }
@@ -480,11 +479,33 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     this.dateChanged = false;
 
     for (let i = 0; i < this.events.length; i++) {
-      let index = this.newDateRange.indexOf(this.events[i]['date']);
+      if(this.events[i]['type'] === 'activity') {
 
-      if(index < 0) {
-        this.events[i]['date'] = "any day";
-        this.updateEvent(this.events[i]);
+        let index = this.newDateRange.indexOf(this.events[i]['date']);
+
+        if(index < 0) {
+          this.events[i]['date'] = "any day";
+          this.updateEvent(this.events[i]);
+        }
+
+      }
+
+      if(this.events[i]['type'] === 'accommodation')  {
+        let CIIndex = this.dateRange.indexOf(this.events[i]['check_in_date']);
+        let COIndex = this.dateRange.indexOf(this.events[i]['check_out_date']);
+
+        if(CIIndex < this.newDateRange.length && COIndex < this.newDateRange.length) {
+          this.events[i]['date'] = this.newDateRange[CIIndex];
+          this.events[i]['check_in_date'] = this.newDateRange[CIIndex];
+          this.events[i]['check_out_date'] = this.newDateRange[COIndex];
+          this.updateEvent(this.events[i]);
+        } else  {
+          this.events[i]['date'] = this.newDateRange[0];
+          this.events[i]['check_in_date'] = this.newDateRange[0];
+          this.events[i]['check_out_date'] = this.newDateRange[this.newDateRange.length - 1];
+          this.updateEvent(this.events[i]);
+        }
+
       }
     }
 
@@ -549,6 +570,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
 
   confirmTypeChange() {
     this.sameIndex();
+    this.dateTypeChanged = false;
   }
 
   cancelEdit()  {
@@ -563,7 +585,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   }
 
   saveEdit() {
-    this.loadingService.setLoader(true, "Saving...");
+    this.loadingService.setLoader(true, "Saving your changes...");
 
     let editedDetails = this.editItineraryForm.value;
 
