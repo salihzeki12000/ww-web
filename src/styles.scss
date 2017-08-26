@@ -250,11 +250,28 @@ span.bold {
   Home and profile page itinerary shortcut
 
 *********************************************/
+.itinerary-shortcut  {
+  right: calc(((100vw - 600px)/2) + 620px);
+  width: 250px;
+  background-color: white;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
+
+  @media only screen and (max-width: 890px) {
+    display: none;
+  }
+
+  @media only screen and (min-width: 890px) and (max-width: 1200px) {
+    right: calc(((100vw - 890px)/2) + 620px);
+  }
+}
+
 .itinerary-shortcut-header > h5  {
   padding: 10px 0 5px 10px;
-  text-align: left;
+  text-align: center;
   font-weight: 500;
   letter-spacing: .5px;
+  color: white;
+  background-color: #FFA15C;
 }
 
 .itinerary-shortcut-new  {
@@ -270,7 +287,7 @@ span.bold {
 .itinerary-shortcut-list {
   padding: 10px;
   text-align: right;
-  border-top: 1px solid lightgray;
+  border-top: 1px solid rgba(0,0,0,.1);
   &:hover {
     cursor: pointer;
     background-color: #E6E6E6;
@@ -742,6 +759,18 @@ h5.action-response-primary  {
   }
 }
 
+.user-profile-background-img  {
+  position: absolute;
+  right: 0;
+  margin-top: -20px;
+  height: 120px;
+  width: 300px;
+
+  @media only screen and (max-width: 1000px) {
+    display: none;
+  }
+}
+
 .user-profile-counters  {
   position: absolute;
   width: 360px;
@@ -1022,6 +1051,15 @@ textarea.ng-invalid.ng-touched {
     top: 0;
     left: 0;
   }
+}
+
+.form-card::-webkit-scrollbar {
+  background-color: rgba(100, 148, 237, 0.3);
+  width: 8px;
+}
+
+.form-card::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 148, 237, 0.9);
 }
 
 
@@ -2445,8 +2483,8 @@ ww-itinerary-map  {
   right: calc((100vw - 600px)/2);
   width: 600px;
   margin-bottom: 20px;
-  background-color: white;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
+  // background-color: white;
+  // box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
 
   @media only screen and (max-width: 650px) {
     width: 100%;
@@ -2482,6 +2520,9 @@ ww-itinerary-map  {
   height: 47px;
   overflow: auto;
   white-space: nowrap;
+  background-color: white;
+  border-left: 1px solid lightgray;
+  border-right: 1px solid lightgray;
 }
 
 .box-container-nav-tabs > li  {
@@ -2542,7 +2583,7 @@ ww-itinerary-map  {
   }
 }
 
-.past-indicator {
+.completed-indicator {
   background-color: #E6E6E6;
   opacity: .6;
 }
@@ -2550,11 +2591,6 @@ ww-itinerary-map  {
 .itinerary-list h3  {
   display: inline-block;
   padding-bottom: 5px;
-}
-
-.private-indicator  {
-  display: inline-block;
-  color: red;
 }
 
 .itinerary-list > h5  {
@@ -2565,11 +2601,7 @@ ww-itinerary-map  {
   padding-bottom: 15px;
 }
 
-.itinerary-list-stats {
-  display: inline-block;
-  margin: 15px;
-  text-align: center;
-}
+
 
 
 

@@ -22,6 +22,20 @@ img {
 }
 
 
+.private-indicator  {
+  display: inline-block;
+  color: firebrick;
+}
+
+.private-info  {
+  position: absolute;
+  width: 170px;
+  margin: 68px 0 0 -180px;
+  text-align: left;
+  background-color: white;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
+}
+
 
 /* itinerary details */
 
@@ -37,6 +51,14 @@ img {
   }
 }
 
+.itinerary-list-stats {
+  display: inline-block;
+  margin: 10px;
+  width: 60px;
+  padding: 5px 0;
+  text-align: center;
+  border-bottom: 4px solid #6494ED;
+}
 
 .itinerary-created-by  {
   @media only screen and (max-width: 500px) {

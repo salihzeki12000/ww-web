@@ -9,7 +9,7 @@ export * from './itinerary-list/itinerary-list.component';
 export * from './itinerary-list/itinerary-list.routes';
 export * from './itinerary-list/itinerary-list-item/itinerary-list-item.component';
 export * from './itinerary-list/itinerary-all/itinerary-all.component';
-export * from './itinerary-list/itinerary-past/itinerary-past.component';
+export * from './itinerary-list/itinerary-completed/itinerary-completed.component';
 export * from './itinerary-list/itinerary-upcoming/itinerary-upcoming.component';
 
 export * from './itinerary-form/itinerary-form.component';

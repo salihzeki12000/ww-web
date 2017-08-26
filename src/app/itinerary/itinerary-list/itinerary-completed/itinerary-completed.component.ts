@@ -6,13 +6,13 @@ import { Title }        from '@angular/platform-browser';
 import { UserService }  from '../../../user';
 
 @Component({
-  selector: 'ww-itinerary-past',
-  templateUrl: './itinerary-past.component.html',
-  styleUrls: ['./itinerary-past.component.scss']
+  selector: 'ww-itinerary-completed',
+  templateUrl: './itinerary-completed.component.html',
+  styleUrls: ['./itinerary-completed.component.scss']
 })
-export class ItineraryPastComponent implements OnInit, OnDestroy {
+export class ItineraryCompletedComponent implements OnInit, OnDestroy {
   itineraries;
-  past =[];
+  completed =[];
 
   currentUser;
   currentUserSubscription: Subscription;
@@ -23,7 +23,7 @@ export class ItineraryPastComponent implements OnInit, OnDestroy {
     private router: Router) { }
 
   ngOnInit() {
-    this.titleService.setTitle("Itineraries | Past");
+    this.titleService.setTitle("Itineraries | completed");
 
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
      result => {
@@ -34,10 +34,10 @@ export class ItineraryPastComponent implements OnInit, OnDestroy {
   }
 
   sortItin(itineraries) {
-    this.past = [];
+    this.completed = [];
     for (let i = 0; i < itineraries.length; i++) {
-      if(itineraries[i]['past']) {
-        this.past.push(itineraries[i]);
+      if(itineraries[i]['completed']) {
+        this.completed.push(itineraries[i]);
       }
     }
   }

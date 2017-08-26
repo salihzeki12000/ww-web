@@ -1,3 +1,3 @@
-<div class="itinerary-list" *ngFor="let itinerary of past" (click)="routeToItin(itinerary._id)">
+<div class="itinerary-list" *ngFor="let itinerary of completed" (click)="routeToItin(itinerary._id)">
   <ww-itinerary-list-item [itinerary]="itinerary" [currentUser]="currentUser"></ww-itinerary-list-item>
 </div>

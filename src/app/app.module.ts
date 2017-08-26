@@ -21,7 +21,7 @@ import { RelationshipService, RelationshipsComponent, FollowingsComponent, Follo
 
 import { PostsComponent, PostComponent, PostInputComponent, PostListComponent, PostService, PostDisplayComponent } from './post';
 
-import { ItineraryComponent, ItineraryListComponent, ItineraryFormComponent, ItineraryInviteComponent, ItineraryAccommodationComponent, ItineraryTransportComponent, ItineraryService, ItineraryActivityComponent, ItineraryResourcesComponent, ResourceInputComponent, ResourceService, ResourceListComponent, ResourceComponent, ItineraryMapComponent, AccommodationFormComponent, TransportFormComponent, ItineraryEventService, ActivityComponent, ActivityListComponent, ActivityInputComponent, AccommodationComponent, TransportComponent, ItineraryPrintComponent, ItineraryPreviewComponent, ItinerarySummaryComponent, ItinerarySummaryDayComponent, ItinerarySettingsComponent, ItineraryShareComponent, ItineraryListItemComponent, ItineraryAllComponent, ItineraryPastComponent, ItineraryUpcomingComponent, ItineraryDescriptionComponent } from './itinerary';
+import { ItineraryComponent, ItineraryListComponent, ItineraryFormComponent, ItineraryInviteComponent, ItineraryAccommodationComponent, ItineraryTransportComponent, ItineraryService, ItineraryActivityComponent, ItineraryResourcesComponent, ResourceInputComponent, ResourceService, ResourceListComponent, ResourceComponent, ItineraryMapComponent, AccommodationFormComponent, TransportFormComponent, ItineraryEventService, ActivityComponent, ActivityListComponent, ActivityInputComponent, AccommodationComponent, TransportComponent, ItineraryPrintComponent, ItineraryPreviewComponent, ItinerarySummaryComponent, ItinerarySummaryDayComponent, ItinerarySettingsComponent, ItineraryShareComponent, ItineraryListItemComponent, ItineraryAllComponent, ItineraryCompletedComponent, ItineraryUpcomingComponent, ItineraryDescriptionComponent } from './itinerary';
 
 import { GooglePlaceSearchComponent, GoogleCheckinComponent } from './google-api';
 
@@ -101,7 +101,7 @@ import { PlaceComponent } from './place';
     ItineraryShareComponent,
     ItineraryListItemComponent,
     ItineraryAllComponent,
-    ItineraryPastComponent,
+    ItineraryCompletedComponent,
     ItineraryUpcomingComponent,
     ItinerarySummaryDayComponent,
     FlashMessageComponent,

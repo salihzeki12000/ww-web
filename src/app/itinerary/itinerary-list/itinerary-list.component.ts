@@ -12,7 +12,7 @@ import { LoadingService } from '../../loading';
 })
 export class ItineraryListComponent implements OnInit, OnDestroy {
   itineraries;
-  past =[];
+  completed =[];
   upcoming = [];
 
   currentUserSubscription: Subscription;
@@ -34,12 +34,12 @@ export class ItineraryListComponent implements OnInit, OnDestroy {
   }
 
   sortItin(itineraries) {
-    this.past = [];
+    this.completed = [];
     this.upcoming = [];
 
     for (let i = 0; i < itineraries.length; i++) {
-      if(itineraries[i]['past'] === true) {
-        this.past.push(itineraries[i])
+      if(itineraries[i]['completed'] === true) {
+        this.completed.push(itineraries[i])
       } else  {
         this.upcoming.push(itineraries[i])
       }
@@ -48,7 +48,7 @@ export class ItineraryListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
-    
+
     this.loadingService.setLoader(true, "");
   }
 

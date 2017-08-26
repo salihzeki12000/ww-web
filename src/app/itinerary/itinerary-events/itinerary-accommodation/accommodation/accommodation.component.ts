@@ -101,7 +101,7 @@ export class AccommodationComponent implements OnInit, OnDestroy {
         this.filterItineraries();
         this.checkCheckIn();
       })
-      console.log(this.dateRange)
+
     this.event['formatted_note'] = this.event['note'].replace(/\r?\n/g, '<br/> ');
 
     this.initTime();

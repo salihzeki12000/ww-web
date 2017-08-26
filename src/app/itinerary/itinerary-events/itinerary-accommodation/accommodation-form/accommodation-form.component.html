@@ -1,169 +1,169 @@
 <form [formGroup]="addAccommodationForm" (ngSubmit)="saveNew()">
 
-    <div class="form-card">
+  <div class="form-card">
 
-      <div class="form-header">
-        <h3>New accommodation arrangement</h3>
-        <a (click)="cancelForm()">X</a>
+    <div class="form-header">
+      <h3>New accommodation arrangement</h3>
+      <a (click)="cancelForm()">X</a>
+    </div>
+
+    <div class="form-housing">
+
+      <div class="progress-tracker-section">
+        <ul class="progress-tracker">
+          <li class="progress-title" (click)="backToSearch()" [class.progress-done]="searchDone">SEARCH ACCOMMODATION</li><li class="progress-title">CONFIRM CHECK IN/OUT DETAILS</li>
+        </ul>
       </div>
 
-      <div class="form-housing">
+      <div *ngIf="!searchDone" class="search-accommodation">
+        <label>Search accommodation by name or address <span class="required"> - local name or address may be required</span></label>
+        <ww-google-place-search [populate]="''" (placeDetail)="getAccommodationDetails($event)"></ww-google-place-search>
 
-        <div class="progress-tracker-section">
-          <ul class="progress-tracker">
-            <li class="progress-title" (click)="backToSearch()" [class.progress-done]="searchDone">SEARCH ACCOMMODATION</li><li class="progress-title">CONFIRM CHECK IN/OUT DETAILS</li>
-          </ul>
+        <h5>You may also search for a nearby location and drag the pin to set a location.</h5>
+        <h5>Only address is available when the pin is dragged.</h5>
+
+        <h5 *ngIf="dragAddress" class="dragged-address">
+          <span class="dragged-location">Dragged location:</span> {{ dragAddress}}
+        </h5>
+
+        <div class="action-response">
+          <h5 class="action-response-primary" (click)="searchDone = true">Next</h5>
         </div>
 
-        <div *ngIf="!searchDone" class="search-accommodation">
-          <label>Search accommodation by name or address <span class="required"> - local name or address may be required</span></label>
-          <ww-google-place-search [populate]="''" (placeDetail)="getAccommodationDetails($event)"></ww-google-place-search>
+        <div #map id="map"></div>
+      </div>
 
-          <h5>You may also search for a nearby location and drag the pin to set a location.</h5>
-          <h5>Only address is available when the pin is dragged.</h5>
+      <div *ngIf="searchDone">
+        <h4 class="form-section-header">Check In/Out Details</h4>
+        <div class="form-section-details">
 
-          <h5 *ngIf="dragAddress" class="dragged-address">
-            <span class="dragged-location">Dragged location:</span> {{ dragAddress}}
-          </h5>
+          <div class="check-in">
+            <div class="date-to-visit">
+              <label>Check In Date</label>
+              <select class="select-date" name="check_in_date" formControlName="check_in_date">
+                <option *ngFor="let itinDate of dateRange; let i = index" [value]="itinDate">
 
-          <div class="action-response">
-            <h5 class="action-response-primary" (click)="searchDone = true">Next</h5>
-          </div>
+                  <div *ngIf="itinerary?.num_days">
+                    <h5>{{ itinDate }}</h5>
+                  </div>
 
-          <div #map id="map"></div>
+                  <div *ngIf="!itinerary?.num_days && itinDate !== 'any day'">
+                    <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+                  </div>
+
+                </option>
+              </select>
+            </div>
+
+            <div class="time-to-visit">
+              <label>Check In Time (24hrs)</label>
+              <ww-time-picker
+              [timePicker]="timePickerIn"
+              [ats]="ats"
+              [initHour]="initHourIn"
+              [initMinute]="initMinuteIn"
+              (hourSelected)="selectHourIn($event)"
+              (minuteSelected)="selectMinuteIn($event)"
+              (pickerSelected)="selectPickerIn($event)"></ww-time-picker>
+            </div>
+          </div><!-- end of check in -->
+
+          <div class="check-out">
+            <div class="date-to-visit">
+              <label>Check Out Date</label>
+              <select class="select-date" name="check_out_date" formControlName="check_out_date">
+                <option *ngFor="let itinDate of dateRange; let i = index" [value]="itinDate">
+
+                  <div *ngIf="itinerary?.num_days">
+                    <h5>{{ itinDate }}</h5>
+                  </div>
+
+                  <div *ngIf="!itinerary?.num_days && itinDate !== 'any day'">
+                    <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+                  </div>
+
+                </option>
+              </select>
+            </div>
+
+            <div class="time-to-visit">
+              <label>Check Out Time (24hrs)</label>
+              <ww-time-picker
+              [timePicker]="timePickerOut"
+              [ats]="ats"
+              [initHour]="initHourOut"
+              [initMinute]="initMinuteOut"
+              (hourSelected)="selectHourOut($event)"
+              (minuteSelected)="selectMinuteOut($event)"
+              (pickerSelected)="selectPickerOut($event)"></ww-time-picker>
+            </div>
+          </div><!-- end of check out -->
+
         </div>
 
-        <div *ngIf="searchDone">
-          <h4 class="form-section-header">Check In/Out Details</h4>
-          <div class="form-section-details">
+        <h4 class="form-section-header">Accommodation Details</h4>
+        <div class="form-section-details">
 
-            <div class="check-in">
-              <div class="date-to-visit">
-                <label>Check In Date</label>
-                <select class="select-date" name="check_in_date" formControlName="check_in_date">
-                  <option *ngFor="let itinDate of dateRange; let i = index" [value]="itinDate">
+          <div class="form-select-image" *ngIf="!uploadPic">
+            <label>Select an image as the display picture</label>
 
-                    <div *ngIf="itinerary?.num_days">
-                      <h5>{{ itinDate }}</h5>
-                    </div>
-
-                    <div *ngIf="!itinerary?.num_days && itinDate !== 'any day'">
-                      <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
-                    </div>
-
-                  </option>
-                </select>
-              </div>
-
-              <div class="time-to-visit">
-                <label>Check In Time (24hrs)</label>
-                <ww-time-picker
-                [timePicker]="timePickerIn"
-                [ats]="ats"
-                [initHour]="initHourIn"
-                [initMinute]="initMinuteIn"
-                (hourSelected)="selectHourIn($event)"
-                (minuteSelected)="selectMinuteIn($event)"
-                (pickerSelected)="selectPickerIn($event)"></ww-time-picker>
-              </div>
-            </div><!-- end of check in -->
-
-            <div class="check-out">
-              <div class="date-to-visit">
-                <label>Check Out Date</label>
-                <select class="select-date" name="check_out_date" formControlName="check_out_date">
-                  <option *ngFor="let itinDate of dateRange; let i = index" [value]="itinDate">
-
-                    <div *ngIf="itinerary?.num_days">
-                      <h5>{{ itinDate }}</h5>
-                    </div>
-
-                    <div *ngIf="!itinerary?.num_days && itinDate !== 'any day'">
-                      <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
-                    </div>
-                    
-                  </option>
-                </select>
-              </div>
-
-              <div class="time-to-visit">
-                <label>Check Out Time (24hrs)</label>
-                <ww-time-picker
-                [timePicker]="timePickerOut"
-                [ats]="ats"
-                [initHour]="initHourOut"
-                [initMinute]="initMinuteOut"
-                (hourSelected)="selectHourOut($event)"
-                (minuteSelected)="selectMinuteOut($event)"
-                (pickerSelected)="selectPickerOut($event)"></ww-time-picker>
-              </div>
-            </div><!-- end of check out -->
-
-          </div>
-
-          <h4 class="form-section-header">Accommodation Details</h4>
-          <div class="form-section-details">
-
-            <div class="form-select-image" *ngIf="!uploadPic">
-              <label>Select an image as the display picture</label>
-
-              <div class="slider" [class.slider-exist]="displayPic">
-                <div class="slider-images" *ngFor="let image of pictureOptions; let i = index">
-                  <input type="radio" name="slide_switch" id="image-{{i}}" (click)="selectPic(image)" [checked]="i === 0">
-                  <label for="image-{{i}}">
-                    <img src="{{ image.url }}" alt="">
-                  </label>
+            <div class="slider" [class.slider-exist]="displayPic">
+              <div class="slider-images" *ngFor="let image of pictureOptions; let i = index">
+                <input type="radio" name="slide_switch" id="image-{{i}}" (click)="selectPic(image)" [checked]="i === 0">
+                <label for="image-{{i}}">
                   <img src="{{ image.url }}" alt="">
-                  <h5 class="photo-credit" [innerHTML]="image.credit"></h5>
-                </div>
+                </label>
+                <img src="{{ image.url }}" alt="">
+                <h5 class="photo-credit" [innerHTML]="image.credit"></h5>
               </div>
             </div>
-
-            <div class="uploaded-picture" *ngIf="uploadPic">
-              <h4 class="delete-picture" (click)="deleteUpload()">X</h4>
-              <img [src]="uploadPic">
-            </div>
-
-            <div class="upload-picture">
-              <label class="file-upload">
-                Upload Image From My Library
-                <input type="file" (change)="fileUploaded($event)" [value]="inputValue" accept="image/*">
-              </label>
-            </div>
-
-            <label>Name of Accommodation <span class="label-note"> - required</span></label>
-            <input type="text" formControlName="name">
-            <span class="form-validator"
-              *ngIf="addAccommodationForm.get('name').touched && addAccommodationForm.get('name').invalid">Name of accommodation is required</span>
-
-            <label>Staying in (City/Town)</label>
-            <input type="text" formControlName="city">
-
-            <label>Address</label>
-            <h4>{{ details.formatted_address }}</h4>
-
-            <label>Contact Number</label>
-            <h4>{{ details.international_phone_number }}</h4>
-
-            <label>Website</label>
-            <h4>{{ details.website }}</h4>
-
           </div>
 
-          <h4 class="form-section-header">Note</h4>
-          <div class="form-section-details">
-            <textarea rows="3" formControlName="note"></textarea>
+          <div class="uploaded-picture" *ngIf="uploadPic">
+            <h4 class="delete-picture" (click)="deleteUpload()">X</h4>
+            <img [src]="uploadPic">
           </div>
+
+          <div class="upload-picture">
+            <label class="file-upload">
+              Upload Image From My Library
+              <input type="file" (change)="fileUploaded($event)" [value]="inputValue" accept="image/*">
+            </label>
+          </div>
+
+          <label>Name of Accommodation <span class="label-note"> - required</span></label>
+          <input type="text" formControlName="name">
+          <span class="form-validator"
+            *ngIf="addAccommodationForm.get('name').touched && addAccommodationForm.get('name').invalid">Name of accommodation is required</span>
+
+          <label>Staying in (City/Town)</label>
+          <input type="text" formControlName="city">
+
+          <label>Address</label>
+          <h4>{{ details.formatted_address }}</h4>
+
+          <label>Contact Number</label>
+          <h4>{{ details.international_phone_number }}</h4>
+
+          <label>Website</label>
+          <h4>{{ details.website }}</h4>
 
         </div>
-      </div>
 
-      <div class="action-response" *ngIf="searchDone">
-        <h5 class="action-response-secondary" (click)="cancelForm()">CANCEL</h5>
-        <button type="submit" class="action-response-primary" [disabled]="!addAccommodationForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
-      </div>
+        <h4 class="form-section-header">Note</h4>
+        <div class="form-section-details">
+          <textarea rows="3" formControlName="note"></textarea>
+        </div>
 
-    </div><!-- end of formCard -->
+      </div>
+    </div>
+
+    <div class="action-response" *ngIf="searchDone">
+      <h5 class="action-response-secondary" (click)="cancelForm()">CANCEL</h5>
+      <button type="submit" class="action-response-primary" [disabled]="!addAccommodationForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
+    </div>
+
+  </div><!-- end of formCard -->
 
 </form>
 

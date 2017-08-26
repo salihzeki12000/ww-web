@@ -1,15 +1,15 @@
 .itinerary-shortcut  {
   position: fixed;
-  right: calc(((100vw - 600px)/2) + 620px);
-  width: 250px;
-
-  @media only screen and (max-width: 890px) {
-    display: none;
-  }
-
-  @media only screen and (min-width: 890px) and (max-width: 1200px) {
-    right: calc(((100vw - 890px)/2) + 620px);
-  }
+  // right: calc(((100vw - 600px)/2) + 620px);
+  // width: 250px;
+  //
+  // @media only screen and (max-width: 890px) {
+  //   display: none;
+  // }
+  //
+  // @media only screen and (min-width: 890px) and (max-width: 1200px) {
+  //   right: calc(((100vw - 890px)/2) + 620px);
+  // }
 }
 
 .home-posts  {

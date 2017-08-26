@@ -135,7 +135,7 @@ export class UserService  {
   sortItin(currentUser) {
     let itineraries = currentUser.itineraries;
     let today = new Date();
-    let past = [];
+    let completed = [];
     let upcoming = [];
     let undated = [];
 
@@ -148,8 +148,8 @@ export class UserService  {
         let date = new Date(itineraries[i]['date_to']);
 
         if( date.getTime() < today.getTime()) {
-          itineraries[i]['past'] = true;
-          past.push(itineraries[i]);
+          itineraries[i]['completed'] = true;
+          completed.push(itineraries[i]);
         } else if (date.getTime() >= today.getTime()) {
           upcoming.push(itineraries[i]);
         }
@@ -158,7 +158,7 @@ export class UserService  {
 
     }
 
-    past.sort((a,b)  =>  {
+    completed.sort((a,b)  =>  {
       return new Date(b['date_to']).getTime() - new Date(a['date_to']).getTime();
     })
 
@@ -166,7 +166,7 @@ export class UserService  {
       return new Date(a['date_to']).getTime() - new Date(b['date_to']).getTime();
     })
 
-    currentUser['itineraries'] = undated.concat(upcoming, past);
+    currentUser['itineraries'] = undated.concat(upcoming, completed);
 
     this.updateCurrentUser.next(currentUser)
   }

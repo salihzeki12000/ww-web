@@ -54,7 +54,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
 
     this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
       result => {
-        console.log('event')
+
         setTimeout(() =>  {
           this.filterEvents(result);
         }, 500)
@@ -62,12 +62,12 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
         setTimeout(() =>  {
           this.initMap();
         }, 1000)
+
       })
 
     this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
       result => {
         this.itinerary = result;
-        console.log('itin')
 
         let header = ''
         if(this.preview) header = "Preview : ";
