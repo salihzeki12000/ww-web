@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router }            from '@angular/router';
+import { Component, OnInit }      from '@angular/core';
+import { Router, NavigationEnd }  from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
 import { AuthService }  from './auth';
@@ -35,5 +35,12 @@ export class AppComponent implements OnInit {
           }
       })
     }
+
+    // to scroll to top when route change
+    this.router.events.subscribe((event: NavigationEnd) => {
+      if(event instanceof NavigationEnd) {
+        window.scrollTo(0, 0);
+      }
+    })
   }
 }
