@@ -8,8 +8,8 @@
 
 <div class="summary-container">
   <div *ngFor="let date of dateRange; let i = index">
-    <div *ngIf="date === 'any day'" class="day-header">
-      <h3 class="date-display">Any day</h3>
+    <div *ngIf="date === 'any day' || itinerary?.num_days" class="day-header">
+      <h3 class="date-display">{{ date }}</h3>
 
       <div *ngFor="let note of dailyNotes" class="daily-note">
         <div *ngIf="note.date === date">
@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <div *ngIf="date !== 'any day'" class="day-header">
+    <div *ngIf="date !== 'any day' && !itinerary?.num_days" class="day-header">
       <h3 class="date-display">Day {{ i }} - {{ date | date: "dd MMM (EEE)" }}</h3>
 
       <div *ngFor="let note of dailyNotes" class="daily-note">
