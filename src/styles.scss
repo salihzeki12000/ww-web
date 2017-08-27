@@ -355,7 +355,6 @@ span.bold {
 .user-profile-thumbnail  {
   height: 30px;
   width: 30px;
-  background-color: #AEAFAF;
   border-radius: 50%;
   overflow: hidden;
 }
@@ -363,7 +362,6 @@ span.bold {
 .user-post-thumbnail  {
   height: 40px;
   width: 40px;
-  background-color: #AEAFAF;
   border-radius: 50%;
   overflow: hidden;
 }
@@ -761,14 +759,21 @@ h5.action-response-primary  {
 
 .user-profile-background-img  {
   position: absolute;
-  right: 0;
-  margin-top: -20px;
-  height: 120px;
-  width: 300px;
+  top: 26px;
+  left: calc(((100vw - 600px)/2) + 550px);
 
-  @media only screen and (max-width: 1000px) {
+  @media only screen and (max-width: 890px) {
     display: none;
   }
+
+  @media only screen and (min-width: 890px) and (max-width: 1300px) {
+    left: calc(100vw - 415px);
+    opacity: .5;
+  }
+}
+
+.user-profile-background-img img{
+  height: 160px;
 }
 
 .user-profile-counters  {

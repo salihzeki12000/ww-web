@@ -9,7 +9,7 @@
     <h6 *ngIf="!itinerary.num_days">( {{ itinerary.date_from | date:'dd MMM yy' }} to {{ itinerary.date_to | date:'dd MMM yy' }} )</h6>
     <h6 *ngIf="itinerary.num_days">( {{ itinerary.num_days }} days )</h6>
   </div>
-  
+
   <div *ngIf="user?.itineraries.length > 10" class="view-all" [routerLink]="['/me/itinerary']">
     <h5>View all</h5>
   </div>
@@ -34,10 +34,8 @@
     </div>
 
     <div class="content-without-header-name">
-      <h4>A verification link has been sent to the email address that you registered this account with.</h4>
-      <h4>Please access the link to validate your account.</h4>
-      <h4>Please check your spam/junk folder if you do not find the email.</h4>
-      <h4>You will not be able to access your account further if you do not validate within 03 days.</h4>
+      <h4>Please confirm your email address using the verification link sent to you.</h4>
+      <h4>In case it is missing from your inbox, please check your spam/junk folder.</h4>
     </div>
 
     <div class="action-response">

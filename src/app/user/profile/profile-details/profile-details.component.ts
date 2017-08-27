@@ -54,6 +54,7 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
      result => {
        this.currentUser = result;
+       console.log(this.currentUser)
        this.getPosts(this.currentUser['_id']);
        this.checkinService.getCheckins(this.currentUser['_id']).subscribe(result =>{})
      })
@@ -87,7 +88,7 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
     if(this.relationshipSubscription) this.relationshipSubscription.unsubscribe();
     if(this.postsSubscription) this.postsSubscription.unsubscribe();
     if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
-    
+
     this.loadingService.setLoader(true, "");
   }
 
