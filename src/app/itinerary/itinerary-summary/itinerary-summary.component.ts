@@ -177,6 +177,7 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
 
     let summaryEvents = [];
     let copyEvents = [];
+    let numDays = '';
 
     for (let i = 0; i < events.length; i++) {
 
@@ -186,11 +187,19 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
       }
 
       if(events[i]['type'] === 'accommodation') {
-        let oneDay = 24*60*60*1000;
-        let inDate = new Date(events[i]['check_in_date']);
-        let outDate = new Date(events[i]['check_out_date']);
-        let numDaysDiff = Math.round(Math.abs((inDate.getTime() - outDate.getTime())/oneDay));
-        let numDays = numDaysDiff + " night" + (numDaysDiff > 1 ? "s" : "");
+
+        if(!this.itinerary['num_days']) {
+          let oneDay = 24*60*60*1000;
+          let inDate = new Date(events[i]['check_in_date']);
+          let outDate = new Date(events[i]['check_out_date']);
+          let numDaysDiff = Math.round(Math.abs((inDate.getTime() - outDate.getTime())/oneDay));
+          numDays = numDaysDiff + " night" + (numDaysDiff > 1 ? "s" : "");
+        } else  {
+          let inDay = events[i]['check_in_date'].slice(4,events[i]['check_in_date'].length);
+          let outDay = events[i]['check_out_date'].slice(4,events[i]['check_out_date'].length)
+          let numDaysDiff = +outDay - +inDay;
+          numDays = numDaysDiff + " night" + (numDaysDiff > 1 ? "s" : "");
+        }
 
         let copy = Object.assign({}, events[i]);
 

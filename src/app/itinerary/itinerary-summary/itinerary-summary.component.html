@@ -44,7 +44,7 @@
   </div>
 
   <div *ngIf="currentDate === 'any day' || itinerary?.num_days">
-    <h4 class="fixed-date-header">Any day</h4>
+    <h4 class="fixed-date-header">{{ currentDate }}</h4>
   </div>
 
   <div *ngIf="currentDate !== 'any day' && !itinerary?.num_days">

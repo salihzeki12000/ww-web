@@ -1,4 +1,4 @@
-<div class="page" *ngIf="!pageError">
+<div class="page" *ngIf="!pageError && isLoggedIn && validUser">
 
   <div class="logo">
     <img src="assets/wondererwanderer_logo.png" alt="">
@@ -247,6 +247,20 @@
 </div>
 
 
+<!-- unauthorised access -->
+<div class="unauthorised-access" *ngIf="!isLoggedIn || !validUser">
+  <div class="logo">
+    <img src="assets/wondererwanderer_logo.png" alt="">
+  </div>
+
+  <h4>You are not authorised to access the itinerary.</h4>
+  <h4>If you are not logged in, please log in and try to access this page via the itinerary.</h4>
+
+</div>
+
+
+
+<!-- page error -->
 <div class="page-error" *ngIf="pageError">
   <div class="logo">
     <img src="assets/wondererwanderer_logo.png" alt="">

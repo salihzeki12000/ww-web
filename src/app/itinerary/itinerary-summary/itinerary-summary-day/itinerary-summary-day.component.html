@@ -36,7 +36,7 @@
 </div>
 
 <div *ngIf="date === 'any day' || itinerary?.num_days">
-  <h5 class="event-date">Any day</h5>
+  <h5 class="event-date">{{ date }}</h5>
 </div>
 
 <div *ngIf="date !== 'any day' && !itinerary?.num_days">

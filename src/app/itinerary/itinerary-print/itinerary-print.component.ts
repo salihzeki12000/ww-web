@@ -9,6 +9,8 @@ import { ItineraryService } from '../itinerary.service';
 import { ItineraryEventService } from '../itinerary-events/itinerary-event.service';
 
 import { LoadingService } from '../../loading';
+import { AuthService }    from '../../auth/auth.service';
+import { UserService }    from '../../user/user.service';
 
 @Component({
   selector: 'ww-itinerary-print',
@@ -16,8 +18,14 @@ import { LoadingService } from '../../loading';
   styleUrls: ['./itinerary-print.component.scss']
 })
 export class ItineraryPrintComponent implements OnInit {
+  isLoggedIn = false;
+  validUser = false;
+  
   itinerary;
   events = [];
+
+  currentUserSubscription: Subscription;
+  currentUser;
 
   dateSubscription: Subscription;
   dateRange = [];
@@ -27,6 +35,8 @@ export class ItineraryPrintComponent implements OnInit {
   pageError = false;
 
   constructor(
+    private authService: AuthService,
+    private userService: UserService,
     private titleService: Title,
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
@@ -35,16 +45,22 @@ export class ItineraryPrintComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
+    this.isLoggedIn = this.authService.isLoggedIn();
+
+    this.userService.getCurrentUser().subscribe(
+      result => { this.currentUser = result; });
+
     this.route.params.forEach((params: Params) => {
       let id = params['id'];
 
       this.itineraryService.getItin(id).subscribe(
         result => {
-          if(!result.itinerary) {
-            this.pageError = true;
-          }
-
+          if(!result.itinerary) this.pageError = true;
           this.itinerary = result.itinerary;
+
+          setTimeout(() =>  {
+            this.checkAccess();
+          }, 1500)
 
           let title = this.itinerary['name'] + " | Save-print"
           this.titleService.setTitle(title);
@@ -70,8 +86,19 @@ export class ItineraryPrintComponent implements OnInit {
 
   ngOnDestroy() {
     if(this.dateSubscription) this.dateSubscription.unsubscribe();
-    
+    if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
+
     this.loadingService.setLoader(true, "");
+  }
+
+  checkAccess() {
+    if(this.isLoggedIn) {
+      for (let i = 0; i < this.itinerary['members'].length; i++) {
+        if(this.itinerary['members'][i]['_id'] === this.currentUser['_id']) {
+          this.validUser = true;
+        }
+      }
+    }
   }
 
   sortDailyNotes()  {
