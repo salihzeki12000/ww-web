@@ -66,7 +66,9 @@
           </h5>
 
           <h5>{{ event?.name }}</h5>
-          <h5 class="check-out-on">stay till {{ event?.check_out_date | date: 'dd MMM (EEE)' }}</h5>
+          <h5 class="check-out-on" *ngIf="!itinerary?.num_days">stay till {{ event?.check_out_date | date: 'dd MMM (EEE)' }}</h5>
+          <h5 class="check-out-on" *ngIf="itinerary?.num_days">stay till {{ event?.check_out_date }}</h5>
+
         </div>
       </div>
 

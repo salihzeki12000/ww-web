@@ -78,7 +78,10 @@
               <div class="departure-section">
                 <h3>{{ event.dep_city | uppercase }}</h3>
                 <h5 class="approach-details">Departs</h5>
-                <h5 class="transport-date-details">{{ event?.dep_date | date:'dd MMM yyyy' }} - {{ event.dep_time }}</h5>
+
+                <h5 class="transport-date-details" *ngIf="!itinerary?.num_days">{{ event?.dep_date | date:'dd MMM yyyy' }} - {{ event.dep_time }}</h5>
+                <h5 class="transport-date-details" *ngIf="itinerary?.num_days">{{ event?.dep_date }} - {{ event.dep_time }}</h5>
+
                 <h5>{{ event.dep_station }}</h5>
                 <h5>{{ event.dep_terminal }}</h5>
               </div>
@@ -90,7 +93,10 @@
               <div class="arrival-section">
                 <h3>{{ event.arr_city | uppercase }}</h3>
                 <h5 class="approach-details">Arrives</h5>
-                <h5 class="transport-date-details">{{ event?.arr_date | date:'dd MMM yyyy' }} - {{ event.arr_time }}</h5>
+
+                <h5 class="transport-date-details" *ngIf="!itinerary?.num_day">{{ event?.arr_date | date:'dd MMM yyyy' }} - {{ event.arr_time }}</h5>
+                <h5 class="transport-date-details" *ngIf="itinerary?.num_day">{{ event?.arr_date }} - {{ event.arr_time }}</h5>
+
                 <h5>{{ event.arr_station }}</h5>
                 <h5>{{ event.arr_terminal }}</h5>
               </div>
@@ -104,7 +110,10 @@
                 <div class="departure-section">
                   <h3>{{ event.dep_city | uppercase }}</h3>
                   <h5 class="approach-details">Departs</h5>
-                  <h5 class="transport-date-details">{{ event?.dep_date | date:'dd MMM yyyy' }} - {{ event.dep_time }}</h5>
+
+                  <h5 class="transport-date-details" *ngIf="!itinerary?.num_days">{{ event?.dep_date | date:'dd MMM yyyy' }} - {{ event.dep_time }}</h5>
+                  <h5 class="transport-date-details" *ngIf="itinerary?.num_days">{{ event?.dep_date }} - {{ event.dep_time }}</h5>
+
                   <h5>{{ event.dep_station }}</h5>
                 </div>
 
@@ -120,7 +129,10 @@
                 <div class="arrival-section">
                   <h3>{{ event.arr_city | uppercase }}</h3>
                   <h5 class="approach-details">Arrives</h5>
-                  <h5 class="transport-date-details">{{ event?.arr_date | date:'dd MMM yyyy' }} - {{ event.arr_time }}</h5>
+
+                  <h5 class="transport-date-details" *ngIf="!itinerary?.num_day">{{ event?.arr_date | date:'dd MMM yyyy' }} - {{ event.arr_time }}</h5>
+                  <h5 class="transport-date-details" *ngIf="itinerary?.num_day">{{ event?.arr_date }} - {{ event.arr_time }}</h5>
+
                   <h5>{{ event.arr_station }}</h5>
                 </div>
 
@@ -141,7 +153,9 @@
                 <div class="departure-section">
                   <h3>{{ event.dep_city | uppercase }}</h3>
                   <h5 class="approach-details">Pick up</h5>
-                  <h5 class="transport-date-details">{{ event?.dep_date | date:'dd MMM yyyy' }} - {{ event.dep_time }}</h5>
+
+                  <h5 class="transport-date-details" *ngIf="!itinerary?.num_days">{{ event?.dep_date | date:'dd MMM yyyy' }} - {{ event.dep_time }}</h5>
+                  <h5 class="transport-date-details" *ngIf="itinerary?.num_days">{{ event?.dep_date }} - {{ event.dep_time }}</h5>
                 </div>
 
                 <div class="route-visual">
@@ -151,7 +165,9 @@
                 <div class="arrival-section">
                   <h3>{{ event.arr_city | uppercase }}</h3>
                   <h5 class="approach-details">Return</h5>
-                  <h5 class="transport-date-details">{{ event?.arr_date | date:'dd MMM yyyy' }} - {{ event.arr_time }}</h5>
+
+                  <h5 class="transport-date-details" *ngIf="!itinerary?.num_day">{{ event?.arr_date | date:'dd MMM yyyy' }} - {{ event.arr_time }}</h5>
+                  <h5 class="transport-date-details" *ngIf="itinerary?.num_day">{{ event?.arr_date }} - {{ event.arr_time }}</h5>
                 </div>
 
               </div><!-- end of vehicle rental -->
@@ -185,7 +201,9 @@
 
             <div *ngIf="event.type === 'accommodation'" class="event-stay-city">
               <h4><i class="fa fa-bed" aria-hidden="true"></i> {{ event?.city | uppercase }}</h4>
-              <h5>Check out - {{ event?.check_out_date | date: "dd MMM yyyy"}} | {{ event?.check_out_time }}</h5>
+
+              <h5 *ngIf="!itinerary?.num_days">Check out - {{ event?.check_out_date | date: "dd MMM yyyy" }} | {{ event?.check_out_time }}</h5>
+              <h5 *ngIf="itinerary?.num_days">Check out - {{ event?.check_out_date }} | {{ event?.check_out_time }}</h5>
             </div>
 
             <div class="event-header">
