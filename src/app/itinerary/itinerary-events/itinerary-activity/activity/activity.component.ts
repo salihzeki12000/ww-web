@@ -385,7 +385,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
       this.editActivityForm.patchValue({
         name: this.activity['name'],
         meals: this.activity['meals'],
-        opening_hours: this.activity['opening_hours'],
+        opening_hours: this.activity['place']['opening_hours'],
         entry_fee: this.activity['entry_fee'],
         website: this.activity['place']['website'],
         formatted_address: this.activity['place']['formatted_address'],

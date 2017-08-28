@@ -4,8 +4,17 @@
   padding-bottom: 0;
 }
 
-.nil-message-main,
+.nil-message-main {
+  background-color: white;
+  border: 1px solid lightgray;
+}
+
+
 .itinerary-list {
   background-color: white;
   border: 1px solid lightgray;
+
+  &:hover {
+    background-color: #F6F6F6;
+  }
 }
