@@ -89,7 +89,7 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
 
     if(itinerary['date_from'] !== "") {
       itinerary['num_day'] = undefined;
-      
+
       let startDate = new Date(itinerary['date_from']);
       let endDate = new Date(itinerary['date_to']);
 
@@ -115,7 +115,7 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
       })
     }
 
-    itinerary.corporate = this.currentUser['corporate'];
+    itinerary.corporate['status'] = this.currentUser['corporate'];
     itinerary.private = this.private;
     itinerary.members = [this.currentUser['_id']];
     itinerary.admin = [this.currentUser['_id']];

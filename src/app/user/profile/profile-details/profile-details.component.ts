@@ -54,7 +54,6 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
      result => {
        this.currentUser = result;
-       console.log(this.currentUser)
        this.getPosts(this.currentUser['_id']);
        this.checkinService.getCheckins(this.currentUser['_id']).subscribe(result =>{})
      })

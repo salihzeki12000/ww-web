@@ -1,21 +1,21 @@
 .loading-overlay  {
-  background-color: rgba(0,0,0,0.5);
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
-  max-height: calc(100vh - 1px);
+  height: calc(100vh - 1px);
+  background-color: rgba(0,0,0,0.5);
   z-index: 5000;
 }
 
 .loading-message  {
-  margin-left: calc((100vw - 200px) / 2);
-  margin-top: calc((100vh - 80px) / 2)
+  // margin-left: calc((100vw - 200px) / 2);
+  margin-top: calc((100vh - 80px) / 2);
+  text-align: center;
 }
 
 .loading-message i  {
-  margin-left: 70px;
+  // margin-left: 70px;
   margin-bottom: 10px;
 }
 
