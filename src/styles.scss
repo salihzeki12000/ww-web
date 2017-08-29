@@ -1230,7 +1230,7 @@ textarea.ng-invalid.ng-touched {
   }
 }
 
-.progress-done::before  {
+.progress-current::before  {
   content: "\2713";
   height: 19px;
   width: 19px;
@@ -1247,7 +1247,7 @@ textarea.ng-invalid.ng-touched {
   }
 }
 
-.progress-tracker li.progress-done  {
+.progress-tracker li.progress-current  {
   color: black;
   font-weight: 500;
   border-top: 4px solid #19CC72;

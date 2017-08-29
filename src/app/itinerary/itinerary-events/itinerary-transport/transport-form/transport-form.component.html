@@ -9,7 +9,7 @@
 
     <div class="progress-tracker-section">
       <ul class="progress-tracker" [class.flight-search-active]="transportOption === 'flight'" [class.choose-airport-option]="chooseAirport">
-        <li class="progress-title" (click)="selectTransport()" [class.progress-done]="transportOption === ''">SELECT TRANSPORT MODE</li><li class="progress-title" *ngIf="transportOption === 'flight'" (click)="flightSearch()" [class.progress-done]="searchFlight">SEARCH FLIGHT</li><li class="progress-title" *ngIf="chooseAirport" (click)="selectAirport()" [class.progress-done]="selectStopOver">SELECT AIRPORT</li><li class="progress-title" [class.progress-done]="confirmPage">CONFIRM {{ transportOption | uppercase }} DETAILS</li>
+        <li class="progress-title" (click)="selectTransport()" [class.progress-current]="transportOption === ''">SELECT TRANSPORT MODE</li><li class="progress-title" *ngIf="transportOption === 'flight'" (click)="flightSearch()" [class.progress-current]="searchFlight">SEARCH FLIGHT</li><li class="progress-title" *ngIf="chooseAirport" (click)="selectAirport()" [class.progress-current]="selectStopOver">SELECT AIRPORT</li><li class="progress-title" [class.progress-current]="confirmPage">CONFIRM {{ transportOption | uppercase }} DETAILS</li>
       </ul>
     </div>
 
