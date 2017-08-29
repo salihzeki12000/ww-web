@@ -111,11 +111,13 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
     for (let i = 0; i < dateRange.length; i++) {
       itinerary['daily_note'].push({
         date: dateRange[i],
-        note: "e.g. Day trip to the outskirts"
+        note: "Note for the day(click to edit)\ne.g. Day trip to the outskirts"
       })
     }
 
-    itinerary.corporate['status'] = this.currentUser['corporate'];
+    itinerary.corporate = {
+      status: this.currentUser['corporate'],
+    }
     itinerary.private = this.private;
     itinerary.members = [this.currentUser['_id']];
     itinerary.admin = [this.currentUser['_id']];

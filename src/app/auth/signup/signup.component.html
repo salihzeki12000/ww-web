@@ -1,4 +1,3 @@
-<a class="cancel-auth" (click)="cancelAuth()">X</a>
 
 <ww-auth
   [reroute]="reroute"
@@ -34,3 +33,7 @@
   <button type="submit" class="action-response-primary" [disabled]="!signupForm.valid"><h4>Sign Up Now</h4></button>
 
 </form>
+
+<div class="action-response">
+  <h5 class="action-response-secondary" (click)="cancelAuth()">Cancel</h5>
+</div>

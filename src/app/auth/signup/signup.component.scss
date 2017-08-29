@@ -1,9 +1,4 @@
 
-a.cancel-auth {
-  float: right;
-  color: grey;
-}
-
 h5  {
   margin: 20px 0;
   text-align: center;
@@ -16,4 +11,13 @@ h5  {
 
 button.action-response-primary  {
   width: 100%;
+}
+
+
+.action-response  {
+  margin-top: 20px;
+}
+
+.action-response h5 {
+  margin: 0;
 }
