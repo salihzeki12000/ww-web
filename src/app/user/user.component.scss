@@ -11,6 +11,7 @@
   position: absolute;
   top: 45px;
   right: calc((100vw - 600px) /2);
+  z-index: 3;
 
   @media only screen and (max-width: 650px) {
     right: 10px;

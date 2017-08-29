@@ -56,6 +56,7 @@ export class RelationshipService  {
                     });
   }
 
+  // user private -> request follow
   requestFollow(following) {
     const body = JSON.stringify({
       user: following.user["_id"],
@@ -65,7 +66,7 @@ export class RelationshipService  {
 
     const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
     const headers = new Headers({ 'Content-Type': 'application/json' });
-    
+
     return this.http.post(this.url + '/following/new' + token, body, { headers: headers })
                     .map((response: Response) => {
                       let newFollowing = response.json().following;
@@ -84,6 +85,7 @@ export class RelationshipService  {
                         display_picture: following.following['display_picture'],
                         description: following.following['description']
                       }
+                      
                       this.requestedFollowings.push(newFollowing);
                       this.relationships.push(newFollowing);
 
@@ -102,6 +104,56 @@ export class RelationshipService  {
                       return Observable.throw(error.json())
                     });
   }
+
+  // user public -> create follow
+  createFollow(following) {
+    const body = JSON.stringify({
+      user: following.user["_id"],
+      following: following.following["_id"],
+      status: "accepted"
+    });
+
+    const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+
+    return this.http.post(this.url + '/following/create' + token, body, { headers: headers })
+                    .map((response: Response) => {
+                      let newFollowing = response.json().following;
+                      newFollowing['relative_status'] = "following";
+
+                      newFollowing['user'] = {
+                        _id: this.currentUser['_id'],
+                        username: this.currentUser['username'],
+                        display_picture: this.currentUser['display_picture'],
+                        description: this.currentUser['description']
+                      }
+
+                      newFollowing['following'] = {
+                        _id: following.following['_id'],
+                        username: following.following['username'],
+                        display_picture: following.following['display_picture'],
+                        description: following.following['description']
+                      }
+
+                      this.followings.push(newFollowing);
+                      this.relationships.push(newFollowing);
+
+                      this.updateRelationships.next({
+                        relationships: this.relationships,
+                        followers: this.followers,
+                        followings: this.followings,
+                        pendingFollowers: this.pendingFollowers,
+                        requestedFollowings: this.requestedFollowings,
+                      });
+
+                      return newFollowing;
+                    })
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
+  }
+
 
   acceptFollow(following) {
     const body = JSON.stringify(following);

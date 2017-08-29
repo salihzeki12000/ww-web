@@ -127,12 +127,23 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   follow()  {
-    this.relationshipService.requestFollow({
+    let following = {
       user: this.currentUser,
-      following: this.user,
-    }).subscribe( result => {} )
+      following: this.user
+    }
 
-    this.followStatus = "requested"
+    if(this.user['private'])  {
+      this.relationshipService.requestFollow(following).subscribe(
+        result => {} )
+
+      this.followStatus = "requested";
+    } else  {
+      this.relationshipService.createFollow(following).subscribe(
+        result => {} )
+
+      this.followStatus = "accepted";
+    }
+
   }
 
   unfollow()  {

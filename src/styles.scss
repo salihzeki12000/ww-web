@@ -499,9 +499,8 @@ h5.action-response-primary  {
   letter-spacing: .5px;
   border-radius: 5px;
   &:hover {
-    color: #6494ED;
-    background-color: transparent;
     cursor: pointer;
+    opacity: .7;
   }
 }
 

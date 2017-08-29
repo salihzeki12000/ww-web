@@ -282,8 +282,18 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
       following: user,
     }
 
-    this.relationshipService.requestFollow(following).subscribe(
-      result => { } )
+    if(user['private']) {
+      this.relationshipService.requestFollow(following).subscribe(
+        result => { } )
+
+      user['following_status'] = 'requestedFollowing';
+    } else  {
+      this.relationshipService.createFollow(following).subscribe(
+        result => { } )
+
+      user['following_status'] = 'following';
+    }
+
   }
 
   unfollow(user)  {
