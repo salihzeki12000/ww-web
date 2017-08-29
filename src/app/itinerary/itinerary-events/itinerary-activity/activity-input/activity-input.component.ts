@@ -41,6 +41,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   meals;
   categories;
 
+  step1 = true;
   selected = false;
   searchActivity = false;
   searchDone = false;
@@ -157,6 +158,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
 
   // progress bar
   backToSelect()  {
+    this.step1 = true;
     this.selected = false;
     this.noLocation = false;
     this.searchDone = false;
@@ -172,6 +174,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   }
 
   backToSearch() {
+    this.selected = true;
     this.searchDone = false;
 
     this.addActivityForm.reset();
@@ -186,6 +189,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   }
 
   getForm() {
+    this.step1 = false;
     this.selected = true;
     this.searchDone = true;
     this.noLocation = true;
@@ -195,11 +199,17 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     })
   }
 
-  search()  {
+  locationSearch()  {
+    this.step1 = false;
     this.selected = true;
     this.searchActivity = true;
 
     setTimeout(() => {this.initMap()},100);
+  }
+
+  search()  {
+    this.selected = false;
+    this.searchDone = true;
   }
 
 

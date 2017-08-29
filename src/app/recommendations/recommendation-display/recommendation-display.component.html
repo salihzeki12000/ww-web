@@ -35,7 +35,7 @@
 
   <div class="slider" *ngIf="recommendation?.place.photos">
     <div class="slider-images" *ngFor="let image of recommendation?.place.photos; let i = index">
-      <input type="radio" name="slide_switch" id="image-{{i}}" checked>
+      <input type="radio" name="slide_switch" id="image-{{i}}" [checked]="i === 0">
       <label for="image-{{i}}">
         <img src="{{ image.url }}" alt="">
       </label>

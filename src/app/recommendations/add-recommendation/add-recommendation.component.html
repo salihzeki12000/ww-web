@@ -8,23 +8,26 @@
 
     <div class="progress-tracker-section">
       <ul class="progress-tracker">
-        <li class="progress-title" (click)="backToSelectItinerary()" [class.progress-done]="itinerarySelected">SELECT ITINERARY</li><li class="progress-title">SELECT DISPLAY PICTURE</li>
+        <li class="progress-title" (click)="backToSelectItinerary()" [class.progress-done]="selectItinerary">SELECT ITINERARY</li><li class="progress-title" [class.progress-done]="selectPicture">SELECT DISPLAY PICTURE</li>
       </ul>
     </div>
 
 
-    <div *ngIf="!itinerarySelected">
+    <div *ngIf="selectItinerary">
       <h4>Please select itinerary to add to:</h4>
       <div class="copy-to-itinerary-list">
-        <div *ngFor="let itinerary of itineraries" class="copy-to-itinerary" (click)="selectItinerary(itinerary)">
-          <h4>{{ itinerary.name }} - ({{ itinerary.date_from | date:"dd MMM yy" }} to {{ itinerary.date_to | date:"dd MMM yy" }})</h4>
+        <div *ngFor="let itinerary of itineraries" class="copy-to-itinerary" (click)="confirmItinerary(itinerary)">
+
+          <h4 *ngIf="!itinerary.num_days">{{ itinerary.name }} - ({{ itinerary.date_from | date:"dd MMM yy" }} to {{ itinerary.date_to | date:"dd MMM yy" }})</h4>
+          <h4 *ngIf="itinerary.num_days">{{ itinerary.name }} - ({{ itinerary.num_days }} {{ itinerary.num_days > 1 ? 'days' : 'day' }})</h4>
+
           <h5 *ngIf="itinerary.added">Recommendation has already been added to this itinerary.</h5>
         </div>
       </div>
     </div>
 
 
-    <div *ngIf="itinerarySelected">
+    <div *ngIf="selectPicture">
       <h4>Please select a display picture:</h4>
       <div class="slider" *ngIf="recommendation?.place.photos">
         <div class="slider-images" *ngFor="let image of recommendation?.place.photos; let i = index">
@@ -43,7 +46,7 @@
 
   <div class="action-response">
     <h5 class="action-response-secondary" (click)="cancel()">CANCEL</h5>
-    <h5 *ngIf="itinerarySelected" class="action-response-primary" (click)="save()"> <i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5>
+    <h5 *ngIf="selectPicture" class="action-response-primary" (click)="save()"> <i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5>
   </div>
 
 

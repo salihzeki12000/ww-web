@@ -9,7 +9,7 @@
 
     <div class="progress-tracker-section">
       <ul class="progress-tracker" [class.flight-search-active]="transportOption === 'flight'" [class.choose-airport-option]="chooseAirport">
-        <li class="progress-title" (click)="selectTransport()" [class.progress-done]="transportOption !== ''">SELECT TRANSPORT MODE</li><li class="progress-title" *ngIf="transportOption === 'flight'" (click)="flightSearch()" [class.progress-done]="populateFlightDetails">SEARCH FLIGHT</li><li class="progress-title" *ngIf="chooseAirport" (click)="selectAirport()" [class.progress-done]="airportsChoosen">SELECT AIRPORT</li><li class="progress-title">CONFIRM {{ transportOption | uppercase }} DETAILS</li>
+        <li class="progress-title" (click)="selectTransport()" [class.progress-done]="transportOption === ''">SELECT TRANSPORT MODE</li><li class="progress-title" *ngIf="transportOption === 'flight'" (click)="flightSearch()" [class.progress-done]="searchFlight">SEARCH FLIGHT</li><li class="progress-title" *ngIf="chooseAirport" (click)="selectAirport()" [class.progress-done]="selectStopOver">SELECT AIRPORT</li><li class="progress-title" [class.progress-done]="confirmPage">CONFIRM {{ transportOption | uppercase }} DETAILS</li>
       </ul>
     </div>
 
@@ -26,18 +26,14 @@
 
 
     <div *ngIf="transportOption === 'flight'">
-      <form [formGroup]="searchFlightForm" class="flight-search" *ngIf="!populateFlightDetails">
+
+      <form [formGroup]="searchFlightForm" class="flight-search" *ngIf="searchFlight">
 
         <div class="form-housing">
           <h4 class="transport-type-header">Search For Your Flight</h4>
           <h5 class="fields-required">All fields required</h5>
 
           <div class="form-section-details">
-            <div class="loading-overlay" *ngIf="fetchFlightDetails">
-              <div class="loading-message">
-                <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
-              </div>
-            </div>
 
             <div class="search-airline-code">
               <label>Airline Code</label>
@@ -113,95 +109,93 @@
       </div>
       <!-- end of airport selection -->
 
-      <div *ngIf="!selectStopOver">
-        <div *ngIf="populateFlightDetails">
-          <div class="form-housing">
+      <div *ngIf="confirmPage">
+        <div class="form-housing">
 
-            <h4 class="transport-type-header"><i class="fa fa-plane fa-lg" aria-hidden="true"></i> Confirm Flight Details</h4>
+          <h4 class="transport-type-header"><i class="fa fa-plane fa-lg" aria-hidden="true"></i> Confirm Flight Details</h4>
 
-            <h4 class="form-section-header">Departure Details</h4>
-            <div class="form-section-details">
+          <h4 class="form-section-header">Departure Details</h4>
+          <div class="form-section-details">
 
-              <div class="operating-message" *ngIf="codeshare">
-                <h5>*This flight is operated by {{ flightSearchDetail?.operating_carrier }} ({{ flightSearchDetail?.operating_flight }}).</h5>
-              </div>
-
-              <div class="flight-details">
-                <h5>Flight Number</h5>
-                <h4>{{ flightSearchDetail?.carrierCode }}{{ flightSearchDetail?.reference_number }}</h4>
-              </div>
-
-              <div class="flight-details">
-                <h5>Airline</h5>
-                <h4>{{ flightSearchDetail?.transport_company }}</h4>
-              </div>
-
-              <div class="flight-details">
-                <h5>Depart From (City)</h5>
-                <h4>{{ flightSearchDetail?.dep_city }}</h4>
-              </div>
-
-              <div class="flight-details">
-                <h5>Departure Airport</h5>
-                <h4>{{ flightSearchDetail?.dep_station }}</h4>
-              </div>
-
-              <div class="flight-details">
-                <h5>Departure Terminal</h5>
-                <h4>{{ flightSearchDetail?.dep_terminal }}</h4>
-              </div>
-
-              <div class="flight-details">
-                <h5>Departure Date</h5>
-                <h4>{{ flightSearchDetail?.dep_date | date: "dd MMM yyyy (EEEE)" }}</h4>
-              </div>
-
-              <div class="flight-details">
-                <h5>Departure Time</h5>
-                <h4>{{ flightSearchDetail?.dep_time }}</h4>
-              </div>
+            <div class="operating-message" *ngIf="codeshare">
+              <h5>*This flight is operated by {{ flightSearchDetail?.operating_carrier }} ({{ flightSearchDetail?.operating_flight }}).</h5>
             </div>
-            <!-- end of departure-details -->
 
-            <h4 class="form-section-header">Arrival Details</h4>
-            <div class="form-section-details">
-              <div class="flight-details">
-                <h5>Going To (City)</h5>
-                <h4>{{ flightSearchDetail?.arr_city }}</h4>
-              </div>
-
-              <div class="flight-details">
-                <h5>Arrival Airport</h5>
-                <h4>{{ flightSearchDetail?.arr_station }}</h4>
-              </div>
-
-              <div class="flight-details">
-                <h5>Arrival Terminal</h5>
-                <input type="text" class="transport-terminal" formControlName="arr_terminal">
-              </div>
-
-              <div class="flight-details">
-                <h5>Arrival Date</h5>
-                <h4>{{ flightSearchDetail?.arr_date | date: "dd MMM yyyy (EEEE)" }}</h4>
-              </div>
-
-              <div class="flight-details">
-                <h5>Arrival Time</h5>
-                <h4>{{ flightSearchDetail?.arr_time }}</h4>
-              </div>
+            <div class="flight-details">
+              <h5>Flight Number</h5>
+              <h4>{{ flightSearchDetail?.carrierCode }}{{ flightSearchDetail?.reference_number }}</h4>
             </div>
-            <!-- end of arrival-details -->
 
-            <h4 class="form-section-header">Note</h4>
-            <div class="form-section-details">
-              <textarea name="name" rows="3" formControlName="note"></textarea>
+            <div class="flight-details">
+              <h5>Airline</h5>
+              <h4>{{ flightSearchDetail?.transport_company }}</h4>
+            </div>
+
+            <div class="flight-details">
+              <h5>Depart From (City)</h5>
+              <h4>{{ flightSearchDetail?.dep_city }}</h4>
+            </div>
+
+            <div class="flight-details">
+              <h5>Departure Airport</h5>
+              <h4>{{ flightSearchDetail?.dep_station }}</h4>
+            </div>
+
+            <div class="flight-details">
+              <h5>Departure Terminal</h5>
+              <h4>{{ flightSearchDetail?.dep_terminal }}</h4>
+            </div>
+
+            <div class="flight-details">
+              <h5>Departure Date</h5>
+              <h4>{{ flightSearchDetail?.dep_date | date: "dd MMM yyyy (EEEE)" }}</h4>
+            </div>
+
+            <div class="flight-details">
+              <h5>Departure Time</h5>
+              <h4>{{ flightSearchDetail?.dep_time }}</h4>
             </div>
           </div>
+          <!-- end of departure-details -->
 
-          <div class="action-response">
-            <h5 class="action-response-secondary" (click)="cancelForm()">CANCEL</h5>
-            <button type="submit" class="action-response-primary" [disabled]="!addTransportForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
+          <h4 class="form-section-header">Arrival Details</h4>
+          <div class="form-section-details">
+            <div class="flight-details">
+              <h5>Going To (City)</h5>
+              <h4>{{ flightSearchDetail?.arr_city }}</h4>
+            </div>
+
+            <div class="flight-details">
+              <h5>Arrival Airport</h5>
+              <h4>{{ flightSearchDetail?.arr_station }}</h4>
+            </div>
+
+            <div class="flight-details">
+              <h5>Arrival Terminal</h5>
+              <input type="text" class="transport-terminal" formControlName="arr_terminal">
+            </div>
+
+            <div class="flight-details">
+              <h5>Arrival Date</h5>
+              <h4>{{ flightSearchDetail?.arr_date | date: "dd MMM yyyy (EEEE)" }}</h4>
+            </div>
+
+            <div class="flight-details">
+              <h5>Arrival Time</h5>
+              <h4>{{ flightSearchDetail?.arr_time }}</h4>
+            </div>
           </div>
+          <!-- end of arrival-details -->
+
+          <h4 class="form-section-header">Note</h4>
+          <div class="form-section-details">
+            <textarea name="name" rows="3" formControlName="note"></textarea>
+          </div>
+        </div>
+
+        <div class="action-response">
+          <h5 class="action-response-secondary" (click)="cancelForm()">CANCEL</h5>
+          <button type="submit" class="action-response-primary" [disabled]="!addTransportForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
         </div>
       </div>
 
@@ -348,7 +342,7 @@
                 <div *ngIf="itinDate !== 'any day' && !itinerary?.num_days">
                   <h5>Day {{ i }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
                 </div>
-                
+
               </option>
             </select>
 

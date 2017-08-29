@@ -1156,6 +1156,7 @@ textarea.ng-invalid.ng-touched {
 
 .form-section-details > h4  {
   margin-bottom: 20px;
+  font-weight: 400;
 }
 
 
@@ -1250,10 +1251,6 @@ textarea.ng-invalid.ng-touched {
   color: black;
   font-weight: 500;
   border-top: 4px solid #19CC72;
-  &:hover {
-    cursor: pointer;
-    color: grey;
-  }
 
   @media only screen and (max-width: 500px) {
     border-top: none;

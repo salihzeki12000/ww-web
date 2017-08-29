@@ -11,11 +11,11 @@
 
       <div class="progress-tracker-section">
         <ul class="progress-tracker">
-          <li class="progress-title" (click)="backToSearch()" [class.progress-done]="searchDone">SEARCH ACCOMMODATION</li><li class="progress-title">CONFIRM CHECK IN/OUT DETAILS</li>
+          <li class="progress-title" (click)="backToSearch()" [class.progress-done]="step1">SEARCH ACCOMMODATION</li><li class="progress-title" [class.progress-done]="searchDone">CONFIRM CHECK IN/OUT DETAILS</li>
         </ul>
       </div>
 
-      <div *ngIf="!searchDone" class="search-accommodation">
+      <div *ngIf="step1" class="search-accommodation">
         <label>Search accommodation by name or address <span class="required"> - local name or address may be required</span></label>
         <ww-google-place-search [populate]="''" (placeDetail)="getAccommodationDetails($event)"></ww-google-place-search>
 
@@ -27,7 +27,7 @@
         </h5>
 
         <div class="action-response">
-          <h5 class="action-response-primary" (click)="searchDone = true">Next</h5>
+          <h5 class="action-response-primary" (click)="search()">Next</h5>
         </div>
 
         <div #map id="map"></div>

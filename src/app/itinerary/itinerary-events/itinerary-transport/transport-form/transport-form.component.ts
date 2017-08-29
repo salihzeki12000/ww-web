@@ -32,13 +32,12 @@ export class TransportFormComponent implements OnInit, OnDestroy {
 
 
   // to influence progress bar
-  populateFlightDetails = false;
-  chooseAirport = false;// for flights with multiple legs
-  airportsChoosen = false;
+  searchFlight = false;
+  chooseAirport = false; // to create li for select airport progress tracker for flights with multiple legs
+  confirmPage = false;
 
   searchFlightForm: FormGroup;
 
-  fetchFlightDetails = false;
   flightNotFound = false;
 
   flightSearchDetail;
@@ -146,28 +145,36 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   // progress bar
   selectTransport() {
     this.transportOption = '';
+    this.confirmPage = false;
+
+    this.searchFlight = false;
     this.codeshare = false;
-    this.selectStopOver = false;
     this.chooseAirport = false;
-    this.airportsChoosen = false;
-    this.populateFlightDetails = false;
+    this.selectStopOver = false;
   }
 
   flightSearch()  {
+    this.searchFlight = true;
+
     this.codeshare = false;
-    this.selectStopOver = false;
     this.chooseAirport = false;
-    this.airportsChoosen = false;
-    this.populateFlightDetails = false;
+    this.selectStopOver = false;
+    this.confirmPage = false;
   }
 
   selectAirport() {
     this.selectStopOver = true;
-    this.airportsChoosen = false;
+    this.confirmPage = false;
   }
 
+
+  // step 1
   selectTransportType(transport)  {
     this.transportOption = transport;
+
+    if(transport !== 'flight') this.confirmPage = true;
+    if(transport === 'flight') this.searchFlight = true;
+
     this.addTransportForm.patchValue({
       dep_date: this.firstDay,
       arr_date: this.firstDay,
@@ -177,7 +184,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
 
   // get flight details from flightstats.com
   searchFlightDetails()  {
-    this.fetchFlightDetails = true;
+    this.searchFlight = false;
 
     let airlineCode = (this.searchFlightForm.value.searchAirlineCode).toUpperCase();
     let flightNumber = this.searchFlightForm.value.searchFlightNumber;
@@ -308,7 +315,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
                   operating_carrier: operatingCarrier,
                   operating_flight: operatingCarrierCode + operatingFlightNumber
                 };
-                this.populateFlightDetails = true;
+                this.confirmPage = true;
               }//end of section where there is only 01 flight
 
               if (scheduledFlights.length > 1)  {
@@ -370,15 +377,11 @@ export class TransportFormComponent implements OnInit, OnDestroy {
                     }
                   }
                 }
-
-                this.populateFlightDetails = true;
               }//end of if more than 01 flight
 
             }
           }
         )//end of subscribe
-
-    this.fetchFlightDetails = false;
 
     this.searchFlightForm.reset({
       'searchAirlineCode': '',
@@ -389,8 +392,8 @@ export class TransportFormComponent implements OnInit, OnDestroy {
 
   // show flight details after selected airport
   getFlightDetails()  {
-    this.airportsChoosen = true;
     this.selectStopOver = false;
+    this.confirmPage = true;
   }
 
   selectedDepAirport(airportCode)  {
@@ -592,7 +595,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
           newTransport[value] = this.flightSearchDetail[value];
         }
       }
-      
+
       newTransport['dep_station_location'] = this.flightSearchDetail['dep_station_location'];
       newTransport['arr_station_location'] = this.flightSearchDetail['arr_station_location'];
       newTransport['reference_number'] = this.flightSearchDetail['carrierCode'] + this.flightSearchDetail['reference_number'];

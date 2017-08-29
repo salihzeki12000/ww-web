@@ -63,7 +63,9 @@ export class ActivityComponent implements OnInit, OnDestroy {
   selectedUsers = []
   validAddUser = false;
   message = '';
-  usersSelected = false;
+
+  selectUsers = true;
+  addMsg = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -242,8 +244,10 @@ export class ActivityComponent implements OnInit, OnDestroy {
 
   cancelRecommend()  {
     this.recommending = false;
-    this.usersSelected = false;
+    this.selectUsers = false;
     this.validAddUser = false;
+    this.addMsg = false;
+    this.message = '';
     this.users.push.apply(this.users, this.selectedUsers);
     this.selectedUsers = [];
     this.preventScroll(false);
@@ -280,6 +284,11 @@ export class ActivityComponent implements OnInit, OnDestroy {
     }
   }
 
+  usersSelected() {
+    this.selectUsers = false;
+    this.addMsg = true;
+  }
+
   logMessage(msg) {
     this.message = msg;
   }
@@ -305,7 +314,8 @@ export class ActivityComponent implements OnInit, OnDestroy {
   }
 
   backToSelectUsers() {
-    this.usersSelected = false;
+    this.selectUsers = true;
+    this.addMsg = false;
   }
 
 

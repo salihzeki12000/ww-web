@@ -88,14 +88,6 @@
 
 
 /* to search for flight from flight stats */
-.loading-overlay  {
-  position: absolute;
-  margin-left: 266px;
-
-  @media only screen and (max-width: 650px) {
-    margin-left: calc((100% - 28px)/2);
-  }
-}
 
 #search-airline-code,
 .example-airline-code  {

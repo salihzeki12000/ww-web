@@ -3,7 +3,7 @@
 .nil-message-main {
   position: absolute;
   top: 59.09px;
-  max-height: calc(100vh - 135px);
+  max-height: calc(100vh - 160px);
   width: 600px;
   overflow: auto;
   background-color: white;
@@ -13,4 +13,14 @@
     width: 100%;
     min-width: 300px;
   }
+}
+
+
+.recommendations-list::-webkit-scrollbar {
+  background-color: rgba(100, 148, 237, 0.3);
+  width: 8px;
+}
+
+.recommendations-list::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 148, 237, 0.9);
 }

@@ -11,3 +11,12 @@ ww-notification-list  {
     min-width: 300px;
   }
 }
+
+ww-notification-list::-webkit-scrollbar {
+  background-color: rgba(86, 127, 204, 0.3);
+  width: 8px;
+}
+
+ww-notification-list::-webkit-scrollbar-thumb {
+  background-color: rgba(86, 127, 204, 0.9);
+}

@@ -17,8 +17,10 @@ export class AddRecommendationComponent implements OnInit {
   @Output() cancelAdd = new EventEmitter();
   @Output() updateAdd = new EventEmitter();
 
+  selectItinerary = true;
+  selectPicture = false;
+
   itineraries;
-  itinerarySelected = false;
   itinerary;
   displayPic;
 
@@ -45,11 +47,12 @@ export class AddRecommendationComponent implements OnInit {
     }
   }
 
-  selectItinerary(itinerary)  {
+  confirmItinerary(itinerary)  {
     this.itinerary = itinerary;
 
     this.formatItinMembers();
-    this.itinerarySelected = true;
+    this.selectItinerary = false;
+    this.selectPicture = true;
   }
 
   formatItinMembers() {
@@ -65,7 +68,8 @@ export class AddRecommendationComponent implements OnInit {
   }
 
   backToSelectItinerary() {
-    this.itinerarySelected = false;
+    this.selectItinerary = true;
+    this.selectPicture = false;
   }
 
   cancel()  {

@@ -10,13 +10,13 @@
       <div class="form-housing">
         <div class="progress-tracker-section">
           <ul class="progress-tracker" [class.search-active]="searchActivity">
-            <li class="progress-title" (click)="backToSelect()" [class.progress-done]="selected">SELECT ACTIVITY TYPE</li><li class="progress-title" *ngIf="searchActivity" (click)="backToSearch()" [class.progress-done]="searchDone">SEARCH FOR ACTIVITY</li><li class="progress-title">CONFIRM DATE &amp; TIME DETAILS</li>
+            <li class="progress-title" (click)="backToSelect()" [class.progress-done]="step1">SELECT ACTIVITY TYPE</li><li class="progress-title" *ngIf="searchActivity" (click)="backToSearch()" [class.progress-done]="selected">SEARCH FOR ACTIVITY</li><li class="progress-title" [class.progress-done]="searchDone">CONFIRM DATE &amp; TIME DETAILS</li>
           </ul>
         </div>
 
-        <div *ngIf="!selected" class="select-activity-type">
+        <div *ngIf="step1" class="select-activity-type">
 
-          <div class="select-activity location"  (click)="search()">
+          <div class="select-activity location"  (click)="locationSearch()">
 
             <i class="fa fa-map-marker fa-2x" aria-hidden="true"></i>
 
@@ -48,7 +48,7 @@
           </h5>
 
           <div class="action-response">
-            <h5 class="action-response-primary" (click)="searchDone = true">Next</h5>
+            <h5 class="action-response-primary" (click)="search()">Next</h5>
           </div>
 
           <div #map id="map"></div>

@@ -106,7 +106,7 @@
           </div>
 
         </div>
-        <h6 class="post-comment-delete" (click)="confirmDeleteComment(i)">x</h6>
+        <h6 *ngIf="comment.same_user || sameUser" class="post-comment-delete" (click)="confirmDeleteComment(i)">x</h6>
       </div>
     </div>
   </div>

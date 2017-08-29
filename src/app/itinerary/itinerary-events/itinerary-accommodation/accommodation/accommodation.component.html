@@ -139,11 +139,11 @@
 
         <div class="progress-tracker-section">
           <ul class="progress-tracker">
-            <li class="progress-title" (click)="backToSelectUsers()" [class.progress-done]="usersSelected">SELECT USERS</li><li class="progress-title">ADD A MESSAGE</li>
+            <li class="progress-title" (click)="backToSelectUsers()" [class.progress-done]="selectUsers">SELECT USERS</li><li class="progress-title" [class.progress-done]="addMsg">ADD A MESSAGE</li>
           </ul>
         </div>
 
-        <div *ngIf="!usersSelected">
+        <div *ngIf="selectUsers">
           <input type="text" placeholder="Search for people..." #text (keyup)="filterSearch(text.value)">
 
           <div *ngIf="validAddUser">
@@ -163,7 +163,7 @@
           </div>
         </div>
 
-        <div *ngIf="usersSelected">
+        <div *ngIf="addMsg">
           <h4>Craft a message to go with your recommendation:</h4>
           <textarea rows="2" #msg (keyup)="logRecMessage(msg.value)"></textarea>
         </div>
@@ -172,8 +172,8 @@
 
       <div class="action-response">
         <h5 class="action-response-secondary" (click)="cancelRecommend()">CANCEL</h5>
-        <h5 *ngIf="!usersSelected && validAddUser" class="action-response-primary" (click)="usersSelected = true">NEXT</h5>
-        <h5 *ngIf="usersSelected" class="action-response-primary" (click)="recommendTo()">RECOMMEND</h5>
+        <h5 *ngIf="selectUsers && validAddUser" class="action-response-primary" (click)="usersSelected()">NEXT</h5>
+        <h5 *ngIf="addMsg" class="action-response-primary" (click)="recommendTo()">RECOMMEND</h5>
       </div>
     </div>
   </div>

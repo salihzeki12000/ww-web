@@ -32,10 +32,10 @@ export class ItineraryShareComponent implements OnInit, OnDestroy {
   resourcesSubscription: Subscription;
   resources = [];
 
+  selectItems = true;
   itemsSelected = false;
 
   shared = false;
-  shareItin = false;
   shareAll = true;
   shareIndex = [];
   shareIndexResource = [];
@@ -131,6 +131,16 @@ export class ItineraryShareComponent implements OnInit, OnDestroy {
   }
 
 
+  // progress tracker
+
+  backToSelectItems() {
+    this.selectItems = true;
+  }
+
+  confirmItems()  {
+    this.selectItems = false;
+    this.itemsSelected = true;
+  }
 
   // toggle share items by group
 
@@ -334,6 +344,7 @@ export class ItineraryShareComponent implements OnInit, OnDestroy {
 
   cancel()  {
     this.cancelShare.emit(false);
+    this.selectItems = true;
     this.itemsSelected = false;
     this.selectedUsers = [];
     this.filteredResult = [];
@@ -345,7 +356,6 @@ export class ItineraryShareComponent implements OnInit, OnDestroy {
   // share itinerary
 
   shareItinerary()  {
-    this.shareItin = false;
 
     for (let i = 0; i < this.selectedUsers.length; i++) {
       let newItinerary = {
@@ -422,7 +432,7 @@ export class ItineraryShareComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.itemsSelected = false;
+    this.selectItems = true;
     this.filteredResult = [];
 
     if(this.shareType === 'Share')  {

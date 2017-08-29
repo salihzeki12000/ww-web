@@ -48,6 +48,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
   hourOut = "12";
   minuteOut = "00";
 
+  step1 = true;
   searchDone = false;
 
   dateSubscription: Subscription;
@@ -147,8 +148,15 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
   }
 
   // progress bar
+  search()  {
+    this.step1 = false;
+    this.searchDone = true;
+  }
+
   backToSearch() {
+    this.step1 = true;
     this.searchDone = false;
+    
     this.addAccommodationForm.reset();
     this.displayPic = undefined;
     this.pictureOptions = [];
