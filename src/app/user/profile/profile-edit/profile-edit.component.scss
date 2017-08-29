@@ -32,39 +32,6 @@ input {
   border-radius: 50%;
 }
 
-.change-profile-picture {
-  text-align: left;
-
-  @media only screen and (max-width: 610px) {
-    height: 250px;
-    text-align: center;
-  }
-}
-
-.keep-original  {
-  @media only screen and (max-width: 610px) {
-    margin-top: 50px;
-  }
-}
-
-.keep-original > h5{
-  margin-top: 5px;
-  width: 150px;
-  padding: 1.5px 10px;
-  border-radius: 25px;
-  border: 2px solid;
-  text-align: center;
-  font-size: 11px;
-  font-weight: 500;
-  &:hover {
-    cursor: pointer;
-  }
-
-  @media only screen and (max-width: 610px) {
-    margin-left: calc((100vw - 190px)/2);
-  }
-}
-
 
 
 /* file upload */
@@ -94,44 +61,6 @@ input {
   opacity: 0;
   cursor: pointer;
 }
-
-
-
-/* new profile picture display */
-
-.new-profile-picture  {
-  position: absolute;
-  top: 100px;
-  // left: calc(((100vw - 600px) / 2) + 400px);
-  margin-left: 420px;
-
-  @media only screen and (max-width: 610px) {
-    position: relative;
-    top: 0;
-    margin-left: 0;
-    padding-bottom: 10px;
-    text-align: center;
-    background-color: #FAFAFA;
-  }
-}
-
-.new-profile-picture > img  {
-  height: 150px;
-  width: 150px;
-  border-radius: 50%;
-}
-
-.new-profile-picture > h5 {
-  margin-top: 9px;
-  width: 150px;
-  text-align: center;
-  font-weight: 500;
-
-  @media only screen and (max-width: 610px) {
-    width: auto;
-  }
-}
-
 
 .profile-date-join  {
   text-align: left;
@@ -214,6 +143,29 @@ ww-google-place-search  {
     margin: 10px 0 0 0;
   }
 }
+
+
+
+/* new profile picture display */
+.new-profile-picture  {
+  text-align: center;
+}
+
+.new-profile-picture > h4 {
+  margin-top: 9px;
+  font-weight: 500;
+
+  @media only screen and (max-width: 610px) {
+    width: auto;
+  }
+}
+
+.new-profile-picture > img  {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+}
+
 
 
 

@@ -42,7 +42,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     showDropdowns: true,
   }
 
-  uploadText = "Change profile picture"
   fileTypeError = false;
   newProfilePic;
   newImageFile = '';
@@ -158,7 +157,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
         reader.onload = (event) =>  {
           this.newProfilePic = event['target']['result'];
           this.thumbnailImage = event['target']['result'];
-          this.uploadText = "Upload another picture"
         }
 
         reader.readAsDataURL(event.target.files[0]);
@@ -167,11 +165,10 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     }
   }
 
-  keepOriginal()  {
+  cancelChangePicture()  {
     this.inputValue = null;
     this.newProfilePic = '';
     this.newImageFile = '';
-    this.uploadText = "Change profile picture"
     this.thumbnailImage = this.currentUser['display_picture'];
   }
 
@@ -303,7 +300,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       result => {
         this.loadingService.setLoader(false, "");
         this.flashMessageService.handleFlashMessage(result.message);
-        
+
         this.inputValue = null;
         this.newProfilePic = '';
         this.newImageFile = '';

@@ -1,22 +1,13 @@
 <div class="profile-edit-main">
   <form [formGroup]="editProfileForm" (ngSubmit)="saveProfile()">
 
-    <div class="profile-edit-header" [class.change-profile-picture]="newProfilePic">
+    <div class="profile-edit-header">
       <img src="{{ currentUser?.display_picture }}" alt="">
-      <div class="keep-original" *ngIf="newProfilePic">
-        <h5 (click)="keepOriginal()">Keep original</h5>
-      </div>
 
       <label class="fileUpload">
-        {{ uploadText }}
+        Change profile picture
         <input type="file" (change)="fileUploaded($event)" [value]="inputValue" accept="image/*">
       </label>
-    </div>
-
-
-    <div class="new-profile-picture" *ngIf="newProfilePic">
-      <img [src]="newProfilePic">
-      <h5>New profile picture</h5>
     </div>
 
 
@@ -139,6 +130,30 @@
       <button type="submit" class="action-response-primary" [disabled]="!editProfileForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE PROFILE</h5></button>
     </div>
   </form>
+
+</div>
+
+
+<!-- change profile pic -->
+<div class="custom-modal" *ngIf="newProfilePic">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>Change display picture?</h3>
+      <a (click)="cancelChangePicture()">X</a>
+    </div>
+
+    <div class="content-without-header-name">
+      <div class="new-profile-picture" *ngIf="newProfilePic">
+        <h4>Your new profile picture</h4>
+        <img [src]="newProfilePic">
+      </div>
+    </div>
+
+    <div class="action-response">
+      <h5 class="action-response-secondary" (click)="cancelChangePicture()">CANCEL</h5>
+      <h5 class="action-response-primary" (click)="saveProfile()"> CONFIRM CHANGE</h5>
+    </div>
+  </div>
 
 </div>
 
