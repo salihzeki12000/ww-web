@@ -19,53 +19,10 @@
 }
 
 /* privacy */
-.check-in-private,
-.check-in-public {
-  display: inline-block;
-  margin-top: 3px;
-  width: 60px;
-  color: #F9FBFB;
-  border-radius: 25px;
-  &:hover {
-    cursor: pointer;
-  }
-}
-
-.check-in-private *,
-.check-in-public *  {
-  color: #F9FBFB;
-}
-
-.check-in-private {
-  padding: 2px 8px 2px 2px;
-  text-align: right;
-  border: 2px solid #19CC72;
-  background-color: #19CC72;
-}
-
-.check-in-public  {
-  padding: 2px 2px 2px 10px;
-  text-align: left;
-  border: 2px solid #A6A6A6;
-  background-color: #A6A6A6;
-}
-
-.toggle-button-private,
-.toggle-button-public  {
-  position: absolute;
-  height: 20px;
-  width: 20px;
-  background-color: white;
-  border-radius: 50%;
-  &:hover {
-    cursor: pointer;
-  }
-}
-
-.toggle-button-private  {
+.toggle-button-true  {
   margin: -22.5px 0 0 3px;
 }
 
-.toggle-button-public  {
+.toggle-button-false  {
   margin: -22.5px 0 0 38px;
 }
