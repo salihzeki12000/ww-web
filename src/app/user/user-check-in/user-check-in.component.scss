@@ -61,6 +61,17 @@
   }
 }
 
+.checkin-dropdown::-webkit-scrollbar,
+.country-dropdown::-webkit-scrollbar {
+  background-color: rgba(100, 148, 237, 0.3);
+  width: 8px;
+}
+
+.checkin-dropdown::-webkit-scrollbar-thumb,
+.country-dropdown::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 148, 237, 0.9);
+}
+
 .country-dropdown-arrow,
 .checkin-dropdown-arrow  {
   position: relative;

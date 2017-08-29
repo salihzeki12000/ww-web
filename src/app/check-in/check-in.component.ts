@@ -165,6 +165,7 @@ export class CheckInComponent implements OnInit, OnDestroy {
       let l = this.locations[i];
       let title;
 
+      if(l['name'] === undefined) l['name'] = '';
       if(l['name'] !== '') {
         title = l['name'];
       } else  {

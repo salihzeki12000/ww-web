@@ -140,10 +140,11 @@ export class UserCheckInComponent implements OnInit, OnDestroy {
       let l = this.locations[i];
       let title;
 
+      if(l['name'] === undefined) l['name'] = '';
       if(l['name'] !== '') {
         title = l['name'];
       } else  {
-        title = l['address']
+        title = l['formatted_address']
       }
 
       let marker = new google.maps.Marker({
@@ -168,7 +169,7 @@ export class UserCheckInComponent implements OnInit, OnDestroy {
 
       let content = '<div>' +
         '<h4>' + l['name'] + '</h4>' +
-        '<h5>' +  l['address'] + '</h5>' +
+        '<h5>' +  l['formatted_address'] + '</h5>' +
         '<h6>' + created_at_string + '</h6>' +
         '</div>';
 
