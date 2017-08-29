@@ -12,6 +12,13 @@
   <div class="recommend-header">
     <h3>{{ recommendation?.originator.username }} recommended {{ recommendation?.place.name }}</h3>
 
+    <div class="recommended-on">
+      <div class="time-ago">
+        <p *ngIf="recommendation?.time_ago !== ''">{{ recommendation?.time_ago }}</p>
+        <p *ngIf="recommendation?.time_ago === ''">{{ recommendation?.created_at | date: 'dd MMM yyyy (EEE)' }}</p>
+      </div>
+    </div>
+    
     <div class="added-message" *ngIf="recommendation?.itinerary.length > 0">
       <h5><i class="fa fa-check fa-lg" aria-hidden="true"></i> You have added this recommendation to the itineraries:</h5>
 

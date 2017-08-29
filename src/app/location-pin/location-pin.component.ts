@@ -22,7 +22,7 @@ export class LocationPinComponent implements OnInit {
   ngOnInit() {
     setTimeout(() =>  {
       this.initMap()
-    }, 2000)
+    }, 2500)
   }
 
   initMap() {

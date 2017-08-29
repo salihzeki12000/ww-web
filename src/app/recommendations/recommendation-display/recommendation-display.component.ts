@@ -48,6 +48,7 @@ export class RecommendationDisplayComponent implements OnInit, OnDestroy {
         this.recommendationService.getRecommendation(id).subscribe(
           result => {
             this.recommendation = result.recommendation;
+            this.timeAgo();
 
             let title = "Recommendation | " + this.recommendation.place.name
             this.titleService.setTitle(title);
@@ -69,6 +70,31 @@ export class RecommendationDisplayComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
+  }
+
+  timeAgo() {
+    let timePosted = new Date(this.recommendation['created_at']).getTime();
+    let timeDiff = (Date.now() - timePosted) / 1000;
+
+    let units = [
+      { name: "minute", in_seconds: 60, limit: 3600 },
+      { name: "hour", in_seconds: 3600, limit: 86400 },
+      { name: "day", in_seconds: 86400, limit: 604800 }
+    ];
+
+    if(timeDiff < 60) {
+      this.recommendation['time_ago'] = "Less than a minute ago"
+    } else if(timeDiff > 604800) {
+      this.recommendation['time_ago'] = '';
+    } else {
+      for (let j = 0; j < units.length; j++) {
+        if(timeDiff < units[j]['limit'])  {
+          let timeAgo =  Math.floor(timeDiff / units[j].in_seconds);
+          this.recommendation['time_ago'] = timeAgo + " " + units[j].name + (timeAgo > 1 ? "s" : "") + " ago";
+          j = units.length;
+        };
+      }
+    }
   }
 
   sortFormat()  {

@@ -46,6 +46,13 @@
     <h4 (click)="delete()">Delete</h4>
   </div>
 
+  <div class="recommended-on">
+    <div class="time-ago">
+      <p *ngIf="recommendation?.time_ago !== ''">{{ recommendation?.time_ago }}</p>
+      <p *ngIf="recommendation?.time_ago === ''">{{ recommendation?.created_at | date: 'dd MMM yyyy (EEE)' }}</p>
+    </div>
+  </div>
+
 </div>
 
 
