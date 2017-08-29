@@ -8,6 +8,7 @@ import { PostService }         from '../post';
 import { LoadingService }      from '../loading';
 import { CheckInService }      from '../check-in';
 import { RelationshipService } from '../relationships/relationship.service';
+import { FlashMessageService } from '../flash-message';
 
 @Component({
   selector: 'ww-user',
@@ -38,6 +39,7 @@ export class UserComponent implements OnInit, OnDestroy {
     private postService: PostService,
     private checkinService: CheckInService,
     private loadingService: LoadingService,
+    private flashMessageService: FlashMessageService,
     private relationshipService: RelationshipService,
     private userService: UserService) { }
 
@@ -132,6 +134,8 @@ export class UserComponent implements OnInit, OnDestroy {
       following: this.user
     }
 
+    let message = "You are now following " + this.user['username'];
+
     if(this.user['private'])  {
       this.relationshipService.requestFollow(following).subscribe(
         result => {} )
@@ -139,7 +143,9 @@ export class UserComponent implements OnInit, OnDestroy {
       this.followStatus = "requested";
     } else  {
       this.relationshipService.createFollow(following).subscribe(
-        result => {} )
+        result => {
+          this.flashMessageService.handleFlashMessage(message);
+        } )
 
       this.followStatus = "accepted";
     }
@@ -147,6 +153,8 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   unfollow()  {
+    this.loadingService.setLoader(true, "Unfollowing user...");
+
     let status;
 
     if(this.followStatus === "accepted") {
@@ -156,7 +164,10 @@ export class UserComponent implements OnInit, OnDestroy {
     }
 
     this.relationshipService.deleteFollow(this.relationship, status).subscribe(
-      result => {} )
+      result => {
+        this.followStatus = "";
+        this.loadingService.setLoader(false, "");
+      })
   }
 
 }

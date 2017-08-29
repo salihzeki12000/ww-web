@@ -20,7 +20,8 @@ import { UserService }    from '../../user/user.service';
 export class ItineraryPrintComponent implements OnInit {
   isLoggedIn = false;
   validUser = false;
-  
+  invalidMsg = '';
+
   itinerary;
   events = [];
 
@@ -45,6 +46,8 @@ export class ItineraryPrintComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
+    this.loadingService.setLoader(true, "Getting the preview...");
+
     this.isLoggedIn = this.authService.isLoggedIn();
 
     this.userService.getCurrentUser().subscribe(
@@ -81,7 +84,6 @@ export class ItineraryPrintComponent implements OnInit {
         this.dateRange = Object.keys(result).map(key => result[key]);
       })
 
-    this.loadingService.setLoader(false, "");
   }
 
   ngOnDestroy() {
@@ -99,6 +101,10 @@ export class ItineraryPrintComponent implements OnInit {
         }
       }
     }
+
+    this.invalidMsg = 'You are not authorised to access the itinerary. If you are not logged in, please log in and try to access this page via the itinerary.';
+
+    this.loadingService.setLoader(false, "");
   }
 
   sortDailyNotes()  {

@@ -9,6 +9,7 @@ import { ItineraryService, ItineraryEventService } from '../../itinerary';
 import { AuthService }                             from '../../auth';
 import { LoadingService }                          from '../../loading';
 import { NotificationService }                     from '../../notifications';
+import { FlashMessageService }                     from '../../flash-message';
 
 @Component({
   selector: 'ww-main-navigation',
@@ -72,6 +73,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     private relationshipService: RelationshipService,
     private itineraryService: ItineraryService,
     private notificationService: NotificationService,
+    private flashMessageService: FlashMessageService,
     private loadingService: LoadingService) { }
 
   ngOnInit() {
@@ -282,6 +284,9 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
       following: user,
     }
 
+    let message = "You are now following " + user['username'];
+
+
     if(user['private']) {
       this.relationshipService.requestFollow(following).subscribe(
         result => { } )
@@ -289,7 +294,9 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
       user['following_status'] = 'requestedFollowing';
     } else  {
       this.relationshipService.createFollow(following).subscribe(
-        result => { } )
+        result => {
+          this.flashMessageService.handleFlashMessage(message);
+        })
 
       user['following_status'] = 'following';
     }
@@ -297,6 +304,8 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   }
 
   unfollow(user)  {
+    this.loadingService.setLoader(true, "Unfollowing user...");
+
     let relationship;
     let status;
 
@@ -318,8 +327,11 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.relationshipService.deleteFollow(relationship, status)
-        .subscribe( result => { } )
+    this.relationshipService.deleteFollow(relationship, status).subscribe(
+      result => {
+        user.following_status = '';
+        this.loadingService.setLoader(false, "");
+      })
   }
 
   cancelShowUsers() {

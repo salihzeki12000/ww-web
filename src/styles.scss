@@ -11,7 +11,7 @@
 // #416099 - even darker blue for nav elements
 // #FFC65C - accent color
 // #19CC72 - light green
-// #7FCC56 - green for itinerary shortcut header
+// #BDECB6 - pastel green for itinerary shortcut header
 // #3C763D - dark green
 // #FFA15C - orange (255,161,92)
 // #DC143C - crimson(red)
@@ -271,8 +271,7 @@ span.bold {
   text-align: center;
   font-weight: 500;
   letter-spacing: .5px;
-  color: white;
-  background-color: #7FCC56;
+  background-color: #BDECB6;
 }
 
 .itinerary-shortcut-new  {
@@ -708,7 +707,7 @@ h5.action-response-primary  {
   height: 150px;
   width: 150px;
   border-radius: 50%;
-  border: 5px solid #2F80ED;
+  border: 5px solid #5899F0;
   background-color: white;
   overflow: hidden;
 
@@ -747,9 +746,9 @@ h5.action-response-primary  {
   top: 40px;
   height: 120px;
   width: 100%;
-  background: #567FCC;
-  background: -webkit-linear-gradient(to right, #2F80ED, #56CCF2);
-  background: linear-gradient(to right, #2F80ED, #56CCF2);
+  background: #5899F0;
+  background: -webkit-linear-gradient(to right, #5899F0, #56CCF2);
+  background: linear-gradient(to right, #5899F0, #56CCF2);
   z-index: -1;
 
   @media only screen and (max-width: 650px) {
