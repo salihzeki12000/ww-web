@@ -126,8 +126,10 @@ export class ItineraryPrintComponent implements OnInit {
         events[i]['formatted_note'] = events[i]['note'].replace(/\r?\n/g, '<br/> ')
       };
 
-      if(events[i]['location'] && events[i]['place']['opening_hours']){
+      if(events[i]['location'] && events[i]['place']['opening_hours'] !== ''){
         events[i]['formatted_hours'] = events[i]['place']['opening_hours'].replace(/\r?\n/g, '<br/> ');
+      } else if(events[i]['opening_hours']) {
+        events[i]['formatted_hours'] = events[i]['opening_hours'].replace(/\r?\n/g, '<br/> ');
       }
     }
 

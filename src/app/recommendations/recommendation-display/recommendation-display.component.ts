@@ -110,12 +110,16 @@ export class RecommendationDisplayComponent implements OnInit, OnDestroy {
       this.recommendation['formatted_hours'] = this.recommendation['place']['opening_hours'].replace(/\r?\n/g, '<br/> ');
     }
 
+    if(this.recommendation['place']['opening_hours'] !== ''){
+      this.recommendation['formatted_hours'] = this.recommendation['place']['opening_hours'].replace(/\r?\n/g, '<br/> ');
+    } else if(this.recommendation['opening_hours']) {
+      this.recommendation['formatted_hours'] = this.recommendation['opening_hours'].replace(/\r?\n/g, '<br/> ');
+    }
+
     if(this.recommendation['place']['photos'].length > 0)  {
       this.displayPic = this.recommendation['place']['photos'][0];
     }
   }
-
-
 
 
   // add to itinerary

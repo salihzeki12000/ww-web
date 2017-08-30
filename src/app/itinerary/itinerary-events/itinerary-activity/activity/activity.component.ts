@@ -138,7 +138,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
     if(this.relationshipSubscription) this.relationshipSubscription.unsubscribe();
   }
 
-  formatHours() {    
+  formatHours() {
     if(this.activity['location'] && this.activity['place']['opening_hours'] !== ''){
       this.activity['formatted_hours'] = this.activity['place']['opening_hours'].replace(/\r?\n/g, '<br/> ');
     } else if(this.activity['opening_hours']) {
@@ -306,6 +306,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
         originator: this.currentUser['_id'],
         place: this.activity['place'],
         message: this.message,
+        opening_hours: this.activity['opening_hours'],
         note: this.activity['note'],
         type: this.activity['type'],
       }
