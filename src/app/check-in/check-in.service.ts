@@ -36,7 +36,7 @@ export class CheckInService {
 
     return this.http.post( this.url + "/checkin/new/" + token, body, { headers: headers })
                     .map((response: Response) => {
-                      this.checkins.push(response.json().checkin);
+                      this.checkins.unshift(response.json().checkin);
                       this.updateCheckIns.next(this.checkins)
                       return response.json()
                     })
