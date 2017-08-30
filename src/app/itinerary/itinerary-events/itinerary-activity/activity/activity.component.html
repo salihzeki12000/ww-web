@@ -88,7 +88,7 @@
           </div>
         </div>
 
-        <div class="details-item" *ngIf="activity?.place.opening_hours">
+        <div class="details-item" *ngIf="activity?.place.opening_hours || activity?.opening_hours">
           <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>
           <h5 [innerHTML]="activity?.formatted_hours"></h5>
         </div>
@@ -296,8 +296,15 @@
               <label>Website</label>
               <h4>{{ activity.place.website }}</h4>
 
-              <label>Opening Hours</label>
-              <textarea rows="2" formControlName="opening_hours"></textarea>
+              <div class="details-item" *ngIf="activity.place.opening_hours !== ''">
+                <label>Opening Hours</label>
+                <h4 [innerHTML]="activity.formatted_hours"></h4>
+              </div>
+
+              <div class="details-item" *ngIf="activity.place.opening_hours === ''">
+                <label>Opening Hours</label>
+                <textarea rows="3" formControlName="opening_hours"></textarea>
+              </div>
 
               <label>Cost / Entry Fee</label>
               <input type="text" formControlName="entry_fee">

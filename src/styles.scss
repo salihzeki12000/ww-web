@@ -7,7 +7,7 @@
 // #A6A6A6 - text lighter grey (HSB 65)
 // #808080 - secondary text grey (HSB 50)
 // #6494ED - blue (100,148,237)
-// #567FCC - darker blue
+// #567FCC - darker blue (86, 127, 204)
 // #416099 - even darker blue for nav elements
 // #FFC65C - accent color
 // #19CC72 - light green
@@ -1058,12 +1058,12 @@ textarea.ng-invalid.ng-touched {
 }
 
 .form-card::-webkit-scrollbar {
-  background-color: rgba(100, 148, 237, 0.3);
+  background-color: rgba(86, 127, 204, 0.3);
   width: 8px;
 }
 
 .form-card::-webkit-scrollbar-thumb {
-  background-color: rgba(100, 148, 237, 0.9);
+  background-color: rgba(86, 127, 204, 0.9);
 }
 
 
@@ -1139,9 +1139,10 @@ textarea.ng-invalid.ng-touched {
 /* form section */
 
 .form-section-header  {
-  padding-bottom: 2px;
+  padding: 20px 0 2px 0;
   font-weight: bold;
   letter-spacing: .5px;
+  border-top: 4px double rgba(0,0,0,.1);
 }
 
 .form-section-details {
@@ -1154,7 +1155,7 @@ textarea.ng-invalid.ng-touched {
 }
 
 .form-section-details > h4  {
-  margin-bottom: 20px;
+  margin: 0 0 20px 10px;
   font-weight: 400;
 }
 
@@ -1164,7 +1165,6 @@ textarea.ng-invalid.ng-touched {
 .progress-tracker-section {
   @media only screen and (max-width: 500px) {
     margin: -20px 0 10px 0;
-    border-bottom: 1px solid lightgray;
   }
 }
 
@@ -1973,6 +1973,11 @@ ww-resource {
   line-height: 1.5;
 }
 
+/* for display in form */
+.details-item > h4  {
+  margin: 0 0 20px 10px;
+  font-weight: 400;
+}
 
 
 /* display note in events / print / recommendation */

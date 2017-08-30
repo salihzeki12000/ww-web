@@ -83,6 +83,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
       'lng': '',
       'international_phone_number':'',
       'opening_hours': '',
+      'input_opening_hours': '',
       'entry_fee': '',
       'website': '',
       'date': '',
@@ -218,6 +219,8 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     this.details = value;
 
     let opening_hours = this.getOpeningHours(value.opening_hours);
+    this.details['formatted_hours'] = opening_hours.replace(/\r?\n/g, '<br/> ');
+
     let lat = value['geometry'].location.lat();
     let lng = value['geometry'].location.lng();
 
@@ -225,7 +228,6 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     this.getCountry(value['address_components']);
 
     this.dragAddress = '';
-
     this.addActivityForm.patchValue({
       Oname: value.name,
       name: value.name,
@@ -391,7 +393,8 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
       formatted_address: this.dragAddress,
       lat: this.dragLat,
       lng: this.dragLng,
-      place_id: this.dragPlaceId
+      place_id: this.dragPlaceId,
+      opening_hours: ''
     })
   }
 

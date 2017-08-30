@@ -105,13 +105,10 @@ export class ActivityComponent implements OnInit, OnDestroy {
         this.checkCheckIn();
       })
 
-    if(this.activity['location'] && this.activity['place']['opening_hours']){
-      this.activity['formatted_hours'] = this.activity['place']['opening_hours'].replace(/\r?\n/g, '<br/> ');
-    }
-
-    this.checkMealTag();
     this.activity['formatted_note'] = this.activity['note'].replace(/\r?\n/g, '<br/> ');
 
+    this.formatHours();
+    this.checkMealTag();
     this.initTime();
 
     this.relationshipSubscription = this.relationshipService.updateRelationships.subscribe(
@@ -137,7 +134,16 @@ export class ActivityComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.currentUserSubscription.unsubscribe();
+    if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
+    if(this.relationshipSubscription) this.relationshipSubscription.unsubscribe();
+  }
+
+  formatHours() {    
+    if(this.activity['location'] && this.activity['place']['opening_hours'] !== ''){
+      this.activity['formatted_hours'] = this.activity['place']['opening_hours'].replace(/\r?\n/g, '<br/> ');
+    } else if(this.activity['opening_hours']) {
+      this.activity['formatted_hours'] = this.activity['opening_hours'].replace(/\r?\n/g, '<br/> ');
+    }
   }
 
   checkSameUser() {
@@ -395,11 +401,8 @@ export class ActivityComponent implements OnInit, OnDestroy {
       this.editActivityForm.patchValue({
         name: this.activity['name'],
         meals: this.activity['meals'],
-        opening_hours: this.activity['place']['opening_hours'],
+        opening_hours: this.activity['opening_hours'],
         entry_fee: this.activity['entry_fee'],
-        website: this.activity['place']['website'],
-        formatted_address: this.activity['place']['formatted_address'],
-        international_phone_number: this.activity['place']['international_phone_number'],
         date: this.activity['date'],
         note: this.activity['note'],
       })
