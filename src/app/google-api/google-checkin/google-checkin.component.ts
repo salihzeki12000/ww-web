@@ -26,6 +26,12 @@ export class GoogleCheckinComponent implements OnInit, OnDestroy {
   photos;
   opening_hours;
   url;
+
+  step1 = true;
+  searchLocation = false;
+  findLocation = false;
+  searchDone = false;
+
   locationType = '';
   private = false;
 
@@ -61,6 +67,35 @@ export class GoogleCheckinComponent implements OnInit, OnDestroy {
       zoom: 1,
       styles: [{"stylers": [{ "saturation": -20 }]}]
     })
+  }
+
+
+  // progress tracker
+
+  backToSelect()  {
+    this.step1 = true;
+    this.findLocation = false;
+    this.searchDone = false;
+    this.searchLocation = false;
+
+    this.clear();
+    this.zoomOut();
+  }
+
+  backToSearch() {
+    this.findLocation = true;
+    this.searchDone = false;
+
+    this.clear();
+    this.zoomOut();
+  }
+
+
+  // seach location
+  getSearch() {
+    this.findLocation = true;
+    this.searchDone = true;
+    this.step1 = false;
   }
 
   getDetails(value)  {
@@ -140,6 +175,32 @@ export class GoogleCheckinComponent implements OnInit, OnDestroy {
     return output;
   }
 
+  getCountry(address)  {
+    for (let i = 0; i < address.length; i++) {
+      if(address[i]['types'][0] === 'country')  {
+        let country = address[i]['long_name'];
+        this.getCountryLatLng(country)
+      }
+    }
+  }
+
+  getCountryLatLng(country)  {
+    let geocoder = new google.maps.Geocoder;
+
+    geocoder.geocode({address: country}, (result, status) =>  {
+      if(status === 'OK') {
+        let lat = result[0]['geometry'].location.lat();
+        let lng = result[0]['geometry'].location.lng();
+
+        this.country = {
+          name: country,
+          lat: lat,
+          lng: lng
+        }
+      }
+    })
+  }
+
   pinLocation(lat, lng)  {
     let center = new google.maps.LatLng(lat, lng);
 
@@ -187,6 +248,15 @@ export class GoogleCheckinComponent implements OnInit, OnDestroy {
     })
   }
 
+  zoomOut() {
+    let center = new google.maps.LatLng(0, 0);
+
+    this.locationMap.panTo(center);
+    this.locationMap.setZoom(0);
+  }
+
+
+  // get current location
   getLocation() {
     this.loadingService.setLoader(true, "Getting your current location...");
 
@@ -204,34 +274,11 @@ export class GoogleCheckinComponent implements OnInit, OnDestroy {
         this.locationType = 'Current';
 
         this.loadingService.setLoader(false, "");
+
+        this.step1 = false;
+        this.searchDone = true;
       })
     }
-  }
-
-  getCountry(address)  {
-    for (let i = 0; i < address.length; i++) {
-      if(address[i]['types'][0] === 'country')  {
-        let country = address[i]['long_name'];
-        this.getCountryLatLng(country)
-      }
-    }
-  }
-
-  getCountryLatLng(country)  {
-    let geocoder = new google.maps.Geocoder;
-
-    geocoder.geocode({address: country}, (result, status) =>  {
-      if(status === 'OK') {
-        let lat = result[0]['geometry'].location.lat();
-        let lng = result[0]['geometry'].location.lng();
-
-        this.country = {
-          name: country,
-          lat: lat,
-          lng: lng
-        }
-      }
-    })
   }
 
   clear() {

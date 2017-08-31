@@ -1,3 +1,65 @@
+.progress-tracker li {
+  width: 50%;
+
+  @media only screen and (max-width: 500px) {
+    width: 100%;
+  }
+}
+
+.search-active li {
+  width: 33.333%;
+
+  @media only screen and (max-width: 500px) {
+    width: 100%;
+  }
+}
+
+// step 1
+
+.select-housing {
+  text-align: center;
+}
+
+.select-activity  {
+  display: inline-block;
+  margin: 10px;
+  padding: 10px;
+  height: 100px;
+  width: 150px;
+  vertical-align: top;
+  border: 2px solid;
+  border-radius: 5px;
+
+  &:hover {
+    cursor: pointer;
+    opacity: .7;
+  }
+}
+
+.location i  {
+  color: #6494ED;
+}
+
+.select-activity h4 {
+  padding: 10px 0 3px 0;
+}
+
+.select-activity h5  {
+  color: #808080;
+}
+
+.location {
+  border: 2px solid #6494ED;
+}
+
+.location h4  {
+  color: #6494ED;
+}
+
+
+
+
+
 #map  {
   height: 300px;
   width: 560px;

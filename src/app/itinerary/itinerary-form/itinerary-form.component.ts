@@ -111,7 +111,7 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
     for (let i = 0; i < dateRange.length; i++) {
       itinerary['daily_note'].push({
         date: dateRange[i],
-        note: "Note for the day(click to edit)\ne.g. Day trip to the outskirts"
+        note: "Note for the day (click to edit)\ne.g. Day trip to the outskirts"
       })
     }
 
