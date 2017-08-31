@@ -316,7 +316,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
 
     this.changeCenter(this.filteredEvents[0]);
 
-    if(date !== "All dates" && this.filteredEvents.length > 1)  {
+    if(date !== "All dates" && date !== 'any day' && this.filteredEvents.length > 1)  {
       let path = [];
       for (let i = 0; i < this.filteredEvents.length; i++) {
         path.push({lat: this.filteredEvents[i]['place']['lat'], lng: this.filteredEvents[i]['place']['lng'] });
