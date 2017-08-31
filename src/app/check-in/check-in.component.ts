@@ -62,6 +62,7 @@ export class CheckInComponent implements OnInit, OnDestroy {
         this.initMap();
         this.setLocations();
         this.setCountries();
+
       })
 
   }
@@ -100,13 +101,15 @@ export class CheckInComponent implements OnInit, OnDestroy {
   }
 
   setLocations()  {
-    let panTo = {
-      lat: 0,
-      lng: this.checkins[0]['place']['lng'],
-      zoom: 2
-    }
+    if(this.checkins.length > 0)  {
+      let panTo = {
+        lat: 0,
+        lng: this.checkins[0]['place']['lng'],
+        zoom: 2
+      }
 
-    this.changeCenter(panTo);
+      this.changeCenter(panTo);
+    }
 
     this.locations = [];
     this.locationIds = [];
@@ -142,9 +145,14 @@ export class CheckInComponent implements OnInit, OnDestroy {
     }
 
     this.countries = this.sortCountries();
-    this.countries.unshift({name: 'Show all', lat: 0, lng: this.checkins[0]['place']['lng'], zoom: 2})
 
-    this.selectedCountry = this.countries[0]['name'];
+    if(this.checkins.length > 0)  {
+      this.countries.unshift({name: 'Show all', lat: 0, lng: this.checkins[0]['place']['lng'], zoom: 2})
+    }
+
+    if(this.countries.length > 0) {
+      this.selectedCountry = this.countries[0]['name'];
+    }
   }
 
   sortCountries() {

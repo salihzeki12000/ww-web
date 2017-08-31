@@ -239,7 +239,7 @@ export class GoogleCheckinComponent implements OnInit, OnDestroy {
         if(result[0]) {
           this.formatted_address = result[0]['formatted_address'];
           this.placeId = result[0]['place_id'];
-
+          // this.getPlaceDetails(this.placeId)
           this.getCountry(result[0]['address_components'])
 
           this.loadingService.setLoader(false, "");
@@ -247,6 +247,14 @@ export class GoogleCheckinComponent implements OnInit, OnDestroy {
       }
     })
   }
+
+  // getPlaceDetails(placeId) {
+  //   let request = { placeId: placeId };
+  //   let service = new google.maps.places.PlacesService(this.locationMap);
+  //
+  //   service.getDetails(request, (result, status)  =>  {
+  //   });
+  // }
 
   zoomOut() {
     let center = new google.maps.LatLng(0, 0);

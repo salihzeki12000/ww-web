@@ -24,6 +24,7 @@ export class CheckInService {
                       return response.json()
                     })
                     .catch((error: Response) => {
+                      console.log(error)
                       this.errorMessageService.handleErrorMessage(error.json());
                       return Observable.throw(error.json())
                     });

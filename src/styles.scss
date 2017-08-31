@@ -1266,7 +1266,8 @@ textarea.ng-invalid.ng-touched {
 .dragged-address  {
   margin: 10px 0;
   padding: 10px 5px;
-  background-color: rgba(100,148,237, .5)
+  background-color: rgba(100,148,237,.5);
+  border: 3px solid rgba(100,148,237,.5);
 }
 
 span.dragged-location {
