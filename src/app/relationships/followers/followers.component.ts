@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Rx';
 import { Title }        from '@angular/platform-browser';
 
 import { RelationshipService } from '../relationship.service';
+import { LoadingService }      from '../../loading';
 
 @Component({
   selector: 'ww-followers',
@@ -14,6 +15,7 @@ export class FollowersComponent implements OnInit, OnDestroy {
   followers = [];
 
   constructor(
+    private loadingService: LoadingService,
     private titleService: Title,
     private relationshipService: RelationshipService) { }
 
@@ -24,6 +26,8 @@ export class FollowersComponent implements OnInit, OnDestroy {
        result => {
          this.followers = Object.keys(result['followers']).map(key => result['followers'][key]);
        })
+
+    this.loadingService.setLoader(false, "");
   }
 
   ngOnDestroy() {

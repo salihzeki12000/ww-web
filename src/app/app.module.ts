@@ -1,18 +1,19 @@
 import { BrowserModule, Title }             from '@angular/platform-browser';
 import { BrowserAnimationsModule }          from '@angular/platform-browser/animations'
-import { NgModule }                         from '@angular/core';
+import { NgModule, ErrorHandler }           from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule }          from '@angular/http';
 import { routing }                          from './app.routing';
 import { Daterangepicker }                  from 'ng2-daterangepicker';
+import * as Raven from 'raven-js';
 
-import { AppComponent } from './app.component';
+import { AppComponent }         from './app.component';
+import { AuthGuard }            from './_guards/auth.guard';
 import { LandingPageComponent } from './landing-page';
 import { AuthComponent, AuthService, SignupComponent, SigninComponent, ResetComponent, ForgotPasswordComponent } from './auth';
-import { AuthGuard } from './_guards/auth.guard';
 
-import { HomeComponent } from './home';
-import { MeComponent } from './me';
+import { HomeComponent }           from './home';
+import { MeComponent }             from './me';
 import { MainNavigationComponent } from './navigation';
 
 import { UserComponent, UserVerifyComponent, UserUnverifiedComponent, UserProfileCardComponent, UserCheckInComponent, UserFollowersComponent, UserFollowingsComponent, UserItinerariesComponent, UserItinerarySummaryComponent, UserPostsComponent, UserService, ProfileComponent, ProfileDetailsComponent, ProfileEditComponent } from './user';
@@ -42,6 +43,18 @@ import { CapitalisePipe } from './pipes';
 import { LocationPinComponent } from './location-pin/location-pin.component';
 import { RecommendationsComponent, RecommendationComponent, RecommendationDisplayComponent, RecommendationService, AddRecommendationComponent } from './recommendations';
 import { PlaceComponent } from './place';
+
+
+Raven
+  .config('https://5575c781e9054ddd828e3e4b8f90bc55@sentry.io/211359')
+  .install();
+
+export class RavenErrorHandler implements ErrorHandler {
+  handleError(err:any) : void {
+    Raven.captureException(err);
+  }
+}
+
 
 @NgModule({
   declarations: [
@@ -145,7 +158,7 @@ import { PlaceComponent } from './place';
     routing,
     Daterangepicker
   ],
-  providers: [ Title, LoadingService, AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, FileuploadService, CommentService, ErrorMessageService, CheckInService, RecommendationService, AuthGuard ],
+  providers: [ Title, LoadingService, AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, FileuploadService, CommentService, ErrorMessageService, CheckInService, RecommendationService, AuthGuard, { provide: ErrorHandler, useClass: RavenErrorHandler } ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

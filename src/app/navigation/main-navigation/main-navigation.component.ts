@@ -58,7 +58,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
 
   showUsers = false;
   users: User[] = [];
-  filteredResult;
+  filteredUsers;
 
   notificationsLimit = true;
 
@@ -105,7 +105,10 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
 
     if(this.isLoggedIn) {
       this.userService.getAllUsers().subscribe(
-        result => { this.users = result.users; })
+        result => {
+          this.users = result.users;
+          this.filteredUsers = this.users;
+        })
     }
 
 
@@ -270,9 +273,9 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
 
   filterSearch(text)  {
     if(!text)   {
-      this.filteredResult = [];
+      this.filteredUsers = [];
     } else  {
-      this.filteredResult = Object.assign([], this.users).filter(
+      this.filteredUsers = Object.assign([], this.users).filter(
         user => user.username.toLowerCase().indexOf(text.toLowerCase()) > -1
       )
     }
@@ -337,7 +340,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   cancelShowUsers() {
     this.showUsers = false;
     this.preventScroll(false);
-    this.filteredResult = [];
+    this.filteredUsers = [];
   }
 
 

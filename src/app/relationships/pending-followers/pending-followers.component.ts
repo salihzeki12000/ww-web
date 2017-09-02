@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Rx';
 import { Title }        from '@angular/platform-browser';
 
 import { RelationshipService } from '../relationship.service';
+import { LoadingService }      from '../../loading';
 
 @Component({
   selector: 'ww-pending-followers',
@@ -14,6 +15,7 @@ export class PendingFollowersComponent implements OnInit, OnDestroy {
   pendingFollowers = [];
 
   constructor(
+    private loadingService: LoadingService,
     private titleService: Title,
     private relationshipService: RelationshipService) { }
 
@@ -24,6 +26,8 @@ export class PendingFollowersComponent implements OnInit, OnDestroy {
      result => {
        this.pendingFollowers = Object.keys(result['pendingFollowers']).map(key => result['pendingFollowers'][key]);
      })
+
+    this.loadingService.setLoader(false, "");
   }
 
   ngOnDestroy() {

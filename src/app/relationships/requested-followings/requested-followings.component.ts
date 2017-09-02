@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Rx';
 import { Title }        from '@angular/platform-browser';
 
 import { RelationshipService } from '../relationship.service';
+import { LoadingService }      from '../../loading';
 
 @Component({
   selector: 'ww-requested-followings',
@@ -14,6 +15,7 @@ export class RequestedFollowingsComponent implements OnInit, OnDestroy {
   requestedFollowings = [];
 
   constructor(
+    private loadingService: LoadingService,
     private titleService: Title,
     private relationshipService: RelationshipService) { }
 
@@ -24,6 +26,8 @@ export class RequestedFollowingsComponent implements OnInit, OnDestroy {
      result => {
        this.requestedFollowings = Object.keys(result['requestedFollowings']).map(key => result['requestedFollowings'][key]);
      })
+
+    this.loadingService.setLoader(false, "");
   }
 
   ngOnDestroy() {

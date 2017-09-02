@@ -6,6 +6,7 @@
       <h5 class="action-response-secondary" (click)="ignoreRequest()">IGNORE</h5>
       <h5 class="action-response-primary" (click)="acceptRequest()">ACCEPT</h5>
     </div>
+    
     <div class="response-status" *ngIf="pendingFollower.responded">
       <h5 *ngIf="pendingFollower.request_accepted">Request Accepted</h5>
       <h5 *ngIf="pendingFollower.request_ignored">Request Ignored</h5>
