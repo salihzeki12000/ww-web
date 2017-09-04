@@ -50,7 +50,7 @@ export class GoogleCheckinComponent implements OnInit, OnDestroy {
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
       result => {
         this.currentUser = result;
-        this.private = this.currentUser['settings']['favourite'];
+        this.private = this.currentUser['settings']['favourite_privacy'];
       })
 
     setTimeout(() => {this.initMap()},100);

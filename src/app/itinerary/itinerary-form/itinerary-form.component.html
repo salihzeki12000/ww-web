@@ -47,6 +47,19 @@
       <h4 *ngIf="!private" class="toggle-false" (click)="private = true">No</h4>
       <h4 *ngIf="!private" class="toggle-button-false" (click)="private = true"></h4>
 
+      <div *ngIf="!private" class="view-only">
+        <label>View only</label>
+        <h5 *ngIf="viewOnly && corporate" class="label-note">Your followers can only view this itinerary.</h5>
+        <h5 *ngIf="viewOnly && !corporate" class="label-note">Followers of members can only view this itinerary.</h5>
+        <h4 *ngIf="viewOnly" class="toggle-true" (click)="viewOnly = false">Yes</h4>
+        <h4 *ngIf="viewOnly" class="toggle-button-true" (click)="viewOnly = false"></h4>
+
+        <h5 *ngIf="!viewOnly && corporate" class="label-note">Your followers can view and copy this itinerary.</h5>
+        <h5 *ngIf="!viewOnly && !corporate" class="label-note">Followers of members can view and copy this itinerary.</h5>
+        <h4 *ngIf="!viewOnly" class="toggle-false" (click)="viewOnly = true">No</h4>
+        <h4 *ngIf="!viewOnly" class="toggle-button-false" (click)="viewOnly = true"></h4>
+      </div>
+
     </div>
 
     <div class="submit-error" *ngIf="nameError || dateError">

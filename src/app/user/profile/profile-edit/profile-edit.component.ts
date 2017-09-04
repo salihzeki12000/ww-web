@@ -131,8 +131,8 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       this.defaultCity = '';
     }
 
-    this.favPrivacy = this.currentUser['settings']['favourite'];
-    this.itinPrivacy = this.currentUser['settings']['itinerary'];
+    this.favPrivacy = this.currentUser['settings']['favourite_privacy'];
+    this.itinPrivacy = this.currentUser['settings']['itinerary_privacy'];
     this.itinView = this.currentUser['settings']['itinerary_viewonly'];
   }
 
@@ -278,8 +278,8 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       this.currentUser[value] = editedProfile[value];
     }
 
-    this.currentUser['settings']['itinerary'] = this.itinPrivacy;
-    this.currentUser['settings']['favourite'] = this.favPrivacy;
+    this.currentUser['settings']['itinerary_privacy'] = this.itinPrivacy;
+    this.currentUser['settings']['favourite_privacy'] = this.favPrivacy;
     this.currentUser['settings']['itinerary_viewonly'] = this.itinView;
 
     if(this.city) {
