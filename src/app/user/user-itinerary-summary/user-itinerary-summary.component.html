@@ -1,10 +1,20 @@
 <h4 class="header">You are viewing the summary of the itinerary - {{ itinerary?.name }}</h4>
-<h4 class="preview-link" *ngIf="itinerary?.corporate.status" [routerLink]="['/preview/itinerary', itinerary?._id]">
-  <i class="fa fa-external-link" aria-hidden="true"></i>
-  View preview
-</h4>
+
+<div class="itinerary-action">
+  <h4 class="preview-link" *ngIf="itinerary?.corporate.status" [routerLink]="['/preview/itinerary', itinerary?._id]">
+    <i class="fa fa-external-link" aria-hidden="true"></i>
+    View preview
+  </h4>
+
+  <h4 class="copy-itinerary" *ngIf="!itinerary?.view_only">
+    <i class="fa fa-clone fa-lg" aria-hidden="true"></i>
+    Copy itinerary
+  </h4>
+</div>
+
 
 <h4 class="description" [innerHTML]="itinerary?.formatted_description"></h4>
+
 
 <div class="summary-container">
   <div *ngFor="let date of dateRange; let i = index">

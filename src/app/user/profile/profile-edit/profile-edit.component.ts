@@ -50,8 +50,9 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   defaultCity;
   changePw = false;
 
-  checkinPrivacy = false;
+  favPrivacy = false;
   itinPrivacy = false;
+  itinView = false;
 
   deactivate = false;
 
@@ -130,8 +131,9 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       this.defaultCity = '';
     }
 
-    this.checkinPrivacy = this.currentUser['privacy']['check_in'];
-    this.itinPrivacy = this.currentUser['privacy']['itinerary'];
+    this.favPrivacy = this.currentUser['settings']['favourite'];
+    this.itinPrivacy = this.currentUser['settings']['itinerary'];
+    this.itinView = this.currentUser['settings']['itinerary_viewonly'];
   }
 
   updateDateRange() {
@@ -276,8 +278,9 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       this.currentUser[value] = editedProfile[value];
     }
 
-    this.currentUser['privacy']['itinerary'] = this.itinPrivacy;
-    this.currentUser['privacy']['check_in'] = this.checkinPrivacy;
+    this.currentUser['settings']['itinerary'] = this.itinPrivacy;
+    this.currentUser['settings']['favourite'] = this.favPrivacy;
+    this.currentUser['settings']['itinerary_viewonly'] = this.itinView;
 
     if(this.city) {
       this.currentUser['city'] = this.city;

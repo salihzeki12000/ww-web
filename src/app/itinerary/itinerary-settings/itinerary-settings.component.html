@@ -66,6 +66,19 @@
           </div>
         </div>
 
+        <div class="itinerary-edit-item" *ngIf="masterAdmin && !private">
+          <h5>View only</h5>
+
+          <h4 *ngIf="viewOnly" class="toggle-true" (click)="viewOnly = false">Yes</h4>
+          <h4 *ngIf="viewOnly" class="toggle-button-true" (click)="viewOnly = false"></h4>
+          <h6 *ngIf="viewOnly">Your followers can only view the itinerary.</h6>
+
+          <h4 *ngIf="!viewOnly" class="toggle-false" (click)="viewOnly = true">No</h4>
+          <h4 *ngIf="!viewOnly" class="toggle-button-false" (click)="viewOnly = true"></h4>
+          <h6 *ngIf="!viewOnly">Your followers can view and copy the itinerary.</h6>
+
+        </div>
+
         <div class="itinerary-edit-item" *ngIf="itinerary?.corporate.status">
           <h5>Publish</h5>
 
@@ -178,7 +191,7 @@
       <span class="cs-info" (click)="copyInfo = true">What is this?</span>
 
       <div class="copy-share-info" *ngIf="copyInfo">
-        <h5>Copying to another itinerary of yours. A new itinerary is not created.</h5>
+        <h5>Revisiting a city? Copy activities from this itinerary to a new itinerary you created for the trip.</h5>
       </div>
 
       <div class="action-response-primary">

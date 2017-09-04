@@ -41,6 +41,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   itinerary;
   private = false;
   publish = false;
+  viewOnly = false;
 
   currentUserSubscription: Subscription;
   currentUser;
@@ -177,6 +178,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     }
 
     this.private = this.itinerary['private'];
+    this.viewOnly = this.itinerary['view_only'];
     this.publish = this.itinerary['corporate']['publish']
 
     let title = this.itinerary['name'] + " | Settings"
@@ -621,6 +623,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     }
 
     this.itinerary['private'] = this.private;
+    this.itinerary['view_only'] = this.viewOnly;
     this.itinerary['corporate']['publish'] = this.publish;
 
     this.itineraryService.editItin(this.itinerary, 'edit').subscribe(

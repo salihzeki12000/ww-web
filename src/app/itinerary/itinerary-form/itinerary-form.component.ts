@@ -68,7 +68,7 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
   checkStatus() {
     if(this.currentUser['corporate']) this.corporate = true;
     console.log(this.corporate)
-    this.private = this.currentUser['privacy']['itinerary'];
+    this.private = this.currentUser['settings']['itinerary'];
   }
 
   selectedDate(value) {
@@ -183,6 +183,7 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
 
     itinerary['corporate'] = { status: this.corporate, publish: false };
     itinerary.private = this.private;
+    itinerary.view_only = this.currentUser['settings']['itinerary_viewonly'];
     itinerary.members = [this.currentUser['_id']];
     itinerary.admin = [this.currentUser['_id']];
     itinerary.created_by = this.currentUser['_id'];

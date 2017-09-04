@@ -6,13 +6,32 @@
   text-align: center;
 }
 
-.preview-link {
+.itinerary-action {
   text-align: center;
+}
+
+.preview-link {
+  display: inline-block;
+  padding: 10px 20px;
   color: #808080;
+  border: 2px solid;
+  border-radius: 5px;
 
   &:hover {
     cursor: pointer;
-    color: #3A4A4D;
+    color: #6494ED;
+  }
+}
+
+.copy-itinerary {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 2px solid;
+  border-radius: 5px;
+
+  &:hover {
+    cursor: pointer;
+    color: #6494ED;
   }
 }
 

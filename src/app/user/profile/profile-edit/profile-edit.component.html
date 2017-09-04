@@ -92,10 +92,10 @@
 
 
 
-    <h4 class="form-section-header">Default Privacy Settings</h4>
+    <h4 class="form-section-header">Default Settings</h4>
     <div class="form-section-details">
       <div class="profile-edit-item">
-        <h5>New itinerary</h5>
+        <h5>Itinerary privacy</h5>
 
         <h4 *ngIf="itinPrivacy" class="toggle-true" (click)="itinPrivacy = false">Yes</h4>
         <h4 *ngIf="itinPrivacy" class="toggle-button-true" (click)="itinPrivacy = false"></h4>
@@ -107,15 +107,27 @@
       </div>
 
       <div class="profile-edit-item">
-        <h5>New check in</h5>
+        <h5>Itinerary view only</h5>
 
-        <h4 *ngIf="checkinPrivacy" class="toggle-true" (click)="checkinPrivacy = false">Yes</h4>
-        <h4 *ngIf="checkinPrivacy" class="toggle-button-true" (click)="checkinPrivacy = false"></h4>
-        <h6 *ngIf="checkinPrivacy">New check in is private. Only you can view.</h6>
+        <h4 *ngIf="itinView" class="toggle-true" (click)="itinView = false">Yes</h4>
+        <h4 *ngIf="itinView" class="toggle-button-true" (click)="itinView = false"></h4>
+        <h6 *ngIf="itinView">Followers of members can only view the itinerary. They cannot copy.</h6>
 
-        <h4 *ngIf="!checkinPrivacy" class="toggle-false" (click)="checkinPrivacy = true">No</h4>
-        <h4 *ngIf="!checkinPrivacy" class="toggle-button-false" (click)="checkinPrivacy = true"></h4>
-        <h6 *ngIf="!checkinPrivacy">New check in is not private. Your followers can view.</h6>
+        <h4 *ngIf="!itinView" class="toggle-false" (click)="itinView = true">No</h4>
+        <h4 *ngIf="!itinView" class="toggle-button-false" (click)="itinView = true"></h4>
+        <h6 *ngIf="!itinView">Followers of members can view and create a copy of the itinerary.</h6>
+      </div>
+
+      <div class="profile-edit-item">
+        <h5>Favourite privacy</h5>
+
+        <h4 *ngIf="favPrivacy" class="toggle-true" (click)="favPrivacy = false">Yes</h4>
+        <h4 *ngIf="favPrivacy" class="toggle-button-true" (click)="favPrivacy = false"></h4>
+        <h6 *ngIf="favPrivacy">New favourite is private. Only you can view.</h6>
+
+        <h4 *ngIf="!favPrivacy" class="toggle-false" (click)="favPrivacy = true">No</h4>
+        <h4 *ngIf="!favPrivacy" class="toggle-button-false" (click)="favPrivacy = true"></h4>
+        <h6 *ngIf="!favPrivacy">New favourite is not private. Your followers can view.</h6>
       </div>
     </div>
 
