@@ -60,6 +60,7 @@ export class CheckInComponent implements OnInit, OnDestroy {
         this.checkins = result;
         this.displayCheckins = Object.assign([], this.checkins);
         this.initMap();
+        this.setInitPan();
         this.setLocations();
         this.setCountries();
 
@@ -100,17 +101,22 @@ export class CheckInComponent implements OnInit, OnDestroy {
     });
   }
 
-  setLocations()  {
-    if(this.checkins.length > 0)  {
-      let panTo = {
-        lat: 0,
-        lng: this.checkins[0]['place']['lng'],
-        zoom: 2
+  setInitPan()  {
+    for (let i = 0; i < this.checkins.length; i++) {
+      if(this.checkins[i]['place']['lat'])  {
+        let panTo = {
+          lat: 0,
+          lng: this.checkins[i]['place']['lng'],
+          zoom: 2
+        }
+
+        this.changeCenter(panTo);
+        break;
       }
-
-      this.changeCenter(panTo);
     }
+  }
 
+  setLocations()  {
     this.locations = [];
     this.locationIds = [];
 
@@ -173,52 +179,54 @@ export class CheckInComponent implements OnInit, OnDestroy {
       let l = this.locations[i];
       let title;
 
-      if(l['name'] === undefined) l['name'] = '';
-      if(l['name'] !== '') {
-        title = l['name'];
-      } else  {
-        title = l['formatted_address']
+      if(l['lat'])  {
+        if(l['name'] === undefined) l['name'] = '';
+        if(l['name'] !== '') {
+          title = l['name'];
+        } else  {
+          title = l['formatted_address']
+        }
+
+        let marker = new google.maps.Marker({
+          position: { lat: l['lat'], lng: l['lng']},
+          map: map,
+          title: title,
+          zIndex: i
+        })
+
+        this.markers.push(marker);
+
+        let created_at_string = '';
+
+        for (let j = 0; j < this.locations[i]['created_at'].length; j++) {
+          let checkIn = this.locations[i]['created_at'][j];
+          let date = new Date(checkIn);
+          let options = { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute:'numeric' };
+          let created_at = date.toLocaleString('en-GB', options) + '<br>';
+
+          created_at_string += created_at;
+        }
+
+        let content = '<div>' +
+                        '<h4 style="padding: 5px 0;">' + l['name'] + '</h4>' +
+                        '<h5 style="padding: 5px 0;">' +  l['formatted_address'] + '</h5>' +
+                        '<h6 style="padding: 5px 0;">' + created_at_string + '</h6>' +
+                      '</div>';
+
+        let infoWindow = new google.maps.InfoWindow({
+          content: content
+        })
+
+        this.infoWindows.push(infoWindow);
+
+        marker.addListener('click', () => {
+          infoWindow.open(map, marker)
+          let center = new google.maps.LatLng(l['lat'], l['lng'])
+
+          map.panTo(center);
+          map.setZoom(17);
+        })
       }
-
-      let marker = new google.maps.Marker({
-        position: { lat: l['lat'], lng: l['lng']},
-        map: map,
-        title: title,
-        zIndex: i
-      })
-
-      this.markers.push(marker);
-
-      let created_at_string = '';
-
-      for (let j = 0; j < this.locations[i]['created_at'].length; j++) {
-        let checkIn = this.locations[i]['created_at'][j];
-        let date = new Date(checkIn);
-        let options = { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute:'numeric' };
-        let created_at = date.toLocaleString('en-GB', options) + '<br>';
-
-        created_at_string += created_at;
-      }
-
-      let content = '<div>' +
-                      '<h4 style="padding: 5px 0;">' + l['name'] + '</h4>' +
-                      '<h5 style="padding: 5px 0;">' +  l['formatted_address'] + '</h5>' +
-                      '<h6 style="padding: 5px 0;">' + created_at_string + '</h6>' +
-                    '</div>';
-
-      let infoWindow = new google.maps.InfoWindow({
-        content: content
-      })
-
-      this.infoWindows.push(infoWindow);
-
-      marker.addListener('click', () => {
-        infoWindow.open(map, marker)
-        let center = new google.maps.LatLng(l['lat'], l['lng'])
-
-        map.panTo(center);
-        map.setZoom(17);
-      })
     }
 
     let imagePath = 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
@@ -267,13 +275,15 @@ export class CheckInComponent implements OnInit, OnDestroy {
   // zoom to particular location
 
   zoomTo(place) {
-    let center = new google.maps.LatLng(place['lat'], place['lng']);
+    if(place['lat'])  {
+      let center = new google.maps.LatLng(place['lat'], place['lng']);
 
-    this.openInfoWindow(place['lat'], place['lng'])
-    this.checkinMap.panTo(center);
-    this.checkinMap.setZoom(17);
+      this.openInfoWindow(place['lat'], place['lng'])
+      this.checkinMap.panTo(center);
+      this.checkinMap.setZoom(17);
 
-    this.showCheckIn = false;
+      this.showCheckIn = false;
+    }
   }
 
   openInfoWindow(lat, lng)  {
