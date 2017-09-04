@@ -158,8 +158,8 @@
     </div>
   </div>
 
-  <h4 class="form-section-header">Share Details</h4>
-  <div class="form-section-details">
+  <h4 class="form-section-header" *ngIf="itinerary?.corporate.status">Share Details</h4>
+  <div class="form-section-details" *ngIf="itinerary?.corporate.status">
     <div *ngIf="!shared">
       <h5>This itinerary has not been shared with anyone</h5>
     </div>
