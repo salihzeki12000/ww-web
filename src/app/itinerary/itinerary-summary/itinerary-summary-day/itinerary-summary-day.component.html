@@ -72,6 +72,8 @@
         </div>
       </div>
 
+      <h5 class="event-note" *ngIf="event?.note !== ''"><i class="fa fa-sticky-note-o" aria-hidden="true"></i> {{ event?.note }}</h5>
+
     </div>
 
     <div *ngIf="event?.type === 'activity'" class="summary-item" (click)="showDetails(event)">
@@ -90,6 +92,8 @@
           <h5>{{ event?.name }}</h5>
         </div>
       </div>
+
+      <h5 class="event-note" *ngIf="event?.note !== ''"><i class="fa fa-sticky-note-o" aria-hidden="true"></i> {{ event?.note }}</h5>
 
     </div>
 
@@ -119,6 +123,8 @@
           <h5 *ngSwitchCase="'others'"><i class="fa fa-rocket" aria-hidden="true"></i> Transport arrives {{ event?.arr_city}}</h5>
         </div>
       </div>
+
+      <h5 class="event-note" *ngIf="event?.note !== ''"><i class="fa fa-sticky-note-o" aria-hidden="true"></i> {{ event?.note }}</h5>
 
     </div>
 

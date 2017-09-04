@@ -187,7 +187,7 @@
   right: 0;
   height: 40px;
   width: 60px;
-  background-color: rgba(0,0,0,.2);
+  background-color: firebrick;
   z-index: 3;
 
   @media only screen and (max-width: 420px) {
@@ -195,6 +195,7 @@
     width: 100vw;
     height: 100vh;
     z-index: 1000;
+    background-color: rgba(0,0,0,.3);
   }
 }
 
@@ -220,7 +221,7 @@
     width: 100px;
     padding: 12px 0;
     text-align: center;
-    background-color: #E6E6E6;
+    background-color: firebrick;
     border-radius: 10px 0 0 10px;
     z-index: 1000;
     // opacity: .5;
@@ -231,7 +232,6 @@
   color: #F9FBFB;
 
   @media only screen and (max-width: 420px) {
-    color: #3A4A4D;
     font-size: 1.1em;
   }
 }
@@ -245,6 +245,7 @@
   top: 80px;
   right: 0;
   background-color: rgba(0,0,0,.3);
+  border: 5px solid firebrick;
 
   @media only screen and (max-width: 420px) {
     top: 0;
@@ -252,6 +253,7 @@
     width: 100vw;
     padding-left: calc((100vw - 330px)/2);
     overflow: auto;
+    border: none;
   }
 
   @media only screen and (max-width: 400px) {
