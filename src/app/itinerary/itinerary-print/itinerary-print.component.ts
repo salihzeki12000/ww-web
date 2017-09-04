@@ -121,25 +121,22 @@ export class ItineraryPrintComponent implements OnInit {
   }
 
   filterEvents(events)  {
-    console.log(events);
     this.events = [];
     for (let i = 0; i < events.length; i++) {
-      if(events[i]['note']) {
-        events[i]['formatted_note'] = events[i]['note'].replace(/\r?\n/g, '<br/> ')
-      };
+      if(events[i]['note'] !== '') {
+        events[i]['formatted_note'] = events[i]['note'].replace(/\r?\n/g, '<br/> ');
+      }
 
-      if(events[i]['location'] && events[i]['place']['opening_hours'] !== ''){
-        events[i]['formatted_hours'] = events[i]['place']['opening_hours'].replace(/\r?\n/g, '<br/> ');
-      } else if(events[i]['opening_hours']) {
+      if(events[i]['location']){
+        if(events[i]['place']['opening_hours'] !== '' && events[i]['place']['opening_hours'] !== undefined) {
+          events[i]['formatted_hours'] = events[i]['place']['opening_hours'].replace(/\r?\n/g, '<br/> ');
+        }
+      } else if(events[i]['opening_hours'] !== '' && events[i]['opening_hours'] !== undefined) {
         events[i]['formatted_hours'] = events[i]['opening_hours'].replace(/\r?\n/g, '<br/> ');
       }
     }
 
-    setTimeout(() =>  {
-      this.events = events;
-    }, 1000)
-
-    console.log(this.events)
+    this.events = events;
   }
 
   download()  {
