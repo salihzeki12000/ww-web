@@ -106,7 +106,6 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
         this.events.push(events[i])
       }
     }
-
     this.filteredEvents = this.events;
   }
 

@@ -354,19 +354,21 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   selectedDate(value) {
     let startDate = value.start._d;
     let startDay = startDate.getDate();
-    if(startDay < 10) startDay = "0" + startDay;
-
     let startMonth = startDate.getMonth() + 1;
-    if(startMonth < 10) startMonth = "0" + startMonth;
-
     let startYear = startDate.getFullYear();
+
+    if(startDay < 10) startDay = "0" + startDay;
+    if(startMonth < 10) startMonth = "0" + startMonth;
     this.dateFrom = startYear + "-" + startMonth + "-" + startDay + "T00:00:00.000Z";
 
     let endDate = value.end._d;
     let endDay = endDate.getDate();
     let endMonth = endDate.getMonth() + 1;
     let endYear = endDate.getFullYear();
-    this.dateTo = endMonth + "-" + endDay + "-" + endYear;
+
+    if(endDay < 10) endDay = "0" + endDay;
+    if(endMonth < 10) endMonth = "0" + endMonth;
+    this.dateTo = endYear + "-" + endMonth + "-" + endDay + "T00:00:00.000Z";
 
     this.editItineraryForm.patchValue({
       date_from: this.dateFrom,
@@ -504,8 +506,8 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
           this.events[i]['check_out_date'] = this.newDateRange[COIndex];
           this.updateEvent(this.events[i]);
         } else  {
-          this.events[i]['date'] = this.newDateRange[0];
-          this.events[i]['check_in_date'] = this.newDateRange[0];
+          this.events[i]['date'] = this.newDateRange[1];
+          this.events[i]['check_in_date'] = this.newDateRange[1];
           this.events[i]['check_out_date'] = this.newDateRange[this.newDateRange.length - 1];
           this.updateEvent(this.events[i]);
         }
@@ -529,17 +531,38 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     this.dateChanged = false;
 
     for (let i = 0; i < this.events.length; i++) {
-      let index = this.dateRange.indexOf(this.events[i]['date']);
 
-      if(index < this.newDateRange.length && index > -1) {
-        this.events[i]['date'] = this.newDateRange[index];
-        this.updateEvent(this.events[i]);
+      if(this.events[i]['type'] === 'activity') {
+        let index = this.dateRange.indexOf(this.events[i]['date']);
+
+        if(index < this.newDateRange.length && index > -1) {
+          this.events[i]['date'] = this.newDateRange[index];
+          this.updateEvent(this.events[i]);
+        }
+
+        if(index >= this.newDateRange.length) {
+          this.events[i]['date'] = "any day";
+          this.updateEvent(this.events[i]);
+        }
       }
 
-      if(index >= this.newDateRange.length) {
-        this.events[i]['date'] = "any day";
-        this.updateEvent(this.events[i]);
+      if(this.events[i]['type'] === 'accommodation')  {
+        let CIIndex = this.dateRange.indexOf(this.events[i]['check_in_date']);
+        let COIndex = this.dateRange.indexOf(this.events[i]['check_out_date']);
+
+        if(CIIndex < this.newDateRange.length && COIndex < this.newDateRange.length) {
+          this.events[i]['date'] = this.newDateRange[CIIndex];
+          this.events[i]['check_in_date'] = this.newDateRange[CIIndex];
+          this.events[i]['check_out_date'] = this.newDateRange[COIndex];
+          this.updateEvent(this.events[i]);
+        } else  {
+          this.events[i]['date'] = this.newDateRange[1];
+          this.events[i]['check_in_date'] = this.newDateRange[1];
+          this.events[i]['check_out_date'] = this.newDateRange[this.newDateRange.length - 1];
+          this.updateEvent(this.events[i]);
+        }
       }
+
     }
 
     let dateLength = Math.min(this.newDateRange.length, this.dateRange.length);

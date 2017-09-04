@@ -121,6 +121,8 @@ export class ItineraryPrintComponent implements OnInit {
   }
 
   filterEvents(events)  {
+    console.log(events);
+    this.events = [];
     for (let i = 0; i < events.length; i++) {
       if(events[i]['note']) {
         events[i]['formatted_note'] = events[i]['note'].replace(/\r?\n/g, '<br/> ')
@@ -133,7 +135,11 @@ export class ItineraryPrintComponent implements OnInit {
       }
     }
 
-    this.events = events
+    setTimeout(() =>  {
+      this.events = events;
+    }, 1000)
+
+    console.log(this.events)
   }
 
   download()  {

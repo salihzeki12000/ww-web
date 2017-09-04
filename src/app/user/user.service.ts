@@ -113,6 +113,10 @@ export class UserService  {
     let itineraries = this.currentUser['itineraries'];
     let index = -1;
 
+    if(method === 'add')  {
+      itineraries.push(itinerary);
+    }
+
     for (let i = 0; i < itineraries.length; i++) {
       if(itineraries[i]['_id'] === itinerary['_id'])  {
         index = i;
@@ -120,9 +124,7 @@ export class UserService  {
     }
 
     if(index > -1)  {
-      if(method === 'add')  {
-       itineraries.push(itinerary);
-      } else if (method === 'edit') {
+      if(method === 'edit') {
         itineraries[index] = itinerary;
       } else if (method === 'delete') {
         itineraries.splice(index, 1);

@@ -589,6 +589,7 @@ h5.action-response-primary  {
 
 .item-menu > ul > li > h5  {
   display: inline-block;
+  width: 75%;
   letter-spacing: .5px;
 }
 
@@ -1027,8 +1028,21 @@ textarea.ng-invalid.ng-touched {
 .fields-required  {
   margin-bottom: 10px;
   text-decoration: underline;
+  font-weight: 600;
 }
 
+.submit-error {
+  padding: 10px 20px;
+  background-color: rgba(255,0,0,.1);
+}
+
+.submit-error * {
+  color: red;
+}
+
+.submit-error h5  {
+  padding: 2px 5px;
+}
 
 /********************
 

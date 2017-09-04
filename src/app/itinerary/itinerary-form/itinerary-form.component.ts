@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter, Renderer2 } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter, Renderer2, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
+import { DaterangePickerComponent } from 'ng2-daterangepicker';
 
 import { User, UserService } from '../../user';
 import { ItineraryService }  from '../itinerary.service';
@@ -13,6 +14,9 @@ import { LoadingService }    from '../../loading';
   styleUrls: ['./itinerary-form.component.scss']
 })
 export class ItineraryFormComponent implements OnInit, OnDestroy {
+  @ViewChild(DaterangePickerComponent)
+  private picker: DaterangePickerComponent;
+
   @Output() hideItineraryForm = new EventEmitter();
   itineraryForm: FormGroup;
 
@@ -21,6 +25,7 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
 
   dateFrom;
   dateTo;
+  dateType = 'none';
   private = false;
   corporate = false;
 
@@ -28,6 +33,10 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
     locale: { format: 'DD-MMM-YYYY' },
     alwaysShowCalendars: false,
   };
+
+  nameError = false;
+  dateError = false;
+  numError = false;
 
   constructor(
     private router: Router,
@@ -58,6 +67,7 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
 
   checkStatus() {
     if(this.currentUser['corporate']) this.corporate = true;
+    console.log(this.corporate)
     this.private = this.currentUser['privacy']['itinerary'];
   }
 
@@ -76,8 +86,61 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
 
     this.itineraryForm.patchValue({
       date_from: this.dateFrom,
-      date_to: this.dateTo
+      date_to: this.dateTo,
+      num_days: undefined
     })
+
+    this.dateType = "Travel dates"
+  }
+
+  logDays(days) {
+    if(days > 0)  {
+      this.dateType = "Number of days";
+
+      this.dateFrom = undefined;
+      this.dateTo = undefined;
+
+      this.picker.datePicker.setStartDate(this.dateFrom);
+      this.picker.datePicker.setEndDate(this.dateTo);
+
+      this.itineraryForm.patchValue({
+        date_from: this.dateFrom,
+        date_to: this.dateTo,
+        num_days: days
+      })
+    }
+
+    if(days === '') {
+      this.itineraryForm.patchValue({
+        num_days: undefined
+      })
+    }
+
+  }
+
+  checkSave() {
+    let itinerary = this.itineraryForm.value;
+    this.nameError = false;
+    this.dateError = false;
+    this.numError = false;
+
+    if(itinerary['name'] === '') this.nameError = true;
+
+    if(!this.corporate) {
+      if(itinerary['date_from'] === '') this.dateError = true;
+
+      if(itinerary['name'] !== '' && itinerary['date_from'] !== '') this.saveNew();
+    }
+
+    if(this.corporate)  {
+      if((itinerary['date_from'] === '' || itinerary['date_from'] === undefined) &&
+         (itinerary['num_days'] === '' || itinerary['num_days'] === undefined)) this.numError = true;
+
+      if(itinerary['name'] !== '' &&
+         ((itinerary['date_from'] !== '' && itinerary['date_from'] !== undefined) || (itinerary['num_days'] !== '' && itinerary['num_days'] !== undefined))) {
+        this.saveNew();
+      }
+    }
   }
 
   saveNew()  {
@@ -87,8 +150,8 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
     let dateRange = [];
     dateRange.push('any day');
 
-    if(itinerary['date_from'] !== "") {
-      itinerary['num_day'] = undefined;
+    if(itinerary['date_from'] !== "" && itinerary['date_from'] !== undefined) {
+      itinerary['num_days'] = undefined;
 
       let startDate = new Date(itinerary['date_from']);
       let endDate = new Date(itinerary['date_to']);
@@ -105,6 +168,9 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
         let day = i + 1;
         dateRange.push("Day " + day);
       }
+
+      itinerary['date_from'] = '';
+      itinerary['date_to'] = '';
     }
 
     itinerary["daily_note"] = [];
@@ -115,14 +181,12 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
       })
     }
 
-    itinerary.corporate = {
-      status: this.currentUser['corporate'],
-    }
+    itinerary['corporate'] = { status: this.corporate, publish: false };
     itinerary.private = this.private;
     itinerary.members = [this.currentUser['_id']];
     itinerary.admin = [this.currentUser['_id']];
     itinerary.created_by = this.currentUser['_id'];
-    itinerary.description = { content: "" };
+    itinerary.description = { content: "", photos: [] };
 
     this.itineraryService.addItin(itinerary).subscribe(
       data => {
