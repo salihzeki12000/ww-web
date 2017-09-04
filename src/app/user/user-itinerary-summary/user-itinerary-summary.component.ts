@@ -2,8 +2,9 @@ import { Component, OnInit, OnDestroy, Renderer2, ElementRef, HostListener } fro
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
-import { ItineraryService, ItineraryEventService }  from '../../itinerary';
+import { ItineraryService, ItineraryEventService, ResourceService }  from '../../itinerary';
 import { LoadingService } from '../../loading';
+import { User, UserService }    from '../../user';
 
 @Component({
   selector: 'ww-user-itinerary-summary',
@@ -11,9 +12,13 @@ import { LoadingService } from '../../loading';
   styleUrls: ['./user-itinerary-summary.component.scss']
 })
 export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
+  userSubscription: Subscription;
+  user;
+
   eventSubscription: Subscription;
   events = [];
   totalEvents = 1;
+  resources = [];
 
   dateSubscription: Subscription;
   dateRange = [];
@@ -34,12 +39,25 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
   oldWidth;
   newWidth;
 
+
+  // for copy itinerary
+  dateFrom;
+  dateTo;
+  requestDate = false;
+  newDateRange = [];
+
+  currentUserSubscription: Subscription;
+  currentUser: User;
+
   constructor(
     private renderer: Renderer2,
     private element: ElementRef,
     private route: ActivatedRoute,
+    private router: Router,
+    private userService: UserService,
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
+    private resourceService: ResourceService,
     private loadingService: LoadingService) { }
 
   ngOnInit() {
@@ -51,6 +69,9 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
 
       this.itineraryEventService.getEvents(id).subscribe(
         eventResult => {})
+
+      this.resourceService.getResources(id).subscribe(
+        resourceResult => { this.resources = resourceResult })
     })
 
     this.events = [];
@@ -77,12 +98,20 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
         this.events = Object.keys(result).map(key => result[key]);
         this.loadingService.setLoader(false, "")
       })
+
+    this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
+      result => { this.currentUser = result; })
+
+    this.userSubscription = this.userService.updateDisplayUser.subscribe(
+      result => { this.user = result })
   }
 
   ngOnDestroy() {
     if(this.dateSubscription) this.dateSubscription.unsubscribe();
     if(this.eventSubscription) this.eventSubscription.unsubscribe();
     if(this.itinerarySubscription) this.itinerarySubscription.unsubscribe();
+    if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
+    if(this.userSubscription) this.userSubscription.unsubscribe();
   }
 
   sortDailyNotes()  {
@@ -97,6 +126,201 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
 
     this.dailyNotes = notes;
   }
+
+
+
+  // copy a preview itinerary
+  copy()  {
+    if(this.itinerary['date_from'] !== '' && this.itinerary['date_from'] !== undefined) {
+      this.dateFrom = this.itinerary['date_from'];
+      this.dateTo = this.itinerary['date_to']
+      this.duplicate();
+    } else  {
+      this.requestDate = true;
+    }
+  }
+
+  selectedDate(value) {
+    let startDate = value.start._d;
+    let startDay = startDate.getDate();
+    let startMonth = startDate.getMonth() + 1;
+    let startYear = startDate.getFullYear();
+
+    if(startDay < 10) startDay = "0" + startDay;
+    if(startMonth < 10) startMonth = "0" + startMonth;
+    this.dateFrom = startYear + "-" + startMonth + "-" + startDay + "T00:00:00.000Z";
+
+    let endDate = value.end._d;
+    let endDay = endDate.getDate();
+    let endMonth = endDate.getMonth() + 1;
+    let endYear = endDate.getFullYear();
+
+    if(endDay < 10) endDay = "0" + endDay;
+    if(endMonth < 10) endMonth = "0" + endMonth;
+    this.dateTo = endYear + "-" + endMonth + "-" + endDay + "T00:00:00.000Z";
+
+    this.setDailyNote();
+  }
+
+  setDailyNote()  {
+    let startDate = new Date(this.dateFrom);
+    let endDate = new Date(this.dateTo);
+
+    this.newDateRange = [];
+    this.newDateRange.push('any day');
+    this.newDateRange.push((new Date(this.dateFrom)).toISOString());
+
+    while(startDate < endDate){
+      let addDate = startDate.setDate(startDate.getDate() + 1);
+      let newDate = new Date(addDate);
+      this.newDateRange.push(newDate.toISOString());
+    }
+
+    this.dailyNotes = [];
+    for (let i = 0; i < this.newDateRange.length; i++) {
+      this.dailyNotes.push({
+        date: this.newDateRange[i],
+        note: "Note for the day (click to edit)\ne.g. Day trip to the outskirts"
+      })
+    }
+  }
+
+  dateSelected()  {
+    this.requestDate = false;
+    this.duplicate();
+  }
+
+  cancelDate()  {
+    this.requestDate = false;
+  }
+
+  duplicate() {
+    this.loadingService.setLoader(true, "Saving to your list of itineraries");
+
+    let currentNote = this.itinerary['daily_note'].length;
+    let newNote = this.newDateRange.length;
+
+    if(currentNote === newNote) {
+      this.dailyNotes = this.itinerary['daily_note'];
+    } else if(currentNote < newNote)  {
+      for (let i = 0; i < currentNote; i++) {
+        this.dailyNotes[i] = this.itinerary['daily_note'][i];
+      }
+    } else if(currentNote > newNote)  {
+      for (let i = 0; i < newNote; i++) {
+        this.dailyNotes[i] = this.itinerary['daily_note'][i];
+      }
+    }
+
+    let newItinerary = {
+      name: this.itinerary['name'] + " - copied from " + this.user['username'],
+      date_from: this.dateFrom,
+      date_to: this.dateTo,
+      daily_note: this.dailyNotes,
+      private: this.currentUser['settings']['itinerary_privacy'],
+      view_only: this.currentUser['settings']['itinerary_viewonly'],
+      members: [this.currentUser['_id']],
+      admin: [this.currentUser['_id']],
+      created_by: this.itinerary['created_by'],
+      taken_from: this.user['_id'],
+      corporate:  {
+        status: false,
+        publish: false
+      }
+    }
+
+    this.itineraryService.addItin(newItinerary).subscribe(
+      result => {
+        this.shareEvents(result.itinerary);
+      })
+
+    if(this.itinerary['taken_by'])  {
+      this.itinerary['taken_by'].push(this.currentUser['_id']);
+    } else  {
+      this.itinerary['taken_by'] = [this.currentUser['_id']];
+    }
+
+    this.itineraryService.editItin(this.itinerary, '').subscribe(
+      result =>{})
+  }
+
+  shareEvents(itinerary) {
+    for (let i = 0; i < this.events.length; i++) {
+      delete this.events[i]['_id'];
+      delete this.events[i]['created_at'];
+      delete this.events[i]['itinerary'];
+
+      if(this.events[i]['type'] !== 'transport')  {
+        this.events[i]['place_id'] = this.events[i]['place']['place_id'];
+        this.events[i]['lat'] = this.events[i]['place']['lat'];
+        this.events[i]['lng'] = this.events[i]['place']['lng'];
+      }
+
+      if(this.itinerary['date_from'] === '' || this.itinerary['date_from'] === undefined) {
+
+        if(this.events[i]['type'] === 'activity') {
+          let index = this.dateRange.indexOf(this.events[i]['date']);
+
+          if(index < this.newDateRange.length)  {
+            this.events[i]['date'] = this.newDateRange[index];
+          } else if(index >= this.newDateRange.length)  {
+            this.events[i]['date'] = 'any day';
+          }
+        }
+
+        if(this.events[i]['type'] === 'accommodation')  {
+          let CIIndex = this.dateRange.indexOf(this.events[i]['check_in_date']);
+          let COIndex = this.dateRange.indexOf(this.events[i]['check_out_date']);
+
+          if(CIIndex < this.newDateRange.length && COIndex < this.newDateRange.length) {
+            this.events[i]['date'] = this.newDateRange[CIIndex];
+            this.events[i]['check_in_date'] = this.newDateRange[CIIndex];
+            this.events[i]['check_out_date'] = this.newDateRange[COIndex];
+          } else  {
+            this.events[i]['date'] = this.newDateRange[0];
+            this.events[i]['check_in_date'] = this.newDateRange[0];
+            this.events[i]['check_out_date'] = this.newDateRange[this.newDateRange.length - 1];
+          }
+        }
+
+        if(this.events[i]['type'] === 'transport')  {
+          let depIndex = this.dateRange.indexOf(this.events[i]['dep_date']);
+          let arrIndex = this.dateRange.indexOf(this.events[i]['arr_date']);
+
+          if(depIndex < this.newDateRange.length && arrIndex < this.newDateRange.length) {
+            this.events[i]['date'] = this.newDateRange[depIndex];
+            this.events[i]['dep_date'] = this.newDateRange[depIndex];
+            this.events[i]['arr_date'] = this.newDateRange[arrIndex];
+          } else  {
+            this.events[i]['date'] = this.newDateRange[0];
+            this.events[i]['dep_date'] = this.newDateRange[0];
+            this.events[i]['arr_date'] = this.newDateRange[0];
+          }
+        }
+
+      }
+
+      this.itineraryEventService.copyEvent(this.events[i], itinerary).subscribe(
+        result => {})
+    }
+
+    for (let i = 0; i < this.resources.length; i++) {
+      delete this.resources[i]['_id'];
+      delete this.resources[i]['created_at'];
+      delete this.resources[i]['itinerary'];
+
+      this.resources[i]['itinerary'] = itinerary;
+
+      this.resourceService.copyResource(this.resources[i]).subscribe(
+        result => {})
+    }
+
+    this.router.navigateByUrl('/me/itinerary/' + itinerary['_id'])
+  }
+
+
+
+
 
   preventScroll(value)  {
     if(value) {

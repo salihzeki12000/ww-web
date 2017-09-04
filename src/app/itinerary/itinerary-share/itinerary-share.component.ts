@@ -417,9 +417,11 @@ export class ItineraryShareComponent implements OnInit, OnDestroy {
         delete this.events[i]['created_at'];
         delete this.events[i]['itinerary'];
 
-        this.events[i]['place_id'] = this.events[i]['place']['place_id'];
-        this.events[i]['lat'] = this.events[i]['place']['lat'];
-        this.events[i]['lng'] = this.events[i]['place']['lng'];
+        if(this.events[i]['type'] !== 'transport')  {
+          this.events[i]['place_id'] = this.events[i]['place']['place_id'];
+          this.events[i]['lat'] = this.events[i]['place']['lat'];
+          this.events[i]['lng'] = this.events[i]['place']['lng'];
+        }
         // this.events[i]['user']['_Id'] = this.events[i]['user']['_id']
 
         this.itineraryEventService.copyEvent(this.events[i], itinerary).subscribe(

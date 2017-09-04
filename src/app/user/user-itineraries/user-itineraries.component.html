@@ -8,6 +8,6 @@
   </div>
 
   <div class="itinerary-list" *ngFor="let itinerary of itineraries" (click)="routeToItin(itinerary)">
-    <ww-itinerary-list-item [itinerary]="itinerary" [currentUser]="currentUser"></ww-itinerary-list-item>
+    <ww-itinerary-list-item [itinerary]="itinerary" [currentUser]="user"></ww-itinerary-list-item>
   </div>
 </div>

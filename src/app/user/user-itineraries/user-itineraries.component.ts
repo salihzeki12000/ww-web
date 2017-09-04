@@ -14,7 +14,7 @@ import { ItineraryService, ItineraryEventService } from '../../itinerary';
 export class UserItinerariesComponent implements OnInit, OnDestroy {
   itineraries;
   userSubscription: Subscription;
-  currentUser;
+  user;
 
   constructor(
     private itineraryService: ItineraryService,
@@ -26,7 +26,7 @@ export class UserItinerariesComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.userSubscription = this.userService.updateDisplayUser.subscribe(
       result => {
-        this.currentUser = result;
+        this.user = result;
         this.itineraries = Object.keys(result['itineraries']).map(key => result['itineraries'][key]);
         this.sortItin();
       }
@@ -51,7 +51,7 @@ export class UserItinerariesComponent implements OnInit, OnDestroy {
   }
 
   routeToItin(itinerary)  {
-    this.router.navigateByUrl('/wondererwanderer/' + this.currentUser['_id'] + '/itinerary/' + itinerary['_id'])
+    this.router.navigateByUrl('/wondererwanderer/' + this.user['_id'] + '/itinerary/' + itinerary['_id'])
     this.loadingService.setLoader(true, "");
   }
 

@@ -560,9 +560,11 @@ export class ItineraryComponent implements OnInit, OnDestroy {
       delete this.events[i]['created_at'];
       delete this.events[i]['itinerary'];
 
-      this.events[i]['place_id'] = this.events[i]['place']['place_id'];
-      this.events[i]['lat'] = this.events[i]['place']['lat'];
-      this.events[i]['lng'] = this.events[i]['place']['lng'];
+      if(this.events[i]['type'] !== 'transport')  {
+        this.events[i]['place_id'] = this.events[i]['place']['place_id'];
+        this.events[i]['lat'] = this.events[i]['place']['lat'];
+        this.events[i]['lng'] = this.events[i]['place']['lng'];
+      }
 
       if(this.itinerary['date_from'] === '' || this.itinerary['date_from'] === undefined) {
 
