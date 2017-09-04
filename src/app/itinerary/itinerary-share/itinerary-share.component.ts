@@ -362,12 +362,17 @@ export class ItineraryShareComponent implements OnInit, OnDestroy {
         name: this.itinerary['name'] + " - shared by " + this.currentUser['username'],
         date_from: this.itinerary['date_from'],
         date_to: this.itinerary['date_to'],
+        num_days: this.itinerary['num_days'],
         daily_note: this.itinerary['daily_note'],
         private: this.selectedUsers[i]['privacy']['itinerary'],
         members: [this.selectedUsers[i]['_id']],
         admin: [this.selectedUsers[i]['_id']],
         created_by: this.itinerary['created_by'],
-        shared_by: this.currentUser['_id']
+        shared_by: this.currentUser['_id'],
+        corporate:  {
+          status: this.selectedUsers[i]['corporate'],
+          publish: false
+        }
       }
 
       let newShare = {
@@ -411,6 +416,9 @@ export class ItineraryShareComponent implements OnInit, OnDestroy {
         delete this.events[i]['created_at'];
         delete this.events[i]['itinerary'];
 
+        this.events[i]['place_id'] = this.events[i]['place']['place_id'];
+        this.events[i]['lat'] = this.events[i]['place']['lat'];
+        this.events[i]['lng'] = this.events[i]['place']['lng'];
         // this.events[i]['user']['_Id'] = this.events[i]['user']['_id']
 
         this.itineraryEventService.copyEvent(this.events[i], itinerary).subscribe(
