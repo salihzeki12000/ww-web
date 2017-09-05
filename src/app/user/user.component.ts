@@ -77,7 +77,7 @@ export class UserComponent implements OnInit, OnDestroy {
       this.postService.getPosts(id).subscribe(result => {})
 
       this.favouriteService.getFavs(id).subscribe(result =>{
-        this.favs = result['favs'];
+        this.favs = result['favourites'];
       })
 
       this.relationshipService.getUserRelationships(id).subscribe(

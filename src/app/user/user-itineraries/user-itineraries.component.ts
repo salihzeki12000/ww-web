@@ -16,6 +16,9 @@ export class UserItinerariesComponent implements OnInit, OnDestroy {
   userSubscription: Subscription;
   user;
 
+  currentUserSubscription: Subscription;
+  currentUser;
+
   constructor(
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
@@ -24,17 +27,20 @@ export class UserItinerariesComponent implements OnInit, OnDestroy {
     private router: Router) { }
 
   ngOnInit() {
+    this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
+      result => { this.currentUser = result })
+
     this.userSubscription = this.userService.updateDisplayUser.subscribe(
       result => {
         this.user = result;
         this.itineraries = Object.keys(result['itineraries']).map(key => result['itineraries'][key]);
         this.sortItin();
-      }
-    )
+      })
   }
 
   ngOnDestroy() {
     if(this.userSubscription) this.userSubscription.unsubscribe();
+    if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
   }
 
   sortItin()  {

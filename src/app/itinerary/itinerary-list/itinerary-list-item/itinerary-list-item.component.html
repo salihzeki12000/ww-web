@@ -12,6 +12,7 @@
     <i class="fa fa-lock" aria-hidden="true"></i>
   </div>
 
+  <h5 class="copied" *ngIf="copied"><i class="fa fa-clone" aria-hidden="true"></i> You have copied this itinerary</h5>
   <h3>{{ itinerary.name }}</h3>
 
   <h5 *ngIf="itinerary.num_days">{{ itinerary.num_days }} days</h5>

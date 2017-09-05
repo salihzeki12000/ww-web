@@ -1,5 +1,7 @@
 <h4 class="header">You are viewing the summary of the itinerary - {{ itinerary?.name }}</h4>
 
+<h5 class="copied" *ngIf="copied"><i class="fa fa-clone" aria-hidden="true"></i> You have copied this itinerary</h5>
+
 <div class="itinerary-action">
   <h4 class="preview-link" *ngIf="itinerary?.corporate.status" [routerLink]="['/preview/itinerary', itinerary?._id]">
     <i class="fa fa-external-link" aria-hidden="true"></i>

@@ -39,7 +39,7 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
   oldWidth;
   newWidth;
 
-
+  copied = false;
   // for copy itinerary
   dateFrom;
   dateTo;
@@ -100,7 +100,10 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
       })
 
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
-      result => { this.currentUser = result; })
+      result => {
+        this.currentUser = result;
+        this.checkCopy();
+      })
 
     this.userSubscription = this.userService.updateDisplayUser.subscribe(
       result => { this.user = result })
@@ -127,7 +130,13 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
     this.dailyNotes = notes;
   }
 
-
+  checkCopy() {
+    for (let i = 0; i < this.itinerary['copied_by'].length; i++) {
+      if(this.itinerary['copied_by'][i]['user']['_id'] === this.currentUser['_id'])  {
+        this.copied = true;
+      }
+    }
+  }
 
   // copy a preview itinerary
   copy()  {
