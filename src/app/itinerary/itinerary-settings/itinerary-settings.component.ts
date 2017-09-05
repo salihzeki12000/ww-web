@@ -83,6 +83,8 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     alwaysShowCalendars: false,
   }
 
+  copied = false;
+
   constructor(
     private titleService: Title,
     private renderer: Renderer2,
@@ -108,6 +110,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
       result => {
         this.itinerary = result;
+        console.log(this.itinerary)
         this.sortStatus();
         this.getUsers();
         this.sortAdmin();
@@ -225,9 +228,8 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
       this.masterAdmin = true;
     }
 
-    if(this.itinerary['shares'].length !== 0) {
-      this.shared = true;
-    }
+    if(this.itinerary['shares'].length !== 0) this.shared = true;
+    if(this.itinerary['copied_by'].length !== 0) this.copied = true;
 
     setTimeout(() =>  {
       this.loadingService.setLoader(false, "");

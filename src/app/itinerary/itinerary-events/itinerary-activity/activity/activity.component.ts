@@ -326,7 +326,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
   }
 
 
-  //check in section
+  //favourite section
   favourite() {
     this.loadingService.setLoader(true, "Saving as favourite...");
 

@@ -124,6 +124,13 @@
           </div>
         </div>
 
+        <div class="created-details" *ngIf="itinerary?.copied_from">
+          <div class="itinerary-edit-item">
+            <h5>Copied from</h5>
+            <h4 class="username" (click)="routeToUser(itinerary?.copied_from._id)">{{ itinerary?.copied_from.username }}</h4>
+          </div>
+        </div>
+
         <div class="created-details">
           <div class="itinerary-edit-item">
             <h5>Master admin</h5>
@@ -176,6 +183,7 @@
     <div *ngIf="!shared">
       <h5>This itinerary has not been shared with anyone</h5>
     </div>
+
     <div *ngFor="let share of itinerary?.shares">
       <h4 class="share-date">{{ share.shared_on | date: 'dd MMM yyyy'}}</h4>
       <h4 class="share-details"><span class="username-bold" (click)="routeToUser(share.shared_by._id)">{{ share.shared_by.username }}</span> shared with <span class="username-bold" (click)="routeToUser(share.shared_with._id)">{{ share.shared_with.username }}</span></h4>
@@ -205,6 +213,18 @@
       <div class="copy-share-info" *ngIf="shareInfo">
         <h5>Share with other users. A new itinerary is created for each selected user.</h5>
       </div>
+    </div>
+  </div>
+
+  <h4 class="form-section-header">Copy Details</h4>
+  <div class="form-section-details">
+    <div *ngIf="!copied">
+      <h5>This itinerary has not been copied by other user.</h5>
+    </div>
+
+    <div *ngFor="let copy of itinerary?.copied_by" class="copy-list">
+      <img src="{{ copy.user.display_picture }}" alt="" class="user-profile-thumbnail">
+      <h4 class="copy-details"><span class="username-bold" (click)="routeToUser(copy.user._id)">{{ copy.user.username }}</span> copied on {{ copy.copied_on | date: 'dd MMM yyyy'}}</h4>
     </div>
   </div>
 

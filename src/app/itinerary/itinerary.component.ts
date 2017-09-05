@@ -532,7 +532,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
       members: [this.currentUser['_id']],
       admin: [this.currentUser['_id']],
       created_by: this.itinerary['created_by'],
-      taken_from: this.itinerary['created_by'],
+      copied_from: this.itinerary['created_by'],
       corporate:  {
         status: false,
         publish: false
@@ -544,10 +544,15 @@ export class ItineraryComponent implements OnInit, OnDestroy {
         this.shareEvents(result.itinerary);
       })
 
-    if(this.itinerary['taken_by'])  {
-      this.itinerary['taken_by'].push(this.currentUser['_id']);
+    let newCopy = {
+      user: this.currentUser['_id'],
+      copied_on: new Date()
+    }
+
+    if(this.itinerary['copied_by'])  {
+      this.itinerary['copied_by'].push(newCopy);
     } else  {
-      this.itinerary['taken_by'] = [this.currentUser['_id']];
+      this.itinerary['copied_by'] = [newCopy];
     }
 
     this.itineraryService.editItin(this.itinerary, '').subscribe(
