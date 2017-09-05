@@ -6,7 +6,7 @@ import { Title }        from '@angular/platform-browser';
 import { UserService }         from './user.service';
 import { PostService }         from '../post';
 import { LoadingService }      from '../loading';
-import { CheckInService }      from '../check-in';
+import { FavouriteService }      from '../favourite';
 import { RelationshipService } from '../relationships/relationship.service';
 import { FlashMessageService } from '../flash-message';
 
@@ -30,14 +30,13 @@ export class UserComponent implements OnInit, OnDestroy {
   followStatus = '';// current user following display user?
   relationship;
 
-  checkins = [];
-  checkInSubscription: Subscription;
+  favs = [];
 
   constructor(
     private titleService: Title,
     private route: ActivatedRoute,
     private postService: PostService,
-    private checkinService: CheckInService,
+    private favouriteService: FavouriteService,
     private loadingService: LoadingService,
     private flashMessageService: FlashMessageService,
     private relationshipService: RelationshipService,
@@ -48,7 +47,7 @@ export class UserComponent implements OnInit, OnDestroy {
     this.relationships = [];
     this.followers = [];
     this.followings = [];
-    this.checkins = [];
+    this.favs = [];
 
     this.userService.getCurrentUser().subscribe( data => {} );
 
@@ -77,8 +76,8 @@ export class UserComponent implements OnInit, OnDestroy {
 
       this.postService.getPosts(id).subscribe(result => {})
 
-      this.checkinService.getCheckins(id).subscribe(result =>{
-        this.checkins = result['checkins'];
+      this.favouriteService.getFavs(id).subscribe(result =>{
+        this.favs = result['favs'];
       })
 
       this.relationshipService.getUserRelationships(id).subscribe(
@@ -99,7 +98,6 @@ export class UserComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if(this.relationshipsSubscription) this.relationshipsSubscription.unsubscribe();
     if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
-    if(this.checkInSubscription) this.checkInSubscription.unsubscribe();
   }
 
   checkFollowStatus() {

@@ -1,17 +1,17 @@
-<div class="check-in-header">
+<div class="favs-header">
 
-  <div class="check-in-stats">
-    <h2>{{ checkins?.length }}</h2>
-    <h5 class="select-checkins" (click)="showCheckIn = true">Check ins</h5>
+  <div class="favs-stats">
+    <h2>{{ favs?.length }}</h2>
+    <h5 class="select-favs" (click)="showFav = true">Favourites</h5>
     <i class="fa fa-caret-down" aria-hidden="true"></i>
   </div>
 
-  <div class="check-in-stats">
+  <div class="favs-stats">
     <h2>{{ locations?.length }}</h2>
     <h5>Locations</h5>
   </div>
 
-  <div class="check-in-stats">
+  <div class="favs-stats">
     <i class="fa fa-search-plus fa-lg" aria-hidden="true"></i>
     <h5 class="select-country" (click)="showCountry = true">zoom to</h5>
     <i class="fa fa-caret-down" aria-hidden="true"></i>
@@ -26,50 +26,50 @@
 
 <div class="country-dropdown-arrow" *ngIf="showCountry"></div>
 
-<div class="checkin-dropdown" *ngIf="showCheckIn">
+<div class="fav-dropdown" *ngIf="showFav">
 
-  <div class="checkin-filter">
+  <div class="favs-filter">
     <h4>Filter by country</h4>
-    <select name="country" [(ngModel)]="selectedCountry" (ngModelChange)="filterCheckins($event)" class="filter-check-in">
+    <select name="country" [(ngModel)]="selectedCountry" (ngModelChange)="filterFavs($event)" class="filter-fav">
       <option *ngFor="let country of countries" [value]="country.name">
         <h5>{{ country.name }}</h5>
       </option>
     </select>
   </div>
 
-  <div *ngFor="let checkin of displayCheckins" >
-    <h6 class="delete-checkin" (click)="delete(checkin)">X</h6>
-    <div class="checkin-details" (click)="zoomTo(checkin.place)">
-      <h6>{{ checkin.created_at | date: 'dd MMM yyyy, HH:mm' }}</h6>
-      <h6 *ngIf="checkin.private">PRIVATE</h6>
-      <h4>{{ checkin.place.name }}</h4>
-      <h5>{{ checkin.place.formatted_address }}</h5>
+  <div *ngFor="let fav of displayFavs" >
+    <h6 class="delete-fav" (click)="delete(fav)">X</h6>
+    <div class="fav-details" (click)="zoomTo(fav.place)">
+      <h6>{{ fav.created_at | date: 'dd MMM yyyy, HH:mm' }}</h6>
+      <h6 *ngIf="fav.private">PRIVATE</h6>
+      <h4>{{ fav.place.name }}</h4>
+      <h5>{{ fav.place.formatted_address }}</h5>
     </div>
-    <div class="check-in-itinerary" *ngIf="checkin.itinerary">
+    <div class="favs-itinerary" *ngIf="fav.itinerary">
       <i class="fa fa-sticky-note" aria-hidden="true"></i>
-      <h5 [routerLink]="['/me/itinerary/', checkin.itinerary._id]">{{ checkin.itinerary.name }}</h5>
+      <h5 [routerLink]="['/me/itinerary/', fav.itinerary._id]">{{ fav.itinerary.name }}</h5>
     </div>
   </div>
 </div>
 
-<div class="checkin-dropdown-arrow" *ngIf="showCheckIn"></div>
+<div class="fav-dropdown-arrow" *ngIf="showFav"></div>
 
 <div #map id="map"></div>
 
-<div class="custom-modal" *ngIf="deleteCheckIn !== undefined">
+<div class="custom-modal" *ngIf="deleteFav !== undefined">
   <div class="form-card">
     <div class="form-header">
-      <h3>Delete check in?</h3>
+      <h3>Delete favourite?</h3>
       <a (click)="cancelDelete()">X</a>
     </div>
 
     <div class="form-header-name-delete">
-      <h4>{{ deleteCheckIn?.place.name }}</h4>
+      <h4>{{ deleteFav?.place.name }}</h4>
     </div>
 
     <div class="content-with-header-name">
       <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
-      <h4>Deleting check in {{ deleteCheckIn?.place.name }} will permanently remove it from your list of check ins.</h4>
+      <h4>Deleting favourite {{ deleteFav?.place.name }} will permanently remove it from your list of favourites.</h4>
     </div>
 
     <div class="action-response">

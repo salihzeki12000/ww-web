@@ -1,7 +1,7 @@
 import { Routes } from "@angular/router";
 
 import { HomeComponent }    from '../home';
-import { CheckInComponent } from '../check-in'
+import { FavouriteComponent } from '../favourite'
 import { NotificationsComponent }   from '../notifications';
 import { PostDisplayComponent }     from '../post';
 import { ProfileComponent, ProfileEditComponent }      from '../user';
@@ -18,7 +18,7 @@ export const HOME_ROUTES: Routes = [
   { path: 'itinerary/:id', component: ItineraryComponent, children: ITINERARY_ROUTES },
   { path: 'notifications', component: NotificationsComponent },
   { path: 'post/:id', component: PostDisplayComponent},
-  { path: 'check-in', component: CheckInComponent},
+  { path: 'favourite', component: FavouriteComponent},
   { path: 'recommendations', component: RecommendationsComponent },
   { path: 'recommendation/:id', component: RecommendationDisplayComponent },
 ]

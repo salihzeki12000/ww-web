@@ -11,7 +11,7 @@ import { RelationshipService } from '../../../relationships/relationship.service
 import { FlashMessageService } from '../../../flash-message';
 import { Post, PostService }   from '../../../post';
 import { LoadingService }      from '../../../loading';
-import { CheckInService }      from '../../../check-in';
+import { FavouriteService }      from '../../../favourite';
 
 @Component({
   selector: 'ww-profile-details',
@@ -29,8 +29,8 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
   followings = [];
   followers = [];
 
-  checkins = [];
-  checkInSubscription: Subscription;
+  favs = [];
+  favSubscription: Subscription;
 
   showItineraryForm = false;
   fixed = false;
@@ -42,7 +42,7 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private userService: UserService,
     private postService: PostService,
-    private checkinService: CheckInService,
+    private favouriteService: FavouriteService,
     private relationshipService: RelationshipService,
     private flashMessageService: FlashMessageService,
     private loadingService: LoadingService,
@@ -55,7 +55,7 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
      result => {
        this.currentUser = result;
        this.getPosts(this.currentUser['_id']);
-       this.checkinService.getCheckins(this.currentUser['_id']).subscribe(result =>{})
+       this.favouriteService.getFavs(this.currentUser['_id']).subscribe(result =>{})
      })
 
     this.relationshipSubscription = this.relationshipService.updateRelationships.subscribe(
@@ -64,9 +64,9 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
        this.followings = Object.keys(result['followings']).map(key => result['followings'][key]);
      })
 
-    this.checkInSubscription = this.checkinService.updateCheckIns.subscribe(
+    this.favSubscription = this.favouriteService.updateFavs.subscribe(
       result => {
-        this.checkins = Object.keys(result).map(key => result[key]);
+        this.favs = Object.keys(result).map(key => result[key]);
         this.loadingService.setLoader(false, "");
       })
 
@@ -87,6 +87,7 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
     if(this.relationshipSubscription) this.relationshipSubscription.unsubscribe();
     if(this.postsSubscription) this.postsSubscription.unsubscribe();
     if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
+    if(this.favSubscription) this.favSubscription.unsubscribe();
 
     this.loadingService.setLoader(true, "");
   }

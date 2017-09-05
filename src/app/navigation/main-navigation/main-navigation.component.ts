@@ -33,7 +33,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   notifications = [];
 
   showItineraryForm = false;
-  checkin = false;
+  fav = false;
 
   // auth
   showSignin = false;
@@ -193,14 +193,14 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
 
 
 
-  // top navigation check in
-  checkIn() {
-    this.checkin = true;
+  // top navigation favourite
+  favourite() {
+    this.fav = true;
     this.preventScroll(true);
   }
 
-  cancelCheckin() {
-    this.checkin = false;
+  cancelFav() {
+    this.fav = false;
     this.preventScroll(false);
   }
 
@@ -209,9 +209,9 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/me/recommendations');
   }
 
-  viewCheckinMap()  {
+  viewFavMap()  {
     this.bookmarkOptions = false;
-    this.router.navigateByUrl('/me/check-in');
+    this.router.navigateByUrl('/me/favourite');
   }
 
 
@@ -381,9 +381,9 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/me/notifications');
   }
 
-  routeToCheckins()  {
+  routeToFavs()  {
     this.sideNav = false;
-    this.router.navigateByUrl('/me/check-in');
+    this.router.navigateByUrl('/me/favourite');
   }
 
 

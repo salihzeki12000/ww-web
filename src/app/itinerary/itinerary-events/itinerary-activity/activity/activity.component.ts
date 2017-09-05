@@ -9,7 +9,7 @@ import { ItineraryEventService } from '../../itinerary-event.service';
 import { FlashMessageService }   from '../../../../flash-message';
 import { UserService }           from '../../../../user';
 import { LoadingService }        from '../../../../loading';
-import { CheckInService }        from '../../../../check-in';
+import { FavouriteService }      from '../../../../favourite';
 import { RelationshipService }   from '../../../../relationships';
 import { RecommendationService } from '../../../../recommendations';
 
@@ -36,8 +36,8 @@ export class ActivityComponent implements OnInit, OnDestroy {
   itineraries = [];
 
   showMenu = false;
-  allowCheckin = false;
-  checkedInDate = undefined;
+  allowFav = false;
+  favDate = undefined;
   copying = false;
   editing = false;
   deleteActivity = false;
@@ -72,7 +72,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
     private renderer: Renderer2,
     private router: Router,
     private userService: UserService,
-    private checkinService: CheckInService,
+    private favouriteService: FavouriteService,
     private itineraryEventService: ItineraryEventService,
     private relationshipService: RelationshipService,
     private recommendationService: RecommendationService,
@@ -102,7 +102,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
         this.currentUser = result;
         this.checkSameUser();
         this.filterItineraries();
-        this.checkCheckIn();
+        this.checkFav();
       })
 
     this.activity['formatted_note'] = this.activity['note'].replace(/\r?\n/g, '<br/> ');
@@ -214,19 +214,19 @@ export class ActivityComponent implements OnInit, OnDestroy {
     }
   }
 
-  checkCheckIn()  {
+  checkFav()  {
     let today = new Date();
     let start = new Date(this.itinerary['date_from'])
 
-    for (let i = 0; i < this.activity['checked_in'].length; i++) {
-      if(this.currentUser['_id'] === this.activity['checked_in'][i]['user'])  {
-        this.checkedInDate = this.activity['checked_in'][i]['date'];
+    for (let i = 0; i < this.activity['favourite'].length; i++) {
+      if(this.currentUser['_id'] === this.activity['favourite'][i]['user'])  {
+        this.favDate = this.activity['favourite'][i]['date'];
       }
     }
 
     if(today.getTime() >= start.getTime())  {
-      if(!this.checkedInDate) {
-        this.allowCheckin = true;
+      if(!this.favDate) {
+        this.allowFav = true;
       }
     }
   }
@@ -327,10 +327,10 @@ export class ActivityComponent implements OnInit, OnDestroy {
 
 
   //check in section
-  checkin() {
-    this.loadingService.setLoader(true, "Checking you in...");
+  favourite() {
+    this.loadingService.setLoader(true, "Saving as favourite...");
 
-    let checkin = {
+    let favourite = {
       lat: this.activity['place']['lat'],
       lng: this.activity['place']['lng'],
       name: this.activity['place']['name'],
@@ -341,19 +341,19 @@ export class ActivityComponent implements OnInit, OnDestroy {
       user: this.currentUser['_id']
     }
 
-    this.checkinService.addCheckin(checkin).subscribe(
+    this.favouriteService.addFav(favourite).subscribe(
       result  =>  {
         this.loadingService.setLoader(false, "");
         this.flashMessageService.handleFlashMessage(result.message);
       })
 
-    this.activity['checked_in'].push({
+    this.activity['favourite'].push({
       date: new Date(),
       user: this.currentUser['_id']
     });
 
-    this.allowCheckin = false;
-    this.checkedInDate = new Date();
+    this.allowFav = false;
+    this.favDate = new Date();
 
     this.itineraryEventService.editEvent(this.activity).subscribe(
       result => {})

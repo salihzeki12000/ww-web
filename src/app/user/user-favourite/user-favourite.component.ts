@@ -5,17 +5,17 @@ import { Subscription }   from 'rxjs/Rx';
 declare var google:any;
 declare var MarkerClusterer:any;
 
-import { CheckInService } from '../../check-in';
+import { FavouriteService } from '../../favourite';
 
 @Component({
-  selector: 'ww-user-check-in',
-  templateUrl: './user-check-in.component.html',
-  styleUrls: ['./user-check-in.component.scss']
+  selector: 'ww-user-favourite',
+  templateUrl: './user-favourite.component.html',
+  styleUrls: ['./user-favourite.component.scss']
 })
-export class UserCheckInComponent implements OnInit, OnDestroy {
+export class UserFavouriteComponent implements OnInit, OnDestroy {
   @ViewChild('map') map: ElementRef;
-  checkinMap;
-  checkins;
+  favMap;
+  favs;
   locations = [];
   locationIds = [];
 
@@ -23,26 +23,26 @@ export class UserCheckInComponent implements OnInit, OnDestroy {
   markers = [];
   infoWindows = [];
 
-  checkInSubscription: Subscription;
+  favSubscription: Subscription;
 
-  showCheckIn = false;
+  showFav = false;
   showCountry = false;
 
   constructor(
     private renderer: Renderer2,
-    private checkinService: CheckInService) { }
+    private favouriteService: FavouriteService) { }
 
   ngOnInit() {
     setTimeout(() =>  {
       this.initMap();
     }, 100)
 
-    this.checkInSubscription = this.checkinService.updateCheckIns.subscribe(
-      result => { this.filterCheckIn(result); })
+    this.favSubscription = this.favouriteService.updateFavs.subscribe(
+      result => { this.filterFav(result); })
   }
 
   ngOnDestroy() {
-    if(this.checkInSubscription) this.checkInSubscription.unsubscribe();
+    if(this.favSubscription) this.favSubscription.unsubscribe();
   }
 
   @HostListener('document:click', ['$event'])
@@ -53,8 +53,8 @@ export class UserCheckInComponent implements OnInit, OnDestroy {
     }
 
     if(!event.target.classList.contains("country-dropdown") &&
-      !event.target.classList.contains("select-checkins")) {
-      this.showCheckIn = false;
+      !event.target.classList.contains("select-favs")) {
+      this.showFav = false;
     }
   }
 
@@ -63,22 +63,22 @@ export class UserCheckInComponent implements OnInit, OnDestroy {
     let center = {lat: 25, lng: 0};
     let zoom = 3;
 
-    this.checkinMap = new google.maps.Map(mapDiv, {
+    this.favMap = new google.maps.Map(mapDiv, {
       center: center,
       zoom: zoom,
       styles: [{"stylers": [{ "saturation": -20 }]}]
     });
   }
 
-  filterCheckIn(checkins) {
-    for (let i = 0; i < checkins.length; i++) {
-      if(checkins[i]['private'])  {
-        checkins.splice(i,1);
+  filterFav(favs) {
+    for (let i = 0; i < favs.length; i++) {
+      if(favs[i]['private'])  {
+        favs.splice(i,1);
         i--
       };
     }
 
-    this.checkins = checkins;
+    this.favs = favs;
     this.setLocations();
     this.setCountries();
   }
@@ -87,16 +87,16 @@ export class UserCheckInComponent implements OnInit, OnDestroy {
     this.locations = [];
     this.locationIds = [];
 
-    for (let i = 0; i < this.checkins.length; i++) {
-      let index = this.locationIds.indexOf(this.checkins[i]['place']['_id']);
+    for (let i = 0; i < this.favs.length; i++) {
+      let index = this.locationIds.indexOf(this.favs[i]['place']['_id']);
 
-      this.checkins[i]['place']['created_at'] = [this.checkins[i]['created_at']];
+      this.favs[i]['place']['created_at'] = [this.favs[i]['created_at']];
 
       if(index < 0) {
-        this.locations.push(this.checkins[i]['place']);
-        this.locationIds.push(this.checkins[i]['place']['_id'])
+        this.locations.push(this.favs[i]['place']);
+        this.locationIds.push(this.favs[i]['place']['_id'])
       } else if (index >= 0)  {
-        this.locations[index]['created_at'].push(this.checkins[i]['created_at'])
+        this.locations[index]['created_at'].push(this.favs[i]['created_at'])
       }
     }
     setTimeout(() =>  {
@@ -108,13 +108,13 @@ export class UserCheckInComponent implements OnInit, OnDestroy {
     this.countries = [];
     let countryName = [];
 
-    for (let i = 0; i < this.checkins.length; i++) {
-      let index = countryName.indexOf(this.checkins[i]['place']['country']['name']);
+    for (let i = 0; i < this.favs.length; i++) {
+      let index = countryName.indexOf(this.favs[i]['place']['country']['name']);
 
       if(index < 0) {
-        this.checkins[i]['place']['country']['zoom'] = 6;
-        this.countries.push(this.checkins[i]['place']['country']);
-        countryName.push(this.checkins[i]['place']['country']['name']);
+        this.favs[i]['place']['country']['zoom'] = 6;
+        this.countries.push(this.favs[i]['place']['country']);
+        countryName.push(this.favs[i]['place']['country']['name']);
       }
     }
 
@@ -149,7 +149,7 @@ export class UserCheckInComponent implements OnInit, OnDestroy {
 
       let marker = new google.maps.Marker({
         position: { lat: l['lat'], lng: l['lng']},
-        map: this.checkinMap,
+        map: this.favMap,
         title: title,
         zIndex: i
       })
@@ -159,8 +159,8 @@ export class UserCheckInComponent implements OnInit, OnDestroy {
       let created_at_string = '';
 
       for (let j = 0; j < this.locations[i]['created_at'].length; j++) {
-        let checkIn = this.locations[i]['created_at'][j];
-        let date = new Date(checkIn);
+        let fav = this.locations[i]['created_at'][j];
+        let date = new Date(fav);
         let options = { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute:'numeric' };
         let created_at = date.toLocaleString('en-GB', options) + '<br>';
 
@@ -180,17 +180,17 @@ export class UserCheckInComponent implements OnInit, OnDestroy {
       this.infoWindows.push(infoWindow);
 
       marker.addListener('click', () => {
-        infoWindow.open(this.checkinMap, marker)
+        infoWindow.open(this.favMap, marker)
         let center = new google.maps.LatLng(l['lat'], l['lng'])
 
-        this.checkinMap.panTo(center);
-        this.checkinMap.setZoom(17);
+        this.favMap.panTo(center);
+        this.favMap.setZoom(17);
       })
     }
 
     let imagePath = 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
 
-    let markerCluster = new MarkerClusterer(this.checkinMap, this.markers, {
+    let markerCluster = new MarkerClusterer(this.favMap, this.markers, {
             maxZoom: 15,
             imagePath: imagePath
           });
@@ -205,23 +205,23 @@ export class UserCheckInComponent implements OnInit, OnDestroy {
   changeCenter(country) {
     let center = new google.maps.LatLng(country['lat'], country['lng']);
 
-    this.checkinMap.panTo(center);
-    this.checkinMap.setZoom(country['zoom']);
+    this.favMap.panTo(center);
+    this.favMap.setZoom(country['zoom']);
 
     this.showCountry = false;
   }
 
 
-  // zoom to check in location
+  // zoom to favourite location
 
   zoomTo(place) {
     let center = new google.maps.LatLng(place['lat'], place['lng']);
 
     this.openInfoWindow(place['lat'], place['lng'])
-    this.checkinMap.panTo(center);
-    this.checkinMap.setZoom(17);
+    this.favMap.panTo(center);
+    this.favMap.setZoom(17);
 
-    this.showCheckIn = false;
+    this.showFav = false;
   }
 
   openInfoWindow(lat, lng)  {

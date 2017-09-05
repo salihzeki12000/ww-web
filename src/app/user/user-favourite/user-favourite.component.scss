@@ -1,4 +1,4 @@
-.check-in-header  {
+.fav-header  {
   position: absolute;
   margin-left: calc((-100vw + 600px)/2);
   height: 40px;
@@ -12,17 +12,17 @@
   }
 }
 
-.check-in-header *  {
+.fav-header *  {
   display: inline-block;
   color: #F9FBFB;
 }
 
-.check-in-stats {
+.fav-stats {
   margin: 0 10px;
   padding: 10px 0;
 }
 
-.check-in-stats h5  {
+.fav-stats h5  {
   vertical-align: text-top;
 }
 
@@ -30,7 +30,7 @@
   vertical-align: 0;
 }
 
-.select-checkins,
+.select-favs,
 .select-country {
   &:hover {
     text-decoration: underline;
@@ -44,7 +44,7 @@
 /* drop downs */
 
 .country-dropdown,
-.checkin-dropdown {
+.fav-dropdown {
   position: absolute;
   margin-top: 40px;
   margin-left: calc(((-100vw + 600px)/2) + ((100vw - 280px) / 2));
@@ -61,19 +61,19 @@
   }
 }
 
-.checkin-dropdown::-webkit-scrollbar,
+.fav-dropdown::-webkit-scrollbar,
 .country-dropdown::-webkit-scrollbar {
   background-color: rgba(100, 148, 237, 0.3);
   width: 8px;
 }
 
-.checkin-dropdown::-webkit-scrollbar-thumb,
+.fav-dropdown::-webkit-scrollbar-thumb,
 .country-dropdown::-webkit-scrollbar-thumb {
   background-color: rgba(100, 148, 237, 0.9);
 }
 
 .country-dropdown-arrow,
-.checkin-dropdown-arrow  {
+.fav-dropdown-arrow  {
   position: relative;
   top: -8px;
   margin-top: 40px;
@@ -89,7 +89,7 @@
   }
 }
 
-.checkin-dropdown-arrow {
+.fav-dropdown-arrow {
   margin-left: calc((((-100vw + 600px)/2) + ((100vw - 280px) / 2)) + 40px);
 }
 
@@ -101,11 +101,11 @@
   }
 }
 
-.checkin-dropdown {
+.fav-dropdown {
   text-align: left;
 }
 
-.checkin-dropdown > div {
+.fav-dropdown > div {
   padding: 10px;
   border-bottom: 1px solid lightgray;
   &:hover {
@@ -119,15 +119,15 @@
 
 /* details display */
 
-.checkin-dropdown h4  {
+.fav-dropdown h4  {
   padding: 5px 0;
 }
 
-.check-in-itinerary {
+.fav-itinerary {
   padding-top: 10px;
 }
 
-.check-in-itinerary * {
+.fav-itinerary * {
   display: inline-block;
   color: #6494ED;
   &:hover {

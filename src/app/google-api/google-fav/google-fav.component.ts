@@ -4,14 +4,14 @@ declare var google:any;
 
 import { User, UserService }  from '../../user';
 import { LoadingService }     from '../../loading';
-import { CheckInService }     from '../../check-in';
+import { FavouriteService }     from '../../favourite';
 
 @Component({
-  selector: 'ww-google-checkin',
-  templateUrl: './google-checkin.component.html',
-  styleUrls: ['./google-checkin.component.scss']
+  selector: 'ww-google-fav',
+  templateUrl: './google-fav.component.html',
+  styleUrls: ['./google-fav.component.scss']
 })
-export class GoogleCheckinComponent implements OnInit, OnDestroy {
+export class GoogleFavComponent implements OnInit, OnDestroy {
   @ViewChild('map') map: ElementRef;
   locationMap;
   marker;
@@ -38,12 +38,12 @@ export class GoogleCheckinComponent implements OnInit, OnDestroy {
   currentUserSubscription: Subscription;
   currentUser: User;
 
-  @Output() cancelCheckIn = new EventEmitter<boolean>();
+  @Output() cancelFav = new EventEmitter<boolean>();
 
   constructor(
     private renderer: Renderer,
     private userService: UserService,
-    private checkinService: CheckInService,
+    private favouriteService: FavouriteService,
     private loadingService: LoadingService) { }
 
   ngOnInit() {
@@ -305,11 +305,11 @@ export class GoogleCheckinComponent implements OnInit, OnDestroy {
     this.opening_hours = '';
   }
 
-  checkin() {
-    this.loadingService.setLoader(true, "Saving your check in...");
-    this.cancelCheckIn.emit();
+  favourite() {
+    this.loadingService.setLoader(true, "Saving as favourite...");
+    this.cancelFav.emit();
 
-    let checkin = {
+    let favourite = {
       lat: this.lat,
       lng: this.lng,
       name: this.name,
@@ -325,7 +325,7 @@ export class GoogleCheckinComponent implements OnInit, OnDestroy {
       user: this.currentUser['_id']
     }
 
-    this.checkinService.addCheckin(checkin).subscribe(
+    this.favouriteService.addFav(favourite).subscribe(
       result  =>  {
         this.loadingService.setLoader(false, "");
       }

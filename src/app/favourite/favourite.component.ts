@@ -6,21 +6,21 @@ import { Subscription }   from 'rxjs/Rx';
 declare var google:any;
 declare var MarkerClusterer:any;
 
-import { CheckInService }       from './check-in.service';
+import { FavouriteService }     from './favourite.service';
 import { User, UserService }    from '../user';
 import { LoadingService }       from '../loading';
 import { FlashMessageService }  from '../flash-message';
 
 @Component({
-  selector: 'ww-check-in',
-  templateUrl: './check-in.component.html',
-  styleUrls: ['./check-in.component.scss']
+  selector: 'ww-favourite',
+  templateUrl: './favourite.component.html',
+  styleUrls: ['./favourite.component.scss']
 })
-export class CheckInComponent implements OnInit, OnDestroy {
+export class FavouriteComponent implements OnInit, OnDestroy {
   @ViewChild('map') map: ElementRef;
-  checkinMap;
-  checkins;
-  displayCheckins;
+  favMap;
+  favs;
+  displayFavs;
   locations = [];
   locationIds = [];
 
@@ -28,37 +28,37 @@ export class CheckInComponent implements OnInit, OnDestroy {
   markers = [];
   infoWindows = [];
 
-  checkInSubscription: Subscription;
+  favSubscription: Subscription;
   currentUserSubscription: Subscription;
   currentUser: User;
 
-  showCheckIn = false;
-  selectedCountry; // for check in filter
+  showFav = false;
+  selectedCountry; // for favourite filter
 
   showCountry = false;
-  deleteCheckIn = undefined;
+  deleteFav = undefined;
 
   constructor(
     private titleService: Title,
     private renderer: Renderer2,
     private userService: UserService,
-    private checkinService: CheckInService,
+    private favouriteService: FavouriteService,
     private flashMessageService: FlashMessageService,
     private loadingService: LoadingService) { }
 
   ngOnInit() {
-    this.titleService.setTitle("Check in");
+    this.titleService.setTitle("Favourite");
 
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
       result => {
         this.currentUser = result;
-        this.checkinService.getCheckins(this.currentUser['_id']).subscribe(result =>{})
+        this.favouriteService.getFavs(this.currentUser['_id']).subscribe(result =>{})
       })
 
-    this.checkInSubscription = this.checkinService.updateCheckIns.subscribe(
+    this.favSubscription = this.favouriteService.updateFavs.subscribe(
       result => {
-        this.checkins = result;
-        this.displayCheckins = Object.assign([], this.checkins);
+        this.favs = result;
+        this.displayFavs = Object.assign([], this.favs);
         this.initMap();
         this.setInitPan();
         this.setLocations();
@@ -70,7 +70,7 @@ export class CheckInComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
-    if(this.checkInSubscription) this.checkInSubscription.unsubscribe();
+    if(this.favSubscription) this.favSubscription.unsubscribe();
 
     this.loadingService.setLoader(true, "");
   }
@@ -83,9 +83,9 @@ export class CheckInComponent implements OnInit, OnDestroy {
     }
 
     if(!event.target.classList.contains("country-dropdown") &&
-      !event.target.classList.contains("filter-check-in") &&
-      !event.target.classList.contains("select-checkins")) {
-      this.showCheckIn = false;
+      !event.target.classList.contains("filter-fav") &&
+      !event.target.classList.contains("select-favs")) {
+      this.showFav = false;
     }
   }
 
@@ -94,7 +94,7 @@ export class CheckInComponent implements OnInit, OnDestroy {
     let center = {lat: 25, lng: 0};
     let zoom = 3;
 
-    this.checkinMap = new google.maps.Map(mapDiv, {
+    this.favMap = new google.maps.Map(mapDiv, {
       center: center,
       zoom: zoom,
       styles: [{"stylers": [{ "saturation": -20 }]}]
@@ -102,11 +102,11 @@ export class CheckInComponent implements OnInit, OnDestroy {
   }
 
   setInitPan()  {
-    for (let i = 0; i < this.checkins.length; i++) {
-      if(this.checkins[i]['place']['lat'])  {
+    for (let i = 0; i < this.favs.length; i++) {
+      if(this.favs[i]['place']['lat'])  {
         let panTo = {
           lat: 0,
-          lng: this.checkins[i]['place']['lng'],
+          lng: this.favs[i]['place']['lng'],
           zoom: 2
         }
 
@@ -120,40 +120,40 @@ export class CheckInComponent implements OnInit, OnDestroy {
     this.locations = [];
     this.locationIds = [];
 
-    for (let i = 0; i < this.checkins.length; i++) {
-      let index = this.locationIds.indexOf(this.checkins[i]['place']['_id']);
+    for (let i = 0; i < this.favs.length; i++) {
+      let index = this.locationIds.indexOf(this.favs[i]['place']['_id']);
 
-      this.checkins[i]['place']['created_at'] = [this.checkins[i]['created_at']];
+      this.favs[i]['place']['created_at'] = [this.favs[i]['created_at']];
 
       if(index < 0) {
-        this.locations.push(this.checkins[i]['place']);
-        this.locationIds.push(this.checkins[i]['place']['_id'])
+        this.locations.push(this.favs[i]['place']);
+        this.locationIds.push(this.favs[i]['place']['_id'])
       } else if (index >= 0)  {
-        this.locations[index]['created_at'].push(this.checkins[i]['created_at'])
+        this.locations[index]['created_at'].push(this.favs[i]['created_at'])
       }
     }
 
-    this.setMarkers(this.checkinMap);
+    this.setMarkers(this.favMap);
   }
 
   setCountries()  {
     this.countries = [];
     let countryName = [];
 
-    for (let i = 0; i < this.checkins.length; i++) {
-      let index = countryName.indexOf(this.checkins[i]['place']['country']['name']);
+    for (let i = 0; i < this.favs.length; i++) {
+      let index = countryName.indexOf(this.favs[i]['place']['country']['name']);
 
       if(index < 0) {
-        this.checkins[i]['place']['country']['zoom'] = 6;
-        this.countries.push(this.checkins[i]['place']['country']);
-        countryName.push(this.checkins[i]['place']['country']['name']);
+        this.favs[i]['place']['country']['zoom'] = 6;
+        this.countries.push(this.favs[i]['place']['country']);
+        countryName.push(this.favs[i]['place']['country']['name']);
       }
     }
 
     this.countries = this.sortCountries();
 
-    if(this.checkins.length > 0)  {
-      this.countries.unshift({name: 'Show all', lat: 0, lng: this.checkins[0]['place']['lng'], zoom: 2})
+    if(this.favs.length > 0)  {
+      this.countries.unshift({name: 'Show all', lat: 0, lng: this.favs[0]['place']['lng'], zoom: 2})
     }
 
     if(this.countries.length > 0) {
@@ -199,8 +199,8 @@ export class CheckInComponent implements OnInit, OnDestroy {
         let created_at_string = '';
 
         for (let j = 0; j < this.locations[i]['created_at'].length; j++) {
-          let checkIn = this.locations[i]['created_at'][j];
-          let date = new Date(checkIn);
+          let favourite = this.locations[i]['created_at'][j];
+          let date = new Date(favourite);
           let options = { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute:'numeric' };
           let created_at = date.toLocaleString('en-GB', options) + '<br>';
 
@@ -243,14 +243,14 @@ export class CheckInComponent implements OnInit, OnDestroy {
 
 
 
-  // filter check in by country
+  // filter favourite by country
 
-  filterCheckins(country) {
+  filterFavs(country) {
     if(country === 'Show all')  {
-      this.displayCheckins = this.checkins;
+      this.displayFavs = this.favs;
     } else  {
-      this.displayCheckins = Object.assign([], this.checkins).filter(
-        checkin => checkin['place']['country']['name'] === country
+      this.displayFavs = Object.assign([], this.favs).filter(
+        favourite => favourite['place']['country']['name'] === country
       )
     }
   }
@@ -263,8 +263,8 @@ export class CheckInComponent implements OnInit, OnDestroy {
   changeCenter(country) {
     let center = new google.maps.LatLng(country['lat'], country['lng']);
 
-    this.checkinMap.panTo(center);
-    this.checkinMap.setZoom(country['zoom']);
+    this.favMap.panTo(center);
+    this.favMap.setZoom(country['zoom']);
 
     this.showCountry = false;
   }
@@ -279,10 +279,10 @@ export class CheckInComponent implements OnInit, OnDestroy {
       let center = new google.maps.LatLng(place['lat'], place['lng']);
 
       this.openInfoWindow(place['lat'], place['lng'])
-      this.checkinMap.panTo(center);
-      this.checkinMap.setZoom(17);
+      this.favMap.panTo(center);
+      this.favMap.setZoom(17);
 
-      this.showCheckIn = false;
+      this.showFav = false;
     }
   }
 
@@ -306,25 +306,25 @@ export class CheckInComponent implements OnInit, OnDestroy {
 
 
 
-  // delete check in
+  // delete favourite
 
-  delete(checkin)  {
-    this.deleteCheckIn = checkin;
+  delete(fav)  {
+    this.deleteFav = fav;
     this.preventScroll(true);
   }
 
   cancelDelete()  {
-    this.deleteCheckIn = undefined;
+    this.deleteFav = undefined;
     this.preventScroll(false);
   }
 
   confirmDelete() {
-    this.loadingService.setLoader(true, "Deleting your check in...");
+    this.loadingService.setLoader(true, "Deleting your favourite...");
 
-    this.checkinService.deleteCheckin(this.deleteCheckIn).subscribe(
+    this.favouriteService.deleteFav(this.deleteFav).subscribe(
       result =>{
-        this.deleteCheckIn = undefined;
-        this.flashMessageService.handleFlashMessage("Check in deleted");
+        this.deleteFav = undefined;
+        this.flashMessageService.handleFlashMessage("Favourite deleted");
       })
 
     this.loadingService.setLoader(false, "");

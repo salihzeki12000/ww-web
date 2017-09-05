@@ -51,19 +51,19 @@
         </div>
 
         <div class="dropdown-item" (click)="viewRecommendations()">
-          <h5><i class="fa fa-thumbs-up fa-fw fa-lg" aria-hidden="true"></i> Recommendations</h5>
+          <h5><i class="fa fa-share fa-fw fa-lg" aria-hidden="true"></i> Recommendations</h5>
         </div>
 
         <div class="nav-sub-header">
-          <h5>CHECK IN OPTIONS</h5>
+          <h5>FAVOURITES</h5>
         </div>
 
-        <div class="dropdown-item" (click)="checkIn()">
-          <h5><i class="fa fa-map-marker fa-fw fa-lg" aria-hidden="true"></i> Check in now</h5>
+        <div class="dropdown-item" (click)="favourite()">
+          <h5><i class="fa fa-star-o fa-fw fa-lg" aria-hidden="true"></i> Save a favourite</h5>
         </div>
 
-        <div class="dropdown-item" (click)="viewCheckinMap()">
-          <h5><i class="fa fa-globe fa-fw fa-lg" aria-hidden="true"></i> Check in map</h5>
+        <div class="dropdown-item" (click)="viewFavMap()">
+          <h5><i class="fa fa-globe fa-fw fa-lg" aria-hidden="true"></i> Favourite map</h5>
         </div>
       </div>
     </div>
@@ -237,7 +237,7 @@
             </div>
 
             <div class="category-item">
-              <h5 (click)="routeToCheckins()">View all check ins</h5>
+              <h5 (click)="routeToFavs()">View all favourites</h5>
             </div>
           </div>
         </div>
@@ -301,16 +301,16 @@
   <ww-itinerary-form (hideItineraryForm)="hideItineraryForm($event)"></ww-itinerary-form>
 </div>
 
-<!-- check in -->
-<div class="custom-modal" *ngIf="checkin">
+<!-- favourite -->
+<div class="custom-modal" *ngIf="fav">
   <div class="form-card">
     <div class="form-header">
-      <h3>Check in</h3>
-      <a (click)="cancelCheckin()">X</a>
+      <h3>Add a favourite place</h3>
+      <a (click)="cancelFav()">X</a>
     </div>
 
     <div class="form-housing">
-      <ww-google-checkin (cancelCheckIn)="cancelCheckin()"></ww-google-checkin>
+      <ww-google-fav (cancelFav)="cancelFav()"></ww-google-fav>
     </div>
   </div>
 </div>

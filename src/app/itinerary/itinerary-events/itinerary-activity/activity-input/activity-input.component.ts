@@ -104,7 +104,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
       result => { this.itinerary = result; })
 
     this.dateSubscription = this.itineraryService.updateDate.subscribe(
-      result => { this.dateRange  = Object.keys(result).map(key => result[key]); console.log(this.dateRange)})
+      result => { this.dateRange  = Object.keys(result).map(key => result[key]); })
   }
 
   @HostListener('document:click', ['$event'])

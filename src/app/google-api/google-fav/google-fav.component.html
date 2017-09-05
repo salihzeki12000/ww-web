@@ -1,6 +1,6 @@
 <div class="progress-tracker-section">
   <ul class="progress-tracker" [class.search-active]="searchLocation">
-    <li class="progress-title" (click)="backToSelect()" [class.progress-current]="step1">GET LOCATION</li><li class="progress-title" *ngIf="searchLocation" (click)="backToSearch()" [class.progress-current]="findLocation">SEARCH LOCATION</li><li class="progress-title" [class.progress-current]="searchDone">CONFIRM CHECK IN DETAILS</li>
+    <li class="progress-title" (click)="backToSelect()" [class.progress-current]="step1">GET LOCATION</li><li class="progress-title" *ngIf="searchLocation" (click)="backToSearch()" [class.progress-current]="findLocation">SEARCH LOCATION</li><li class="progress-title" [class.progress-current]="searchDone">CONFIRM FAVOURITE DETAILS</li>
   </ul>
 </div>
 
@@ -21,7 +21,7 @@
 </div>
 
 <div *ngIf="findLocation">
-  <label>Search check in location by name or adddress <span class="label-note"> - local name or address may be required</span></label>
+  <label>Search favourite location by name or adddress <span class="label-note"> - local name or address may be required</span></label>
   <ww-google-place-search [populate]="''" (placeDetail)="getDetails($event)"></ww-google-place-search>
 </div>
 
@@ -32,8 +32,8 @@
     <span class="dragged-location">{{ locationType }} location:</span> {{ formatted_address }}
   </h5>
 
-  <div class="check-in-privacy">
-    <label>Keep check in private?</label>
+  <div class="fav-privacy">
+    <label>Keep favourite private?</label>
 
     <h4 *ngIf="private" class="toggle-true" (click)="private = false">Yes</h4>
     <h4 *ngIf="private" class="toggle-button-true" (click)="private = false"></h4>
@@ -45,8 +45,7 @@
   </div>
 
   <div class="action-response">
-    <!-- <h5 class="action-response-primary" (click)="getLocation()" [class.current-loc]="locationType === 'Current'">Get current location</h5> -->
-    <h5 class="action-response-primary" (click)="checkin()">Check in now</h5>
+    <h5 class="action-response-primary" (click)="favourite()">Save favourite</h5>
   </div>
 
 </div>

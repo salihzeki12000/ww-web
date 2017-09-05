@@ -8,7 +8,7 @@ import { ItineraryEventService } from '../../itinerary-event.service';
 import { FlashMessageService }   from '../../../../flash-message';
 import { UserService }           from '../../../../user';
 import { LoadingService }        from '../../../../loading';
-import { CheckInService }        from '../../../../check-in';
+import { FavouriteService }        from '../../../../favourite';
 import { RelationshipService }   from '../../../../relationships';
 import { RecommendationService } from '../../../../recommendations';
 
@@ -35,8 +35,8 @@ export class AccommodationComponent implements OnInit, OnDestroy {
   itineraries = [];
 
   showMenu = false;
-  allowCheckin = false;
-  checkedInDate = undefined;
+  allowFav = false;
+  favDate = undefined;
   copying = false;
   editing = false;
   deleteAccommodation = false;
@@ -74,7 +74,7 @@ export class AccommodationComponent implements OnInit, OnDestroy {
     private renderer: Renderer2,
     private router: Router,
     private userService: UserService,
-    private checkinService: CheckInService,
+    private favouriteService: FavouriteService,
     private itineraryEventService: ItineraryEventService,
     private loadingService: LoadingService,
     private relationshipService: RelationshipService,
@@ -101,7 +101,7 @@ export class AccommodationComponent implements OnInit, OnDestroy {
         this.currentUser = result;
         this.checkSameUser();
         this.filterItineraries();
-        this.checkCheckIn();
+        this.checkFav();
       })
 
     this.event['formatted_note'] = this.event['note'].replace(/\r?\n/g, '<br/> ');
@@ -189,19 +189,19 @@ export class AccommodationComponent implements OnInit, OnDestroy {
     this.initMinuteOut = this.minuteOut;
   }
 
-  checkCheckIn()  {
+  checkFav()  {
     let today = new Date();
     let start = new Date(this.itinerary['date_from'])
 
-    for (let i = 0; i < this.event['checked_in'].length; i++) {
-      if(this.currentUser['_id'] === this.event['checked_in'][i]['user'])  {
-        this.checkedInDate = this.event['checked_in'][i]['date'];
+    for (let i = 0; i < this.event['favourite'].length; i++) {
+      if(this.currentUser['_id'] === this.event['favourite'][i]['user'])  {
+        this.favDate = this.event['favourite'][i]['date'];
       }
     }
 
     if(today.getTime() >= start.getTime())  {
-      if(!this.checkedInDate) {
-        this.allowCheckin = true;
+      if(!this.favDate) {
+        this.allowFav = true;
       }
     }
   }
@@ -302,10 +302,10 @@ export class AccommodationComponent implements OnInit, OnDestroy {
 
 
   //check in section
-  checkin() {
-    this.loadingService.setLoader(true, "Checking you in...");
+  favourite() {
+    this.loadingService.setLoader(true, "Saving as favourite...");
 
-    let checkin = {
+    let favourite = {
       lat: this.event['place']['lat'],
       lng: this.event['place']['lng'],
       name: this.event['place']['name'],
@@ -316,19 +316,19 @@ export class AccommodationComponent implements OnInit, OnDestroy {
       user: this.currentUser['_id']
     }
 
-    this.checkinService.addCheckin(checkin).subscribe(
+    this.favouriteService.addFav(favourite).subscribe(
       result  =>  {
         this.loadingService.setLoader(false, "");
         this.flashMessageService.handleFlashMessage(result.message);
       })
 
-    this.event['checked_in'].push({
+    this.event['favourite'].push({
       date: new Date(),
       user: this.currentUser['_id']
     });
 
-    this.allowCheckin = false;
-    this.checkedInDate = new Date();
+    this.allowFav = false;
+    this.favDate = new Date();
 
     this.itineraryEventService.editEvent(this.event).subscribe(
       result => {})

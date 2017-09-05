@@ -1,17 +1,17 @@
 // import { NgModule }                         from '@angular/core';
 // import { CommonModule }                     from '@angular/common';
 //
-// import { GooglePlaceSearchComponent, GoogleCheckinComponent } from '../google-api';
+// import { GooglePlaceSearchComponent, GoogleFavComponent } from '../google-api';
 //
 // @NgModule({
 //   declarations: [
 //     GooglePlaceSearchComponent,
-//     GoogleCheckinComponent,
+//     GoogleFavComponent,
 //   ],
 //   exports: [
 //     CommonModule,
 //     GooglePlaceSearchComponent,
-//     GoogleCheckinComponent,
+//     GoogleFavComponent,
 //   ]
 // })
 // export class SharedModule {}

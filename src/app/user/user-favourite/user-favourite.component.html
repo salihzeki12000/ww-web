@@ -1,0 +1,45 @@
+<div class="fav-header">
+
+  <div class="fav-stats">
+    <h2>{{ favs?.length }}</h2>
+    <h5 class="select-favs" (click)="showFav = true">Favourites</h5>
+    <i class="fa fa-caret-down" aria-hidden="true"></i>
+  </div>
+
+  <div class="fav-stats">
+    <h2>{{ locations?.length }}</h2>
+    <h5>Locations</h5>
+  </div>
+
+  <div class="fav-stats">
+    <i class="fa fa-search-plus fa-lg" aria-hidden="true"></i>
+    <h5 class="select-country" (click)="showCountry = true">zoom to</h5>
+    <i class="fa fa-caret-down" aria-hidden="true"></i>
+  </div>
+</div>
+
+<div class="country-dropdown" *ngIf="showCountry">
+  <div *ngFor="let country of countries">
+    <h4 (click)="changeCenter(country)">{{ country.name }}</h4>
+  </div>
+</div>
+
+<div class="country-dropdown-arrow" *ngIf="showCountry"></div>
+
+<div class="fav-dropdown" *ngIf="showFav">
+  <div *ngFor="let fav of favs" >
+    <div (click)="zoomTo(fav.place)">
+      <h6>{{ fav.created_at | date: 'dd MMM yyyy, HH:mm' }}</h6>
+      <h4>{{ fav.place.name }}</h4>
+      <h5>{{ fav.place.formatted_address }}</h5>
+    </div>
+    <div class="fav-itinerary" *ngIf="fav.itinerary">
+      <i class="fa fa-sticky-note" aria-hidden="true"></i>
+      <h5 [routerLink]="['/me/itinerary/', fav.itinerary._id]">{{ fav.itinerary.name }}</h5>
+    </div>
+  </div>
+</div>
+
+<div class="fav-dropdown-arrow" *ngIf="showFav"></div>
+
+<div #map id="map"></div>

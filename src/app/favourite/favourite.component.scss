@@ -1,4 +1,4 @@
-.check-in-header  {
+.favs-header  {
   position: fixed;
   top: 40px;
   left: 0;
@@ -8,21 +8,21 @@
   background-color: #6494ED;
 }
 
-.check-in-header *  {
+.favs-header *  {
   display: inline-block;
   color: #F9FBFB;
 }
 
-.check-in-stats {
+.favs-stats {
   margin: 0 10px;
   padding: 10px 0;
 }
 
-.check-in-stats h5  {
+.favs-stats h5  {
   vertical-align: text-top;
 }
 
-.select-checkins,
+.select-favs,
 .select-country {
   &:hover {
     text-decoration: underline;
@@ -40,7 +40,7 @@
 /* drop down */
 
 .country-dropdown,
-.checkin-dropdown {
+.fav-dropdown {
   position: absolute;
   margin-left: calc((100vw - 280px) / 2);
   width: 280px;
@@ -52,19 +52,19 @@
   z-index: 2;
 }
 
-.checkin-dropdown::-webkit-scrollbar,
+.fav-dropdown::-webkit-scrollbar,
 .country-dropdown::-webkit-scrollbar {
   background-color: rgba(100, 148, 237, 0.3);
   width: 8px;
 }
 
-.checkin-dropdown::-webkit-scrollbar-thumb,
+.fav-dropdown::-webkit-scrollbar-thumb,
 .country-dropdown::-webkit-scrollbar-thumb {
   background-color: rgba(100, 148, 237, 0.9);
 }
 
 .country-dropdown-arrow,
-.checkin-dropdown-arrow  {
+.fav-dropdown-arrow  {
   position: relative;
   top: -8px;
   margin-left: calc(((100vw - 280px)/2) + 230px);
@@ -75,7 +75,7 @@
   border-bottom: 8px solid white;
 }
 
-.checkin-dropdown-arrow {
+.fav-dropdown-arrow {
   margin-left: calc(((100vw - 280px)/2) + 40px);
 }
 
@@ -87,11 +87,11 @@
   }
 }
 
-.checkin-dropdown {
+.fav-dropdown {
   text-align: left;
 }
 
-.checkin-dropdown > div {
+.fav-dropdown > div {
   padding: 10px;
   border-bottom: 1px solid lightgray;
   &:hover {
@@ -100,27 +100,27 @@
   }
 }
 
-.checkin-dropdown h4  {
+.fav-dropdown h4  {
   padding: 5px 0;
 }
 
-.checkin-filter select {
+.favs-filter select {
   margin-bottom: 5px;
 }
 
-.checkin-details h6 {
+.fav-details h6 {
   display: inline-block;
 }
 
-.checkin-details h6:nth-of-type(2)  {
+.fav-details h6:nth-of-type(2)  {
   color: red;
 }
 
-.check-in-itinerary {
+.favs-itinerary {
   padding-top: 10px;
 }
 
-.check-in-itinerary * {
+.favs-itinerary * {
   display: inline-block;
   color: #6494ED;
   &:hover {
@@ -128,7 +128,7 @@
   }
 }
 
-.delete-checkin {
+.delete-fav {
   float: right;
   color: #A6A6A6;
   &:hover {

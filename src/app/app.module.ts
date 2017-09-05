@@ -16,7 +16,7 @@ import { HomeComponent }           from './home';
 import { MeComponent }             from './me';
 import { MainNavigationComponent } from './navigation';
 
-import { UserComponent, UserVerifyComponent, UserUnverifiedComponent, UserProfileCardComponent, UserCheckInComponent, UserFollowersComponent, UserFollowingsComponent, UserItinerariesComponent, UserItinerarySummaryComponent, UserPostsComponent, UserService, ProfileComponent, ProfileDetailsComponent, ProfileEditComponent } from './user';
+import { UserComponent, UserVerifyComponent, UserUnverifiedComponent, UserProfileCardComponent, UserFavouriteComponent, UserFollowersComponent, UserFollowingsComponent, UserItinerariesComponent, UserItinerarySummaryComponent, UserPostsComponent, UserService, ProfileComponent, ProfileDetailsComponent, ProfileEditComponent } from './user';
 
 import { RelationshipService, RelationshipsComponent, FollowingsComponent, FollowingComponent, FollowersComponent, FollowerComponent, RequestedFollowingsComponent, RequestedFollowingComponent, PendingFollowerComponent, PendingFollowersComponent } from './relationships';
 
@@ -24,7 +24,7 @@ import { PostsComponent, PostComponent, PostInputComponent, PostListComponent, P
 
 import { ItineraryComponent, ItineraryListComponent, ItineraryFormComponent, ItineraryInviteComponent, ItineraryAccommodationComponent, ItineraryTransportComponent, ItineraryService, ItineraryActivityComponent, ItineraryResourcesComponent, ResourceInputComponent, ResourceService, ResourceListComponent, ResourceComponent, ItineraryMapComponent, AccommodationFormComponent, TransportFormComponent, ItineraryEventService, ActivityComponent, ActivityListComponent, ActivityInputComponent, AccommodationComponent, TransportComponent, ItineraryPrintComponent, ItineraryPreviewComponent, ItinerarySummaryComponent, ItinerarySummaryDayComponent, ItinerarySettingsComponent, ItineraryShareComponent, ItineraryListItemComponent, ItineraryAllComponent, ItineraryCompletedComponent, ItineraryUpcomingComponent, ItineraryDescriptionComponent } from './itinerary';
 
-import { GooglePlaceSearchComponent, GoogleCheckinComponent } from './google-api';
+import { GooglePlaceSearchComponent, GoogleFavComponent } from './google-api';
 
 import { FlashMessageComponent, FlashMessageService } from './flash-message';
 import { NotificationComponent, NotificationsComponent, NotificationListComponent, NotificationService } from './notifications';
@@ -38,7 +38,7 @@ import { LoadingComponent, LoadingService } from './loading';
 import { ErrorMessageComponent, ErrorMessageService } from './error-message';
 
 import { PrivacyPolicyComponent } from './privacy-policy';
-import { CheckInComponent, CheckInService } from './check-in';
+import { FavouriteComponent, FavouriteService } from './favourite';
 import { CapitalisePipe } from './pipes';
 import { LocationPinComponent } from './location-pin/location-pin.component';
 import { RecommendationsComponent, RecommendationComponent, RecommendationDisplayComponent, RecommendationService, AddRecommendationComponent } from './recommendations';
@@ -69,7 +69,7 @@ export class RavenErrorHandler implements ErrorHandler {
     UserVerifyComponent,
     UserUnverifiedComponent,
     UserProfileCardComponent,
-    UserCheckInComponent,
+    UserFavouriteComponent,
     UserFollowersComponent,
     UserFollowingsComponent,
     UserItinerariesComponent,
@@ -99,7 +99,7 @@ export class RavenErrorHandler implements ErrorHandler {
     ActivityListComponent,
     ActivityInputComponent,
     GooglePlaceSearchComponent,
-    GoogleCheckinComponent,
+    GoogleFavComponent,
     ItineraryPrintComponent,
     ItineraryPreviewComponent,
     ItineraryResourcesComponent,
@@ -140,7 +140,7 @@ export class RavenErrorHandler implements ErrorHandler {
     ErrorMessageComponent,
     TimePickerComponent,
     PrivacyPolicyComponent,
-    CheckInComponent,
+    FavouriteComponent,
     LocationPinComponent,
     RecommendationDisplayComponent,
     PlaceComponent,
@@ -158,7 +158,7 @@ export class RavenErrorHandler implements ErrorHandler {
     routing,
     Daterangepicker
   ],
-  providers: [ Title, LoadingService, AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, FileuploadService, CommentService, ErrorMessageService, CheckInService, RecommendationService, AuthGuard, { provide: ErrorHandler, useClass: RavenErrorHandler } ],
+  providers: [ Title, LoadingService, AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, FileuploadService, CommentService, ErrorMessageService, FavouriteService, RecommendationService, AuthGuard, { provide: ErrorHandler, useClass: RavenErrorHandler } ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

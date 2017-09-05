@@ -23,7 +23,7 @@
             <h5>Recommend to a friend</h5>
             <i class="fa fa-share" aria-hidden="true"></i>
           </li>
-          <li (click)="checkin()" *ngIf="allowCheckin">
+          <li (click)="favourite()" *ngIf="allowFav">
             <h5>Favourite</h5>
             <i class="fa fa-star-o" aria-hidden="true"></i>
           </li>
@@ -58,12 +58,12 @@
         Recommended by {{ event?.recommended_by.username }}
       </h6>
 
-      <h6 class="check-in-note" *ngIf="checkedInDate">You checked in on {{ checkedInDate | date: 'dd MMM yyyy'}}</h6>
+      <h6 class="favs-note" *ngIf="favDate">You checked in on {{ favDate | date: 'dd MMM yyyy'}}</h6>
 
       <h4 class="accommodation-city"><i class="fa fa-bed" aria-hidden="true"></i> {{ event?.city | uppercase }}</h4>
       <h3 class="accommodation-header">{{ event?.name | uppercase }}</h3>
 
-      <div class="check-in-details">
+      <div class="fav-details">
         <h5>Check in</h5>
         <h2 *ngIf="itinerary?.num_days">{{ event?.check_in_date }}</h2>
         <h2 *ngIf="!itinerary?.num_days">{{ event?.check_in_date | date:'dd MMM yy' }}</h2>
@@ -231,7 +231,7 @@
           <h4 class="form-section-header">Check In/Out Details</h4>
           <div class="form-section-details">
 
-            <div class="check-in">
+            <div class="fav">
               <div class="date-to-visit">
                 <label>Check In Date <span class="required"> - required</span></label>
                 <select class="select-date" name="check_in_date" formControlName="check_in_date">
