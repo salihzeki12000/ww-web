@@ -368,9 +368,13 @@
 /* top nav notification */
 
 .new-indicator  {
-  margin: 1px 0 0 7px;
-  height: 5px;
-  width: 5px;
+  position: absolute;
+  margin: -20px 0 0 10px;
+  padding: 0 1.5px;
+  height: 10px;
+  width: 10px;
+  color: white;
+  font-size: 8px;
   border-radius: 50%;
   background-color: red;
 }
@@ -698,7 +702,18 @@ i.fa-sticky-note {
   }
 }
 
+.category-item *  {
+  display: inline-block;
+}
 
+.category-item h6 {
+  display: inline-block;
+  padding: 2px 3px 1px 3px;
+  color: white;
+  vertical-align: text-bottom;
+  background-color: red;
+  border-radius: 50%;
+}
 
 
 /* connections */

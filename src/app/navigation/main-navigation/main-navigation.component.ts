@@ -289,7 +289,6 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
 
     let message = "You are now following " + user['username'];
 
-
     if(user['private']) {
       this.relationshipService.requestFollow(following).subscribe(
         result => { } )
