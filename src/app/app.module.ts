@@ -45,15 +45,15 @@ import { RecommendationsComponent, RecommendationComponent, RecommendationDispla
 import { PlaceComponent } from './place';
 
 
-// Raven
-//   .config('https://5575c781e9054ddd828e3e4b8f90bc55@sentry.io/211359')
-//   .install();
-//
-// export class RavenErrorHandler implements ErrorHandler {
-//   handleError(err:any) : void {
-//     Raven.captureException(err);
-//   }
-// }
+Raven
+  .config('https://5575c781e9054ddd828e3e4b8f90bc55@sentry.io/211359')
+  .install();
+
+export class RavenErrorHandler implements ErrorHandler {
+  handleError(err:any) : void {
+    Raven.captureException(err);
+  }
+}
 
 
 @NgModule({
@@ -158,9 +158,7 @@ import { PlaceComponent } from './place';
     routing,
     Daterangepicker
   ],
-  providers: [ Title, LoadingService, AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, FileuploadService, CommentService, ErrorMessageService, FavouriteService, RecommendationService, AuthGuard ],
+  providers: [ Title, LoadingService, AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, FileuploadService, CommentService, ErrorMessageService, FavouriteService, RecommendationService, AuthGuard, { provide: ErrorHandler, useClass: RavenErrorHandler } ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
-// { provide: ErrorHandler, useClass: RavenErrorHandler }
