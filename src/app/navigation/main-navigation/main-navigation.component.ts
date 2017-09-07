@@ -273,7 +273,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
 
   filterSearch(text)  {
     if(!text)   {
-      this.filteredUsers = [];
+      this.filteredUsers = this.users;
     } else  {
       this.filteredUsers = Object.assign([], this.users).filter(
         user => user.username.toLowerCase().indexOf(text.toLowerCase()) > -1
@@ -339,7 +339,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   cancelShowUsers() {
     this.showUsers = false;
     this.preventScroll(false);
-    this.filteredUsers = [];
+    this.filteredUsers = this.users;
   }
 
 

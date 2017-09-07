@@ -40,7 +40,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
 
   showUsersSearch = false;
   users: User[] = [];
-  filteredResult;
+  filteredUsers;
   newMembers = [];
   validAddUser = false;
 
@@ -223,6 +223,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
         }
       }
     }
+    this.filteredUsers = this.users;
   }
 
   setInviteLink() {
@@ -241,9 +242,9 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   // add members modal
   filterSearch(text)  {
     if(!text)   {
-      this.filteredResult = [];
+      this.filteredUsers = this.users;
     } else  {
-      this.filteredResult = Object.assign([], this.users).filter(
+      this.filteredUsers = Object.assign([], this.users).filter(
         user => user.username.toLowerCase().indexOf(text.toLowerCase()) > -1
       )
     }
@@ -252,8 +253,8 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   cancelShowUsers() {
     this.showUsersSearch = false;
     this.preventScroll(false);
-    this.filteredResult = [];
     this.users.push.apply(this.users, this.newMembers);
+    this.filteredUsers = this.users;
 
     this.newMembers = [];
   }
@@ -263,14 +264,12 @@ export class ItineraryComponent implements OnInit, OnDestroy {
 
     if(index > -1 ) {
       this.newMembers.splice(index, 1);
-      this.users.push(user);
-      this.filteredResult.push(user);
+      this.filteredUsers.push(user);
     }
 
     if(index < 0 )  {
       this.newMembers.push(user);
-      this.users.splice(this.users.indexOf(user), 1);
-      this.filteredResult.splice(this.filteredResult.indexOf(user),1)
+      this.filteredUsers.splice(this.filteredUsers.indexOf(user),1)
     }
 
     if(this.newMembers.length > 0) {

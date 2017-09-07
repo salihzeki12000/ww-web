@@ -85,8 +85,8 @@
         </div>
       </div>
 
-      <h5 class="user-search-header">Search result ({{ filteredResult.length }})</h5>
-      <div *ngFor="let user of filteredResult" class="search-result-card">
+      <h5 class="user-search-header">Search result ({{ filteredUsers.length }})</h5>
+      <div *ngFor="let user of filteredUsers | slice:0:30" class="search-result-card">
         <ww-user-profile-card [user]="user" [currentUser]="currentUser"></ww-user-profile-card>
         <h5 class="user-shared-status">{{ user.status }}</h5>
 

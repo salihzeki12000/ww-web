@@ -47,7 +47,7 @@ export class ItineraryShareComponent implements OnInit, OnDestroy {
 
   showUsers = false;
   users = [];
-  filteredResult = [];
+  filteredUsers = [];
   selectedUsers = []
   validAddUser = false;
 
@@ -303,9 +303,9 @@ export class ItineraryShareComponent implements OnInit, OnDestroy {
 
   filterSearch(text)  {
     if(!text)   {
-      this.filteredResult = [];
+      this.filteredUsers = this.users;
     } else  {
-      this.filteredResult = Object.assign([], this.users).filter(
+      this.filteredUsers = Object.assign([], this.users).filter(
         user => user.username.toLowerCase().indexOf(text.toLowerCase()) > -1
       )
     }
@@ -319,14 +319,12 @@ export class ItineraryShareComponent implements OnInit, OnDestroy {
 
     if(index > -1 ) {
       this.selectedUsers.splice(index, 1);
-      this.users.push(user);
-      this.filteredResult.push(user);
+      this.filteredUsers.push(user);
     }
 
     if(index < 0 )  {
       this.selectedUsers.push(user);
-      this.users.splice(this.users.indexOf(user), 1);
-      this.filteredResult.splice(this.filteredResult.indexOf(user),1)
+      this.filteredUsers.splice(this.filteredUsers.indexOf(user),1)
     }
 
     if(this.selectedUsers.length > 0) {
@@ -346,9 +344,9 @@ export class ItineraryShareComponent implements OnInit, OnDestroy {
     this.cancelShare.emit(false);
     this.selectItems = true;
     this.itemsSelected = false;
-    this.selectedUsers = [];
-    this.filteredResult = [];
     this.users.push.apply(this.users, this.selectedUsers);
+    this.filteredUsers = this.users;
+    this.selectedUsers = [];
   }
 
 
@@ -444,7 +442,7 @@ export class ItineraryShareComponent implements OnInit, OnDestroy {
     }
 
     this.selectItems = true;
-    this.filteredResult = [];
+    this.filteredUsers = [];
 
     if(this.shareType === 'Share')  {
       this.confirmShareMessage();
