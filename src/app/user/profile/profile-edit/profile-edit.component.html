@@ -106,7 +106,7 @@
         <h6 *ngIf="!itinPrivacy">New itinerary created by you is not private. Followers of members can view.</h6>
       </div>
 
-      <div class="profile-edit-item">
+      <div class="profile-edit-item" *ngIf="!itinPrivacy">
         <h5>Itinerary view only</h5>
 
         <h4 *ngIf="itinView" class="toggle-true" (click)="itinView = false">Yes</h4>
@@ -116,6 +116,14 @@
         <h4 *ngIf="!itinView" class="toggle-false" (click)="itinView = true">No</h4>
         <h4 *ngIf="!itinView" class="toggle-button-false" (click)="itinView = true"></h4>
         <h6 *ngIf="!itinView">Followers of members can view and create a copy of the itinerary.</h6>
+
+      </div>
+
+      <div class="profile-edit-item" *ngIf="itinPrivacy">
+        <h5>Itinerary view only</h5>
+
+        <h5 class="na-text">Not applicable when itinerary privacy is private</h5>
+
       </div>
 
       <div class="profile-edit-item">

@@ -24,7 +24,7 @@
 
 </form>
 
-<h5 class="reset" [routerLink]="['/forgot-password']">Forgot password</h5>
+<h5 class="reset" (click)="routeToForgetPw()">Forgot password</h5>
 
 <div class="action-response">
   <h5 class="action-response-secondary" (click)="cancelAuth()">Cancel</h5>

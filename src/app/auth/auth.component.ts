@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, NgZone, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-declare const FB: any;
+// declare const FB: any;
 declare const gapi: any;
 
 import { AuthService }       from './auth.service';
@@ -14,7 +14,6 @@ import { ItineraryService }  from '../itinerary';
   styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent implements OnInit, AfterViewInit {
-
   @Input() reroute;
   @Input() reload;
   @Input() itinerary;
@@ -46,46 +45,6 @@ export class AuthComponent implements OnInit, AfterViewInit {
     if(this.reroute === undefined)  {
       this.reroute = '/me'
     }
-  }
-
-  statusChangeCallback(res) {
-    // https://developers.facebook.com/docs/facebook-login/web
-    if (res.status === 'connected') {
-      this.getDetails()
-    }
-  };
-
-  loginFacebook() {
-    FB.login((response) =>  {
-      this.loadingService.setLoader(true, "get ready to wonder wander");
-
-      this.getDetails();
-    }, {scope: 'email' });
-  }
-
-  getDetails() {
-    FB.api('/me?fields=id,name,gender,picture.width(150).height(150),email',
-      (result) => {
-        if (result && !result.error) {
-          // if no email, to open up a modal notice and to sign up or sign in
-          result['username'] = result['name'];
-          result['display_picture'] = result['picture']['data']['url'];
-
-          this.authService.loginFacebook(result)
-              .subscribe(
-                data => {
-                  this.loadingService.setLoader(true, "We are redirecting you");
-
-                  this.userService.getCurrentUser()
-                      .subscribe(data => {});
-
-                  this.rerouting({_id: data.userId});
-                }
-              )
-        } else {
-          console.log(result.error);
-        }
-      });
   }
 
   // https://developers.google.com/identity/sign-in/web/sign-in
@@ -123,20 +82,20 @@ export class AuthComponent implements OnInit, AfterViewInit {
   // http://stackoverflow.com/questions/35530483/google-sign-in-for-websites-and-angular-2-using-typescript
   loginGoogle(user) {
     let profile = user.getBasicProfile();
-    let email = profile.getEmail();
-    let username = profile.getName();
-    let display_picture = profile.getImageUrl();
 
-    this.authService.loginGoogle({
-      username: username,
-      email: email,
-      display_picture: display_picture,
-    }).subscribe( data => {
-      this.loadingService.setLoader(true, "get ready to wonder wander");
+    let newUser = {
+      username: profile.getName(),
+      email: profile.getEmail(),
+      display_picture: profile.getImageUrl()
+    }
 
-      let user = {_id: data.userId};
-      this.rerouting(user);
-    });
+    this.authService.loginGoogle(newUser).subscribe(
+      data => {
+        this.loadingService.setLoader(true, "get ready to wonder wander");
+
+        let savedUser = {_id: data.userId};
+        this.rerouting(savedUser);
+      });
   }
 
   rerouting(user) {
@@ -168,3 +127,43 @@ export class AuthComponent implements OnInit, AfterViewInit {
       })
   }
 }
+
+// statusChangeCallback(res) {
+//   // https://developers.facebook.com/docs/facebook-login/web
+//   if (res.status === 'connected') {
+//     this.getDetails()
+//   }
+// };
+
+// loginFacebook() {
+//   FB.login((response) =>  {
+//     this.loadingService.setLoader(true, "get ready to wonder wander");
+//
+//     this.getDetails();
+//   }, {scope: 'email' });
+// }
+//
+// getDetails() {
+//   FB.api('/me?fields=id,name,gender,picture.width(150).height(150),email',
+//     (result) => {
+//       if (result && !result.error) {
+//         // if no email, to open up a modal notice and to sign up or sign in
+//         result['username'] = result['name'];
+//         result['display_picture'] = result['picture']['data']['url'];
+//
+//         this.authService.loginFacebook(result)
+//             .subscribe(
+//               data => {
+//                 this.loadingService.setLoader(true, "We are redirecting you");
+//
+//                 this.userService.getCurrentUser()
+//                     .subscribe(data => {});
+//
+//                 this.rerouting({_id: data.userId});
+//               }
+//             )
+//       } else {
+//         console.log(result.error);
+//       }
+//     });
+// }

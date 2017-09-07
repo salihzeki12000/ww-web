@@ -96,4 +96,9 @@ export class SigninComponent implements OnInit {
     this.hideSignin.emit()
   }
 
+  routeToForgetPw() {
+    this.router.navigateByUrl('/forgot-password');
+    this.loadingService.setLoader(true, "");
+  }
+
 }

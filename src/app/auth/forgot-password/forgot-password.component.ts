@@ -43,9 +43,11 @@ export class ForgotPasswordComponent implements OnInit {
       })
   }
 
-  close() {
+  routeToHome() {
     this.resetEmail = false;
     this.router.navigateByUrl('/');
+
+    this.loadingService.setLoader(true, "");
   }
 
   validEmail(control: FormControl): {[s: string]: boolean} {

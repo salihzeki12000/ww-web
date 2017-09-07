@@ -44,7 +44,6 @@ export class ResetComponent implements OnInit {
 
       this.authService.reset(this.resetToken).subscribe(
         result => {
-          console.log(result);
           if(result.message === 'Reset valid') this.resetValid = true;
           if(result.message === 'Reset Invalid') this.resetInvalid = true;
 
@@ -97,6 +96,17 @@ export class ResetComponent implements OnInit {
       if (control.value !== this.resetForm.controls['newPassword'].value) {
           return {notMatch: true};
       }
+  }
+
+
+  routeToHome() {
+    this.router.navigateByUrl('/');
+    this.loadingService.setLoader(true, "");
+  }
+
+  routeToForgetPw() {
+    this.router.navigateByUrl('/forgot-password');
+    this.loadingService.setLoader(true, "");
   }
 
 }

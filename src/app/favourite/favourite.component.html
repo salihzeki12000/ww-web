@@ -47,7 +47,7 @@
     </div>
     <div class="favs-itinerary" *ngIf="fav.itinerary">
       <i class="fa fa-sticky-note" aria-hidden="true"></i>
-      <h5 [routerLink]="['/me/itinerary/', fav.itinerary._id]">{{ fav.itinerary.name }}</h5>
+      <h5 (click)="routeToItin(fav.itinerary._id)">{{ fav.itinerary.name }}</h5>
     </div>
   </div>
 </div>

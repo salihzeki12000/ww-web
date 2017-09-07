@@ -50,7 +50,7 @@
           <h5 class="exit-nav-view" (click)="bookmarkOptions = false">X</h5>
         </div>
 
-        <div class="dropdown-item" (click)="viewRecommendations()">
+        <div class="dropdown-item" (click)="routeToRecommendations()">
           <h5><i class="fa fa-share fa-fw fa-lg" aria-hidden="true"></i> Recommendations</h5>
         </div>
 
@@ -62,7 +62,7 @@
           <h5><i class="fa fa-star-o fa-fw fa-lg" aria-hidden="true"></i> Save a favourite</h5>
         </div>
 
-        <div class="dropdown-item" (click)="viewFavMap()">
+        <div class="dropdown-item" (click)="routeToFavs()">
           <h5><i class="fa fa-globe fa-fw fa-lg" aria-hidden="true"></i> Favourite map</h5>
         </div>
       </div>
@@ -87,28 +87,32 @@
 
   <div class="nav-itinerary">
     <div class="nav-link">
-      <i class="fa fa-sticky-note fa-lg" aria-hidden="true" (mouseover)="showItineraries = true"></i>
+      <i class="fa fa-sticky-note fa-lg" aria-hidden="true" (mouseover)="itineraryOptions = true"></i>
 
-      <div class="nav-dropdown" *ngIf="showItineraries">
+      <div class="nav-dropdown" *ngIf="itineraryOptions">
         <div class="dropdown-arrow"></div>
         <div class="nav-dropdown-header">
           <h6>{{ currentUser?.itineraries.length > 1 ? 'ITINERARIES' : 'ITINERARY'}}</h6>
-          <h5 class="exit-nav-view" (click)="showItineraries = false">X</h5>
+          <h5 class="exit-nav-view" (click)="itineraryOptions = false">X</h5>
         </div>
+
         <h5 class="dropdown-new-itinerary" (click)="newItin()"><i class="fa fa-plus" aria-hidden="true"></i> Plan a new itinerary</h5>
+
         <div>
           <div *ngIf="currentUser?.itineraries.length === 0">
             <h5 class="nil-dropdown-item">No itinerary at the moment</h5>
           </div>
+
           <div *ngFor="let itinerary of currentUser?.itineraries | slice:0:10" class="dropdown-item">
-            <div [routerLink]="['/me/itinerary/', itinerary._id]" (click)="routeToItinerary(itinerary._id)">
+            <div (click)="routeToItinerary(itinerary._id)">
               <h5>{{ itinerary.name }}</h5>
               <h6 *ngIf="!itinerary?.num_days">( {{ itinerary.date_from | date:'dd MMM yy' }} to {{ itinerary.date_to | date:'dd MMM yy' }} )</h6>
               <h6 *ngIf="itinerary?.num_days">( {{ itinerary.num_days }} days )</h6>
             </div>
           </div>
         </div>
-        <div *ngIf="currentUser?.itineraries.length > 10" class="view-all" [routerLink]="['/me/itinerary']">
+
+        <div *ngIf="currentUser?.itineraries.length > 10" class="view-all" (click)="routeToItineraries()">
           <h5>See all</h5>
         </div>
 
@@ -121,7 +125,7 @@
       <i class="fa fa-bell fa-lg" aria-hidden="true" (mouseover)="getNotifications()"></i>
       <div class="new-indicator" *ngIf='newNotification'>N</div>
 
-      <div class="nav-dropdown" *ngIf="showNotifications">
+      <div class="nav-dropdown" *ngIf="notificationOptions">
         <div class="dropdown-arrow"></div>
         <div class="nav-dropdown-header"></div>
 
@@ -145,7 +149,7 @@
 
   <div class="nav-profile">
     <div class="nav-link">
-      <img src="{{ currentUser?.display_picture }}" class="user-profile-thumbnail" [routerLink]="['/me/profile']" (mouseover)="profileOptions = true">
+      <img src="{{ currentUser?.display_picture }}" class="user-profile-thumbnail" (click)="routeToProfile()" (mouseover)="profileOptions = true">
 
       <div class="nav-dropdown" *ngIf="profileOptions">
         <div class="dropdown-arrow"></div>
@@ -153,11 +157,11 @@
           <h6>PROFILE SETTINGS</h6>
         </div>
 
-        <div class="dropdown-item" (click)="profileOptions = false" [routerLink]="['/me/profile']">
+        <div class="dropdown-item" (click)="routeToProfile()">
           <h5><i class="fa fa-user fa-fw fa-lg" aria-hidden="true"></i> Profile home</h5>
         </div>
 
-        <div class="dropdown-item" (click)="profileOptions = false" [routerLink]="['/me/profile-edit']">
+        <div class="dropdown-item" (click)="routeToProfileEdit()">
           <h5><i class="fa fa-pencil fa-fw fa-lg" aria-hidden="true"></i> Edit profile</h5>
         </div>
 
@@ -170,23 +174,23 @@
 
 
   <div class="side-nav">
-    <div class="custom-modal" *ngIf="sideNav" (click)="showSideNav()"></div>
+    <div class="custom-modal" *ngIf="sideNav" (click)="toggleSideNav()"></div>
 
-    <div class="side-nav-bars" (click)="showSideNav()">
+    <div class="side-nav-bars" (click)="toggleSideNav()">
       <i class="fa fa-bars fa-2x" aria-hidden="true"></i>
     </div>
 
     <div *ngIf="sideNav">
 
       <div class="side-nav-profile">
-        <img src="{{ currentUser?.display_picture }}" alt="" [routerLink]="['/me/profile']" (click)="exitSideNav()">
+        <img src="{{ currentUser?.display_picture }}" alt="" (click)="routeToProfile()">
 
-        <div class="edit-profile" [routerLink]="['/me/profile-edit']" (click)="exitSideNav()">
+        <div class="edit-profile" (click)="routeToProfileEdit()">
           <i class="fa fa-pencil" aria-hidden="true"></i>
         </div>
 
         <div class="username">
-          <h4 [routerLink]="['/me/profile']" (click)="exitSideNav()">{{ currentUser?.username }}</h4>
+          <h4 (click)="routeToProfile()">{{ currentUser?.username }}</h4>
         </div>
 
         <h5 class="user-description">{{ currentUser?.description }}</h5>
@@ -231,7 +235,13 @@
             <h4 *ngIf="quickLinksSection">Quick links <i class="fa fa-minus" aria-hidden="true"></i></h4>
           </div>
 
+
           <div *ngIf="quickLinksSection">
+
+            <div class="category-item">
+              <h5 (click)="routeToItineraries()">View all itineraries</h5>
+            </div>
+
             <div class="category-item">
               <h5 (click)="routeToNotifications()">View all notifications</h5>
               <h6 *ngIf='newNotification'>N</h6>
@@ -239,6 +249,10 @@
 
             <div class="category-item">
               <h5 (click)="routeToFavs()">View all favourites</h5>
+            </div>
+
+            <div class="category-item">
+              <h5 (click)="routeToRecommendations()">View all recommendations</h5>
             </div>
           </div>
         </div>

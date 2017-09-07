@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { LoadingService } from '../../loading';
+
 @Component({
   selector: 'ww-user-profile-card',
   templateUrl: './user-profile-card.component.html',
@@ -10,7 +12,9 @@ export class UserProfileCardComponent implements OnInit {
   @Input() user;
   @Input() currentUser;
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private loadingService: LoadingService) { }
 
   ngOnInit() {
   }
@@ -23,7 +27,8 @@ export class UserProfileCardComponent implements OnInit {
       } else  {
         this.router.navigateByUrl('/wondererwanderer/' + id)
       }
-      
+
+      this.loadingService.setLoader(true, "");
     }
 
   }

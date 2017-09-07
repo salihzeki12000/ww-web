@@ -65,7 +65,20 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
       let id = params['id'];
 
       this.itineraryService.getItin(id).subscribe(
-        result => {})
+        result => {
+          this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
+             result => {
+               this.itinerary = result;
+
+               if(this.itinerary['description'])  {
+                 this.itinerary['formatted_description'] = this.itinerary['description']['content'].replace(/\r?\n/g, '<br/> ');
+               } else  {
+                 this.itinerary['formatted_description'] = '';
+               }
+
+               this.sortDailyNotes();
+             })
+        })
 
       this.itineraryEventService.getEvents(id).subscribe(
         eventResult => {})
@@ -75,18 +88,6 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
     })
 
     this.events = [];
-    this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
-       result => {
-         this.itinerary = result;
-
-         if(this.itinerary['description'])  {
-           this.itinerary['formatted_description'] = this.itinerary['description']['content'].replace(/\r?\n/g, '<br/> ');
-         } else  {
-           this.itinerary['formatted_description'] = '';
-         }
-
-         this.sortDailyNotes();
-       })
 
     this.dateSubscription = this.itineraryService.updateDate.subscribe(
       result => {

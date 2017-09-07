@@ -1,8 +1,6 @@
-<div class="logo" [routerLink]="['/']">
+<div class="logo" (click)="routeToHome()">
   <img src="assets/wondererwanderer_logo.png" alt="">
 </div>
-
-
 
 
 <div class="reset-container">
@@ -10,8 +8,8 @@
   <div class="reset-invalid" *ngIf="resetInvalid">
     <h3>Your reset password link is invalid or has expired.</h3>
 
-    <h4 class="navigate" [routerLink]="['/forgot-password']">Request for new reset</h4>
-    <h4 class="navigate" [routerLink]="['/']">Back to home page</h4>
+    <h4 class="navigate" (click)="routeToForgetPw()">Request for new reset</h4>
+    <h4 class="navigate" (click)="routeToHome()">Back to home page</h4>
   </div>
 
   <div class="reset-valid" *ngIf="resetValid">

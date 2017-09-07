@@ -471,6 +471,12 @@ header {
 .copy-itinerary > a {
   color: firebrick !important;
   font-weight: 500;
+
+  &:hover {
+    color: #F9FBFB !important;
+    background-color: firebrick !important;
+    border-top: 5px solid firebrick !important;
+  }
 }
 
 

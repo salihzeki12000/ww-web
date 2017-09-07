@@ -111,9 +111,15 @@ input {
   width: 130px;
   color: grey;
   letter-spacing: .5px;
+  vertical-align: top;
   @media only screen and (max-width: 610px) {
     padding-bottom: 3px;
   }
+}
+
+.na-text  {
+  width: auto !important;
+  color: #3A4A4D !important;
 }
 
 

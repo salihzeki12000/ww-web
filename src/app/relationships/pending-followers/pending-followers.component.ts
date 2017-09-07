@@ -27,7 +27,9 @@ export class PendingFollowersComponent implements OnInit, OnDestroy {
        this.pendingFollowers = Object.keys(result['pendingFollowers']).map(key => result['pendingFollowers'][key]);
      })
 
-    this.loadingService.setLoader(false, "");
+    setTimeout(()  =>  {
+      this.loadingService.setLoader(false, "");
+    }, 500)
   }
 
   ngOnDestroy() {

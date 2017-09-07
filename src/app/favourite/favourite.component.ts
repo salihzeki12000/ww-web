@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ElementRef, ViewChild, Renderer2, HostListener } from '@angular/core';
-import { Title }          from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription }   from 'rxjs/Rx';
+import { Title }          from '@angular/platform-browser';
 
 declare var google:any;
 declare var MarkerClusterer:any;
@@ -44,6 +44,7 @@ export class FavouriteComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private favouriteService: FavouriteService,
     private flashMessageService: FlashMessageService,
+    private router: Router,
     private loadingService: LoadingService) { }
 
   ngOnInit() {
@@ -63,7 +64,6 @@ export class FavouriteComponent implements OnInit, OnDestroy {
         this.setInitPan();
         this.setLocations();
         this.setCountries();
-
       })
 
   }
@@ -341,6 +341,11 @@ export class FavouriteComponent implements OnInit, OnDestroy {
     } else  {
       this.renderer.removeClass(document.body, 'prevent-scroll');
     }
+  }
+
+  routeToItin(id) {
+    this.router.navigateByUrl('/me/itinerary/' + id);
+    this.loadingService.setLoader(true, "Fetching itinerary...");
   }
 
 }

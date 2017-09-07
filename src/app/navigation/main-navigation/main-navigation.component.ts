@@ -44,8 +44,8 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   authOptions = false;
   bookmarkOptions = false;
   searchOptions = false;
-  showItineraries = false;
-  showNotifications = false;
+  itineraryOptions = false;
+  notificationOptions = false;
   profileOptions = false;
 
   newNotification = false;
@@ -204,16 +204,21 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     this.preventScroll(false);
   }
 
-  viewRecommendations() {
+  routeToRecommendations() {
+    this.loadingService.setLoader(true, "");
     this.bookmarkOptions = false;
+    this.exitSideNav();
+
     this.router.navigateByUrl('/me/recommendations');
   }
 
-  viewFavMap()  {
+  routeToFavs()  {
+    this.loadingService.setLoader(true, "");
     this.bookmarkOptions = false;
+    this.exitSideNav();
+
     this.router.navigateByUrl('/me/favourite');
   }
-
 
 
 
@@ -224,7 +229,8 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   }
 
   routeToItinerary(id) {
-    this.showItineraries = false;
+    this.itineraryOptions = false;
+    this.router.navigateByUrl('/me/itinerary/' + id);
 
     if(this.route.snapshot['_urlSegment'].segments[2]) {
       if(this.route.snapshot['_urlSegment'].segments[2].path !== id)  {
@@ -233,25 +239,56 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     }
   }
 
+  routeToItineraries()  {
+    this.loadingService.setLoader(true, "");
+    this.itineraryOptions = false;
+    this.exitSideNav();
+
+    this.router.navigateByUrl('/me/itinerary');
+  }
 
 
 
   // top navigation notification/followers
   getNotifications()  {
-    this.showNotifications = true;
+    this.notificationOptions = true;
     this.newNotification = false;
 
     this.currentUser['check_notification'] = new Date();
-
     this.userService.editUser(this.currentUser).subscribe(
       result => {})
   }
 
+  routeToNotifications()  {
+    this.exitSideNav();
+    this.notificationOptions = false;
 
+    this.router.navigateByUrl('/me/notifications');
+    this.loadingService.setLoader(true, "");
+  }
+
+
+
+  // route to profile
+  routeToProfile()  {
+    this.loadingService.setLoader(true, "");
+    this.exitSideNav();
+    this.profileOptions = false;
+
+    this.router.navigateByUrl('/me/profile');
+  }
+
+  routeToProfileEdit()  {
+    this.loadingService.setLoader(true, "");
+    this.exitSideNav();
+    this.profileOptions = false;
+
+    this.router.navigateByUrl('/me/profile-edit');
+  }
 
 
   // side navigation
-  showSideNav()  {
+  toggleSideNav()  {
     this.sideNav = !this.sideNav;
     this.preventScroll(this.sideNav);
   }
@@ -260,7 +297,6 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     this.sideNav = false;
     this.preventScroll(false);
   }
-
 
 
 
@@ -346,21 +382,23 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
 
   // routing to relationships
   routeToFollowers() {
-    this.sideNav = false;
+    this.loadingService.setLoader(true, "");
+    this.exitSideNav();
     this.router.navigateByUrl('/me/relationships/followers');
   }
 
   routeToFollowings() {
-    this.sideNav = false;
+    this.loadingService.setLoader(true, "");
+    this.exitSideNav();
     this.router.navigateByUrl('/me/relationships/following');
   }
 
   routeToPendingFollowers() {
-    this.sideNav = false;
-    this.showNotifications = false;
+    this.loadingService.setLoader(true, "");
+    this.exitSideNav();
+    this.notificationOptions = false;
     this.router.navigateByUrl('/me/relationships/follow-request');
   }
-
 
 
 
@@ -373,27 +411,11 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
 
 
 
-  // route to all notifications
-  routeToNotifications()  {
-    this.sideNav = false;
-    this.showNotifications = false;
-    this.router.navigateByUrl('/me/notifications');
-  }
-
-  routeToFavs()  {
-    this.sideNav = false;
-    this.router.navigateByUrl('/me/favourite');
-  }
-
-
-
-
   // profile options
   logout()  {
     this.authService.logout();
-    this.sideNav = false;
+    this.exitSideNav();
     this.profileOptions = false;
-    this.preventScroll(false);
   }
 
 
@@ -409,6 +431,8 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   }
 
   routeToHome() {
+    this.loadingService.setLoader(true, "");
+
     if(this.isLoggedIn) {
       this.router.navigateByUrl('/me')
     } else  {
