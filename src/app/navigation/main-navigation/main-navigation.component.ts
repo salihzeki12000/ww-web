@@ -271,7 +271,6 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
 
   // route to profile
   routeToProfile()  {
-    this.loadingService.setLoader(true, "");
     this.exitSideNav();
     this.profileOptions = false;
 
@@ -431,8 +430,6 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   }
 
   routeToHome() {
-    this.loadingService.setLoader(true, "");
-
     if(this.isLoggedIn) {
       this.router.navigateByUrl('/me')
     } else  {

@@ -6,6 +6,7 @@ declare var google:any;
 declare var MarkerClusterer:any;
 
 import { FavouriteService } from '../../favourite';
+import { LoadingService }   from '../../loading';
 
 @Component({
   selector: 'ww-user-favourite',
@@ -30,6 +31,7 @@ export class UserFavouriteComponent implements OnInit, OnDestroy {
 
   constructor(
     private renderer: Renderer2,
+    private loadingService: LoadingService,
     private favouriteService: FavouriteService) { }
 
   ngOnInit() {
@@ -195,6 +197,7 @@ export class UserFavouriteComponent implements OnInit, OnDestroy {
             imagePath: imagePath
           });
 
+    this.loadingService.setLoader(false, "");
     this.preventScroll(false);
   }
 

@@ -54,6 +54,10 @@ export class UserItinerariesComponent implements OnInit, OnDestroy {
         i--;
       }
     }
+
+    setTimeout(() =>  {
+      this.loadingService.setLoader(false, "");
+    }, 1500)
   }
 
   routeToItin(itinerary)  {

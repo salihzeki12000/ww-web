@@ -41,6 +41,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private router: Router) { }
 
   ngOnInit() {
+    this.loadingService.setLoader(true, "");
     this.titleService.setTitle("Home");
 
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
@@ -51,6 +52,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.feedSubscription = this.postService.updateFeed.subscribe(
           feedResult => {
             this.feed = Object.keys(feedResult).map(key => feedResult[key]);
+            this.loadingService.setLoader(false, "");
           })
       })
 
@@ -61,7 +63,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.tourStart = true;
     }
 
-    this.loadingService.setLoader(false, "");
     this.renderer.removeClass(document.body, 'prevent-scroll');
 
     // work around for issue where fb login cant load page properly

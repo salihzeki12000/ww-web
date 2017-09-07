@@ -19,7 +19,7 @@
 
 
   <div class="user-profile-header">
-    <img src="{{ user?.display_picture }}" alt="" [routerLink]="['/wondererwanderer', user?._id]">
+    <img src="{{ user?.display_picture }}" alt="" (click)="routeToProfile()">
     <h1>{{ user?.username }}</h1>
 
     <div class="user-profile-details">
@@ -34,19 +34,19 @@
   <div class="user-profile-background"></div>
 
   <div class="user-profile-counters">
-    <div class="follower-counter" [routerLink]="['followers']">
+    <div class="follower-counter" (click)="routeTo('followers')">
       <h2>{{ followers.length }}</h2>
       <h5>FOLLOWER</h5>
     </div>
-    <div class="following-counter" [routerLink]="['followings']">
+    <div class="following-counter" (click)="routeTo('followings')">
       <h2>{{ followings.length }}</h2>
       <h5>FOLLOWING</h5>
     </div>
-    <div class="itinerary-counter" [routerLink]="['itineraries']">
+    <div class="itinerary-counter" (click)="routeTo('itineraries')">
       <h2>{{ itineraries.length }}</h2>
       <h5>ITINERARY</h5>
     </div>
-    <div class="itinerary-counter" [routerLink]="['favourite']">
+    <div class="itinerary-counter" (click)="routeTo('favourite')">
       <h2>{{ favs?.length }}</h2>
       <h5>FAVOURITE</h5>
     </div>

@@ -6,7 +6,7 @@ import { Title }        from '@angular/platform-browser';
 import { UserService }         from './user.service';
 import { PostService }         from '../post';
 import { LoadingService }      from '../loading';
-import { FavouriteService }      from '../favourite';
+import { FavouriteService }    from '../favourite';
 import { RelationshipService } from '../relationships/relationship.service';
 import { FlashMessageService } from '../flash-message';
 
@@ -35,6 +35,7 @@ export class UserComponent implements OnInit, OnDestroy {
   constructor(
     private titleService: Title,
     private route: ActivatedRoute,
+    private router: Router,
     private postService: PostService,
     private favouriteService: FavouriteService,
     private loadingService: LoadingService,
@@ -54,10 +55,6 @@ export class UserComponent implements OnInit, OnDestroy {
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
       result => {
         this.currentUser = result;
-
-        let title = this.currentUser['username'] + " | Home"
-        this.titleService.setTitle(title);
-
         this.checkFollowStatus();
       }
     )
@@ -68,6 +65,10 @@ export class UserComponent implements OnInit, OnDestroy {
       this.userService.getUser(id).subscribe(
         result => {
           this.user = result.user;
+
+          let title = this.user['username'] + " | Home"
+          this.titleService.setTitle(title);
+          
           this.itineraries = Object.keys(this.user['itineraries']).map(key => this.user['itineraries'][key]);
           this.sortItin();
 
@@ -166,6 +167,16 @@ export class UserComponent implements OnInit, OnDestroy {
         this.followStatus = "";
         this.loadingService.setLoader(false, "");
       })
+  }
+
+  routeToProfile()  {
+    this.router.navigateByUrl('/wondererwanderer/' + this.user['_id']);
+    this.loadingService.setLoader(true, "");
+  }
+
+  routeTo(seg) {
+    this.router.navigateByUrl('/wondererwanderer/' + this.user['_id'] + '/' + seg);
+    this.loadingService.setLoader(true, "");
   }
 
 }

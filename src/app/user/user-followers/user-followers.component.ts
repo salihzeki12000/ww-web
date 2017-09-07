@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Rx';
 
 import { RelationshipService } from '../../relationships/relationship.service';
 import { UserService }         from '../user.service';
+import { LoadingService }      from '../../loading';
 
 @Component({
   selector: 'ww-user-followers',
@@ -18,12 +19,14 @@ export class UserFollowersComponent implements OnInit, OnDestroy {
 
   constructor(
     private userService: UserService,
+    private loadingService: LoadingService,
     private relationshipService: RelationshipService) { }
 
   ngOnInit() {
     this.followersSubscription = this.relationshipService.updateUserRelationships.subscribe(
       result => {
        this.followers = Object.keys(result['followers']).map(key => result['followers'][key]);
+       this.loadingService.setLoader(false, "");
       })
 
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(

@@ -49,6 +49,7 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
     private router: Router) {}
 
   ngOnInit() {
+    this.loadingService.setLoader(true, "");
     this.titleService.setTitle("Profile");
 
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
@@ -67,7 +68,6 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
     this.favSubscription = this.favouriteService.updateFavs.subscribe(
       result => {
         this.favs = Object.keys(result).map(key => result[key]);
-        this.loadingService.setLoader(false, "");
       })
 
     this.renderer.removeClass(document.body, 'prevent-scroll');
@@ -98,6 +98,10 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
         this.postsSubscription = this.postService.updatePost.subscribe(
           result =>  {
             this.posts = Object.keys(result).map(key => result[key]);
+
+            setTimeout(() => {
+              this.loadingService.setLoader(false, "");
+            }, 500)
           })
       })
   }
