@@ -1,4 +1,3 @@
-<!-- edit itinerary form modal -->
 <div class="itinerary-edit-main">
 
   <div class="textless-header"></div>
@@ -55,7 +54,6 @@
           <h4 *ngIf="!private" class="toggle-button-false" (click)="private = true"></h4>
           <h6 *ngIf="!private && itinerary?.corporate.status">Any one can view.</h6>
           <h6 *ngIf="!private && !itinerary?.corporate.status">Followers of itinerary members can view.</h6>
-
         </div>
 
         <div class="created-details" *ngIf="!masterAdmin">
@@ -65,6 +63,8 @@
             <h4 *ngIf="!private">No</h4>
           </div>
         </div>
+
+
 
         <div class="itinerary-edit-item" *ngIf="masterAdmin && !private">
           <h5>View only</h5>
@@ -76,6 +76,12 @@
           <h4 *ngIf="!viewOnly" class="toggle-false" (click)="viewOnly = true">No</h4>
           <h4 *ngIf="!viewOnly" class="toggle-button-false" (click)="viewOnly = true"></h4>
           <h6 *ngIf="!viewOnly">Your followers can view and copy the itinerary.</h6>
+        </div>
+
+        <div class="itinerary-edit-item" *ngIf="masterAdmin && private">
+          <h5>View only</h5>
+
+          <h5 class="na-text">Not applicable when itinerary privacy is private</h5>
 
         </div>
 

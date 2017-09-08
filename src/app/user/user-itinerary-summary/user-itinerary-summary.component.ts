@@ -103,7 +103,10 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
       result => {
         this.currentUser = result;
-        this.checkCopy();
+        
+        setTimeout(() =>  {
+          this.checkCopy();
+        }, 1000)
       })
 
     this.userSubscription = this.userService.updateDisplayUser.subscribe(
