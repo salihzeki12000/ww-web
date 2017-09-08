@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs/Rx';
 
 import { Router } from '@angular/router';
 
-import { AuthService }       from '../auth';
 import { User, UserService } from '../user';
 import { Post, PostService } from '../post';
 import { LoadingService }    from '../loading';
@@ -34,7 +33,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(
     private titleService: Title,
     private renderer: Renderer2,
-    private authService: AuthService,
     private userService: UserService,
     private postService: PostService,
     private loadingService: LoadingService,
@@ -45,7 +43,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.titleService.setTitle("Home");
 
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
-      result => { this.user = result; })
+      result => {
+        this.user = result;
+
+        if(!this.user['new_user_tour'])  {
+          this.newUser = true;
+          this.verifyMsg = true;
+          this.tourStart = true;
+        }
+      })
 
     this.postService.getFeed().subscribe(
       result  => {
@@ -56,7 +62,6 @@ export class HomeComponent implements OnInit, OnDestroy {
           })
       })
 
-    this.newUser = this.authService.newUser;
 
     if(this.newUser) {
       this.verifyMsg = true;
@@ -81,11 +86,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   // }
 
   ngOnDestroy() {
+    this.user['new_user_tour'] = true;
+    this.userService.editUser(this.user).subscribe(result =>{})
+
     if(this.feedSubscription) this.feedSubscription.unsubscribe();
     if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
 
     this.loadingService.setLoader(true, "");
-    this.authService.newUser = false;
   }
 
 

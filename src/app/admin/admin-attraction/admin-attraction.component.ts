@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { LoadingService } from '../../loading';
+
 @Component({
   selector: 'ww-admin-attraction',
   templateUrl: './admin-attraction.component.html',
@@ -7,9 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminAttractionComponent implements OnInit {
 
-  constructor() { }
+  constructor(private loadingService: LoadingService) { }
 
   ngOnInit() {
+    this.loadingService.setLoader(false, "");
   }
 
 }

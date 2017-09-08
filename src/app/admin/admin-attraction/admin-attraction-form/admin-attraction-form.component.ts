@@ -2,6 +2,8 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 declare var google:any;
 
+import { LoadingService } from '../../../loading';
+
 @Component({
   selector: 'ww-admin-attraction-form',
   templateUrl: './admin-attraction-form.component.html',
@@ -17,7 +19,8 @@ export class AdminAttractionFormComponent implements OnInit {
   showContactDetails = false;
   showMenu = false;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(
+    private formBuilder: FormBuilder) {
     this.newAttractionForm = this.formBuilder.group({
       'name': '',
       'country': '',

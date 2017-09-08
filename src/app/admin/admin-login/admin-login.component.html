@@ -1,0 +1,28 @@
+<div class="logo">
+  <img src="assets/wondererwanderer_logo.png" alt="">
+  <h3>ADMIN LOG IN</h3>
+</div>
+
+<div class="login-container">
+
+  <form [formGroup]="signinForm" (ngSubmit)="onSubmit()">
+
+    <label>Email</label>
+    <input type="text" #email formControlName="email">
+    <span class="form-validator"
+      *ngIf="signinForm.get('email').touched && signinForm.get('email').invalid">Invalid email address</span>
+
+    <label>Password<span class="label-note"> (at least 6 characters)</span></label>
+    <input type="password" #password formControlName="password">
+    <span class="form-validator"
+      *ngIf="signinForm.get('password').touched && signinForm.get('password').invalid">Password is not valid. Please enter at least 6 characters</span>
+
+    <div class="submit-button">
+      <button type="submit" class="action-response-primary" [disabled]="!signinForm.valid"><h4>Log In Now</h4></button>
+    </div>
+
+  </form>
+
+  <h5 class="reset" (click)="routeToForgetPw()">Forgot password</h5>
+
+</div>

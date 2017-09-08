@@ -90,7 +90,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
     }
 
     this.authService.loginGoogle(newUser).subscribe(
-      data => {
+      data => {        
         this.loadingService.setLoader(true, "get ready to wonder wander");
 
         let savedUser = {_id: data.userId};
@@ -101,7 +101,6 @@ export class AuthComponent implements OnInit, AfterViewInit {
   rerouting(user) {
     this.userService.getCurrentUser().subscribe(
       data => {
-
         if(this.itinerary)  {
           this.addToItin(user);
         } else if(this.reload)  {
@@ -117,14 +116,25 @@ export class AuthComponent implements OnInit, AfterViewInit {
   }
 
   addToItin(user) {
+    for (let i = 0; i < this.itinerary['members'].length; i++) {
+      if(this.itinerary['members'][i]['_id'] === user)  {
+        console.log("user already exist")
+        this.router.navigateByUrl(this.reroute);
+        window.location.reload();
+        break;
+      }
+    }
+
     this.itinerary['members'].push(user);
 
     this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
       data => {
         setTimeout(() =>  {
           this.router.navigateByUrl(this.reroute);
+          window.location.reload();
         }, 1000)
       })
+
   }
 }
 

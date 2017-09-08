@@ -29,7 +29,7 @@ import { GooglePlaceSearchComponent, GoogleFavComponent } from './google-api';
 import { FlashMessageComponent, FlashMessageService } from './flash-message';
 import { NotificationComponent, NotificationsComponent, NotificationListComponent, NotificationService } from './notifications';
 
-import { AdminComponent } from './admin';
+import { AdminComponent, AdminService, AdminLoginComponent, AdminVerifyComponent } from './admin';
 import { AttractionsComponent } from './attractions/attractions.component';
 import { AdminAttractionComponent,AdminAttractionFormComponent } from './admin/admin-attraction';
 
@@ -146,7 +146,9 @@ export class RavenErrorHandler implements ErrorHandler {
     PlaceComponent,
     RecommendationsComponent,
     RecommendationComponent,
-    AddRecommendationComponent
+    AddRecommendationComponent,
+    AdminLoginComponent,
+    AdminVerifyComponent
   ],
   imports: [
     BrowserModule,
@@ -158,7 +160,7 @@ export class RavenErrorHandler implements ErrorHandler {
     routing,
     Daterangepicker
   ],
-  providers: [ Title, LoadingService, AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, FileuploadService, CommentService, ErrorMessageService, FavouriteService, RecommendationService, AuthGuard, { provide: ErrorHandler, useClass: RavenErrorHandler } ],
+  providers: [ Title, AdminService, LoadingService, AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, FileuploadService, CommentService, ErrorMessageService, FavouriteService, RecommendationService, AuthGuard, { provide: ErrorHandler, useClass: RavenErrorHandler } ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

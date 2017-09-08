@@ -1,0 +1,27 @@
+<div class="logo">
+  <img src="assets/wondererwanderer_logo.png" alt="">
+</div>
+
+<div class="verify-container">
+
+  <form [formGroup]="resetForm" (ngSubmit)="resetPassword()">
+    <div class="form-housing">
+
+      <label>New Password <span class="label-note"> ( at least 6 characters )</span></label>
+      <input type="password" formControlName="newPassword">
+      <span class="form-validator"
+        *ngIf="resetForm.get('newPassword').touched && resetForm.get('newPassword').invalid">Password is not valid. Please enter at least 6 characters</span>
+
+
+      <label>Confirm New Password</label>
+      <input type="password" formControlName="confirmNewPassword">
+      <span class="form-validator"
+        *ngIf="resetForm.get('confirmNewPassword').dirty && resetForm.get('confirmNewPassword').invalid">Passwords do not match</span>
+    </div>
+
+    <div class="action-response">
+      <button type="submit" class="action-response-primary" [disabled]="!resetForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> RESET</h5></button>
+    </div>
+  </form>
+  
+</div>

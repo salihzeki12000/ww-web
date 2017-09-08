@@ -14,11 +14,8 @@ import { ErrorMessageService } from '../error-message';
 
 @Injectable()
 export class AuthService  {
-  // private url = 'http://localhost:9000';
   private url = 'https://vast-island-87972.herokuapp.com';
   loginType;
-  newUser = false;
-  updateNewUser = new ReplaySubject();
 
   constructor(
     private http: Http,
@@ -41,7 +38,6 @@ export class AuthService  {
                     .map((response: Response) => {
                       this.loginType = 'local';
                       localStorage.setItem('token', response.json()['token']);
-                      this.newUser = true;
                       return response.json();
                     })
                     .catch((error: Response) => {
@@ -115,24 +111,22 @@ export class AuthService  {
                     });
   }
 
-  loginFacebook(user) {
-    const body = JSON.stringify(user);
-    const headers = new Headers({ 'Content-Type': 'application/json' });
-
-    return this.http.post(this.url + '/users/social-login/', body, { headers: headers })
-                    .map((response: Response) => {
-                      this.loginType = 'facebook';
-                      localStorage.setItem('token', response.json()['token']);
-
-                      if(response.json().newUser) this.newUser = true;
-
-                      return response.json();
-                    })
-                    .catch((error: Response) => {
-                      this.errorMessageService.handleErrorMessage(error.json());
-                      return Observable.throw(error.json())
-                    });
-  }
+  // loginFacebook(user) {
+  //   const body = JSON.stringify(user);
+  //   const headers = new Headers({ 'Content-Type': 'application/json' });
+  //
+  //   return this.http.post(this.url + '/users/social-login/', body, { headers: headers })
+  //                   .map((response: Response) => {
+  //                     this.loginType = 'facebook';
+  //                     localStorage.setItem('token', response.json()['token']);
+  //  //
+  //                     return response.json();
+  //                   })
+  //                   .catch((error: Response) => {
+  //                     this.errorMessageService.handleErrorMessage(error.json());
+  //                     return Observable.throw(error.json())
+  //                   });
+  // }
 
   loginGoogle(user) {
     const body = JSON.stringify(user);
@@ -142,8 +136,6 @@ export class AuthService  {
                     .map((response: Response) => {
                       this.loginType = 'google';
                       localStorage.setItem('token', response.json()['token']);
-
-                      if(response.json().newUser) this.newUser = true;
 
                       return response.json();
                     })
