@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Title }        from '@angular/platform-browser';
+import { Subscription } from 'rxjs/Rx';
 
 import { Itinerary }        from '../itinerary';
 import { ItineraryService } from '../itinerary.service';
 import { LoadingService }   from '../../loading';
+import { AuthService }      from '../../auth';
+import { UserService }      from '../../user';
 
 @Component({
   selector: 'ww-itinerary-invite',
@@ -14,6 +17,8 @@ import { LoadingService }   from '../../loading';
 export class ItineraryInviteComponent implements OnInit {
   itinerary;
   reroute;
+  currentUserSubscription: Subscription;
+  user;
 
   passwordValid = false;
 
@@ -22,7 +27,10 @@ export class ItineraryInviteComponent implements OnInit {
 
   constructor(
     private titleService: Title,
+    private authService: AuthService,
+    private userService: UserService,
     private route: ActivatedRoute,
+    private router: Router,
     private itineraryService: ItineraryService,
     private loadingService: LoadingService) {}
 
@@ -44,12 +52,36 @@ export class ItineraryInviteComponent implements OnInit {
       )
     })
 
+    let isLoggedIn = this.authService.isLoggedIn();
+
+    if(isLoggedIn)  {
+      this.userService.getCurrentUser().subscribe(
+        data => {
+          this.user = data;
+      });
+    }
+
     this.loadingService.setLoader(false, "");
   }
 
   enterPassword(password) {
     if(password === this.itinerary['invite_password']) this.passwordValid = true;
   }
+
+  join()  {
+    this.itinerary['members'].push(this.user);
+
+    this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
+      result => {
+        this.loadingService.setLoader(true, "Redirecting to itinerary...")
+
+        this.router.navigateByUrl('/me/itinerary/' + this.itinerary['_id'])
+      }
+    )
+  }
+
+
+
 
   hideSignin(e)  {
     this.signin = false;

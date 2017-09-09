@@ -3,7 +3,8 @@
 </div>
 
 <div class="invite-container">
-  <h3>You have been invited to the itinerary:</h3>
+  <h3 *ngIf="!user">You have been invited to the itinerary:</h3>
+  <h3 *ngIf="user">{{ user?.username }}, you have been invited to the itinerary:</h3>
   <h2>{{ itinerary?.name }}</h2>
   <h3>from {{ itinerary?.date_from | date: 'dd MMM yyyy'}} to {{ itinerary?.date_to | date: 'dd MMM yyyy'}}</h3>
 
@@ -14,19 +15,33 @@
     <h6 class="valid-pw" *ngIf="passwordValid"><i class="fa fa-check" aria-hidden="true"></i> Password confirmed</h6>
   </div>
 
-  <div class="accept-invite" *ngIf="passwordValid">
-    <h4>Log in or sign up to access the itinerary now!</h4>
 
-    <h3 (click)="signin = true">Log in</h3>
-    <h3 (click)="signup = true">Sign up</h3>
+  <div *ngIf="!user">
+    <div class="accept-invite" *ngIf="passwordValid">
+      <h4>Log in or sign up to access the itinerary now!</h4>
+
+      <h3 (click)="signin = true">Log in</h3>
+      <h3 (click)="signup = true">Sign up</h3>
+    </div>
+
+    <div class="disabled-invite" *ngIf="!passwordValid">
+      <h4>Log in or sign up to access the itinerary now!</h4>
+
+      <h3>Log in</h3>
+      <h3>Sign up</h3>
+    </div>
   </div>
 
-  <div class="disabled-invite" *ngIf="!passwordValid">
-    <h4>Log in or sign up to access the itinerary now!</h4>
+  <div *ngIf="user">
+    <div class="accept-invite" *ngIf="passwordValid">
+      <h3 (click)="join()">Join itinerary now</h3>
+    </div>
 
-    <h3>Log in</h3>
-    <h3>Sign up</h3>
+    <div class="disabled-invite" *ngIf="!passwordValid">
+      <h3>Join itinerary now</h3>
+    </div>
   </div>
+
 
   <div class="current-members">
     <h4>Current members in the itinerary</h4>
