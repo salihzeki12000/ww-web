@@ -113,17 +113,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.tour3 = true;
   }
 
-  backToStart() {
-    this.tourStart = true;
-    this.tour1 = false;
-  }
-
   backTo1() {
     this.tour1 = true;
     this.tour2 = false;
+    this.tour3 = false;
   }
 
   backTo2() {
+    this.tour1 = false;
     this.tour2 = true;
     this.tour3 = false;
   }

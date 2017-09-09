@@ -50,10 +50,10 @@
 <!-- new user tour -->
 <div class="custom-modal" *ngIf="newUser">
   <div class="message-box" *ngIf="tourStart">
-    <h3>Hi, {{ user?.username }}!</h3>
-    <h4>Welcome to wondererwanderer, where your wondering thoughts and wandering ways can call home!</h4>
-    <h4>We have a quick tour line up for you. However, if you are one of those who like to explore as you go along, feel free to skip it.</h4>
-    <h4>Before you skip the tour, do remember to go to your edit profile page to update your details and privacy settings!</h4>
+    <h1>WELCOME!</h1>
+    <h4>{{ user?.username }}, thanks for signing up to wondererwanderer. Now you have a place to easily manage and share your travel inspirations and itineraries.</h4>
+    <h4>We have line up a quick tour for you. It offers a glimpse of what you can do on the platform. However, if you are one of those who like to explore as you go along, feel free to skip it.</h4>
+    <h4>Before you skip the tour though, do remember to go to your edit profile page to update your details and privacy settings! We take your privacy seriously and you should too.</h4>
     <h4>Have fun!</h4>
     <h4 class="sign-off">Master of wonder wander</h4>
 
@@ -66,8 +66,16 @@
   </div>
 
   <div class="message-box" *ngIf="tour1">
-    <h5>Tour 1 of 3</h5>
-    <h5 class="back-tour" (click)="backToStart()">Back</h5>
+
+    <div class="tour-header">
+      <div class="tour-tracker">
+        <h5 class="tour-current">1</h5>
+        <h5 class="tour-next">2</h5>
+        <h5 class="tour-next">3</h5>
+      </div>
+
+      <h3>Post your inspirations</h3>
+    </div>
 
     <h4>This is your home page where you can view your posts and posts of people you follow. Hopefully you can find some inspirations for your next adventure!</h4>
     <h4>You can post a message, a photo or share a link to inspire others too!</h4>
@@ -83,8 +91,15 @@
   </div>
 
   <div class="message-box desktop" *ngIf="tour2">
-    <h5>Tour 2 of 3</h5>
-    <h5 class="back-tour" (click)="backTo1()">Back</h5>
+    <div class="tour-header">
+      <div class="tour-tracker">
+        <h5 class="tour-done" (click)="backTo1()">1</h5>
+        <h5 class="tour-current">2</h5>
+        <h5 class="tour-next">3</h5>
+      </div>
+
+      <h3>Find your itineraries</h3>
+    </div>
 
     <h4>You can start adding an itinerary by selecting the add option on the left.</h4>
     <h4>As you add new itineraries, they will be displayed here.</h4>
@@ -98,15 +113,25 @@
   </div>
 
   <div class="message-box mobile" *ngIf="tour2">
-    <h5>Tour 2 of 3</h5>
-    <h5 class="back-tour" (click)="backTo1()">Back</h5>
+    <div class="tour-header">
+      <div class="tour-tracker">
+        <h5 class="tour-done" (click)="backTo1()">1</h5>
+        <h5 class="tour-current">2</h5>
+        <h5 class="tour-next">3</h5>
+      </div>
+
+      <h3>Drop down for more options</h3>
+    </div>
 
     <h4>The drop down menu on the top left provides quick access to help you navigate around the website easily.</h4>
 
     <ol>
       <li>View and edit your profile</li>
       <li>Search for people to follow</li>
+      <li>View your itineraries</li>
       <li>View your notifications</li>
+      <li>View your favourites</li>
+      <li>View your recommendations</li>
     </ol>
 
     <h4 class="select-tour" (click)="tour2Done()">Continue tour</h4>
@@ -120,14 +145,21 @@
   </div>
 
   <div class="message-box" *ngIf="tour3">
-    <h5>Tour 3 of 3</h5>
-    <h5 class="back-tour" (click)="backTo2()">Back</h5>
+    <div class="tour-header">
+      <div class="tour-tracker">
+        <h5 class="tour-done" (click)="backTo1()">1</h5>
+        <h5 class="tour-done" (click)="backTo2()">2</h5>
+        <h5 class="tour-current">3</h5>
+      </div>
+
+      <h3>Short cuts for quick access</h3>
+    </div>
 
     <h4>On the top right are shortcuts that allow you to navigate around the website quickly.</h4>
 
     <div class="tour-nav-list">
       <i class="fa fa-bookmark fa-lg fa-fw" aria-hidden="true"></i>
-      <h4>Access to places you have liked and those recommended to you.</h4>
+      <h4>Access to your favourite places and those recommended to you.</h4>
     </div>
 
     <div class="tour-nav-list desktop">
@@ -148,6 +180,9 @@
     <div class="tour-nav-list desktop">
       <img src="{{ user?.display_picture }}" class="user-profile-thumbnail">
       <h4>View and edit your profile</h4>
+    </div>
+
+    <div class="tour-nav-list">
       <h4>Remember to go to your edit profile page to update your details and privacy settings!</h4>
     </div>
 

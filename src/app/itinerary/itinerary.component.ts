@@ -98,7 +98,6 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   // not log in / not preview -> cannot see
 
   ngOnInit() {
-    console.log("init")
     this.isLoggedIn = this.authService.isLoggedIn();
 
     let segments = this.route.snapshot['_urlSegment'].segments;

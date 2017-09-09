@@ -55,8 +55,7 @@ export class ItinerarySummaryDayComponent implements OnInit {
     this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
       result => {
         this.flashMessageService.handleFlashMessage("Note updated");
-      }
-    )
+      })
 
     this.editing = false;
   }
