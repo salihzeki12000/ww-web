@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Title }        from '@angular/platform-browser';
 
@@ -16,7 +15,7 @@ export class ItineraryInviteComponent implements OnInit {
   itinerary;
   reroute;
 
-  passwordForm: FormGroup;
+  passwordValid = false;
 
   signin = false;
   signup = false;
@@ -24,13 +23,8 @@ export class ItineraryInviteComponent implements OnInit {
   constructor(
     private titleService: Title,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder,
     private itineraryService: ItineraryService,
-    private loadingService: LoadingService) {
-      this.passwordForm = this.formBuilder.group({
-        'password': '',
-      })
-    }
+    private loadingService: LoadingService) {}
 
   ngOnInit() {
     this.loadingService.setLoader(true, "Retrieving your invitation");
@@ -44,11 +38,17 @@ export class ItineraryInviteComponent implements OnInit {
           this.itinerary = result.itinerary;
           let title = this.itinerary['name'] + " | Invite"
           this.titleService.setTitle(title);
+
+          if(this.itinerary['invite_password'] === '')  this.passwordValid = true;
         }
       )
     })
 
     this.loadingService.setLoader(false, "");
+  }
+
+  enterPassword(password) {
+    if(password === this.itinerary['invite_password']) this.passwordValid = true;
   }
 
   hideSignin(e)  {

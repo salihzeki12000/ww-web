@@ -43,7 +43,7 @@
 }
 
 .invite-password > h4 {
-  padding-bottom: 3px;
+  padding-bottom: 5px;
 }
 
 .invite-password input  {
@@ -55,20 +55,28 @@
   }
 }
 
+.invite-password h6 {
+  margin-top: -18px;
+}
 
+h6.valid-pw {
+  color: #19CC72;
+}
 
 /* log in sign up options */
 
-.accept-invite  {
+.accept-invite,
+.disabled-invite  {
   margin: 40px 0;
 }
 
-.accept-invite h3 {
+.accept-invite h3,
+.disabled-invite h3 {
   display: inline-block;
   margin: 20px 10px;
   padding: 10px 20px;
   color: #6494ED;
-  border: 2px solid #6494ed;
+  border: 2px solid #6494ED;
   border-radius: 5px;
   &:hover {
     cursor: pointer;
@@ -77,6 +85,15 @@
   }
 }
 
+.disabled-invite h3  {
+  color: #C0C0C0;
+  border: 2px solid #C0C0C0;
+  &:hover {
+    cursor: default;
+    color: #C0C0C0;
+    background-color: transparent;
+  }
+}
 
 
 /* show current memebers of itnerary */

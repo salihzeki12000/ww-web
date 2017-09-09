@@ -415,6 +415,8 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   }
 
 
+
+
   // to toggle nav and close any open modal in mobile < 420px
   toggleNav() {
     this.showNav = !this.showNav;
@@ -425,6 +427,8 @@ export class ItineraryComponent implements OnInit, OnDestroy {
       this.showUsersSearch = false;
     }
   }
+
+
 
 
   // copy a preview itinerary

@@ -9,16 +9,23 @@
 
   <div *ngIf="itinerary?.invite_password !== ''" class="invite-password">
     <h4>A password is required to join this itinerary</h4>
-    <form [formGroup]="passwordForm">
-      <input type="text" formControlName="password">
-    </form>
+    <input type="text" #password (keyup.enter)="enterPassword(password.value)">
+    <h6 *ngIf="!passwordValid">press enter to confirm password</h6>
+    <h6 class="valid-pw" *ngIf="passwordValid"><i class="fa fa-check" aria-hidden="true"></i> Password confirmed</h6>
   </div>
 
-  <div class="accept-invite">
+  <div class="accept-invite" *ngIf="passwordValid">
     <h4>Log in or sign up to access the itinerary now!</h4>
 
     <h3 (click)="signin = true">Log in</h3>
     <h3 (click)="signup = true">Sign up</h3>
+  </div>
+
+  <div class="disabled-invite" *ngIf="!passwordValid">
+    <h4>Log in or sign up to access the itinerary now!</h4>
+
+    <h3>Log in</h3>
+    <h3>Sign up</h3>
   </div>
 
   <div class="current-members">

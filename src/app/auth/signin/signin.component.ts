@@ -76,6 +76,14 @@ export class SigninComponent implements OnInit {
   }
 
   addToItin(user) {
+    for (let i = 0; i < this.itinerary['members'].length; i++) {
+      if(this.itinerary['members'][i]['_id'] === user)  {
+        this.router.navigateByUrl(this.reroute);
+        window.location.reload();
+        break;
+      }
+    }
+
     this.itinerary['members'].push(user);
 
     this.itineraryService.editItin(this.itinerary, 'edit').subscribe(

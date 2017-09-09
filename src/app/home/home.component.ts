@@ -63,11 +63,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       })
 
 
-    if(this.newUser) {
-      this.verifyMsg = true;
-      this.tourStart = true;
-    }
-
     this.renderer.removeClass(document.body, 'prevent-scroll');
 
     // work around for issue where fb login cant load page properly
