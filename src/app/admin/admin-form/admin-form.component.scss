@@ -1,0 +1,11 @@
+.form-housing {
+  margin-top: 80px;
+  margin-left: calc((100vw - 800px) /2);
+  width: 600px;
+
+  @media only screen and (max-width: 650px) {
+    width: 100%;
+    min-width: 300px;
+    margin-left: 0;
+  }
+}

@@ -1,32 +1,61 @@
-<header>
-  <nav>
-    <ul class="admin-nav-tabs">
-      <li [class.add-new-active]="showAddNew" (mouseover)="showAddNewOptions()" class="add-new">
-        <a (mouseover)="showAddNewOptions()">ADD NEW <i class="fa fa-caret-down fa-lg" aria-hidden="true"></i></a>
-        <div class="show-add-new" *ngIf="showAddNew">
-          <ul>
-            <li [routerLink]="['attraction-new']">NEW ATTRACTION</li>
-            <!-- <li (click)="newTransport()">NEW TRANSPORT</li>
-            <li (click)="newActivity()">NEW ACTIVITY</li>
-            <li (click)="newResource()">NEW RESOURCE</li> -->
-          </ul>
-        </div>
-      </li>
-      <li routerLinkActive="active"><a [routerLink]="['attraction']">ATTRACTION</a></li>
-      <li routerLinkActive="active"><a [routerLink]="['attraction']">LOCAL DELICACIES</a></li>
-      <li routerLinkActive="active"><a [routerLink]="['attraction']">LANGUAGE</a></li>
-      <li routerLinkActive="active"><a [routerLink]="['attraction']">FESTIVALS &amp; EVENTS</a></li>
-    </ul>
-  </nav>
-</header>
 
-<h4 class="new-admin" (click)="addNewAdmin = true">ADD NEW ADMIN</h4>
+<div class="side-nav">
+  <img src="assets/wondererwanderer_logo.png" alt="">
+
+  <div class="admin-header">
+    <h4><i class="fa fa-user" aria-hidden="true"></i> {{ username }}</h4>
+    <h5>{{ admin?.role }}</h5>
+  </div>
+
+
+  <header [class.show-nav]="showNav">
+    <nav>
+      <ul class="admin-nav-tabs">
+        <li class="add-new" (click)="showAddNewOptions()">
+          <a><i class="fa fa-plus" aria-hidden="true"></i> ADD NEW</a>
+        </li>
+        <li (click)="activateTab('ATTRACTION')" routerLinkActive="active"><a [routerLink]="['attraction']">ATTRACTION</a></li>
+        <li (click)="activateTab('LOCAL DELICACIES')" routerLinkActive="active"><a [routerLink]="['attraction']">LOCAL DELICACIES</a></li>
+        <li (click)="activateTab('LANGUAGE')" routerLinkActive="active"><a [routerLink]="['attraction']">LANGUAGE</a></li>
+        <li (click)="activateTab('FESTIVALS & EVENTS')" routerLinkActive="active"><a [routerLink]="['attraction']">FESTIVALS & EVENTS</a></li>
+      </ul>
+    </nav>
+  </header>
+
+</div>
+
+<!-- show nav in mobile < 420px -->
+
+<div class="show-nav-menu" (click)="toggleNav()" [class.nav-active]="showNav">
+  <i *ngIf="!showNav" class="fa fa-ellipsis-h fa-lg" aria-hidden="true"></i>
+  <i *ngIf="showNav" class="fa fa-minus fa-lg" aria-hidden="true"></i>
+</div>
+
+<div class="add-new-button" (click)="showAddNewOptions()">
+  <a><i class="fa fa-plus" aria-hidden="true"></i> ADD NEW</a>
+</div>
+
+<div class="current-route" (click)="toggleNav()">
+  <h4>{{ currentRoute | uppercase }}</h4>
+</div>
+
 
 <div class="admin-main">
   <router-outlet></router-outlet>
 </div>
 
 
-<div class="custom-modal" *ngIf="addNewAdmin">
-  <ww-admin-form (hideAdminForm)="hideAdminForm($event)"></ww-admin-form>
+<!-- add new items modal -->
+<div class="custom-modal add-new-modal" *ngIf="showAddNew">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>Add new</h3>
+      <a (click)="cancelAddNewOptions()">X</a>
+    </div>
+
+    <div class="content-without-header-name">
+      <h4 (click)="activateTab('NEW ADMIN')" [routerLink]="['admin-new']">NEW ADMIN USER</h4>
+      <h4 (click)="activateTab('NEW ATTRACTION')" [routerLink]="['attraction-new']">NEW ATTRACTION</h4>
+    </div>
+  </div>
 </div>

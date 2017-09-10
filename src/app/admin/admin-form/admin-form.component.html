@@ -1,25 +1,22 @@
-<div class="form-card">
-  <div class="form-header">
-    <h3>Add new admin</h3>
-    <a (click)="cancelForm()">X</a>
+<div class="admin-portal-header">
+  <h3>Add new admin</h3>
+</div>
+
+<form [formGroup]="newAdminForm" (ngSubmit)="onSubmit()">
+
+  <div class="form-housing">
+    <label>Email</label>
+    <input type="text" #email formControlName="email">
+    <span class="form-validator"
+      *ngIf="newAdminForm.get('email').touched && newAdminForm.get('email').invalid">Invalid email address</span>
+
+    <label>Role</label>
+    <input type="text" formControlName="role">
+
+    <div class="action-response">
+      <button type="submit" class="action-response-primary" [disabled]="!newAdminForm.valid"><h4>Add new admin</h4></button>
+    </div>
   </div>
 
-  <form [formGroup]="newAdminForm" (ngSubmit)="onSubmit()">
 
-    <div class="form-housing">
-      <label>Email</label>
-      <input type="text" #email formControlName="email">
-      <span class="form-validator"
-        *ngIf="newAdminForm.get('email').touched && newAdminForm.get('email').invalid">Invalid email address</span>
-
-      <label>Role</label>
-      <input type="text" formControlName="role">
-
-      <div class="action-response">
-        <button type="submit" class="action-response-primary" [disabled]="!newAdminForm.valid"><h4>Add new admin</h4></button>
-      </div>
-    </div>
-
-
-  </form>
-</div>
+</form>

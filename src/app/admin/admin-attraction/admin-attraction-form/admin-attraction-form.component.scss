@@ -1,11 +1,12 @@
 .new-attraction-form  {
+  margin-top: 40px;
+  height: calc(100vh - 45px);
+  overflow: auto;
   border-right: 1px solid lightgray;
 }
 
 .attraction-google-search {
   padding: 10px 20px;
-  margin-bottom: 10px;
-  border-bottom: 2px solid lightgray;
 }
 
 .details-section-container  {
