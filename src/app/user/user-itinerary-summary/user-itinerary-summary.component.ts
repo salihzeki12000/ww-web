@@ -103,7 +103,7 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
       result => {
         this.currentUser = result;
-        
+
         setTimeout(() =>  {
           this.checkCopy();
         }, 1000)
@@ -236,6 +236,7 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
       admin: [this.currentUser['_id']],
       created_by: this.itinerary['created_by'],
       copied_from: this.user['_id'],
+      invite_password: Math.random().toString(36).substr(2, 8),
       corporate:  {
         status: false,
         publish: false

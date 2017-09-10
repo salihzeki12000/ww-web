@@ -368,6 +368,7 @@ export class ItineraryShareComponent implements OnInit, OnDestroy {
         admin: [this.selectedUsers[i]['_id']],
         created_by: this.itinerary['created_by'],
         shared_by: this.currentUser['_id'],
+        invite_password: Math.random().toString(36).substr(2, 8),
         corporate:  {
           status: this.selectedUsers[i]['corporate'],
           publish: false

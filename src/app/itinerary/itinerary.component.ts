@@ -536,6 +536,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
       admin: [this.currentUser['_id']],
       created_by: this.itinerary['created_by'],
       copied_from: this.itinerary['created_by'],
+      invite_password: Math.random().toString(36).substr(2, 8),
       corporate:  {
         status: false,
         publish: false
