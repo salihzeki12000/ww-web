@@ -20,8 +20,13 @@
   </nav>
 </header>
 
-<h4>ADD NEW ADMIN</h4>
+<h4 class="new-admin" (click)="addNewAdmin = true">ADD NEW ADMIN</h4>
 
 <div class="admin-main">
   <router-outlet></router-outlet>
+</div>
+
+
+<div class="custom-modal" *ngIf="addNewAdmin">
+  <ww-admin-form (hideAdminForm)="hideAdminForm($event)"></ww-admin-form>
 </div>

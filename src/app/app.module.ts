@@ -29,7 +29,7 @@ import { GooglePlaceSearchComponent, GoogleFavComponent } from './google-api';
 import { FlashMessageComponent, FlashMessageService } from './flash-message';
 import { NotificationComponent, NotificationsComponent, NotificationListComponent, NotificationService } from './notifications';
 
-import { AdminComponent, AdminService, AdminLoginComponent, AdminVerifyComponent } from './admin';
+import { AdminComponent, AdminService, AdminLoginComponent, AdminVerifyComponent, AdminFormComponent } from './admin';
 import { AttractionsComponent } from './attractions/attractions.component';
 import { AdminAttractionComponent,AdminAttractionFormComponent } from './admin/admin-attraction';
 
@@ -148,7 +148,8 @@ import { PlaceComponent } from './place';
     RecommendationComponent,
     AddRecommendationComponent,
     AdminLoginComponent,
-    AdminVerifyComponent
+    AdminVerifyComponent,
+    AdminFormComponent
   ],
   imports: [
     BrowserModule,

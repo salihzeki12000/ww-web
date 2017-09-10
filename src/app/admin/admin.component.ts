@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+  import { Component, OnInit } from '@angular/core';
+
+import { LoadingService}  from '../loading';
 
 @Component({
   selector: 'ww-admin',
@@ -7,15 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminComponent implements OnInit {
 
+  addNewAdmin = false;
+
   showAddNew = false;
-  
-  constructor() { }
+
+  constructor(
+    private loadingService: LoadingService) { }
 
   ngOnInit() {
+    this.loadingService.setLoader(false, "");
   }
 
   showAddNewOptions() {
     this.showAddNew = true;
   }
 
+  hideAdminForm() {
+    this.addNewAdmin = false;
+  }
 }

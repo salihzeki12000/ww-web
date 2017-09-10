@@ -15,7 +15,7 @@ export class AdminService {
     private errorMessageService: ErrorMessageService)  {}
 
 
-  signup(admin)  {
+  addAdmin(admin)  {
     const body = JSON.stringify(admin);
     const headers = new Headers({ 'Content-Type': 'application/json' });
 
