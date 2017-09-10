@@ -13,6 +13,8 @@
       <span class="form-validator"
         *ngIf="itineraryForm.get('name').touched && itineraryForm.get('name').invalid || nameError">Name of itinerary is required</span>
 
+
+
       <div class="select-days" *ngIf="corporate">
         <h5>* Select either travel dates or number of days</h5>
         <h5>Currently active: <span class="bold">{{ dateType }}</span></h5>
@@ -35,6 +37,21 @@
       </div>
 
       <span class="form-validator" *ngIf="numError">A date range or number of days is required</span>
+
+
+      <div class="invite-password">
+        <label>Invitation password</label>
+        <h5 class="pw-info" (click)="showInfo = true">?</h5>
+
+        <div class="show-pw-info" *ngIf="showInfo">
+          <h5>This password is applicable when you want to invite users through an invitation link.</h5>
+          <h5>A password will ensure only valid users can join your itinerary through the invite.</h5>
+          <h5>You can set this password now or amend it later via the itinerary's settings.</h5>
+        </div>
+
+        <input type="text" formControlName="invite_password">
+      </div>
+
 
       <label>Privacy</label>
       <h5 *ngIf="private && corporate" class="label-note">Only you can view this itinerary.</h5>

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter, Renderer2, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter, HostListener, Renderer2, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
@@ -39,6 +39,8 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
   dateError = false;
   numError = false;
 
+  showInfo = false;
+
   constructor(
     private router: Router,
     private renderer: Renderer2,
@@ -51,6 +53,7 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
         'date_from': '',
         'date_to': '',
         'num_days': '',
+        'invite_password': '',
       });
     }
 
@@ -60,10 +63,22 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
         this.currentUser = result;
         this.checkStatus();
       })
+
+    let password = Math.random().toString(36).substr(2, 8);
+    this.itineraryForm.patchValue({
+      invite_password: password
+    })
   }
 
   ngOnDestroy() {
     if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
+  }
+
+  @HostListener('document:click', ['$event'])
+  checkClick(event) {
+    if(!event.target.classList.contains("pw-info")) {
+      this.showInfo = false;
+    }
   }
 
   checkStatus() {

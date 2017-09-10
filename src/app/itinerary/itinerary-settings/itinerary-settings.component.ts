@@ -153,11 +153,12 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
       }
     }
 
-    if(!event.target.classList.contains("cs-info")) {
-      for (let i = 0; i < this.showOptions.length; i++) {
-        this.copyInfo = false;
-        this.shareInfo = false;
-      }
+    if(!event.target.classList.contains("copy-info")) {
+      this.copyInfo = false;
+    }
+
+    if(!event.target.classList.contains("share-info")) {
+      this.shareInfo = false;
     }
   }
 

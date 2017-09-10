@@ -12,8 +12,40 @@
 }
 
 .label-note  {
-  padding-bottom: 3px;
+  padding: 0 0 3px 3px;
 }
+
+
+
+// password
+
+.invite-password input  {
+  width: 300px;
+}
+
+
+.pw-info  {
+  position: absolute;
+  margin: -20px 0 0 115px;
+  padding: 0 4px;
+  border: 1px solid;
+  border-radius: 50%;
+
+  &:hover {
+    cursor: pointer;
+    color: #808080;
+    border: 2px solid #808080;
+  }
+}
+
+.show-pw-info {
+  position: absolute;
+  padding: 10px;
+  background-color: white;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
+}
+
+
 
 /* privacy */
 .toggle-button-true  {
