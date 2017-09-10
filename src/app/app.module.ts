@@ -9,6 +9,8 @@ import * as Raven from 'raven-js';
 
 import { AppComponent }         from './app.component';
 import { AuthGuard }            from './_guards/auth.guard';
+import { AdminGuard }           from './_guards/admin.guard';
+
 import { LandingPageComponent } from './landing-page';
 import { AuthComponent, AuthService, SignupComponent, SigninComponent, ResetComponent, ForgotPasswordComponent } from './auth';
 
@@ -161,7 +163,7 @@ import { PlaceComponent } from './place';
     routing,
     Daterangepicker
   ],
-  providers: [ Title, AdminService, LoadingService, AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, FileuploadService, CommentService, ErrorMessageService, FavouriteService, RecommendationService, AuthGuard ],
+  providers: [ Title, AdminService, LoadingService, AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, FileuploadService, CommentService, ErrorMessageService, FavouriteService, RecommendationService, AuthGuard, AdminGuard ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

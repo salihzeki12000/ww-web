@@ -23,6 +23,7 @@ export class UserService  {
   getCurrentUser()  {
     const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
     const headers = new Headers({ 'Content-Type': 'application/json' });
+
     return this.http.get(this.url + '/users/currentUser' + token, { headers: headers })
                     .map((response: Response) => {
                       this.currentUser = response.json().user;

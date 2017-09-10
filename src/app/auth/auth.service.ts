@@ -185,7 +185,6 @@ export class AuthService  {
     } else  {
       this.router.navigateByUrl('/');
     }
-
   }
 
   isLoggedIn()  {

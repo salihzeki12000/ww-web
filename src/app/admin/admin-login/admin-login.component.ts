@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Title }  from '@angular/platform-browser';
 
 import { LoadingService } from '../../loading';
 import { AdminService }   from '../admin.service';
@@ -14,6 +15,7 @@ export class AdminLoginComponent implements OnInit {
   signinForm: FormGroup;
 
   constructor(
+    private titleService: Title,
     private router: Router,
     private adminService: AdminService,
     private formBuilder: FormBuilder,
@@ -26,6 +28,7 @@ export class AdminLoginComponent implements OnInit {
 
   ngOnInit() {
     this.loadingService.setLoader(false, "");
+    this.titleService.setTitle("Admin Log In");
   }
 
   onSubmit()  {

@@ -4,24 +4,28 @@
 
 <div class="verify-container">
 
-  <!-- <form [formGroup]="resetForm" (ngSubmit)="resetPassword()">
+  <h3 *ngIf="validated">{{ validatedMsg }}</h3>
+
+  <form [formGroup]="passwordForm" (ngSubmit)="setPassword()" *ngIf="!validated">
     <div class="form-housing">
 
-      <label>New Password <span class="label-note"> ( at least 6 characters )</span></label>
-      <input type="password" formControlName="newPassword">
+      <h4>{{ admin?.email }}, please provide a password to complete your admin account set up.</h4>
+
+      <label>Password <span class="label-note"> ( at least 6 characters )</span></label>
+      <input type="password" formControlName="password">
       <span class="form-validator"
-        *ngIf="resetForm.get('newPassword').touched && resetForm.get('newPassword').invalid">Password is not valid. Please enter at least 6 characters</span>
+        *ngIf="passwordForm.get('password').touched && passwordForm.get('password').invalid">Password is not valid. Please enter at least 6 characters</span>
 
 
-      <label>Confirm New Password</label>
-      <input type="password" formControlName="confirmNewPassword">
+      <label>Confirm Password</label>
+      <input type="password" formControlName="confirmPassword">
       <span class="form-validator"
-        *ngIf="resetForm.get('confirmNewPassword').dirty && resetForm.get('confirmNewPassword').invalid">Passwords do not match</span>
+        *ngIf="passwordForm.get('confirmPassword').dirty && passwordForm.get('confirmPassword').invalid">Passwords do not match</span>
     </div>
 
     <div class="action-response">
-      <button type="submit" class="action-response-primary" [disabled]="!resetForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> RESET</h5></button>
+      <button type="submit" class="action-response-primary" [disabled]="!passwordForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> CONFIRM</h5></button>
     </div>
-  </form> -->
+  </form>
 
 </div>

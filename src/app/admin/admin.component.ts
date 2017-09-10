@@ -1,6 +1,8 @@
-  import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Title }        from '@angular/platform-browser';
 
 import { LoadingService}  from '../loading';
+import { AdminService }   from './admin.service';
 
 @Component({
   selector: 'ww-admin',
@@ -14,10 +16,19 @@ export class AdminComponent implements OnInit {
   showAddNew = false;
 
   constructor(
+    private titleService: Title,
+    private adminService: AdminService,
     private loadingService: LoadingService) { }
 
   ngOnInit() {
     this.loadingService.setLoader(false, "");
+    this.titleService.setTitle("Admin Home");
+
+    this.adminService.getCurrentAdmin().subscribe(
+      result => {
+        console.log(result);
+      }
+    )
   }
 
   showAddNewOptions() {

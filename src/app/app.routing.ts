@@ -1,6 +1,6 @@
 import { Routes, RouterModule } from '@angular/router';
 
-import { AdminComponent, AdminLoginComponent, ADMIN_ROUTES } from './admin';
+import { AdminComponent, AdminLoginComponent, AdminVerifyComponent, ADMIN_ROUTES } from './admin';
 import { LandingPageComponent }         from './landing-page';
 import { MeComponent, HOME_ROUTES }     from './me';
 import { PrivacyPolicyComponent }       from './privacy-policy';
@@ -12,7 +12,8 @@ import { ItineraryPreviewComponent,
 
 import { UserComponent, UserVerifyComponent, USER_ROUTES, UserUnverifiedComponent }   from './user';
 import { ResetComponent, ForgotPasswordComponent }           from './auth';
-import { AuthGuard } from './_guards/auth.guard';
+import { AuthGuard }  from './_guards/auth.guard';
+import { AdminGuard } from './_guards/admin.guard';
 
 const APP_ROUTES: Routes = [
   { path: '', component: LandingPageComponent },
@@ -27,8 +28,10 @@ const APP_ROUTES: Routes = [
   { path: 'invite/me/:id', component: ItineraryInviteComponent },
   { path: 'place/:id', component: PlaceComponent },
   { path: 'preview', component: ItineraryPreviewComponent, children: PREVIEW_ROUTES },
-  { path: 'admin', component: AdminComponent, children: ADMIN_ROUTES },
+
+  { path: 'admin', component: AdminComponent, children: ADMIN_ROUTES, canActivate: [AdminGuard] },
   { path: 'admin-login', component: AdminLoginComponent },
+  { path: 'admin-verify/:token/:id', component: AdminVerifyComponent },
 ]
 
 export const routing = RouterModule.forRoot(APP_ROUTES, { useHash: true })
