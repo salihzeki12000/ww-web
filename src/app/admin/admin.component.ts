@@ -35,7 +35,6 @@ export class AdminComponent implements OnInit {
       result => {
         this.admin = result.admin;
         this.username = this.admin['email'].split('@')[0]
-        console.log(result);
       }
     )
   }

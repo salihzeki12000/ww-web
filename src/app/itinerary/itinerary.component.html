@@ -51,7 +51,7 @@
         <li class="add-new" (click)="showAddNewOptions()" *ngIf="!preview">
           <a><i class="fa fa-plus" aria-hidden="true"></i> ADD NEW</a>
         </li>
-        <li (click)="copy()" class="copy-itinerary" *ngIf="preview && !creator"><a>COPY ITINERARY</a></li>
+        <li (click)="copy()" class="copy-itinerary" *ngIf="preview && !creator"><a><i class="fa fa-clone" aria-hidden="true"></i> COPY ITINERARY</a></li>
         <li (click)="routeToPreview()" *ngIf="!preview && itinerary?.corporate.status"><a>PREVIEW</a></li>
         <li (click)="activateTab('DESCRIPTION')" routerLinkActive="active"><a [routerLink]="['description']">DESCRIPTION</a></li>
         <li (click)="activateTab('SUMMARY')" routerLinkActive="active"><a [routerLink]="['summary']">SUMMARY</a></li>

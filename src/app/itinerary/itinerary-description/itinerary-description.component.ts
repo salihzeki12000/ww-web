@@ -234,11 +234,12 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
 
   // edit description
 
-  save(content) {
+  save(header, content) {
     this.editing = false;
 
     this.itinerary['formatted_description'] = content.replace(/\r?\n/g, '<br/> ');
     this.itinerary['description']['content'] = content;
+    this.itinerary['description']['header'] = header;
 
     this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
       result => {

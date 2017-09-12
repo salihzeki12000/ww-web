@@ -247,10 +247,12 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
 
     if(value.photos) {
       let credit = value.photos[0].html_attributions[0];
+
       this.displayPic = {
         url: value.photos[0].getUrl({'maxWidth': 300, 'maxHeight': 250}),
         credit: credit.slice(0,3) + 'target="_blank" ' + credit.slice(3,credit.length)
       };
+
       if(value.photos.length > 5)  {
         index = 5;
       } else  {

@@ -71,7 +71,7 @@ export class AdminService {
   getCurrentAdmin() {
     const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
     const headers = new Headers({ 'Content-Type': 'application/json' });
-    console.log(token)
+
     return this.http.get(this.url + '/admin/currentAdmin' + token, { headers: headers })
                     .map((response: Response) => {
                       this.updateCurrentAdmin.next(response.json().admin);

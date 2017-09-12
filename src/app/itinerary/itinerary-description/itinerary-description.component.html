@@ -24,6 +24,7 @@
     <div *ngIf="!editing">
       <i *ngIf="!preview" class="fa fa-pencil" aria-hidden="true" (click)="editing = true"></i>
 
+      <h2 *ngIf="itinerary?.description.header">{{ itinerary?.description.header }}</h2>
       <h4 [innerHTML]="itinerary?.formatted_description"></h4>
 
       <div *ngIf="itinerary?.formatted_description === ''">
@@ -34,12 +35,13 @@
     </div>
 
     <div *ngIf="editing">
-      <textarea #content rows="8"
+      <input type="text" #header [value]="itinerary?.description.header">
+      <textarea #content rows="10"
         [value]="itinerary?.description.content"></textarea>
 
       <div class="action-response">
         <h5 class="action-response-secondary" (click)="editing = false">CANCEL</h5>
-        <h5 class="action-response-primary" (click)="save(content.value)">SAVE</h5>
+        <h5 class="action-response-primary" (click)="save(header.value, content.value)">SAVE</h5>
       </div>
     </div>
 
