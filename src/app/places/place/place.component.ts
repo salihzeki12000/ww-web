@@ -22,6 +22,7 @@ export class PlaceComponent implements OnInit {
 
   place;
   placeForm: FormGroup;
+  formatted_hours = '';
   pictureOptions = [];
   placeID;
   reviews = [];
@@ -85,6 +86,10 @@ export class PlaceComponent implements OnInit {
     this.pictureOptions = this.place['photos'];
     this.placeID = this.place['place_id'];
 
+    if(this.place['opening_hours']) {
+      this.formatted_hours = this.place['opening_hours'].replace(/\r?\n/g, '<br/> ');
+    }
+    
     this.placeForm.patchValue({
       name: this.place['name'],
       // country: this.place['country'],
@@ -132,6 +137,10 @@ export class PlaceComponent implements OnInit {
       this.reviews = place['reviews'];
       this.loadingService.setLoader(false, "");
     })
+  }
+
+  logHours(h) {
+    this.formatted_hours = h.replace(/\r?\n/g, '<br/> ');
   }
 
   reposition(i, j)  {

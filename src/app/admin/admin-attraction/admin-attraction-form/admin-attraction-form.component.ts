@@ -76,7 +76,6 @@ export class AdminAttractionFormComponent implements OnInit {
     this.placeID = value['place_id'];
 
     let opening_hours = this.getOpeningHours(value.opening_hours);
-    this.formatted_hours = opening_hours.replace(/\r?\n/g, '<br/> ');
 
     this.reviews = value.reviews;
     this.formatReviews();
