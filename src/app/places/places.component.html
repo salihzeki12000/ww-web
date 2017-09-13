@@ -1,0 +1,17 @@
+<div class="places">
+  <div class="places-header">
+    <h5>S/NO</h5>
+    <h5>NAME</h5>
+    <h5>ADDRESS</h5>
+  </div>
+
+  <div class="places-list">
+    <div *ngFor="let place of places; let i = index" class="place" (click)="routeToPlace(place)">
+      <!-- <ww-place [place]="place"></ww-place> -->
+      <h5>{{ i +1 }}</h5>
+      <h5>{{ place?.name }}</h5>
+      <h5>{{ place?.formatted_address }}</h5>
+    </div>
+  </div>
+
+</div>

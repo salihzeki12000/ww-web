@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 declare var google:any;
 
 import { LoadingService } from '../../../loading';
-import { PlaceService }   from '../../../place';
+import { PlaceService }   from '../../../places';
 
 @Component({
   selector: 'ww-admin-attraction-form',

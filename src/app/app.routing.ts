@@ -4,7 +4,7 @@ import { AdminComponent, AdminLoginComponent, AdminVerifyComponent, ADMIN_ROUTES
 import { LandingPageComponent }         from './landing-page';
 import { MeComponent, HOME_ROUTES }     from './me';
 import { PrivacyPolicyComponent }       from './privacy-policy';
-import { PlaceComponent }               from './place';
+import { PlaceDisplayComponent }        from './places';
 import { ItineraryPreviewComponent,
          ItineraryInviteComponent,
          ItineraryPrintComponent,
@@ -26,7 +26,7 @@ const APP_ROUTES: Routes = [
   { path: 'wondererwanderer/:id', component: UserComponent, children: USER_ROUTES, canActivate: [AuthGuard] },
   { path: 'save-print/:id', component: ItineraryPrintComponent, canActivate: [AuthGuard] },
   { path: 'invite/me/:id', component: ItineraryInviteComponent },
-  { path: 'place/:id', component: PlaceComponent },
+  { path: 'place/:id', component: PlaceDisplayComponent },
   { path: 'preview', component: ItineraryPreviewComponent, children: PREVIEW_ROUTES },
 
   { path: 'admin', component: AdminComponent, children: ADMIN_ROUTES, canActivate: [AdminGuard] },
