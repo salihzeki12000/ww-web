@@ -67,6 +67,7 @@ export class PlaceComponent implements OnInit {
       this.placeService.getPlace(id).subscribe(
         result => {
           this.place = result.place;
+          console.log(this.place);
           this.patchValue();
         }
       )
@@ -89,10 +90,10 @@ export class PlaceComponent implements OnInit {
     if(this.place['opening_hours']) {
       this.formatted_hours = this.place['opening_hours'].replace(/\r?\n/g, '<br/> ');
     }
-    
+
     this.placeForm.patchValue({
       name: this.place['name'],
-      // country: this.place['country'],
+      country: this.place['country']['name'],
       // city: this.place[''],
       description: this.place['description'],
       sub_description: this.place['sub_description'],

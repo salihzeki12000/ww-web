@@ -199,7 +199,7 @@ export class GoogleFavComponent implements OnInit, OnDestroy {
     for (let i = 0; i < address.length; i++) {
       if(address[i]['types'][0] === 'country')  {
         let country = address[i]['long_name'];
-        this.getCountryLatLng(country)
+        this.getCountryLatLng(country);
       }
     }
   }

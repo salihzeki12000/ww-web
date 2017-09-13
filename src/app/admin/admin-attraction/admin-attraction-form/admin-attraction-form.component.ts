@@ -4,6 +4,7 @@ declare var google:any;
 
 import { LoadingService } from '../../../loading';
 import { PlaceService }   from '../../../places';
+import { CountryService } from '../../../countries';
 
 @Component({
   selector: 'ww-admin-attraction-form',
@@ -27,8 +28,13 @@ export class AdminAttractionFormComponent implements OnInit {
   showContactDetails3 = false;
 
   details = true;
+  country;
+  countries;
+  countriesName;
+  countryID;
 
   constructor(
+    private countryService: CountryService,
     private loadingService: LoadingService,
     private placeService: PlaceService,
     private formBuilder: FormBuilder) {
@@ -51,6 +57,19 @@ export class AdminAttractionFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.countryService.getCountries().subscribe(
+      result => {
+        this.countries = result.countries;
+        this.getCountriesName();
+      })
+  }
+
+  getCountriesName()  {
+    this.countriesName = [];
+
+    for(let i = 0; i < this.countries.length; i++) {
+      this.countriesName.push(this.countries[i]['name']);
+    }
   }
 
   getAttractionDetails(value)  {
@@ -65,6 +84,7 @@ export class AdminAttractionFormComponent implements OnInit {
     for (let i = 0; i < address_components.length; i++) {
       if(address_components[i]['types'][0] === 'country')  {
         country = address_components[i]['long_name'];
+        this.getCountryLatLng(country);
       }
       if(address_components[i]['types'][0] === 'administrative_area_level_1') {
         city += ', ' + address_components[i]['long_name'];
@@ -152,6 +172,38 @@ export class AdminAttractionFormComponent implements OnInit {
     return output;
   }
 
+  getCountryLatLng(country)  {
+    let geocoder = new google.maps.Geocoder;
+
+    geocoder.geocode({address: country}, (result, status) =>  {
+      if(status === 'OK') {
+        let lat = result[0]['geometry'].location.lat();
+        let lng = result[0]['geometry'].location.lng();
+
+        this.country = {
+          name: country,
+          lat: lat,
+          lng: lng
+        }
+
+        this.checkCountry();
+      }
+    })
+  }
+
+  checkCountry() {
+    let index = this.countriesName.indexOf(this.country['name'])
+
+    if(index > -1)  {
+      this.countryID = this.countries[index];
+    } else {
+      this.countryService.addCountry(this.country).subscribe(
+        result => {
+          this.countryID = result.country;
+        })
+    }
+  }
+
   formatReviews() {
     for (let i = 0; i < this.reviews.length; i++) {
       this.reviews[i]['author'] = "<a href='" + this.reviews[i]['author_url'] + "' target='_blank'>" + this.reviews[i]['author_name'] + "</a>";
@@ -213,6 +265,8 @@ export class AdminAttractionFormComponent implements OnInit {
     this.loadingService.setLoader(true, "Saving attraction...");
 
     let place = this.newAttractionForm.value;
+
+    place['country'] = this.countryID;
 
     this.placeService.addPlace(place).subscribe(
       result => {
