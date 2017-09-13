@@ -45,6 +45,7 @@ import { CapitalisePipe } from './pipes';
 import { LocationPinComponent } from './location-pin/location-pin.component';
 import { RecommendationsComponent, RecommendationComponent, RecommendationDisplayComponent, RecommendationService, AddRecommendationComponent } from './recommendations';
 import { PlaceComponent, PlacesComponent, PlaceDisplayComponent, PlaceService } from './places';
+import { CountriesComponent, CountryComponent, CountryService } from './countries';
 
 
 // Raven
@@ -153,7 +154,9 @@ import { PlaceComponent, PlacesComponent, PlaceDisplayComponent, PlaceService } 
     AdminVerifyComponent,
     AdminFormComponent,
     PlacesComponent,
-    PlaceDisplayComponent
+    PlaceDisplayComponent,
+    CountriesComponent,
+    CountryComponent
   ],
   imports: [
     BrowserModule,
@@ -165,7 +168,7 @@ import { PlaceComponent, PlacesComponent, PlaceDisplayComponent, PlaceService } 
     routing,
     Daterangepicker
   ],
-  providers: [ Title, AdminService, LoadingService, AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, FileuploadService, CommentService, ErrorMessageService, FavouriteService, RecommendationService, PlaceService, AuthGuard, AdminGuard ],
+  providers: [ Title, AdminService, LoadingService, AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, FileuploadService, CommentService, ErrorMessageService, FavouriteService, RecommendationService, PlaceService, CountryService, AuthGuard, AdminGuard ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

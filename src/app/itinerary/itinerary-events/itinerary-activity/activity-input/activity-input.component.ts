@@ -10,6 +10,7 @@ import { ItineraryEventService } from '../../itinerary-event.service';
 import { FlashMessageService }   from '../../../../flash-message';
 import { FileuploadService }     from '../../../../shared';
 import { LoadingService }        from '../../../../loading';
+import { CountryService }        from '../../../../countries';
 
 @Component({
   selector: 'ww-activity-input',
@@ -63,9 +64,14 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   inputValue = '';
   fileTypeError = false;
 
+  countries;
+  countriesName;
+  countryID;
+
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
+    private countryService: CountryService,
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
     private flashMessageService: FlashMessageService,
@@ -105,6 +111,13 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
 
     this.dateSubscription = this.itineraryService.updateDate.subscribe(
       result => { this.dateRange  = Object.keys(result).map(key => result[key]); })
+
+    this.countryService.getCountries().subscribe(
+      result => {
+        this.countries = result.countries;
+        this.getCountriesName();
+      }
+    )
   }
 
   @HostListener('document:click', ['$event'])
@@ -154,6 +167,14 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
       this.formBuilder.group({ value: 'sight-seeing', icon: 'eye', checked: false }),
     ])
     return this.categories;
+  }
+
+  getCountriesName()  {
+    this.countriesName = [];
+
+    for(let i = 0; i < this.countries.length; i++) {
+      this.countriesName.push(this.countries[i]['name']);
+    }
   }
 
 
@@ -375,8 +396,23 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
           lat: lat,
           lng: lng
         }
+
+        this.checkCountry();
       }
     })
+  }
+
+  checkCountry() {
+    let index = this.countriesName.indexOf(this.country['name'])
+
+    if(index > -1)  {
+      this.countryID = this.countries[index];
+    } else {
+      this.countryService.addCountry(this.country).subscribe(
+        result => {
+          this.countryID = result.country;
+        })
+    }
   }
 
   patchLocationData() {
@@ -468,7 +504,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     }
 
     newActivity['photos'] = this.pictureOptions;
-    newActivity['country'] = this.country;
+    newActivity['country'] = this.countryID;
     newActivity['created_at'] = new Date();
     newActivity['type'] = 'activity';
     newActivity['location'] = !this.noLocation;

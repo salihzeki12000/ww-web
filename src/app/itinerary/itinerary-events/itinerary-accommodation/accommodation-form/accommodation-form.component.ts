@@ -13,6 +13,7 @@ import { UserService }         from '../../../../user';
 import { FlashMessageService } from '../../../../flash-message';
 import { FileuploadService }   from '../../../../shared';
 import { LoadingService }      from '../../../../loading';
+import { CountryService }      from '../../../../countries';
 
 @Component({
   selector: 'ww-accommodation-form',
@@ -72,6 +73,10 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
   inputValue = '';
   fileTypeError = false;
 
+  countries;
+  countriesName;
+  countryID;
+
   constructor(
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
@@ -79,6 +84,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
     private flashMessageService: FlashMessageService,
     private fileuploadService: FileuploadService,
     private loadingService: LoadingService,
+    private countryService: CountryService,
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder) {
@@ -118,6 +124,13 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
     })
 
     setTimeout(() => {this.initMap()},100);
+
+    this.countryService.getCountries().subscribe(
+      result => {
+        this.countries = result.countries;
+        this.getCountriesName();
+      }
+    )
   }
 
   @HostListener('document:click', ['$event'])
@@ -147,6 +160,14 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
     })
   }
 
+  getCountriesName()  {
+    this.countriesName = [];
+
+    for(let i = 0; i < this.countries.length; i++) {
+      this.countriesName.push(this.countries[i]['name']);
+    }
+  }
+
   // progress bar
   search()  {
     this.step1 = false;
@@ -156,7 +177,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
   backToSearch() {
     this.step1 = true;
     this.searchDone = false;
-    
+
     this.addAccommodationForm.reset();
     this.displayPic = undefined;
     this.pictureOptions = [];
@@ -301,8 +322,23 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
           lat: lat,
           lng: lng
         }
+
+        this.checkCountry();
       }
     })
+  }
+
+  checkCountry() {
+    let index = this.countriesName.indexOf(this.country['name'])
+
+    if(index > -1)  {
+      this.countryID = this.countries[index];
+    } else {
+      this.countryService.addCountry(this.country).subscribe(
+        result => {
+          this.countryID = result.country;
+        })
+    }
   }
 
   patchLocationData() {
@@ -408,7 +444,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
     }
 
     newAccommodation['photos'] = this.pictureOptions;
-    newAccommodation['country'] = this.country;
+    newAccommodation['country'] = this.countryID;
     newAccommodation['date'] = newAccommodation['check_in_date'];
     newAccommodation['time'] = newAccommodation['check_in_time'];
     newAccommodation['type'] = 'accommodation';

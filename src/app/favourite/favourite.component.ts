@@ -59,6 +59,7 @@ export class FavouriteComponent implements OnInit, OnDestroy {
     this.favSubscription = this.favouriteService.updateFavs.subscribe(
       result => {
         this.favs = result;
+        console.log(this.favs)
         this.displayFavs = Object.assign([], this.favs);
         this.initMap();
         this.setInitPan();

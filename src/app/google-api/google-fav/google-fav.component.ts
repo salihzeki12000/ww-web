@@ -4,7 +4,8 @@ declare var google:any;
 
 import { User, UserService }  from '../../user';
 import { LoadingService }     from '../../loading';
-import { FavouriteService }     from '../../favourite';
+import { FavouriteService }   from '../../favourite';
+import { CountryService }     from '../../countries';
 
 @Component({
   selector: 'ww-google-fav',
@@ -37,11 +38,15 @@ export class GoogleFavComponent implements OnInit, OnDestroy {
 
   currentUserSubscription: Subscription;
   currentUser: User;
+  countries;
+  countriesName;
+  countryID;
 
   @Output() cancelFav = new EventEmitter<boolean>();
 
   constructor(
     private renderer: Renderer,
+    private countryService: CountryService,
     private userService: UserService,
     private favouriteService: FavouriteService,
     private loadingService: LoadingService) { }
@@ -54,6 +59,13 @@ export class GoogleFavComponent implements OnInit, OnDestroy {
       })
 
     setTimeout(() => {this.initMap()},100);
+
+    this.countryService.getCountries().subscribe(
+      result => {
+        this.countries = result.countries;
+        this.getCountriesName();
+      }
+    )
   }
 
   ngOnDestroy() {
@@ -70,6 +82,13 @@ export class GoogleFavComponent implements OnInit, OnDestroy {
     })
   }
 
+  getCountriesName()  {
+    this.countriesName = [];
+
+    for(let i = 0; i < this.countries.length; i++) {
+      this.countriesName.push(this.countries[i]['name']);
+    }
+  }
 
   // progress tracker
 
@@ -198,8 +217,23 @@ export class GoogleFavComponent implements OnInit, OnDestroy {
           lat: lat,
           lng: lng
         }
+
+        this.checkCountry();
       }
     })
+  }
+
+  checkCountry() {
+    let index = this.countriesName.indexOf(this.country['name'])
+
+    if(index > -1)  {
+      this.countryID = this.countries[index];
+    } else {
+      this.countryService.addCountry(this.country).subscribe(
+        result => {
+          this.countryID = result.country;
+        })
+    }
   }
 
   pinLocation(lat, lng)  {
@@ -314,7 +348,7 @@ export class GoogleFavComponent implements OnInit, OnDestroy {
       lng: this.lng,
       name: this.name,
       formatted_address: this.formatted_address,
-      country: this.country,
+      country: this.countryID,
       international_phone_number: this.international_phone_number,
       website: this.website,
       place_id: this.placeId,
