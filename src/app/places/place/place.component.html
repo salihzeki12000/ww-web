@@ -5,17 +5,22 @@
 <form [formGroup]="placeForm" (ngSubmit)="onSubmit()">
 
   <div class="details-section-container">
+    <h5>Last updated {{ updated?.date }}</h5>
+
     <h5 class="form-section-header">BASIC DETAILS</h5>
     <div class="details-section-container">
 
       <label>NAME</label>
       <input type="text" formControlName="name" #name>
 
-      <label>DESCRIPTION ({{description?.value.length}} characters) - keep to 290 characters</label>
+      <label>DESCRIPTION ({{description?.value.length}} characters) - keep to 300 characters</label>
       <textarea rows="6" formControlName="description" #description></textarea>
 
-      <label>SUB-DESCRIPTION ({{sub_description?.value.length}} characters) - keep to 290 characters</label>
+      <label>SUB-DESCRIPTION ({{sub_description?.value.length}} characters) - keep to 300 characters</label>
       <textarea rows="6" formControlName="sub_description" #sub_description></textarea>
+
+      <label>TIPS ({{tips?.value.length}} characters)</label>
+      <textarea rows="6" formControlName="tips" #tips></textarea>
     </div>
 
 
@@ -37,13 +42,13 @@
       <textarea rows="3" formControlName="formatted_address" #formatted_address></textarea>
 
       <label>LATITUDE <span class="required"> - for internal use</span></label>
-      <input type="text" formControlName="lat">
+      <h4>{{ place?.lat }}</h4>
 
       <label>LONGITUDE <span class="required"> - for internal use</span></label>
-      <input type="text" formControlName="lng">
+      <h4>{{ place?.lng }}</h4>
 
       <label>COUNTRY <span class="required"> - for internal use</span></label>
-      <input type="text" formControlName="country">
+      <h4>{{ place?.country.name }}</h4>
 
       <label>CITY <span class="required"> - for internal use</span></label>
       <input type="text" formControlName="city">
@@ -138,6 +143,11 @@
 
       <div class="content-details" *ngIf="sub_description?.value !== ''">
         <h4>{{ sub_description?.value }}</h4>
+      </div>
+
+      <div class="content-details" *ngIf="tips?.value !== ''">
+        <h5 class="tips">TIPS</h5>
+        <h4>{{ tips?.value }}</h4>
       </div>
 
       <div class="sub-content">
@@ -243,6 +253,11 @@
           <h5>{{ sub_description?.value }}</h5>
         </div>
 
+        <div class="show-details" *ngIf="tips?.value !== ''">
+          <h6 class="tips">TIPS</h6>
+          <h5>{{ tips?.value }}</h5>
+        </div>
+
         <div class="toggle-contact-details" (click)="showContactDetails6 = !showContactDetails6">
           <h5>Address and contact number</h5>
           <h5><i class="fa fa-angle-down" aria-hidden="true"></i></h5>
@@ -305,6 +320,11 @@
 
         <div class="show-details" *ngIf="sub_description?.value !== ''">
           <h5>{{ sub_description?.value }}</h5>
+        </div>
+
+        <div class="show-details" *ngIf="tips?.value !== ''">
+          <h6 class="tips">TIPS</h6>
+          <h5>{{ tips?.value }}</h5>
         </div>
 
         <div class="toggle-contact-details" (click)="showContactDetails3 = !showContactDetails3">

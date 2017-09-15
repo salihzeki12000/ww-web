@@ -4,6 +4,7 @@ form  {
   width: 460px;
   padding: 0 10px;
   overflow: auto;
+  border-right: 1px solid lightgray;
 }
 
 .place  * {
@@ -22,4 +23,18 @@ form  {
 
 .details-section-container h4 {
   margin-bottom: 20px;
+}
+
+
+.tips {
+  margin-top: 30px;
+  color: firebrick;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+
+.display-600 .tips,
+.display-300 .tips  {
+  margin-top: 10px;
 }

@@ -21,6 +21,38 @@ export class PlacesComponent implements OnInit {
     )
   }
 
+  sortNameA()  {
+    this.places.sort((a,b)  =>  {
+      if(a['name'] < b['name']) return -1;
+      if(a['name'] > b['name']) return 1;
+      return 0;
+    })
+  }
+
+  sortNameD()  {
+    this.places.sort((a,b)  =>  {
+      if(a['name'] < b['name']) return 1;
+      if(a['name'] > b['name']) return -1;
+      return 0;
+    })
+  }
+
+  sortCountryA()  {
+    this.places.sort((a,b)  =>  {
+      if(a['country']['name'] < b['country']['name']) return -1;
+      if(a['country']['name'] > b['country']['name']) return 1;
+      return 0;
+    })
+  }
+
+  sortCountryD()  {
+    this.places.sort((a,b)  =>  {
+      if(a['country']['name'] < b['country']['name']) return 1;
+      if(a['country']['name'] > b['country']['name']) return -1;
+      return 0;
+    })
+  }
+
   routeToPlace(place) {
     this.router.navigateByUrl('admin/place/' + place["_id"]);
   }

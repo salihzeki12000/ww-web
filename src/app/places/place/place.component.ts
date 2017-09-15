@@ -21,6 +21,7 @@ export class PlaceComponent implements OnInit {
   lng;
 
   place;
+  updated;
   placeForm: FormGroup;
   formatted_hours = '';
   pictureOptions = [];
@@ -48,6 +49,7 @@ export class PlaceComponent implements OnInit {
         'city': '',
         'description': '',
         'sub_description': '',
+        'tips': '',
         'opening_hours': '',
         'entryFee': '',
         'website': '',
@@ -67,7 +69,6 @@ export class PlaceComponent implements OnInit {
       this.placeService.getPlace(id).subscribe(
         result => {
           this.place = result.place;
-          console.log(this.place);
           this.patchValue();
         }
       )
@@ -91,12 +92,17 @@ export class PlaceComponent implements OnInit {
       this.formatted_hours = this.place['opening_hours'].replace(/\r?\n/g, '<br/> ');
     }
 
+    if(this.place['updated'].length > 0)  {
+      this.updated = this.place['updated'][0];
+    }
+
     this.placeForm.patchValue({
       name: this.place['name'],
-      country: this.place['country']['name'],
+      country: this.place['country'],
       // city: this.place[''],
       description: this.place['description'],
       sub_description: this.place['sub_description'],
+      tips: this.place['tips'],
       opening_hours: this.place['opening_hours'],
       entryFee: this.place['entry_fee'],
       website: this.place['website'],
@@ -136,8 +142,15 @@ export class PlaceComponent implements OnInit {
 
     service.getDetails({placeId: this.placeID}, (place, status) =>  {
       this.reviews = place['reviews'];
+      this.formatReviews();
       this.loadingService.setLoader(false, "");
     })
+  }
+
+  formatReviews() {
+    for (let i = 0; i < this.reviews.length; i++) {
+      this.reviews[i]['author'] = "<a href='" + this.reviews[i]['author_url'] + "' target='_blank'>" + this.reviews[i]['author_name'] + "</a>";
+    }
   }
 
   logHours(h) {
@@ -165,10 +178,12 @@ export class PlaceComponent implements OnInit {
       this.place[key] = place[key];
     }
 
-    this.place['updated'].push({
+    this.place['updated'].unshift({
       admin: this.admin['_id'],
       date: new Date()
-    })
+    });
+
+    this.updated = this.place['updated'][0];
 
     this.placeService.editPlace(this.place).subscribe(
       result => {

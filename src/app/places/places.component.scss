@@ -7,7 +7,8 @@
   margin-top: -30px;
   padding: 5px;
   background-color: #6494ED;
-  border: 1px solid #6494ED;
+  border: 2px solid #6494ED;
+  border-bottom: none;
 }
 
 .places-header *  {
@@ -23,7 +24,7 @@
 }
 
 .place  {
-  width: 759px;
+  width: 940px;
   padding: 5px;
   border: 1px solid lightgray;
 
@@ -44,8 +45,8 @@
   }
 }
 
-.places-header *,
-.place * {
+.places-header h5,
+.place > h5 {
   display: inline-block;
   vertical-align: text-top;
   border-right: 1px solid lightgray;
@@ -72,5 +73,31 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.places-header h5:nth-of-type(4),
+.place h5:nth-of-type(4)  {
+  width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.places-header h5:nth-of-type(5),
+.place h5:nth-of-type(5)  {
+  width: 74px;
+  text-align: center;
   border-right: none;
+}
+
+.sort {
+  display: inline-block;
+}
+
+.sort * {
+  margin: 0 3px;
+
+  &:hover {
+    color: #F9FBFB;
+  }
 }

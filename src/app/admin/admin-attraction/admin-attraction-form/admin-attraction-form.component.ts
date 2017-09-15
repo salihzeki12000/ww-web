@@ -44,6 +44,7 @@ export class AdminAttractionFormComponent implements OnInit {
       'city': '',
       'description': '',
       'sub_description': '',
+      'tips': '',
       'opening_hours': '',
       'entryFee': '',
       'website': '',
@@ -120,6 +121,7 @@ export class AdminAttractionFormComponent implements OnInit {
 
     this.newAttractionForm.patchValue({
       name: value.name,
+      description: '',
       formatted_address: value.formatted_address,
       country: country,
       city: city,
@@ -207,12 +209,6 @@ export class AdminAttractionFormComponent implements OnInit {
   formatReviews() {
     for (let i = 0; i < this.reviews.length; i++) {
       this.reviews[i]['author'] = "<a href='" + this.reviews[i]['author_url'] + "' target='_blank'>" + this.reviews[i]['author_name'] + "</a>";
-
-      // if(this.reviews[i]['rating'] >= 1) this.reviews[i]['rating1'] = true;
-      // if(this.reviews[i]['rating'] >= 2) this.reviews[i]['rating2'] = true;
-      // if(this.reviews[i]['rating'] >= 3) this.reviews[i]['rating3'] = true;
-      // if(this.reviews[i]['rating'] >= 4) this.reviews[i]['rating4'] = true;
-      // if(this.reviews[i]['rating'] >= 5) this.reviews[i]['rating5'] = true;
     }
   }
 
@@ -229,6 +225,7 @@ export class AdminAttractionFormComponent implements OnInit {
       'name': '',
       'description': '',
       'sub_description': '',
+      'tips': '',
       'opening_hours': '',
       'entryFee': '',
       'website': '',

@@ -1,16 +1,31 @@
 <div class="places">
   <div class="places-header">
     <h5>S/NO</h5>
-    <h5>NAME</h5>
+    <h5>
+      NAME
+      <div class="sort">
+        <i class="fa fa-sort-alpha-asc" aria-hidden="true" (click)="sortNameA()"></i>
+        <i class="fa fa-sort-alpha-desc" aria-hidden="true" (click)="sortNameD()"></i>
+      </div>
+    </h5>
     <h5>ADDRESS</h5>
+    <h5>
+      COUNTRY
+      <div class="sort">
+        <i class="fa fa-sort-alpha-asc" aria-hidden="true" (click)="sortCountryA()"></i>
+        <i class="fa fa-sort-alpha-desc" aria-hidden="true" (click)="sortCountryD()"></i>
+      </div>
+    </h5>
+    <h5>DESCRIPTION</h5>
   </div>
 
   <div class="places-list">
     <div *ngFor="let place of places; let i = index" class="place" (click)="routeToPlace(place)">
-      <!-- <ww-place [place]="place"></ww-place> -->
       <h5>{{ i +1 }}</h5>
       <h5>{{ place?.name }}</h5>
       <h5>{{ place?.formatted_address }}</h5>
+      <h5>{{ place?.country.name }}</h5>
+      <h5 *ngIf="place.description !== ''"><i class="fa fa-check" aria-hidden="true"></i></h5>
     </div>
   </div>
 
