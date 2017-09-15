@@ -32,7 +32,9 @@ export class ActivityComponent implements OnInit, OnDestroy {
   sameUser;
   mealTag = false;
   showContactDetails = false;
-
+  showHours = true;
+  showSub = false;
+  
   itineraries = [];
 
   showMenu = false;
@@ -108,6 +110,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
     this.activity['formatted_note'] = this.activity['note'].replace(/\r?\n/g, '<br/> ');
 
     this.formatHours();
+    this.formatDescription();
     this.checkMealTag();
     this.initTime();
 
@@ -143,6 +146,17 @@ export class ActivityComponent implements OnInit, OnDestroy {
       this.activity['formatted_hours'] = this.activity['place']['opening_hours'].replace(/\r?\n/g, '<br/> ');
     } else if(this.activity['opening_hours']) {
       this.activity['formatted_hours'] = this.activity['opening_hours'].replace(/\r?\n/g, '<br/> ');
+    }
+  }
+
+  formatDescription() {
+    if(this.activity['place']['description'] !== '')  {
+      this.activity['formatted_description'] = this.activity['place']['description'].replace(/\r?\n/g, '<br/> ');
+      this.showHours = false;
+    }
+
+    if(this.activity['place']['sub_description'] !== '')  {
+      this.activity['formatted_sub_description'] = this.activity['place']['sub_description'].replace(/\r?\n/g, '<br/> ');
     }
   }
 

@@ -70,6 +70,8 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
              result => {
                this.itinerary = result;
 
+               if(this.currentUser) this.checkCopy();
+
                if(this.itinerary['description'])  {
                  this.itinerary['formatted_description'] = this.itinerary['description']['content'].replace(/\r?\n/g, '<br/> ');
                } else  {
@@ -97,6 +99,7 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
     this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
       result => {
         this.events = Object.keys(result).map(key => result[key]);
+        this.formatDescription();
         this.loadingService.setLoader(false, "")
       })
 
@@ -104,9 +107,7 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
       result => {
         this.currentUser = result;
 
-        setTimeout(() =>  {
-          this.checkCopy();
-        }, 1000)
+        if(this.itinerary) this.checkCopy();
       })
 
     this.userSubscription = this.userService.updateDisplayUser.subscribe(
@@ -132,6 +133,23 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
     }
 
     this.dailyNotes = notes;
+  }
+
+  formatDescription() {
+    for (let i = 0; i < this.events.length; i++) {
+      if(this.events[i]['location'])  {
+
+        if(this.events[i]['place']['description']) {
+          this.events[i]['formatted_description'] = this.events[i]['place']['description'].replace(/\r?\n/g, '<br/> ');
+        }
+
+        if(this.events[i]['place']['sub_description']) {
+          this.events[i]['formatted_sub_description'] = this.events[i]['place']['sub_description'].replace(/\r?\n/g, '<br/> ');
+        }
+      }
+
+      this.events[i]['formatted_note'] = this.events[i]['note'].replace(/\r?\n/g, '<br/> ');
+    }
   }
 
   checkCopy() {

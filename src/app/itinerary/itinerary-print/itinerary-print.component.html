@@ -217,6 +217,14 @@
 
             <div *ngIf="event?.place">
 
+              <div class="details-description" *ngIf="event?.place.description">
+                <h4 [innerHTML]="event?.formatted_description"></h4>
+              </div>
+
+              <div class="details-description" *ngIf="event?.place.sub_description">
+                <h4 [innerHTML]="event?.formatted_sub_description"></h4>
+              </div>
+
               <div class="details-item" *ngIf="event?.place.formatted_address">
                 <i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>
                 <h5> {{ event?.place.formatted_address }}</h5>

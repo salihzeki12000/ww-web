@@ -1971,20 +1971,41 @@ ww-resource {
 
 /* display individual item for events / print / recommendation */
 
+.details-description  {
+  margin-bottom: 10px;
+  text-align: justify;
+}
+
+.details-description h4 {
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.details-description h5 {
+  color: #6494ED;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
 .details-item  {
   margin-bottom: 10px;
 }
 
 .details-item > i {
-  vertical-align: top;
+  vertical-align: middle;
   color: grey;
 }
 
 .details-item > h5 {
   display: inline-block;
-  width: 90%;
+  width: calc(100% - 25px);
   vertical-align: top;
   color: grey;
+  text-align: justify;
   line-height: 1.5;
 }
 
