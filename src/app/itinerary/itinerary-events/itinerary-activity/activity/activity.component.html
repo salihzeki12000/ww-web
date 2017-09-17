@@ -71,11 +71,11 @@
 
       <div *ngIf="activity?.location">
 
-        <div class="details-description" *ngIf="activity?.place.description">
+        <div class="details-description" *ngIf="activity?.formatted_description">
           <h4 [innerHTML]="activity?.formatted_description"></h4>
         </div>
 
-        <div class="details-description" *ngIf="activity?.place.sub_description">
+        <div class="details-description" *ngIf="activity?.formatted_sub_description">
           <h5 *ngIf="!showSub" (click)="showSub = true">show more...</h5>
           <h5 *ngIf="showSub" (click)="showSub = false">show less...</h5>
           <h4 *ngIf="showSub" [innerHTML]="activity?.formatted_sub_description"></h4>
@@ -98,7 +98,7 @@
           </div>
         </div>
 
-        <div class="toggle-contact-details" (click)="showHours = !showHours" *ngIf="activity?.place.opening_hours || activity?.opening_hours">
+        <div class="toggle-contact-details" (click)="showHours = !showHours" *ngIf="activity?.fomatted_hours || activity?.opening_hours">
           <h5>Opening hours</h5>
           <h5><i class="fa fa-angle-down" aria-hidden="true"></i></h5>
         </div>
@@ -115,7 +115,7 @@
           <h5>{{ activity?.entry_fee }}</h5>
         </div>
 
-        <div class="details-item" *ngIf="activity?.place.website">
+        <div class="details-item" *ngIf="activity?.place?.website">
           <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
           <h5 class="truncate">
             <a href="{{ activity?.place.website }}" target="_blank" class="website-link">{{ activity?.place.website }}</a>

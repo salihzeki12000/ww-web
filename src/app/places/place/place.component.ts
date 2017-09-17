@@ -141,8 +141,12 @@ export class PlaceComponent implements OnInit {
     let service = new google.maps.places.PlacesService(this.mapPosition);
 
     service.getDetails({placeId: this.placeID}, (place, status) =>  {
-      this.reviews = place['reviews'];
-      this.formatReviews();
+      
+      if(place['reviews'])  {
+        this.reviews = place['reviews'];
+        this.formatReviews();
+      }
+
       this.loadingService.setLoader(false, "");
     })
   }

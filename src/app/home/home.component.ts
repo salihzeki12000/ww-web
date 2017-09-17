@@ -81,8 +81,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   // }
 
   ngOnDestroy() {
-    this.user['new_user_tour'] = true;
-    this.userService.editUser(this.user).subscribe(result =>{})
+    if(!this.user['new_user_tour']) {
+      this.user['new_user_tour'] = true;
+      this.userService.editUser(this.user).subscribe(result =>{})
+    }
 
     if(this.feedSubscription) this.feedSubscription.unsubscribe();
     if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();

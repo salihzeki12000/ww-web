@@ -5,6 +5,8 @@
   <div class="admin-header">
     <h4><i class="fa fa-user" aria-hidden="true"></i> {{ username }}</h4>
     <h5>{{ admin?.role }}</h5>
+
+    <h5 (click)="logout()">Log out</h5>
   </div>
 
 

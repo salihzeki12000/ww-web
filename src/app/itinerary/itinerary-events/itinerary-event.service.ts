@@ -44,6 +44,7 @@ export class ItineraryEventService  {
                       return this.events;
                     })
                     .catch((error: Response) => {
+                      console.log(error);
                       this.errorMessageService.handleErrorMessage(error.json());
                       return Observable.throw(error.json())
                     });
@@ -87,7 +88,7 @@ export class ItineraryEventService  {
                             link: "/me/itinerary/" + itinerary['_id'] + "/" + event['type'],
                             read: false
                           }).subscribe(result => {});
-                          
+
                         }
                       }
 

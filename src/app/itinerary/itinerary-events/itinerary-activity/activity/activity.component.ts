@@ -34,7 +34,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
   showContactDetails = false;
   showHours = true;
   showSub = false;
-  
+
   itineraries = [];
 
   showMenu = false;
@@ -142,21 +142,28 @@ export class ActivityComponent implements OnInit, OnDestroy {
   }
 
   formatHours() {
-    if(this.activity['location'] && this.activity['place']['opening_hours'] !== ''){
-      this.activity['formatted_hours'] = this.activity['place']['opening_hours'].replace(/\r?\n/g, '<br/> ');
-    } else if(this.activity['opening_hours']) {
-      this.activity['formatted_hours'] = this.activity['opening_hours'].replace(/\r?\n/g, '<br/> ');
+    if(!this.activity['place']) console.log(this.activity)
+
+    if(this.activity['location'] && this.activity['place']) {
+      if(this.activity['place']['opening_hours'] !== ''){
+        this.activity['formatted_hours'] = this.activity['place']['opening_hours'].replace(/\r?\n/g, '<br/> ');
+      } else if(this.activity['opening_hours']) {
+        this.activity['formatted_hours'] = this.activity['opening_hours'].replace(/\r?\n/g, '<br/> ');
+      }
     }
+
   }
 
   formatDescription() {
-    if(this.activity['place']['description'] !== '')  {
-      this.activity['formatted_description'] = this.activity['place']['description'].replace(/\r?\n/g, '<br/> ');
-      this.showHours = false;
-    }
+    if(this.activity['place'])  {
+      if(this.activity['place']['description'] !== '')  {
+        this.activity['formatted_description'] = this.activity['place']['description'].replace(/\r?\n/g, '<br/> ');
+        this.showHours = false;
+      }
 
-    if(this.activity['place']['sub_description'] !== '')  {
-      this.activity['formatted_sub_description'] = this.activity['place']['sub_description'].replace(/\r?\n/g, '<br/> ');
+      if(this.activity['place']['sub_description'] !== '')  {
+        this.activity['formatted_sub_description'] = this.activity['place']['sub_description'].replace(/\r?\n/g, '<br/> ');
+      }
     }
   }
 

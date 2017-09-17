@@ -52,7 +52,7 @@
 // items above modal - 1001
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700); //font-family: 'Roboto', sans-serif;
-@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700); //font-family: 'Roboto Condensed', sans-serif;
+@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:200,400,700); //font-family: 'Roboto Condensed', sans-serif;
 @import url(https://fonts.googleapis.com/css?family=Fira+Sans:300,400,600); //font-family: 'Fira Sans', sans-serif;
 @import url(https://fonts.googleapis.com/css?family=Raleway:400,500,700); //font-family: 'Raleway', sans-serif;
 @import url(https://fonts.googleapis.com/css?family=Alice);//font-family: 'Alice', serif;
@@ -2334,35 +2334,6 @@ h5.transport-date-details  {
   color: #567FCC;
   font-size: 0.9em;
 }
-
-
-
-
-/**************
-
-  POST BY DISPLAY
-
-******************/
-.post-by  {
-  padding: 0 20px;
-  height: 45px;
-}
-
-.post-by > img,
-.post-by > .post-by-user-details {
-  display: inline-block;
-}
-
-.post-by-user-details {
-  margin-left: 5px;
-  vertical-align: top;
-}
-
-.post-by-user-details > .time-ago > p {
-  margin-top: 3px;
-}
-
-
 
 
 /****************

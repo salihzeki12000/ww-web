@@ -137,7 +137,7 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
 
   formatDescription() {
     for (let i = 0; i < this.events.length; i++) {
-      if(this.events[i]['location'])  {
+      if(this.events[i]['location'] && this.events[i]['place'])  {
 
         if(this.events[i]['place']['description']) {
           this.events[i]['formatted_description'] = this.events[i]['place']['description'].replace(/\r?\n/g, '<br/> ');

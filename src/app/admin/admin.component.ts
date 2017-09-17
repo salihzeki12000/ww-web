@@ -84,6 +84,10 @@ export class AdminComponent implements OnInit {
 
 
   // others
+  logout()  {
+    this.adminService.logout();
+  }
+
   preventScroll(value)  {
     if(value) {
       this.renderer.addClass(document.body, 'prevent-scroll');

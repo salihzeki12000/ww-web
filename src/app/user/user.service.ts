@@ -69,6 +69,7 @@ export class UserService  {
     return this.http.patch( this.url + '/users/currentUser' + token, body, { headers: headers})
                     .map((response: Response) => response.json())
                     .catch((error: Response) => {
+                      console.log(error)
                       this.errorMessageService.handleErrorMessage(error.json());
                       return Observable.throw(error.json())
                     });
@@ -160,6 +161,12 @@ export class UserService  {
       }
 
     }
+
+    undated.sort((a,b)  =>  {
+      if(a['name'] < b['name']) return -1;
+      if(a['name'] > b['name']) return 1;
+      return 0;
+    })
 
     completed.sort((a,b)  =>  {
       return new Date(b['date_to']).getTime() - new Date(a['date_to']).getTime();

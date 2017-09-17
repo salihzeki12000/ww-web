@@ -122,7 +122,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
                 this.validAccess = false;
                 this.creator = false;
 
-                if(id === this.itinerary['_id']) this.checkPreview();
+                if(this.currentUser) this.checkPreview();
 
                 if(!this.preview && this.isLoggedIn)  {
                   this.getAllUsers();
@@ -140,7 +140,11 @@ export class ItineraryComponent implements OnInit, OnDestroy {
     })
 
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
-      result => { this.currentUser = result; })
+      result => {
+        this.currentUser = result;
+
+        if(this.itinerary) this.checkPreview();
+      })
 
     this.dateSubscription = this.itineraryService.updateDate.subscribe(
       result => {
@@ -155,29 +159,12 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   }
 
   checkPreview()  {
-    // invalid preview for non-corporate itinerary or corporate itinerary not published
-    if((this.preview && !this.itinerary['corporate']['status']) ||
-       (this.preview && this.itinerary['corporate']['status'] && !this.itinerary['corporate']['publish']))  {
-      this.invalidPreview = true;
 
-      setTimeout(() =>  {
-        this.loadingService.setLoader(false, "");
-      }, 300)
-
-    } else  {
-      setTimeout(() =>  {
-        this.checkAccess();
-      },3000)
-    }
-  }
-
-  checkAccess() {
-    // valid access if preview, corporate & published
-    // valid access for non preview, logged in and valid user
     if(this.isLoggedIn) {
       for (let i = 0; i < this.itinerary['members'].length; i++) {
         if(this.itinerary['members'][i]['_id'] === this.currentUser['_id']) {
           this.validUser = true;
+          console.log("validUser: " + this.validUser)
         }
       }
 
@@ -186,9 +173,28 @@ export class ItineraryComponent implements OnInit, OnDestroy {
       }
     }
 
-    console.log("validUser: " + this.validUser)
+    // invalid preview for non-corporate itinerary
+    // invalid preview for corporate itinerary not published && not creator
+    if((this.preview && !this.itinerary['corporate']['status']) ||
+       (this.preview && this.itinerary['corporate']['status'] && !this.itinerary['corporate']['publish'] && !this.creator))  {
+      this.invalidPreview = true;
+
+      setTimeout(() =>  {
+        this.loadingService.setLoader(false, "");
+      }, 300)
+
+    } else  {
+      this.checkAccess();
+    }
+  }
+
+  checkAccess() {
+    // valid access if preview, corporate & published
+    // valid access if preview, corporate, not published & creator
+    // valid access for non preview, logged in and valid user
 
     if((this.preview && this.itinerary['corporate']['status'] && this.itinerary['corporate']['publish']) ||
+       (this.preview && this.itinerary['corporate']['status'] && this.creator) ||
        (!this.preview && this.isLoggedIn && this.validUser))  {
 
       this.validAccess = true;

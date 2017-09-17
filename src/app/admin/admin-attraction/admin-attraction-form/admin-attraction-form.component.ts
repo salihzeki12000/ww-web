@@ -99,7 +99,7 @@ export class AdminAttractionFormComponent implements OnInit {
     let opening_hours = this.getOpeningHours(value.opening_hours);
 
     this.reviews = value.reviews;
-    this.formatReviews();
+    if(this.reviews) this.formatReviews();
 
     if(value.photos) {
       let credit = value.photos[0].html_attributions[0];
@@ -124,7 +124,7 @@ export class AdminAttractionFormComponent implements OnInit {
       description: '',
       formatted_address: value.formatted_address,
       country: country,
-      city: city,
+      // city: city,
       lat: this.lat,
       lng: this.lng,
       international_phone_number: value.international_phone_number,
@@ -202,6 +202,9 @@ export class AdminAttractionFormComponent implements OnInit {
       this.countryService.addCountry(this.country).subscribe(
         result => {
           this.countryID = result.country;
+
+          this.countries.push(this.countryID);
+          this.countriesName.push(this.countryID['name']);
         })
     }
   }

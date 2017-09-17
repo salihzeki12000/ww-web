@@ -26,7 +26,7 @@
   <div class="post-by">
     <img src="{{ post?.user.display_picture }}" alt="" class="user-post-thumbnail">
     <div class="post-by-user-details">
-      <h5 class="username-bold" (click)="routeToUser(post?.user._id)">{{ post?.user.username}}</h5>
+      <h4 class="username-bold" (click)="routeToUser(post?.user._id)">{{ post?.user.username}}</h4>
       <div class="time-ago">
         <p *ngIf="post?.time_ago !== ''">{{ post?.time_ago }}</p>
         <p *ngIf="post?.time_ago === ''">{{ post?.created_at | date: 'dd MMM yyyy (EEE)' }}</p>

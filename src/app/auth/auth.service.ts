@@ -157,7 +157,7 @@ export class AuthService  {
           localStorage.clear();
 
           setTimeout(() =>  {
-            this.router.navigateByUrl('/signin');
+            this.router.navigateByUrl('/');
           },1000)
         })
       }
@@ -170,7 +170,7 @@ export class AuthService  {
       localStorage.clear();
 
       setTimeout(() =>  {
-        this.router.navigateByUrl('/signin');
+        this.router.navigateByUrl('/');
       },1000)
     });
   }

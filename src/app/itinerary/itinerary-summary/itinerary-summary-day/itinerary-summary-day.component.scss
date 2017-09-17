@@ -24,9 +24,14 @@
 
 .daily-note p {
   padding: 4px 8px;
+  width: 270px;
   height: 50px;
   font-size: 11px;
   overflow: auto;
+
+  @media only screen and (max-width: 420px) {
+    width: calc(100vw - 10px);
+  }
 }
 
 .daily-note p::-webkit-scrollbar  {
@@ -207,4 +212,10 @@ h5.check-out-on {
   @media only screen and (max-width: 420px) {
     width: calc(100vw - 90px)
   }
+}
+
+/* style for transport */
+.event-content h5.summary-airport  {
+  padding-top: 3px;
+  font-weight: 400;
 }

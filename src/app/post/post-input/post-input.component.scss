@@ -1,9 +1,16 @@
 .post-form  {
   position: relative;
-  padding-top: 20px;
   min-height: 80px;
   background-color: white;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
+}
+
+.post-input-box {
+  padding: 20px 0;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .post-input-box > h4 {
@@ -12,8 +19,9 @@
   text-align: left;
 }
 
-
-
+form  {
+  padding-top: 20px;
+}
 
 /* user thumbnail display */
 
