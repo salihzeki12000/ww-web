@@ -77,8 +77,8 @@ export class ResetComponent implements OnInit {
         setTimeout(() =>  {
           this.authService.signin(signin).subscribe(
             result => {
-              this.userService.getCurrentUser().subscribe(
-                data =>{})
+              // this.userService.getCurrentUser().subscribe(
+              //   data =>{})
 
               this.router.navigateByUrl('/me')
             }

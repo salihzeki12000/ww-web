@@ -46,8 +46,8 @@ export class SignupComponent implements OnInit {
 
     this.authService.signup(this.signupForm.value).subscribe(
       data => {
-        this.userService.getCurrentUser().subscribe(
-          data => {});
+        // this.userService.getCurrentUser().subscribe(
+        //   data => {});
 
         if(this.itinerary)  {
           let user = {_id: data.userId};
@@ -72,7 +72,7 @@ export class SignupComponent implements OnInit {
         break;
       }
     }
-    
+
     this.itinerary['members'].push(user);
 
     this.itineraryService.editItin(this.itinerary, 'edit').subscribe(

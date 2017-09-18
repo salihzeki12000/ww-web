@@ -99,8 +99,8 @@ export class AuthComponent implements OnInit, AfterViewInit {
   }
 
   rerouting(user) {
-    this.userService.getCurrentUser().subscribe(
-      data => {
+    // this.userService.getCurrentUser().subscribe(
+    //   data => {
         if(this.itinerary)  {
           this.addToItin(user);
         } else if(this.reload)  {
@@ -111,8 +111,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
             window.location.reload();
           }, 500)
         }
-      }
-    );
+      // });
   }
 
   addToItin(user) {

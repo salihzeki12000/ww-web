@@ -13,6 +13,7 @@ import { ItineraryService }  from '../../itinerary';
   styleUrls: ['./signin.component.scss']
 })
 export class SigninComponent implements OnInit {
+  // reroute to itinerary from invite & to home from landing page
   @Input() reroute;
   @Input() reload;
   @Input() itinerary;
@@ -43,8 +44,8 @@ export class SigninComponent implements OnInit {
     this.authService.signin(this.signinForm.value).subscribe(
       data => {
 
-        this.userService.getCurrentUser().subscribe(
-          result => {});
+        // this.userService.getCurrentUser().subscribe(
+        //   result => {});
 
         if(!data['validated'])  {
           this.checkVerification(data);
