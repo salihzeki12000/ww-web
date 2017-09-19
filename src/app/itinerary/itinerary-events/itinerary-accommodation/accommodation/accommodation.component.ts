@@ -362,6 +362,10 @@ export class AccommodationComponent implements OnInit, OnDestroy {
       copiedEvent['check_out_date'] = this.dateRange[this.dateRange.length - 1];
     }
 
+    copiedEvent['place_id'] = copiedEvent['place']['place_id'];
+    copiedEvent['lat'] = copiedEvent['place']['lat'];
+    copiedEvent['lng'] = copiedEvent['place']['lng'];
+
     copiedEvent['date'] = copiedEvent['check_in_date'];
     copiedEvent['user'] ={
       _id: this.currentUser['_id'],

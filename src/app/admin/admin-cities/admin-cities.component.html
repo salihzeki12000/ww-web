@@ -1,0 +1,63 @@
+<div class="admin-portal-header">
+  <h3>Cities</h3>
+</div>
+
+<div class="new-city-section">
+  <div class="city-google-search">
+    <label>SEARCH CITY</label>
+    <ww-google-place-search [populate]="''"  (placeDetail)="getCityDetails($event)"></ww-google-place-search>
+  </div>
+
+  <form [formGroup]="newCityForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-detail">
+      <label>Name</label>
+      <input type="text" #email formControlName="name">
+    </div>
+
+    <div class="form-detail">
+      <label>Lat</label>
+      <input type="text" formControlName="lat">
+    </div>
+
+    <div class="form-detail">
+      <label>Lng</label>
+      <input type="text" formControlName="lng">
+    </div>
+
+
+    <div class="action-response">
+      <button type="submit" class="action-response-primary" [disabled]="!newCityForm.valid"><h4>Add new city</h4></button>
+    </div>
+
+  </form>
+</div>
+
+<div class="cities">
+  <div class="cities-header">
+    <h5>S/NO</h5>
+    <h5>
+      NAME
+      <div class="sort">
+        <i class="fa fa-sort-alpha-asc" aria-hidden="true" (click)="sortNameA()"></i>
+        <i class="fa fa-sort-alpha-desc" aria-hidden="true" (click)="sortNameD()"></i>
+      </div>
+    </h5>
+
+    <h5>
+      COUNTRY
+      <div class="sort">
+        <i class="fa fa-sort-alpha-asc" aria-hidden="true" (click)="sortCountryA()"></i>
+        <i class="fa fa-sort-alpha-desc" aria-hidden="true" (click)="sortCountryD()"></i>
+      </div>
+    </h5>
+  </div>
+
+  <div class="cities-list">
+    <div *ngFor="let city of cities; let i = index" class="city" (click)="routeToCity(city)">
+      <h5>{{ i +1 }}</h5>
+      <h5>{{ city?.name }}</h5>
+      <h5>{{ city?.country.name }}</h5>
+    </div>
+  </div>
+</div>

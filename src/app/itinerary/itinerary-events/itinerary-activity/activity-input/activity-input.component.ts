@@ -432,7 +432,9 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
       lat: this.dragLat,
       lng: this.dragLng,
       place_id: this.dragPlaceId,
-      opening_hours: ''
+      opening_hours: '',
+      note: '',
+      entry_fee: ''
     })
   }
 
@@ -487,7 +489,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   // save
   saveNew()  {
     let newActivity = this.addActivityForm.value;
-
+    console.log(newActivity)
     if(this.hour === 'anytime')  {
       newActivity['time'] = 'anytime';
     } else  {

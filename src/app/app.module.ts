@@ -31,7 +31,7 @@ import { GooglePlaceSearchComponent, GoogleFavComponent } from './google-api';
 import { FlashMessageComponent, FlashMessageService } from './flash-message';
 import { NotificationComponent, NotificationsComponent, NotificationListComponent, NotificationService } from './notifications';
 
-import { AdminComponent, AdminService, AdminLoginComponent, AdminVerifyComponent, AdminFormComponent } from './admin';
+import { AdminComponent, AdminService, AdminLoginComponent, AdminVerifyComponent, AdminFormComponent, AdminCountriesComponent, AdminCitiesComponent } from './admin';
 import { AttractionsComponent } from './attractions/attractions.component';
 import { AdminAttractionComponent,AdminAttractionFormComponent } from './admin/admin-attraction';
 
@@ -46,17 +46,18 @@ import { LocationPinComponent } from './location-pin/location-pin.component';
 import { RecommendationsComponent, RecommendationComponent, RecommendationDisplayComponent, RecommendationService, AddRecommendationComponent } from './recommendations';
 import { PlaceComponent, PlacesComponent, PlaceDisplayComponent, PlaceService } from './places';
 import { CountriesComponent, CountryComponent, CountryService } from './countries';
+import { CitiesComponent, CityService } from './cities';
 
 
-Raven
-  .config('https://5575c781e9054ddd828e3e4b8f90bc55@sentry.io/211359')
-  .install();
-
-export class RavenErrorHandler implements ErrorHandler {
-  handleError(err:any) : void {
-    Raven.captureException(err);
-  }
-}
+// Raven
+//   .config('https://5575c781e9054ddd828e3e4b8f90bc55@sentry.io/211359')
+//   .install();
+//
+// export class RavenErrorHandler implements ErrorHandler {
+//   handleError(err:any) : void {
+//     Raven.captureException(err);
+//   }
+// }
 
 
 @NgModule({
@@ -156,7 +157,10 @@ export class RavenErrorHandler implements ErrorHandler {
     PlacesComponent,
     PlaceDisplayComponent,
     CountriesComponent,
-    CountryComponent
+    CountryComponent,
+    AdminCountriesComponent,
+    AdminCitiesComponent,
+    CitiesComponent
   ],
   imports: [
     BrowserModule,
@@ -168,7 +172,9 @@ export class RavenErrorHandler implements ErrorHandler {
     routing,
     Daterangepicker
   ],
-  providers: [ Title, AdminService, LoadingService, AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, FileuploadService, CommentService, ErrorMessageService, FavouriteService, RecommendationService, PlaceService, CountryService, AuthGuard, AdminGuard, { provide: ErrorHandler, useClass: RavenErrorHandler } ],
+  providers: [ Title, AdminService, LoadingService, AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, FileuploadService, CommentService, ErrorMessageService, FavouriteService, RecommendationService, PlaceService, CountryService, CityService, AuthGuard, AdminGuard ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+// , { provide: ErrorHandler, useClass: RavenErrorHandler }

@@ -1,0 +1,60 @@
+<div class="admin-portal-header">
+  <h3>Countries</h3>
+</div>
+
+<div class="new-country-section">
+  <div class="country-google-search">
+    <label>SEARCH COUNTRY</label>
+    <ww-google-place-search [populate]="''"  (placeDetail)="getCountryDetails($event)"></ww-google-place-search>
+  </div>
+
+  <form [formGroup]="newCountryForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-detail">
+      <label>Name</label>
+      <input type="text" #email formControlName="name">
+    </div>
+
+    <div class="form-detail">
+      <label>Lat</label>
+      <input type="text" formControlName="lat">
+    </div>
+
+    <div class="form-detail">
+      <label>Lng</label>
+      <input type="text" formControlName="lng">
+    </div>
+
+    <div class="form-detail">
+      <label>Continent</label>
+      <input type="text" formControlName="continent">
+    </div>
+
+    <div class="action-response">
+      <button type="submit" class="action-response-primary" [disabled]="!newCountryForm.valid"><h4>Add new country</h4></button>
+    </div>
+
+  </form>
+</div>
+
+
+<div class="countries">
+  <div class="countries-header">
+    <h5>S/NO</h5>
+    <h5>
+      NAME
+      <div class="sort">
+        <i class="fa fa-sort-alpha-asc" aria-hidden="true" (click)="sortNameA()"></i>
+        <i class="fa fa-sort-alpha-desc" aria-hidden="true" (click)="sortNameD()"></i>
+      </div>
+    </h5>
+  </div>
+
+  <div class="countries-list">
+    <div *ngFor="let country of countries; let i = index" class="country" (click)="routeToCountry(country)">
+      <h5>{{ i +1 }}</h5>
+      <h5>{{ country?.name }}</h5>
+    </div>
+  </div>
+
+</div>

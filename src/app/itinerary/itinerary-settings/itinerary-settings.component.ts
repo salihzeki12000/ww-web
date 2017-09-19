@@ -258,7 +258,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
 
   formatDate(date)  {
     if(!date) {
-      return null
+      return undefined
     } else  {
       let d = new Date(date),
       month = '' + (d.getMonth() + 1),
@@ -316,6 +316,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   }
 
 
+
   // display dropdown option for each member
   showMemberOption(i)  {
     this.showOptions[i] = true;
@@ -353,6 +354,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
         data => {})
   }
+
 
 
   // edit section
@@ -441,8 +443,9 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
 
   }
 
-  // date range changed
 
+
+  // date range changed
   setDateRange(type, method)  {
     this.newDateRange = [];
     this.newDateRange.push('any day');
@@ -468,7 +471,9 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
         this.newDateRange.push("Day " + day);
       }
 
-      if(method === "numChange")  this.sameDates();
+      setTimeout(() =>  {
+        if(method === "numChange")  this.sameDates();
+      }, 500)
 
     }
 

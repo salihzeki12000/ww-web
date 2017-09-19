@@ -142,8 +142,6 @@ export class ActivityComponent implements OnInit, OnDestroy {
   }
 
   formatHours() {
-    if(!this.activity['place']) console.log(this.activity)
-
     if(this.activity['location'] && this.activity['place']) {
       if(this.activity['place']['opening_hours'] !== ''){
         this.activity['formatted_hours'] = this.activity['place']['opening_hours'].replace(/\r?\n/g, '<br/> ');
@@ -398,6 +396,10 @@ export class ActivityComponent implements OnInit, OnDestroy {
     delete copiedEvent['_id'];
     delete copiedEvent['created_at'];
     delete copiedEvent['itinerary'];
+
+    copiedEvent['place_id'] = copiedEvent['place']['place_id'];
+    copiedEvent['lat'] = copiedEvent['place']['lat'];
+    copiedEvent['lng'] = copiedEvent['place']['lng'];
 
     copiedEvent['date'] = 'any day';
     copiedEvent['time'] = 'anytime';

@@ -16,6 +16,8 @@
         <li class="add-new" (click)="showAddNewOptions()">
           <a><i class="fa fa-plus" aria-hidden="true"></i> ADD NEW</a>
         </li>
+        <li (click)="activateTab('CITIES')" routerLinkActive="active"><a [routerLink]="['cities']">CITIES</a></li>
+        <li (click)="activateTab('COUNTRY')" routerLinkActive="active"><a [routerLink]="['countries']">COUNTRIES</a></li>
         <li (click)="activateTab('PLACES')" routerLinkActive="active"><a [routerLink]="['places']">PLACES</a></li>
         <li (click)="activateTab('ATTRACTION')" routerLinkActive="active"><a [routerLink]="['attraction']">ATTRACTION</a></li>
         <li (click)="activateTab('LOCAL DELICACIES')" routerLinkActive="active"><a [routerLink]="['attraction']">LOCAL DELICACIES</a></li>

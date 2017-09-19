@@ -42,11 +42,16 @@
 
 .daily-note textarea  {
   margin: 0;
+  width: 270px;
   background-color: rgba(100, 148, 237, 0.1);
   border: none;
   border-radius: 0;
   resize: none;
   font-size: 11px;
+
+  @media only screen and (max-width: 420px) {
+    width: 100%;
+  }
 }
 
 h5.edit-note  {

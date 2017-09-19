@@ -83,6 +83,7 @@ export class AddRecommendationComponent implements OnInit {
       type: this.recommendation['type'],
       lat: this.recommendation['place']['lat'],
       lng: this.recommendation['place']['lng'],
+      place_id: this.recommendation['place']['place_id'],
       name: this.recommendation['place']['name'],
       location: true,
       note: this.recommendation['note'],

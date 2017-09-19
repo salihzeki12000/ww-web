@@ -43,18 +43,18 @@ export class CountryService {
                       return Observable.throw(error.json())
                     });
   }
-  
 
-  //   editPlace(place)  {
-  //     const body = JSON.stringify(place);
-  //     const headers = new Headers({ 'Content-Type': 'application/json' });
-  //     const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
-  //
-  //     return this.http.patch( this.url + "/place/" + place['_id'] + token, body, { headers: headers })
-  //                     .map((response: Response) => response.json())
-  //                     .catch((error: Response) => {
-  //                       this.errorMessageService.handleErrorMessage(error.json());
-  //                       return Observable.throw(error.json())
-  //                     });
-  //   }
+
+    editCountry(country)  {
+      const body = JSON.stringify(country);
+      const headers = new Headers({ 'Content-Type': 'application/json' });
+      const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
+
+      return this.http.patch( this.url + "/country/" + country['_id'] + token, body, { headers: headers })
+                      .map((response: Response) => response.json())
+                      .catch((error: Response) => {
+                        this.errorMessageService.handleErrorMessage(error.json());
+                        return Observable.throw(error.json())
+                      });
+    }
 }

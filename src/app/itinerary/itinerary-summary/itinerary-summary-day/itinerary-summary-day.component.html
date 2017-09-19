@@ -85,7 +85,7 @@
       <div>
         <div class="activity-indicator pill"></div>
 
-        <img src="{{ event?.photo.url }}" alt="picture of {{ event?.name}}" *ngIf="event?.photo">
+        <img src="{{ event?.photo.url }}" alt="" *ngIf="event?.photo">
         <i class="fa fa-bicycle fa-lg" aria-hidden="true" *ngIf="!event?.photo"></i>
 
         <div class="event-content">
