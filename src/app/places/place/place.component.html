@@ -79,7 +79,7 @@
       <textarea rows="7" formControlName="opening_hours" #opening_hours (keyup)="logHours(opening_hours.value)"></textarea>
 
       <label>COST / ENTRY FEE</label>
-      <input type="text" formControlName="entryFee" #entryFee>
+      <input type="text" formControlName="entry_fee" #entry_fee>
     </div>
 
 
@@ -212,9 +212,9 @@
           <h4 [innerHTML]="formatted_hours"></h4>
         </div>
 
-        <div class="content-details" *ngIf="entryFee?.value !== ''">
+        <div class="content-details" *ngIf="entry_fee?.value !== ''">
           <h4><i class="fa fa-money fa-fw" aria-hidden="true"></i></h4>
-          <h4>{{ entryFee?.value }}</h4>
+          <h4>{{ entry_fee?.value }}</h4>
         </div>
       </div>
 
@@ -280,9 +280,9 @@
           <h5 [innerHTML]="formatted_hours"></h5>
         </div>
 
-        <div class="show-details" *ngIf="entryFee?.value !== ''">
+        <div class="show-details" *ngIf="entry_fee?.value !== ''">
           <i class="fa fa-money fa-fw" aria-hidden="true"></i>
-          <h5>{{ entryFee?.value }}</h5>
+          <h5>{{ entry_fee?.value }}</h5>
         </div>
 
         <div class="show-details" *ngIf="website?.value !== ''">
@@ -349,9 +349,9 @@
           <h5 [innerHTML]="formatted_hours"></h5>
         </div>
 
-        <div class="show-details" *ngIf="entryFee?.value !== ''">
+        <div class="show-details" *ngIf="entry_fee?.value !== ''">
           <i class="fa fa-money fa-fw" aria-hidden="true"></i>
-          <h5>{{ entryFee?.value }}</h5>
+          <h5>{{ entry_fee?.value }}</h5>
         </div>
 
         <div class="show-details" *ngIf="website?.value !== ''">

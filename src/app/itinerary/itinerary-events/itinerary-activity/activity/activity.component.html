@@ -110,9 +110,9 @@
           </div>
         </div>
 
-        <div class="details-item" *ngIf="activity?.entry_fee">
+        <div class="details-item" *ngIf="activity?.place?.entry_fee">
           <i class="fa fa-money fa-fw" aria-hidden="true"></i>
-          <h5>{{ activity?.entry_fee }}</h5>
+          <h5>{{ activity?.place.entry_fee }}</h5>
         </div>
 
         <div class="details-item" *ngIf="activity?.place?.website">
@@ -322,9 +322,6 @@
                 <label>Opening Hours</label>
                 <textarea rows="3" formControlName="opening_hours"></textarea>
               </div>
-
-              <label>Cost / Entry Fee</label>
-              <input type="text" formControlName="entry_fee">
 
             </div>
 

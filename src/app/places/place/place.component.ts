@@ -51,7 +51,7 @@ export class PlaceComponent implements OnInit {
         'sub_description': '',
         'tips': '',
         'opening_hours': '',
-        'entryFee': '',
+        'entry_fee': '',
         'website': '',
         'formatted_address': '',
         'lat': '',
@@ -104,7 +104,7 @@ export class PlaceComponent implements OnInit {
       sub_description: this.place['sub_description'],
       tips: this.place['tips'],
       opening_hours: this.place['opening_hours'],
-      entryFee: this.place['entry_fee'],
+      entry_fee: this.place['entry_fee'],
       website: this.place['website'],
       formatted_address: this.place['formatted_address'],
       lat: this.place['lat'],
@@ -141,7 +141,7 @@ export class PlaceComponent implements OnInit {
     let service = new google.maps.places.PlacesService(this.mapPosition);
 
     service.getDetails({placeId: this.placeID}, (place, status) =>  {
-      
+
       if(place['reviews'])  {
         this.reviews = place['reviews'];
         this.formatReviews();

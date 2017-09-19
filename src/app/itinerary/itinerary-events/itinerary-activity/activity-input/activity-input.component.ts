@@ -90,7 +90,6 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
       'international_phone_number':'',
       'opening_hours': '',
       'input_opening_hours': '',
-      'entry_fee': '',
       'website': '',
       'date': '',
       'time': '',
@@ -434,7 +433,6 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
       place_id: this.dragPlaceId,
       opening_hours: '',
       note: '',
-      entry_fee: ''
     })
   }
 

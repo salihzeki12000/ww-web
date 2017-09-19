@@ -47,6 +47,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
   editActivityForm: FormGroup;
   categories;
   meals;
+  openingHours;
 
   //time picker
   ats = true;
@@ -87,10 +88,6 @@ export class ActivityComponent implements OnInit, OnDestroy {
         'description': '',
         'sub_description': '',
         'opening_hours': '',
-        'entry_fee': '',
-        'website': '',
-        'formatted_address': '',
-        'international_phone_number':'',
         'date': '',
         'time': '',
         'note': '',
@@ -145,8 +142,10 @@ export class ActivityComponent implements OnInit, OnDestroy {
     if(this.activity['location'] && this.activity['place']) {
       if(this.activity['place']['opening_hours'] !== ''){
         this.activity['formatted_hours'] = this.activity['place']['opening_hours'].replace(/\r?\n/g, '<br/> ');
+        this.openingHours = this.activity['place']['opening_hours'];
       } else if(this.activity['opening_hours']) {
         this.activity['formatted_hours'] = this.activity['opening_hours'].replace(/\r?\n/g, '<br/> ');
+        this.openingHours = this.activity['opening_hours'];
       }
     }
 
@@ -325,7 +324,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
         originator: this.currentUser['_id'],
         place: this.activity['place'],
         message: this.message,
-        opening_hours: this.activity['opening_hours'],
+        opening_hours: this.openingHours,
         note: this.activity['note'],
         type: this.activity['type'],
       }
@@ -352,9 +351,6 @@ export class ActivityComponent implements OnInit, OnDestroy {
     let favourite = {
       lat: this.activity['place']['lat'],
       lng: this.activity['place']['lng'],
-      name: this.activity['place']['name'],
-      address: this.activity['place']['formatted_address'],
-      country: this.activity['place']['country'],
       place_id: this.activity['place']['place_id'],
       itinerary: this.itinerary['_id'],
       user: this.currentUser['_id']
@@ -425,8 +421,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
       this.editActivityForm.patchValue({
         name: this.activity['name'],
         meals: this.activity['meals'],
-        opening_hours: this.activity['opening_hours'],
-        entry_fee: this.activity['entry_fee'],
+        opening_hours: this.openingHours,
         date: this.activity['date'],
         note: this.activity['note'],
       })
