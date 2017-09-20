@@ -536,6 +536,8 @@ export class ItineraryComponent implements OnInit, OnDestroy {
       date_from: this.dateFrom,
       date_to: this.dateTo,
       daily_note: this.dailyNotes,
+      photo: this.itinerary['photo'],
+      description: this.itinerary['description'],
       private: this.currentUser['settings']['itinerary_privacy'],
       view_only: this.currentUser['settings']['itinerary_viewonly'],
       members: [this.currentUser['_id']],

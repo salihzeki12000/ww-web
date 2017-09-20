@@ -248,6 +248,8 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
       date_from: this.dateFrom,
       date_to: this.dateTo,
       daily_note: this.dailyNotes,
+      description: this.itinerary['description'],
+      photo: this.itinerary['photo'],
       private: this.currentUser['settings']['itinerary_privacy'],
       view_only: this.currentUser['settings']['itinerary_viewonly'],
       members: [this.currentUser['_id']],

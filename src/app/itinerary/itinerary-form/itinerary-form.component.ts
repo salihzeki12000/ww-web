@@ -85,7 +85,7 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
     if(this.currentUser['corporate']) this.corporate = true;
 
     this.private = this.currentUser['settings']['itinerary_privacy'];
-    this.viewOnly = this.currentUser['settings']['itinerary_viewOnly'];
+    this.viewOnly = this.currentUser['settings']['itinerary_viewonly'];
   }
 
   selectedDate(value) {
@@ -204,7 +204,7 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
     itinerary.members = [this.currentUser['_id']];
     itinerary.admin = [this.currentUser['_id']];
     itinerary.created_by = this.currentUser['_id'];
-    itinerary.description = { content: "", photos: [] };
+    itinerary.description = { header: "", sections: [], photos: [] };
 
     this.itineraryService.addItin(itinerary).subscribe(
       data => {
