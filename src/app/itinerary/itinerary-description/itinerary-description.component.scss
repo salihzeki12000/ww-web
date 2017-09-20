@@ -148,6 +148,8 @@
 
 
 
+
+
 /* description content */
 
 .description-content  {
@@ -170,6 +172,15 @@
 
 .description-content > div > div > h4 {
   padding-bottom: 10px;
+}
+
+.external-link  {
+  padding: 5px 0 30px 10px;
+}
+
+.external-link *  {
+  display: inline-block;
+  color: #6494ED;
 }
 
 .section-header {

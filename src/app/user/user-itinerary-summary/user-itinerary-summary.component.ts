@@ -252,6 +252,7 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
       view_only: this.currentUser['settings']['itinerary_viewonly'],
       members: [this.currentUser['_id']],
       admin: [this.currentUser['_id']],
+      link: this.itinerary['link'],
       created_by: this.itinerary['created_by'],
       copied_from: this.user['_id'],
       invite_password: Math.random().toString(36).substr(2, 8),

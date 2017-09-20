@@ -47,6 +47,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
     private loadingService: LoadingService) {
       this.descriptionForm = this.formBuilder.group({
         'header': '',
+        'link': '',
         'sections': this.formBuilder.array([])
       })
     }
@@ -58,14 +59,9 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
     this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
       result =>{
         this.itinerary = result;
+        console.log(this.itinerary)
         this.descriptionForm.reset();
         this.patchValue();
-        // if(this.itinerary['description'])  {
-        //   this.itinerary['formatted_description'] = this.itinerary['description']['content'].replace(/\r?\n/g, '<br/> ');
-        // } else  {
-        //   this.itinerary['formatted_description'] = '';
-        // }
-
         this.sortPhotos();
       })
 
@@ -105,6 +101,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
 
     this.descriptionForm.patchValue({
       header: this.itinerary['description']['header'],
+      link: this.itinerary['link']
     })
 
     let sections = this.itinerary['description']['sections'];
@@ -123,9 +120,6 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
       let formSection = this.descriptionForm.value.sections;
       let desSection = this.itinerary['description']['sections'];
       let diff = formSection.length - desSection.length;
-
-      console.log(formSection)
-      console.log(desSection)
 
       for (let i = 0; i < diff; i++) {
         this.removeSection(i);
@@ -304,6 +298,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
     this.editing = false;
     this.itinerary['description']['header'] = this.descriptionForm.value.header;
     this.itinerary['description']['sections'] = this.descriptionForm.value.sections;
+    this.itinerary['link'] = this.descriptionForm.value.link;
 
     this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
       result => {

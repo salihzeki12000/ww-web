@@ -26,12 +26,19 @@
 
       <h2 *ngIf="itinerary?.description.header">{{ itinerary?.description.header }}</h2>
 
+      <div *ngIf="itinerary?.created_by?.corporate">
+        <ww-user-profile-card [user]="itinerary.created_by" [currentUser]="currentUser"></ww-user-profile-card>
+
+        <div class="external-link" *ngIf="itinerary?.link !== ''">
+          <i class="fa fa-external-link" aria-hidden="true"></i>
+          <a href="{{ itinerary.link }}" target="_blank">External link</a>
+        </div>
+      </div>
+
       <div *ngIf="itinerary?.description.sections.length > 0">
         <div *ngFor="let section of itinerary?.description.sections">
           <h3 class="section-header">{{ section.section_header}}</h3>
-          <!-- <h4 class="section-content">{{ section.section_content}}</h4> -->
           <h4 class="section-content" [innerHTML]="section.formatted_content"></h4>
-
         </div>
       </div>
 
@@ -49,6 +56,9 @@
 
         <label>Description header</label>
         <input type="text" formControlName="header">
+
+        <label>External link<span class="label-note"> - link to your article or itinerary</span></label>
+        <input type="text" formControlName="link">
 
         <div formArrayName="sections">
           <div *ngFor="let section of descriptionForm.controls.sections.controls; let i = index" class="section">
