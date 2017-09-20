@@ -25,9 +25,18 @@
       <i *ngIf="!preview" class="fa fa-pencil" aria-hidden="true" (click)="editing = true"></i>
 
       <h2 *ngIf="itinerary?.description.header">{{ itinerary?.description.header }}</h2>
-      <h4 [innerHTML]="itinerary?.formatted_description"></h4>
 
-      <div *ngIf="itinerary?.formatted_description === ''">
+      <div *ngIf="itinerary?.description.sections.length > 0">
+        <div *ngFor="let section of itinerary?.description.sections">
+          <h3 class="section-header">{{ section.section_header}}</h3>
+          <!-- <h4 class="section-content">{{ section.section_content}}</h4> -->
+          <h4 class="section-content" [innerHTML]="section.formatted_content"></h4>
+
+        </div>
+      </div>
+
+
+      <div *ngIf="itinerary?.description.sections.length === 0">
         <h4>You do not have a description at the moment.</h4>
         <h4>Is there a story to this trip? Pen it down so that you will never forget about it!</h4>
         <h4>This description will also appear in the PDF version of your itinerary.</h4>
@@ -35,14 +44,41 @@
     </div>
 
     <div *ngIf="editing">
-      <input type="text" #header [value]="itinerary?.description.header">
-      <textarea #content rows="15"
-        [value]="itinerary?.description.content"></textarea>
 
-      <div class="action-response">
-        <h5 class="action-response-secondary" (click)="editing = false">CANCEL</h5>
-        <h5 class="action-response-primary" (click)="save(header.value, content.value)">SAVE</h5>
-      </div>
+      <form [formGroup]="descriptionForm" (ngSubmit)="onSubmit()">
+
+        <label>Description header</label>
+        <input type="text" formControlName="header">
+
+        <div formArrayName="sections">
+          <div *ngFor="let section of descriptionForm.controls.sections.controls; let i = index" class="section">
+
+            <div class="section-tracker">
+              <h4>Section {{i + 1}}</h4>
+              <h5 *ngIf="descriptionForm.controls.sections.controls.length > 1" (click)="removeSection(i)">Delete section</h5>
+            </div>
+
+            <div [formGroupName]="i">
+              <label>Section header</label>
+              <input type="text" formControlName="section_header">
+
+              <label>Section content</label>
+              <textarea rows="10" formControlName="section_content"></textarea>
+            </div>
+
+          </div>
+        </div>
+
+        <h4 class="add-section" (click)="addSection()">+ Add new section</h4>
+
+        <div class="action-response">
+          <h5 class="action-response-secondary" (click)="editing = false">CANCEL</h5>
+          <button type="submit" class="action-response-primary" [disabled]="!descriptionForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
+        </div>
+
+      </form>
+
+
     </div>
 
   </div>

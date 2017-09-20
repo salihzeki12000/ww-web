@@ -147,6 +147,7 @@
 }
 
 
+
 /* description content */
 
 .description-content  {
@@ -171,6 +172,15 @@
   padding-bottom: 10px;
 }
 
+.section-header {
+  margin-bottom: 5px;
+  font-family: 'Raleway', sans-serif;
+}
+
+.section-content  {
+  margin-bottom: 40px;
+  text-align: justify;
+}
 
 
 /* edit */
@@ -186,6 +196,36 @@
   }
 }
 
+.section  {
+  margin-bottom: 30px;
+  padding: 10px;
+  border: 1px solid lightgray;
+}
+
+.section-tracker h4 {
+  display: inline-block;
+  font-weight: 600;
+}
+
+.section-tracker h5 {
+  float: right;
+  color: red;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+.add-section  {
+  margin-bottom: 20px;
+  color: #6494ED;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
 
 
 

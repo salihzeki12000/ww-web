@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy, Renderer2, ElementRef } from '@angular/core';
+import { FormGroup, FormArray, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
 import { ActivatedRoute } from '@angular/router';
 
@@ -14,6 +15,7 @@ import { FlashMessageService }   from '../../flash-message';
   styleUrls: ['./itinerary-description.component.scss']
 })
 export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
+  descriptionForm: FormGroup;
 
   itinerarySubscription: Subscription;
   itinerary;
@@ -38,10 +40,16 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private route: ActivatedRoute,
     private renderer: Renderer2,
+    private formBuilder: FormBuilder,
     private flashMessageService: FlashMessageService,
     private fileuploadService: FileuploadService,
     private itineraryService: ItineraryService,
-    private loadingService: LoadingService) { }
+    private loadingService: LoadingService) {
+      this.descriptionForm = this.formBuilder.group({
+        'header': '',
+        'sections': this.formBuilder.array([])
+      })
+    }
 
   ngOnInit() {
     let segments = this.route.snapshot['_urlSegment'].segments;
@@ -50,12 +58,13 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
     this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
       result =>{
         this.itinerary = result;
-
-        if(this.itinerary['description'])  {
-          this.itinerary['formatted_description'] = this.itinerary['description']['content'].replace(/\r?\n/g, '<br/> ');
-        } else  {
-          this.itinerary['formatted_description'] = '';
-        }
+        this.descriptionForm.reset();
+        this.patchValue();
+        // if(this.itinerary['description'])  {
+        //   this.itinerary['formatted_description'] = this.itinerary['description']['content'].replace(/\r?\n/g, '<br/> ');
+        // } else  {
+        //   this.itinerary['formatted_description'] = '';
+        // }
 
         this.sortPhotos();
       })
@@ -70,6 +79,63 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
     if(this.itinerarySubscription) this.itinerarySubscription.unsubscribe();
     if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
   }
+
+  initSection(header, content)  {
+    return this.formBuilder.group({
+      section_header: header,
+      section_content: content,
+    })
+  }
+
+  addSection()  {
+    const control = <FormArray>this.descriptionForm.controls['sections'];
+    control.push(this.initSection('', ''));
+  }
+
+  removeSection(i)  {
+    const control = <FormArray>this.descriptionForm.controls['sections'];
+    control.removeAt(i);
+  }
+
+  patchValue()  {
+    for (let i = 0; i < this.descriptionForm.value.sections.length; i++) {
+      this.removeSection(i);
+      i--;
+    }
+
+    this.descriptionForm.patchValue({
+      header: this.itinerary['description']['header'],
+    })
+
+    let sections = this.itinerary['description']['sections'];
+
+    if(sections.length === 0) {
+      this.initSection('','');
+    } else  {
+
+      for (let i = 0; i < sections.length; i++) {
+        const control = <FormArray>this.descriptionForm.controls['sections'];
+        let section = sections[i];
+        section['formatted_content'] = section['section_content'].replace(/\r?\n/g, '<br/> ');
+        control.push(this.initSection(section['section_header'], section['section_content']));
+      }
+
+      let formSection = this.descriptionForm.value.sections;
+      let desSection = this.itinerary['description']['sections'];
+      let diff = formSection.length - desSection.length;
+
+      console.log(formSection)
+      console.log(desSection)
+
+      for (let i = 0; i < diff; i++) {
+        this.removeSection(i);
+      }
+
+    }
+
+  }
+
+
 
   sortPhotos()  {
     if(this.itinerary['description']['photos'])  {
@@ -234,12 +300,10 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
 
   // edit description
 
-  save(header, content) {
+  onSubmit() {
     this.editing = false;
-
-    this.itinerary['formatted_description'] = content.replace(/\r?\n/g, '<br/> ');
-    this.itinerary['description']['content'] = content;
-    this.itinerary['description']['header'] = header;
+    this.itinerary['description']['header'] = this.descriptionForm.value.header;
+    this.itinerary['description']['sections'] = this.descriptionForm.value.sections;
 
     this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
       result => {
