@@ -22,14 +22,14 @@ export class ErrorMessageComponent implements OnInit {
       (errorMessage: ErrorMessage) => {
 
         this.errorMessage = errorMessage;
-
+        console.log(this.errorMessage);
         if(this.errorMessage['error'] === undefined)  {
           this.errorMessage['title'] = "An error has occurred"
           this.errorMessage['error'] = {
             message: "An error has occurred. Please refresh your browser."
           }
         }
-        
+
         this.error = true;
       }
     );
