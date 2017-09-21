@@ -23,9 +23,14 @@
     <h6>{{ itinerary.members.length > 1 ? "Members" : "Member" }}</h6>
   </div>
 
-  <div class="itinerary-list-stats">
+  <div class="itinerary-list-stats" *ngIf="!itinerary.corporate.status">
     <h3>{{ itinerary.shares.length }}</h3>
     <h6>{{ itinerary.shares.length > 1 ? "Shares" : "Share" }}</h6>
+  </div>
+
+  <div class="itinerary-list-stats" *ngIf="itinerary.corporate.status">
+    <h3>{{ itinerary.copied_by.length }}</h3>
+    <h6>{{ itinerary.copied_by.length > 1 ? "Copies" : "Copy" }}</h6>
   </div>
 
   <h5 class="itinerary-created-by">Created by <span class="username-bold" (click)="routeToUser(itinerary.created_by._id)">{{ itinerary.created_by.username }}</span> on {{ itinerary.created_at | date: 'dd MMM yy'}}</h5>

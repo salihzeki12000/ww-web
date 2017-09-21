@@ -52,6 +52,9 @@ export class UserItinerariesComponent implements OnInit, OnDestroy {
       if(this.itineraries[i]['private'])  {
         this.itineraries.splice(i,1);
         i--;
+      } else if(this.itineraries[i]['corporate']['status'] && !this.itineraries[i]['corporate']['publish']) {
+        this.itineraries.splice(i,1);
+        i--;
       }
     }
 
