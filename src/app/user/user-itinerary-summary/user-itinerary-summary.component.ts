@@ -69,14 +69,10 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
           this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
              result => {
                this.itinerary = result;
-
+               console.log(this.itinerary);
                if(this.currentUser) this.checkCopy();
+               this.formatItinDescription();
 
-               if(this.itinerary['description'])  {
-                 this.itinerary['formatted_description'] = this.itinerary['description']['content'].replace(/\r?\n/g, '<br/> ');
-               } else  {
-                 this.itinerary['formatted_description'] = '';
-               }
 
                this.sortDailyNotes();
              })
@@ -133,6 +129,16 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
     }
 
     this.dailyNotes = notes;
+  }
+
+  formatItinDescription() {
+    let sections = this.itinerary['description']['sections'];
+
+    for (let i = 0; i < sections.length; i++) {
+      let formatted_content = sections[i]['section_content'].replace(/\r?\n/g, '<br/> ');
+
+      sections[i]['formatted_content'] = formatted_content;
+    }
   }
 
   formatDescription() {

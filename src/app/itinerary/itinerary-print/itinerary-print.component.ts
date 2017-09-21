@@ -69,10 +69,7 @@ export class ItineraryPrintComponent implements OnInit {
           this.titleService.setTitle(title);
 
           this.sortDailyNotes();
-
-          if(this.itinerary['description']) {
-            this.itinerary['formatted_description'] = this.itinerary['description']['content'].replace(/\r?\n/g, '<br/> ');
-          }
+          this.formatDescription();
         })
 
       this.itineraryEventService.getEvents(id).subscribe(
@@ -105,6 +102,16 @@ export class ItineraryPrintComponent implements OnInit {
     this.invalidMsg = 'You are not authorised to access the itinerary. If you are not logged in, please log in and try to access this page via the itinerary.';
 
     this.loadingService.setLoader(false, "");
+  }
+
+  formatDescription() {
+    let sections = this.itinerary['description']['sections'];
+
+    for (let i = 0; i < sections.length; i++) {
+      let formatted_content = sections[i]['section_content'].replace(/\r?\n/g, '<br/> ');
+
+      sections[i]['formatted_content'] = formatted_content;
+    }
   }
 
   sortDailyNotes()  {

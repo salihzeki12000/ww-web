@@ -17,7 +17,12 @@
   </div>
 
   <div class="itinerary-description">
-    <h4 [innerHTML]="itinerary?.formatted_description"></h4>
+    <h2>{{ itinerary?.description.header }}</h2>
+
+    <div *ngFor="let section of itinerary?.description.sections">
+      <h3 class="section-header">{{ section.section_header }}</h3>
+      <h4 class="section-content" [innerHTML]="section.formatted_content"></h4>
+    </div>
   </div>
 
   <div *ngFor="let date of dateRange; let i = index">

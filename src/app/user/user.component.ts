@@ -68,7 +68,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
           let title = this.user['username'] + " | Home"
           this.titleService.setTitle(title);
-          
+
           this.itineraries = Object.keys(this.user['itineraries']).map(key => this.user['itineraries'][key]);
           this.sortItin();
 
@@ -121,6 +121,9 @@ export class UserComponent implements OnInit, OnDestroy {
 
     for (let i = 0; i < this.itineraries.length; i++) {
       if(this.itineraries[i]['private'])  {
+        this.itineraries.splice(i,1);
+        i--;
+      } else if(this.itineraries[i]['corporate']['status'] && !this.itineraries[i]['corporate']['publish']) {
         this.itineraries.splice(i,1);
         i--;
       }

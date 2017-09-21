@@ -14,8 +14,14 @@
   </h4>
 </div>
 
+<div class="description">
+  <h2>{{ itinerary?.description.header }}</h2>
 
-<h4 class="description" [innerHTML]="itinerary?.formatted_description"></h4>
+  <div *ngFor="let section of itinerary?.description.sections">
+    <h3 class="section-header">{{ section.section_header }}</h3>
+    <h4 class="section-content" [innerHTML]="section.formatted_content"></h4>
+  </div>
+</div>
 
 
 <div class="summary-container">
@@ -54,8 +60,8 @@
 
           <div class="summary-item-details">
             <h4>{{ event.name }}</h4>
-            <h4 class="summary-description" [innerHTML]="event?.formatted_description"></h4>
-            <h4 class="summary-description" [innerHTML]="event?.formatted_sub_description"></h4>
+            <h4 class="summary-description" [innerHTML]="event?.formatted_description" *ngIf="event?.formatted_description"></h4>
+            <h4 class="summary-description" [innerHTML]="event?.formatted_sub_description" *ngIf="event?.formatted_sub_description"></h4>
 
             <div class="details-item" *ngIf="event?.formatted_note !== ''">
               <i class="fa fa-sticky-note-o fa-fw" aria-hidden="true"></i>
