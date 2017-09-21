@@ -164,7 +164,12 @@
   }
 }
 
-
+.date-column:nth-of-type(even)  {
+  background-color: #EDEDED;
+  &:hover {
+    background-color: white;
+  }
+}
 
 
 /* scroll */
