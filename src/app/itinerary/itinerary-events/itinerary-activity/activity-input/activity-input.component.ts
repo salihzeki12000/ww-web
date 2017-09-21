@@ -40,7 +40,6 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   minute = "00";
 
   meals;
-  categories;
 
   step1 = true;
   selected = false;
@@ -80,7 +79,6 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router) {
     this.addActivityForm = this.formBuilder.group({
-      'categories': this.initCategoryArray(),
       'name': ['', Validators.required],
       'Oname': '',
       'formatted_address': '',
@@ -156,16 +154,6 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
       this.formBuilder.group({ value: "Drinks", checked: false }),
     ])
     return this.meals;
-  }
-
-  initCategoryArray() {
-    this.categories = this.formBuilder.array([
-      this.formBuilder.group({ value: 'adventure', icon: 'hand-peace-o', checked: false }),
-      this.formBuilder.group({ value: 'food/drink', icon: 'cutlery', checked: false }),
-      this.formBuilder.group({ value: 'shopping', icon: 'shopping-bag', checked: false }),
-      this.formBuilder.group({ value: 'sight-seeing', icon: 'eye', checked: false }),
-    ])
-    return this.categories;
   }
 
   getCountriesName()  {

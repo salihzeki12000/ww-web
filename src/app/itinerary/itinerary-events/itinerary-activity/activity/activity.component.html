@@ -129,13 +129,6 @@
         <h5 class="note" [innerHTML]="activity?.formatted_note"></h5>
       </div>
 
-      <!-- <div class="activity-tags">
-        <i class="fa fa-tags" aria-hidden="true"></i>
-        <div *ngFor="let category of activity.categories" class="activity-category">
-          <h6 *ngIf="category.checked">|  {{ category.value }}  |</h6>
-        </div>
-      </div> -->
-
       <div class="created-by">
         <h5 class="username" (click)="routeToUser(activity?.user._id)">{{ activity?.user.username }}</h5>
         <div class="time-ago">
@@ -324,22 +317,6 @@
               </div>
 
             </div>
-
-            <!-- <div formArrayName="categories">
-              <label>Category</label>
-
-              <div *ngFor="let category of categories.controls; let j = index" [formGroupName]="j">
-
-                  <div class="category-input">
-                    <input type="checkbox" formControlName="checked" [ngModel]="activity.categories[j].checked">
-                    <label>
-                      <i class="fa fa-{{ category?.value.icon }} fa-fw" aria-hidden="true"></i>
-                      {{ category?.value.value }}
-                    </label>
-                  </div>
-
-              </div>
-            </div> -->
           </div>
 
           <h4 class="form-section-header">Note</h4>

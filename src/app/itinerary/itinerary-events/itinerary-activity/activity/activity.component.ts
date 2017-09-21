@@ -45,7 +45,6 @@ export class ActivityComponent implements OnInit, OnDestroy {
   deleteActivity = false;
 
   editActivityForm: FormGroup;
-  categories;
   meals;
   openingHours;
 
@@ -83,7 +82,6 @@ export class ActivityComponent implements OnInit, OnDestroy {
     private flashMessageService: FlashMessageService,
     private itineraryService: ItineraryService) {
       this.editActivityForm = this.formBuilder.group({
-        'categories': this.initCategoryArray(),
         'name': ['', Validators.required],
         'description': '',
         'sub_description': '',
@@ -198,16 +196,6 @@ export class ActivityComponent implements OnInit, OnDestroy {
       this.formBuilder.group({ value: "Drinks", checked: false }),
     ])
     return this.meals;
-  }
-
-  initCategoryArray() {
-    this.categories = this.formBuilder.array([
-      this.formBuilder.group({ value: 'adventure', icon: 'hand-peace-o', checked: false }),
-      this.formBuilder.group({ value: 'food/drink', icon: 'cutlery', checked: false }),
-      this.formBuilder.group({ value: 'sight-seeing', icon: 'eye', checked: false }),
-      this.formBuilder.group({ value: 'shopping', icon: 'shopping-bag', checked: false }),
-    ])
-    return this.categories;
   }
 
   initTime()  {
