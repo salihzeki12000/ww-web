@@ -10,6 +10,13 @@
     </h5>
     <h5>ADDRESS</h5>
     <h5>
+      CITY
+      <div class="sort">
+        <i class="fa fa-sort-alpha-asc" aria-hidden="true" (click)="sortCityA()"></i>
+        <i class="fa fa-sort-alpha-desc" aria-hidden="true" (click)="sortCityD()"></i>
+      </div>
+    </h5>
+    <h5>
       COUNTRY
       <div class="sort">
         <i class="fa fa-sort-alpha-asc" aria-hidden="true" (click)="sortCountryA()"></i>
@@ -24,6 +31,7 @@
       <h5>{{ i +1 }}</h5>
       <h5>{{ place?.name }}</h5>
       <h5>{{ place?.formatted_address }}</h5>
+      <h5>{{ place?.city?.name }}</h5>
       <h5>{{ place?.country.name }}</h5>
       <h5 *ngIf="place.description !== ''"><i class="fa fa-check" aria-hidden="true"></i></h5>
     </div>

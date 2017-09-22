@@ -8,6 +8,7 @@ declare var google:any;
 import { PlaceService }   from '../place.service';
 import { LoadingService } from '../../loading';
 import { AdminService }   from '../../admin/admin.service';
+import { CityService }    from '../../cities';
 
 @Component({
   selector: 'ww-place',
@@ -27,7 +28,9 @@ export class PlaceComponent implements OnInit {
   pictureOptions = [];
   placeID;
   reviews = [];
-
+  cities;
+  citiesName;
+  cityName;
 
   showContactDetails6 = false;
   showContactDetails3 = false;
@@ -38,6 +41,7 @@ export class PlaceComponent implements OnInit {
   admin;
 
   constructor(
+    private cityService: CityService,
     private adminService: AdminService,
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
@@ -47,6 +51,7 @@ export class PlaceComponent implements OnInit {
         'name': '',
         'country': '',
         'city': '',
+        'categories': '',
         'description': '',
         'sub_description': '',
         'tips': '',
@@ -70,13 +75,29 @@ export class PlaceComponent implements OnInit {
         result => {
           this.place = result.place;
           this.patchValue();
+          console.log(this.place)
         }
       )
     })
 
     this.currentAdminSubscription = this.adminService.updateCurrentAdmin.subscribe(
-      result => {this.admin = result;}
+      result => { this.admin = result; }
     )
+
+    this.cityService.getCities().subscribe(
+      result => {
+        this.cities = result.cities;
+        this.getCitiesName();
+      }
+    )
+  }
+
+  getCitiesName() {
+    this.citiesName = [];
+
+    for (let i = 0; i < this.cities.length; i++) {
+      this.citiesName.push(this.cities[i]['name'] + ', ' + this.cities[i]['country']['name']);
+    }
   }
 
   patchValue()  {
@@ -87,6 +108,10 @@ export class PlaceComponent implements OnInit {
     this.pictureOptions = [];
     this.pictureOptions = this.place['photos'];
     this.placeID = this.place['place_id'];
+
+    if(this.place['city'])  {
+      this.cityName = this.place['city']['name'] + ", " + this.place['country']['name'];
+    }
 
     if(this.place['opening_hours']) {
       this.formatted_hours = this.place['opening_hours'].replace(/\r?\n/g, '<br/> ');
@@ -99,7 +124,7 @@ export class PlaceComponent implements OnInit {
     this.placeForm.patchValue({
       name: this.place['name'],
       country: this.place['country'],
-      // city: this.place[''],
+      city: this.place['city'],
       description: this.place['description'],
       sub_description: this.place['sub_description'],
       tips: this.place['tips'],
@@ -177,11 +202,14 @@ export class PlaceComponent implements OnInit {
     this.loadingService.setLoader(true, "Saving place...");
 
     let place = this.placeForm.value;
-
+    console.log(place)
     for (let key in place) {
       this.place[key] = place[key];
     }
 
+    let index = this.citiesName.indexOf(place['city']);
+    this.place['city'] = this.cities[index];
+    console.log(this.place)
     this.place['updated'].unshift({
       admin: this.admin['_id'],
       date: new Date()

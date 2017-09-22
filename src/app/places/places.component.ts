@@ -37,6 +37,22 @@ export class PlacesComponent implements OnInit {
     })
   }
 
+  sortCityA()  {
+    this.places.sort((a,b)  =>  {
+      if(a['city']['name'] < b['city']['name']) return -1;
+      if(a['city']['name'] > b['city']['name']) return 1;
+      return 0;
+    })
+  }
+
+  sortCityD()  {
+    this.places.sort((a,b)  =>  {
+      if(a['city']['name'] < b['city']['name']) return 1;
+      if(a['city']['name'] > b['city']['name']) return -1;
+      return 0;
+    })
+  }
+
   sortCountryA()  {
     this.places.sort((a,b)  =>  {
       if(a['country']['name'] < b['country']['name']) return -1;
