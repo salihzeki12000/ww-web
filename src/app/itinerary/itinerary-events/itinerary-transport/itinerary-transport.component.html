@@ -31,12 +31,18 @@
 
 </div>
 
-<div *ngIf="!totalTransports" class="nil-event-message">
+<div *ngIf="!totalTransports && !preview" class="nil-event-message">
   <img class="img-example" src="assets/arrow.png" alt="">
   <h4>This is a dedicated section for all your transport arrangements.</h4>
   <h4 class="action-response-primary" (click)="addTransport = true">Add new transport now</h4>
   <h4>You can also add a new arrangement by selecting the "ADD NEW" tab and then the "NEW TRANSPORT" option</h4>
   <h4 class="nil-event-message-mobile">You can access the "ADD NEW" tab at the bottom of the screen.</h4>
+</div>
+
+<div *ngIf="!totalTransports && preview" class="nil-event-message">
+  <img class="img-example" src="assets/arrow.png" alt="">
+  <h4>This is no transport arrangement in this itinerary.</h4>
+  <h4>You can copy this itinerary and add your own transport arrangement.</h4>
 </div>
 
 <div class="event-list">

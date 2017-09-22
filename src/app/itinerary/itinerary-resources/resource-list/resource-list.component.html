@@ -33,12 +33,18 @@
 
 </div>
 
-<div *ngIf="!totalResources" class="nil-event-message">
+<div *ngIf="!totalResources && !preview" class="nil-event-message">
   <img class="img-example" src="assets/arrow.png" alt="">
   <h4>This is a dedicated section for all your resources. This includes website links you are interested in or a note for your travel.</h4>
   <h4 class="action-response-primary" (click)="addResource = true">Add new resource now</h4>
   <h4>You can also add a new resource by selecting the "ADD NEW" tab and then the "NEW RESOURCE" option</h4>
   <h4 class="nil-event-message-mobile">You can access the "ADD NEW" tab at the bottom of the screen.</h4>
+</div>
+
+<div *ngIf="!totalResources && preview" class="nil-event-message">
+  <img class="img-example" src="assets/arrow.png" alt="">
+  <h4>This is no resource in this itinerary.</h4>
+  <h4>You can copy this itinerary and add your own resources, such as website links or notes.</h4>
 </div>
 
 <div class="event-list">

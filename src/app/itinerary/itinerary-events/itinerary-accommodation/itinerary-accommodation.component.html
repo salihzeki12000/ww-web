@@ -24,12 +24,18 @@
 
 </div>
 
-<div *ngIf="!totalAccommodations" class="nil-event-message">
+<div *ngIf="!totalAccommodations && !preview" class="nil-event-message">
   <img class="img-example" src="assets/arrow.png" alt="">
   <h4>This is a dedicated section for all your accommodation arrangements.</h4>
   <h4 class="action-response-primary" (click)="addAccommodation = true">Add new accommodation now</h4>
   <h4>You can also add a new arrangement by selecting the "ADD NEW" tab and then the "NEW ACCOMMODATION" option</h4>
   <h4 class="nil-event-message-mobile">You can access the "ADD NEW" tab at the bottom of the screen.</h4>
+</div>
+
+<div *ngIf="!totalAccommodations && preview" class="nil-event-message">
+  <img class="img-example" src="assets/arrow.png" alt="">
+  <h4>There is no accommodation arrangement in this itinerary.</h4>
+  <h4>You can copy this itinerary and add your own accommodation arrangement.</h4>
 </div>
 
 <div class="event-list">
