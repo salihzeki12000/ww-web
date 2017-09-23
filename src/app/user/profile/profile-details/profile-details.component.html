@@ -40,7 +40,10 @@
 
     <div class="itinerary-shortcut" [class.fix-profile-itineraries]="fixed">
       <div class="itinerary-shortcut-header">
-        <h5>{{ currentUser?.itineraries.length > 1 ? 'ITINERARIES' : 'ITINERARY'}} ({{ currentUser?.itineraries.length }})</h5>
+        <h5>
+          <i class="fa fa-sticky-note-o fa-lg" aria-hidden="true"></i>
+          {{ currentUser?.itineraries.length > 1 ? 'ITINERARIES' : 'ITINERARY'}} ({{ currentUser?.itineraries.length }})
+        </h5>
       </div>
       <h5 class="itinerary-shortcut-new" (click)="createItinerary()"><i class="fa fa-plus" aria-hidden="true"></i> Plan a new itinerary</h5>
       <div class="itinerary-shortcut-list" *ngFor="let itinerary of currentUser?.itineraries | slice:0:10 "  (click)="routeToItin(itinerary._id)">

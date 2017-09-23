@@ -178,9 +178,9 @@
 
     <div class="side-nav-bars" (click)="toggleSideNav()">
       <i class="fa fa-bars fa-2x" aria-hidden="true"></i>
-      <h6>N</h6>
+      <h6 *ngIf='newNotification'>N</h6>
     </div>
- <!-- *ngIf='newNotification' -->
+
     <div *ngIf="sideNav">
 
       <div class="side-nav-profile">

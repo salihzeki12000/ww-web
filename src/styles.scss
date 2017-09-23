@@ -298,6 +298,9 @@ span.bold {
 .itinerary-shortcut-list h5 {
   padding-bottom: 5px;
   font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 

@@ -16,6 +16,8 @@ import { LoadingService }    from '../loading';
 export class HomeComponent implements OnInit, OnDestroy {
   user;
   feed = [];
+  wwItineraries; //to get wondererwanderer itineraries
+  top;
 
   verifyMsg = false;
 
@@ -45,6 +47,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
       result => {
         this.user = result;
+        this.top = 165 + (this.user['itineraries'].length * 61) + 'px';
 
         if(!this.user['new_user_tour'])  {
           this.newUser = true;
@@ -64,6 +67,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 
     this.renderer.removeClass(document.body, 'prevent-scroll');
+
+    this.userService.getUser("59001ca5e0cc620004da87b8").subscribe(
+      result => {
+        this.wwItineraries = result.user['itineraries'];
+        this.sortItin();
+      }
+    )
 
     // work around for issue where fb login cant load page properly
     // let login = this.authService.loginType;
@@ -92,6 +102,19 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.loadingService.setLoader(true, "");
   }
 
+
+  sortItin()  {
+
+    for (let i = 0; i < this.wwItineraries.length; i++) {
+      if(this.wwItineraries[i]['private'])  {
+        this.wwItineraries.splice(i,1);
+        i--;
+      } else if(this.wwItineraries[i]['corporate']['status'] && !this.wwItineraries[i]['corporate']['publish']) {
+        this.wwItineraries.splice(i,1);
+        i--;
+      }
+    }
+  }
 
 
   // tour related
@@ -144,6 +167,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   routeToItin(id) {
     this.router.navigateByUrl('/me/itinerary/' + id);
+  }
+
+  routeToPreview(id) {
+    this.router.navigateByUrl('/preview/itinerary/' + id);
   }
 
 }
