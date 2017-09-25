@@ -47,11 +47,11 @@ export class SigninComponent implements OnInit {
         // this.userService.getCurrentUser().subscribe(
         //   result => {});
 
-        if(!data['validated'])  {
-          this.checkVerification(data);
-        } else if(this.itinerary)  {
+        if(this.itinerary)  {
           let user = { _id: data.userId };
           this.addToItin(user);
+        } else if (!data['validated']) {
+          this.checkVerification(data);
         } else if(this.reload) {
           window.location.reload();
         } else {
@@ -87,7 +87,7 @@ export class SigninComponent implements OnInit {
 
     this.itinerary['members'].push(user);
 
-    this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
+    this.itineraryService.updateItinUser(this.itinerary).subscribe(
       data => {
         setTimeout(() =>  {
           this.router.navigateByUrl(this.reroute);

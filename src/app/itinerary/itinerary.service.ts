@@ -118,6 +118,19 @@ export class ItineraryService {
                     });
   }
 
+  updateItinUser(itinerary: Itinerary)  {
+    const body = JSON.stringify(itinerary);
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
+
+    return this.http.patch( this.url + "/itinerary/" + itinerary['_id']+ token, body, { headers: headers })
+                    .map((response: Response) => response.json())
+                    .catch((error: Response) => {
+                      this.errorMessageService.handleErrorMessage(error.json());
+                      return Observable.throw(error.json())
+                    });
+  }
+
   deleteItin(itinerary: Itinerary)  {
     const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
 

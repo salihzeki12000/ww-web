@@ -38,7 +38,6 @@ export class AdminCitiesComponent implements OnInit {
     this.cityService.getCities().subscribe(
       result => {
         this.cities = result.cities;
-        console.log(this.cities)
       })
 
     this.countryService.getCountries().subscribe(
@@ -97,7 +96,7 @@ export class AdminCitiesComponent implements OnInit {
 
     this.cityService.addCity(newCity).subscribe(
       result => {
-        this.cities.push(result.city);
+        this.cities.unshift(result.city);
 
         this.loadingService.setLoader(false, "");
         this.newCityForm.reset();

@@ -81,6 +81,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
 
   // http://stackoverflow.com/questions/35530483/google-sign-in-for-websites-and-angular-2-using-typescript
   loginGoogle(user) {
+    this.loading = true;
     let profile = user.getBasicProfile();
 
     let newUser = {
@@ -125,7 +126,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
 
     this.itinerary['members'].push(user);
 
-    this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
+    this.itineraryService.updateItinUser(this.itinerary).subscribe(
       data => {
         setTimeout(() =>  {
           this.router.navigateByUrl(this.reroute);
