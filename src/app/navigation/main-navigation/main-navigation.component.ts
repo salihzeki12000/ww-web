@@ -225,7 +225,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   // top navigation itinerary
   newItin() {
     this.showItineraryForm = true;
-    this.preventScroll(true);
+    // this.preventScroll(true);
   }
 
   routeToItinerary(id) {

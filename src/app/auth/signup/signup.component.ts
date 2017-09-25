@@ -48,14 +48,10 @@ export class SignupComponent implements OnInit {
       data => {
         // this.userService.getCurrentUser().subscribe(
         //   data => {});
-        console.log(data)
+
         if(this.itinerary)  {
           let user = {_id: data.userId};
           this.addToItin(user);
-
-          console.log(this.itinerary);
-          console.log(user);
-
         } else if(this.reload) {
           window.location.reload();
         } else {
@@ -81,7 +77,6 @@ export class SignupComponent implements OnInit {
 
     this.itineraryService.updateItinUser(this.itinerary).subscribe(
       data => {
-        console.log(data)
         setTimeout(() =>  {
           this.router.navigateByUrl(this.reroute);
         }, 1000)

@@ -92,8 +92,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if(!this.user['new_user_tour']) {
-      this.user['new_user_tour'] = true;
-      this.userService.editUser(this.user).subscribe(result =>{})
+      this.updateUser();
     }
 
     if(this.feedSubscription) this.feedSubscription.unsubscribe();
@@ -119,8 +118,14 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   // tour related
 
+  updateUser()  {
+    this.user['new_user_tour'] = true;
+    this.userService.editUser(this.user).subscribe(result =>{})
+  }
+
   skipTour()  {
     this.newUser = false;
+    this.updateUser();
   }
 
   startTour() {
