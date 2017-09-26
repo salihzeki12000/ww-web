@@ -471,9 +471,12 @@ export class ActivityComponent implements OnInit, OnDestroy {
       originalActivity[value] = editedActivity[value];
     }
 
-    if(originalActivity['place']['opening_hours'])  {
-      this.activity['formatted_hours'] = originalActivity['place']['opening_hours'].replace(/\r?\n/g, '<br/> ');
+    if(originalActivity['place']) {
+      if(originalActivity['place']['opening_hours'])  {
+        this.activity['formatted_hours'] = originalActivity['place']['opening_hours'].replace(/\r?\n/g, '<br/> ');
+      }
     }
+
 
     this.activity['formatted_note'] = originalActivity['note'].replace(/\r?\n/g, '<br/> ');
 

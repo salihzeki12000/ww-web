@@ -83,7 +83,8 @@ export class ResourceInputComponent implements OnInit, OnDestroy {
             if(result.meta_img) this.link_img = result.meta_img.trim();
 
             this.fetchLink = false;
-          }
+          },
+          error => this.fetchLink = false
         );
       }
     }

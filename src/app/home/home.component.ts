@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
       result => {
         this.user = result;
-        this.top = 165 + (this.user['itineraries'].length * 61) + 'px';
+        this.checkItinLength();
 
         if(!this.user['new_user_tour'])  {
           this.newUser = true;
@@ -103,7 +103,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 
   sortItin()  {
-
     for (let i = 0; i < this.wwItineraries.length; i++) {
       if(this.wwItineraries[i]['private'])  {
         this.wwItineraries.splice(i,1);
@@ -113,6 +112,15 @@ export class HomeComponent implements OnInit, OnDestroy {
         i--;
       }
     }
+  }
+
+  checkItinLength() {
+    if(this.user['itineraries'].length < 6) {
+      this.top = 165 + (this.user['itineraries'].length * 61) + 'px';
+    } else  {
+      this.top = '500px';
+    }
+
   }
 
 
