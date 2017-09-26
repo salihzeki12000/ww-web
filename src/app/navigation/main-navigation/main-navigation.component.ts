@@ -234,7 +234,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
 
     if(this.route.snapshot['_urlSegment'].segments[2]) {
       if(this.route.snapshot['_urlSegment'].segments[2].path !== id)  {
-        this.loadingService.setLoader(true, "");
+        this.loadingService.setLoader(true, "Fetching itinerary...");
       }
     }
   }

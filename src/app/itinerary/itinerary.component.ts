@@ -179,9 +179,9 @@ export class ItineraryComponent implements OnInit, OnDestroy {
        (this.preview && this.itinerary['corporate']['status'] && !this.itinerary['corporate']['publish'] && !this.creator))  {
       this.invalidPreview = true;
 
-      setTimeout(() =>  {
-        this.loadingService.setLoader(false, "");
-      }, 300)
+      // setTimeout(() =>  {
+      //   this.loadingService.setLoader(false, "");
+      // }, 3000)
 
     } else  {
       this.checkAccess();
@@ -210,7 +210,9 @@ export class ItineraryComponent implements OnInit, OnDestroy {
       this.loadingMessage = 'You are not authorised to access the selected itinerary.';
     }
 
-    this.loadingService.setLoader(false, "");
+    // setTimeout(() =>  {
+    //   this.loadingService.setLoader(false, "");
+    // }, 3000)
   }
 
   getAllUsers() {
