@@ -93,7 +93,7 @@
 
     <h5 class="form-section-header">PHOTOS</h5>
 
-    <div class="upload-picture" *ngIf="!preview">
+    <div class="upload-picture">
       <label class="file-upload">
         Upload new pictures
         <input type="file" (change)="fileUploaded($event)" [value]="inputValue" accept="image/*" multiple>
