@@ -14,6 +14,8 @@ import { LoadingService }        from '../../loading';
 })
 export class ItinerarySummaryComponent implements OnInit, OnDestroy {
   preview;
+  compressed = false;
+  compressedView = false;
 
   eventSubscription: Subscription;
   events = [];
@@ -56,6 +58,10 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
     private loadingService: LoadingService) { }
 
   ngOnInit() {
+    if(this.element.nativeElement.ownerDocument.activeElement.clientWidth > 420)  {
+      this.compressedView = true;
+    }
+
     let segments = this.route.snapshot['_urlSegment'].segments;
     if(segments[0]['path'] === 'preview') this.preview = true;
 
@@ -96,16 +102,32 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
 
   @HostListener("window:scroll", [])
   onWindowScroll() {
-    for (let i = 0; i < this.itemPosition.length; i++) {
-      let offset = this.element.nativeElement.offsetParent.scrollTop;
-      let item = this.itemPosition[i]['position'] - 45;
-      let diff = item - offset;
+    if(!this.compressed)  {
+      for (let i = 0; i < this.itemPosition.length; i++) {
+        let offset = this.element.nativeElement.offsetParent.scrollTop;
+        let item = this.itemPosition[i]['position'] - 45;
+        let diff = item - offset;
 
-      if(diff < 0)  {
-        this.currentDate = this.itemPosition[i]['date']
-        this.index = i;
+        if(diff < 0)  {
+          this.currentDate = this.itemPosition[i]['date']
+          this.index = i;
+        }
       }
     }
+
+    if(this.compressed) {
+      for (let i = 0; i < this.itemPosition.length; i++) {
+        let offset = this.element.nativeElement.ownerDocument.scrollingElement.scrollTop;
+        let item = this.itemPosition[i]['position'] - 50;
+        let diff = item - offset;
+
+        if(diff < 0)  {
+          this.currentDate = this.itemPosition[i]['date']
+          this.index = i;
+        }
+      }
+    }
+
   }
 
   sortDailyNotes()  {
@@ -132,6 +154,12 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
     this.itemPosition.push(event);
   }
 
+  toggleView()  {
+    this.itemPosition = [];
+    this.currentDate = "any day";
+    this.compressed = !this.compressed;
+  }
+
   onScroll(event) {
     if(event.type === "resize") {
       this.oldWidth = this.newWidth;
@@ -145,6 +173,12 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
         if(this.left !== undefined) {
           this.left = (Number(this.left.slice(0, this.left.length - 2)) + 200) + 'px';
         }
+      }
+
+      if(this.newWidth > 420) {
+        this.compressedView = true;
+      } else  {
+        this.compressedView = false;
       }
 
       this.dateRow = this.element.nativeElement.children[1].clientWidth;

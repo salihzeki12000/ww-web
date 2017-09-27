@@ -1,4 +1,8 @@
 <div class="legend">
+  <div *ngIf="compressedView" (click)="toggleView()">
+    <i class="fa fa-align-justify" aria-hidden="true"></i>
+  </div>
+
   <div>
     <div class="accommodation-indicator pill"></div>
     <h6>ACCOMMODATION</h6>
@@ -13,6 +17,7 @@
     <div class="transport-indicator pill"></div>
     <h6>TRANSPORT</h6>
   </div>
+
 </div>
 
 <div *ngIf="!totalEvents" class="nil-event-message">
@@ -27,7 +32,7 @@
   <h4 class="nil-event-message-mobile">You can access the "ADD NEW" tab at the bottom of the screen.</h4>
 </div>
 
-<div *ngIf="totalEvents" class="summary-container" (window:resize)="onScroll($event)" (scroll)="onScroll($event)">
+<div *ngIf="totalEvents && !compressed" class="summary-container" (window:resize)="onScroll($event)" (scroll)="onScroll($event)">
 
   <div class="date-bar" [style.left]="left">
     <div *ngFor="let date of dateRange; let i = index">
@@ -73,6 +78,29 @@
 
 </div>
 
+<div *ngIf="totalEvents && compressed" class="compressed-container">
+
+  <div *ngIf="currentDate === 'any day' || itinerary?.num_days">
+    <h4 class="fixed-date-header-c">{{ currentDate }}</h4>
+  </div>
+
+  <div *ngIf="currentDate !== 'any day' && !itinerary?.num_days">
+    <h4 class="fixed-date-header-c">Day {{ index }} - {{ currentDate | date: 'dd MMM (EEE)'}}</h4>
+  </div>
+
+  <div *ngFor="let date of dateRange; let i = index" class="compressed-column">
+
+    <ww-itinerary-summary-compressed
+      [index]="i"
+      [date]="date"
+      [itinerary]="itinerary"
+      [dailyNote]="dailyNotes[i]"
+      [events]="events"
+      (showEventDetails)="showEventDetails($event)"
+      (sectionPosition)="sectionPosition($event)"></ww-itinerary-summary-compressed>
+  </div>
+
+</div>
 
 
 
