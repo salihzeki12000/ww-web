@@ -38,3 +38,70 @@ form  {
 .display-300 .tips  {
   margin-top: 10px;
 }
+
+
+/* upload picture */
+
+.upload-picture {
+  margin-top: -15px;
+  float: right;
+}
+
+
+.file-upload {
+  overflow: hidden;
+  position: relative;
+  padding: 2px 10px 1px 10px;
+  color: #F9FBFB;
+  font-size: 10px;
+  background-color: #6494ED;
+  border: 2px solid #F9FBFB;
+  border-radius: 25px;
+  &:hover {
+    cursor: pointer;
+    opacity: .7;
+  }
+}
+
+.file-upload [type=file] {
+  display: block;
+  position: absolute;
+  top: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.file-upload input  {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+
+/* add / remove photo */
+
+.blur {
+  opacity: .3;
+}
+
+.remove {
+  padding: 5px 0;
+  color: red;
+  border: 2px solid;
+  border-radius: 5px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.add  {
+  padding: 5px 0;
+  color: #19CC72;
+  border: 2px solid;
+  border-radius: 5px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

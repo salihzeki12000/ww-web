@@ -2,7 +2,7 @@
   <h3>Edit place - {{ place?.name }}</h3>
 </div>
 
-<form [formGroup]="placeForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="placeForm" (ngSubmit)="savePics()">
 
   <div class="details-section-container">
     <h5>Last updated {{ updated?.date }}</h5>
@@ -92,11 +92,31 @@
 
 
     <h5 class="form-section-header">PHOTOS</h5>
+
+    <div class="upload-picture" *ngIf="!preview">
+      <label class="file-upload">
+        Upload new pictures
+        <input type="file" (change)="fileUploaded($event)" [value]="inputValue" accept="image/*" multiple>
+      </label>
+    </div>
+
+
     <div class="details-section-container">
+
+      <div *ngFor="let pic of uploadedPics; let i = index" class="form-image">
+        <img [src]="pic.url" [class.blur]="!pic.status">
+
+        <div class="positioning">
+          <h4>NEW</h4>
+          <h4 class="remove" *ngIf="pic.status" (click)="pic.status = !pic.status">Remove</h4>
+          <h4 class="add" *ngIf="!pic.status" (click)="pic.status = !pic.status">Add</h4>
+        </div>
+
+      </div>
 
       <div *ngIf="pictureOptions?.length > 0">
         <div *ngFor="let photo of pictureOptions; let i = index" class="form-image">
-          <img src="{{ photo.url }}" alt="">
+          <img src="{{ photo.url }}" alt="" [class.blur]="!photo.status">
           <div class="positioning">
             <h5>Current position</h5>
             <h3>{{ i+1 }}</h3>
@@ -108,6 +128,8 @@
               </option>
             </select>
 
+            <h4 class="remove" *ngIf="photo.status" (click)="photo.status = !photo.status">Remove</h4>
+            <h4 class="add" *ngIf="!photo.status" (click)="photo.status = !photo.status">Add</h4>
           </div>
         </div>
       </div>

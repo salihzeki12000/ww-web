@@ -5,10 +5,11 @@ import { Subscription } from 'rxjs/Rx';
 
 declare var google:any;
 
-import { PlaceService }   from '../place.service';
-import { LoadingService } from '../../loading';
-import { AdminService }   from '../../admin/admin.service';
-import { CityService }    from '../../cities';
+import { PlaceService }      from '../place.service';
+import { LoadingService }    from '../../loading';
+import { AdminService }      from '../../admin/admin.service';
+import { CityService }       from '../../cities';
+import { FileuploadService } from '../../shared';
 
 @Component({
   selector: 'ww-place',
@@ -40,12 +41,17 @@ export class PlaceComponent implements OnInit {
   currentAdminSubscription: Subscription;
   admin;
 
+  uploadedPics = [];
+  inputValue = '';
+  tracker = 0;
+
   constructor(
     private cityService: CityService,
     private adminService: AdminService,
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
     private placeService: PlaceService,
+    private fileuploadService: FileuploadService,
     private route: ActivatedRoute) {
       this.placeForm = this.formBuilder.group({
         'name': '',
@@ -107,6 +113,8 @@ export class PlaceComponent implements OnInit {
 
     this.pictureOptions = [];
     this.pictureOptions = this.place['photos'];
+    this.formatPhotos();
+
     this.placeID = this.place['place_id'];
 
     if(this.place['city'])  {
@@ -182,6 +190,12 @@ export class PlaceComponent implements OnInit {
     }
   }
 
+  formatPhotos()  {
+    for (let i = 0; i < this.pictureOptions.length; i++) {
+      this.pictureOptions[i]['status'] = true;
+    }
+  }
+
   logHours(h) {
     this.formatted_hours = h.replace(/\r?\n/g, '<br/> ');
   }
@@ -198,18 +212,101 @@ export class PlaceComponent implements OnInit {
     }
   }
 
-  onSubmit()  {
-    this.loadingService.setLoader(true, "Saving place...");
+  // add/remove pictures
+  //
+  // updateStatus(photo) {
+  //   photo.status = !photo.status;
+  // }
 
+  // upload pictures
+
+  fileUploaded(event) {
+    this.uploadedPics = [];
+    let files = event.target.files;
+
+    for (let i = 0; i < files.length; i++) {
+      let reader = new FileReader();
+
+      reader.onload = (event) =>  {
+        this.uploadedPics.push({
+          file: files[i],
+          url: event['target']['result'],
+          status: true,
+        });
+
+      }
+
+      reader.readAsDataURL(files[i]);
+    }
+  }
+
+
+  savePics()  {
+    this.tracker = 0;
+    this.loadingService.setLoader(true, "Saving edit...");
+
+    for (let i = 0; i < this.pictureOptions.length; i++) {
+      if(!this.pictureOptions[i]['status']) {
+
+        // if(this.pictureOptions[i]['public_id']) {
+        //   this.fileuploadService.deleteFile(this.pictureOptions[i]['public_id']).subscribe(
+        //     result => {console.log(result)}
+        //   )
+        // }
+
+        this.pictureOptions.splice(i,1);
+        i--;
+      }
+
+      if((i+1 === this.pictureOptions.length) && (this.uploadedPics.length === 0))  {
+        this.submit();
+      }
+    }
+
+
+    for (let i = 0; i < this.uploadedPics.length; i++) {
+      if(this.uploadedPics[i]['status'])  {
+        this.fileuploadService.uploadFile(this.uploadedPics[i]['file'], "description").subscribe(
+          result => {
+
+            let newPic = {
+              url: result.secure_url,
+              public_id: result.public_id,
+              credit: '',
+              status: true,
+            }
+
+            this.pictureOptions.unshift(newPic);
+            this.tracker += 1;
+            this.trackTracker();
+          }
+        )
+      } else{
+        this.tracker += 1;
+        this.trackTracker();
+      }
+    }
+  }
+
+  trackTracker()  {
+    if(this.tracker === this.uploadedPics.length) {
+      this.submit();
+    }
+  }
+
+
+  submit()  {
     let place = this.placeForm.value;
-    console.log(place)
+
     for (let key in place) {
       this.place[key] = place[key];
     }
 
+    this.place['photos'] = this.pictureOptions;
+
     let index = this.citiesName.indexOf(place['city']);
     this.place['city'] = this.cities[index];
-    console.log(this.place)
+
     this.place['updated'].unshift({
       admin: this.admin['_id'],
       date: new Date()
@@ -219,6 +316,7 @@ export class PlaceComponent implements OnInit {
 
     this.placeService.editPlace(this.place).subscribe(
       result => {
+        this.uploadedPics = [];
         this.loadingService.setLoader(false, "");
       }
     )
