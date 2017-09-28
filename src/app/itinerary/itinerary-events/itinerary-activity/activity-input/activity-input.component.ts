@@ -475,7 +475,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   // save
   saveNew()  {
     let newActivity = this.addActivityForm.value;
-    console.log(newActivity)
+
     if(this.hour === 'anytime')  {
       newActivity['time'] = 'anytime';
     } else  {

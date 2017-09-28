@@ -12,6 +12,7 @@ import { LoadingService }        from '../../../../loading';
 import { FavouriteService }      from '../../../../favourite';
 import { RelationshipService }   from '../../../../relationships';
 import { RecommendationService } from '../../../../recommendations';
+import { FileuploadService }     from '../../../../shared';
 
 @Component({
   selector: 'ww-activity',
@@ -80,6 +81,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
     private recommendationService: RecommendationService,
     private loadingService: LoadingService,
     private flashMessageService: FlashMessageService,
+    private fileuploadService: FileuploadService,
     private itineraryService: ItineraryService) {
       this.editActivityForm = this.formBuilder.group({
         'name': ['', Validators.required],
@@ -506,6 +508,12 @@ export class ActivityComponent implements OnInit, OnDestroy {
   confirmDelete()  {
     this.itineraryEventService.deleteEvent(this.activity).subscribe(
       result => {
+        
+        if(this.activity['photo']['public_id']) {
+          this.fileuploadService.deleteFile(this.activity['photo']['public_id']).subscribe(
+            result => {})
+        }
+
         this.flashMessageService.handleFlashMessage(result.message);
       })
 

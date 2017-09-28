@@ -8,9 +8,10 @@ import { ItineraryEventService } from '../../itinerary-event.service';
 import { FlashMessageService }   from '../../../../flash-message';
 import { UserService }           from '../../../../user';
 import { LoadingService }        from '../../../../loading';
-import { FavouriteService }        from '../../../../favourite';
+import { FavouriteService }      from '../../../../favourite';
 import { RelationshipService }   from '../../../../relationships';
 import { RecommendationService } from '../../../../recommendations';
+import { FileuploadService }     from '../../../../shared';
 
 @Component({
   selector: 'ww-accommodation',
@@ -79,6 +80,7 @@ export class AccommodationComponent implements OnInit, OnDestroy {
     private loadingService: LoadingService,
     private relationshipService: RelationshipService,
     private recommendationService: RecommendationService,
+    private fileuploadService: FileuploadService,
     private flashMessageService: FlashMessageService,
     private formBuilder: FormBuilder) {
       this.editAccommodationForm = this.formBuilder.group({
@@ -503,6 +505,12 @@ export class AccommodationComponent implements OnInit, OnDestroy {
   confirmDelete() {
     this.itineraryEventService.deleteEvent(this.event).subscribe(
       result => {
+
+        if(this.event['photo']['public_id']) {
+          this.fileuploadService.deleteFile(this.event['photo']['public_id']).subscribe(
+            result => {})
+        }
+
         this.flashMessageService.handleFlashMessage(result.message);
       })
 
