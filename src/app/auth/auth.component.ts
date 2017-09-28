@@ -87,7 +87,9 @@ export class AuthComponent implements OnInit, AfterViewInit {
     let newUser = {
       username: profile.getName(),
       email: profile.getEmail(),
-      display_picture: profile.getImageUrl()
+      display_picture: {
+        url: profile.getImageUrl()
+      }
     }
 
     this.authService.loginGoogle(newUser).subscribe(
@@ -158,7 +160,9 @@ export class AuthComponent implements OnInit, AfterViewInit {
 //       if (result && !result.error) {
 //         // if no email, to open up a modal notice and to sign up or sign in
 //         result['username'] = result['name'];
-//         result['display_picture'] = result['picture']['data']['url'];
+//         result['display_picture'] = {
+//           url: result['picture']['data']['url'],
+//         }
 //
 //         this.authService.loginFacebook(result)
 //             .subscribe(

@@ -11,7 +11,7 @@
 
 <div class="custom-modal" *ngIf="removeFollower">
   <div class="confirm-remove-follower">
-    <img src="{{ follower.user.display_picture }}" alt="" class="user-profile-thumbnail">
+    <img src="{{ follower.user.display_picture.url }}" alt="" class="user-profile-thumbnail">
     <h5 class="remove-follower-message"><span class="follower-username">{{ follower.user.username }}</span> will not be informed of this removal</h5>
 
     <div class="action-response">

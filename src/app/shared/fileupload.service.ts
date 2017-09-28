@@ -9,6 +9,7 @@ import { ErrorMessageService } from '../error-message';
 export class FileuploadService  {
 
   private cloudinaryUrl = `https://api.cloudinary.com/v1_1/wwfileupload/`;
+  private url = 'https://vast-island-87972.herokuapp.com';
 
   profile = 'w_150,h_150,c_fill,g_faces';
 
@@ -35,10 +36,21 @@ export class FileuploadService  {
                     });
   }
 
-  deleteFile(public_id)  {
-    const route = 'resources/image/upload?public_ids[]=';
 
-    return this.http.delete(this.cloudinaryUrl + route + public_id)
+
+  // deleteFile(public_id)  {
+  //   const route = 'resources/image/upload?public_ids[]=';
+  //
+  //   return this.http.delete(this.cloudinaryUrl + route + public_id)
+  //                   .map((response: Response) => response.json())
+  //                   .catch((error: Response) => {
+  //                     this.errorMessageService.handleErrorMessage(error.json());
+  //                     return Observable.throw(error.json())
+  //                   });
+  // }
+
+  deleteFile(public_id) {
+    return this.http.delete(this.url + '/image/' + public_id)
                     .map((response: Response) => response.json())
                     .catch((error: Response) => {
                       this.errorMessageService.handleErrorMessage(error.json());
@@ -46,3 +58,18 @@ export class FileuploadService  {
                     });
   }
 }
+
+// newFile(file) {
+//   const body = JSON.stringify(file);
+//   const headers = new Headers({ 'Content-Type': 'application/json' });
+//
+//   return this.http.post(this.url + '/image/new', body, { headers: headers })
+//                   .map((response: Response) => {
+//                     console.log(response.json())
+//                     return response.json();
+//                   })
+//                   .catch((error: Response) => {
+//                     this.errorMessageService.handleErrorMessage(error.json());
+//                     return Observable.throw(error.json())
+//                   });
+// }

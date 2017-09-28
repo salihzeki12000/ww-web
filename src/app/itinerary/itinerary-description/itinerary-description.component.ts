@@ -176,6 +176,13 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
 
     for (let i = 0; i < this.itinerary['description']['photos'].length; i++) {
       if(!this.itinerary['description']['photos'][i]['status'])  {
+
+        if(this.itinerary['description']['photos'][i]['public_id']) {
+          this.fileuploadService.deleteFile(this.itinerary['description']['photos'][i]['public_id']).subscribe(
+            result => {}
+          )
+        }
+
         this.itinerary['description']['photos'].splice(i,1);
         i--;
       }
@@ -220,7 +227,6 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
           status: true,
           order: this.itinerary['description']['photos'].length + i + 1,
         });
-
       }
 
       reader.readAsDataURL(files[i]);
@@ -242,6 +248,13 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
 
     for (let i = 0; i < this.itinerary['description']['photos'].length; i++) {
       if(!this.itinerary['description']['photos'][i]['status'])  {
+
+        if(this.itinerary['description']['photos'][i]['public_id']) {
+          this.fileuploadService.deleteFile(this.itinerary['description']['photos'][i]['public_id']).subscribe(
+            result => {}
+          )
+        }
+        
         this.itinerary['description']['photos'].splice(i,1);
         i--;
       }

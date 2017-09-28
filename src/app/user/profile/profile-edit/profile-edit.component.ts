@@ -87,7 +87,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
      result =>  {
        this.currentUser = result;
-       this.thumbnailImage = this.currentUser['display_picture'];
+       this.thumbnailImage = this.currentUser['display_picture']['url'];
        this.patchValue();
 
        if(this.currentUser['birth_date'] === undefined || this.currentUser['birth_date'] === "")  {
@@ -171,7 +171,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     this.inputValue = null;
     this.newProfilePic = '';
     this.newImageFile = '';
-    this.thumbnailImage = this.currentUser['display_picture'];
+    this.thumbnailImage = this.currentUser['display_picture']['url'];
   }
 
 
@@ -289,7 +289,10 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     if(this.newImageFile !== '')  {
       this.fileuploadService.uploadFile(this.newImageFile, "profile").subscribe(
         result => {
-          this.currentUser['display_picture'] = result.secure_url;
+          this.currentUser['display_picture'] = {
+            url: result.secure_url,
+            public_id: result.public_id
+          }
           this.updateProfile();
       })
     } else  {
@@ -307,7 +310,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
         this.inputValue = null;
         this.newProfilePic = '';
         this.newImageFile = '';
-        this.thumbnailImage = this.currentUser['display_picture'];
+        this.thumbnailImage = this.currentUser['display_picture']['url'];
       })
   }
 

@@ -149,7 +149,7 @@
 
   <div class="nav-profile">
     <div class="nav-link">
-      <img src="{{ currentUser?.display_picture }}" class="user-profile-thumbnail" (click)="routeToProfile()" (mouseover)="profileOptions = true">
+      <img src="{{ currentUser?.display_picture.url }}" class="user-profile-thumbnail" (click)="routeToProfile()" (mouseover)="profileOptions = true">
 
       <div class="nav-dropdown" *ngIf="profileOptions">
         <div class="dropdown-arrow"></div>
@@ -184,7 +184,7 @@
     <div *ngIf="sideNav">
 
       <div class="side-nav-profile">
-        <img src="{{ currentUser?.display_picture }}" alt="" (click)="routeToProfile()">
+        <img src="{{ currentUser?.display_picture.url }}" alt="" (click)="routeToProfile()">
 
         <div class="edit-profile" (click)="routeToProfileEdit()">
           <i class="fa fa-pencil" aria-hidden="true"></i>

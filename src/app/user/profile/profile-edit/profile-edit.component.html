@@ -2,7 +2,7 @@
   <form [formGroup]="editProfileForm" (ngSubmit)="saveProfile()">
 
     <div class="profile-edit-header">
-      <img src="{{ currentUser?.display_picture }}" alt="">
+      <img src="{{ currentUser?.display_picture.url }}" alt="">
 
       <label class="fileUpload">
         Change profile picture

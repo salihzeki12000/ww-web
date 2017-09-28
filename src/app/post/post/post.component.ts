@@ -7,9 +7,9 @@ import { Post }                from '../post';
 import { PostService }         from '../post.service';
 import { FlashMessageService } from '../../flash-message';
 import { UserService }         from '../../user/user.service';
-import { CommentService }      from '../../shared';
 import { ErrorMessageService } from '../../error-message';
 import { NotificationService } from '../../notifications';
+import { CommentService, FileuploadService }  from '../../shared';
 
 @Component({
   selector: 'ww-post',
@@ -44,6 +44,7 @@ export class PostComponent implements OnInit, OnDestroy {
     private flashMessageService: FlashMessageService,
     private errorMessageService: ErrorMessageService,
     private notificationService: NotificationService,
+    private fileuploadService: FileuploadService,
     private formBuilder: FormBuilder) {
       this.commentForm = this.formBuilder.group({
         comment: '',
@@ -225,6 +226,12 @@ export class PostComponent implements OnInit, OnDestroy {
   onDelete()  {
     this.postService.deletePost(this.post).subscribe(
       data =>  {
+        if(this.post['public_id'])  {
+          this.fileuploadService.deleteFile(this.post['public_id']).subscribe(
+            result => {}
+          )
+        }
+
         this.flashMessageService.handleFlashMessage(data.message);
       })
 

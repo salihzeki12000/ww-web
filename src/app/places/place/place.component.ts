@@ -248,11 +248,11 @@ export class PlaceComponent implements OnInit {
     for (let i = 0; i < this.pictureOptions.length; i++) {
       if(!this.pictureOptions[i]['status']) {
 
-        // if(this.pictureOptions[i]['public_id']) {
-        //   this.fileuploadService.deleteFile(this.pictureOptions[i]['public_id']).subscribe(
-        //     result => {console.log(result)}
-        //   )
-        // }
+        if(this.pictureOptions[i]['public_id']) {
+          this.fileuploadService.deleteFile(this.pictureOptions[i]['public_id']).subscribe(
+            result => {}
+          )
+        }
 
         this.pictureOptions.splice(i,1);
         i--;

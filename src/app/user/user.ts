@@ -7,5 +7,8 @@ export class User {
     gender: string,
     birth_date: string,
     password: string,
-    display_picture: string) {}
+    display_picture: {
+      url: string,
+      public_id: string,
+    }) {}
 }

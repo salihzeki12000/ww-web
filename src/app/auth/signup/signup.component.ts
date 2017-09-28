@@ -33,7 +33,7 @@ export class SignupComponent implements OnInit {
       'email' : ['', Validators.compose([ Validators.required, this.validEmail ])],
       'password' : ['', Validators.compose([ Validators.required, Validators.minLength(6)])],
       'confirmPassword' : ['', Validators.compose([ Validators.required, this.passwordsAreEqual.bind(this) ])],
-      'display_picture': this.avatar,
+      'display_picture': { url: this.avatar },
     });
   }
 

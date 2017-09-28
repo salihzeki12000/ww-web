@@ -24,7 +24,7 @@
 
     <div *ngFor="let member of itinerary?.members | slice:0:5" class="member" [class.mt]="itinerary?.corporate.status">
       <div class="tool-tip">
-        <img src="{{ member.display_picture }}" alt="" class="user-profile-thumbnail" (click)="routeToUser(member._id)">
+        <img src="{{ member.display_picture.url }}" alt="" class="user-profile-thumbnail" (click)="routeToUser(member._id)">
         <span class="tool-tiptext" [class.bt]="preview">{{ member.username }}</span>
       </div>
     </div>

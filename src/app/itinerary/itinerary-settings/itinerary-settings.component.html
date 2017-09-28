@@ -229,7 +229,7 @@
     </div>
 
     <div *ngFor="let copy of itinerary?.copied_by" class="copy-list">
-      <img src="{{ copy.user.display_picture }}" alt="" class="user-profile-thumbnail">
+      <img src="{{ copy.user.display_picture.url }}" alt="" class="user-profile-thumbnail">
       <h4 class="copy-details"><span class="username-bold" (click)="routeToUser(copy.user._id)">{{ copy.user.username }}</span> copied on {{ copy.copied_on | date: 'dd MMM yyyy'}}</h4>
     </div>
   </div>
