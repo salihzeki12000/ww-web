@@ -18,8 +18,6 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   // pictures
   mtfuji = 'https://res.cloudinary.com/wwfileupload/image/upload/v1505975133/mt_fuji_ggztym.jpg';
 
-  transportSearch = "https://res.cloudinary.com/wwfileupload/image/upload/v1505976031/landing%20page/example-search-transport.gif";
-
   summary = 'http://res.cloudinary.com/wwfileupload/image/upload/v1505975635/landing%20page/example-summary.png';
   description = 'http://res.cloudinary.com/wwfileupload/image/upload/v1505975650/landing%20page/example-description.png';
   transport = 'https://res.cloudinary.com/wwfileupload/image/upload/v1505975498/landing page/example-transport.png';
@@ -73,10 +71,10 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     this.preventScroll(false);
   }
 
-  goToSample()  {
-    this.loadingService.setLoader(true, "Retrieving itinerary details...");
+  routeTo(id)  {
+    this.loadingService.setLoader(true, "Retrieving itinerary...");
 
-    this.router.navigateByUrl('/preview/itinerary/5971d919773bea000429a120/summary')
+    this.router.navigateByUrl('/preview/itinerary/' + id + '/summary')
   }
 
   preventScroll(value)  {

@@ -123,6 +123,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
                 this.creator = false;
 
                 if(this.currentUser) this.checkPreview();
+                if(!this.isLoggedIn) this.checkAccess();
 
                 if(!this.preview && this.isLoggedIn)  {
                   this.getAllUsers();
@@ -208,6 +209,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
       }, 8000)
     } else if(!this.validAccess) {
       this.loadingMessage = 'You are not authorised to access the selected itinerary.';
+      this.loadingService.setLoader(false, "");
     }
 
     // setTimeout(() =>  {

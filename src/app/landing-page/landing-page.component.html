@@ -18,12 +18,30 @@
       <h2>We help you simplify the process</h2>
     </div>
 
-    <h2 class="call-to-action" (click)="getSignup()">Sign up now!</h2>
+    <h3 class="call-to-action" (click)="getSignup()">Start an itinerary now!</h3>
 
-    <a href="#hwdi">
-      <i class="fa fa-arrow-circle-o-down fa-3x" aria-hidden="true"></i>
-    </a>
+  </div>
 
+  <div id="curated">
+    <h1>Discover curated itineraries</h1>
+    <hr class="header-separator">
+
+    <h2 class="sub">We bring you the best</h2>
+
+    <div class="curated-itinerary" (click)="routeTo('5971d919773bea000429a120')">
+      <img src="https://res.cloudinary.com/wwfileupload/image/upload/v1503027048/rjhchmk3pnbiudmh3n9t.jpg" alt="">
+      <h3>Penang Food Fest</h3>
+    </div>
+
+    <div class="curated-itinerary" (click)="routeTo('59bf62363f3ff000041d3e2c')">
+      <img src="https://res.cloudinary.com/wwfileupload/image/upload/v1503027048/rjhchmk3pnbiudmh3n9t.jpg" alt="">
+      <h3>A day in Phuket Town</h3>
+    </div>
+
+    <div class="curated-itinerary" (click)="routeTo('59bfb2e0c6f8230004dd7ef7')">
+      <img src="https://res.cloudinary.com/wwfileupload/image/upload/v1506413609/Thatbyinnyu_lcovz2.jpg" alt="">
+      <h3>Jewels of Myanmar</h3>
+    </div>
   </div>
 
   <div id="hwdi">
@@ -32,23 +50,25 @@
 
     <h2 class="sub">We make it easy to add details</h2>
 
-    <div class="hwdi-example">
-      <h3>Give us a name or address and we will populate the basic details for you</h3>
-      <img class="gif" src="assets/example-search.gif" alt="">
-    </div>
+    <h3>Give us a name or address and we will populate the basic details for you</h3>
 
     <div class="hwdi-example">
-      <h3>Your flight details too!</h3>
-      <h3>We just need your flight number and date of departure</h3>
-      <img class="gif" src="{{ transportSearch }}" alt="">
-    </div>
+      <h3>name / address|</h3>
+      <img src="assets/filter.png" alt="">
 
+      <div class="output">
+        <h4><i class="fa fa-check fa-fw" aria-hidden="true"></i><i class="fa fa-map-marker fa-fw" aria-hidden="true"></i> Address</h4>
+        <h4><i class="fa fa-check fa-fw" aria-hidden="true"></i><i class="fa fa-phone fa-fw" aria-hidden="true"></i> Contact number</h4>
+        <h4><i class="fa fa-check fa-fw" aria-hidden="true"></i><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i> Opening hours</h4>
+        <h4><i class="fa fa-check fa-fw" aria-hidden="true"></i><i class="fa fa-globe fa-fw" aria-hidden="true"></i> Website</h4>
+        <h4><i class="fa fa-check fa-fw" aria-hidden="true"></i><i class="fa fa-camera fa-fw" aria-hidden="true"></i> Photo</h4>
+        <h4><i class="fa fa-check fa-fw" aria-hidden="true"></i><i class="fa fa-map-pin fa-fw" aria-hidden="true"></i> Pin location</h4>
+      </div>
+
+    </div>
 
     <h2 class="leading">The details are organised in different views that helps with your planning</h2>
-
-    <a href="#slide-show">
-      <i class="fa fa-arrow-circle-o-down fa-3x" aria-hidden="true"></i>
-    </a>
+    <img src="assets/arrow_down.png" alt="">
   </div>
 
 
@@ -98,18 +118,10 @@
       </div>
     </div>
 
-    <div class="sample-itin" (click)="goToSample()">
-      <h3>View this itinerary</h3>
-    </div>
-
-    <a href="#share">
-      <i class="fa fa-arrow-circle-o-down fa-3x" aria-hidden="true"></i>
-    </a>
-
   </div>
 
   <div id="share">
-    <h1>How we simplify it</h1>
+    <h1>How else we simplify it</h1>
     <hr class="header-separator">
 
     <h2>We enable seamless sharing</h2>
@@ -119,9 +131,6 @@
 
     <h2 class="leading">Adopt and adapt travel-ready itineraries for your trip!</h2>
 
-    <a href="#benefit">
-      <i class="fa fa-arrow-circle-o-down fa-3x" aria-hidden="true"></i>
-    </a>
   </div>
 
 

@@ -63,7 +63,7 @@
 /* background image */
 
 .landing-page-image {
-  height: 665px;
+  height: 400px;
   width: 100vw;
 }
 
@@ -75,72 +75,57 @@
   top: 0;
   padding-top: 100px;
   width: 100vw;
-  height: 665px;
+  height: 400px;
   text-align: center;
   background-color: rgba(0,0,0,.2);
 
   @media only screen and (max-width: 450px) {
-    padding-top: 30px;
+    padding-top: 80px;
   }
 }
 
 .landing-page-tagline {
-  margin-top: 100px;
   width: 100vw;
   color: #F9FBFB;
   text-align: center;
   vertical-align: top;
   font-family: 'Fira Sans', sans-serif;
 
-  @media only screen and (max-width: 750px) {
+  @media only screen and (max-width: 650px) {
     padding: 0 20px;
   }
 }
 
 .landing-page-tagline > h1  {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 300;
   color: #F9FBFB;
 }
 
 .landing-page-tagline > h2  {
   margin-top: 20px;
-  font-size: 25px;
+  font-size: 23px;
   font-weight: 300;
   color: #F9FBFB;
 }
 
 .call-to-action {
-  margin-top: 220px;
+  position: absolute;
+  top: 330px;
   margin-left: calc((100vw - 200px )/2);
   width: 200px;
-  padding: 15px;
+  padding: 10px 15px;
   text-align: center;
   color: #F9FBFB;
   background-color: #6494ED;
   border-radius: 5px;
-  border: 4px solid #F9FBFB;
+  border: 2px solid #F9FBFB;
 
   &:hover {
     cursor: pointer;
     opacity: .7;
   }
-
-  @media only screen and (max-width: 450px) {
-    margin-top: 60px;
-  }
-
-  @media only screen and (min-width: 450px) and (max-width: 720px) {
-    margin-top: 150px;
-  }
 }
-
-.fa-arrow-circle-o-down {
-  margin: 40px 0 15px 0;
-  color: black;
-  opacity: .5;
-}
-
 
 
 hr.header-separator {
@@ -150,9 +135,63 @@ hr.header-separator {
   border-top: 2px solid #6494ED;
 }
 
+
+/* curated itineraries section */
+
+#curated {
+  padding-bottom: 100px;
+  font-family: 'Fira Sans', sans-serif;
+  text-align: center;
+  background-color: white;
+}
+
+#curated h1  {
+  padding: 70px 0 20px 0;
+  color: #6494ED;
+}
+
+#curated > .sub {
+  padding: 0 100px 50px 100px;
+
+  @media only screen and (max-width: 500px) {
+    padding: 0 12px 30px 12px;
+  }
+}
+
+.curated-itinerary {
+  display: inline-block;
+  width: 300px;
+  margin: 10px;
+  background-color: white;
+  -webkit-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+  border-radius: 5px;
+
+  &:hover {
+    cursor: pointer;
+    opacity: .7;
+  }
+}
+
+.curated-itinerary img  {
+  width: 300px;
+  height: 200px;
+  border-radius: 5px 5px 0 0;
+}
+
+.curated-itinerary h3 {
+  padding: 15px 0;
+}
+
+
+
+
+
 /* how we do it section */
 
 #hwdi {
+  padding-bottom: 50px;
   font-family: 'Fira Sans', sans-serif;
   text-align: center;
 }
@@ -179,8 +218,12 @@ hr.header-separator {
 }
 
 .hwdi-example  {
+  padding: 25px;
   width: 400px;
+  margin-top: 30px;
   margin-left: calc((100vw - 400px) /2);
+  border: 1px solid lightgray;
+  border-radius: 5px;
 
   @media only screen and (max-width: 400px) {
     width: calc(100vw - 20px);
@@ -192,26 +235,46 @@ hr.header-separator {
   }
 }
 
-.hwdi-example:first-of-type {
-  margin-bottom: 100px;
-}
 
 .hwdi-example h3 {
-  padding: 0 15px 15px 15px;
-}
-
-.gif  {
-  width: 100%;
+  margin: 10px 0;
+  padding: 5px 15px;
+  text-align: left;
+  color: #808080;
+  border: 1px solid;
   border-radius: 5px;
-  border: 1px solid lightgray;
 }
 
 
+.hwdi-example img {
+  margin-bottom: 10px;
+  height: 150px;
+}
+
+.output {
+  padding-left: 100px;
+}
+
+.output h4  {
+  padding: 5px 0;
+  text-align: left;
+}
+
+.fa-check {
+  color: #19CC72;
+}
+
+#hwdi > img {
+  position: absolute;
+  height: 120px;
+  margin: 10px 0 0 -20px;
+}
 
 /* slide show section */
 
 #slide-show {
-  padding-top: 120px;
+  padding: 120px 0;
+  height: 650px;
   width: 100%;
   text-align: center;
   background-color: white;
@@ -306,23 +369,6 @@ hr.header-separator {
   100%    {opacity:0}
 }
 
-.sample-itin {
-  width: 200px;
-  margin-top: 490px;
-  margin-left: calc((100vw - 200px)/2);
-  padding: 20px 10px;
-  background-color: #6494ED;
-  border-radius: 5px;
-
-  &:hover {
-    cursor: pointer;
-    opacity: .7;
-  }
-}
-
-.sample-itin h3  {
-  color: #F9FBFB;
-}
 
 
 
@@ -330,6 +376,7 @@ hr.header-separator {
 /* share section */
 
 #share {
+  padding-bottom: 100px;
   font-family: 'Fira Sans', sans-serif;
   text-align: center;
 }
@@ -345,6 +392,11 @@ hr.header-separator {
   @media only screen and (max-width: 500px) {
     padding: 10px 20px 30px 20px;
   }
+}
+
+#share > img  {
+  height: 200px;
+  width: 200px;
 }
 
 #share > .leading  {
