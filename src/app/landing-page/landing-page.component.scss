@@ -114,7 +114,7 @@
   top: 330px;
   margin-left: calc((100vw - 200px )/2);
   width: 200px;
-  padding: 10px 15px;
+  padding: 10px;
   text-align: center;
   color: #F9FBFB;
   background-color: #6494ED;
@@ -197,7 +197,7 @@ hr.header-separator {
 }
 
 #hwdi h1  {
-  padding: 70px 0 20px 0;
+  padding: 70px 5px 20px 5px;
   color: #6494ED;
 }
 
@@ -225,13 +225,10 @@ hr.header-separator {
   border: 1px solid lightgray;
   border-radius: 5px;
 
-  @media only screen and (max-width: 400px) {
+  @media only screen and (max-width: 450px) {
     width: calc(100vw - 20px);
+    margin-left: 10px;
     min-width: 300px;
-  }
-
-  @media only screen and (max-width: 500px) {
-    margin: 20px 10px;
   }
 }
 
@@ -253,6 +250,10 @@ hr.header-separator {
 
 .output {
   padding-left: 100px;
+
+  @media only screen and (max-width: 450px) {
+    padding-left: calc((100vw - 220px) /2);
+  }
 }
 
 .output h4  {
@@ -278,10 +279,6 @@ hr.header-separator {
   width: 100%;
   text-align: center;
   background-color: white;
-
-  @media only screen and (max-width: 450px) {
-    padding-top: 90px;
-  }
 }
 
 .example-header,

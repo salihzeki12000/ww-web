@@ -112,7 +112,9 @@ export class PlaceComponent implements OnInit {
     this.initMap();
 
     this.pictureOptions = [];
-    this.pictureOptions = this.place['photos'];
+    if(this.place['photos'])  {
+      this.pictureOptions = this.place['photos'];
+    }
     this.formatPhotos();
 
     this.placeID = this.place['place_id'];
@@ -244,6 +246,10 @@ export class PlaceComponent implements OnInit {
   savePics()  {
     this.tracker = 0;
     this.loadingService.setLoader(true, "Saving edit...");
+
+    if(this.uploadedPics.length === 0 && this.pictureOptions.length === 0)  {
+      this.submit();
+    }
 
     for (let i = 0; i < this.pictureOptions.length; i++) {
       if(!this.pictureOptions[i]['status']) {
