@@ -182,7 +182,6 @@ textarea  {
 .post-comments textarea  {
   margin: 0 0 0 5px;
   width: 510px;
-  border-radius: 0;
 
   @media only screen and (max-width: 650px) {
     width: calc(100% - 50px);

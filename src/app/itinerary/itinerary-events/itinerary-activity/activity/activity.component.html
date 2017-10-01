@@ -183,7 +183,7 @@
 
         <div *ngIf="addMsg">
           <h4>Craft a message to go with your recommendation:</h4>
-          <textarea rows="2" #msg (keyup)="logMessage(msg.value)"></textarea>
+          <textarea rows="2" #msg (keyup)="logMessage(msg.value)" auto-grow></textarea>
         </div>
 
       </div>
@@ -313,7 +313,7 @@
 
               <div class="details-item" *ngIf="activity.place.opening_hours === ''">
                 <label>Opening Hours</label>
-                <textarea rows="3" formControlName="opening_hours"></textarea>
+                <textarea rows="3" formControlName="opening_hours" auto-grow></textarea>
               </div>
 
             </div>
@@ -321,7 +321,7 @@
 
           <h4 class="form-section-header">Note</h4>
           <div class="form-section-details">
-            <textarea rows="2" formControlName="note"></textarea>
+            <textarea rows="2" formControlName="note" auto-grow></textarea>
           </div>
 
         </div>

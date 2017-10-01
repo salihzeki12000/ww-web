@@ -90,8 +90,8 @@
 
   <div class="post-comments">
     <form [formGroup]="commentForm">
-      <img src="{{ currentUser?.display_picture.url }}" alt="" class="user-post-thumbnail">
-      <textarea rows="1" placeholder="comment..." formControlName="comment" #comment (keyup.enter)="commentPost(comment.value)"></textarea>
+      <img src="{{ currentUser?.display_picture.url }}" alt="" class="user-profile-thumbnail">
+      <textarea rows="1" placeholder="comment..." formControlName="comment" #comment (keyup.enter)="commentPost(comment.value)" auto-grow></textarea>
     </form>
 
     <div *ngIf="seeComments" class="post-comments-section">

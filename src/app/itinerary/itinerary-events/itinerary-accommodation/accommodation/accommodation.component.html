@@ -165,7 +165,7 @@
 
         <div *ngIf="addMsg">
           <h4>Craft a message to go with your recommendation:</h4>
-          <textarea rows="2" #msg (keyup)="logRecMessage(msg.value)"></textarea>
+          <textarea rows="2" #msg (keyup)="logRecMessage(msg.value)" auto-grow></textarea>
         </div>
 
       </div>
@@ -322,7 +322,7 @@
           <h4 class="form-section-header">Note</h4>
           <div class="form-section-details">
             <div class="accommodation-note">
-              <textarea rows="3" formControlName="note"></textarea>
+              <textarea rows="3" formControlName="note" auto-grow></textarea>
             </div>
           </div>
 
