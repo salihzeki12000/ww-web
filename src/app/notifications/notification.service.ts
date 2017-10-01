@@ -38,12 +38,7 @@ export class NotificationService  {
     const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
 
     return this.http.post( this.url + "/notification/new" + token, body, { headers: headers })
-                    .map((response: Response) =>  {
-                      let newNotification = response.json().notification
-                      this.notifications.push(newNotification);
-                      this.timeAgo(this.notifications)
-                      return response.json();
-                    })
+                    .map((response: Response) => response.json())
                     .catch((error: Response) => {
                       this.errorMessageService.handleErrorMessage(error.json());
                       return Observable.throw(error.json())

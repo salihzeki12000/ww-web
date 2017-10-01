@@ -24,6 +24,7 @@
   letter-spacing: 1px;
   @media only screen and (max-width: 420px) {
     margin: 5px;
+    padding: 0;
     min-width: 0;
   }
 }
@@ -37,18 +38,6 @@
     transform: rotate(90deg);
   }
 }
-
-
-/* nil message */
-
-.nil-event-message  {
-  @media only screen and (min-width: 420px) and (max-width: 1090px) {
-    margin-top: 150px;
-  }
-}
-
-
-
 
 
 /* summary container */

@@ -1631,23 +1631,21 @@ span.dragged-location {
 
 .nil-event-message  {
   position: fixed;
-  width: 400px;
   margin: 75px 0 0 10px;
   padding: 10px;
   z-index: 2;
 
-  @media only screen and (max-width: 420px) {
+  @media only screen and (max-width: 550px) {
     width: 100%;
     min-width: 300px;
     margin: 40px 0;
     text-align: center;
-    background-color: white;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
   }
 
-  @media only screen and (min-width: 420px) and (max-width: 1090px) {
+  @media only screen and (min-width: 550px) and (max-width: 1090px) {
     text-align: center;
-    margin-left: calc((100vw - 400px)/2)
+    margin-top: 150px;
+    margin-left: calc((100vw - 520px)/2)
   }
 }
 
@@ -1664,19 +1662,6 @@ span.dragged-location {
   line-height: 1.2;
 }
 
-.nil-event-message .action-response-primary {
-  width: 220px;
-  margin-left: 30px;
-  text-align: center;
-
-  @media only screen and (max-width: 420px) {
-    margin-left: calc((100vw - 240px)/2);
-  }
-
-  @media only screen and (min-width: 420px) and (max-width: 1090px) {
-    margin-left: 80px;
-  }
-}
 
 .nil-event-message li {
   padding-bottom: 10px;
@@ -1690,7 +1675,30 @@ span.dragged-location {
   }
 }
 
+.add-opt  {
+  display: inline-block;
+  margin: 20px;
+  text-align: center;
 
+  &:hover {
+    cursor: pointer;
+  }
+
+  @media only screen and (max-width: 550px) {
+    display: block;
+  }
+
+}
+
+.add-opt:hover *  {
+  color: #6494ED;
+}
+
+.add-opt *  {
+  display: block;
+  font-weight: 400;
+  color: #567FCC;
+}
 
 /***************************************
 

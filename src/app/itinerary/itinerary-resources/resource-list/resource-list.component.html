@@ -35,9 +35,15 @@
 
 <div *ngIf="!totalResources && !preview" class="nil-event-message">
   <img class="img-example" src="assets/arrow.png" alt="">
-  <h4>This is a dedicated section for all your resources. This includes website links you are interested in or a note for your travel.</h4>
-  <h4 class="action-response-primary" (click)="addResource = true">Add new resource now</h4>
-  <h4>You can also add a new resource by selecting the "ADD NEW" tab and then the "NEW RESOURCE" option</h4>
+  <h4>This is a dedicated section for all your resources.</h4>
+  <h4>This includes website links you are interested in or a note for your travel.</h4>
+
+  <div class="add-opt" (click)="addResource = true">
+    <i class="fa fa-clone fa-3x" aria-hidden="true"></i>
+    <h4>Add new resource</h4>
+  </div>
+
+  <h4>You can also add a new resource by selecting from the "ADD NEW" tab.</h4>
   <h4 class="nil-event-message-mobile">You can access the "ADD NEW" tab at the bottom of the screen.</h4>
 </div>
 

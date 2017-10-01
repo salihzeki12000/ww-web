@@ -24,11 +24,25 @@
   <img class="img-example" src="assets/arrow.png" alt="">
   <h4>You have not added any item to display on this summary</h4>
 
-  <h4 class="action-response-primary" (click)="addAccommodation = true">Add new accommodation now</h4>
-  <h4 class="action-response-primary" (click)="addTransport = true">Add new transport now</h4>
-  <h4 class="action-response-primary" (click)="addActivity = true">Add new activity now</h4>
+  <div class="add-options">
+    <div class="add-opt" (click)="addTransport = true">
+      <i class="fa fa-car fa-3x" aria-hidden="true"></i>
+      <h4>Add new transport</h4>
+    </div>
 
-  <h4>You can also add a new item by selecting the "ADD NEW" tab and then the respective options for accommodation, activity or transport</h4>
+    <div class="add-opt" (click)="addAccommodation = true">
+      <i class="fa fa-bed fa-3x" aria-hidden="true"></i>
+      <h4>Add new accommodation</h4>
+    </div>
+
+    <div class="add-opt" (click)="addActivity = true">
+      <i class="fa fa-bicycle fa-3x" aria-hidden="true"></i>
+      <h4>Add new activity</h4>
+    </div>
+  </div>
+
+
+  <h4>You can also add a new item by selecting from the "ADD NEW" tab.</h4>
   <h4 class="nil-event-message-mobile">You can access the "ADD NEW" tab at the bottom of the screen.</h4>
 </div>
 

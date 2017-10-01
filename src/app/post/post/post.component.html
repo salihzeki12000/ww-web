@@ -96,7 +96,7 @@
 
     <div *ngIf="seeComments" class="post-comments-section">
       <div *ngFor="let comment of post.comments; let i = index" class="post-comments-item">
-        <img src="{{ comment.user.display_picture.url }}" class="user-post-thumbnail">
+        <img src="{{ comment.user.display_picture.url }}" class="user-profile-thumbnail">
         <div class="post-comments-details">
           <h5><span class="username-bold" (click)="routeToUser(comment.user._id)">{{ comment.user.username}}</span> {{ comment.comment }}</h5>
 
