@@ -200,7 +200,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
       let marker = new google.maps.Marker({
         position: { lat: event[1], lng: event[2] },
         map: map,
-        // icon: 'https://res.cloudinary.com/wwfileupload/image/upload/v1501394201/lodging-2_jsekp1.png',
+        // icon: 'https://res.cloudinary.com/wwfileupload/image/upload/v1503905778/wondererwanderer_logo_thumbnail_white_ywqidg.png',
         title: event[0],
         label: {
           text: '' + (i + 1),

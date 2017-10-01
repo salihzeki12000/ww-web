@@ -100,12 +100,19 @@
 }
 
 .message-box > h1 {
-  padding-bottom: 20px;
   text-align: center;
   font-family: 'Alice', serif;
   letter-spacing: .5px;
 }
 
+// .message-box h3 {
+//   text-align: center;
+// }
+
+.message-box > img  {
+  width: 300px;
+  margin: 0 0 30px 130px;
+}
 
 .message-box > h4 {
   padding-bottom: 15px;
@@ -113,11 +120,26 @@
   text-align: justify;
 }
 
-.sign-off {
-  font-family: 'Alice', serif;
-  font-weight: 600;
-  font-style: italic;
-  color: #6494ED;
+.welcome-message  * {
+  text-align: center;
+}
+
+.init-response {
+  margin-top: 20px;
+}
+
+.init-tour  {
+  display: inline-block;
+  padding: 20px;
+
+  &:hover {
+    cursor: pointer;
+    color: #808080;
+  }
+}
+
+.init-tour *  {
+  display: block;
 }
 
 .select-tour  {

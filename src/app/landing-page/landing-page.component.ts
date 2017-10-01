@@ -18,8 +18,8 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   // pictures
   mtfuji = 'https://res.cloudinary.com/wwfileupload/image/upload/v1505975133/mt_fuji_ggztym.jpg';
 
-  summary = 'http://res.cloudinary.com/wwfileupload/image/upload/v1505975635/landing%20page/example-summary.png';
-  description = 'http://res.cloudinary.com/wwfileupload/image/upload/v1505975650/landing%20page/example-description.png';
+  summary = 'https://res.cloudinary.com/wwfileupload/image/upload/v1505975635/landing page/example-summary.png';
+  description = 'https://res.cloudinary.com/wwfileupload/image/upload/v1505975650/landing page/example-description.png';
   transport = 'https://res.cloudinary.com/wwfileupload/image/upload/v1505975498/landing page/example-transport.png';
   accommodation = 'https://res.cloudinary.com/wwfileupload/image/upload/v1505975571/landing page/example-accommodation.png';
   activity = 'https://res.cloudinary.com/wwfileupload/image/upload/v1505975569/landing page/example-activity.png';
