@@ -147,10 +147,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
           position: { lat: pos['lat'], lng: pos['lng'] },
           map: map,
           title: "Current location",
-          label: {
-            text: 'C',
-            color: 'black',
-          },
+          icon: "https://res.cloudinary.com/wwfileupload/image/upload/v1506913864/current_location_hdlfjj.png",
           zIndex: 100
         })
       })
@@ -170,6 +167,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
         if(this.events[i]['place']['lat']) {
           let date;
           let eventDate;
+          let icon;
 
           if(this.events[i]['date'] !== 'any day' && !this.itinerary['num_days'])  {
             date = new Date(this.events[i]['date'])
@@ -178,13 +176,20 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
             eventDate = this.events[i]['date'];
           }
 
+          if(this.events[i]['type'] === 'activity') {
+            icon = "https://res.cloudinary.com/wwfileupload/image/upload/v1506912342/red_marker_blhqim.png";
+          } else if(this.events[i]['type'] === 'accommodation') {
+            icon = "https://res.cloudinary.com/wwfileupload/image/upload/v1506911538/purple_marker2_dgpfgs.png"
+          }
+
           eventMarker.push(
             [ this.events[i]['name'],
               this.events[i]['place']['lat'],
               this.events[i]['place']['lng'],
               eventDate,
               this.events[i]['time'],
-              this.events[i]['note']]
+              this.events[i]['note'],
+              icon]
           )
         } else if(!this.events[i]['place']['lat']) {
           this.events.splice(i,1)
@@ -200,11 +205,15 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
       let marker = new google.maps.Marker({
         position: { lat: event[1], lng: event[2] },
         map: map,
-        // icon: 'https://res.cloudinary.com/wwfileupload/image/upload/v1503905778/wondererwanderer_logo_thumbnail_white_ywqidg.png',
+        icon: {
+          url: event[6],
+          labelOrigin: new google.maps.Point(17, 17)
+        },
         title: event[0],
         label: {
           text: '' + (i + 1),
-          color: 'black',
+          color: '#F9FBFB',
+          fontSize: '13px'
         },
         date: event[3],
         zIndex: i
