@@ -69,10 +69,9 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
           this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
              result => {
                this.itinerary = result;
-               console.log(this.itinerary);
+
                if(this.currentUser) this.checkCopy();
                this.formatItinDescription();
-
 
                this.sortDailyNotes();
              })
@@ -297,9 +296,11 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
       delete this.events[i]['itinerary'];
 
       if(this.events[i]['type'] !== 'transport')  {
-        this.events[i]['place_id'] = this.events[i]['place']['place_id'];
-        this.events[i]['lat'] = this.events[i]['place']['lat'];
-        this.events[i]['lng'] = this.events[i]['place']['lng'];
+        if(this.events[i]['place']) {
+          this.events[i]['place_id'] = this.events[i]['place']['place_id'];
+          this.events[i]['lat'] = this.events[i]['place']['lat'];
+          this.events[i]['lng'] = this.events[i]['place']['lng'];
+        }
       }
 
       if(this.itinerary['date_from'] === '' || this.itinerary['date_from'] === undefined) {

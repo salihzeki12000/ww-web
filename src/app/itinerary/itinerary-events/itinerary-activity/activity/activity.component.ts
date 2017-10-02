@@ -383,9 +383,11 @@ export class ActivityComponent implements OnInit, OnDestroy {
     delete copiedEvent['created_at'];
     delete copiedEvent['itinerary'];
 
-    copiedEvent['place_id'] = copiedEvent['place']['place_id'];
-    copiedEvent['lat'] = copiedEvent['place']['lat'];
-    copiedEvent['lng'] = copiedEvent['place']['lng'];
+    if(copiedEvent['place'])  {
+      copiedEvent['place_id'] = copiedEvent['place']['place_id'];
+      copiedEvent['lat'] = copiedEvent['place']['lat'];
+      copiedEvent['lng'] = copiedEvent['place']['lng'];
+    }
 
     copiedEvent['date'] = 'any day';
     copiedEvent['time'] = 'anytime';
@@ -508,7 +510,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
   confirmDelete()  {
     this.itineraryEventService.deleteEvent(this.activity).subscribe(
       result => {
-        
+
         if(this.activity['photo']['public_id']) {
           this.fileuploadService.deleteFile(this.activity['photo']['public_id']).subscribe(
             result => {})
