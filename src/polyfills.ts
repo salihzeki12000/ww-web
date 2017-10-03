@@ -19,5 +19,5 @@ import 'core-js/es7/reflect';
 import 'zone.js/dist/zone';
 
 // https://coryrylan.com/blog/adding-the-internationalization-polyfill-to-a-angular-cli-project
-import 'intl';
-import 'intl/locale-data/jsonp/en.js';
+// import 'intl';
+// import 'intl/locale-data/jsonp/en.js';
