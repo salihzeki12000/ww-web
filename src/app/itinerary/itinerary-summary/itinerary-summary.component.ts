@@ -59,7 +59,7 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
     private loadingService: LoadingService) { }
 
   ngOnInit() {
-    if(this.element.nativeElement.ownerDocument.activeElement.clientWidth > 420)  {
+    if(this.element.nativeElement.ownerDocument.body.clientWidth > 420)  {
       this.compressedView = true;
     }
 

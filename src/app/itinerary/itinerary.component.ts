@@ -106,8 +106,6 @@ export class ItineraryComponent implements OnInit, OnDestroy {
       this.reload = true;
     }
 
-    this.currentRoute = segments[3]['path']
-
     this.route.params.forEach((params: Params) => {
       let id = params['id'];
 
@@ -124,6 +122,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
     this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
       result =>  {
         this.itinerary = result;
+        this.currentRoute = segments[3]['path']
 
         this.invalidPreview = false;
         this.validUser = false;
