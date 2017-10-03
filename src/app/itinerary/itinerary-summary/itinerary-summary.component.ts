@@ -16,6 +16,7 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
   preview;
   compressed = false;
   compressedView = false;
+  show = false;
 
   eventSubscription: Subscription;
   events = [];
@@ -68,7 +69,11 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
     this.events = [];
     this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
        result => {
+         this.show = false;
+         setTimeout(()  =>  {this.show = true}, 200);
+
          this.itinerary = result;
+         this.itemPosition = [];
 
          let header = ''
          if(this.preview) header = "Preview : ";
@@ -102,27 +107,28 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
 
   @HostListener("window:scroll", [])
   onWindowScroll() {
-    if(!this.compressed)  {
+    if(!this.compressedView)  {
       for (let i = 0; i < this.itemPosition.length; i++) {
-        let offset = this.element.nativeElement.offsetParent.scrollTop;
+        // let offset = this.element.nativeElement.offsetParent.scrollTop;
+        let offset = this.element.nativeElement.ownerDocument.scrollingElement.scrollTop;
         let item = this.itemPosition[i]['position'] - 45;
         let diff = item - offset;
-
+        // console.log(this.element.nativeElement.ownerDocument.scrollingElement.scrollTop)
         if(diff < 0)  {
-          this.currentDate = this.itemPosition[i]['date']
+          this.currentDate = this.itemPosition[i]['date'];
           this.index = i;
         }
       }
     }
 
-    if(this.compressed) {
+    if(this.compressedView) {
       for (let i = 0; i < this.itemPosition.length; i++) {
         let offset = this.element.nativeElement.ownerDocument.scrollingElement.scrollTop;
         let item = this.itemPosition[i]['position'] - 50;
         let diff = item - offset;
 
         if(diff < 0)  {
-          this.currentDate = this.itemPosition[i]['date']
+          this.currentDate = this.itemPosition[i]['date'];
           this.index = i;
         }
       }

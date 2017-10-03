@@ -112,33 +112,32 @@ export class ItineraryComponent implements OnInit, OnDestroy {
       let id = params['id'];
 
       this.itineraryService.getItin(id).subscribe(
-        result => {
-          this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
-              result =>  {
-                this.itinerary = result;
+        result => {})
 
-                this.invalidPreview = false;
-                this.validUser = false;
-                this.validAccess = false;
-                this.creator = false;
+      this.itineraryEventService.getEvents(id).subscribe(
+        eventResult => { this.events = eventResult })
 
-                if(this.currentUser) this.checkPreview();
-                if(!this.isLoggedIn) this.checkAccess();
-
-                if(!this.preview && this.isLoggedIn)  {
-                  this.getAllUsers();
-                  this.setInviteLink();
-                }
-              })
-
-          this.itineraryEventService.getEvents(id).subscribe(
-               eventResult => { this.events = eventResult })
-
-          this.resourceService.getResources(id).subscribe(
-               resourceResult => { this.resources = resourceResult })
-        }
-      )
+      this.resourceService.getResources(id).subscribe(
+        resourceResult => { this.resources = resourceResult })
     })
+
+    this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
+      result =>  {
+        this.itinerary = result;
+
+        this.invalidPreview = false;
+        this.validUser = false;
+        this.validAccess = false;
+        this.creator = false;
+
+        if(this.currentUser) this.checkPreview();
+        if(!this.isLoggedIn) this.checkAccess();
+
+        if(!this.preview && this.isLoggedIn)  {
+          this.getAllUsers();
+          this.setInviteLink();
+        }
+      })
 
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
       result => {
@@ -160,12 +159,10 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   }
 
   checkPreview()  {
-
     if(this.isLoggedIn) {
       for (let i = 0; i < this.itinerary['members'].length; i++) {
         if(this.itinerary['members'][i]['_id'] === this.currentUser['_id']) {
           this.validUser = true;
-          console.log("validUser: " + this.validUser)
         }
       }
 

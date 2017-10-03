@@ -73,6 +73,7 @@
   <div *ngFor="let date of dateRange; let i = index" class="date-column">
 
     <ww-itinerary-summary-day
+      *ngIf="show"
       [index]="i"
       [date]="date"
       [itinerary]="itinerary"
@@ -105,6 +106,7 @@
   <div *ngFor="let date of dateRange; let i = index" class="compressed-column">
 
     <ww-itinerary-summary-compressed
+      *ngIf="show"
       [index]="i"
       [date]="date"
       [itinerary]="itinerary"

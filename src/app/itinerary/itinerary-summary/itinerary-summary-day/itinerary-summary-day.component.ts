@@ -35,6 +35,7 @@ export class ItinerarySummaryDayComponent implements OnInit {
     }, 1500)
   }
 
+
   @HostListener('document:click', ['$event'])
   checkClick(event) {
     if(!event.target.classList.contains(this.uniqueClass)) {
