@@ -39,6 +39,7 @@ export class PlaceService {
     return this.http.post( this.url + "/place/new/" + token, body, { headers: headers })
                     .map((response: Response) => response.json())
                     .catch((error: Response) => {
+                      console.log(error)
                       this.errorMessageService.handleErrorMessage(error.json());
                       return Observable.throw(error.json())
                     });

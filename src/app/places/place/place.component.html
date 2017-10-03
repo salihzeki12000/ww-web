@@ -51,7 +51,6 @@
       <h4>{{ place?.country.name }}</h4>
 
       <label>CITY <span class="required"> - for internal use</span></label>
-      <!-- <input type="text" formControlName="city"> -->
       <select class="select-city" name="city" formControlName="city" [value]="cityName">
         <option *ngFor="let city of citiesName">
           {{ city }}

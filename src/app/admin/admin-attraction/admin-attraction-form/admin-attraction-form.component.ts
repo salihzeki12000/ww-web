@@ -5,6 +5,7 @@ declare var google:any;
 import { LoadingService } from '../../../loading';
 import { PlaceService }   from '../../../places';
 import { CountryService } from '../../../countries';
+import { CityService }    from '../../../cities';
 
 @Component({
   selector: 'ww-admin-attraction-form',
@@ -32,9 +33,12 @@ export class AdminAttractionFormComponent implements OnInit {
   countries;
   countriesName;
   countryID;
+  cities;
+  citiesName;
 
   constructor(
     private countryService: CountryService,
+    private cityService: CityService,
     private loadingService: LoadingService,
     private placeService: PlaceService,
     private formBuilder: FormBuilder) {
@@ -63,6 +67,12 @@ export class AdminAttractionFormComponent implements OnInit {
         this.countries = result.countries;
         this.getCountriesName();
       })
+
+    this.cityService.getCities().subscribe(
+      result => {
+        this.cities = result.cities;
+        this.getCitiesName();
+      })
   }
 
   getCountriesName()  {
@@ -73,9 +83,16 @@ export class AdminAttractionFormComponent implements OnInit {
     }
   }
 
+  getCitiesName() {
+    this.citiesName = [];
+
+    for (let i = 0; i < this.cities.length; i++) {
+      this.citiesName.push(this.cities[i]['name'] + ', ' + this.cities[i]['country']['name']);
+    }
+  }
+
   getAttractionDetails(value)  {
     this.details = true;
-    console.log(value);
     this.resetAttractionForm();
 
     let address_components = value['address_components'];
@@ -266,6 +283,9 @@ export class AdminAttractionFormComponent implements OnInit {
 
     let place = this.newAttractionForm.value;
 
+    let index = this.citiesName.indexOf(place['city']);
+    place['city'] = this.cities[index];
+    
     place['country'] = this.countryID;
 
     this.placeService.addPlace(place).subscribe(

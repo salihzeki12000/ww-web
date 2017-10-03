@@ -59,7 +59,6 @@ export class AdminService {
   }
 
   getAdmin(adminId)  {
-    console.log('get admin')
     return this.http.get( this.url + "/admin/display/" + adminId)
                     .map((response: Response) => response.json())
                     .catch((error: Response) => {

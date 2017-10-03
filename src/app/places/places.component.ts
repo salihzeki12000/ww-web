@@ -17,8 +17,21 @@ export class PlacesComponent implements OnInit {
 
   ngOnInit() {
     this.placeService.getPlaces().subscribe(
-      result => { this.places = result['places'] }
+      result => {
+        this.places = result['places'];
+        this.sortPlaces();
+      }
     )
+  }
+
+  sortPlaces()  {
+    for (let i = 0; i < this.places.length; i++) {
+      if(!this.places[i]['city'])  {
+        this.places[i]['city'] = {
+          name: ""
+        }
+      }
+    }
   }
 
   sortNameA()  {

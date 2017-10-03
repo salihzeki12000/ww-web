@@ -78,8 +78,10 @@
 
     <div *ngIf="event?.type === 'activity'" class="summary-item" (click)="showDetails(event)">
 
-      <div class="meals-display" *ngFor="let meal of event?.meals">
-        <h6 *ngIf="meal.checked">{{ meal.value }}</h6>
+      <div *ngIf="event?.meal">
+        <div class="meals-display" *ngFor="let meal of event?.meals">
+          <h6 *ngIf="meal.checked">{{ meal.value }}</h6>
+        </div>
       </div>
 
       <div>

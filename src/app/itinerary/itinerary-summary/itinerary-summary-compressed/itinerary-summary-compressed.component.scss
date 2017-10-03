@@ -166,32 +166,12 @@ h5.check-out-on {
 
 /* style for activity type */
 
-.meals-display h6  {
-  display: inline-block;
-  margin: 0 2px 5px 0;
-  padding: 2px 5px 1px 5px;
-  color: #19CC72;
-  border: 1px solid #19cc72;
-  border-radius: 15px;
-
-  @media only screen and (max-width: 420px) {
-    font-size: .83em;
-  }
-}
-
 .summary-item > div > img {
   width: 36px;
   height: 36px;
 }
 
 
-// .activity-indicator ~ .event-content {
-//   width: 190px;
-//
-//   @media only screen and (max-width: 420px) {
-//     width: calc(100vw - 90px)
-//   }
-// }
 
 /* style for transport */
 .event-content h5.summary-airport  {

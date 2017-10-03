@@ -81,7 +81,6 @@ export class PlaceComponent implements OnInit {
         result => {
           this.place = result.place;
           this.patchValue();
-          console.log(this.place)
         }
       )
     })

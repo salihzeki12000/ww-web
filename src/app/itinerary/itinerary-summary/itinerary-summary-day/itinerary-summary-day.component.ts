@@ -27,6 +27,7 @@ export class ItinerarySummaryDayComponent implements OnInit {
 
   ngOnInit() {
     this.uniqueClass = "daily-note-" + this.index;
+    this.checkMeal();
   }
 
   ngAfterViewInit() {
@@ -43,9 +44,25 @@ export class ItinerarySummaryDayComponent implements OnInit {
     }
   }
 
+
   showDetails(event)  {
       this.showEventDetails.emit(event);
   }
+
+  checkMeal() {
+    for (let i = 0; i < this.events.length; i++) {
+      if(this.events[i]['type'] === 'activity')  {
+
+        for (let j = 0; j < this.events[i]['meals'].length; j++) {
+          if(this.events[i]['meals'][j]['checked']) {
+            this.events[i]['meal'] = true;
+            break;
+          };
+        }
+      }
+    }
+  }
+
 
   updateNote(editedNote: string)  {
     editedNote = editedNote.trim();
