@@ -6,3 +6,4 @@ export * from './post-input/post-input.component';
 export * from './post-list/post-list.component';
 
 export * from './post-display/post-display.component';
+// export * from './post.module';

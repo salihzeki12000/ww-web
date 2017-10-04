@@ -15,3 +15,6 @@ export * from './requested-followings/requested-following/requested-following.co
 
 export * from './pending-followers/pending-followers.component';
 export * from './pending-followers/pending-follower/pending-follower.component';
+
+
+// export * from './relationships.module';

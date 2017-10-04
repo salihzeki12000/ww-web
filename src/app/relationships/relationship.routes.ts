@@ -1,4 +1,5 @@
-import { Routes } from "@angular/router";
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
 
 import { FollowingsComponent }          from './followings/followings.component';
 import { FollowersComponent }           from './followers/followers.component';
@@ -12,3 +13,11 @@ export const RELATIONSHIP_ROUTES: Routes = [
   { path: 'following-request', component: RequestedFollowingsComponent },
   { path: 'follow-request', component: PendingFollowersComponent },
 ]
+
+// @NgModule({
+//   imports: [
+//     RouterModule.forChild(RELATIONSHIP_ROUTES)
+//   ],
+//   exports: [RouterModule]
+// })
+// export class RelationshipsRoutingModule {}

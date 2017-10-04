@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, HostListener
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
+declare var google:any;
 
 import { Itinerary }             from '../../../itinerary';
 import { ItineraryService }      from '../../../itinerary.service';
@@ -11,6 +12,8 @@ import { ItineraryEventService } from '../../itinerary-event.service';
 import { UserService }         from '../../../../user';
 import { FlashMessageService } from '../../../../flash-message';
 import { ErrorMessageService } from '../../../../error-message';
+import { PlaceService }        from '../../../../places';
+import { CountryService }      from '../../../../countries';
 
 @Component({
   selector: 'ww-transport-form',
@@ -53,6 +56,12 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   depStation = '';
   arrStation = '';
 
+  depLocation;
+  arrLocation;
+  place;
+  countries;
+  countriesName;
+
   // time picker
   ats = true;
   timePickerDep = false;
@@ -77,6 +86,8 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
     private userService: UserService,
+    private placeService: PlaceService,
+    private countryService: CountryService,
     private flashMessageService: FlashMessageService,
     private errorMessageService: ErrorMessageService,
     private route: ActivatedRoute,
@@ -122,6 +133,13 @@ export class TransportFormComponent implements OnInit, OnDestroy {
         this.dateRange  = Object.keys(result).map(key => result[key]);
         this.firstDay = this.dateRange[1];
     })
+
+    this.countryService.getCountries().subscribe(
+      result => {
+        this.countries = result.countries;
+        this.getCountriesName();
+      }
+    )
   }
 
   @HostListener('document:click', ['$event'])
@@ -139,6 +157,14 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     if(this.itinerarySubscription) this.itinerarySubscription.unsubscribe();
     if(this.dateSubscription) this.dateSubscription.unsubscribe();
     if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
+  }
+
+  getCountriesName()  {
+    this.countriesName = [];
+
+    for(let i = 0; i < this.countries.length; i++) {
+      this.countriesName.push(this.countries[i]['name']);
+    }
   }
 
 
@@ -214,6 +240,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
                 }
               }
 
+              // code share details
               let operatingCarrier;
               let operatingCarrierCode;
               let operatingFlightNumber;
@@ -230,6 +257,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
                 }
               }
 
+              // flight details
               if(scheduledFlights.length === 1) {
                 let departureAirportCode = scheduledFlights[0].departureAirportFsCode;
                 let arrivalAirportCode = scheduledFlights[0].arrivalAirportFsCode;
@@ -238,6 +266,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
                 if(scheduledFlights[0].departureTerminal !== '')  {
                   departureTerminal = "Terminal " + scheduledFlights[0].departureTerminal;
                 }
+
 
                 let departureTime = scheduledFlights[0].departureTime.slice(11,16);
                 let arrivalTime = scheduledFlights[0].arrivalTime.slice(11,16);
@@ -252,37 +281,39 @@ export class TransportFormComponent implements OnInit, OnDestroy {
                 let arrivalDay = scheduledFlights[0].arrivalTime.slice(8,10);
                 let arrivalDate = arrivalYear + "-" + arrivalMonth + "-" + arrivalDay + "T00:00:00.000Z";
 
+
+
                 let departureAirport;
                 let departureCity;
-                let departureCountry;
-                let departureStationLocation;
 
                 for (let i = 0; i < appendix.airports.length; i++) {
                   if (appendix.airports[i].fs === departureAirportCode) {
                     departureAirport = appendix.airports[i].name;
                     departureCity = appendix.airports[i].city;
-                    departureCountry = appendix.airports[i].countryName;
-                    departureStationLocation = {
+
+                    let place = {
+                      name: appendix.airports[i].name,
                       lat: appendix.airports[i].latitude,
                       lng: appendix.airports[i].longitude,
                     }
+                    this.getLocation(place, "dep");
                   }
                 }
 
                 let arrivalAirport;
                 let arrivalCity;
-                let arrivalCountry;
-                let arrivalStationLocation;
 
                 for (let i = 0; i < appendix.airports.length; i++) {
                   if (appendix.airports[i].fs === arrivalAirportCode) {
                     arrivalAirport = appendix.airports[i].name;
                     arrivalCity = appendix.airports[i].city;
-                    arrivalCountry = appendix.airports[i].countryName;
-                    arrivalStationLocation = {
+
+                    let place = {
+                      name: appendix.airports[i].name,
                       lat: appendix.airports[i].latitude,
                       lng: appendix.airports[i].longitude,
                     }
+                    this.getLocation(place, "arr");
                   }
                 }
 
@@ -300,18 +331,14 @@ export class TransportFormComponent implements OnInit, OnDestroy {
                   dep_station: departureAirport,
                   depAirportCode: departureAirportCode,
                   dep_city: departureCity,
-                  depCountry: departureCountry,
                   dep_terminal: departureTerminal,
                   dep_date: departureDate,
                   dep_time: departureTime,
-                  dep_station_location: departureStationLocation,
                   arr_station: arrivalAirport,
                   arrAirportCode: arrivalAirportCode,
                   arr_city: arrivalCity,
-                  arrCountry: arrivalCountry,
                   arr_date: arrivalDate,
                   arr_time: arrivalTime,
-                  arr_station_location: arrivalStationLocation,
                   operating_carrier: operatingCarrier,
                   operating_flight: operatingCarrierCode + operatingFlightNumber
                 };
@@ -422,11 +449,13 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       if (appendix.airports[i].fs === airportCode) {
         currentFlightSearch['dep_station'] = appendix.airports[i].name;
         currentFlightSearch['dep_city'] = appendix.airports[i].city;
-        currentFlightSearch['depCountry'] = appendix.airports[i].countryName;
-        currentFlightSearch['dep_station_location'] = {
+
+        let place = {
+          name: appendix.airports[i].name,
           lat: appendix.airports[i].latitude,
           lng: appendix.airports[i].longitude,
         }
+        this.getLocation(place, "dep");
       }
     }
 
@@ -457,11 +486,13 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       if (appendix.airports[i].fs === airportCode) {
         currentFlightSearch['arr_station'] = appendix.airports[i].name;
         currentFlightSearch['arr_city'] = appendix.airports[i].city;
-        currentFlightSearch['arrCountry'] = appendix.airports[i].countryName;
-        currentFlightSearch['arr_station_location'] = {
+
+        let place = {
+          name: appendix.airports[i].name,
           lat: appendix.airports[i].latitude,
           lng: appendix.airports[i].longitude,
         }
+        this.getLocation(place, "arr");
       }
     }
 
@@ -472,23 +503,110 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   }
 
 
+
+  // add place as station location
+  getLocation(place, type) {
+    this.placeService.searchPlace(place).subscribe(
+      result => {
+        if(type === "dep")  {
+          this.depLocation = result['place'];
+
+          if(result['place']['city']) {
+            this.addTransportForm.patchValue({
+              dep_city: result['place']['city']['name']
+            })
+          }
+        }
+
+        if(type === "arr")  {
+          this.arrLocation = result['place'];
+
+          if(result['place']['city']) {
+            this.addTransportForm.patchValue({
+              arr_city: result['place']['city']['name']
+            })
+          }
+        }
+
+        if(!result['place']['country']) {
+          this.getLocationAddress(result['place'])
+        }
+      }
+    )
+  }
+
+  getLocationAddress(place)  {
+    let geocoder = new google.maps.Geocoder;
+    let lat = place['lat'];
+    let lng = place['lng'];
+
+    geocoder.geocode({location: {lat:lat, lng:lng}}, (result, status) =>  {
+      if(status === 'OK') {
+        if(result[0]) {
+          place['formatted_address'] = result[0]['formatted_address'];
+          place['place_id'] = result[0]['place_id'];
+          place['address'] = result[0]['address_components'];
+
+          this.getCountry(place);
+        }
+      }
+    })
+  }
+
+  getCountry(place)  {
+    let address = place['address'];
+
+    for (let i = 0; i < address.length; i++) {
+      if(address[i]['types'][0] === 'country')  {
+        let country = address[i]['long_name'];
+        this.getCountryLatLng(country, place)
+      }
+    }
+  }
+
+  getCountryLatLng(country, place)  {
+    let geocoder = new google.maps.Geocoder;
+
+    geocoder.geocode({address: country}, (result, status) =>  {
+      if(status === 'OK') {
+        let lat = result[0]['geometry'].location.lat();
+        let lng = result[0]['geometry'].location.lng();
+
+        let rCountry = {
+          name: country,
+          lat: lat,
+          lng: lng
+        }
+
+        this.checkCountry(rCountry, place);
+      }
+    })
+  }
+
+  checkCountry(country, place)  {
+    let index = this.countriesName.indexOf(country['name'])
+
+    if(index > -1)  {
+      place['country'] = this.countries[index];
+      this.savePlace(place);
+    } else {
+      this.countryService.addCountry(country).subscribe(
+        result => {
+          place['country'] = result.country;
+          this.savePlace(place);
+        })
+    }
+  }
+
+  savePlace(place)  {
+    this.placeService.editPlace(place).subscribe(
+      result => {console.log(result)})
+  }
+
+
+
+
   // google search
-  searchingDep(event) {
-    this.depCity = event;
-
-    this.addTransportForm.patchValue({
-      dep_city: this.depCity,
-    })
-  }
-
-  setDepCity(data) {
-    this.depCity = data['formatted_address'];
-
-    this.addTransportForm.patchValue({
-      dep_city: this.depCity,
-    })
-  }
-
   searchingDepStation(event) {
     setTimeout(() =>  {
       if(!this.depStation)  {
@@ -506,30 +624,27 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   setDepStation(data) {
     this.depStation = data['name'];
 
+    let address_components = data['address_components'];
+
+    for (let i = 0; i < address_components.length; i++) {
+      if(address_components[i]['types'][0] === 'locality')  {
+        data['city'] = address_components[i]['long_name'];
+      } else if(address_components[i]['types'][0] === 'administrative_area_level_1') {
+        data['city'] += ', ' + address_components[i]['long_name'];
+      }
+    }
+
     this.addTransportForm.patchValue({
       dep_station: this.depStation,
-      dep_station_location: {
-        lat: data['geometry'].location.lat(),
-        lng: data['geometry'].location.lng(),
-      }
+      dep_city: data['city'],
     })
-  }
 
-
-  searchingArr(event) {
-    this.arrCity = event;
-
-    this.addTransportForm.patchValue({
-      arr_city: this.arrCity,
-    })
-  }
-
-  setArrCity(data) {
-    this.arrCity = data['formatted_address'];
-
-    this.addTransportForm.patchValue({
-      arr_city: this.arrCity,
-    })
+    let place = {
+      name: data['name'],
+      lat: data['geometry'].location.lat(),
+      lng: data['geometry'].location.lng(),
+    }
+    this.getLocation(place, "dep");
   }
 
   searchingArrStation(event) {
@@ -548,13 +663,27 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   setArrStation(data) {
     this.arrStation = data['name'];
 
+    let address_components = data['address_components'];
+
+    for (let i = 0; i < address_components.length; i++) {
+      if(address_components[i]['types'][0] === 'locality')  {
+        data['city'] = address_components[i]['long_name'];
+      } else if(address_components[i]['types'][0] === 'administrative_area_level_1') {
+        data['city'] += ', ' + address_components[i]['long_name'];
+      }
+    }
+
     this.addTransportForm.patchValue({
       arr_station: this.arrStation,
-      arr_station_location: {
-        lat: data['geometry'].location.lat(),
-        lng: data['geometry'].location.lng(),
-      }
+      arr_city: data['city']
     })
+
+    let place = {
+      name: data['name'],
+      lat: data['geometry'].location.lat(),
+      lng: data['geometry'].location.lng(),
+    }
+    this.getLocation(place, "arr");
   }
 
 
@@ -596,8 +725,8 @@ export class TransportFormComponent implements OnInit, OnDestroy {
         }
       }
 
-      newTransport['dep_station_location'] = this.flightSearchDetail['dep_station_location'];
-      newTransport['arr_station_location'] = this.flightSearchDetail['arr_station_location'];
+      newTransport['dep_station_location'] = this.depLocation;
+      newTransport['arr_station_location'] = this.arrLocation;
       newTransport['reference_number'] = this.flightSearchDetail['carrierCode'] + this.flightSearchDetail['reference_number'];
     }
 

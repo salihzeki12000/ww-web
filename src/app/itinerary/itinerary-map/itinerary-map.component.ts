@@ -85,10 +85,15 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
   }
 
   filterEvents(events)  {
+    console.log(events)
     this.events = [];
     let index = 1;
 
     for (let i = 0; i < events.length; i++) {
+      if(events[i]['type'] === 'transport') {
+        console.log(events[i])
+      }
+
       if(events[i]['type'] !== 'transport' && events[i]['location'])  {
 
         if(this.itinerary['num_days'])  {
@@ -168,6 +173,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
           let date;
           let eventDate;
           let icon;
+          let color;
 
           if(this.events[i]['date'] !== 'any day' && !this.itinerary['num_days'])  {
             date = new Date(this.events[i]['date'])
@@ -177,9 +183,12 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
           }
 
           if(this.events[i]['type'] === 'activity') {
-            icon = "https://res.cloudinary.com/wwfileupload/image/upload/v1506912342/red_marker_blhqim.png";
+            // icon = "https://res.cloudinary.com/wwfileupload/image/upload/v1506912342/red_marker_blhqim.png";
+            icon = "https://res.cloudinary.com/wwfileupload/image/upload/v1507089951/red_marker2_vet9gn.png";
+            color = "#D6101E";
           } else if(this.events[i]['type'] === 'accommodation') {
-            icon = "https://res.cloudinary.com/wwfileupload/image/upload/v1506911538/purple_marker2_dgpfgs.png"
+            icon = "https://res.cloudinary.com/wwfileupload/image/upload/v1507090509/purple_marker2_ohhe64.png"
+            color = "#9421FF";
           }
 
           eventMarker.push(
@@ -189,7 +198,8 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
               eventDate,
               this.events[i]['time'],
               this.events[i]['note'],
-              icon]
+              icon,
+              color]
           )
         } else if(!this.events[i]['place']['lat']) {
           this.events.splice(i,1)
@@ -207,13 +217,14 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
         map: map,
         icon: {
           url: event[6],
-          labelOrigin: new google.maps.Point(17, 17)
+          labelOrigin: new google.maps.Point(16, 16)
         },
         title: event[0],
         label: {
           text: '' + (i + 1),
-          color: '#F9FBFB',
-          fontSize: '13px'
+          color: event[7],
+          fontSize: '13px',
+          fontWeight: 'bold'
         },
         date: event[3],
         zIndex: i

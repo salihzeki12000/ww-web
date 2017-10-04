@@ -3,17 +3,19 @@
 // import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { HttpModule } from '@angular/http';
 //
-// import { PostsComponent }     from './posts.component';
-// import { PostComponent }      from './post/post.component';
-// import { PostInputComponent } from './post-input/post-input.component';
-// import { PostListComponent }  from './post-list/post-list.component';
+// import { PostsComponent }       from './posts.component';
+// import { PostComponent }        from './post/post.component';
+// import { PostInputComponent }   from './post-input/post-input.component';
+// import { PostListComponent }    from './post-list/post-list.component';
+// import { PostDisplayComponent } from './post-display/post-display.component';
 //
 // @NgModule({
 //   declarations: [
 //     PostComponent,
 //     PostsComponent,
 //     PostInputComponent,
-//     PostListComponent
+//     PostListComponent,
+//     PostDisplayComponent
 //   ],
 //   imports: [
 //     CommonModule,
@@ -21,6 +23,6 @@
 //     ReactiveFormsModule,
 //     HttpModule,
 //   ],
-//   // schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+//   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 // })
 // export class PostModule {}

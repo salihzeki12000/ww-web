@@ -12,7 +12,7 @@ declare var google:any;
 @Component({
   selector: 'ww-google-place-search',
   template: `
-    <input type="text" #ggPlaceSearch placeholder="" [value]="populate" [class.settings]="settings === 'true'" (keyup.enter)="$event.preventDefault()" (keyup.enter)="logSearch(ggPlaceSearch.value)">
+    <input type="text" #ggPlaceSearch placeholder="" [value]="populate" [class.settings]="settings === 'true'" (keydown.enter)="$event.preventDefault()" (keyup.enter)="logSearch(ggPlaceSearch.value)">
   `,
   styleUrls: ['./google-place-search.component.scss']
 })

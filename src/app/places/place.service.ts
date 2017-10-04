@@ -45,6 +45,20 @@ export class PlaceService {
                     });
     }
 
+    searchPlace(place) {
+      const body = JSON.stringify(place);
+      const headers = new Headers({ 'Content-Type': 'application/json' });
+      const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
+
+      return this.http.post( this.url + "/place/search/" + token, body, { headers: headers })
+                      .map((response: Response) => response.json())
+                      .catch((error: Response) => {
+                        console.log(error)
+                        this.errorMessageService.handleErrorMessage(error.json());
+                        return Observable.throw(error.json())
+                      });
+      }
+
 
     editPlace(place)  {
       const body = JSON.stringify(place);

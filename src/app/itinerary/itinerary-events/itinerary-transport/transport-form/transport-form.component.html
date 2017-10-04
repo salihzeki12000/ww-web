@@ -222,13 +222,6 @@
             <input type="text" class="reference-number" formControlName="reference_number">
           </div>
 
-          <label>Depart from (City) <span class="required"> - required</span></label>
-          <ww-google-place-search
-          [populate]="depCity"
-          [options]="cityOptions"
-          (placeDetail)="setDepCity($event)"
-          (searching)="searchingDep($event)"></ww-google-place-search>
-
           <!-- departure details for all other transport type except vehicle rental-->
           <div *ngIf="transportOption !== 'vehicle rental'">
             <label>Departure Station / Terminal</label>
@@ -236,6 +229,9 @@
             [populate]="depStation"
             (placeDetail)="setDepStation($event)"
             (searching)="searchingDepStation($event)"></ww-google-place-search>
+
+            <label>Depart from (City) <span class="required"> - required</span></label>
+            <input type="text" formControlName="dep_city">
 
             <label>Departure Date <span class="required"> - required</span></label>
             <select class="select-date" name="dep_date" formControlName="dep_date">
@@ -291,12 +287,6 @@
 
         <h4 class="form-section-header">Arrival Details</h4>
         <div class="form-section-details">
-          <label>Going To (City) <span class="required"> - required</span></label>
-          <ww-google-place-search
-          [populate]="arrCity"
-          [options]="cityOptions"
-          (placeDetail)="setArrCity($event)"
-          (searching)="searchingArr($event)"></ww-google-place-search>
 
           <!-- arrival details for all transport type except vehicle rental-->
           <div *ngIf="transportOption !== 'vehicle rental'">
@@ -305,6 +295,9 @@
             [populate]="arrStation"
             (placeDetail)="setArrStation($event)"
             (searching)="searchingArrStation($event)"></ww-google-place-search>
+
+            <label>Going To (City) <span class="required"> - required</span></label>
+            <input type="text" formControlName="arr_city">
 
             <label>Arrival Date</label>
             <select class="select-date" name="arr_date" formControlName="arr_date">
