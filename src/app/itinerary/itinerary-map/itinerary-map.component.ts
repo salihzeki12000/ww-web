@@ -85,13 +85,53 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
   }
 
   filterEvents(events)  {
-    console.log(events)
     this.events = [];
     let index = 1;
 
     for (let i = 0; i < events.length; i++) {
-      if(events[i]['type'] === 'transport') {
-        console.log(events[i])
+      if(events[i]['type'] === 'transport' && events[i]['transport_type'] !== "vehicle rental") {
+        if(events[i]['dep_station_location'] && events[i]['arr_station_location'])  {
+
+          let depDate = new Date(events[i]['dep_date']);
+          let dep_converted_date = depDate.getDate() + " " + this.month[depDate.getMonth()];
+
+          let departure = {
+            type: "transport",
+            name: "Departs " + events[i]['dep_city'] + " (" + events[i]['dep_station'] + ")",
+            place: events[i]['dep_station_location'],
+            date: events[i]['dep_date'],
+            time: events[i]['dep_time'],
+            note: events[i]['note'],
+            converted_date: dep_converted_date,
+            index: index
+          }
+
+          index += 1;
+
+          this.events.push(departure)
+
+          let arrDate = new Date(events[i]['arr_date']);
+          let converted_date = arrDate.getDate() + " " + this.month[arrDate.getMonth()];
+
+          let arrival = {
+            type: "transport",
+            name: "Arrives " + events[i]['arr_city'] + " (" + events[i]['arr_station'] + ")",
+            place: events[i]['arr_station_location'],
+            date: events[i]['arr_date'],
+            time: events[i]['arr_time'],
+            note: events[i]['note'],
+            converted_date: converted_date,
+            index: index
+          }
+
+          index += 1;
+
+          this.events.push(arrival);
+
+          setTimeout(() =>  {
+            this.setTravelPath(events[i]);
+          }, 1000)
+        }
       }
 
       if(events[i]['type'] !== 'transport' && events[i]['location'])  {
@@ -168,7 +208,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
     this.markers = [];
 
     for (let i = 0; i < this.events.length; i++) {
-      if(this.events[i]['type'] !== 'transport')  {
+      // if(this.events[i]['type'] !== 'transport')  {
         if(this.events[i]['place']['lat']) {
           let date;
           let eventDate;
@@ -183,12 +223,14 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
           }
 
           if(this.events[i]['type'] === 'activity') {
-            // icon = "https://res.cloudinary.com/wwfileupload/image/upload/v1506912342/red_marker_blhqim.png";
             icon = "https://res.cloudinary.com/wwfileupload/image/upload/v1507089951/red_marker2_vet9gn.png";
             color = "#D6101E";
           } else if(this.events[i]['type'] === 'accommodation') {
-            icon = "https://res.cloudinary.com/wwfileupload/image/upload/v1507090509/purple_marker2_ohhe64.png"
+            icon = "https://res.cloudinary.com/wwfileupload/image/upload/v1507090509/purple_marker2_ohhe64.png";
             color = "#9421FF";
+          } else if(this.events[i]['type'] === 'transport') {
+            icon = "https://res.cloudinary.com/wwfileupload/image/upload/v1507186249/orange_marker2_ltrumz.png";
+            color = "#FFA15C";
           }
 
           eventMarker.push(
@@ -205,7 +247,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
           this.events.splice(i,1)
           i--;
         }
-      }
+      // }
     }
 
     this.setDate(eventMarker);
@@ -277,6 +319,23 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
     this.dates.unshift("All dates");
     this.selectedDate = this.dates[0];
   }
+
+  setTravelPath(event) {
+    let path = [];
+    path.push({ lat: event['dep_station_location']['lat'], lng: event['dep_station_location']['lng']});
+    path.push({ lat: event['arr_station_location']['lat'], lng: event['arr_station_location']['lng']});
+
+    let travelPath = new google.maps.Polyline({
+      path: path,
+      geodesic: true,
+      strokeColor: "#FFA15C",
+      strokeOpacity: 1,
+      strokeWeight: 5
+    })
+
+    travelPath.setMap(this.itinMap);
+  }
+
 
 
   // change center
