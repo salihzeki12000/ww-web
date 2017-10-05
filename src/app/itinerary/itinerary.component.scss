@@ -118,7 +118,7 @@
   margin-bottom: 5px;
   color: #F9FBFB;
   font-family: 'Raleway', sans-serif;
-  
+
   @media only screen and (max-width: 690px) {
     font-size: 1.2em;
     vertical-align: -webkit-baseline-middle;
@@ -681,7 +681,6 @@ header {
   margin: 10px;
   width: 100px;
   text-align: center;
-  background-color: #6494ED;
   border-radius: 2px;
   border: 2px solid #6494ED;
 
@@ -693,7 +692,7 @@ header {
 
 .get-sign-in h4,
 .get-sign-up h4 {
-  color: #F9FBFB;
+  color: #6494ED;
 }
 
 ww-signin,
