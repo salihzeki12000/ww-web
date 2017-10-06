@@ -528,7 +528,7 @@ h5.action-response-primary  {
   margin-top: -5px;
   width: 15px;
   font-size: 18px;
-  color: #F9FBFB;
+  color: #808080;
   text-align: center;
   float: right;
   &:hover {
@@ -891,7 +891,7 @@ h5.action-response-primary  {
 
 .link-preview {
   position: relative;
-  margin: 0 30px;
+  margin: 0 30px 20px 30px;
   border: 1px solid lightgray;
 }
 
@@ -2664,7 +2664,7 @@ ww-itinerary-map  {
 }
 
 .transport-indicator  {
-  background-color: rgba(189,162,15,.8);
+  background-color: rgba(255, 161, 92,1);
 }
 
 .activity-indicator {
@@ -2716,6 +2716,11 @@ ww-itinerary-map  {
   Itinerary Description
 
 ************************/
+.description-header {
+  padding: 10px 0 20px 0;
+  font-family: 'Raleway', sans-serif;
+  text-align: center;
+}
 
 .section-header {
   margin-bottom: 5px;

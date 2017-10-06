@@ -80,7 +80,7 @@
     <div class="init-response">
       <div class="init-tour" (click)="startTour()">
         <i class="fa fa-thumbs-o-up fa-3x" aria-hidden="true"></i>
-        Yes, I love tours
+        Yes, let's start
       </div>
       <div class="init-tour" (click)="skipTour()">
         <i class="fa fa-sign-out fa-3x" aria-hidden="true"></i>
@@ -122,6 +122,12 @@
     <div class="highlight-itin"></div>
   </div>
 
+  <div class="tour-itinerary-arrow desktop" *ngIf="tour2">
+    <div class="triangle-left"></div>
+    <div class="box"></div>
+  </div>
+
+
   <div class="message-box desktop" *ngIf="tour2">
     <div class="tour-header">
       <div class="tour-tracker">
@@ -142,6 +148,11 @@
 
   <div class="tour-menu" *ngIf="tour2">
     <div class="highlight-menu"></div>
+  </div>
+
+  <div class="tour-menu-arrow mobile" *ngIf="tour2">
+    <div class="triangle-left"></div>
+    <div class="box"></div>
   </div>
 
   <div class="message-box mobile" *ngIf="tour2">
@@ -174,6 +185,11 @@
 
   <div class="tour-nav" *ngIf="tour3">
     <div class="highlight-nav"></div>
+  </div>
+
+  <div class="tour-nav-arrow" *ngIf="tour3">
+    <div class="triangle-right"></div>
+    <div class="box"></div>
   </div>
 
   <div class="message-box" *ngIf="tour3">

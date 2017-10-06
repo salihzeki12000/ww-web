@@ -53,6 +53,9 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.newUser = true;
           this.verifyMsg = true;
           this.tourStart = true;
+          this.preventScroll(true);
+        } else  {
+          this.preventScroll(false);
         }
       })
 
@@ -64,9 +67,6 @@ export class HomeComponent implements OnInit, OnDestroy {
             this.loadingService.setLoader(false, "");
           })
       })
-
-
-    this.renderer.removeClass(document.body, 'prevent-scroll');
 
     this.userService.getUser("59001ca5e0cc620004da87b8").subscribe(
       result => {
@@ -186,4 +186,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/preview/itinerary/' + id);
   }
 
+
+  // others
+  preventScroll(value)  {
+    if(value) {
+      this.renderer.addClass(document.body, 'prevent-scroll');
+    } else  {
+      this.renderer.removeClass(document.body, 'prevent-scroll');
+    }
+  }
 }

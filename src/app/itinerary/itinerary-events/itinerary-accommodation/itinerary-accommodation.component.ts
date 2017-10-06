@@ -81,6 +81,7 @@ export class ItineraryAccommodationComponent implements OnInit, OnDestroy {
 
   filterEvent(events) {
     this.accommodations = [];
+
     for (let i = 0; i < events.length; i++) {
       if(events[i]['type'] === 'accommodation') {
 
@@ -95,6 +96,17 @@ export class ItineraryAccommodationComponent implements OnInit, OnDestroy {
             events[i]['out_of_range'] = false;
           }
 
+          let oneDay = 24*60*60*1000;
+          let inDate = new Date(events[i]['check_in_date']);
+          let outDate = new Date(events[i]['check_out_date']);
+          let numDaysDiff = Math.round(Math.abs((inDate.getTime() - outDate.getTime())/oneDay));
+          events[i]['numDays'] = numDaysDiff + " night" + (numDaysDiff > 1 ? "s" : "");
+
+        } else  {
+          let inDay = events[i]['check_in_date'].slice(4,events[i]['check_in_date'].length);
+          let outDay = events[i]['check_out_date'].slice(4,events[i]['check_out_date'].length)
+          let numDaysDiff = +outDay - +inDay;
+          events[i]['numDays'] = numDaysDiff + " night" + (numDaysDiff > 1 ? "s" : "");
         }
 
         this.accommodations.push(events[i])

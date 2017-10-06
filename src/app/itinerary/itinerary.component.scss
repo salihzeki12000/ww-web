@@ -598,7 +598,7 @@ header {
   }
 }
 
-.add-new-modal h4 {
+.add-new-modal .add-new-opt {
   margin-bottom: 20px;
   padding: 10px;
   width: 320px;
@@ -608,9 +608,7 @@ header {
   border-radius: 5px;
   &:hover {
     cursor: pointer;
-    color: #F9FBFB;
-    background-color: #6494ED;
-    border: 2px solid #6494ED;
+    opacity: .7;
   }
 
   @media only screen and (max-width: 450px) {
@@ -619,6 +617,10 @@ header {
   }
 }
 
+.add-new-opt h4 {
+  padding-top: 10px;
+  color: #567FCC;
+}
 
 
 /* user search for invite members */

@@ -24,7 +24,7 @@
     <div *ngIf="!editing">
       <i *ngIf="!preview" class="fa fa-pencil" aria-hidden="true" (click)="editing = true"></i>
 
-      <h2 *ngIf="itinerary?.description.header">{{ itinerary?.description.header }}</h2>
+      <h1 class="description-header" *ngIf="itinerary?.description.header">{{ itinerary?.description.header }}</h1>
 
       <!-- <div *ngIf="corporate" class="creator">
         <ww-user-profile-card [user]="itinerary.created_by" [currentUser]="currentUser"></ww-user-profile-card>

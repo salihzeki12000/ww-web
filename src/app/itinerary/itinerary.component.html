@@ -197,10 +197,22 @@
     </div>
 
     <div class="content-without-header-name">
-      <h4 (click)="newAccommodation()">NEW ACCOMMODATION</h4>
-      <h4 (click)="newTransport()">NEW TRANSPORT</h4>
-      <h4 (click)="newActivity()">NEW ACTIVITY</h4>
-      <h4 (click)="newResource()">NEW RESOURCE</h4>
+      <div (click)="newTransport()" class="add-new-opt">
+        <i class="fa fa-car fa-3x" aria-hidden="true"></i>
+        <h4>NEW TRANSPORT</h4>
+      </div>
+      <div (click)="newAccommodation()" class="add-new-opt">
+        <i class="fa fa-bed fa-3x" aria-hidden="true"></i>
+        <h4>NEW ACCOMMODATION</h4>
+      </div>
+      <div (click)="newActivity()" class="add-new-opt">
+        <i class="fa fa-bicycle fa-3x" aria-hidden="true"></i>
+        <h4>NEW ACTIVITY</h4>
+      </div>
+      <div (click)="newResource()" class="add-new-opt">
+        <i class="fa fa-clone fa-3x" aria-hidden="true"></i>
+        <h4>NEW RESOURCE</h4>
+      </div>
     </div>
   </div>
 </div>

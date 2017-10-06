@@ -60,7 +60,7 @@
 
       <h6 class="favs-note" *ngIf="favDate"><i class="fa fa-star-o" aria-hidden="true"></i> Added as favourite on {{ favDate | date: 'dd MMM yyyy'}}</h6>
 
-      <h4 class="accommodation-city"><i class="fa fa-bed" aria-hidden="true"></i> {{ event?.city | uppercase }}</h4>
+      <h4 class="accommodation-city"><i class="fa fa-bed" aria-hidden="true"></i> {{ event?.city | uppercase }} ( {{ event?.numDays }} )</h4>
       <h3 class="accommodation-header">{{ event?.name | uppercase }}</h3>
 
       <div class="fav-details">
