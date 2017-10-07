@@ -40,7 +40,7 @@
 </div>
 
 <div *ngIf="date !== 'any day' && !itinerary?.num_days">
-  <h5 class="event-date">Day {{ index }} - {{ date | date: "dd MMM (EEE)" }}</h5>
+  <h5 class="event-date">Day {{ index }} <span>{{ date | date: "dd MMM (EEE)" }}</span></h5>
 </div>
 
 <div *ngFor="let event of events">

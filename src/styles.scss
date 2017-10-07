@@ -58,6 +58,9 @@
 @import url(https://fonts.googleapis.com/css?family=Alice);//font-family: 'Alice', serif;
 @import url(https://fonts.googleapis.com/css?family=Lato); //font-family: 'Lato', sans-serif;
 
+
+@import "itinerary";
+
 $primaryColor: #6494ED;
 
 $primaryText: #3A4A4D;
@@ -107,16 +110,6 @@ a  { font-size: 0.83em }
 
 img { object-fit: cover }
 
-// @mixin button  {
-//   padding: 8px 20px;
-//   color: $primaryColor;
-//   border: 1px solid $primaryColor;
-//   background-color: white;
-//   &:hover {
-//     color: white;
-//     background-color: $primaryColor;
-//   }
-// }
 
 button[disabled]  {
   border: none;
@@ -134,13 +127,8 @@ button[disabled] h5 {
   }
 }
 
-span.italic {
-  font-style: italic;
-}
-
-span.bold {
-  font-weight: bold;
-}
+span.italic { font-style: italic;}
+span.bold {font-weight: bold;}
 
 .truncate {
   white-space: nowrap;
@@ -445,7 +433,7 @@ h5.action-response-primary  {
 
 
 
-/*************************
+/****
 
  display of users and followings status
 
@@ -511,9 +499,9 @@ h5.action-response-primary  {
 
 
 
-/*****************
+/*****
 
- HOVER MENU
+  hover menu
 
 ********************/
 
@@ -606,7 +594,7 @@ h5.action-response-primary  {
 
 
 
-/*******************
+/*******
 
  SLIDER FOR IMAGES
 
@@ -698,7 +686,7 @@ h5.action-response-primary  {
 
 
 
-/************************
+/******
 
   USER PROFILE DISPLAY
 
@@ -828,7 +816,7 @@ h5.action-response-primary  {
 
 
 
-/*****************
+/******
 
  User search
 
@@ -2101,30 +2089,30 @@ ww-resource {
 
 /* meal display in activity / print / summary */
 
-.meals-display  {
-  display: inline-block;
-}
-
-.meals-display h5  {
-  margin: 10px 2px 0 0;
-  padding: 2px 10px;
-  border: 1px solid #19CC72;
-  border-radius: 2px;
-  color: #19CC72;
-}
-
-.meals-display h6  {
-  display: inline-block;
-  margin: 0 2px 5px 0;
-  padding: 2px 5px 1px 5px;
-  color: #19CC72;
-  border: 1px solid #19cc72;
-  border-radius: 2px;
-
-  @media only screen and (max-width: 420px) {
-    font-size: .83em;
-  }
-}
+// .meals-display  {
+//   display: inline-block;
+// }
+//
+// .meals-display h5  {
+//   margin: 10px 2px 0 0;
+//   padding: 2px 10px;
+//   border: 1px solid #19CC72;
+//   border-radius: 2px;
+//   color: #19CC72;
+// }
+//
+// .meals-display h6  {
+//   display: inline-block;
+//   margin: 0 2px 5px 0;
+//   padding: 2px 5px 1px 5px;
+//   color: #19CC72;
+//   border: 1px solid #19cc72;
+//   border-radius: 2px;
+//
+//   @media only screen and (max-width: 420px) {
+//     font-size: .83em;
+//   }
+// }
 
 
 

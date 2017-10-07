@@ -101,17 +101,24 @@
 
 .date-bar .date {
   width: 280px;
+  height: 38px;
   text-align: left;
   margin: -50px 0 10px 0;
   padding: 15px 10px 10px 10px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: #F9FBFB;
+  color: #E6E6E6;
   background-color: #567FCC;
   border-right: 1px solid lightgray;
 }
 
-
+.date span,
+.fixed-date-header span,
+.fixed-date-header-c span  {
+  padding-left: 10px;
+  color: #F9FBFB;
+  font-size: 1.1em;
+}
 
 
 /* fix date header in mobile column style */
@@ -126,7 +133,7 @@
     padding: 5px 10px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    color: #F9FBFB;
+    color: #E6E6E6;
     background-color: #416099;
     border-bottom: 1px solid #F9FBFB;
   }
@@ -141,7 +148,7 @@
   padding: 5px 10px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: #F9FBFB;
+  color: #E6E6E6;
   background-color: #416099;
   border-bottom: 1px solid #F9FBFB;
 

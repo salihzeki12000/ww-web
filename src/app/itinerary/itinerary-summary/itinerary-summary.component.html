@@ -56,7 +56,7 @@
       </div>
 
       <div *ngIf="date !== 'any day' && !itinerary?.num_days">
-        <h5 class="date">Day {{ i }} - {{ date | date: "dd MMM (EEE)" }}</h5>
+        <h5 class="date">Day {{ i }} <span>{{ date | date: "dd MMM (EEE)" }}</span></h5>
       </div>
 
     </div>
@@ -67,7 +67,7 @@
   </div>
 
   <div *ngIf="currentDate !== 'any day' && !itinerary?.num_days">
-    <h4 class="fixed-date-header">Day {{ index }} - {{ currentDate | date: 'dd MMM (EEE)'}}</h4>
+    <h4 class="fixed-date-header">Day {{ index }} <span>{{ currentDate | date: 'dd MMM (EEE)'}}</span></h4>
   </div>
 
   <div *ngFor="let date of dateRange; let i = index" class="date-column">
@@ -100,7 +100,7 @@
   </div>
 
   <div *ngIf="currentDate !== 'any day' && !itinerary?.num_days">
-    <h4 class="fixed-date-header-c">Day {{ index }} - {{ currentDate | date: 'dd MMM (EEE)'}}</h4>
+    <h4 class="fixed-date-header-c">Day {{ index }} <span>{{ currentDate | date: 'dd MMM (EEE)'}}</span></h4>
   </div>
 
   <div *ngFor="let date of dateRange; let i = index" class="compressed-column">
