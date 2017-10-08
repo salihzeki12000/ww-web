@@ -7,7 +7,7 @@
     <h4>There is no following to display at the moment</h4>
   </div>
 
-  <div *ngFor="let following of followings" class="search-result-card">
+  <div *ngFor="let following of followings" class="user-card">
     <ww-user-profile-card [user]="following.following" [currentUser]="currentUser"></ww-user-profile-card>
   </div>
 </div>

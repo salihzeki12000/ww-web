@@ -34,6 +34,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
   exceedMsg = false;
   confirmPics = false;
   tracker = 0;
+  captions = [];
 
   constructor(
     private element: ElementRef,
@@ -132,15 +133,16 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
 
 
   sortPhotos()  {
+    this.captions = [];
     if(this.itinerary['description']['photos'])  {
       for (let i = 0; i < this.itinerary['description']['photos'].length; i++) {
-        this.itinerary['description']['photos'][i]['status'] = true;
-        this.itinerary['description']['photos'][i]['order'] = i + 1;
+        let photo = this.itinerary['description']['photos'][i];
+        photo['status'] = true;
+        photo['order'] = i + 1;
+        this.captions[i] = photo['caption'];
       }
     }
   }
-
-
 
   // manage pictures
 
@@ -152,6 +154,10 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
   cancelManage()  {
     this.managePics = false;
     this.preventScroll(false);
+
+    for (let i = 0; i < this.captions.length; i++) {
+      this.itinerary['description']['photos'][i]['caption'] = this.captions[i];
+    }
   }
 
 
@@ -160,7 +166,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
   updateStatus(image) {
     image.status = !image.status;
 
-    for (let i = 0; i < this.itinerary['description']['photos'].length; i++) {
+    for (let i = 0; i < this.itinerary['description']['pictures'].length; i++) {
       if(!this.itinerary['description']['photos'][i]['status'])  {
         this.picDeleted = true;
         i = this.itinerary['description']['photos'].length;
@@ -169,6 +175,10 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
       }
     }
 
+  }
+
+  updateCaption(i, caption) {
+    this.itinerary['description']['photos'][i]['caption'] = caption;
   }
 
   saveChanges() {
@@ -195,6 +205,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
       })
 
     this.managePics = false;
+    this.preventScroll(false);
     this.sortPhotos();
   }
 
@@ -234,6 +245,11 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
 
     this.confirmPics = true;
     this.managePics = false;
+    this.preventScroll(false);
+  }
+
+  createCaption(i, caption) {
+    this.uploadedPics[i]['caption'] = caption;
   }
 
   cancelPics()  {
@@ -254,7 +270,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
             result => {}
           )
         }
-        
+
         this.itinerary['description']['photos'].splice(i,1);
         i--;
       }
@@ -269,6 +285,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
               url: result.secure_url,
               public_id: result.public_id,
               credit: '',
+              caption: this.uploadedPics[i]['caption']
             }
 
             if(this.itinerary['description']['photos'].length < 10) {

@@ -166,7 +166,7 @@
 
           <div *ngIf="validAddUser">
             <h5 class="user-search-header">Selected users ({{ selectedUsers.length }})</h5>
-            <div *ngFor="let user of selectedUsers" class="search-result-card selected-user">
+            <div *ngFor="let user of selectedUsers" class="user-card selected-user">
               <ww-user-profile-card [user]="user" [currentUser]="currentUser"></ww-user-profile-card>
 
               <h5 class="toggle-remove" (click)="toggleAdd(user)">Selected</h5>
@@ -174,7 +174,7 @@
           </div>
 
           <h5 class="user-search-header">Search result ({{ filteredResult.length }})</h5>
-          <div *ngFor="let user of filteredResult" class="search-result-card">
+          <div *ngFor="let user of filteredResult" class="user-card">
             <ww-user-profile-card [user]="user" [currentUser]="currentUser"></ww-user-profile-card>
 
             <h5 class="toggle-add" (click)="toggleAdd(user)">Select</h5>

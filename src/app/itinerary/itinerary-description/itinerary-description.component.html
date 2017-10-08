@@ -8,6 +8,7 @@
   <div *ngIf="itinerary?.description.photos.length > 0" class="description-slider">
     <div *ngFor="let photo of itinerary?.description.photos; let i = index" class="description-images">
       <input type="radio" name="slide_switch" id="image-{{i}}" [checked]="i === 0">
+      <h5 class="photo-caption">{{ photo.caption }}</h5>
       <label for="image-{{i}}">
         <h5>{{ i + 1 }}</h5>
       </label>
@@ -116,9 +117,8 @@
 
 
       <h3 class="manage-pic-header">Existing pictures</h3>
-      <!-- <h4 class="reorder">Reorder</h4> -->
 
-      <div *ngFor="let image of itinerary?.description.photos; let i = index">
+      <div *ngFor="let image of itinerary?.description.photos; let i = index" class="manage-pic">
         <img src="{{image.url}}" alt="" [class.blur]="!image.status">
 
         <div class="status">
@@ -128,12 +128,16 @@
           <h4 class="add" *ngIf="!image.status" (click)="updateStatus(image)">Add</h4>
         </div>
 
+        <div class="caption">
+          <h5>Max characters 200 ({{captionA.value.length}} / 200)</h5>
+          <textarea rows="2" maxlength="200" placeholder="Caption..." #captionA (keyup)="updateCaption(i, captionA.value)" auto-grow [value]="image.caption"></textarea>
+        </div>
       </div>
     </div>
 
     <div class="action-response">
       <h5 class="action-response-secondary" (click)="cancelManage()">Cancel</h5>
-      <h5 class="action-response-primary" (click)="saveChanges()" *ngIf="picDeleted">Save</h5>
+      <h5 class="action-response-primary" (click)="saveChanges()">Save</h5>
     </div>
 
   </div>
@@ -155,7 +159,7 @@
       <h3 class="manage-pic-header">Existing pictures</h3>
       <!-- <h4 class="reorder">Reorder</h4> -->
 
-      <div *ngFor="let image of itinerary?.description.photos; let i = index">
+      <div *ngFor="let image of itinerary?.description.photos; let i = index" class="manage-pic">
         <img src="{{image.url}}" alt="" [class.blur]="!image.status">
 
         <div class="status">
@@ -165,12 +169,17 @@
           <h4 class="add" *ngIf="!image.status" (click)="image.status = !image.status">Add</h4>
         </div>
 
+        <div class="caption">
+          <h5>Max characters 200 ({{captionB.value.length}} / 200)</h5>
+          <textarea rows="2" maxlength="200" placeholder="Caption..." #captionB (keyup)="updateCaption(i, captionB.value)" auto-grow [value]="image.caption"></textarea>
+        </div>
+
       </div>
 
 
       <h3 class="manage-pic-header">New pictures</h3>
 
-      <div *ngFor="let pic of uploadedPics; let i = index">
+      <div *ngFor="let pic of uploadedPics; let i = index" class="manage-pic">
         <img [src]="pic.url" [class.blur]="!pic.status">
 
         <div class="status">
@@ -178,6 +187,11 @@
           <h3>{{ pic.order }}</h3> -->
           <h4 class="remove" *ngIf="pic.status" (click)="pic.status = !pic.status">Remove</h4>
           <h4 class="add" *ngIf="!pic.status" (click)="pic.status = !pic.status">Add</h4>
+        </div>
+
+        <div class="caption">
+          <h5>Max characters 200 ({{captionC.value.length}} / 200)</h5>
+          <textarea rows="2" maxlength="200" placeholder="Caption..." #captionC (keyup)="createCaption(i, captionC.value)" auto-grow></textarea>
         </div>
 
       </div>

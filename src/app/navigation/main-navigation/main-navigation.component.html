@@ -288,7 +288,7 @@
 
     <input type="text" placeholder="Search for people..." #text (keyup)="filterSearch(text.value)">
 
-    <div *ngFor="let user of filteredUsers | slice:0:30" class="search-result-card">
+    <div *ngFor="let user of filteredUsers | slice:0:30" class="user-card">
       <ww-user-profile-card [user]="user" [currentUser]="currentUser"></ww-user-profile-card>
 
       <div class="follow-button">

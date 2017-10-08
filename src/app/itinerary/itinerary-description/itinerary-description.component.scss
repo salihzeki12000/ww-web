@@ -43,7 +43,7 @@
   }
 
   @media only screen and (min-width: 610px) and (max-width: 1090px) {
-    height: 33vw;
+    height: calc(100vw / 3);
   }
 }
 
@@ -51,8 +51,60 @@
   display: inline-block;
 }
 
+
+
+
 .description-images input[name='slide_switch'] {
   display: none;
+}
+
+.photo-caption  {
+  position: absolute;
+  margin-top: calc((100vw - 200px) / 3);
+  left: 0;
+  width: 100%;
+  min-height: 33px;
+  padding: 10px 0;
+  padding-left: calc((100vw - 800px) / 2);
+  padding-right: calc((100vw - 800px) / 2);
+  background-color: rgba(0,0,0,.1);
+
+  @media only screen and (max-width: 610px) {
+    margin-top: calc(100vw / 2);
+    padding: 10px;
+  }
+
+  @media only screen and (min-width: 610px) and (max-width: 1090px) {
+    margin-top: calc(100vw / 3);
+    padding-left: calc((100vw - 600px) / 2);
+    padding-right: calc((100vw - 600px) / 2);
+  }
+}
+
+.description-images label {
+  margin: 0 3px;
+  margin-top: calc((100vw - 50px) / 3);
+  background-color: #E6E6E6;
+  border-radius: 50%;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #567FCC;
+  }
+
+  @media only screen and (max-width: 610px) {
+    margin-top: calc((100vw / 2) + 80px);
+  }
+
+  @media only screen and (min-width: 610px) and (max-width: 1090px) {
+    margin-top: calc((100vw / 3) + 50px);
+  }
+}
+
+.description-images > label > h5  {
+  display: inline-block;
+  padding: 2px 5px 3px 5px;
+  color: #F9FBFB;
 }
 
 .description-images img {
@@ -73,46 +125,25 @@
   }
 
   @media only screen and (min-width: 610px) and (max-width: 1090px) {
-    height: 33vw;
+    height: calc(100vw / 3);
   }
 }
 
-.description-images label {
-  margin: 0 3px;
-  margin-top: calc((100vw - 180px) / 3);
-  background-color: #E6E6E6;
-  border-radius: 50%;
 
-  &:hover {
-    cursor: pointer;
-    background-color: #567FCC;
-  }
 
-  @media only screen and (max-width: 610px) {
-    margin-top: calc((100vw / 2) + 5px);
-  }
 
-  @media only screen and (min-width: 610px) and (max-width: 1090px) {
-    margin-top: calc(33vw + 20px);
-  }
-}
-
-.description-images h5  {
-  display: inline-block;
-  padding: 2px 5px;
-  color: #F9FBFB;
-}
-
-.description-images input[name='slide_switch']:checked+label  {
+.description-images input[name='slide_switch']:checked~label  {
   background-color: #6494ED;
 }
 
-.description-images input[name='slide_switch'] ~ img  {
+.description-images input[name='slide_switch'] ~ img,
+.description-images input[name='slide_switch'] ~ h5  {
 	opacity: 0;
 	transform: scale(1.01);
 }
 
-.description-images input[name='slide_switch']:checked+label+img {
+.description-images input[name='slide_switch']:checked~img,
+.description-images input[name='slide_switch']:checked~h5 {
 	opacity: 1;
 	transform: scale(1);
   z-index: 2;
@@ -154,14 +185,14 @@
 /* description content */
 
 .description-content  {
-  padding: 60px 0;
+  padding: 100px 0 60px 0;
   padding-left: calc((100vw - 800px) /2);
   padding-right: calc((100vw - 800px) /2);
   min-height: calc(100vh - 380px);
   background-color: white;
 
     @media only screen and (max-width: 610px) {
-      padding: 60px 20px;
+      padding: 120px 20px 60px 20px;
     }
 
     @media only screen and (min-width: 610px) and (max-width: 1090px) {
@@ -260,14 +291,14 @@
 
 .custom-modal img {
   display: inline-block;
-  margin: 0 0 20px 20px;
-  width: 200px;
-  height: 100px;
+  margin-bottom: 10px;
+  width: 240px;
+  height: 120px;
 
   @media only screen and (max-width: 450px) {
     margin-left: 0;
-    width: 180px;
-    height: 90px;
+    width: calc(100vw - 160px);
+    height: calc((100vw - 160px) / 2);
   }
 }
 
@@ -285,6 +316,12 @@
   border-bottom: 1px solid lightgray;
 }
 
+.manage-pic  {
+  padding: 0 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid lightgray;
+}
+
 // .reorder  {
 //   position: absolute;
 //   width: auto;
@@ -295,6 +332,7 @@
 .content-without-header-name .status {
   display: inline-block;
   vertical-align: top;
+  float: right;
 }
 
 // .status h5  {
@@ -309,7 +347,7 @@
 // }
 
 .status h4 {
-  margin: 5px 10px;
+  margin: 5px 8px;
   padding: 5px 10px;
   width: 75px;
   vertical-align: top;

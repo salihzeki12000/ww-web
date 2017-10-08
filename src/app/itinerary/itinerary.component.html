@@ -168,14 +168,14 @@
 
 
     <div *ngIf="validAddUser">
-      <div *ngFor="let user of newMembers" class="search-result-card selected-user">
+      <div *ngFor="let user of newMembers" class="user-card selected-user">
         <ww-user-profile-card [user]="user" [currentUser]="currentUser"></ww-user-profile-card>
 
         <h5 class="toggle-remove" (click)="toggleAdd(user)">Selected</h5>
       </div>
     </div>
 
-    <div *ngFor="let user of filteredUsers | slice:0:30" class="search-result-card">
+    <div *ngFor="let user of filteredUsers | slice:0:30" class="user-card">
       <ww-user-profile-card [user]="user" [currentUser]="currentUser"></ww-user-profile-card>
 
       <h5 class="toggle-add" (click)="toggleAdd(user)">Invite</h5>
