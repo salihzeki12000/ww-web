@@ -59,7 +59,7 @@ export class FavouriteComponent implements OnInit, OnDestroy {
     this.favSubscription = this.favouriteService.updateFavs.subscribe(
       result => {
         this.favs = result;
-        console.log(this.favs)
+
         this.displayFavs = Object.assign([], this.favs);
         this.initMap();
         this.setInitPan();
@@ -120,11 +120,12 @@ export class FavouriteComponent implements OnInit, OnDestroy {
   setLocations()  {
     this.locations = [];
     this.locationIds = [];
-
+    console.log(this.favs)
     for (let i = 0; i < this.favs.length; i++) {
       let index = this.locationIds.indexOf(this.favs[i]['place']['_id']);
 
       this.favs[i]['place']['created_at'] = [this.favs[i]['created_at']];
+      if(this.favs[i]['private']) this.favs[i]['place']['private'] = true;
 
       if(index < 0) {
         this.locations.push(this.favs[i]['place']);
@@ -175,10 +176,11 @@ export class FavouriteComponent implements OnInit, OnDestroy {
   setMarkers(map) {
     this.markers = [];
     this.infoWindows = [];
-
+    console.log(this.locations)
     for (let i = 0; i < this.locations.length; i++) {
       let l = this.locations[i];
       let title;
+      let icon;
 
       if(l['lat'])  {
         if(l['name'] === undefined) l['name'] = '';
@@ -188,10 +190,17 @@ export class FavouriteComponent implements OnInit, OnDestroy {
           title = l['formatted_address']
         }
 
+        if(l['private'])  {
+          icon = "https://res.cloudinary.com/wwfileupload/image/upload/v1507478316/red_star_yci6ft.png"
+        } else  {
+          icon = "https://res.cloudinary.com/wwfileupload/image/upload/v1507477787/star_vy1zvl.png"
+        }
+
         let marker = new google.maps.Marker({
           position: { lat: l['lat'], lng: l['lng']},
           map: map,
           title: title,
+          icon: icon,
           zIndex: i
         })
 

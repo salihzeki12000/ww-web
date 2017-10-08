@@ -714,6 +714,11 @@ ww-resource {
   }
 }
 
+.display-card .dots-menu::after,
+.display-content-housing .dots-menu::after  {
+  color: #F9FBFB;
+}
+
 .display-details-housing  {
   padding: 0 20px;
 }
