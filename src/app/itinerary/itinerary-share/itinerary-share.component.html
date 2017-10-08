@@ -81,7 +81,7 @@
           <ww-user-profile-card [user]="user" [currentUser]="currentUser"></ww-user-profile-card>
           <h5 class="user-shared-status">{{ user.status }}</h5>
 
-          <h5 class="toggle-remove-member" (click)="toggleAdd(user)">Selected</h5>
+          <h5 class="toggle-remove" (click)="toggleAdd(user)">Selected</h5>
         </div>
       </div>
 
@@ -90,7 +90,7 @@
         <ww-user-profile-card [user]="user" [currentUser]="currentUser"></ww-user-profile-card>
         <h5 class="user-shared-status">{{ user.status }}</h5>
 
-        <h5 class="toggle-invite-member" (click)="toggleAdd(user)">Select</h5>
+        <h5 class="toggle-add" (click)="toggleAdd(user)">Select</h5>
       </div>
     </div>
 

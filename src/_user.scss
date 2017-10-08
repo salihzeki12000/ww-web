@@ -1,0 +1,310 @@
+/*******
+
+ User profile display card
+
+****************************/
+
+.search-result-card  {
+  min-width: 300px;
+  padding: 20px;
+  border-bottom: 1px solid lightgray;
+}
+
+.user-details {
+  display: inline-block;
+  width: 70%;
+  margin-left: 5px;
+  vertical-align: top;
+
+  @media only screen and (max-width: 400px) {
+   width: 50%;
+  }
+}
+
+.user-description {
+  color: gray;
+}
+
+
+/***
+
+  User name display
+
+************************/
+.username {
+  &:hover {
+    cursor: pointer;
+    color: #6494ED;
+  }
+}
+
+.username-bold  {
+  font-weight: 600;
+  &:hover {
+    cursor: pointer;
+    color: #6494ED;
+  }
+}
+
+
+
+/***
+
+  User thumbnail photo
+
+*********************************************/
+.user-profile-thumbnail  {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.user-post-thumbnail  {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+
+/******
+
+ User search
+
+*********************/
+.user-search-header  {
+  margin-top: 10px;
+  padding: 5px;
+  font-weight: 500;
+}
+
+.selected-user  {
+  background-color: #F6F6F6;
+}
+
+.toggle-add {
+  float: right;
+  padding: 5px 10px;
+  color: #6494ED;
+  border: 2px solid #6494ED;
+  border-radius: 5px;
+
+  &:hover {
+    color: #19CC72;
+    border: 2px solid #19CC72;
+    cursor: pointer;
+  }
+}
+
+.toggle-remove {
+  float: right;
+  padding: 5px 10px;
+  color: #19CC72;
+  border: 2px solid #19CC72;
+  border-radius: 5px;
+
+  &:hover {
+    color: #808080;
+    border: 2px solid #808080;
+    cursor: pointer;
+  }
+}
+
+
+
+
+/****
+
+ display of users and followings status
+
+******************************************/
+.already-following  {
+  padding: 6px 10px;
+  font-weight: 500;
+  letter-spacing: .5px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.requested-following {
+  padding: 6px 10px;
+  color: grey;
+  font-weight: 500;
+  letter-spacing: .5px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.unfollow {
+  display: none;
+}
+
+.following-response:hover > .unfollow {
+  display: block;
+  position: absolute;
+  right: 25px;
+  padding: 7px 10px;
+  width: 100px;
+  font-weight: 500;
+  text-align: center;
+  background-color: white;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
+  &:hover {
+    cursor: pointer;
+    color: grey;
+  }
+}
+
+.follow-button  {
+  background-color: transparent;
+  border: none;
+  float: right;
+}
+
+.follow-button > h5  {
+  padding: 6px 10px;
+  color: #F9FBFB;
+  background-color: #6494ED;
+  font-weight: 500;
+  letter-spacing: .5px;
+  border-radius: 5px;
+  &:hover {
+    cursor: pointer;
+    opacity: .7;
+  }
+}
+
+
+
+
+
+/******
+
+  USER PROFILE DISPLAY
+
+*****************************/
+
+.user-profile-header > img  {
+  position: absolute;
+  left: calc((100vw - 600px)/2);
+  margin-bottom: 15px;
+  padding: 2px;
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  border: 5px solid #5899F0;
+  background-color: white;
+  overflow: hidden;
+
+  @media only screen and (max-width: 650px) {
+    margin-top: -30px;
+    left: calc((100vw - 150px) /2);
+  }
+}
+
+.user-profile-header > .user-profile-details  {
+  position: absolute;
+  margin-top: 85px;
+  width: 360px;
+  left: calc(((100vw - 600px)/2) + 190px);;
+
+  @media only screen and (max-width: 650px) {
+    margin-top: 185px;
+    left: 10px;
+    width: calc(100% - 20px);
+    text-align: center;
+  }
+
+  @media only screen and (min-width: 650px) and (max-width: 890px) {
+    left: calc(((100vw - 600px) / 2) + 179px);
+  }
+}
+
+.user-profile-details * {
+  padding: 5px 0;
+  font-weight: 400;
+  color: #808080;
+}
+
+.user-profile-background  {
+  position: absolute;
+  top: 40px;
+  height: 120px;
+  width: 100%;
+  background: #5899F0;
+  z-index: -1;
+
+  @media only screen and (max-width: 650px) {
+    height: 215px;
+  }
+}
+
+.user-profile-background-img  {
+  position: absolute;
+  top: 27px;
+  left: calc(((100vw - 600px)/2) + 550px);
+
+  @media only screen and (max-width: 890px) {
+    display: none;
+  }
+
+  @media only screen and (min-width: 890px) and (max-width: 1300px) {
+    left: calc(100vw - 415px);
+    opacity: .5;
+  }
+}
+
+.user-profile-background-img img{
+  height: 160px;
+}
+
+.user-profile-counters  {
+  position: absolute;
+  width: 360px;
+  margin-top: 20px;
+  left: calc(((100vw - 600px)/2) + 180px);
+
+  @media only screen and (max-width: 650px) {
+    left: 0;
+    width: 100%;
+    min-width: 300px;
+    margin-top: 115px;
+  }
+
+  @media only screen and (min-width: 650px) and (max-width: 890px) {
+    left: calc(((100vw - 600px) / 2) + 170px);
+  }
+}
+
+.follower-counter,
+.following-counter,
+.itinerary-counter  {
+  display: inline-block;
+  width: 24%;
+  padding: 10px 5px;
+  text-align: center;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.follower-counter *,
+.following-counter *,
+.itinerary-counter * {
+  color: #F9FBFB;
+}
+
+.follower-counter > h2,
+.following-counter > h2,
+.itinerary-counter > h2 {
+  padding-bottom: 3px;
+}
+
+/* dont have follower/following message */
+.nil-message-main {
+  padding: 20px;
+  text-align: center;
+}
