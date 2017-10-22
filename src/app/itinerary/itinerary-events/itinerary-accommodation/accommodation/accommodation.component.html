@@ -63,7 +63,7 @@
       <h4 class="accommodation-city"><i class="fa fa-bed" aria-hidden="true"></i> {{ event?.city | uppercase }} ( {{ event?.numDays }} )</h4>
       <h3 class="accommodation-header">{{ event?.name | uppercase }}</h3>
 
-      <div class="fav-details">
+      <div class="check-in-details">
         <h5>Check in</h5>
         <h2 *ngIf="itinerary?.num_days">{{ event?.check_in_date }}</h2>
         <h2 *ngIf="!itinerary?.num_days">{{ event?.check_in_date | date:'dd MMM yy' }}</h2>
@@ -231,7 +231,7 @@
           <h4 class="form-section-header">Check In/Out Details</h4>
           <div class="form-section-details">
 
-            <div class="fav">
+            <div class="check-in">
               <div class="date-to-visit">
                 <label>Check In Date <span class="required"> - required</span></label>
                 <select class="select-date" name="check_in_date" formControlName="check_in_date">

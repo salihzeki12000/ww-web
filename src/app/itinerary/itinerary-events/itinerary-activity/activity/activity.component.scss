@@ -19,6 +19,10 @@
 }
 
 /* edit view */
+input[type=checkbox]  {
+  height: 0;
+}
+
 .category-input > input {
   display: inline-block;
   width: 15px;

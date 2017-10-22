@@ -65,22 +65,27 @@ export class SignupComponent implements OnInit {
   }
 
   addToItin(user) {
+    let members = [];
+
     for (let i = 0; i < this.itinerary['members'].length; i++) {
-      if(this.itinerary['members'][i]['_id'] === user)  {
-        this.router.navigateByUrl(this.reroute);
-        window.location.reload();
-        break;
-      }
+      members.push(this.itinerary['members'][i]['_id']);
     }
 
-    this.itinerary['members'].push(user);
+    let index = members.indexOf(user);
 
-    this.itineraryService.updateItinUser(this.itinerary).subscribe(
-      data => {
-        setTimeout(() =>  {
-          this.router.navigateByUrl(this.reroute);
-        }, 1000)
-      })
+    if(index === -1)  {
+      this.itinerary['members'].push(user);
+
+      this.itineraryService.updateItinUser(this.itinerary).subscribe(
+        data => {
+          setTimeout(() =>  {
+            this.router.navigateByUrl(this.reroute);
+          }, 1000)
+        })
+    } else  {
+      this.router.navigateByUrl(this.reroute);
+      window.location.reload();
+    }
   }
 
   copyUsername(value)  {

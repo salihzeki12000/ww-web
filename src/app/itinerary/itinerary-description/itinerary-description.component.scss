@@ -36,6 +36,7 @@
   height: calc((100vw - 200px) / 3);
   width: 100%;
   text-align: center;
+  background-color: rgba(0,0,0,.8);
 
   @media only screen and (max-width: 610px) {
     min-width: 300px;
@@ -113,6 +114,7 @@
   left: 0;
   height: calc((100vw - 200px) / 3);
   width: 100%;
+  object-fit: contain;
 
   transition: all linear 500ms;
   -o-transition: all linear 500ms;
@@ -229,7 +231,12 @@
 
 /* edit */
 
-.fa-pencil  {
+.edit-description {
+  position: relative;
+  text-align: right;
+}
+
+.fa-cog  {
   margin: -25px 20px 0 0;
   float: right;
   color: #A6A6A6;
@@ -238,6 +245,15 @@
     cursor: pointer;
     color: #3A4A4D;
   }
+}
+
+.item-menu  {
+  top: -10px;
+  right: 20px;
+}
+
+.item-menu li {
+  text-align: left;
 }
 
 .section  {

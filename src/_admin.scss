@@ -118,6 +118,8 @@ select.photo-index  {
   left: 0;
   height: 300px;
   width: 100%;
+  background-color: rgba(0,0,0,.8);
+  object-fit: contain;
 
   transition: all linear 500ms;
   -o-transition: all linear 500ms;

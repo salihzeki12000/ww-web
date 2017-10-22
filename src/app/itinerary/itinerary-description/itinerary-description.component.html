@@ -16,14 +16,31 @@
     </div>
   </div>
 
-  <div *ngIf="!preview" class="manage-pics" (click)="managePictures()">
+  <!-- <div *ngIf="!preview" class="manage-pics" (click)="managePictures()">
     <h5>Manage pictures</h5>
-  </div>
+  </div> -->
 
 
   <div class="description-content">
     <div *ngIf="!editing">
-      <i *ngIf="!preview" class="fa fa-pencil" aria-hidden="true" (click)="editing = true"></i>
+      <div class="edit-description">
+        <i *ngIf="!preview" class="fa fa-cog" aria-hidden="true" (click)="showMenu = true"></i>
+
+        <div class="item-menu" *ngIf="showMenu">
+          <ul>
+            <li (click)=managePictures()>
+              <h5>Manage pictures</h5>
+              <i class="fa fa-picture-o" aria-hidden="true"></i>
+            </li>
+            <li (click)="editing = true">
+              <h5>Edit content</h5>
+              <i class="fa fa-pencil" aria-hidden="true"></i>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+      <!-- <i *ngIf="!preview" class="fa fa-pencil" aria-hidden="true" (click)="editing = true"></i> -->
 
       <h1 class="description-header" *ngIf="itinerary?.description.header">{{ itinerary?.description.header }}</h1>
 

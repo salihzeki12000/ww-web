@@ -80,13 +80,8 @@
   }
 }
 
-.category-input > input {
-  display: inline-block;
-  width: 15px;
-}
-
-.category-input > label {
-  display: inline-block;
+input[type=checkbox]  {
+  height: 0;
 }
 
 .file-upload {

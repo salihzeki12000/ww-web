@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Renderer2, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2, ElementRef, HostListener } from '@angular/core';
 import { FormGroup, FormArray, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Rx';
 import { ActivatedRoute } from '@angular/router';
@@ -24,6 +24,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
   currentUser;
 
   preview = false;
+  showMenu = false;
   editing = false;
   managePics = false;
   picDeleted = false;
@@ -70,6 +71,13 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
       result => { this.currentUser = result; })
 
     this.loadingService.setLoader(false, "");
+  }
+
+  @HostListener('document:click', ['$event'])
+  checkClick(event) {
+    if(!event.target.classList.contains("fa-cog")) {
+      this.showMenu = false;
+    }
   }
 
   ngOnDestroy() {
