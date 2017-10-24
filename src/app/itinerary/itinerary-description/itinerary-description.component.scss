@@ -306,15 +306,11 @@
 }
 
 .custom-modal img {
-  display: inline-block;
-  margin-bottom: 10px;
-  width: 240px;
   height: 120px;
 
   @media only screen and (max-width: 450px) {
     margin-left: 0;
-    width: calc(100vw - 160px);
-    height: calc((100vw - 160px) / 2);
+    height: calc((100vw - 50px) / 3);
   }
 }
 
@@ -333,9 +329,14 @@
 }
 
 .manage-pic  {
-  padding: 0 10px;
   margin-bottom: 20px;
   border-bottom: 1px solid lightgray;
+}
+
+.pic-div  {
+  margin-bottom: 10px;
+  text-align: center;
+  background-color: rgba(0,0,0,.8);
 }
 
 // .reorder  {
@@ -346,9 +347,7 @@
 // }
 
 .content-without-header-name .status {
-  display: inline-block;
-  vertical-align: top;
-  float: right;
+  margin-bottom: 20px;
 }
 
 // .status h5  {
