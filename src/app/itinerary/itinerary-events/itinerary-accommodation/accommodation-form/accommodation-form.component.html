@@ -15,7 +15,7 @@
         </ul>
       </div>
 
-      <div *ngIf="step1" class="search-accommodation">
+      <div *ngIf="step1" class="search-accommodation" #form>
         <label>Search accommodation by name or address <span class="required"> - local name or address may be required</span></label>
         <ww-google-place-search [populate]="''" (placeDetail)="getAccommodationDetails($event)"></ww-google-place-search>
 
@@ -104,7 +104,7 @@
         <h4 class="form-section-header">Accommodation Details</h4>
         <div class="form-section-details">
 
-          <div class="form-select-image" *ngIf="!uploadPic">
+          <div class="form-select-image" *ngIf="pictureOptions.length > 0">
             <label>Select an image as the display picture</label>
 
             <div class="slider" [class.slider-exist]="displayPic">
@@ -124,12 +124,12 @@
             <img [src]="uploadPic">
           </div>
 
-          <div class="upload-picture">
+          <!-- <div class="upload-picture">
             <label class="file-upload">
               Upload Image From My Library
               <input type="file" (change)="fileUploaded($event)" [value]="inputValue" accept="image/*">
             </label>
-          </div>
+          </div> -->
 
           <label>Name of Accommodation <span class="label-note"> - required</span></label>
           <input type="text" formControlName="name">

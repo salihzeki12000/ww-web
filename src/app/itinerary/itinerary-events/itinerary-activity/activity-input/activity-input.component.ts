@@ -67,7 +67,6 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
 
   countries;
   countriesName;
-  countryID;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -229,8 +228,6 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   getActivityDetails(value)  {
     this.newPlace = value;
 
-    this.newPlace['description'] = '';
-    this.newPlace['sub_description'] = '';
     this.newPlace['lat'] = value['geometry'].location.lat()
     this.newPlace['lng'] = value['geometry'].location.lng()
     this.newPlace['opening_hours'] = this.getOpeningHours(value.opening_hours);
@@ -405,8 +402,10 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
         this.form.nativeElement.click();
 
         this.details = result['place'];
-        this.displayPic = this.details['photos'][0];
         this.pictureOptions = this.details['photos'];
+        if(this.details['photos'][0])  {
+          this.displayPic = this.details['photos'][0];
+        }
 
         if(this.details['opening_hours']) {
           this.details['formatted_hours'] = this.details['opening_hours'].replace(/\r?\n/g, '<br/> ');
@@ -488,7 +487,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   // save
   saveNew()  {
     let newActivity = this.addActivityForm.value;
-    
+
     if(this.hour === 'anytime')  {
       newActivity['time'] = 'anytime';
     } else  {

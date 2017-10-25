@@ -14,6 +14,7 @@ import { FlashMessageService } from '../../../../flash-message';
 import { FileuploadService }   from '../../../../shared';
 import { LoadingService }      from '../../../../loading';
 import { CountryService }      from '../../../../countries';
+import { PlaceService }        from '../../../../places';
 
 @Component({
   selector: 'ww-accommodation-form',
@@ -22,13 +23,14 @@ import { CountryService }      from '../../../../countries';
 })
 export class AccommodationFormComponent implements OnInit, OnDestroy {
   @ViewChild('map') map: ElementRef;
+  @ViewChild('form') form:ElementRef;
   locationMap;
   marker;
   dragLat;
   dragLng;
   dragAddress;
-  dragPlaceId;
   country;
+  newPlace;
 
   @Output() hideAccommodationForm = new EventEmitter();
 
@@ -75,7 +77,6 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
 
   countries;
   countriesName;
-  countryID;
 
   constructor(
     private itineraryService: ItineraryService,
@@ -85,6 +86,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
     private fileuploadService: FileuploadService,
     private loadingService: LoadingService,
     private countryService: CountryService,
+    private placeService: PlaceService,
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder) {
@@ -191,52 +193,14 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
 
   // get place details from Google
   getAccommodationDetails(value)  {
-    this.details = value;
+    this.newPlace = value;
 
-    let lat = value['geometry'].location.lat();
-    let lng = value['geometry'].location.lng();
-
-    this.pinLocation(lat, lng)
-    this.dragAddress = '';
-
-    let address_components = value['address_components'];
-
-    for (let i = 0; i < address_components.length; i++) {
-      if(address_components[i]['types'][0] === 'locality')  {
-        value['city'] = address_components[i]['long_name'];
-      } else if(address_components[i]['types'][0] === 'administrative_area_level_1') {
-        value['city'] += ', ' + address_components[i]['long_name'];
-      }
-    }
-
-    this.getCountry(address_components);
-
-    this.addAccommodationForm.patchValue({
-      Oname: value.name,
-      name: value.name,
-      formatted_address: value.formatted_address,
-      lat: lat,
-      lng: lng,
-      website: value.website,
-      international_phone_number: value.international_phone_number,
-      check_in_date: this.firstDay,
-      check_out_date: this.lastDay,
-      check_in_time: this.timeCheckIn,
-      check_out_time: this.timeCheckOut,
-      city: value.city,
-      url: value.url,
-      place_id: value.place_id,
-      note: ""
-    })
+    this.newPlace['lat'] = value['geometry'].location.lat()
+    this.newPlace['lng'] = value['geometry'].location.lng()
 
     let index = 0;
 
     if(value.photos) {
-      let credit = value.photos[0].html_attributions[0];
-      this.displayPic = {
-        url: value.photos[0].getUrl({'maxWidth': 300, 'maxHeight': 250}),
-        credit: credit.slice(0,3) + 'target="_blank" ' + credit.slice(3,credit.length)
-      };
       if(value.photos.length > 5)  {
         index = 5;
       } else  {
@@ -252,6 +216,33 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
         });
       }
     }
+
+    let lat = this.newPlace['lat'];
+    let lng = this.newPlace['lng'];
+
+    this.pinLocation(lat, lng)
+
+    let address_components = this.newPlace['address_components'];
+
+    this.getCountry(address_components);
+    this.getCity(address_components);
+    this.dragAddress = '';
+  }
+
+  getCity(address) {
+    let city = '';
+    for (let i = 0; i < address.length; i++) {
+      if(address[i]['types'][0] === 'locality')  {
+        city = address[i]['long_name'];
+      } else if(address[i]['types'][0] === 'administrative_area_level_1') {
+        if(city !== "") city += ', '
+        city += address[i]['long_name'];
+      }
+    }
+
+    this.addAccommodationForm.patchValue({
+      city: city
+    })
   }
 
   pinLocation(lat, lng)  {
@@ -275,7 +266,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
     let geocoder = new google.maps.Geocoder;
 
     google.maps.event.addListener(this.marker, 'dragend', (event) => {
-      this.loadingService.setLoader(true, "Getting location address...");
+      // this.loadingService.setLoader(true, "Getting location address...");
 
       this.dragLat = event.latLng.lat();
       this.dragLng = event.latLng.lng();
@@ -289,11 +280,18 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
       if(status === 'OK') {
         if(result[0]) {
           this.dragAddress = result[0]['formatted_address'];
-          this.dragPlaceId = result[0]['place_id'];
 
+          this.newPlace = null;
+          this.newPlace = {
+            formatted_address: result[0]['formatted_address'],
+            lat: lat,
+            lng: lng,
+            place_id: result[0]['place_id']
+          }
+
+          this.getCity(result[0]['address_components'])
           this.getCountry(result[0]['address_components'])
 
-          this.loadingService.setLoader(false, "");
           this.patchLocationData();
         }
       }
@@ -332,13 +330,51 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
     let index = this.countriesName.indexOf(this.country['name'])
 
     if(index > -1)  {
-      this.countryID = this.countries[index];
+      this.newPlace['country'] = this.countries[index];
+      this.getPlace();
     } else {
       this.countryService.addCountry(this.country).subscribe(
         result => {
-          this.countryID = result.country;
+          this.newPlace['country'] = result.country;
+          this.getPlace();
         })
     }
+  }
+
+  getPlace()  {
+    this.newPlace['photos'] = this.pictureOptions;
+    this.newPlace['description'] = "";
+    this.newPlace['sub_description'] = "";
+    this.newPlace['opening_hours'] = '';
+
+    this.placeService.searchPlace(this.newPlace).subscribe(
+      result => {
+        this.form.nativeElement.click();
+
+        this.details = result['place'];
+        this.pictureOptions = this.details['photos'];
+        if(this.details['photos'][0])  {
+          this.displayPic = this.details['photos'][0];
+        }
+
+        this.addAccommodationForm.patchValue({
+          Oname: this.details['name'],
+          name: this.details['name'],
+          formatted_address: this.details['formatted_address'],
+          lat: this.details['lat'],
+          lng: this.details['lng'],
+          website: this.details['website'],
+          international_phone_number: this.details['international_phone_number'],
+          check_in_date: this.firstDay,
+          check_out_date: this.lastDay,
+          check_in_time: this.timeCheckIn,
+          check_out_time: this.timeCheckOut,
+          url: this.details['url'],
+          place_id: this.details['place_id'],
+          note: ""
+        })
+      }
+    )
   }
 
   patchLocationData() {
@@ -359,7 +395,6 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
       formatted_address: this.dragAddress,
       lat: this.dragLat,
       lng: this.dragLng,
-      place_id: this.dragPlaceId
     })
   }
 
@@ -443,8 +478,6 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
       newAccommodation['check_out_time'] = this.hourOut + ':' + this.minuteOut;
     }
 
-    newAccommodation['photos'] = this.pictureOptions;
-    newAccommodation['country'] = this.countryID;
     newAccommodation['date'] = newAccommodation['check_in_date'];
     newAccommodation['time'] = newAccommodation['check_in_time'];
     newAccommodation['type'] = 'accommodation';
