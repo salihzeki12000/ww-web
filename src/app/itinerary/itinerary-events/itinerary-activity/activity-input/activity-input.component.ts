@@ -11,6 +11,7 @@ import { FlashMessageService }   from '../../../../flash-message';
 import { FileuploadService }     from '../../../../shared';
 import { LoadingService }        from '../../../../loading';
 import { CountryService }        from '../../../../countries';
+import { PlaceService }          from '../../../../places';
 
 @Component({
   selector: 'ww-activity-input',
@@ -19,13 +20,14 @@ import { CountryService }        from '../../../../countries';
 })
 export class ActivityInputComponent implements OnInit, OnDestroy {
   @ViewChild('map') map: ElementRef;
+  @ViewChild('form') form:ElementRef;
   locationMap;
   marker;
   dragLat;
   dragLng;
   dragAddress;
-  dragPlaceId;
   country;
+  newPlace;
 
   @Output() hideActivityForm = new EventEmitter<boolean>();
 
@@ -76,6 +78,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     private flashMessageService: FlashMessageService,
     private loadingService: LoadingService,
     private fileuploadService: FileuploadService,
+    private placeService: PlaceService,
     private route: ActivatedRoute,
     private router: Router) {
     this.addActivityForm = this.formBuilder.group({
@@ -165,37 +168,37 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   }
 
 
-  // progress bar
-  backToSelect()  {
-    this.step1 = true;
-    this.selected = false;
-    this.noLocation = false;
-    this.searchDone = false;
-    this.searchActivity = false;
-
-    this.addActivityForm.reset();
-    this.initMeals();
-    this.displayPic = undefined;
-    this.pictureOptions = [];
-    this.dragAddress = '';
-    this.marker = undefined;
-    this.details = undefined;
-  }
-
-  backToSearch() {
-    this.selected = true;
-    this.searchDone = false;
-
-    this.addActivityForm.reset();
-    this.initMeals();
-    this.displayPic = undefined;
-    this.pictureOptions = [];
-    this.dragAddress = '';
-    this.marker = undefined;
-    this.details = undefined;
-
-    setTimeout(() => {this.initMap()}, 100)
-  }
+  // progress bar (disabled due issue with init meal array)
+  // backToSelect()  {
+  //   this.step1 = true;
+  //   this.selected = false;
+  //   this.noLocation = false;
+  //   this.searchDone = false;
+  //   this.searchActivity = false;
+  //
+  //   this.addActivityForm.reset();
+  //   this.initMeals();
+  //   this.displayPic = undefined;
+  //   this.pictureOptions = [];
+  //   this.dragAddress = '';
+  //   this.marker = undefined;
+  //   this.details = undefined;
+  // }
+  //
+  // backToSearch() {
+  //   this.selected = true;
+  //   this.searchDone = false;
+  //
+  //   this.addActivityForm.reset();
+  //   this.initMeals();
+  //   this.displayPic = undefined;
+  //   this.pictureOptions = [];
+  //   this.dragAddress = '';
+  //   this.marker = undefined;
+  //   this.details = undefined;
+  //
+  //   setTimeout(() => {this.initMap()}, 100)
+  // }
 
   getForm() {
     this.step1 = false;
@@ -224,43 +227,17 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
 
   //get activity details from Google
   getActivityDetails(value)  {
-    this.details = value;
+    this.newPlace = value;
 
-    let opening_hours = this.getOpeningHours(value.opening_hours);
-    this.details['formatted_hours'] = opening_hours.replace(/\r?\n/g, '<br/> ');
-
-    let lat = value['geometry'].location.lat();
-    let lng = value['geometry'].location.lng();
-
-    this.pinLocation(lat, lng)
-    this.getCountry(value['address_components']);
-
-    this.dragAddress = '';
-    this.addActivityForm.patchValue({
-      Oname: value.name,
-      name: value.name,
-      date: 'any day',
-      formatted_address: value.formatted_address,
-      lat: lat,
-      lng: lng,
-      international_phone_number: value.international_phone_number,
-      website: value.website,
-      opening_hours: opening_hours,
-      url: value.url,
-      place_id: value.place_id,
-      note: ''
-    })
+    this.newPlace['description'] = '';
+    this.newPlace['sub_description'] = '';
+    this.newPlace['lat'] = value['geometry'].location.lat()
+    this.newPlace['lng'] = value['geometry'].location.lng()
+    this.newPlace['opening_hours'] = this.getOpeningHours(value.opening_hours);
 
     let index = 0;
 
     if(value.photos) {
-      let credit = value.photos[0].html_attributions[0];
-
-      this.displayPic = {
-        url: value.photos[0].getUrl({'maxWidth': 300, 'maxHeight': 250}),
-        credit: credit.slice(0,3) + 'target="_blank" ' + credit.slice(3,credit.length)
-      };
-
       if(value.photos.length > 5)  {
         index = 5;
       } else  {
@@ -276,6 +253,14 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
         });
       }
     }
+
+    let lat = this.newPlace['lat'];
+    let lng = this.newPlace['lng'];
+
+    this.pinLocation(lat, lng)
+    this.getCountry(this.newPlace['address_components']);
+
+    this.dragAddress = '';
   }
 
   getOpeningHours(hours)  {
@@ -336,7 +321,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     let geocoder = new google.maps.Geocoder;
 
     google.maps.event.addListener(this.marker, 'dragend', (event) => {
-      this.loadingService.setLoader(true, "Getting location address...");
+      // this.loadingService.setLoader(true, "Getting location address...");
 
       this.dragLat = event.latLng.lat();
       this.dragLng = event.latLng.lng();
@@ -350,11 +335,17 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
       if(status === 'OK') {
         if(result[0]) {
           this.dragAddress = result[0]['formatted_address'];
-          this.dragPlaceId = result[0]['place_id'];
+
+          this.newPlace = null;
+          this.newPlace = {
+            formatted_address: result[0]['formatted_address'],
+            lat: lat,
+            lng: lng,
+            place_id: result[0]['place_id']
+          }
 
           this.getCountry(result[0]['address_components'])
 
-          this.loadingService.setLoader(false, "");
           this.patchLocationData();
         }
       }
@@ -393,35 +384,57 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     let index = this.countriesName.indexOf(this.country['name'])
 
     if(index > -1)  {
-      this.countryID = this.countries[index];
+      this.newPlace['country'] = this.countries[index];
+      this.getPlace();
     } else {
       this.countryService.addCountry(this.country).subscribe(
         result => {
-          this.countryID = result.country;
+          this.newPlace['country'] = result.country;
+          this.getPlace();
         })
     }
   }
 
+  getPlace()  {
+    this.newPlace['photos'] = this.pictureOptions;
+    this.newPlace['description'] = "";
+    this.newPlace['sub_description'] = "";
+
+    this.placeService.searchPlace(this.newPlace).subscribe(
+      result => {
+        this.form.nativeElement.click();
+
+        this.details = result['place'];
+        this.displayPic = this.details['photos'][0];
+        this.pictureOptions = this.details['photos'];
+
+        if(this.details['opening_hours']) {
+          this.details['formatted_hours'] = this.details['opening_hours'].replace(/\r?\n/g, '<br/> ');
+        }
+
+        this.addActivityForm.patchValue({
+          Oname: this.details['name'],
+          name: this.details['name'],
+          date: 'any day',
+          formatted_address: this.details['formatted_address'],
+          lat: this.details['lat'],
+          lng: this.details['lng'],
+          international_phone_number: this.details['international_phone_number'],
+          website: this.details['website'],
+          opening_hours: this.details['opening_hours'],
+          url: this.details['url'],
+          place_id: this.details['place_id'],
+          note: ''
+        })
+
+      }
+    )
+  }
+
   patchLocationData() {
-    this.addActivityForm.reset();
-    this.initMeals();
     this.displayPic = '';
     this.pictureOptions = [];
     this.details = undefined;
-
-    this.details = {
-      formatted_address: this.dragAddress,
-    }
-
-    this.addActivityForm.patchValue({
-      date: 'any day',
-      formatted_address: this.dragAddress,
-      lat: this.dragLat,
-      lng: this.dragLng,
-      place_id: this.dragPlaceId,
-      opening_hours: '',
-      note: '',
-    })
   }
 
 
@@ -444,38 +457,38 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     this.displayPic = image;
   }
 
-  fileUploaded(event) {
-    let file = event.target.files[0];
-    let type = file['type'].split('/')[0]
-
-    if (type !== 'image') {
-      this.fileTypeError = true;
-    } else  {
-      if(event.target.files[0]) {
-        this.newImageFile = event.target.files[0];
-        let reader = new FileReader();
-
-        reader.onload = (event) =>  {
-          this.uploadPic = event['target']['result'];
-        }
-
-        reader.readAsDataURL(event.target.files[0]);
-        return;
-      }
-    }
-  }
-
-  deletePicture() {
-    this.inputValue = null;
-    this.uploadPic = '';
-    this.newImageFile = '';
-  }
+  // fileUploaded(event) {
+  //   let file = event.target.files[0];
+  //   let type = file['type'].split('/')[0]
+  //
+  //   if (type !== 'image') {
+  //     this.fileTypeError = true;
+  //   } else  {
+  //     if(event.target.files[0]) {
+  //       this.newImageFile = event.target.files[0];
+  //       let reader = new FileReader();
+  //
+  //       reader.onload = (event) =>  {
+  //         this.uploadPic = event['target']['result'];
+  //       }
+  //
+  //       reader.readAsDataURL(event.target.files[0]);
+  //       return;
+  //     }
+  //   }
+  // }
+  //
+  // deletePicture() {
+  //   this.inputValue = null;
+  //   this.uploadPic = '';
+  //   this.newImageFile = '';
+  // }
 
 
   // save
   saveNew()  {
     let newActivity = this.addActivityForm.value;
-
+    
     if(this.hour === 'anytime')  {
       newActivity['time'] = 'anytime';
     } else  {
@@ -491,8 +504,6 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
       username: this.currentUser['username'],
     }
 
-    newActivity['photos'] = this.pictureOptions;
-    newActivity['country'] = this.countryID;
     newActivity['created_at'] = new Date();
     newActivity['type'] = 'activity';
     newActivity['location'] = !this.noLocation;

@@ -10,7 +10,7 @@
       <div class="form-housing">
         <div class="progress-tracker-section">
           <ul class="progress-tracker" [class.search-active]="searchActivity">
-            <li class="progress-title" (click)="backToSelect()" [class.progress-current]="step1">SELECT ACTIVITY TYPE</li><li class="progress-title" *ngIf="searchActivity" (click)="backToSearch()" [class.progress-current]="selected">SEARCH FOR ACTIVITY</li><li class="progress-title" [class.progress-current]="searchDone">CONFIRM DATE &amp; TIME DETAILS</li>
+            <li class="progress-title" [class.progress-current]="step1">SELECT ACTIVITY TYPE</li><li class="progress-title" *ngIf="searchActivity" [class.progress-current]="selected">SEARCH FOR ACTIVITY</li><li class="progress-title" [class.progress-current]="searchDone">CONFIRM DATE &amp; TIME DETAILS</li>
           </ul>
         </div>
 
@@ -34,7 +34,7 @@
 
         </div>
 
-        <div *ngIf="searchActivity && !searchDone" class="search-activity">
+        <div *ngIf="searchActivity && !searchDone" class="search-activity" #form>
 
           <label>Search activity location by name or adddress <span class="label-note"> - local name or address may be required</span></label>
           <ww-google-place-search [populate]="''" (placeDetail)="getActivityDetails($event)"></ww-google-place-search>
@@ -107,7 +107,7 @@
 
           <div class="form-section-details" *ngIf="!noLocation">
 
-            <div class="form-select-image" *ngIf="!uploadPic">
+            <div class="form-select-image" *ngIf="pictureOptions.length > 0">
               <label>Select an image as the display picture</label>
 
               <div class="slider" [class.slider-exist]="displayPic">
@@ -127,12 +127,12 @@
               <img [src]="uploadPic">
             </div>
 
-            <div class="upload-picture">
+            <!-- <div class="upload-picture">
               <label class="file-upload">
                 Upload Image From My Library
                 <input type="file" (change)="fileUploaded($event)" [value]="inputValue" accept="image/*">
               </label>
-            </div>
+            </div> -->
 
             <label>Name <span class="label-note"> - required</span></label>
             <input type="text" formControlName="name">
