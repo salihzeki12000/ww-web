@@ -140,7 +140,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
 
   formatHours() {
     if(this.activity['location'] && this.activity['place']) {
-      if(this.activity['place']['opening_hours'] !== ''){
+      if(this.activity['place']['opening_hours'] !== '' && this.activity['place']['opening_hours'] !== undefined){
         this.activity['formatted_hours'] = this.activity['place']['opening_hours'].replace(/\r?\n/g, '<br/> ');
         this.openingHours = this.activity['place']['opening_hours'];
       } else if(this.activity['opening_hours']) {
@@ -153,12 +153,12 @@ export class ActivityComponent implements OnInit, OnDestroy {
 
   formatDescription() {
     if(this.activity['place'])  {
-      if(this.activity['place']['description'] !== '')  {
+      if(this.activity['place']['description'] !== '' && this.activity['place']['description'] !== undefined)  {
         this.activity['formatted_description'] = this.activity['place']['description'].replace(/\r?\n/g, '<br/> ');
         this.showHours = false;
       }
 
-      if(this.activity['place']['sub_description'] !== '')  {
+      if(this.activity['place']['sub_description'] !== '' && this.activity['place']['sub_description'] !== undefined)  {
         this.activity['formatted_sub_description'] = this.activity['place']['sub_description'].replace(/\r?\n/g, '<br/> ');
       }
     }
@@ -511,9 +511,11 @@ export class ActivityComponent implements OnInit, OnDestroy {
     this.itineraryEventService.deleteEvent(this.activity).subscribe(
       result => {
 
-        if(this.activity['photo']['public_id']) {
-          this.fileuploadService.deleteFile(this.activity['photo']['public_id']).subscribe(
-            result => {})
+        if(this.activity['photo'])  {
+          if(this.activity['photo']['public_id']) {
+            this.fileuploadService.deleteFile(this.activity['photo']['public_id']).subscribe(
+              result => {})
+          }
         }
 
         this.flashMessageService.handleFlashMessage(result.message);
