@@ -124,7 +124,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
       members.push(this.itinerary['members'][i]['_id']);
     }
 
-    let index = members.indexOf(user);
+    let index = members.indexOf(user['_id']);
 
     if(index === -1)  {
       this.itinerary['members'].push(user);
@@ -133,13 +133,14 @@ export class AuthComponent implements OnInit, AfterViewInit {
         data => {
           setTimeout(() =>  {
             this.router.navigateByUrl(this.reroute);
+            window.location.reload();
           }, 1000)
         })
     } else  {
       this.router.navigateByUrl(this.reroute);
       window.location.reload();
     }
-  } 
+  }
 
 }
 

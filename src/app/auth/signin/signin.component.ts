@@ -83,7 +83,7 @@ export class SigninComponent implements OnInit {
       members.push(this.itinerary['members'][i]['_id']);
     }
 
-    let index = members.indexOf(user);
+    let index = members.indexOf(user['_id']);
 
     if(index === -1)  {
       this.itinerary['members'].push(user);

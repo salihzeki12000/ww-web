@@ -54,16 +54,29 @@
 </div>
 
 
-<div class="custom-modal" *ngIf="signin">
+<div class="custom-modal sign" *ngIf="signin">
   <ww-signin
     [reroute]="reroute"
     [itinerary]="itinerary"
     (hideSignin)="hideSignin($event)"></ww-signin>
 </div>
 
-<div class="custom-modal" *ngIf="signup">
+<div class="custom-modal sign" *ngIf="signup">
   <ww-signup
     [reroute]="reroute"
     [itinerary]="itinerary"
     (hideSignup)="hideSignup($event)"></ww-signup>
+</div>
+
+
+<div class="custom-modal" *ngIf="member">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>Already a member</h3>
+    </div>
+
+    <div class="content-without-header-name">
+      <h4>You are already a member of the itinerary. We are redirecting you to the itinerary.</h4>
+    </div>
+  </div>
 </div>

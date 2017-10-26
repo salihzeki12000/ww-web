@@ -19,6 +19,8 @@ export class ItineraryInviteComponent implements OnInit {
   reroute;
   currentUserSubscription: Subscription;
   user;
+  members = [];
+  member = false;
 
   passwordValid = false;
 
@@ -47,6 +49,7 @@ export class ItineraryInviteComponent implements OnInit {
           let title = this.itinerary['name'] + " | Invite"
           this.titleService.setTitle(title);
 
+          this.getMembers();
           if(this.itinerary['invite_password'] === '')  this.passwordValid = true;
         }
       )
@@ -64,20 +67,36 @@ export class ItineraryInviteComponent implements OnInit {
     this.loadingService.setLoader(false, "");
   }
 
+  getMembers()  {
+    for (let i = 0; i < this.itinerary['members'].length; i++) {
+      this.members.push(this.itinerary['members'][i]['_id']);
+    }
+  }
+
   enterPassword(password) {
     if(password === this.itinerary['invite_password']) this.passwordValid = true;
   }
 
   join()  {
-    this.itinerary['members'].push(this.user);
+    let index = this.members.indexOf(this.user['_id']);
 
-    this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
-      result => {
-        this.loadingService.setLoader(true, "Redirecting to itinerary...")
+    if(index < 0)  {
+      this.itinerary['members'].push(this.user);
 
+      this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
+        result => {
+          this.loadingService.setLoader(true, "Redirecting to itinerary...")
+
+          this.router.navigateByUrl('/me/itinerary/' + this.itinerary['_id'])
+        }
+      )
+    } else  {
+      this.member = true;
+
+      setTimeout(() =>  {
         this.router.navigateByUrl('/me/itinerary/' + this.itinerary['_id'])
-      }
-    )
+      }, 3000)
+    }
   }
 
 
