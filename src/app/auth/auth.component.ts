@@ -102,19 +102,16 @@ export class AuthComponent implements OnInit, AfterViewInit {
   }
 
   rerouting(user) {
-    // this.userService.getCurrentUser().subscribe(
-    //   data => {
-        if(this.itinerary)  {
-          this.addToItin(user);
-        } else if(this.reload)  {
-          window.location.reload();
-        } else  {
-          setTimeout(() =>  {
-            this.router.navigateByUrl(this.reroute);
-            window.location.reload();
-          }, 500)
-        }
-      // });
+    if(this.itinerary)  {
+      this.addToItin(user);
+    } else if(this.reload)  {
+      window.location.reload();
+    } else  {
+      setTimeout(() =>  {
+        this.router.navigateByUrl(this.reroute);
+        window.location.reload();
+      }, 500)
+    }
   }
 
   addToItin(user) {

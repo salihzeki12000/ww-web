@@ -425,6 +425,11 @@ export class ItineraryShareComponent implements OnInit, OnDestroy {
             this.events[i]['lat'] = this.events[i]['place']['lat'];
             this.events[i]['lng'] = this.events[i]['place']['lng'];
           }
+
+          if(this.shareType === 'Copy' && this.events[i]['type'] === 'activity') {
+            this.events[i]['date'] = 'any day';
+            this.events[i]['time'] = 'anytime';
+          }
         }
         // this.events[i]['user']['_Id'] = this.events[i]['user']['_id']
 

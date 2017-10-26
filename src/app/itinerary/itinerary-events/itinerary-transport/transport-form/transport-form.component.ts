@@ -509,6 +509,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     this.placeService.searchPlace(place).subscribe(
       result => {
         if(type === "dep")  {
+          console.log(result['place'])
           this.depLocation = result['place'];
 
           if(result['place']['city']) {
@@ -725,8 +726,6 @@ export class TransportFormComponent implements OnInit, OnDestroy {
         }
       }
 
-      newTransport['dep_station_location'] = this.depLocation;
-      newTransport['arr_station_location'] = this.arrLocation;
       newTransport['reference_number'] = this.flightSearchDetail['carrierCode'] + this.flightSearchDetail['reference_number'];
     }
 
@@ -751,6 +750,8 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       date = newTransport['dep_date'];
     }
 
+    newTransport['dep_station_location'] = this.depLocation;
+    newTransport['arr_station_location'] = this.arrLocation;
     newTransport['date'] = date;
     newTransport['time'] = newTransport['dep_time'];
     newTransport['type'] = 'transport';

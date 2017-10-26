@@ -353,8 +353,11 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
 
         this.details = result['place'];
         this.pictureOptions = this.details['photos'];
-        if(this.details['photos'][0])  {
-          this.displayPic = this.details['photos'][0];
+
+        if(this.details['photos'])  {
+          if(this.details['photos'].length > 0)  {
+            this.displayPic = this.details['photos'][0];
+          }
         }
 
         this.addAccommodationForm.patchValue({

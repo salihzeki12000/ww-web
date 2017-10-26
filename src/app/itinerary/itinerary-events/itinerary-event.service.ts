@@ -120,9 +120,13 @@ export class ItineraryEventService  {
 
     return this.http.patch( this.url + "/event/" + event['_id']+ token, body, { headers: headers })
                     .map((response: Response) => {
-                      let index = this.events.indexOf(event);
-                      this.events[index] = event;
-                      this.sortEventByDate(this.events);
+                      for (let i = 0; i < this.events.length; i++) {
+                        if(this.events[i]['_id'] === event['_id'])  {
+                          this.events[i] = event;
+                          this.sortEventByDate(this.events);
+                          break;
+                        };
+                      }
 
                       return response.json()
                     })
