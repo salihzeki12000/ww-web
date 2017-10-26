@@ -24,6 +24,7 @@ export class AdminAttractionFormComponent implements OnInit {
   displayPic;
   placeID;
   reviews = [];
+  openingHoursRaw;
 
   showContactDetails6 = false;
   showContactDetails3 = false;
@@ -112,6 +113,10 @@ export class AdminAttractionFormComponent implements OnInit {
     this.lat = value['geometry'].location.lat();
     this.lng = value['geometry'].location.lng();
     this.placeID = value['place_id'];
+
+    if(this.details['opening_hours'])  {
+      this.openingHoursRaw = this.details['opening_hours']['periods'];
+    }
 
     let opening_hours = this.getOpeningHours(value.opening_hours);
 
@@ -285,9 +290,10 @@ export class AdminAttractionFormComponent implements OnInit {
 
     let index = this.citiesName.indexOf(place['city']);
     place['city'] = this.cities[index];
-    
-    place['country'] = this.countryID;
 
+    place['country'] = this.countryID;
+    place['opening_hours_raw'] = this.openingHoursRaw;
+    
     this.placeService.addPlace(place).subscribe(
       result => {
         this.resetAttractionForm();

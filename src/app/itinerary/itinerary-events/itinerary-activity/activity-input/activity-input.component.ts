@@ -228,6 +228,9 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   getActivityDetails(value)  {
     this.newPlace = value;
 
+    if(this.newPlace['opening_hours'])  {
+      this.newPlace['opening_hours_raw'] = this.newPlace['opening_hours']['periods'];
+    }
     this.newPlace['lat'] = value['geometry'].location.lat()
     this.newPlace['lng'] = value['geometry'].location.lng()
     this.newPlace['opening_hours'] = this.getOpeningHours(value.opening_hours);
