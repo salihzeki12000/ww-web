@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent, AdminLoginComponent, AdminVerifyComponent, ADMIN_ROUTES } from './admin';
 import { LandingPageComponent }         from './landing-page';
 import { MeComponent, HOME_ROUTES }     from './me';
+import { AboutUsComponent }             from './about-us';
 import { PrivacyPolicyComponent }       from './privacy-policy';
 import { PlaceDisplayComponent }        from './places';
 import { ItineraryPreviewComponent,
@@ -17,6 +18,7 @@ import { AdminGuard } from './_guards/admin.guard';
 
 const APP_ROUTES: Routes = [
   { path: '', component: LandingPageComponent },
+  { path: 'about-us', component: AboutUsComponent },
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset/:id', component: ResetComponent },
