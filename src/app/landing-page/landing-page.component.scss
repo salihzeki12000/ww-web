@@ -527,6 +527,7 @@ hr.header-separator {
 
 #footer  {
   position: relative;
+  padding-bottom: 20px;
   background-color: #6494ED;
 }
 
@@ -535,15 +536,43 @@ hr.header-separator {
   text-align: center;
 }
 
-.company-information > *  {
+.company-information > h6  {
   display: inline-block;
+  padding: 0 20px;
+  letter-spacing: .5px;
+  color: #F9FBFB;
+  vertical-align: text-top;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+.social > h6 {
   padding: 0 20px;
   letter-spacing: .5px;
   color: #F9FBFB;
 
   &:hover {
+    cursor: default;
+    text-decoration: none;
+  }
+}
+
+.social {
+  display: inline-block;
+  vertical-align: text-top;
+}
+
+.social i {
+  display: inline-block;
+  margin: 10px 5px;
+  color: white;
+
+  &:hover {
     cursor: pointer;
-    text-decoration: underline;
+    opacity: .7;
   }
 }
 

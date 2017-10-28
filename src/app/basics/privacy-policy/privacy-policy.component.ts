@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Title }        from '@angular/platform-browser';
+import { Title }  from '@angular/platform-browser';
 
-import { LoadingService } from '../loading';
+import { LoadingService } from '../../loading';
 
 @Component({
   selector: 'ww-privacy-policy',

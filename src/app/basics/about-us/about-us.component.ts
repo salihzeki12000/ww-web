@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Title }  from '@angular/platform-browser';
 
-import { LoadingService } from '../loading';
+import { LoadingService } from '../../loading';
 
 @Component({
   selector: 'ww-about-us',
@@ -10,11 +11,13 @@ import { LoadingService } from '../loading';
 export class AboutUsComponent implements OnInit {
 
   constructor(
-    private loadingService: LoadingService
-  ) { }
+    private titleService: Title,
+    private loadingService: LoadingService) { }
 
   ngOnInit() {
-    this.loadingService.setLoader(false, "")
+    this.titleService.setTitle("About Us");
+
+    this.loadingService.setLoader(false, "");
   }
 
 }

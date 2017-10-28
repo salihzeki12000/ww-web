@@ -39,7 +39,6 @@ import { FileuploadService, CommentService, TimePickerComponent } from './shared
 import { LoadingComponent, LoadingService } from './loading';
 import { ErrorMessageComponent, ErrorMessageService } from './error-message';
 
-import { PrivacyPolicyComponent } from './privacy-policy';
 import { FavouriteComponent, FavouriteService } from './favourite';
 import { CapitalisePipe } from './pipes';
 import { LocationPinComponent } from './location-pin/location-pin.component';
@@ -48,18 +47,17 @@ import { PlaceComponent, PlacesComponent, PlaceDisplayComponent, PlaceService } 
 import { CountriesComponent, CountryComponent, CountryService } from './countries';
 import { CitiesComponent, CityService } from './cities';
 import { AutoGrowDirective } from './directives/auto-grow.directive';
-import { AboutUsComponent } from './about-us';
+import { AboutUsComponent, ContactUsComponent, PrivacyPolicyComponent } from './basics';
 
+Raven
+  .config('https://5575c781e9054ddd828e3e4b8f90bc55@sentry.io/211359')
+  .install();
 
-// Raven
-//   .config('https://5575c781e9054ddd828e3e4b8f90bc55@sentry.io/211359')
-//   .install();
-//
-// export class RavenErrorHandler implements ErrorHandler {
-//   handleError(err:any) : void {
-//     Raven.captureException(err);
-//   }
-// }
+export class RavenErrorHandler implements ErrorHandler {
+  handleError(err:any) : void {
+    Raven.captureException(err);
+  }
+}
 
 
 @NgModule({
@@ -165,7 +163,8 @@ import { AboutUsComponent } from './about-us';
     AdminCitiesComponent,
     CitiesComponent,
     AutoGrowDirective,
-    AboutUsComponent
+    AboutUsComponent,
+    ContactUsComponent
   ],
   imports: [
     BrowserModule,
@@ -177,10 +176,7 @@ import { AboutUsComponent } from './about-us';
     routing,
     Daterangepicker
   ],
-  providers: [ Title, AdminService, LoadingService, AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, FileuploadService, CommentService, ErrorMessageService, FavouriteService, RecommendationService, PlaceService, CountryService, CityService, AuthGuard, AdminGuard ],
+  providers: [ Title, AdminService, LoadingService, AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, FileuploadService, CommentService, ErrorMessageService, FavouriteService, RecommendationService, PlaceService, CountryService, CityService, AuthGuard, AdminGuard, { provide: ErrorHandler, useClass: RavenErrorHandler } ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
-
-// , { provide: ErrorHandler, useClass: RavenErrorHandler }
