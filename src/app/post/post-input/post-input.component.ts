@@ -116,21 +116,23 @@ export class PostInputComponent implements OnInit, OnDestroy {
 
       for (let i = 0; i < texts.length; i++) {
         if(texts[i].match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g)) {
-          // this.fetchLink = true;
+          this.fetchLink = true;
+
+          this.linkExist = true;
+          this.link_url = texts[i];
+
           this.postService.getPreview({link:texts[i]}).subscribe(
             result => {
-              this.linkExist = true;
-              this.link_url = texts[i];
 
-              if(result.title)  {
-                this.link_title = result.title.trim();
-              }
-              
-              if(result.meta_img) {
-                this.link_img = result.meta_img.trim();
-              }
-              // this.fetchLink = false;
-            });
+              if(result.title)  this.link_title = result.title.trim();
+              if(result.meta_img) this.link_img = result.meta_img.trim();
+
+              this.fetchLink = false;
+            },
+            error => {
+              this.fetchLink = false;
+            }
+          );
         }
       }
     }
