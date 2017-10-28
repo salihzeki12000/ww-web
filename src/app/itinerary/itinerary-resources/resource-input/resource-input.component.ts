@@ -28,6 +28,8 @@ export class ResourceInputComponent implements OnInit, OnDestroy {
   link_description;
   link_img;
 
+  linkError = false;
+
   currentUserSubscription: Subscription;
   currentUser;
 
@@ -69,6 +71,7 @@ export class ResourceInputComponent implements OnInit, OnDestroy {
 
     for (let i = 0; i < texts.length; i++) {
       if(texts[i].match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g)) {
+        this.linkError = false;
         this.fetchLink = true;
 
         this.postService.getPreview({link:texts[i]}).subscribe(
@@ -84,7 +87,11 @@ export class ResourceInputComponent implements OnInit, OnDestroy {
 
             this.fetchLink = false;
           },
-          error => this.fetchLink = false
+          error => {
+            this.fetchLink = false;
+            this.linkError = true;
+            this.link_url = texts[i];
+          }
         );
       }
     }

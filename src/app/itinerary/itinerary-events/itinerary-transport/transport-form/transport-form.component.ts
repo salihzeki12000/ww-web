@@ -509,7 +509,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     this.placeService.searchPlace(place).subscribe(
       result => {
         if(type === "dep")  {
-          console.log(result['place'])
+
           this.depLocation = result['place'];
 
           if(result['place']['city']) {
@@ -601,7 +601,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
 
   savePlace(place)  {
     this.placeService.editPlace(place).subscribe(
-      result => {console.log(result)})
+      result => {})
   }
 
 

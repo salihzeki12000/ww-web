@@ -48,7 +48,7 @@
       <a href="{{ resource?.link_url }}" target="_blank">
         <img class="resource-link-img" src="{{ resource?.link_img }}" alt="" *ngIf="resource.link_img">
         <h3 class="resource-link-title">{{ resource?.link_title }}</h3>
-        <h4 class="resource-link-description">{{ resource?.link_description }}</h4>
+        <h4 class="resource-link-description" *ngIf="resource?.link_description">{{ resource?.link_description }}</h4>
         <h5 class="resource-link-url truncate">{{ resource?.link_url }}</h5>
       </a>
 

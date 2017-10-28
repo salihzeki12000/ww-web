@@ -27,6 +27,11 @@
         </a>
       </div>
 
+      <div class="link-error" *ngIf="linkError">
+        <label>Url</label>
+        <h4>{{ link_url }}</h4>
+      </div>
+
       <label>Title</label>
       <input type="text" formControlName="title" value="{{ link_title }}">
 

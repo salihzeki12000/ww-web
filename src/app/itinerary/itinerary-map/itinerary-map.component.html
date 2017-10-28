@@ -33,7 +33,7 @@
         </div>
 
         <h5 class="marker-name">{{ event.name }}</h5>
-        <h5 class="event-summary-note truncate">{{ event?.note }}</h5>
+        <h5 class="event-summary-note truncate" *ngIf="!event?.arrival">{{ event?.note }}</h5>
       </div>
 
     </div>

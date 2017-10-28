@@ -121,7 +121,8 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
             time: events[i]['arr_time'],
             note: events[i]['note'],
             converted_date: converted_date,
-            index: index
+            index: index,
+            arrival: true,
           }
 
           index += 1;

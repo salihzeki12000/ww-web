@@ -129,7 +129,7 @@
         <h5 class="summary-airport" *ngIf="event?.transport_type === 'flight'">{{ event?.arr_station }}</h5>
       </div>
 
-      <h5 class="event-note" *ngIf="event?.note !== ''"><i class="fa fa-sticky-note-o" aria-hidden="true"></i> {{ event?.note }}</h5>
+      <h5 class="event-note" *ngIf="event?.note !== '' && event?.approach === 'departure'"><i class="fa fa-sticky-note-o" aria-hidden="true"></i> {{ event?.note }}</h5>
 
     </div>
 
