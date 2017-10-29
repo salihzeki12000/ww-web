@@ -33,6 +33,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
   newPlace;
 
   @Output() hideAccommodationForm = new EventEmitter();
+  @Output() changeRoute = new EventEmitter();
 
   addAccommodationForm: FormGroup;
   details;
@@ -505,8 +506,6 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
     } else  {
       this.addEvent(newAccommodation);
     }
-
-    this.hideAccommodationForm.emit(false)
   }
 
   addEvent(accommodation)  {
@@ -514,6 +513,9 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
       result => {
         if(this.route.snapshot['_urlSegment'].segments[3].path !== 'summary' &&
            this.route.snapshot['_urlSegment'].segments[3].path !== 'accommodation') {
+
+          this.changeRoute.emit('ACCOMMODATION');
+
           let id = this.route.snapshot['_urlSegment'].segments[2].path;
           this.router.navigateByUrl('/me/itinerary/' + id + '/accommodation');
         }
@@ -522,6 +524,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
         this.inputValue = null;
         this.uploadPic = '';
         this.newImageFile = '';
+        this.hideAccommodationForm.emit(false)
       })
   }
 

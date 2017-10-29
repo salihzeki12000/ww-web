@@ -16,6 +16,7 @@ import { PostService }         from '../../../post';
 })
 export class ResourceInputComponent implements OnInit, OnDestroy {
   @Output() hideResourceForm = new EventEmitter();
+  @Output() changeRoute = new EventEmitter();
 
   resourceForm: FormGroup;
   categories = ['', 'Food', 'Accommodation', 'Transport', 'Activity'];
@@ -133,14 +134,17 @@ export class ResourceInputComponent implements OnInit, OnDestroy {
     .subscribe(
       result => {
         if(this.route.snapshot['_urlSegment'].segments[3].path !== 'resources') {
+
+          this.changeRoute.emit('RESOURCE');
+
           let id = this.route.snapshot['_urlSegment'].segments[2].path;
           this.router.navigateByUrl('/me/itinerary/' + id + '/resource');
         }
         this.flashMessageService.handleFlashMessage(result.message);
+        this.hideResourceForm.emit(false);
       }
     )
 
-    this.hideResourceForm.emit(false);
     this.linkExist = false;
     this.link_url = '';
     this.link_title = '';

@@ -30,6 +30,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   newPlace;
 
   @Output() hideActivityForm = new EventEmitter<boolean>();
+  @Output() changeRoute = new EventEmitter();
 
   addActivityForm: FormGroup;
   details;
@@ -527,8 +528,6 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     } else  {
       this.addActivity(newActivity);
     }
-
-    this.hideActivityForm.emit(false);
   }
 
   addActivity(activity) {
@@ -536,6 +535,9 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
       result => {
         if(this.route.snapshot['_urlSegment'].segments[3].path !== 'summary' &&
            this.route.snapshot['_urlSegment'].segments[3].path !== 'activities') {
+
+          this.changeRoute.emit('ACTIVITY');
+
           let id = this.route.snapshot['_urlSegment'].segments[2].path;
           this.router.navigateByUrl('/me/itinerary/' + id + '/activity');
         }
@@ -544,6 +546,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
         this.inputValue = null;
         this.uploadPic = '';
         this.newImageFile = '';
+        this.hideActivityForm.emit(false);
       });
   }
 

@@ -419,7 +419,9 @@ export class ItineraryComponent implements OnInit, OnDestroy {
     this.preventScroll(false);
   }
 
-
+  changeRoute(type) {
+    this.currentRoute = type;
+  }
 
 
   // to toggle nav and close any open modal in mobile < 420px

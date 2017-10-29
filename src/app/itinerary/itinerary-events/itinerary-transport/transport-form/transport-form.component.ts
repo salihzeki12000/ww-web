@@ -22,6 +22,7 @@ import { CountryService }      from '../../../../countries';
 })
 export class TransportFormComponent implements OnInit, OnDestroy {
   @Output() hideTransportForm = new EventEmitter();
+  @Output() changeRoute = new EventEmitter();
 
   addTransportForm: FormGroup;
   transportOption = '';
@@ -766,13 +767,15 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       result => {
         if(this.route.snapshot['_urlSegment'].segments[3].path !== 'summary' &&
            this.route.snapshot['_urlSegment'].segments[3].path !== 'transport') {
+
+          this.changeRoute.emit('TRANSPORT');
+
           let id = this.route.snapshot['_urlSegment'].segments[2].path;
           this.router.navigateByUrl('/me/itinerary/' + id + '/transport');
         }
         this.flashMessageService.handleFlashMessage(result.message);
+        this.hideTransportForm.emit(false)
       })
-
-    this.hideTransportForm.emit(false)
   }
 
   cancelForm()  {

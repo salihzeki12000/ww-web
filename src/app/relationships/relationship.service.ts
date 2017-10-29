@@ -85,7 +85,7 @@ export class RelationshipService  {
                         display_picture: following.following['display_picture'],
                         description: following.following['description']
                       }
-                      
+
                       this.requestedFollowings.push(newFollowing);
                       this.relationships.push(newFollowing);
 

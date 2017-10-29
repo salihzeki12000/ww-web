@@ -101,19 +101,19 @@
   <router-outlet></router-outlet>
 
   <div *ngIf="addAccommodation" class="custom-modal">
-    <ww-accommodation-form (hideAccommodationForm)="hideAccommodationForm($event)"></ww-accommodation-form>
+    <ww-accommodation-form (hideAccommodationForm)="hideAccommodationForm($event)" (changeRoute)="changeRoute($event)"></ww-accommodation-form>
   </div>
 
   <div *ngIf="addTransport" class="custom-modal">
-    <ww-transport-form (hideTransportForm)="hideTransportForm($event)"></ww-transport-form>
+    <ww-transport-form (hideTransportForm)="hideTransportForm($event)" (changeRoute)="changeRoute($event)"></ww-transport-form>
   </div>
 
   <div *ngIf="addActivity" class="custom-modal">
-    <ww-activity-input (hideActivityForm)="hideActivityForm($event)"></ww-activity-input>
+    <ww-activity-input (hideActivityForm)="hideActivityForm($event)" (changeRoute)="changeRoute($event)"></ww-activity-input>
   </div>
 
   <div *ngIf="addResource" class="custom-modal">
-    <ww-resource-input (hideResourceForm)="hideResourceForm($event)"></ww-resource-input>
+    <ww-resource-input (hideResourceForm)="hideResourceForm($event)" (changeRoute)="changeRoute($event)"></ww-resource-input>
   </div>
 
 </div>
