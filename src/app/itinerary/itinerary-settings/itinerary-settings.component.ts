@@ -453,10 +453,16 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
 
     if(type === 'date') {
 
-      let startDate = new Date(editedDetails['date_from']);
-      let endDate = new Date(editedDetails['date_to']);
+      // let startDate = new Date(editedDetails['date_from']);
+      // let endDate = new Date(editedDetails['date_to']);
 
-      this.newDateRange.push((new Date(editedDetails['date_from'])).toISOString());
+      let startArray = editedDetails['date_from'].split(/[- :]/);
+      let startDate = new Date(startArray[2], startArray[0] - 1, startArray[1]);
+
+      let endArray = editedDetails['date_to'].split(/[- :]/);
+      let endDate = new Date(endArray[2], endArray[0] - 1, endArray[1]);
+
+      this.newDateRange.push((new Date(startArray[2], startArray[0] - 1, startArray[1])).toISOString());
 
       while(startDate < endDate){
         let addDate = startDate.setDate(startDate.getDate() + 1);

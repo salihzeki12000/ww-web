@@ -746,7 +746,13 @@ export class TransportFormComponent implements OnInit, OnDestroy {
 
     let date;
     if(newTransport['dep_date'] !== "any day")  {
-      date = new Date(newTransport['dep_date']).toISOString();
+
+      let dep_date = new Date(newTransport['dep_date']);
+      let year = dep_date.getFullYear();
+      let month = dep_date.getMonth();
+      let day = dep_date.getDate();
+
+      date = new Date(year, month, day).toISOString();
     } else  {
       date = newTransport['dep_date'];
     }

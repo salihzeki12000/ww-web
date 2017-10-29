@@ -20,15 +20,13 @@
         <h5>Currently active: <span class="bold">{{ dateType }}</span></h5>
       </div>
 
-      <label>Travel date from - Travel date to</label>
+      <label>Travel date from - Travel date to (MM - DD - YYYY)</label>
       <h5 class="label-note">Do include your date of departure and arrival for details to show up in the itinerary summary</h5>
 
       <div class="date-picker" daterangepicker [options]="options" (selected)="selectedDate($event)">
         <i class="fa fa-calendar" aria-hidden="true"></i>
         <h4><span>From:</span> {{ dateFrom }}</h4>
         <h4><span>To:</span> {{ dateTo }}</h4>
-        <!-- <h4><span>From:</span> {{ dateFrom | date: 'dd MMM yyyy'}}</h4>
-        <h4><span>To:</span> {{ dateTo | date: 'dd MMM yyyy'}}</h4> -->
       </div>
 
       <span class="form-validator" *ngIf="dateError">Date range is required</span>
