@@ -47,7 +47,7 @@ import { PlaceComponent, PlacesComponent, PlaceDisplayComponent, PlaceService } 
 import { CountriesComponent, CountryComponent, CountryService } from './countries';
 import { CitiesComponent, CityService } from './cities';
 import { AutoGrowDirective } from './directives/auto-grow.directive';
-import { AboutUsComponent, ContactUsComponent, PrivacyPolicyComponent } from './basics';
+import { AboutUsComponent, ContactUsComponent, PrivacyPolicyComponent, TermsOfServiceComponent } from './basics';
 
 Raven
   .config('https://5575c781e9054ddd828e3e4b8f90bc55@sentry.io/211359')
@@ -164,7 +164,8 @@ export class RavenErrorHandler implements ErrorHandler {
     CitiesComponent,
     AutoGrowDirective,
     AboutUsComponent,
-    ContactUsComponent
+    ContactUsComponent,
+    TermsOfServiceComponent
   ],
   imports: [
     BrowserModule,

@@ -10,7 +10,7 @@ import { ItineraryPreviewComponent,
          ItineraryPrintComponent,
          PREVIEW_ROUTES } from './itinerary';
 
-import { AboutUsComponent, ContactUsComponent, PrivacyPolicyComponent } from './basics';
+import { AboutUsComponent, ContactUsComponent, PrivacyPolicyComponent, TermsOfServiceComponent } from './basics';
 import { UserComponent, UserVerifyComponent, USER_ROUTES, UserUnverifiedComponent } from './user';
 import { ResetComponent, ForgotPasswordComponent }           from './auth';
 import { AuthGuard }  from './_guards/auth.guard';
@@ -21,6 +21,7 @@ const APP_ROUTES: Routes = [
   { path: 'about-us', component: AboutUsComponent },
   { path: 'contact-us', component: ContactUsComponent },
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
+  { path: 'terms-of-service', component: TermsOfServiceComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset/:id', component: ResetComponent },
   { path: 'verify/:token/:id', component: UserVerifyComponent },
