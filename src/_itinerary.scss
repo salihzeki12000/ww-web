@@ -44,7 +44,7 @@
   padding: 2px 10px;
   color: lightgray;
   border: 1px solid lightgray;
-  border-radius: 15px;
+  border-radius: 2px;
   &:hover {
     cursor: pointer;
   }
@@ -320,24 +320,30 @@
   }
 }
 
-.event-summary-popup {
+
+.list-short-cut {
   display: none;
 
   @media only screen and (max-width: 890px) {
     display: block;
     position: fixed;
-    bottom: 50px;
-    right: 10px;
-    padding: 15px;
-    background-color: lightgray;
-    border: 1px solid lightgray;
-    border-radius: 50%;
-    opacity: .5;
+    width: 100vw;
+    right: 0;
+    bottom: 40px;
+    text-align: center;
     z-index: 499;
-    &:hover {
-      cursor: pointer;
-    }
+    background-color: white;
   }
+}
+
+.list-short-cut h4  {
+  width: 100vw;
+  padding: 8px 0;
+  border-top: 4px solid #6494ED;
+}
+
+.list-short-cut .fa-level-up  {
+  padding-left: 10px;
 }
 
 
@@ -786,9 +792,9 @@ ww-resource {
 
 .display-date-header > h5:nth-of-type(2),
 .resource-count  {
-  padding: 3px 10px;
+  padding: 3px 10px 2px 10px;
   border: 1px solid #F9FBFB;
-  border-radius: 25px;
+  border-radius: 2px;
 }
 
 

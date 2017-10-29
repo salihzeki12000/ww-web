@@ -2,7 +2,7 @@
 
 <div *ngIf="totalResources" class="event-summary-section" [class.show-summary]="showResourceSummary">
 
-  <h4 class="event-summary-header">Quick reference - {{ totalResources }}</h4>
+  <h4 class="event-summary-header">Resource List - {{ totalResources }}</h4>
   <h5 class="close-pop-up" (click)="showSummary()">X</h5>
 
   <select class="event-summary-filter" [(ngModel)]="selectedCategory" (ngModelChange)="filter($event)">
@@ -66,8 +66,12 @@
   </ww-resource>
 </div>
 
-<div class="event-summary-popup" (click)="showSummary()" *ngIf="totalResources">
-  <i class="fa fa-list" aria-hidden="true"></i>
+<div class="list-short-cut" *ngIf="totalResources">
+  <h4 (click)="showSummary()">
+    <i class="fa fa-list" aria-hidden="true"></i>
+    RESOURCE LIST
+    <i class="fa fa-level-up" aria-hidden="true"></i>
+  </h4>
 </div>
 
 <div *ngIf="addResource" class="custom-modal">

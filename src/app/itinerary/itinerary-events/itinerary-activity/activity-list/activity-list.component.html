@@ -2,7 +2,7 @@
 
 <div *ngIf="totalActivities" class="event-summary-section" [class.show-summary]="showActivitySummary">
 
-  <h4 class="event-summary-header">Quick reference - {{ totalActivities }}</h4>
+  <h4 class="event-summary-header">Activity List - {{ totalActivities }}</h4>
   <h5 class="close-pop-up" (click)="toggleSummary()">X</h5>
 
   <div class="event-summary">
@@ -60,8 +60,12 @@
   </ww-activity>
 </div>
 
-<div class="event-summary-popup" (click)="toggleSummary()" *ngIf="totalActivities">
-  <i class="fa fa-list" aria-hidden="true"></i>
+<div class="list-short-cut" *ngIf="totalActivities">
+  <h4 (click)="toggleSummary()">
+    <i class="fa fa-list" aria-hidden="true"></i>
+    ACTIVITY LIST
+    <i class="fa fa-level-up" aria-hidden="true"></i>
+  </h4>
 </div>
 
 <div *ngIf="addActivity" class="custom-modal">

@@ -2,7 +2,7 @@
 
 <div *ngIf="totalAccommodations" class="event-summary-section" [class.show-summary]="showAccommodationSummary">
 
-  <h4 class="event-summary-header">Quick reference - {{ totalAccommodations }}</h4>
+  <h4 class="event-summary-header">Accommodation List - {{ totalAccommodations }}</h4>
   <h5 class="close-pop-up" (click)="toggleSummary()">X</h5>
 
   <div class="event-summary">
@@ -57,8 +57,12 @@
   </ww-accommodation>
 </div>
 
-<div class="event-summary-popup" (click)="toggleSummary()" *ngIf="totalAccommodations">
-  <i class="fa fa-list" aria-hidden="true"></i>
+<div class="list-short-cut" *ngIf="totalAccommodations">
+  <h4 (click)="toggleSummary()">
+    <i class="fa fa-list" aria-hidden="true"></i>
+    ACCOMMODATION LIST
+    <i class="fa fa-level-up" aria-hidden="true"></i>
+  </h4>
 </div>
 
 <div *ngIf="addAccommodation" class="custom-modal">

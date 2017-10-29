@@ -2,7 +2,7 @@
 
 <div class="legend-section" [class.show-legend]="showMapLegend">
 
-  <h4 class="event-summary-header">Map list - {{ events.length }}</h4>
+  <h4 class="event-summary-header">Map List - {{ events.length }}</h4>
   <h5 class="close-pop-up" (click)="toggleLegend()">X</h5>
 
   <select class="event-summary-filter" [(ngModel)]="selectedDate" (ngModelChange)="filterMarkers($event)">
@@ -40,8 +40,12 @@
   </div>
 </div>
 
-<div class="event-summary-popup" (click)="toggleLegend()">
-  <i class="fa fa-list" aria-hidden="true"></i>
+<div class="list-short-cut">
+  <h4 (click)="toggleLegend()">
+    <i class="fa fa-list" aria-hidden="true"></i>
+    MAP LIST
+    <i class="fa fa-level-up" aria-hidden="true"></i>
+  </h4>
 </div>
 
 <div #map id="map"></div>

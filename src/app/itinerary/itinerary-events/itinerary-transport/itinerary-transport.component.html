@@ -2,7 +2,7 @@
 
 <div *ngIf="totalTransports" class="event-summary-section" [class.show-summary]="showTransportSummary">
 
-  <h4 class="event-summary-header">Quick reference - {{ totalTransports }}</h4>
+  <h4 class="event-summary-header">Transport List - {{ totalTransports }}</h4>
   <h5 class="close-pop-up" (click)="toggleSummary()">X</h5>
 
   <div class="event-summary">
@@ -64,8 +64,12 @@
   </ww-transport>
 </div>
 
-<div class="event-summary-popup" (click)="toggleSummary()" *ngIf="totalTransports">
-  <i class="fa fa-list" aria-hidden="true"></i>
+<div class="list-short-cut" *ngIf="totalTransports">
+  <h4 (click)="toggleSummary()">
+    <i class="fa fa-list" aria-hidden="true"></i>
+    TRANSPORT LIST
+    <i class="fa fa-level-up" aria-hidden="true"></i>
+  </h4>
 </div>
 
 <div *ngIf="addTransport" class="custom-modal">
