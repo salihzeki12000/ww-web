@@ -43,7 +43,7 @@ export class SigninComponent implements OnInit {
 
     this.authService.signin(this.signinForm.value).subscribe(
       data => {
-
+        console.log(data);
         // this.userService.getCurrentUser().subscribe(
         //   result => {});
 
@@ -56,6 +56,7 @@ export class SigninComponent implements OnInit {
           window.location.reload();
         } else {
           setTimeout(() =>  {
+            console.log('route')
             this.router.navigateByUrl(this.reroute);
           }, 1000)
         }
