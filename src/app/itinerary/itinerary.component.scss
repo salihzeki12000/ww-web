@@ -298,8 +298,8 @@ header {
     position: fixed;
     display: block;
     bottom: -4px;
-    left: 40px;
-    width: calc(100vw - 80px);
+    left: 160px;
+    width: calc(100vw - 235px);
     height: 44px;
     z-index: 500;
   }
@@ -354,10 +354,10 @@ header {
     position: fixed;
     display: block;
     bottom: 0;
-    width: 40px;
+    width: 60px;
     height: 40px;
     background-color: white;
-    border-top: 1px solid lightgray;
+    border: 1px solid lightgray;
     z-index: 500;
     &:hover {
       cursor: pointer;
@@ -367,10 +367,8 @@ header {
 
 
 .scroll-left  {
-  left: 0;
+  left: 100px;
 }
-
-
 
 /* nav  tabs */
 
@@ -487,7 +485,7 @@ header {
 
 .add-new,
 .copy-itinerary  {
-  @media only screen and (max-width: 420px) {
+  @media only screen and (max-width: 1090px) {
     display: none !important;
   }
 }
@@ -496,7 +494,7 @@ header {
 .copy-button {
   display: none;
 
-  @media only screen and (max-width: 420px) {
+  @media only screen and (max-width: 1090px) {
     position: fixed;
     display: block;
     padding: 10px;

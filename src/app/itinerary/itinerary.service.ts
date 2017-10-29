@@ -44,9 +44,13 @@ export class ItineraryService {
 
     if(!itinerary['num_days']) {
       let startDate = new Date(itinerary['date_from']);
+      let year = startDate.getFullYear();
+      let month = startDate.getMonth();
+      let day = startDate.getDate();
+
       let endDate = new Date(itinerary['date_to']);
 
-      dateRange.push((new Date(itinerary['date_from'])).toISOString());
+      dateRange.push((new Date(year, month, day)).toISOString());
 
       while(startDate < endDate){
         let addDate = startDate.setDate(startDate.getDate() + 1);

@@ -168,7 +168,7 @@
 .scroll-right {
   position: fixed;
   margin-top: 79px;
-  width: 40px;
+  width: 60px;
   height: calc(100vh - 190px);
 
   &:hover {
@@ -187,7 +187,7 @@
 
 .scroll-left i,
 .scroll-right i {
-  padding: 12.7px 14.5px;
+  padding: 12.7px 24.5px;
 }
 
 .scroll-right {

@@ -199,12 +199,18 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
   }
 
   setDailyNote()  {
-    let startDate = new Date(this.dateFrom);
-    let endDate = new Date(this.dateTo);
+    // let startDate = new Date(this.dateFrom);
+    // let endDate = new Date(this.dateTo);
+
+    let startArray = this.dateFrom.split(/[- :]/);
+    let startDate = new Date(startArray[2], startArray[0] - 1, startArray[1]);
+
+    let endArray = this.dateTo.split(/[- :]/);
+    let endDate = new Date(endArray[2], endArray[0] - 1, endArray[1]);
 
     this.newDateRange = [];
     this.newDateRange.push('any day');
-    this.newDateRange.push((new Date(this.dateFrom)).toISOString());
+    this.newDateRange.push((new Date(startArray[2], startArray[0] - 1, startArray[1])).toISOString());
 
     while(startDate < endDate){
       let addDate = startDate.setDate(startDate.getDate() + 1);

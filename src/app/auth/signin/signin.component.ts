@@ -43,7 +43,6 @@ export class SigninComponent implements OnInit {
 
     this.authService.signin(this.signinForm.value).subscribe(
       data => {
-        console.log(data);
         // this.userService.getCurrentUser().subscribe(
         //   result => {});
 
