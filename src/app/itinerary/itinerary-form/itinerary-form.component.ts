@@ -170,10 +170,15 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
     if(itinerary['date_from'] !== "" && itinerary['date_from'] !== undefined) {
       itinerary['num_days'] = undefined;
 
-      let startDate = new Date(itinerary['date_from']);
-      let endDate = new Date(itinerary['date_to']);
+      let startArray = itinerary['date_from'].split(/[- :]/);
+      let startDate = new Date(startArray[2], startArray[0] - 1, startArray[1]);
 
-      dateRange.push((new Date(itinerary['date_from'])).toISOString());
+      let endArray = itinerary['date_to'].split(/[- :]/);
+      let endDate = new Date(endArray[2], endArray[0] - 1, endArray[1]);
+
+      // let endDate = new Date(itinerary['date_to']);
+
+      dateRange.push((new Date(startArray[2], startArray[0] - 1, startArray[1])).toISOString());
 
       while(startDate < endDate){
         let addDate = startDate.setDate(startDate.getDate() + 1);
