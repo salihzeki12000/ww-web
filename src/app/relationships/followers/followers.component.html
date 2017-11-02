@@ -1,7 +1,12 @@
-<div *ngIf="followers.length === 0">
-  <h4 class="nil-message-main">You do not have any follower at the moment</h4>
+<div class="search">
+  <i class="fa fa-search fa-lg" aria-hidden="true"></i>
+  <input type="text" placeholder="filter followers" #text (keyup)="filterSearch(text.value)">
 </div>
 
-<div *ngIf="followers.length > 0">
-  <ww-follower *ngFor="let follower of followers" [follower]="follower"></ww-follower>
+<div *ngIf="followers.length === 0" class="nil-message-main">
+  <h3>You do not have any follower at the moment</h3>
+</div>
+
+<div *ngIf="followers.length > 0" class="middle">
+  <ww-follower *ngFor="let follower of filteredFollowers" [follower]="follower" class="user-card"></ww-follower>
 </div>

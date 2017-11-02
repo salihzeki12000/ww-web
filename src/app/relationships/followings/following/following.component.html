@@ -1,10 +1,8 @@
-<div class="user-card">
-  <ww-user-profile-card [user]="following.following" [currentUser]="currentUser"></ww-user-profile-card>
+<ww-user-profile-card [user]="following.following" [currentUser]="currentUser"></ww-user-profile-card>
 
-  <div class="follow-button">
-    <div class="following-response">
-      <h5 class="already-following">Following</h5>
-      <h5 class="unfollow" (click)="unfollow()">Stop following</h5>
-    </div>
+<div class="follow-button">
+  <div class="following-response">
+    <h5 class="already-following">Following</h5>
+    <h5 class="unfollow" (click)="unfollow()">Stop following</h5>
   </div>
 </div>

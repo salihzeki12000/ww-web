@@ -1,16 +1,34 @@
 <div class="box-container">
   <div class="box-container-header">
-    <h3><i class="fa fa-users" aria-hidden="true"></i> Your connections</h3>
-    <header>
-      <nav>
-        <ul class="box-container-nav-tabs">
-          <li routerLinkActive="active"><a [routerLink]="['followers']">Followers<span class="tab-count">{{ followers?.length }}</span></a></li>
-          <li routerLinkActive="active"><a [routerLink]="['following']">Following<span class="tab-count">{{ followings?.length }}</span></a></li>
-          <li routerLinkActive="active"><a [routerLink]="['follow-request']">Follow requests<span class="tab-count">{{ pendingFollowers?.length }}</span></a></li>
-          <li routerLinkActive="active"><a [routerLink]="['following-request']">Following requests<span class="tab-count">{{ requestedFollowings?.length }}</span></a></li>
-        </ul>
-      </nav>
-    </header>
+    <h3><i class="fa fa-users" aria-hidden="true"></i> YOUR CONNECTIONS</h3>
+
+    <div class="navigate-bar">
+      <header>
+        <nav>
+          <ul>
+            <li routerLinkActive="active"><a [routerLink]="['followers']">
+              {{ followers?.length }}
+              <span>FOLLOWER</span>
+            </a></li>
+            <li routerLinkActive="active"><a [routerLink]="['following']">
+              {{ followings?.length }}
+              <span>FOLLOWING</span>
+            </a></li>
+            <li routerLinkActive="active"><a [routerLink]="['follow-request']">
+              {{ pendingFollowers?.length }}
+              <span class="reg">FOLLOW REQUESTS</span>
+              <span class="mob">FOLLOW REQ</span>
+            </a></li>
+            <li routerLinkActive="active"><a [routerLink]="['following-request']">
+              {{ requestedFollowings?.length }}
+              <span class="reg">FOLLOWING REQUESTS</span>
+              <span class="mob">FOLLOWING REQ</span>
+            </a></li>
+          </ul>
+        </nav>
+      </header>
+    </div>
+
   </div>
 
   <div class="router-outlet">

@@ -1,12 +1,14 @@
 import { Routes } from "@angular/router";
 
-import { ItineraryAllComponent }      from './itinerary-all/itinerary-all.component';
-import { ItineraryCompletedComponent }     from './itinerary-completed/itinerary-completed.component';
-import { ItineraryUpcomingComponent } from './itinerary-upcoming/itinerary-upcoming.component';
+import { ItineraryAllComponent }       from './itinerary-all/itinerary-all.component';
+import { ItineraryCuratedComponent }   from './itinerary-curated/itinerary-curated.component';
+import { ItinerarySavedComponent }     from './itinerary-saved/itinerary-saved.component';
+import { ItineraryFollowingComponent } from './itinerary-following/itinerary-following.component';
 
 export const ITINERARY_LIST_ROUTES: Routes = [
   { path: '', redirectTo: 'all', pathMatch: 'full' },
   { path: 'all', component: ItineraryAllComponent },
-  { path: 'completed', component: ItineraryCompletedComponent },
-  { path: 'upcoming', component: ItineraryUpcomingComponent },
+  { path: 'curated', component: ItineraryCuratedComponent },
+  { path: 'saved', component: ItinerarySavedComponent },
+  { path: 'following', component: ItineraryFollowingComponent },
 ]

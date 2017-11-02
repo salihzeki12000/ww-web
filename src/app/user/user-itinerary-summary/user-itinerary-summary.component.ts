@@ -95,7 +95,6 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
       result => {
         this.events = Object.keys(result).map(key => result[key]);
         this.formatDescription();
-        this.loadingService.setLoader(false, "")
       })
 
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
@@ -155,6 +154,97 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
 
       this.events[i]['formatted_note'] = this.events[i]['note'].replace(/\r?\n/g, '<br/> ');
     }
+
+    this.filterEvents();
+  }
+
+  filterEvents()  {
+    let summaryEvents = [];
+    let copyEvents = [];
+
+    for (let i = 0; i < this.events.length; i++) {
+      if(this.events[i]['type'] === 'activity')  {
+        this.events[i]['summary_date'] = this.events[i]['date'];
+        this.events[i]['summary_time'] = this.events[i]['time'];
+      }
+
+      if(this.events[i]['type'] === 'accommodation')  {
+        let copy = Object.assign({}, this.events[i]);
+
+        this.events[i]['inOut'] = "checkin";
+        this.events[i]['summary_date'] = this.events[i]['check_in_date'];
+        this.events[i]['summary_time'] = this.events[i]['check_in_time'];
+
+        copy['inOut'] = "checkout";
+        copy['summary_date'] = this.events[i]['check_out_date'];
+        copy['summary_time'] = this.events[i]['check_out_time'];
+
+        copyEvents.push(copy)
+      }
+
+
+      if(this.events[i]['type'] === 'transport')  {
+        let copy = Object.assign({}, this.events[i]);
+
+        this.events[i]['approach'] = 'departure';
+        this.events[i]['summary_date'] = this.events[i]['dep_date'];
+        this.events[i]['summary_time'] = this.events[i]['dep_time'];
+
+        copy['approach'] = 'arrival';
+        copy['summary_date'] = this.events[i]['arr_date'];
+        copy['summary_time'] = this.events[i]['arr_time'];
+
+        copyEvents.push(copy);
+      }
+    }
+
+    summaryEvents = this.events.concat(copyEvents)
+    this.sortEvents(summaryEvents);
+  }
+
+  sortEvents(events)  {
+    let flex = [];
+    let dated = [];
+
+    for (let i = 0; i < events.length; i++) {
+      if(events[i]['summary_time'] === 'anytime') {
+        events[i]['sort_time'] = "25:00"
+      } else  {
+        events[i]['sort_time'] = events[i]['summary_time']
+      }
+
+      if(events[i]['summary_date'] === 'any day') {
+        flex.push(events[i]);
+      } else  {
+        dated.push(events[i])
+      }
+    }
+
+    flex = this.sort(flex);
+    dated = this.sort(dated);
+
+    this.events = dated.concat(flex);
+
+    setTimeout(() =>  {this.loadingService.setLoader(false, "")}, 1000);
+  }
+
+  sort(events)  {
+    events.sort((a,b) =>  {
+      let dateA = new Date(a['summary_date']).getTime();
+      let dateB = new Date(b['summary_date']).getTime();
+
+      let timeA = parseInt((a['sort_time'].replace(a['sort_time'].substring(2,3), "")));
+      let timeB = parseInt((b['sort_time'].replace(b['sort_time'].substring(2,3), "")));
+
+      if (dateA < dateB) return -1;
+      if (dateA > dateB) return 1;
+      if (timeA < timeB) return -1;
+      if (timeA > timeB) return 1;
+
+      return 0;
+    })
+
+    return events;
   }
 
   checkCopy() {

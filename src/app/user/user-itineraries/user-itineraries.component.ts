@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
-import { Router }       from '@angular/router';
 
 import { UserService }    from '../user.service';
 import { LoadingService } from '../../loading';
@@ -13,6 +12,8 @@ import { ItineraryService, ItineraryEventService } from '../../itinerary';
 })
 export class UserItinerariesComponent implements OnInit, OnDestroy {
   itineraries;
+  filteredItineraries = [];
+
   userSubscription: Subscription;
   user;
 
@@ -23,8 +24,7 @@ export class UserItinerariesComponent implements OnInit, OnDestroy {
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
     private userService: UserService,
-    private loadingService: LoadingService,
-    private router: Router) { }
+    private loadingService: LoadingService) { }
 
   ngOnInit() {
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
@@ -34,6 +34,7 @@ export class UserItinerariesComponent implements OnInit, OnDestroy {
       result => {
         this.user = result;
         this.itineraries = Object.keys(result['itineraries']).map(key => result['itineraries'][key]);
+
         this.sortItin();
       })
   }
@@ -58,14 +59,21 @@ export class UserItinerariesComponent implements OnInit, OnDestroy {
       }
     }
 
+    this.filteredItineraries = this.itineraries;
+
     setTimeout(() =>  {
       this.loadingService.setLoader(false, "");
     }, 1500)
   }
 
-  routeToItin(itinerary)  {
-    this.router.navigateByUrl('/wondererwanderer/' + this.user['_id'] + '/itinerary/' + itinerary['_id'])
-    this.loadingService.setLoader(true, "");
+  filterSearch(text)  {
+    if(!text)   {
+      this.filteredItineraries = this.itineraries;
+    } else  {
+      this.filteredItineraries = Object.assign([], this.itineraries).filter(
+        itin => itin.name.toLowerCase().indexOf(text.toLowerCase()) > -1
+      )
+    }
   }
 
 }

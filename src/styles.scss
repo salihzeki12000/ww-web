@@ -14,7 +14,6 @@
 // #BDECB6 - pastel green for itinerary shortcut header
 // #3C763D - dark green
 // #FFA15C - orange (255,161,92)
-// #DC143C - crimson(red)
 // #3A4A4D - dark grey
 // #C0C0C0 - light grey
 // #F9FBFB - off white
@@ -1080,84 +1079,99 @@ span.dragged-location {
 
 *********************/
 
-.box-container  {
-  position: absolute;
-  right: calc((100vw - 600px)/2);
-  width: 600px;
-  margin-bottom: 20px;
-  // background-color: white;
-  // box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
-
-  @media only screen and (max-width: 650px) {
-    width: 100%;
-    min-width: 300px;
-    right: 0;
-  }
-}
-
-.box-container-header {
-  position: fixed;
-  width: 600px;
-  padding-bottom: 3px;
-
-  @media only screen and (max-width: 650px) {
-    width: 100%;
-    min-width: 300px;
-  }
-}
-
 .box-container-header > h3  {
   padding: 20px;
+  padding-left: calc((100vw - 600px) /2);
   font-weight: 400;
   color: #F9FBFB;
   background-color: #6494ED;
-}
 
-
-/* box container nav tabs */
-
-.box-container-nav-tabs {
-  margin: 0;
-  padding: 5px 0 3px 10px;
-  height: 47px;
-  overflow: auto;
-  white-space: nowrap;
-  background-color: white;
-  border-left: 1px solid lightgray;
-  border-right: 1px solid lightgray;
-}
-
-.box-container-nav-tabs > li  {
-  display: inline-block;
-}
-
-.box-container-nav-tabs > li > a {
-  padding: 5px 10px;
-  color: #3A4A4D;
-  text-decoration: none;
-  letter-spacing: .5px;
-  border-radius: 0;
-  &:hover {
-    color: #6494ED;
+  @media only screen and (max-width: 650px) {
+    padding-left: 20px;
   }
 }
 
-.box-container-nav-tabs > li.active > a {
-  color: #6494ED;
-  font-weight: bold;
-  border-bottom: 3px solid #6494ED;
+
+
+/*********************
+
+  Navigate bar
+
+*********************/
+
+.navigate-bar {
+  margin-top: 30px;
+  border-top: 1px solid #E6E6E6;
+  border-bottom: 1px solid #E6E6E6;
+
+  @media only screen and (max-width: 650px) {
+    margin-top: 10px;
+  }
 }
 
-.box-container-nav-tabs span.tab-count {
-  padding-left: 5px;
-  color: grey;
+.navigate-bar ul  {
+  margin-bottom: 0;
+  margin-left: calc((100vw - 600px)/2);
+  padding: 9px 10px 0 10px;
+  height: 60px;
+  overflow: auto;
+  white-space: nowrap;
+
+  @media only screen and (max-width: 650px) {
+    margin: 0;
+    height: 50px;
+    text-align: center;
+  }
+}
+
+.navigate-bar li  {
+  display: inline-block;
+  height: 51px;
+  margin: 0 20px;
+  text-align: center;
+
+  @media only screen and (max-width: 650px) {
+    margin: 0 5px;
+    height: 41px;
+  }
+}
+
+.navigate-bar li > a {
+  color: #3A4A4D;
+  text-decoration: none;
+  letter-spacing: 1px;
+  border-radius: 0;
+  font-size: 20px;
+  font-weight: 500;
+
+  &:hover {
+    color: #6494ED;
+  }
+
+  @media only screen and (max-width: 650px) {
+    padding: 0;
+    font-size: 14px;
+  }
+}
+
+.navigate-bar span  {
+  display: block;
+  font-size: 12px;
   font-weight: 400;
+
+  @media only screen and (max-width: 650px) {
+    font-size: 10px;
+  }
 }
 
+.navigate-bar li.active > a {
+  color: #6494ED;
 
+  @media only screen and (max-width: 650px) {
+    border-bottom: none;
+  }
+}
 
-/* to display horizontal scrollbar */
-
-.box-container-nav-tabs::-webkit-scrollbar {
-    -webkit-appearance: none;
+.navigate-bar li.active {
+  border-bottom: 3px solid #6494ED;
 }

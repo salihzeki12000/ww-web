@@ -1,15 +1,8 @@
 .fav-header  {
-  position: absolute;
-  margin-left: calc((-100vw + 600px)/2);
   height: 40px;
   width: 100vw;
   text-align: center;
   background-color: #6494ED;
-
-  @media only screen and (max-width: 650px) {
-    position: absolute;
-    margin-left: 0;
-  }
 }
 
 .fav-header *  {
@@ -46,8 +39,8 @@
 .country-dropdown,
 .fav-dropdown {
   position: absolute;
-  margin-top: 40px;
-  margin-left: calc(((-100vw + 600px)/2) + ((100vw - 280px) / 2));
+  margin-top: -2px;
+  margin-left: calc((100vw - 280px) / 2);
   width: 280px;
   max-height: calc(100vh - 150px);
   text-align: center;
@@ -76,21 +69,16 @@
 .fav-dropdown-arrow  {
   position: relative;
   top: -8px;
-  margin-top: 40px;
-  margin-left: calc((((-100vw + 600px)/2) + ((100vw - 280px) / 2)) + 215px);
+  margin-left: calc(((100vw - 280px) /2) + 235px);
   width: 0;
   height: 0;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
   border-bottom: 8px solid white;
-
-  @media only screen and (max-width: 650px) {
-    margin-left: calc(((100vw - 280px) /2) + 215px);
-  }
 }
 
 .fav-dropdown-arrow {
-  margin-left: calc((((-100vw + 600px)/2) + ((100vw - 280px) / 2)) + 40px);
+  margin-left: calc(((100vw - 280px) / 2) + 40px);
 }
 
 .country-dropdown h4  {
@@ -141,16 +129,11 @@
 
 #map  {
   position: absolute !important;
-  top: 40px;
-  // position: fixed !important;
-  // top: 300px;
-  margin-left: calc((-100vw + 600px)/2);
+  top: 360px;
   width: 100vw;
-  height: calc(100vh - 90px);
+  height: calc(100vh - 155px);
 
   @media only screen and (max-width: 650px) {
-    // position: absolute !important;
-    // top: 40px;
-    margin-left: 0;
+    top: 385px;
   }
 }

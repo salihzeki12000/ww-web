@@ -120,7 +120,7 @@ export class FavouriteComponent implements OnInit, OnDestroy {
   setLocations()  {
     this.locations = [];
     this.locationIds = [];
-    console.log(this.favs)
+
     for (let i = 0; i < this.favs.length; i++) {
       let index = this.locationIds.indexOf(this.favs[i]['place']['_id']);
 
@@ -176,7 +176,6 @@ export class FavouriteComponent implements OnInit, OnDestroy {
   setMarkers(map) {
     this.markers = [];
     this.infoWindows = [];
-    console.log(this.locations)
     for (let i = 0; i < this.locations.length; i++) {
       let l = this.locations[i];
       let title;

@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
-import { Router } from '@angular/router';
 import { Title }        from '@angular/platform-browser';
 
 import { UserService }  from '../../../user';
+import { LoadingService } from '../../../loading';
 
 @Component({
   selector: 'ww-itinerary-all',
@@ -12,38 +12,56 @@ import { UserService }  from '../../../user';
 })
 export class ItineraryAllComponent implements OnInit, OnDestroy {
   itineraries;
-  currentUser;
-  currentUserSubscription: Subscription;
+  filteredItineraries = [];
+
+  user;
+  userSubscription: Subscription;
+
+  showItineraryForm = false;
 
   constructor(
     private titleService: Title,
-    private userService: UserService,
-    private router: Router) { }
+    private loadingService: LoadingService,
+    private renderer: Renderer2,
+    private userService: UserService) { }
 
   ngOnInit() {
+    this.loadingService.setLoader(true,"")
+
     this.titleService.setTitle("Itineraries");
 
-    this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
+    this.userSubscription = this.userService.updateCurrentUser.subscribe(
      result => {
-       this.currentUser = result;
+       this.user = result;
        this.itineraries = Object.keys(result['itineraries']).map(key => result['itineraries'][key]);
+       this.filteredItineraries = this.itineraries;
+
+       this.loadingService.setLoader(false,"")
      })
   }
 
   ngOnDestroy() {
-    if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
+    if(this.userSubscription) this.userSubscription.unsubscribe();
   }
 
-  routeToItin(id) {
-    this.router.navigateByUrl('/me/itinerary/' + id);
-  }
-
-  routeToUser(id) {
-    if(id === this.currentUser['_id']) {
-      this.router.navigateByUrl('/me/profile');
+  filterSearch(text)  {
+    if(!text)   {
+      this.filteredItineraries = this.itineraries;
     } else  {
-      this.router.navigateByUrl('/wondererwanderer/' + id)
+      this.filteredItineraries = Object.assign([], this.itineraries).filter(
+        itin => itin.name.toLowerCase().indexOf(text.toLowerCase()) > -1
+      )
     }
+  }
+
+  createItinerary() {
+    this.showItineraryForm = true;
+    this.renderer.addClass(document.body, 'prevent-scroll');
+  }
+
+  hideItineraryForm(hide) {
+    this.showItineraryForm = false;
+    this.renderer.removeClass(document.body, 'prevent-scroll');
   }
 
 }

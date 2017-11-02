@@ -19,6 +19,7 @@ export class RelationshipService  {
 
   updateRelationships = new ReplaySubject();
   updateUserRelationships = new ReplaySubject();
+  updateFollowingItins = new ReplaySubject();
 
   private url = 'https://vast-island-87972.herokuapp.com';
 
@@ -272,6 +273,8 @@ export class RelationshipService  {
     }
     this.relationships = relationships;
 
+    this.filterFollowingItineraries();
+
     this.updateRelationships.next({
       relationships: this.relationships,
       followers: this.followers,
@@ -305,4 +308,80 @@ export class RelationshipService  {
       followers: followers,
     })
   }
+
+  filterFollowingItineraries()  {
+    let itineraries = [];
+
+    for (let i = 0; i < this.followings.length; i++) {
+      let followingItins = this.followings[i]['following']['itineraries'];
+
+      for (let j = 0; j < followingItins.length; j++) {
+        let index = itineraries.indexOf(followingItins[j]);
+        let privateItin = followingItins[j]['private'];
+        let corporate = followingItins[j]['corporate']['status'];
+        let publish = followingItins[j]['corporate']['publish'];
+        let user = Object.assign({}, this.followings[i]['following'])
+        let valid;
+
+        if(!corporate && !privateItin)  {
+          valid = true;
+        } else if(corporate && publish) {
+          valid = true;
+        }
+
+        if(index === -1 && valid)  {
+          followingItins[j]['following'] = [];
+          followingItins[j]['following'].push(user);
+          itineraries.push(followingItins[j])
+        } else if (index > -1)  {
+          itineraries[index]['following'].push(user)
+        }
+      }
+    }
+
+    this.sortItin(itineraries);
+  }
+
+  sortItin(itineraries) {
+    let today = new Date();
+    let completed = [];
+    let upcoming = [];
+    let undated = [];
+
+    for (let i = 0; i < itineraries.length; i++) {
+
+      if(itineraries[i]['num_days'])  {
+        undated.push(itineraries[i])
+      } else  {
+
+        let date = new Date(itineraries[i]['date_to']);
+
+        if( date.getTime() < today.getTime()) {
+          itineraries[i]['completed'] = true;
+          completed.push(itineraries[i]);
+        } else if (date.getTime() >= today.getTime()) {
+          upcoming.push(itineraries[i]);
+        }
+      }
+    }
+
+    undated.sort((a,b)  =>  {
+      if(a['name'] < b['name']) return -1;
+      if(a['name'] > b['name']) return 1;
+      return 0;
+    })
+
+    completed.sort((a,b)  =>  {
+      return new Date(b['date_to']).getTime() - new Date(a['date_to']).getTime();
+    })
+
+    upcoming.sort((a,b)  =>  {
+      return new Date(a['date_to']).getTime() - new Date(b['date_to']).getTime();
+    })
+
+    let sortedItins = undated.concat(upcoming, completed);
+
+    this.updateFollowingItins.next(sortedItins)
+  }
+
 }

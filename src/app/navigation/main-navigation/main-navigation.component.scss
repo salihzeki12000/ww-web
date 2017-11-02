@@ -748,8 +748,7 @@ i.fa-sticky-note {
   border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
-.follower-counter,
-.following-counter  {
+.data-counter {
   width: 49%;
 
   &:hover {
@@ -757,8 +756,7 @@ i.fa-sticky-note {
   }
 }
 
-.follower-counter *,
-.following-counter * {
+.data-counter * {
   color: #3A4A4D;
 }
 

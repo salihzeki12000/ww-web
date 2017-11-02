@@ -126,8 +126,10 @@
 
 .section-content  {
   margin-bottom: 40px;
+  font-weight: 400;
   text-align: justify;
   line-height: 1.5;
+  font-family: 'Lato', sans-serif;
   font-size: 15px;
 }
 
@@ -1224,24 +1226,56 @@ ww-itinerary-map  {
   Itinerary List
 
 *********************/
+ww-itinerary-all,
+ww-itinerary-curated,
+ww-itinerary-following,
+ww-itinerary-saved,
+ww-user-itineraries  {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding-top: 60px;
+  width: 1360px;
+  margin-left: calc((100vw - 1360px) /2);
+
+  @media only screen and (max-width: 680px) {
+    width: 100%;
+    margin-left: 0;
+    justify-content: center;
+  }
+
+  @media only screen and (min-width: 680px) and (max-width: 1020px) {
+    width: 680px;
+    margin-left: calc(((100vw - 680px) / 2));
+  }
+
+  @media only screen and (min-width: 1020px) and (max-width: 1360px) {
+    width: 1020px;
+    margin-left: calc(((100vw - 1020px) / 2));
+  }
+}
+
+
 .itinerary-list {
-  padding: 10px 20px;
-  border-top: 1px solid lightgray;
-
-  &:hover {
-    cursor: pointer;
-    background-color: #F6F6F6;
-    opacity: 1;
-  }
-
-  @media only screen and (max-width: 500px) {
-    padding: 10px;
-  }
+  position: relative;
+  display: inline-block;
+  margin: 20px;
+  width: 300px;
+  vertical-align: text-top;
+  background-color: white;
+  -webkit-box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
+  -moz-box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
 }
 
 .completed-indicator {
   background-color: #E6E6E6;
   opacity: .6;
+
+  &:hover {
+    background-color: white;
+    opacity: 1;
+  }
 }
 
 .itinerary-list h3  {

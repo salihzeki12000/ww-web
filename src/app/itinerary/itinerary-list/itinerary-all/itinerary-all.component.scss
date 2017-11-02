@@ -1,0 +1,29 @@
+.add-new  {
+  padding-top: 100px;
+  background-color: #6494ED;
+  border: 10px solid white;
+
+  &:hover {
+    opacity: .7;
+  }
+
+  @media only screen and (max-width: 679px) {
+    padding: 20px;
+  }
+}
+
+.add-new * {
+  display: block;
+  padding: 5px 0;
+  color: #F9FBFB;
+  font-weight: 400;
+
+  @media only screen and (max-width: 650px) {
+    display: inline-block;
+    font-size: 20px;
+  }
+}
+
+.custom-modal {
+  text-align: left;
+}

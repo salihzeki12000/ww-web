@@ -1,0 +1,249 @@
+
+<div class="itinerary-shortcut">
+  <div class="itinerary-shortcut-header">
+    <h5>
+      <i class="fa fa-sticky-note-o fa-lg" aria-hidden="true"></i>
+      {{ user?.itineraries.length > 1 ? 'Your Itineraries' : 'Your Itinerary'}} ({{ user?.itineraries.length }})
+    </h5>
+  </div>
+  <h5 class="itinerary-shortcut-new" (click)="createItinerary()"><i class="fa fa-plus" aria-hidden="true"></i> Plan a new itinerary</h5>
+
+  <div class="itinerary-shortcut-list" *ngFor="let itinerary of user?.itineraries | slice:0:5" (click)="routeToItin(itinerary._id)">
+    <h5>{{ itinerary.name }}</h5>
+    <h6 *ngIf="!itinerary.num_days">( {{ itinerary.date_from | date:'dd MMM yy' }} to {{ itinerary.date_to | date:'dd MMM yy' }} )</h6>
+    <h6 *ngIf="itinerary.num_days">( {{ itinerary.num_days }} days )</h6>
+  </div>
+
+  <div *ngIf="user?.itineraries.length > 5" class="view-all" [routerLink]="['/me/itinerary']">
+    <h5>View all</h5>
+  </div>
+</div>
+
+
+<div class="itinerary-shortcut ww-itinerary" [style.top]="top">
+  <div class="itinerary-shortcut-header">
+    <h5>
+      <i class="fa fa-thumbs-o-up fa-lg" aria-hidden="true"></i>
+      wondererwanderer recommended
+    </h5>
+  </div>
+
+  <div class="itinerary-shortcut-list" *ngFor="let itinerary of wwItineraries | slice:0:10" (click)="routeToPreview(itinerary._id)">
+    <h5>{{ itinerary.name }}</h5>
+    <h6 *ngIf="!itinerary.num_days">( {{ itinerary.date_from | date:'dd MMM yy' }} to {{ itinerary.date_to | date:'dd MMM yy' }} )</h6>
+    <h6 *ngIf="itinerary.num_days">( {{ itinerary.num_days }} days )</h6>
+  </div>
+
+  <div *ngIf="wwItineraries?.length > 10" class="view-all" [routerLink]="['/wondererwanderer/59001ca5e0cc620004da87b8/itineraries']">
+    <h5>View all</h5>
+  </div>
+</div>
+
+
+
+<div class="home-posts">
+  <ww-post-input></ww-post-input>
+  <div class="home-posts-list">
+    <ww-post-list [posts]="feed"></ww-post-list>
+  </div>
+</div>
+
+
+<div class="custom-modal verify-message" *ngIf="verifyMsg">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>Verify your account</h3>
+      <a (click)="verifyMsg = false">X</a>
+    </div>
+
+    <div class="content-without-header-name">
+      <h4>Please confirm your email address using the verification link sent to you.</h4>
+      <h4>In case it is missing from your inbox, please check your spam/junk folder.</h4>
+    </div>
+
+    <div class="action-response">
+      <h5 class="action-response-primary" (click)="verifyMsg = false">OK</h5>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- new user tour -->
+<div class="custom-modal" *ngIf="newUser">
+  <div class="message-box welcome-message" *ngIf="tourStart">
+    <h1>WELCOME!</h1>
+    <h3>to</h3>
+    <img src="assets/wondererwanderer_logo.png" alt="">
+    <h3>{{ user?.username }}, we have lined up a tour of the website for you.</h3>
+
+    <div class="init-response">
+      <div class="init-tour" (click)="startTour()">
+        <i class="fa fa-thumbs-o-up fa-3x" aria-hidden="true"></i>
+        Yes, let's start
+      </div>
+      <div class="init-tour" (click)="skipTour()">
+        <i class="fa fa-sign-out fa-3x" aria-hidden="true"></i>
+        I'll skip it
+      </div>
+    </div>
+
+  </div>
+
+  <div class="space-block" *ngIf="tourStart"></div>
+
+
+  <div class="tour-post" *ngIf="tour1">
+    <div class="highlight-post"></div>
+  </div>
+
+  <div class="message-box" *ngIf="tour1">
+
+    <div class="tour-header">
+      <div class="tour-tracker">
+        <h5 class="tour-current">1</h5>
+        <h5 class="tour-next">2</h5>
+        <h5 class="tour-next">3</h5>
+      </div>
+
+      <h3>Post your inspirations</h3>
+    </div>
+
+    <h4>This is your home page where you can view your posts and posts of people you follow. Hopefully you can find some inspirations for your next adventure!</h4>
+    <h4>You can post a message, a photo or share a link to inspire others too!</h4>
+    <h4>It is like what you see on Facebook!</h4>
+
+    <h4 class="select-tour" (click)="tour1Done()">Continue tour</h4>
+    <h4 class="select-tour" (click)="skipTour()">Skip tour</h4>
+
+  </div>
+
+  <div class="tour-add-itin desktop" *ngIf="tour2">
+    <div class="highlight-itin"></div>
+  </div>
+
+  <div class="tour-itinerary-arrow desktop" *ngIf="tour2">
+    <div class="triangle-left"></div>
+    <div class="box"></div>
+  </div>
+
+
+  <div class="message-box desktop" *ngIf="tour2">
+    <div class="tour-header">
+      <div class="tour-tracker">
+        <h5 class="tour-done" (click)="backTo1()">1</h5>
+        <h5 class="tour-current">2</h5>
+        <h5 class="tour-next">3</h5>
+      </div>
+
+      <h3>Find your itineraries</h3>
+    </div>
+
+    <h4>You can start adding an itinerary by selecting the add option on the left.</h4>
+    <h4>As you add new itineraries, they will be displayed here.</h4>
+
+    <h4 class="select-tour" (click)="tour2Done()">Continue tour</h4>
+    <h4 class="select-tour" (click)="skipTour()">Skip tour</h4>
+  </div>
+
+  <div class="tour-menu" *ngIf="tour2">
+    <div class="highlight-menu"></div>
+  </div>
+
+  <div class="tour-menu-arrow mobile" *ngIf="tour2">
+    <div class="triangle-left"></div>
+    <div class="box"></div>
+  </div>
+
+  <div class="message-box mobile" *ngIf="tour2">
+    <div class="tour-header">
+      <div class="tour-tracker">
+        <h5 class="tour-done" (click)="backTo1()">1</h5>
+        <h5 class="tour-current">2</h5>
+        <h5 class="tour-next">3</h5>
+      </div>
+
+      <h3>Drop down for more options</h3>
+    </div>
+
+    <h4>The drop down menu on the top left provides quick access to help you navigate around the website easily.</h4>
+
+    <ol>
+      <li>View and edit your profile</li>
+      <li>Search for people to follow</li>
+      <li>View your itineraries</li>
+      <li>View your notifications</li>
+      <li>View your favourites</li>
+      <li>View your recommendations</li>
+    </ol>
+
+    <h4 class="select-tour" (click)="tour2Done()">Continue tour</h4>
+    <h4 class="select-tour" (click)="skipTour()">Skip tour</h4>
+  </div>
+
+
+
+  <div class="tour-nav" *ngIf="tour3">
+    <div class="highlight-nav"></div>
+  </div>
+
+  <div class="tour-nav-arrow" *ngIf="tour3">
+    <div class="triangle-right"></div>
+    <div class="box"></div>
+  </div>
+
+  <div class="message-box" *ngIf="tour3">
+    <div class="tour-header">
+      <div class="tour-tracker">
+        <h5 class="tour-done" (click)="backTo1()">1</h5>
+        <h5 class="tour-done" (click)="backTo2()">2</h5>
+        <h5 class="tour-current">3</h5>
+      </div>
+
+      <h3>Short cuts for quick access</h3>
+    </div>
+
+    <h4>On the top right are shortcuts that allow you to navigate around the website quickly.</h4>
+
+    <div class="tour-nav-list">
+      <i class="fa fa-bookmark fa-lg fa-fw" aria-hidden="true"></i>
+      <h4>Access to your favourite places and those recommended to you.</h4>
+    </div>
+
+    <div class="tour-nav-list desktop">
+      <i class="fa fa-search fa-lg fa-fw" aria-hidden="true"></i>
+      <h4>Find people to follow, check out their itineraries and be inspired!</h4>
+    </div>
+
+    <div class="tour-nav-list">
+      <i class="fa fa-sticky-note fa-lg fa-fw" aria-hidden="true"></i>
+      <h4>Quick access to your itineraries at all times. You can add new itinerary from here too!</h4>
+    </div>
+
+    <div class="tour-nav-list desktop">
+      <i class="fa fa-bell fa-lg fa-fw" aria-hidden="true"></i>
+      <h4>Access to your notifications</h4>
+    </div>
+
+    <div class="tour-nav-list desktop">
+      <img src="{{ user?.display_picture.url }}" class="user-profile-thumbnail">
+      <h4>View and edit your profile</h4>
+    </div>
+
+    <div class="tour-nav-list">
+      <h4>Remember to go to your edit profile page to update your details and privacy settings!</h4>
+    </div>
+
+    <h4 class="select-tour" (click)="skipTour()">End tour</h4>
+  </div>
+
+</div>
+
+
+
+
+<!-- new itin form -->
+<div class="custom-modal" *ngIf="showItineraryForm">
+  <ww-itinerary-form (hideItineraryForm)="hideItineraryForm($event)"></ww-itinerary-form>
+</div>

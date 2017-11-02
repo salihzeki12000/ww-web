@@ -13,6 +13,7 @@ import { LoadingService }      from '../../loading';
 export class PendingFollowersComponent implements OnInit, OnDestroy {
   relationshipSubscription: Subscription;
   pendingFollowers = [];
+  filteredFollowers = [];
 
   constructor(
     private loadingService: LoadingService,
@@ -25,6 +26,8 @@ export class PendingFollowersComponent implements OnInit, OnDestroy {
     this.relationshipSubscription = this.relationshipService.updateRelationships.subscribe(
      result => {
        this.pendingFollowers = Object.keys(result['pendingFollowers']).map(key => result['pendingFollowers'][key]);
+
+       this.filteredFollowers = this.pendingFollowers;
      })
 
     setTimeout(()  =>  {
@@ -34,6 +37,16 @@ export class PendingFollowersComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if(this.relationshipSubscription) this.relationshipSubscription.unsubscribe();
+  }
+
+  filterSearch(text)  {
+    if(!text)   {
+      this.filteredFollowers = this.pendingFollowers;
+    } else  {
+      this.filteredFollowers = Object.assign([], this.pendingFollowers).filter(
+        follower => follower.user.username.toLowerCase().indexOf(text.toLowerCase()) > -1
+      )
+    }
   }
 
 }

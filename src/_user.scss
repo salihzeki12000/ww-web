@@ -12,13 +12,13 @@
 
 .user-details {
   display: inline-block;
-  width: 70%;
+  width: 50%;
   margin-left: 5px;
   vertical-align: top;
 
-  @media only screen and (max-width: 400px) {
-   width: 50%;
-  }
+  // @media only screen and (max-width: 400px) {
+  // //  width: 50%;
+  // }
 }
 
 .user-description {
@@ -145,7 +145,7 @@
 .following-response:hover > .unfollow {
   display: block;
   position: absolute;
-  right: 25px;
+  margin-left: -10px;
   padding: 7px 10px;
   width: 100px;
   font-weight: 500;
@@ -188,9 +188,7 @@
 *****************************/
 
 .user-profile-header > img  {
-  position: absolute;
-  left: calc((100vw - 600px)/2);
-  margin-bottom: 15px;
+  margin-left: calc((100vw - 600px)/2);
   padding: 2px;
   height: 150px;
   width: 150px;
@@ -198,35 +196,38 @@
   border: 5px solid #5899F0;
   background-color: white;
   overflow: hidden;
+  vertical-align: top;
 
   @media only screen and (max-width: 650px) {
     margin-top: -30px;
-    left: calc((100vw - 150px) /2);
+    margin-left: calc((100vw - 150px) /2);
   }
 }
 
-.user-profile-header > .user-profile-details  {
-  position: absolute;
-  margin-top: 85px;
+.user-profile-details  {
+  display: inline-block;
+  margin-top: 35px;
   width: 360px;
-  left: calc(((100vw - 600px)/2) + 190px);;
 
   @media only screen and (max-width: 650px) {
-    margin-top: 185px;
-    left: 10px;
-    width: calc(100% - 20px);
+    margin-top: 10px;
+    width: 100vw;
     text-align: center;
-  }
-
-  @media only screen and (min-width: 650px) and (max-width: 890px) {
-    left: calc(((100vw - 600px) / 2) + 179px);
   }
 }
 
 .user-profile-details * {
-  padding: 5px 0;
   font-weight: 400;
   color: #808080;
+}
+
+.user-profile-details h1  {
+  padding-bottom: 15px;
+  color: #F9FBFB;
+}
+
+.user-profile-details h4  {
+  padding: 5px;
 }
 
 .user-profile-background  {
@@ -238,7 +239,7 @@
   z-index: -1;
 
   @media only screen and (max-width: 650px) {
-    height: 215px;
+    height: 210px;
   }
 }
 
@@ -262,9 +263,7 @@
 }
 
 .user-profile-counters  {
-  position: absolute;
   width: 360px;
-  margin-top: 20px;
   left: calc(((100vw - 600px)/2) + 180px);
 
   @media only screen and (max-width: 650px) {
@@ -279,9 +278,7 @@
   }
 }
 
-.follower-counter,
-.following-counter,
-.itinerary-counter  {
+.data-counter {
   display: inline-block;
   width: 24%;
   padding: 10px 5px;
@@ -291,21 +288,79 @@
   }
 }
 
-.follower-counter *,
-.following-counter *,
-.itinerary-counter * {
+.data-counter * {
   color: #F9FBFB;
 }
 
-.follower-counter > h2,
-.following-counter > h2,
-.itinerary-counter > h2 {
+.data-counter > h2 {
   padding-bottom: 3px;
 }
 
 /* dont have follower/following message */
 .nil-message-main {
+  width: 100%;
   padding: 20px;
   text-align: center;
-  font-weight: 400;
+}
+
+ww-followers,
+ww-followings,
+ww-pending-followers,
+ww-requested-followings,
+ww-user-followers,
+ww-user-followings  {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding-top: 60px;
+  width: 640px;
+  margin-left: calc((100vw - 640px) /2);
+
+  @media only screen and (max-width: 650px) {
+    width: 100%;
+    margin-left: 0;
+    justify-content: center;
+  }
+}
+
+
+ww-followers .user-card,
+ww-followings .user-card,
+ww-pending-followers .user-card,
+ww-requested-followings .user-card,
+ww-user-followers .user-card,
+ww-user-followings .user-card {
+  display: inline-block;
+  margin: 5px;
+  width: 310px;
+  text-align: left;
+  background-color: white;
+  border: 1px solid lightgray;
+}
+
+.search {
+  width: 100%;
+  margin-top: -40px;
+
+  @media only screen and (max-width: 680px) {
+    position: absolute;
+    left: 0;
+  }
+}
+
+.search *  {
+  display: inline-block;
+  padding: 0 5px;
+}
+
+.search input {
+  @media only screen and (max-width: 650px) {
+    width: calc(100vw - 50px);
+  }
+}
+
+.middle {
+  @media only screen and (max-width: 639px) {
+    text-align: center;
+  }
 }

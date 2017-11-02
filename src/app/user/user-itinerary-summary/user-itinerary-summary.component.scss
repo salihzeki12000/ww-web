@@ -1,10 +1,37 @@
+.main-container {
+  width: 600px;
+  margin-left: calc((100vw - 600px) /2);
+  border-right: 1px solid rgba(0,0,0,.1);
+  border-left: 1px solid rgba(0,0,0,.1);
+
+  @media only screen and (max-width: 650px) {
+    width: 100%;
+    margin-left: 0;
+    border: none;
+  }
+}
+
+.header-container {
+  padding: 40px 0;
+  background-color: white;
+  border-top: 5px solid #6494ED;
+}
+
 .header {
   width: 100%;
   margin-bottom: 20px;
   padding: 0 10px;
-  color: #6494ED;
   text-align: center;
+  font-family: 'Fira Sans', sans-serif;
 }
+
+hr.header-separator {
+  margin-top: 0;
+  margin-bottom: 40px;
+  width: 150px;
+  border-top: 2px solid #6494ED;
+}
+
 
 .itinerary-action {
   text-align: center;
@@ -42,17 +69,34 @@
 }
 
 .description  {
-  padding: 30px 0;
   text-align: justify;
   font-family: 'Lato', sans-serif;
+}
 
-  @media only screen and (max-width: 650px) {
-    padding: 30px;
-  }
+.description-header {
+  padding: 30px;
+}
+
+.section  {
+  padding: 0 30px;
+}
+
+.legend {
+  text-align: left;
+  border-top: 1px solid rgba(0,0,0,.1);
+}
+
+.legend > div {
+  display: inline-block;
+  padding: 3px;
+  width: auto;
+  margin: 5px 10px;
+  letter-spacing: 1px;
 }
 
 .summary-container  {
   margin-bottom: 40px;
+  text-align: left;
 }
 
 
@@ -61,27 +105,30 @@
 /* day header */
 
 .day-header {
-  margin: 50px 0 10px 0;
   padding: 10px;
-  border-bottom: 5px double;
+  background-color: #6494ED;
+}
+
+.day-header * {
+  color: #F9FBFB;
 }
 
 .date-display  {
   display: inline-block;
   width: 170px;
+
+  @media only screen and (max-width: 650px) {
+    margin-bottom: 10px;
+  }
 }
 
-.day-header:first-of-type  {
-  margin-top: 20px;
-}
 
 .daily-note  {
   display: inline-block;
   vertical-align: top;
 
-  @media only screen and (max-width: 450px) {
+  @media only screen and (max-width: 650px) {
     display: block;
-    margin-top: 10px;
   }
 }
 
@@ -94,14 +141,9 @@
 .daily-note h5 {
   width: 370px;
 
-  @media only screen and (max-width: 450px) {
-    width: calc(100vw - 50px);
+  @media only screen and (max-width: 650px) {
+    width: calc(100vw - 60px);
   }
-
-  @media only screen and (min-width: 450px) and (max-width: 650px) {
-    width: calc(100vw - 220px);
-  }
-
 }
 
 
@@ -110,109 +152,87 @@
 /* individual event item */
 
 .event-item-card  {
-  border-bottom: 1px dashed lightgray;
+  padding: 10px;
+  border-bottom: 1px solid rgba(0,0,0,.1);
+}
+
+.time-photo {
+  display: inline-block;
 }
 
 .event-time {
-  display: inline-block;
-  padding-top: 15px;
-  width: 70px;
+  padding-bottom: 20px;
+  width: 80px;
   text-align: right;
-  vertical-align: top;
 }
 
+.event-photo img {
+  height: 80px;
+  width: 80px;
+}
 
+.event-photo i  {
+  width: 80px;
+}
 
 /* details of each item */
+.pill,
+.event-header {
+  display: inline-block;
+  vertical-align: text-top;
+}
+
+.event-header {
+  width: 430px;
+
+  @media only screen and (max-width: 650px) {
+    width: calc((100vw - 165px));
+  }
+}
 
 .event-details-card  {
   display: inline-block;
-  width: 525px;
+  width: 490px;
+  padding-left: 15px;
+  vertical-align: top;
 
-  @media only screen and (max-width: 450px) {
-    display: block;
-    width: 100vw;
-  }
-
-  @media only screen and (min-width: 450px) and (max-width: 650px) {
-    width: calc((100vw - 100px));
+  @media only screen and (max-width: 650px) {
+    width: calc((100vw - 120px));
   }
 }
 
 
 /* image related */
-
-.event-details-card > img,
-.event-details-card > i,
-.event-details-card > .summary-item-details  {
+.transport-icon {
   display: inline-block;
-  vertical-align: top;
-  margin-top: 15px;
 }
 
-.event-details-card .transport-switch  {
-  display: inline-block;
-  vertical-align: top;
+.fa-home  {
+  padding: 0 23px;
 }
 
-.event-details-card > img,
-.event-details-card > i,
-.event-details-card .transport-switch i  {
-  height: 80px;
-  width: 80px;
-  margin: 10px;
-  background-color: #EAEAFB;
+// .fa-bicycle  {
+//   padding: 0 13px;
+// }
+
+
+/* details */
+
+
+.event-name  {
+  padding-bottom: 15px;
 }
 
-.fa-bicycle  {
-  padding: 20px 13px;
-}
-
-.fa-home,
-.fa-plane,
-.fa-train,
-.fa-bus,
-.fa-rocket  {
-  padding: 23px;
-}
-
-.fa-car,
-.fa-ship  {
-  padding: 20px 16px;
-}
-
-
-/* summary of details */
-
-.summary-item-details {
-  width: 420px;
-
-  @media only screen and (max-width: 450px) {
-    width: calc((100vw - 120px))
-  }
-
-  @media only screen and (min-width: 450px) and (max-width: 650px) {
-    width: calc((100vw - 210px))
-  }
-}
-
-.summary-item-details h5  {
-  padding-bottom: 5px;
-}
-
-.summary-item-details h4  {
-  padding-bottom: 10px;
-}
-
-.summary-item-details .summary-description  {
+.summary-description  {
   font-weight: 400;
   text-align: justify;
   font-size: 13px;
   font-family: 'Lato', sans-serif;
+  padding-bottom: 10px;
 }
 
-.event-type {
-  color: #567FCC;
+.event-details-card h5  {
+  padding-bottom: 5px;
 }
 
 

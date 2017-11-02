@@ -32,7 +32,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     { name:'bus', icon: 'bus' },
     { name:'cruise', icon: 'ship'},
     { name:'vehicle rental', icon: 'car'},
-    { name:'others', icon: 'rocket'} ];
+    { name:'transport', icon: 'rocket'} ];
 
 
   // to influence progress bar

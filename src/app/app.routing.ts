@@ -2,7 +2,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AdminComponent, AdminLoginComponent, AdminVerifyComponent, ADMIN_ROUTES } from './admin';
 import { LandingPageComponent }         from './landing-page';
-import { MeComponent, HOME_ROUTES }     from './me';
+import { MeComponent, ME_ROUTES }     from './me';
 import {  }       from './privacy-policy';
 import { PlaceDisplayComponent }        from './places';
 import { ItineraryPreviewComponent,
@@ -26,7 +26,7 @@ const APP_ROUTES: Routes = [
   { path: 'reset/:id', component: ResetComponent },
   { path: 'verify/:token/:id', component: UserVerifyComponent },
   { path: 'account-not-verified', component: UserUnverifiedComponent },
-  { path: 'me', component: MeComponent, children: HOME_ROUTES, canActivate: [AuthGuard] },
+  { path: 'me', component: MeComponent, children: ME_ROUTES, canActivate: [AuthGuard] },
   { path: 'wondererwanderer/:id', component: UserComponent, children: USER_ROUTES, canActivate: [AuthGuard] },
   { path: 'save-print/:id', component: ItineraryPrintComponent, canActivate: [AuthGuard] },
   { path: 'invite/me/:id', component: ItineraryInviteComponent },

@@ -12,6 +12,7 @@ import { LoadingService }      from '../../loading';
 })
 export class UserFollowingsComponent implements OnInit, OnDestroy {
   followings = [];
+  filteredFollowings = [];
   followingsSubscription: Subscription;
 
   currentUser;
@@ -26,6 +27,8 @@ export class UserFollowingsComponent implements OnInit, OnDestroy {
     this.followingsSubscription = this.relationshipService.updateUserRelationships.subscribe(
       result => {
        this.followings = Object.keys(result['followings']).map(key => result['followings'][key]);
+
+       this.filteredFollowings = this.followings;
        this.loadingService.setLoader(false, "");
       })
 
@@ -36,6 +39,16 @@ export class UserFollowingsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if(this.followingsSubscription) this.followingsSubscription.unsubscribe();
     if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
+  }
+
+  filterSearch(text)  {
+    if(!text)   {
+      this.filteredFollowings = this.followings;
+    } else  {
+      this.filteredFollowings = Object.assign([], this.followings).filter(
+        following => following.following.username.toLowerCase().indexOf(text.toLowerCase()) > -1
+      )
+    }
   }
 
 }

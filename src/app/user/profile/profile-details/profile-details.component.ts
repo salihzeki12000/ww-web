@@ -11,7 +11,7 @@ import { RelationshipService } from '../../../relationships/relationship.service
 import { FlashMessageService } from '../../../flash-message';
 import { Post, PostService }   from '../../../post';
 import { LoadingService }      from '../../../loading';
-import { FavouriteService }      from '../../../favourite';
+import { FavouriteService }    from '../../../favourite';
 
 @Component({
   selector: 'ww-profile-details',
@@ -55,7 +55,7 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
      result => {
        this.currentUser = result;
-       this.getPosts(this.currentUser['_id']);
+      //  this.getPosts(this.currentUser['_id']);
        this.favouriteService.getFavs(this.currentUser['_id']).subscribe(result =>{})
      })
 
@@ -130,7 +130,7 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
   }
 
   viewProfile()  {
-    this.router.navigateByUrl('/me/profile-edit');
+    this.router.navigateByUrl('/me/home-edit');
   }
 
   routeToFollowers() {

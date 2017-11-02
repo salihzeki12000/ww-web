@@ -78,7 +78,7 @@ export class UserComponent implements OnInit, OnDestroy {
       this.postService.getPosts(id).subscribe(result => {})
 
       this.favouriteService.getFavs(id).subscribe(result =>{
-        this.favs = result['favourites'];
+        this.filterFav(result['favourites'])
       })
 
       this.relationshipService.getUserRelationships(id).subscribe(
@@ -130,6 +130,17 @@ export class UserComponent implements OnInit, OnDestroy {
     }
   }
 
+  filterFav(favs) {
+    for (let i = 0; i < favs.length; i++) {
+      if(favs[i]['private'])  {
+        favs.splice(i,1);
+        i--
+      };
+    }
+
+    this.favs = favs;
+  }
+
   follow()  {
     let following = {
       user: this.currentUser,
@@ -151,7 +162,6 @@ export class UserComponent implements OnInit, OnDestroy {
 
       this.followStatus = "accepted";
     }
-
   }
 
   unfollow()  {
@@ -177,9 +187,5 @@ export class UserComponent implements OnInit, OnDestroy {
     this.loadingService.setLoader(true, "");
   }
 
-  routeTo(seg) {
-    this.router.navigateByUrl('/wondererwanderer/' + this.user['_id'] + '/' + seg);
-    this.loadingService.setLoader(true, "");
-  }
 
 }

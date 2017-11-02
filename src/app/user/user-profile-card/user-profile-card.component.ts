@@ -23,7 +23,7 @@ export class UserProfileCardComponent implements OnInit {
     if(this.currentUser)  {
 
       if(id === this.currentUser['_id']) {
-        this.router.navigateByUrl('/me/profile');
+        this.router.navigateByUrl('/me/home');
       } else  {
         this.router.navigateByUrl('/wondererwanderer/' + id)
       }

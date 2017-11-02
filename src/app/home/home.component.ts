@@ -4,9 +4,10 @@ import { Subscription } from 'rxjs/Rx';
 
 import { Router } from '@angular/router';
 
-import { User, UserService } from '../user';
-import { Post, PostService } from '../post';
-import { LoadingService }    from '../loading';
+import { User, UserService }    from '../user';
+import { LoadingService }       from '../loading';
+import { RelationshipService }  from '../relationships';
+import { FavouriteService }     from '../favourite';
 
 @Component({
   selector: 'ww-home',
@@ -15,9 +16,13 @@ import { LoadingService }    from '../loading';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   user;
-  feed = [];
-  wwItineraries; //to get wondererwanderer itineraries
-  top;
+
+  relationshipSubscription: Subscription;
+  followings = [];
+  followers = [];
+
+  favSubscription: Subscription;
+  favs = [];
 
   verifyMsg = false;
 
@@ -36,8 +41,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     private titleService: Title,
     private renderer: Renderer2,
     private userService: UserService,
-    private postService: PostService,
+    private relationshipService: RelationshipService,
     private loadingService: LoadingService,
+    private favouriteService: FavouriteService,
     private router: Router) { }
 
   ngOnInit() {
@@ -47,7 +53,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
       result => {
         this.user = result;
-        this.checkItinLength();
+
+        this.favouriteService.getFavs(this.user['_id']).subscribe(result =>{})
+
 
         if(!this.user['new_user_tour'])  {
           this.newUser = true;
@@ -59,68 +67,30 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
       })
 
-    this.postService.getFeed().subscribe(
-      result  => {
-        this.feedSubscription = this.postService.updateFeed.subscribe(
-          feedResult => {
-            this.feed = Object.keys(feedResult).map(key => feedResult[key]);
-            this.loadingService.setLoader(false, "");
-          })
+    this.relationshipSubscription = this.relationshipService.updateRelationships.subscribe(
+      result => {
+        this.followers = Object.keys(result['followers']).map(key => result['followers'][key]);
+        this.followings = Object.keys(result['followings']).map(key => result['followings'][key]);
       })
 
-    this.userService.getUser("59001ca5e0cc620004da87b8").subscribe(
+    this.favSubscription = this.favouriteService.updateFavs.subscribe(
       result => {
-        this.wwItineraries = result.user['itineraries'];
-        this.sortItin();
-      }
-    )
+        this.favs = Object.keys(result).map(key => result[key]);
+      })
 
-    // work around for issue where fb login cant load page properly
-    // let login = this.authService.loginType;
-    //
-    // if(login === 'facebook')  {
-    //   this.authService.setLogin("fb");
-    //   this.reload();
-    // }
+    this.loadingService.setLoader(false, "");
+
   }
 
-  // reload()  {
-  //   setTimeout(() =>  {
-  //     window.location.reload();
-  //   },1000)
-  // }
 
   ngOnDestroy() {
     if(!this.user['new_user_tour']) {
       this.updateUser();
     }
 
-    if(this.feedSubscription) this.feedSubscription.unsubscribe();
     if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
 
     this.loadingService.setLoader(true, "");
-  }
-
-
-  sortItin()  {
-    for (let i = 0; i < this.wwItineraries.length; i++) {
-      if(this.wwItineraries[i]['private'])  {
-        this.wwItineraries.splice(i,1);
-        i--;
-      } else if(this.wwItineraries[i]['corporate']['status'] && !this.wwItineraries[i]['corporate']['publish']) {
-        this.wwItineraries.splice(i,1);
-        i--;
-      }
-    }
-  }
-
-  checkItinLength() {
-    if(this.user['itineraries'].length < 6) {
-      this.top = 165 + (this.user['itineraries'].length * 61) + 'px';
-    } else  {
-      this.top = '500px';
-    }
-
   }
 
 

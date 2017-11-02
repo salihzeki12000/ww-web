@@ -267,7 +267,7 @@ export class PostComponent implements OnInit, OnDestroy {
   // route to users
   routeToUser(id) {
     if(id === this.currentUser['_id']) {
-      this.router.navigateByUrl('/me/profile');
+      this.router.navigateByUrl('/me/home');
     } else  {
       this.router.navigateByUrl('/wondererwanderer/' + id)
     }

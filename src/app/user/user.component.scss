@@ -3,22 +3,20 @@
 }
 
 
-
-
 /* follow status */
 
 .user-profile-follow-status  {
   position: absolute;
-  top: 45px;
-  right: calc((100vw - 600px) /2);
+  left: calc(((100vw - 600px) /2) + 150px);
   z-index: 3;
 
   @media only screen and (max-width: 650px) {
-    right: 10px;
+    top: 60px;
+    left: 20px;
   }
 }
 
-.user-profile-follow-status .already-following {
+.already-following {
   border: 1px solid #3A4A4D;
   border-radius: 5px;
   &:hover {
@@ -26,7 +24,7 @@
   }
 }
 
-.user-profile-follow-status .requested-following {
+.requested-following {
   border: 1px solid grey;
   border-radius: 5px;
   &:hover {
@@ -65,38 +63,28 @@
   }
 }
 
-.user-profile-header > .user-profile-details {
-  @media only screen and (min-width: 650px) {
-    left: calc(((100vw - 600px)/2) + 180px);
-  }
-
-  @media only screen and (max-width: 650px) {
-    margin-top: 240px;
+/* navigate bar */
+.navigate-bar ul  {
+  @media only screen and (min-width: 350px) and (max-width: 650px) {
+    height: 60px;
   }
 }
 
-
-
-/* profile background */
-
-.user-profile-background  {
-  @media only screen and (max-width: 650px) {
-    height: 270px;
+.navigate-bar li  {
+  @media only screen and (min-width: 350px) and (max-width: 650px) {
+    height: 51px;
   }
 }
 
-
-
-
-/* profile counters */
-
-.user-profile-counters {
-  @media only screen and (min-width: 650px) {
-    left: calc(((100vw - 600px)/2) + 170px);
+.navigate-bar a {
+  @media only screen and (min-width: 350px) and (max-width: 650px) {
+    font-size: 20px;
   }
+}
 
-  @media only screen and (max-width: 650px) {
-    margin-top: 170px;
+.navigate-bar span  {
+  @media only screen and (min-width: 350px) and (max-width: 650px) {
+    font-size: 12px;
   }
 }
 
@@ -104,17 +92,7 @@
 /* others */
 
 .router-outlet  {
-  position: absolute;
-  left: calc((100vw - 600px)/2);
-  width: 600px;
-  margin-top: 180px;
-
-  @media only screen and (max-width: 650px) {
-    width: 100%;
-    min-width: 300px;
-    margin-top: 300px;
-    left: 0;
-  }
+  text-align: center;
 }
 
 .hide {

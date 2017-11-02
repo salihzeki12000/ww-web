@@ -15,19 +15,19 @@
   <div class="user-profile-background"></div>
 
   <div class="user-profile-counters">
-    <div class="follower-counter" (click)="routeToFollowers()">
+    <div class="data-counter" (click)="routeToFollowers()">
       <h2>{{ followers.length }}</h2>
       <h5>FOLLOWER</h5>
     </div>
-    <div class="following-counter" (click)="routeToFollowings()">
+    <div class="data-counter" (click)="routeToFollowings()">
       <h2>{{ followings.length }}</h2>
       <h5>FOLLOWING</h5>
     </div>
-    <div class="itinerary-counter" [routerLink]="['/me/itinerary']">
+    <div class="data-counter" [routerLink]="['/me/itinerary']">
       <h2>{{ currentUser?.itineraries.length }}</h2>
       <h5>ITINERARY</h5>
     </div>
-    <div class="itinerary-counter" [routerLink]="['/me/favourite']">
+    <div class="data-counter" [routerLink]="['/me/favourite']">
       <h2>{{ favs?.length }}</h2>
       <h5>FAVOURITE</h5>
     </div>

@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { ItineraryUpcomingComponent } from './itinerary-upcoming.component';
+import { ItineraryFollowingComponent } from './itinerary-following.component';
 
-describe('ItineraryUpcomingComponent', () => {
-  let component: ItineraryUpcomingComponent;
-  let fixture: ComponentFixture<ItineraryUpcomingComponent>;
+describe('ItineraryFollowingComponent', () => {
+  let component: ItineraryFollowingComponent;
+  let fixture: ComponentFixture<ItineraryFollowingComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ItineraryUpcomingComponent ]
+      declarations: [ ItineraryFollowingComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ItineraryUpcomingComponent);
+    fixture = TestBed.createComponent(ItineraryFollowingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -8,7 +8,7 @@ import { UserFavouriteComponent }        from './user-favourite/user-favourite.c
 import { UserItinerarySummaryComponent } from './user-itinerary-summary/user-itinerary-summary.component';
 
 export const USER_ROUTES: Routes = [
-  { path: '', component: UserPostsComponent },
+  { path: '', redirectTo: 'itineraries', pathMatch: 'full' },
   { path: 'followers', component: UserFollowersComponent },
   { path: 'followings', component: UserFollowingsComponent },
   { path: 'itineraries', component: UserItinerariesComponent },

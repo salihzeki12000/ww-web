@@ -8,19 +8,24 @@
 </div>
 
 <div class="itinerary-details">
+  <div class="itin-completed" *ngIf="itinerary.completed">
+    <img src="assets/completed.png" alt="">
+  </div>
+
   <div class="private-indicator" *ngIf="itinerary.private">
     <i class="fa fa-lock" aria-hidden="true"></i>
   </div>
 
   <h5 class="copied" *ngIf="copied"><i class="fa fa-clone" aria-hidden="true"></i> You have copied this itinerary</h5>
-  <h3>{{ itinerary.name }}</h3>
+  <h3 class="itinerary-name" (click)="routeToItin()">{{ itinerary.name }}</h3>
 
-  <h5 *ngIf="itinerary.num_days">{{ itinerary.num_days }} days</h5>
+  <div *ngIf="itinerary.num_days" class="banner">{{ itinerary.num_days }} {{ itinerary.num_days > 1 ? "days" : "day" }}</div>
   <h5 *ngIf="!itinerary.num_days">{{ itinerary.date_from | date:'dd MMM yy' }} to {{ itinerary.date_to | date:'dd MMM yy' }}</h5>
+  <div *ngIf="itinerary.num_days" class="space-filler"></div>
 
   <div class="itinerary-list-stats">
-    <h3>{{ itinerary.members.length }}</h3>
-    <h6>{{ itinerary.members.length > 1 ? "Members" : "Member" }}</h6>
+    <h3>{{ itinerary.likes.length }}</h3>
+    <h6>{{ itinerary.likes.length > 1 ? "Likes" : "Like" }}</h6>
   </div>
 
   <div class="itinerary-list-stats" *ngIf="!itinerary.corporate.status">
@@ -28,9 +33,22 @@
     <h6>{{ itinerary.shares.length > 1 ? "Shares" : "Share" }}</h6>
   </div>
 
-  <div class="itinerary-list-stats" *ngIf="itinerary.corporate.status">
+  <div class="itinerary-list-stats">
     <h3>{{ itinerary.copied_by.length }}</h3>
     <h6>{{ itinerary.copied_by.length > 1 ? "Copies" : "Copy" }}</h6>
+  </div>
+
+  <div class="following-member" *ngIf="followings">
+    <div *ngFor="let member of followings">
+      <h5 class="username-bold" (click)="routeToUser(member._id)"><i class="fa fa-user" aria-hidden="true"></i> {{ member.username }}</h5>
+    </div>
+  </div>
+
+  <div class="like-save">
+    <i *ngIf="!like" class="fa fa-heart-o fa-fw fa-lg" aria-hidden="true" (click)="toggleLike()"></i>
+    <i *ngIf="like" class="fa fa-heart fa-fw fa-lg" aria-hidden="true" (click)="toggleLike()"></i>
+    <i *ngIf="!save" class="fa fa-bookmark-o fa-fw fa-lg" aria-hidden="true" (click)="toggleSave()"></i>
+    <i *ngIf="save" class="fa fa-bookmark fa-fw fa-lg" aria-hidden="true" (click)="toggleSave()"></i>
   </div>
 
   <h5 class="itinerary-created-by">Created by <span class="username-bold" (click)="routeToUser(itinerary.created_by._id)">{{ itinerary.created_by.username }}</span> on {{ itinerary.created_at | date: 'dd MMM yy'}}</h5>

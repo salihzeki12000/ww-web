@@ -1,13 +1,12 @@
-<div class="box-container">
-  <div class="box-container-header">
-    <h3><i class="fa fa-users" aria-hidden="true"></i> Followings</h3>
-  </div>
+<div class="search">
+  <i class="fa fa-search fa-lg" aria-hidden="true"></i>
+  <input type="text" placeholder="filter followings" #text (keyup)="filterSearch(text.value)">
+</div>
 
-  <div class="nil-message-main" *ngIf="followings.length === 0">
-    <h4>There is no following to display at the moment</h4>
-  </div>
+<div class="nil-message-main" *ngIf="followings.length === 0">
+  <h4>There is no following to display at the moment</h4>
+</div>
 
-  <div *ngFor="let following of followings" class="user-card">
-    <ww-user-profile-card [user]="following.following" [currentUser]="currentUser"></ww-user-profile-card>
-  </div>
+<div *ngFor="let following of filteredFollowings" class="user-card">
+  <ww-user-profile-card [user]="following.following" [currentUser]="currentUser"></ww-user-profile-card>
 </div>

@@ -1,7 +1,12 @@
-<div *ngIf="pendingFollowers.length === 0">
-  <h4 class="nil-message-main">You do not have any pending follower request at the moment</h4>
+<div class="search">
+  <i class="fa fa-search fa-lg" aria-hidden="true"></i>
+  <input type="text" placeholder="filter pending followers" #text (keyup)="filterSearch(text.value)">
 </div>
 
-<div *ngIf="pendingFollowers.length > 0">
-  <ww-pending-follower *ngFor="let pendingFollower of pendingFollowers" [pendingFollower]="pendingFollower"></ww-pending-follower>
+<div *ngIf="pendingFollowers.length === 0" class="nil-message-main">
+  <h3>You do not have any pending follower request at the moment</h3>
+</div>
+
+<div *ngIf="pendingFollowers.length > 0" class="middle">
+  <ww-pending-follower *ngFor="let pendingFollower of filteredFollowers" [pendingFollower]="pendingFollower" class="user-card"></ww-pending-follower>
 </div>

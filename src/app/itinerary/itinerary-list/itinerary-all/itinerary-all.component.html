@@ -1,3 +1,19 @@
-<div class="itinerary-list" *ngFor="let itinerary of itineraries" (click)="routeToItin(itinerary._id)" [class.completed-indicator]="itinerary.completed">
-  <ww-itinerary-list-item [itinerary]="itinerary" [currentUser]="currentUser"></ww-itinerary-list-item>
+
+<div class="search">
+  <i class="fa fa-search fa-lg" aria-hidden="true"></i>
+  <input type="text" placeholder="filter itineraries" #text (keyup)="filterSearch(text.value)">
+</div>
+
+<div class="itinerary-list add-new" (click)="showItineraryForm = true">
+  <i class="fa fa-plus fa-4x" aria-hidden="true"></i>
+  <h2>Create a new itinerary</h2>
+</div>
+
+<div class="itinerary-list" *ngFor="let itinerary of filteredItineraries" [class.completed-indicator]="itinerary.completed">
+  <ww-itinerary-list-item [itinerary]="itinerary" [user]="user"></ww-itinerary-list-item>
+</div>
+
+
+<div class="custom-modal" *ngIf="showItineraryForm">
+  <ww-itinerary-form (hideItineraryForm)="hideItineraryForm($event)"></ww-itinerary-form>
 </div>

@@ -111,7 +111,7 @@
           <h5 *ngSwitchCase="'bus'"><i class="fa fa-bus" aria-hidden="true"></i> Bus {{ event?.reference_number | uppercase }}</h5>
           <h5 *ngSwitchCase="'cruise'"><i class="fa fa-ship" aria-hidden="true"></i> Cruise</h5>
           <h5 *ngSwitchCase="'vehicle rental'"><i class="fa fa-car" aria-hidden="true"></i> Vehicle rental</h5>
-          <h5 *ngSwitchCase="'others'"><i class="fa fa-rocket" aria-hidden="true"></i> Transport</h5>
+          <h5 *ngSwitchCase="'transport'"><i class="fa fa-rocket" aria-hidden="true"></i> Transport</h5>
         </div>
 
         <h5>departs {{ event?.dep_city }} for {{ event?.arr_city}}</h5>
@@ -125,7 +125,7 @@
           <h5 *ngSwitchCase="'bus'"><i class="fa fa-bus" aria-hidden="true"></i> Bus {{ event?.reference_number | uppercase }} arrives {{ event?.arr_city}}</h5>
           <h5 *ngSwitchCase="'cruise'"><i class="fa fa-ship" aria-hidden="true"></i> Cruise arrives {{ event?.arr_city}}</h5>
           <h5 *ngSwitchCase="'vehicle rental'"><i class="fa fa-car" aria-hidden="true"></i> Vehicle rental arrives {{ event?.arr_city}}</h5>
-          <h5 *ngSwitchCase="'others'"><i class="fa fa-rocket" aria-hidden="true"></i> Transport arrives {{ event?.arr_city}}</h5>
+          <h5 *ngSwitchCase="'transport'"><i class="fa fa-rocket" aria-hidden="true"></i> Transport arrives {{ event?.arr_city}}</h5>
         </div>
 
         <h5 class="summary-airport" *ngIf="event?.transport_type === 'flight'">{{ event?.arr_station }}</h5>

@@ -1,428 +1,52 @@
-.itinerary-shortcut  {
-  position: fixed;
-}
-
-.ww-itinerary > .itinerary-shortcut-header h5 {
-  color: #F9FBFB;
-  background-color: #6494ED;
-}
-
-.home-posts  {
-  position: absolute;
-  right: calc((100vw - 600px)/2);
-  width: 600px;
+.profile-details  {
+  display: inline-block;
+  padding: 10px;
+  width: 400px;
 
   @media only screen and (max-width: 650px) {
     width: 100%;
-    min-width: 300px;
-    right: 0;
-  }
-
-  @media only screen and (min-width: 650px) and (max-width: 890px) {
-    right: calc((100vw - 600px)/2);
-  }
-
-  @media only screen and (min-width: 890px) and (max-width: 1200px) {
-    right: calc((100vw - 890px)/2);
+    text-align: center;
   }
 }
 
-.home-posts-list  {
-  display: flex;
-  flex-direction: column-reverse;
-  text-align: left;
+.profile-details h4 {
+  padding: 10px 5px;
+  color: #808080;
+  font-weight: 400;
 }
 
+.data-counter * {
+  color: #3A4A4D;
+}
 
+/******************
 
-/****************
-
-  verify account
+  Navigate bar
 
 ******************/
-.verify-message {
-  z-index: 1001;
-}
 
-.verify-message h4  {
-  width: 100%;
-  padding-bottom: 10px;
-}
+.navigate-bar li > a {
+  font-size: 18px;
 
+  @media only screen and (max-width: 350px) {
+    font-size: 12px;
+  }
 
-
-
-/****************
-
-  for new user tour
-
-*********************/
-.desktop  {
-  @media only screen and (max-width: 890px) {
-    display: none;
+  @media only screen and (min-width: 350px) and (max-width: 650px) {
+    font-size: 14px;
   }
 }
 
-.mobile {
-  display: none;
 
-  @media only screen and (max-width: 890px) {
-    display: block;
-  }
-}
-
-.message-box  {
-  position: absolute;
-  top: 170px;
-  right: calc((100vw - 600px)/2);
-  width: 600px;
-  padding: 20px;
-  background-color: white;
-  -webkit-box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
-  -moz-box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
-  box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
-  border-radius: 10px;
-
+.navigate-bar span  {
   @media only screen and (max-width: 650px) {
-    width: 100%;
-    min-width: 300px;
-    right: 0;
-  }
-
-  @media only screen and (min-width: 650px) and (max-width: 890px) {
-    right: calc((100vw - 600px)/2);
-  }
-
-  @media only screen and (min-width: 890px) and (max-width: 1200px) {
-    right: calc((100vw - 890px)/2);
+    font-size: 8px;
   }
 }
 
-.message-box > h1 {
+
+
+
+.router-outlet  {
   text-align: center;
-  font-family: 'Alice', serif;
-  letter-spacing: .5px;
-}
-
-.message-box > img  {
-  width: 300px;
-  margin: 5px 0 30px 130px;
-
-  @media only screen and (max-width: 650px) {
-    margin-left: calc((100vw - 340px) /2);
-  }
-}
-
-.message-box > h4 {
-  padding-bottom: 15px;
-  line-height: 1.4;
-  text-align: justify;
-}
-
-.welcome-message  * {
-  text-align: center;
-}
-
-.init-response {
-  margin-top: 20px;
-}
-
-.init-tour  {
-  display: inline-block;
-  padding: 20px;
-
-  &:hover {
-    cursor: pointer;
-    color: #808080;
-  }
-}
-
-.init-tour *  {
-  display: block;
-}
-
-.select-tour  {
-  display: inline-block;
-  padding: 20px;
-  margin-left: 10px;
-  color: #6494ED;
-  border: 2px solid #6494ED;
-  border-radius: 10px;
-  float: right;
-  &:hover{
-    cursor: pointer;
-    color: #3A4A4D;
-    border: 2px solid #3A4A4D;
-  }
-}
-
-// tour header
-.tour-header  {
-  margin-bottom: 20px;
-  padding-bottom: 3px;
-  border-bottom: 2px solid #6494ED;
-}
-
-.tour-header *  {
-  display: inline-block;
-}
-
-.tour-tracker {
-  margin-right: 10px;
-  vertical-align: top;
-}
-
-.tour-tracker h5  {
-  padding: 2px 0 1px 0;
-  height: 18px;
-  width: 18px;
-  text-align: center;
-  border: 1px solid;
-  border-radius: 50%;
-}
-
-.tour-done  {
-  color: #808080;
-  &:hover {
-    cursor: pointer;
-    color: #6494ED;
-  }
-}
-
-.tour-current {
-  color: #19CC72;
-  font-weight: 600;
-}
-
-.tour-next  {
-  color: #808080;
-}
-
-.triangle-left {
-	width: 0;
-	height: 0;
-	border-top: 10px solid transparent;
-	border-right: 20px solid white;
-	border-bottom: 10px solid transparent;
-}
-
-// step 1 of tour
-.tour-post  {
-  position: absolute;
-  top: 80px;
-  right: calc((100vw - 600px)/2);
-  width: 600px;
-
-  @media only screen and (max-width: 650px) {
-    width: 100%;
-    min-width: 300px;
-    right: 0;
-  }
-
-  @media only screen and (min-width: 650px) and (max-width: 890px) {
-    right: calc((100vw - 600px)/2);
-  }
-
-  @media only screen and (min-width: 890px) and (max-width: 1200px) {
-    right: calc((100vw - 890px)/2);
-  }
-}
-
-.highlight-post {
-  padding: 15px;
-  width: 600px;
-  height: 80px;
-  border: 5px dashed white;
-  border-radius: 5px;
-
-  @media only screen and (max-width: 650px) {
-    width: 100%;
-    min-width: 300px;
-  }
-}
-
-
-
-// step 2 of tour desktop
-.tour-add-itin  {
-  position: absolute;
-  top: 105px;
-  right: calc(((100vw - 600px)/2) + 620px);
-  width: 250px;
-
-  @media only screen and (max-width: 890px) {
-    display: none;
-  }
-
-  @media only screen and (min-width: 890px) and (max-width: 1200px) {
-    right: calc(((100vw - 890px)/2) + 620px);
-  }
-}
-
-.highlight-itin {
-  padding: 5px;
-  width: 250px;
-  height: 40px;
-  border: 5px dashed white;
-  border-radius: 5px;
-}
-
-.tour-itinerary-arrow {
-  position: absolute;
-  top: 115px;
-  left: calc(((100vw - 600px)/2) - 20px);
-
-  @media only screen and (min-width: 890px) and (max-width: 1200px) {
-    left: calc(((100vw - 600px)/2) + 125px);
-  }
-}
-
-.tour-itinerary-arrow > .box  {
-  margin: -13px 0 0 20px;
-  height: 50px;
-  width: 100px;
-  border-top: 5px solid white;
-  border-right: 5px solid white;
-  border-radius: 0 150px 0 0;
-}
-
-// step 2 of tour mobile
-.tour-menu  {
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 4%;
-
-  @media only screen and (max-width: 400px) {
-    left: 3%;
-  }
-
-  @media only screen and (min-width: 400px) and (max-width: 600px) {
-    left: 3.5%;
-  }
-
-  @media only screen and (max-width: 890px) {
-    display: block;
-  }
-}
-
-.highlight-menu {
-  padding: 5px;
-  width: 40px;
-  height: 40px;
-  border: 5px dashed white;
-  border-radius: 5px;
-}
-
-li  {
-  padding-bottom: 10px;
-}
-
-.tour-menu-arrow  {
-  position: absolute;
-  top: 10px;
-  left: 70px;
-
-  @media only screen and (max-width: 600px) {
-    left: 55px;
-  }
-}
-
-.tour-menu-arrow .box {
-  margin: -13px 0 0 20px;
-  height: 160px;
-  width: 100px;
-  border-top: 5px solid white;
-  border-right: 5px solid white;
-  border-radius: 0 150px 0 0;
-}
-
-
-
-// step 3 of tour
-.tour-nav {
-  position: fixed;
-  top: 0;
-  right: 6%;
-
-  @media only screen and (max-width: 500px) {
-    right: 0%;
-  }
-}
-
-.highlight-nav  {
-  padding: 5px;
-  width: 210px;
-  height: 45px;
-  border: 5px dashed white;
-  border-radius: 5px;
-
-  @media only screen and (max-width: 380px) {
-    width: 80px;
-  }
-
-  @media only screen and (min-width: 380px) and (max-width: 890px) {
-    width: 90px;
-  }
-}
-
-.tour-nav-list  {
-  padding-bottom: 20px;
-}
-
-.tour-nav-list *  {
-  display: inline-block;
-}
-
-.tour-nav-list h4 {
-  @media only screen and (max-width: 890px) {
-    width: 90%;
-    vertical-align: text-top;
-  }
-}
-
-.tour-nav-arrow {
-  position: absolute;
-  top: 10px;
-  left: 50%;
-}
-
-.tour-nav-arrow .box {
-  margin: -13px 0 0 20px;
-  height: 160px;
-  width: calc(44vw - 240px);
-  border-top: 5px solid white;
-  border-left: 5px solid white;
-  border-radius: 150px 0 0 0;
-
-  @media only screen and (max-width: 500px) {
-    width: calc(50vw - 120px);
-  }
-
-  @media only screen and (min-width: 500px) and (max-width: 890px) {
-    width: calc(44vw - 120px);
-  }
-}
-
-.triangle-right {
-	width: 0;
-	height: 0;
-	border-top: 10px solid transparent;
-	border-left: 20px solid white;
-	border-bottom: 10px solid transparent;
-  margin-left: calc(44vw - 230px);
-
-  @media only screen and (max-width: 500px) {
-    margin-left: calc(50vw - 110px);
-  }
-
-  @media only screen and (min-width: 500px) and (max-width: 890px) {
-    margin-left: calc(44vw - 110px);
-  }
-}
-
-
-.space-block  {
-  width: 1px;
-  height: 100px;
 }

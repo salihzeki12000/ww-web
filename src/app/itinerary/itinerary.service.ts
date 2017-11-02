@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
+import { Http, Headers, Response, URLSearchParams, RequestOptions } from '@angular/http';
 import 'rxjs/Rx';
 import { Observable, ReplaySubject } from 'rxjs';
 
@@ -38,6 +38,7 @@ export class ItineraryService {
                     });
   }
 
+
   setDateRange(itinerary)  {
     let dateRange = [];
     dateRange.push('any day');
@@ -50,7 +51,7 @@ export class ItineraryService {
 
       let endDate = new Date(itinerary['date_to']);
 
-      dateRange.push((new Date(year, month, day)).toISOString());
+      dateRange.push(startDate.toISOString());
 
       while(startDate < endDate){
         let addDate = startDate.setDate(startDate.getDate() + 1);
@@ -150,3 +151,26 @@ export class ItineraryService {
                     });
   }
 }
+
+
+
+// getItineraries(ids) {
+//   // const body = JSON.stringify(ids);
+//   const headers = new Headers({ 'Content-Type': 'application/json' });
+//   const token = localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '';
+//
+//   let data = new URLSearchParams();
+//   for (let i = 0; i < ids.length; i++) {
+//     data.append('_id', ids[i]);
+//   }
+//
+//   let opts = new RequestOptions({headers: headers});
+//   opts.params = data;
+//
+//   return this.http.get(this.url + '/itinerary/list' + token, opts)
+//                   .map((response: Response) => response.json())
+//                   .catch((error: Response) => {
+//                     this.errorMessageService.handleErrorMessage(error.json());
+//                     return Observable.throw(error.json())
+//                   });
+// }

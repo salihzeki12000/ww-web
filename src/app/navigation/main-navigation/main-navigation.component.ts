@@ -274,7 +274,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     this.exitSideNav();
     this.profileOptions = false;
 
-    this.router.navigateByUrl('/me/profile');
+    this.router.navigateByUrl('/me/home');
   }
 
   routeToProfileEdit()  {
@@ -282,7 +282,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     this.exitSideNav();
     this.profileOptions = false;
 
-    this.router.navigateByUrl('/me/profile-edit');
+    this.router.navigateByUrl('/me/home-edit');
   }
 
 
@@ -431,7 +431,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
 
   routeToHome() {
     if(this.isLoggedIn) {
-      this.router.navigateByUrl('/me')
+      this.router.navigateByUrl('/me/home')
     } else  {
       this.router.navigateByUrl('/')
     }
@@ -440,7 +440,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   routeToUser(id) {
     this.cancelShowUsers();
     if(id === this.currentUser['_id']) {
-      this.router.navigateByUrl('/me/profile');
+      this.router.navigateByUrl('/me/home');
     } else  {
       this.router.navigateByUrl('/wondererwanderer/' + id)
     }

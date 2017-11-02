@@ -20,9 +20,10 @@
 
   <div class="user-profile-header">
     <img src="{{ user?.display_picture.url }}" alt="" (click)="routeToProfile()">
-    <h1>{{ user?.username }}</h1>
 
     <div class="user-profile-details">
+      <h1>{{ user?.username }}</h1>
+
       <h4>{{ user?.description }}</h4>
       <h4 *ngIf="user?.corporate"><i class="fa fa-envelope" aria-hidden="true"></i> <a href="mailto:{{user?.email}}">{{ user?.email }}</a></h4>
     </div>
@@ -33,23 +34,29 @@
   </div>
   <div class="user-profile-background"></div>
 
-  <div class="user-profile-counters">
-    <div class="follower-counter" (click)="routeTo('followers')">
-      <h2>{{ followers.length }}</h2>
-      <h5>FOLLOWER</h5>
-    </div>
-    <div class="following-counter" (click)="routeTo('followings')">
-      <h2>{{ followings.length }}</h2>
-      <h5>FOLLOWING</h5>
-    </div>
-    <div class="itinerary-counter" (click)="routeTo('itineraries')">
-      <h2>{{ itineraries.length }}</h2>
-      <h5>ITINERARY</h5>
-    </div>
-    <div class="itinerary-counter" (click)="routeTo('favourite')">
-      <h2>{{ favs?.length }}</h2>
-      <h5>FAVOURITE</h5>
-    </div>
+  <div class="navigate-bar">
+    <header>
+      <nav>
+        <ul>
+          <li routerLinkActive="active"><a [routerLink]="['itineraries']">
+            {{ itineraries.length }}
+            <span>ITINERARY</span>
+          </a></li>
+          <li routerLinkActive="active"><a [routerLink]="['favourite']">
+            {{ favs?.length }}
+            <span>FAVOURITE</span>
+          </a></li>
+          <li routerLinkActive="active"><a [routerLink]="['followers']">
+            {{ followers?.length }}
+            <span>FOLLOWER</span>
+          </a></li>
+          <li routerLinkActive="active"><a [routerLink]="['followings']">
+            {{ followings?.length }}
+            <span>FOLLOWING</span>
+          </a></li>
+        </ul>
+      </nav>
+    </header>
   </div>
 
 
