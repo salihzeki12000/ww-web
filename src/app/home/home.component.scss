@@ -45,8 +45,444 @@
 }
 
 
-
-
 .router-outlet  {
   text-align: center;
+}
+
+
+/****************
+
+  verify account
+
+******************/
+.verify-message {
+  z-index: 1001;
+}
+
+.verify-message h4  {
+  width: 100%;
+  padding-bottom: 10px;
+}
+
+.verify-message .form-card  {
+  top: 50px;
+}
+
+
+/****************
+
+  for new user tour
+
+*********************/
+.desktop  {
+  @media only screen and (max-width: 890px) {
+    display: none;
+  }
+}
+
+.mobile {
+  display: none;
+
+  @media only screen and (max-width: 890px) {
+    display: block;
+  }
+}
+
+.message-box  {
+  position: absolute;
+  top: 50px;
+  right: calc((100vw - 600px)/2);
+  width: 600px;
+  padding: 20px;
+  background-color: white;
+  -webkit-box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
+  -moz-box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
+  border-radius: 2px;
+
+  @media only screen and (max-width: 650px) {
+    width: 100%;
+    min-width: 300px;
+    right: 0;
+  }
+}
+
+.message-box > h1 {
+  text-align: center;
+  font-family: 'Alice', serif;
+  letter-spacing: .5px;
+}
+
+.message-box > img  {
+  width: 300px;
+  margin: 5px 0 30px 130px;
+
+  @media only screen and (max-width: 650px) {
+    margin-left: calc((100vw - 340px) /2);
+  }
+}
+
+.message-box > h4 {
+  padding-bottom: 10px;
+  line-height: 1.4;
+  text-align: justify;
+}
+
+.welcome-message  * {
+  text-align: center;
+}
+
+.init-response {
+  margin-top: 20px;
+}
+
+.init-tour  {
+  display: inline-block;
+  padding: 20px;
+
+  &:hover {
+    cursor: pointer;
+    color: #808080;
+  }
+}
+
+.init-tour *  {
+  display: block;
+}
+
+.next-step  {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 10px 0 0 10px;
+  color: #6494ED;
+  border: 2px solid #6494ED;
+  border-radius: 10px;
+  float: right;
+  &:hover{
+    cursor: pointer;
+    color: #3A4A4D;
+    border: 2px solid #3A4A4D;
+  }
+}
+
+// tour header
+.tour-header  {
+  margin-bottom: 20px;
+  padding-bottom: 3px;
+  border-bottom: 2px solid #6494ED;
+}
+
+
+.triangle-top {
+	width: 0;
+	height: 0;
+	border-left: 10px solid transparent;
+	border-bottom: 10px solid black;
+	border-right: 10px solid transparent;
+}
+
+.triangle-down {
+	width: 0;
+	height: 0;
+  border-left: 10px solid transparent;
+	border-top: 10px solid black;
+	border-right: 10px solid transparent;
+}
+
+
+// step 1 of tour
+
+.tour1  {
+  top: 30px;
+}
+
+.tour-itin  {
+  position: absolute;
+  top: 255px;
+  left: calc((100vw - 600px)/2);
+
+  @media only screen and (max-width: 650px) {
+    width: 100%;
+    min-width: 300px;
+    right: 0;
+  }
+}
+
+.hide-text {
+  position: absolute;
+  margin: -125px 0 0 -5px;
+  height: 100px;
+  width: 500px;
+  background-color: #B2B2B2;
+
+  @media only screen and (max-width: 650px) {
+    position: fixed;
+    margin: 0;
+    top: 130px;
+    left: 5vw;
+    height: 200px;
+    width: 90vw;
+  }
+}
+
+.your-itin,
+.curated-itin,
+.follow-itin,
+.save-itin  {
+  position: absolute;
+  width: 180px;
+  padding: 5px;
+  color: #F9FBFB;
+  font-family: 'Alice', serif;
+  text-align: center;
+  background-color: black;
+  border-radius: 2px;
+  z-index: 1;
+}
+
+
+/* your itin */
+.your-itin  {
+  margin: -66px 0 0 5px;
+
+  @media only screen and (max-width: 650px) {
+    margin: -45px 0 0 190px;
+    width: 220px;
+    height: 60px;
+  }
+}
+
+.itin-your-arrow  {
+  position: absolute;
+  margin: 8px 0 0 59px;
+
+  @media only screen and (max-width: 650px) {
+    margin: 105px 0 0 165px;
+  }
+}
+
+.itin-your-arrow  .box  {
+  margin: -45px 0 0 -39px;
+  height: 40px;
+  width: 50px;
+  border-top: 5px solid black;
+  border-right: 3px solid black;
+  border-radius: 0 30px 0 0;
+
+  @media only screen and (max-width: 650px) {
+    margin: -125px 0 0 8px;
+    height: 116px;
+    width: 80px;
+    border-right: none;
+    border-left: 3px solid black;
+    border-radius: 70px 0 0 0;
+  }
+}
+
+
+
+/* curated itin */
+.curated-itin {
+  margin: 85px 0 0 15px;
+  width: 230px;
+
+  @media only screen and (max-width: 650px) {
+    margin: 237px 0 0 150px;
+    padding: 28px 5px;
+    width: 300px;
+    height: 95px;
+  }
+}
+
+.itin-curated-arrow  {
+  position: absolute;
+  margin: 55px 0 0 185px;
+
+  @media only screen and (max-width: 650px) {
+    margin: 145px 0 0 240px;
+  }
+}
+
+.itin-curated-arrow .box {
+  margin-left: -39px;
+  height: 26px;
+  width: 50px;
+  border-right: 3px solid black;
+  border-bottom: 5px solid black;
+  border-radius: 0 0 20px 0;
+
+  @media only screen and (max-width: 650px) {
+    height: 110px;
+    border-radius: 0 0 50px 0;
+  }
+}
+
+
+
+
+/* follow itin */
+.follow-itin  {
+  margin: 85px 0 0 280px;
+
+  @media only screen and (max-width: 650px) {
+    margin: 165px 0 0 270px;
+  }
+}
+
+.itin-follow-arrow  {
+  position: absolute;
+  margin: 55px 0 0 320px;
+
+  @media only screen and (max-width: 650px) {
+    margin-top: 145px;
+  }
+}
+
+.itin-follow-arrow  .box  {
+  margin-left: 8px;
+  height: 30px;
+  width: 50px;
+  border-left: 3px solid black;
+  border-bottom: 5px solid black;
+  border-radius: 0 0 0 35px;
+}
+
+
+/* save itin */
+.save-itin  {
+  margin: -60px 0 0 360px;
+  width: 240px;
+
+  @media only screen and (max-width: 650px) {
+    margin: 37px 0 0 215px;
+  }
+}
+
+.itin-save-arrow  {
+  position: absolute;
+  margin: 8px 0 0 455px;
+
+  @media only screen and (max-width: 650px) {
+    margin: 105px 0 0 415px;
+  }
+}
+
+.itin-save-arrow  .box  {
+  height: 30px;
+  width: 50px;
+  margin: -35px 0 0 -39px;
+  border-right: 3px solid black;
+  border-top: 5px solid black;
+  border-radius: 0 20px 0 0;
+}
+
+
+// tour of nav
+.tour-nav {
+  position: fixed;
+  top: 0;
+  right: 6%;
+
+  @media only screen and (max-width: 500px) {
+    right: 0%;
+  }
+}
+
+.highlight-nav  {
+  padding: 5px;
+  width: 210px;
+  height: 45px;
+  border: 5px dashed white;
+  border-radius: 5px;
+
+  @media only screen and (max-width: 380px) {
+    width: 80px;
+  }
+
+  @media only screen and (min-width: 380px) and (max-width: 890px) {
+    width: 90px;
+  }
+}
+
+.tour-nav-list  {
+  padding-bottom: 20px;
+}
+
+.tour-nav-list *  {
+  display: inline-block;
+}
+
+.tour-nav-list h4 {
+  @media only screen and (max-width: 890px) {
+    width: 90%;
+    vertical-align: text-top;
+  }
+}
+
+
+
+/* right arrow */
+.tour-nav-arrow {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+}
+
+.tour-nav-arrow .box {
+  margin: -13px 0 0 20px;
+  height: 160px;
+  width: calc(44vw - 240px);
+  border-top: 2px solid white;
+  border-left: 5px solid white;
+  border-radius: 150px 0 0 0;
+
+  @media only screen and (max-width: 500px) {
+    width: calc(50vw - 120px);
+  }
+
+  @media only screen and (min-width: 500px) and (max-width: 890px) {
+    width: calc(44vw - 120px);
+  }
+}
+
+.triangle-right {
+	width: 0;
+	height: 0;
+	border-top: 10px solid transparent;
+	border-left: 20px solid white;
+	border-bottom: 10px solid transparent;
+  margin-left: calc(44vw - 230px);
+
+  @media only screen and (max-width: 500px) {
+    margin-left: calc(50vw - 110px);
+  }
+
+  @media only screen and (min-width: 500px) and (max-width: 890px) {
+    margin-left: calc(44vw - 110px);
+  }
+}
+
+
+/* left arrow */
+.tour-nav-arrow-left {
+  position: absolute;
+  top: 10px;
+  left: calc(5% + 25px);
+}
+
+.tour-nav-arrow-left .box {
+  margin: -12px 0 0 18px;
+  height: 160px;
+  width: 35vw;
+  border-top: 2px solid white;
+  border-right: 5px solid white;
+  border-radius: 0 150px 0 0;
+}
+
+.triangle-left {
+	width: 0;
+	height: 0;
+	border-top: 10px solid transparent;
+	border-right: 20px solid white;
+	border-bottom: 10px solid transparent;
 }

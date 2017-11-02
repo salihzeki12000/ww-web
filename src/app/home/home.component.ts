@@ -28,9 +28,15 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   newUser = false;
   tourStart = false;
+
+  tourHome = false; //home page
   tour1 = false;
   tour2 = false;
   tour3 = false;
+  tour4 = false;
+  index = 0;
+
+  tourNav = false;
 
   currentUserSubscription: Subscription;
   feedSubscription: Subscription;
@@ -108,29 +114,30 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   startTour() {
     this.tourStart = false;
+
+    this.tourHome = true;
     this.tour1 = true;
+    this.index = 1;
   }
 
-  tour1Done() {
-    this.tour1 = false;
-    this.tour2 = true;
-  }
+  next()  {
+    this.index += 1;
 
-  tour2Done() {
-    this.tour2 = false;
-    this.tour3 = true;
-  }
+    if(this.index === 2) {
+      this.tour2 = true;
+    } else if(this.index === 3)  {
+      this.tour3 = true;
+    } else if(this.index === 4) {
+      this.tour4 = true;
+    } else if(this.index === 5) {
+      this.tourHome = false;
+      this.tour1 = false;
+      this.tour2 = false;
+      this.tour3 = false;
+      this.tour4 = false;
 
-  backTo1() {
-    this.tour1 = true;
-    this.tour2 = false;
-    this.tour3 = false;
-  }
-
-  backTo2() {
-    this.tour1 = false;
-    this.tour2 = true;
-    this.tour3 = false;
+      this.tourNav = true;
+    }
   }
 
 

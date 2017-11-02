@@ -56,3 +56,147 @@
 <div class="custom-modal" *ngIf="showItineraryForm">
   <ww-itinerary-form (hideItineraryForm)="hideItineraryForm($event)"></ww-itinerary-form>
 </div>
+
+<!-- verify message -->
+<div class="custom-modal verify-message" *ngIf="verifyMsg">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>Verify your account</h3>
+      <a (click)="verifyMsg = false">X</a>
+    </div>
+
+    <div class="content-without-header-name">
+      <h4>Please confirm your email address using the verification link sent to you.</h4>
+      <h4>In case it is missing from your inbox, please check your spam/junk folder.</h4>
+    </div>
+
+    <div class="action-response">
+      <h5 class="action-response-primary" (click)="verifyMsg = false">OK</h5>
+    </div>
+  </div>
+</div>
+
+
+<!-- new user tour -->
+<div class="custom-modal" *ngIf="newUser">
+
+  <div class="message-box welcome-message" *ngIf="tourStart">
+    <h1>WELCOME!</h1>
+    <h3>to</h3>
+    <img src="assets/wondererwanderer_logo.png" alt="">
+    <h3>{{ user?.username }}, we have lined up a quick tour of the website for you.</h3>
+
+    <div class="init-response">
+      <div class="init-tour" (click)="startTour()">
+        <i class="fa fa-thumbs-o-up fa-3x" aria-hidden="true"></i>
+        Yes, let's start
+      </div>
+      <div class="init-tour" (click)="skipTour()">
+        <i class="fa fa-sign-out fa-3x" aria-hidden="true"></i>
+        I'll skip it
+      </div>
+    </div>
+  </div>
+
+
+  <div class="tour-itin" *ngIf="tourHome">
+
+    <div class="hide-text"></div>
+
+    <h3 class="your-itin" *ngIf="tour1">All the itineraries that you are part of.</h3>
+    <h3 class="curated-itin" *ngIf="tour2">Itineraries curated by us for you. Grab one and start traveling now.</h3>
+    <h3 class="follow-itin" *ngIf="tour3">Find travel inspirations from people you follow.</h3>
+    <h3 class="save-itin" *ngIf="tour4">Save and never lose track of the itineraries that inspire you.</h3>
+
+    <div class="itin-your-arrow" *ngIf="tour1">
+      <div class="triangle-down"></div>
+      <div class="box"></div>
+    </div>
+
+    <div class="itin-curated-arrow" *ngIf="tour2">
+      <div class="triangle-top"></div>
+      <div class="box"></div>
+    </div>
+
+    <div class="itin-follow-arrow" *ngIf="tour3">
+      <div class="triangle-top"></div>
+      <div class="box"></div>
+    </div>
+
+    <div class="itin-save-arrow" *ngIf="tour4">
+      <div class="triangle-down"></div>
+      <div class="box"></div>
+    </div>
+
+  </div>
+
+  <div class="message-box tour1" *ngIf="tourHome">
+    <div class="tour-header">
+      <h3>Explore itineraries in your home page.</h3>
+    </div>
+
+    <h4 class="next-step" (click)="next()">Next</h4>
+    <h4 class="next-step" (click)="skipTour()">Skip</h4>
+
+  </div>
+
+
+  <div class="tour-nav" *ngIf="tourNav">
+    <div class="highlight-nav"></div>
+  </div>
+
+  <div class="tour-nav-arrow" *ngIf="tourNav">
+    <div class="triangle-right"></div>
+    <div class="box"></div>
+  </div>
+
+  <div class="tour-nav-arrow-left mobile" *ngIf="tourNav">
+    <div class="triangle-left"></div>
+    <div class="box"></div>
+  </div>
+
+  <div class="message-box" *ngIf="tourNav">
+    <div class="tour-header">
+      <h3>Short cuts for quick access</h3>
+    </div>
+
+    <h4>These are shortcuts that allow you to navigate around the website quickly.</h4>
+
+    <div class="tour-nav-list">
+      <i class="fa fa-bookmark fa-lg fa-fw" aria-hidden="true"></i>
+      <h4>Access to your favourite places.</h4>
+    </div>
+
+    <div class="tour-nav-list desktop">
+      <i class="fa fa-search fa-lg fa-fw" aria-hidden="true"></i>
+      <h4>Find people to follow, check out their itineraries and be inspired!</h4>
+    </div>
+
+    <div class="tour-nav-list">
+      <i class="fa fa-sticky-note fa-lg fa-fw" aria-hidden="true"></i>
+      <h4>Quick access to your itineraries at all times. You can add new itinerary from here too!</h4>
+    </div>
+
+    <div class="tour-nav-list desktop">
+      <i class="fa fa-bell fa-lg fa-fw" aria-hidden="true"></i>
+      <h4>Access to your notifications</h4>
+    </div>
+
+    <div class="tour-nav-list desktop">
+      <img src="{{ user?.display_picture.url }}" class="user-profile-thumbnail">
+      <h4>View and edit your profile</h4>
+    </div>
+
+    <div class="tour-nav-list mobile">
+      <i class="fa fa-bars fa-lg fa-fw" aria-hidden="true"></i>
+      <h4>More options to help you navigate the website</h4>
+    </div>
+
+    <div class="tour-nav-list">
+      <h4>Remember to go to your edit profile page to update your details and privacy settings!</h4>
+    </div>
+
+    <h4 class="next-step" (click)="skipTour()">End tour</h4>
+  </div>
+
+</div>
