@@ -136,7 +136,18 @@
   display: block;
 }
 
+.flight-search .form-section-details  {
+  margin-bottom: 0;
+}
 
+.flight-data-message  {
+  padding: 5px;
+  border: 2px solid red;
+}
+
+.flight-data-message *  {
+  font-weight: 400;
+}
 
 /* if need to select airport */
 .stop-over > h5.form-section-header  {
