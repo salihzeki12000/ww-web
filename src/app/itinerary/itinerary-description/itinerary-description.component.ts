@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy, Renderer2, ElementRef, HostListener } from '@angular/core';
 import { FormGroup, FormArray, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { Subscription } from 'rxjs/Rx';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription }   from 'rxjs/Rx';
+import { Title }          from '@angular/platform-browser';
 
 import { UserService }           from '../../user';
 import { ItineraryService }      from '../itinerary.service';
@@ -38,6 +39,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
   captions = [];
 
   constructor(
+    private titleService: Title,
     private element: ElementRef,
     private userService: UserService,
     private route: ActivatedRoute,
@@ -61,6 +63,13 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
     this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
       result =>{
         this.itinerary = result;
+
+        let header = ''
+        if(this.preview) header = "Preview : ";
+
+        let title = header + this.itinerary['name'] + " | Description";
+
+        this.titleService.setTitle(title);
 
         this.descriptionForm.reset();
         this.patchValue();

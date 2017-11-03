@@ -30,6 +30,11 @@
   <span class="form-validator"
     *ngIf="signupForm.get('confirmPassword').dirty && signupForm.get('confirmPassword').invalid">Passwords do not match</span>
 
+
+  <div class="safari-message" *ngIf="safari">
+    <h4>Safari browser detected. If the website cannot load after sign up, please use Chrome browser.</h4>
+  </div>
+
   <button type="submit" class="action-response-primary" [disabled]="!signupForm.valid"><h4>Sign Up Now</h4></button>
 
 </form>

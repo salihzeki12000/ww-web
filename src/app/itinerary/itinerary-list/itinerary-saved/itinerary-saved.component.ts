@@ -25,7 +25,7 @@ export class ItinerarySavedComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.loadingService.setLoader(true,"")
 
-    this.titleService.setTitle("Itineraries | Saved");
+    this.titleService.setTitle("Saved itineraries");
 
     this.userSubscription = this.userService.updateCurrentUser.subscribe(
      result => {

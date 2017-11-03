@@ -21,7 +21,7 @@ export class PendingFollowersComponent implements OnInit, OnDestroy {
     private relationshipService: RelationshipService) { }
 
   ngOnInit() {
-    this.titleService.setTitle("Relationships | Pending Followers");
+    this.titleService.setTitle("Relationships | Followers requests");
 
     this.relationshipSubscription = this.relationshipService.updateRelationships.subscribe(
      result => {

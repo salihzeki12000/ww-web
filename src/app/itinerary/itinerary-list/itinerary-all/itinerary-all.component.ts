@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
-import { Title }        from '@angular/platform-browser';
 
 import { UserService }  from '../../../user';
 import { LoadingService } from '../../../loading';
@@ -20,15 +19,12 @@ export class ItineraryAllComponent implements OnInit, OnDestroy {
   showItineraryForm = false;
 
   constructor(
-    private titleService: Title,
     private loadingService: LoadingService,
     private renderer: Renderer2,
     private userService: UserService) { }
 
   ngOnInit() {
     this.loadingService.setLoader(true,"")
-
-    this.titleService.setTitle("Itineraries");
 
     this.userSubscription = this.userService.updateCurrentUser.subscribe(
      result => {

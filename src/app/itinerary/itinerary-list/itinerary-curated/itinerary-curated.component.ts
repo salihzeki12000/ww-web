@@ -24,7 +24,7 @@ export class ItineraryCuratedComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadingService.setLoader(true,"")
-    this.titleService.setTitle("Itineraries | Curated");
+    this.titleService.setTitle("Curated itineraries");
 
     this.userService.getUser("59001ca5e0cc620004da87b8").subscribe(
       result => {

@@ -20,6 +20,10 @@
   <span class="form-validator"
     *ngIf="signinForm.get('password').touched && signinForm.get('password').invalid">Password is not valid. Please enter at least 6 characters</span>
 
+  <div class="safari-message" *ngIf="safari">
+    <h4>Safari browser detected. If the website cannot load after log in, please use Chrome browser.</h4>
+  </div>
+
   <button type="submit" class="action-response-primary" [disabled]="!signinForm.valid"><h4>Log In Now</h4></button>
 
 </form>

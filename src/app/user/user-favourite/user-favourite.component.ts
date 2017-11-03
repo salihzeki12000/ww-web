@@ -1,12 +1,14 @@
 import { Component, OnInit, OnDestroy, ElementRef, ViewChild, Renderer2, HostListener } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription }   from 'rxjs/Rx';
+import { Title }        from '@angular/platform-browser';
 
 declare var google:any;
 declare var MarkerClusterer:any;
 
 import { FavouriteService } from '../../favourite';
 import { LoadingService }   from '../../loading';
+import { UserService }      from '../user.service';
 
 @Component({
   selector: 'ww-user-favourite',
@@ -25,12 +27,15 @@ export class UserFavouriteComponent implements OnInit, OnDestroy {
   infoWindows = [];
 
   favSubscription: Subscription;
+  userSubscription: Subscription;
 
   showFav = false;
   showCountry = false;
 
   constructor(
+    private titleService: Title,
     private renderer: Renderer2,
+    private userService: UserService,
     private loadingService: LoadingService,
     private favouriteService: FavouriteService) { }
 
@@ -45,6 +50,11 @@ export class UserFavouriteComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if(this.favSubscription) this.favSubscription.unsubscribe();
+
+    this.userSubscription = this.userService.updateDisplayUser.subscribe(
+      result => {
+        this.titleService.setTitle(result['username'] + ' | Favourites')
+      })
   }
 
   @HostListener('document:click', ['$event'])

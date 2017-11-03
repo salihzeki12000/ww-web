@@ -30,7 +30,7 @@ export class ItineraryFollowingComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadingService.setLoader(true,"")
-    this.titleService.setTitle("Itineraries | Followings");
+    this.titleService.setTitle("Following itineraries");
 
     this.userSubscription = this.userService.updateCurrentUser.subscribe(
      result => {

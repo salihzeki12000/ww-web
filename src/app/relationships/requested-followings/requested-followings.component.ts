@@ -21,7 +21,7 @@ export class RequestedFollowingsComponent implements OnInit, OnDestroy {
     private relationshipService: RelationshipService) { }
 
   ngOnInit() {
-    this.titleService.setTitle("Relationships | Following Requests");
+    this.titleService.setTitle("Relationships | Following requests");
 
     this.relationshipSubscription = this.relationshipService.updateRelationships.subscribe(
      result => {

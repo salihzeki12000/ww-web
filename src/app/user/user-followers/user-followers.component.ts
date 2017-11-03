@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
+import { Title }        from '@angular/platform-browser';
 
 import { RelationshipService } from '../../relationships/relationship.service';
 import { UserService }         from '../user.service';
@@ -17,8 +18,10 @@ export class UserFollowersComponent implements OnInit, OnDestroy {
 
   currentUser;
   currentUserSubscription: Subscription;
+  userSubscription: Subscription;
 
   constructor(
+    private titleService: Title,
     private userService: UserService,
     private loadingService: LoadingService,
     private relationshipService: RelationshipService) { }
@@ -30,6 +33,11 @@ export class UserFollowersComponent implements OnInit, OnDestroy {
 
        this.filteredFollowers = this.followers;
        this.loadingService.setLoader(false, "");
+      })
+
+    this.userSubscription = this.userService.updateDisplayUser.subscribe(
+      result => {
+        this.titleService.setTitle(result['username'] + ' | Followers')
       })
 
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(

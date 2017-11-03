@@ -14,20 +14,22 @@ import { ItineraryService }  from '../../itinerary';
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent implements OnInit {
-  signupForm: FormGroup;
-  avatar = 'https://res.cloudinary.com/wwfileupload/image/upload/v1495091346/avatar_neutral_d43pub.png';
-
   @Input() reroute;
   @Input() reload;
   @Input() itinerary;
   @Output() hideSignup = new EventEmitter();
 
+  signupForm: FormGroup;
+  avatar = 'https://res.cloudinary.com/wwfileupload/image/upload/v1495091346/avatar_neutral_d43pub.png';
+  safari;
+  
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private userService: UserService,
     private itineraryService: ItineraryService,
     private loadingService: LoadingService,
+    private deviceService: Ng2DeviceService,
     private router: Router) {
     this.signupForm = formBuilder.group({
       'username' : ['', Validators.required],
@@ -40,6 +42,14 @@ export class SignupComponent implements OnInit {
 
   ngOnInit() {
     this.loadingService.setLoader(false, "");
+
+    let deviceInfo = this.deviceService.getDeviceInfo();
+    console.log(deviceInfo);
+    let browser = deviceInfo['browser'];
+    let device = deviceInfo['device']
+    if(browser === 'safari' && (device === 'iphone' || device === 'ipad'))  {
+      this.safari = true;
+    }
   }
 
   onSubmit()  {

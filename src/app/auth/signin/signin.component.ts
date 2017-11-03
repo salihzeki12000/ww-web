@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Ng2DeviceService } from 'ng2-device-detector';
 
 import { User, UserService } from '../../user';
 import { AuthService }       from '../auth.service';
@@ -18,6 +19,7 @@ export class SigninComponent implements OnInit {
   @Input() reload;
   @Input() itinerary;
   @Output() hideSignin = new EventEmitter();
+  safari;
 
   signinForm: FormGroup;
 
@@ -27,6 +29,7 @@ export class SigninComponent implements OnInit {
     private userService: UserService,
     private itineraryService: ItineraryService,
     private loadingService: LoadingService,
+    private deviceService: Ng2DeviceService,
     private router: Router) {
     this.signinForm = formBuilder.group({
       'email' : ['', Validators.compose([ Validators.required, this.validEmail ])],
@@ -36,6 +39,14 @@ export class SigninComponent implements OnInit {
 
   ngOnInit() {
     this.loadingService.setLoader(false, "");
+
+    let deviceInfo = this.deviceService.getDeviceInfo();
+    console.log(deviceInfo);
+    let browser = deviceInfo['browser'];
+    let device = deviceInfo['device']
+    if(browser === 'safari' && (device === 'iphone' || device === 'ipad'))  {
+      this.safari = true;
+    }
   }
 
   onSubmit()  {
