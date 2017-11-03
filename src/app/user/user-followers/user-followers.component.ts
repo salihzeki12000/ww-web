@@ -30,7 +30,7 @@ export class UserFollowersComponent implements OnInit, OnDestroy {
     this.followersSubscription = this.relationshipService.updateUserRelationships.subscribe(
       result => {
        this.followers = Object.keys(result['followers']).map(key => result['followers'][key]);
-
+       console.log(this.followers)
        this.filteredFollowers = this.followers;
        this.loadingService.setLoader(false, "");
       })

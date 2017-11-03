@@ -294,7 +294,7 @@
       <div class="follow-button">
         <div *ngIf="user.following_status === 'following'">
           <div class="following-response">
-            <h5 class="already-following">Following</h5>
+            <h5 class="already-following"><i class="fa fa-check" aria-hidden="true"></i> Following</h5>
             <h5 class="unfollow" (click)="unfollow(user)">Stop following</h5>
           </div>
         </div>
@@ -305,7 +305,7 @@
           </div>
         </div>
         <div *ngIf="user.following_status === ''">
-          <button type="button" class="follow-button" (click)="follow(user)"><h5>Follow</h5></button>
+          <button type="button" class="follow-button" (click)="follow(user)"><h5><i class="fa fa-plus" aria-hidden="true"></i> Follow</h5></button>
         </div>
       </div>
     </div>
