@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Ng2DeviceService } from 'ng2-device-detector';
 
 import { User, UserService } from '../../user'
 import { AuthService }       from '../auth.service';
