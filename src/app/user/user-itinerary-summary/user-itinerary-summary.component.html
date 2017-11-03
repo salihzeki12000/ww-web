@@ -157,30 +157,3 @@
   </div>
 
 </div>
-
-
-<!-- select date for copy itinerary -->
-<div class="custom-modal" *ngIf="requestDate">
-  <div class="form-card">
-    <div class="form-header">
-      <h3>Date range for new itinerary</h3>
-      <a (click)="cancelDate()">X</a>
-    </div>
-
-    <div class="content-without-header-name">
-      <h4>Please select a start and end date to complete the copying process.</h4>
-      <h4>This itinerary consists of {{ itinerary.num_days }} days.</h4>
-
-      <div class="date-picker" daterangepicker [options]="options" (selected)="selectedDate($event)">
-        <i class="fa fa-calendar" aria-hidden="true"></i>
-        <h4><span>From:</span> {{ dateFrom | date: 'dd MMM yyyy'}}</h4>
-        <h4><span>To:</span> {{ dateTo | date: 'dd MMM yyyy'}}</h4>
-      </div>
-    </div>
-
-    <div class="action-response">
-      <h5 class="action-response-primary" (click)="dateSelected()">NEXT</h5>
-    </div>
-
-  </div>
-</div>

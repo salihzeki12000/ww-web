@@ -466,6 +466,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
   // save
   saveNew()  {
     let newAccommodation = this.addAccommodationForm.value;
+
     if(this.displayPic)  {
       newAccommodation['photo'] = this.displayPic;
     }

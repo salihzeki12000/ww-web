@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response, URLSearchParams, RequestOptions } from '@angular/http';
-import 'rxjs/Rx';
+// import 'rxjs/Rx';
 import { Observable, ReplaySubject } from 'rxjs';
 
 import { Itinerary }           from './itinerary';
@@ -45,13 +45,9 @@ export class ItineraryService {
 
     if(!itinerary['num_days']) {
       let startDate = new Date(itinerary['date_from']);
-      let year = startDate.getFullYear();
-      let month = startDate.getMonth();
-      let day = startDate.getDate();
-
       let endDate = new Date(itinerary['date_to']);
 
-      dateRange.push(startDate.toISOString());
+      dateRange.push(itinerary['date_from']);
 
       while(startDate < endDate){
         let addDate = startDate.setDate(startDate.getDate() + 1);
@@ -66,7 +62,6 @@ export class ItineraryService {
    }
 
     return dateRange;
-
   }
 
   addItin(itinerary: Itinerary) {

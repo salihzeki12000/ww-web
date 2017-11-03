@@ -113,7 +113,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
         result => {})
 
       this.itineraryEventService.getEvents(id).subscribe(
-        eventResult => { this.events = eventResult })
+        eventResult => { this.events = eventResult; })
 
       this.resourceService.getResources(id).subscribe(
         resourceResult => { this.resources = resourceResult })
@@ -496,6 +496,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
     this.newDateRange = [];
     this.newDateRange.push('any day');
     this.newDateRange.push((new Date(startArray[2], startArray[0] - 1, startArray[1])).toISOString());
+    console.log(this.newDateRange)
 
     while(startDate < endDate){
       let addDate = startDate.setDate(startDate.getDate() + 1);

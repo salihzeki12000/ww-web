@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
-import 'rxjs/Rx';
+// import 'rxjs/Rx';
 import { Observable, ReplaySubject } from 'rxjs';
 
 import { User } from '../user';

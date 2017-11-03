@@ -1,9 +1,10 @@
-import { Component, OnInit }      from '@angular/core';
+import { Component, OnInit, HostListener }      from '@angular/core';
 import { Router, NavigationEnd }  from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
 import { AuthService }  from './auth';
 import { UserService }  from './user';
+import { ErrorMessageService } from './error-message';
 
 @Component({
   selector: 'ww-root',
@@ -15,10 +16,22 @@ export class AppComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private errorMessageService: ErrorMessageService,
     private authService: AuthService,
     private userService: UserService) { }
 
   ngOnInit()  {
+    if(!navigator.onLine) {
+      let message = {
+        title: "No internet connection",
+        error: {
+          message: "No internet connection"
+        }
+      }
+      console.log('send error message')
+      this.errorMessageService.handleErrorMessage(message)
+    }
+
     let isLoggedIn = this.authService.isLoggedIn();
 
     if(isLoggedIn)  {
@@ -42,5 +55,10 @@ export class AppComponent implements OnInit {
         window.scrollTo(0, 0);
       }
     })
+  }
+
+  @HostListener('window', ['$event'])
+  onInit(event)  {
+    console.log(event)
   }
 }

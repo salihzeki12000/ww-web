@@ -132,6 +132,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     this.dateSubscription = this.itineraryService.updateDate.subscribe(
       result => {
         this.dateRange  = Object.keys(result).map(key => result[key]);
+        console.log(this.dateRange)
         this.firstDay = this.dateRange[1];
     })
 
@@ -744,22 +745,9 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       }
     }
 
-    let date;
-    if(newTransport['dep_date'] !== "any day")  {
-
-      let dep_date = new Date(newTransport['dep_date']);
-      let year = dep_date.getFullYear();
-      let month = dep_date.getMonth();
-      let day = dep_date.getDate();
-
-      date = new Date(year, month, day).toISOString();
-    } else  {
-      date = newTransport['dep_date'];
-    }
-
     newTransport['dep_station_location'] = this.depLocation;
     newTransport['arr_station_location'] = this.arrLocation;
-    newTransport['date'] = date;
+    newTransport['date'] = newTransport['dep_date'];
     newTransport['time'] = newTransport['dep_time'];
     newTransport['type'] = 'transport';
     newTransport['transport_type'] = this.transportOption;

@@ -40,6 +40,7 @@ export class ItineraryEventService  {
     return this.http.get( this.url + "/event" + itinId)
                     .map((response: Response) => {
                       this.events = response.json().events;
+
                       this.timeAgo(this.events);
                       return this.events;
                     })
@@ -217,6 +218,7 @@ export class ItineraryEventService  {
         }
       }
     }
+
     this.updateEvent.next(events);
   }
 }
