@@ -20,6 +20,7 @@ img {
 .private-indicator  {
   display: inline-block;
   color: firebrick;
+  vertical-align: top;
 }
 
 .private-info  {
@@ -85,7 +86,7 @@ img {
 }
 
 .itinerary-details > h3 {
-  min-width: 245px;
+  width: 245px;
 }
 
 .itinerary-list-stats {
@@ -160,9 +161,10 @@ img {
 
 .itin-completed  {
   position: absolute;
-  margin: -15px 0 0 150px;
+  margin: 22px 0 0 170px;
 }
 
 .itin-completed img{
-  height: 60px;
+  height: 40px;
+  transform: rotate(40deg);
 }

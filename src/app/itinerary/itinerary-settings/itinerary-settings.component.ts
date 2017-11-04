@@ -23,6 +23,13 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   @ViewChild(DaterangePickerComponent)
   private picker: DaterangePickerComponent;
 
+  // navigation
+  basic = true;
+  member = false;
+  shareD = false;
+  copy = false;
+  others = false;
+
   editItineraryForm: FormGroup;
   dateChanged = false;
   dateRange = [];
@@ -315,6 +322,22 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     }
   }
 
+
+
+  // settings navigation
+  navigate(section) {
+    this.basic = false;
+    this.member = false;
+    this.shareD = false;
+    this.copy = false;
+    this.others = false;
+
+    if(section === 'basic') this.basic = true;
+    if(section === 'member') this.member = true;
+    if(section === 'shareD') this.shareD = true;
+    if(section === 'copy') this.copy = true;
+    if(section === 'others') this.others = true;
+  }
 
 
   // display dropdown option for each member
