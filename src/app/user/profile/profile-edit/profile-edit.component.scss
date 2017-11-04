@@ -1,34 +1,96 @@
-input {
-  padding-left: 0;
-  border: none;
-  border-bottom: 1px solid lightgray;
-  border-radius: 0;
-}
-
 .profile-edit-main  {
-  width: 600px;
-  margin-left: calc((100vw - 600px) / 2 );
+  position: relative;
+  width: 680px;
+  margin-left: calc((100vw - 680px) / 2 );
   padding-bottom: 20px;
-  background-color: white;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
 
-  @media only screen and (max-width: 610px) {
+
+  @media only screen and (max-width: 680px) {
     width: 100%;
     min-width: 300px;
     margin-left: 0;
   }
 }
 
-.profile-edit-header  {
-  padding: 20px;
-  height: 210px;
-  text-align: center;
-  background-color: #FAFAFA;
+.settings-navigation  {
+  position: fixed;
+  display: inline-block;
+  margin-top: 20px;
+  vertical-align: top;
+
+  @media only screen and (max-width: 450px) {
+    position: relative;
+    margin: 0 0 0 10px;
+  }
+
+  @media only screen and (min-width: 450px) and (max-width: 680px) {
+    position: relative;
+    margin: 0 0 0 35px;
+  }
 }
 
-.profile-edit-header > img  {
-  height: 150px;
-  width: 150px;
+.settings-navigation  * {
+  margin: 15px 5px;
+  padding: 5px;
+  font-weight: 400;
+  border-bottom: 2px solid transparent;
+
+  &:hover {
+    cursor: pointer;
+    opacity: .7;
+  }
+}
+
+.settings-navigation .current  {
+  color: #6494ED;
+  border-bottom: 2px solid #6494ED;
+}
+
+.settings-section {
+  display: inline-block;
+  width: 530px;
+  margin-left: 150px;
+
+  @media only screen and (max-width: 680px) {
+    display: block;
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+.settings-header  {
+  padding: 10px 0 20px 35px;
+  font-family: 'Fira Sans', sans-serif;
+  font-weight: 400;
+
+  @media only screen and (max-width: 450px) {
+    padding-left: 10px;
+  }
+
+  @media only screen and (max-width: 680px) {
+    border-top: 1px solid;
+    padding-top: 40px;
+  }
+}
+
+
+/* profile */
+.profile-date-join  {
+  text-align: left;
+  margin-bottom: 10px;
+  padding: 5px 10px;
+  font-style: italic;
+  color: #F9FBFB;
+  background-color: #6494ED;
+}
+
+.profile-img-edit  {
+  padding: 20px 0;
+}
+
+.profile-img-edit > img  {
+  height: 100px;
+  width: 100px;
   border-radius: 50%;
 }
 
@@ -38,19 +100,17 @@ input {
 
 .fileUpload {
   overflow: hidden;
-  position: absolute;
-  top: 260px;
-  left: calc(((100vw - 600px) / 2) + 225px);
-  padding: 0 10px;
+  margin-left: 20px;
+  padding: 5px 10px;
   color: #567FCC;
-  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 400;
+  vertical-align: bottom;
   border: 2px solid #567FCC;
+
   &:hover {
     cursor: pointer;
-  }
-
-  @media only screen and (max-width: 610px) {
-    left: calc((100vw - 152px) / 2);
+    opacity: .7;
   }
 }
 
@@ -62,27 +122,13 @@ input {
   cursor: pointer;
 }
 
-.profile-date-join  {
-  text-align: left;
-  margin-bottom: 10px;
-  padding: 5px 10px;
-  font-style: italic;
-  color: #F9FBFB;
-  background-color: #6494ED;
-}
+
 
 
 
 
 /* edit profile section */
 
-.form-section-header  {
-  padding: 30px 0 0 20px;
-
-  @media only screen and (max-width: 450px) {
-    padding: 30px 0 0 5px;
-  }
-}
 
 .form-section-details {
   padding: 10px 10px 5px 35px;
@@ -93,28 +139,17 @@ input {
 }
 
 .profile-edit-item  {
-  height: 50px;
-  @media only screen and (max-width: 610px) {
-    margin-bottom: 20px;
-    height: auto;
-  }
+  margin-bottom: 30px;
 }
 
-.profile-edit-item > * {
-  display: inline-block;
-  @media only screen and (max-width: 610px) {
-    display: block;
-  }
-}
-
-.profile-edit-item > h5 {
-  width: 130px;
+.profile-edit-item > h4:first-of-type {
+  padding-bottom: 3px;
   color: grey;
   letter-spacing: .5px;
-  vertical-align: top;
-  @media only screen and (max-width: 610px) {
-    padding-bottom: 3px;
-  }
+}
+
+.profile-edit-item > h4 {
+  font-weight: 400;
 }
 
 .na-text  {
@@ -127,6 +162,8 @@ input {
 ww-google-place-search  {
   width: 400px;
   margin-bottom: 0;
+  background-color: #E6E6E6;
+
   @media only screen and (max-width: 450px) {
     width: 100%;
   }
@@ -137,29 +174,18 @@ ww-google-place-search  {
 }
 
 
-
-/* preview of user profile card */
-
-.profile-preview  {
-  margin: 10px auto 0 auto;
-  padding: 10px;
-  max-width: 300px;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
-  @media only screen and (max-width: 610px) {
-    margin: 10px 0 0 0;
-  }
+.date-picker  {
+  background-color: #E6E6E6;
 }
-
-
 
 /* new profile picture display */
 .new-profile-picture  {
   text-align: center;
 }
 
-.new-profile-picture > h4 {
-  margin-top: 9px;
-  font-weight: 500;
+.new-profile-picture > h3 {
+  margin: 10px 0;
+  font-weight: 400;
 
   @media only screen and (max-width: 610px) {
     width: auto;
@@ -180,9 +206,12 @@ ww-google-place-search  {
 select.profile-gender-select  {
   width: 100px;
   margin-bottom: 0;
+  background-color: #E6E6E6;
 }
 
 .change-pw  {
+  margin: 40px 0 0 0;
+
   &:hover {
     cursor: pointer;
     text-decoration: underline;
@@ -193,29 +222,29 @@ select.profile-gender-select  {
   background-color: transparent;
 }
 
-.deactivate-account  {
-  padding: 10px 0 0 20px;
-  font-weight: 400;
-  color: grey;
+.settings-section .action-response-warning  {
+  border: 2px solid red;
+
   &:hover {
-    cursor: pointer;
-    color: red;
+    opacity: .7;
   }
+}
+
+.action-response-warning h5 {
+  padding: 5px;
+  color: red;
 }
 
 /* toggle */
-.toggle-button-true  {
-  margin: 2px 0 0 -61px;
+.toggle-true,
+.toggle-false{
+  margin-top: 5px;
+}
 
-  @media only screen and (max-width: 610px) {
-    margin: -22.5px 0 0 3px;
-  }
+.toggle-button-true  {
+  margin: -23px 0 0 3px;
 }
 
 .toggle-button-false  {
-  margin: 2px 0 0 -26px;
-
-  @media only screen and (max-width: 610px) {
-    margin: -22.5px 0 0 38px;
-  }
+  margin: -23px 0 0 37px;
 }

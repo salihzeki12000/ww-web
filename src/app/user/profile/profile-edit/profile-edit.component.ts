@@ -21,6 +21,12 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   @ViewChild(DaterangePickerComponent)
   private picker: DaterangePickerComponent;
 
+  // navigation
+  profile = true;
+  private = false;
+  default = false;
+  others = false;
+
   currentUser;
   currentUserSubscription: Subscription;
 
@@ -98,12 +104,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
          this.displayDate = this.currentUser['birth_date'].slice(0,10)
        }
 
-       setTimeout(() => {
-         if(!this.currentUser['corporate'])  {
-           this.updateDateRange();
-         }
-         this.loadingService.setLoader(false, "");
-       },1000)
+       this.loadingService.setLoader(false, "");
      })
 
     this.preventScroll(false);
@@ -139,6 +140,27 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   updateDateRange() {
     this.picker.datePicker.setStartDate(this.birthDate);
     this.picker.datePicker.setEndDate(this.birthDate);
+  }
+
+
+  // settings navigation
+  navigate(section) {
+    this.profile = false;
+    this.private = false;
+    this.default = false;
+    this.others = false;
+
+    if(section === 'profile') this.profile = true;
+    if(section === 'default') this.default = true;
+    if(section === 'others') this.others = true;
+
+    if(section === 'private') {
+      this.private = true;
+
+      if(!this.currentUser['corporate'])  {
+        this.updateDateRange();
+      }
+    }
   }
 
 

@@ -1,155 +1,161 @@
 <div class="profile-edit-main">
+
+  <div class="settings-navigation">
+    <h3 (click)="navigate('profile')" [class.current]="profile">Profile details</h3>
+    <h3 (click)="navigate('private')" [class.current]="private">Private details</h3>
+    <h3 (click)="navigate('default')" [class.current]="default">Default settings</h3>
+    <h3 (click)="navigate('others')" [class.current]="others">Others</h3>
+  </div>
+
+
   <form [formGroup]="editProfileForm" (ngSubmit)="saveProfile()">
 
-    <div class="profile-edit-header">
-      <img src="{{ currentUser?.display_picture.url }}" alt="">
+    <div class="settings-section" *ngIf="profile">
+      <h2 class="settings-header">Profile Details</h2>
 
-      <label class="fileUpload">
-        Change profile picture
-        <input type="file" (change)="fileUploaded($event)" [value]="inputValue" accept="image/*">
-      </label>
-    </div>
+      <div class="form-section-details">
 
+        <h5 class="profile-date-join">A wonderer wanderer since {{ currentUser?.created_at | date:'dd MMMM y'}}</h5>
+        <div class="profile-img-edit">
+          <img src="{{ currentUser?.display_picture.url }}" alt="">
 
-    <h5 class="profile-date-join">A wonderer wanderer since {{ currentUser?.created_at | date:'dd MMMM y'}}</h5>
-
-
-    <h4 class="form-section-header">Public Details</h4>
-    <div class="form-section-details">
-      <div class="profile-edit-item">
-        <h5>Username</h5>
-        <div class="">
-          <input type="text" formControlName="username" #username>
-          <span class="form-validator"
-            *ngIf="editProfileForm.get('username').touched && editProfileForm.get('username').invalid">Username is required</span>
-        </div>
-      </div>
-
-      <div class="profile-edit-item">
-        <h5>Description</h5>
-        <input type="text" formControlName="description" #description>
-      </div>
-
-      <div class="profile-preview">
-        <img src="{{ thumbnailImage }}" alt="" class="user-profile-thumbnail">
-
-        <div class="user-details">
-          <h4 class="username-bold">{{ username.value }}</h4>
-          <h5 class="user-description">{{ description.value }}</h5>
+          <label class="fileUpload">
+            Change picture
+            <input type="file" (change)="fileUploaded($event)" [value]="inputValue" accept="image/*">
+          </label>
         </div>
 
-      </div>
-    </div>
-
-
-
-    <h4 class="form-section-header">Private Details</h4>
-    <div class="form-section-details">
-      <div class="profile-edit-item">
-        <h5>Email</h5>
-        <div>
-          <input type="text" formControlName="email">
-          <span class="form-validator"
-            *ngIf="editProfileForm.get('email').touched && editProfileForm.get('email').invalid">Valid email is required</span>
-        </div>
-      </div>
-
-      <div class="profile-edit-item">
-        <h5>City of Residence</h5>
-
-        <ww-google-place-search
-        [settings]="'true'"
-        [options]="options"
-        [populate]="defaultCity"
-        (placeDetail)="setCity($event)"
-        (searching)="searching($event)"></ww-google-place-search>
-      </div>
-
-      <div *ngIf="!currentUser?.corporate">
         <div class="profile-edit-item">
-          <h5>Date of Birth</h5>
-
-          <div class="date-picker date-picker-single" daterangepicker [options]="birthDatePicker" (selected)="selectedDate($event)">
-            <i class="fa fa-calendar" aria-hidden="true"></i>
-            <h4>{{ displayDate | date: 'dd MMM yyyy'}}</h4>
+          <h4>Username</h4>
+          <div class="">
+            <input type="text" formControlName="username" #username>
+            <span class="form-validator"
+              *ngIf="editProfileForm.get('username').touched && editProfileForm.get('username').invalid">Username is required</span>
           </div>
         </div>
 
         <div class="profile-edit-item">
-          <h5>Gender</h5>
+          <h4>Description</h4>
+          <input type="text" formControlName="description" #description>
+        </div>
 
-          <select class="profile-gender-select" name="gender" formControlName="gender" [value]="currentUser?.gender">
-            <option *ngFor="let gender of genders">
-              <h5>{{ gender }}</h5>
-            </option>
-          </select>
+      </div>
+    </div>
+
+
+    <div class="settings-section" *ngIf="private">
+      <h2 class="settings-header">Private Details</h2>
+      <div class="form-section-details">
+        <div class="profile-edit-item">
+          <h4>Email</h4>
+          <div>
+            <input type="text" formControlName="email">
+            <span class="form-validator"
+              *ngIf="editProfileForm.get('email').touched && editProfileForm.get('email').invalid">Valid email is required</span>
+          </div>
+        </div>
+
+        <div class="profile-edit-item">
+          <h4>City of Residence</h4>
+
+          <ww-google-place-search
+          [settings]="'true'"
+          [options]="options"
+          [populate]="defaultCity"
+          (placeDetail)="setCity($event)"
+          (searching)="searching($event)"></ww-google-place-search>
+        </div>
+
+        <div *ngIf="!currentUser?.corporate">
+          <div class="profile-edit-item">
+            <h4>Date of Birth</h4>
+
+            <div class="date-picker date-picker-single" daterangepicker [options]="birthDatePicker" (selected)="selectedDate($event)">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <h4>{{ displayDate | date: 'dd MMM yyyy'}}</h4>
+            </div>
+          </div>
+
+          <div class="profile-edit-item">
+            <h4>Gender</h4>
+
+            <select class="profile-gender-select" name="gender" formControlName="gender" [value]="currentUser?.gender">
+              <option *ngFor="let gender of genders">
+                <h5>{{ gender }}</h5>
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <h4 class="change-pw" (click)="changePassword()">Change password</h4>
+
+      </div>
+    </div>
+
+
+    <div class="settings-section" *ngIf="default">
+      <h2 class="settings-header">Default Settings</h2>
+      <div class="form-section-details">
+        <div class="profile-edit-item">
+          <h4>Itinerary privacy</h4>
+
+          <h4 *ngIf="itinPrivacy"> > New itinerary created by you is private. Only members of itinerary can view.</h4>
+          <h4 *ngIf="itinPrivacy" class="toggle-true" (click)="itinPrivacy = false">Yes</h4>
+          <h4 *ngIf="itinPrivacy" class="toggle-button-true" (click)="itinPrivacy = false"></h4>
+
+          <h4 *ngIf="!itinPrivacy"> > New itinerary created by you is not private. Followers of members can view.</h4>
+          <h4 *ngIf="!itinPrivacy" class="toggle-false" (click)="itinPrivacy = true">No</h4>
+          <h4 *ngIf="!itinPrivacy" class="toggle-button-false" (click)="itinPrivacy = true"></h4>
+        </div>
+
+        <div class="profile-edit-item" *ngIf="!itinPrivacy">
+          <h4>Itinerary view only</h4>
+
+          <h4 *ngIf="itinView"> > Followers of members can only view the itinerary. They cannot copy.</h4>
+          <h4 *ngIf="itinView" class="toggle-true" (click)="itinView = false">Yes</h4>
+          <h4 *ngIf="itinView" class="toggle-button-true" (click)="itinView = false"></h4>
+
+          <h4 *ngIf="!itinView"> > Followers of members can view and create a copy of the itinerary.</h4>
+          <h4 *ngIf="!itinView" class="toggle-false" (click)="itinView = true">No</h4>
+          <h4 *ngIf="!itinView" class="toggle-button-false" (click)="itinView = true"></h4>
+
+        </div>
+
+        <div class="profile-edit-item" *ngIf="itinPrivacy">
+          <h4>Itinerary view only</h4>
+          <h4 class="na-text">Not applicable when itinerary privacy is private</h4>
+        </div>
+
+        <div class="profile-edit-item">
+          <h4>Favourite privacy</h4>
+
+          <h4 *ngIf="favPrivacy"> > New favourite is private. Only you can view.</h4>
+          <h4 *ngIf="favPrivacy" class="toggle-true" (click)="favPrivacy = false">Yes</h4>
+          <h4 *ngIf="favPrivacy" class="toggle-button-true" (click)="favPrivacy = false"></h4>
+
+          <h4 *ngIf="!favPrivacy"> > New favourite is not private. Your followers can view.</h4>
+          <h4 *ngIf="!favPrivacy" class="toggle-false" (click)="favPrivacy = true">No</h4>
+          <h4 *ngIf="!favPrivacy" class="toggle-button-false" (click)="favPrivacy = true"></h4>
         </div>
       </div>
-
-      <h5 class="change-pw" (click)="changePassword()">Change password</h5>
-
     </div>
 
-
-
-    <h4 class="form-section-header">Default Settings</h4>
-    <div class="form-section-details">
-      <div class="profile-edit-item">
-        <h5>Itinerary privacy</h5>
-
-        <h4 *ngIf="itinPrivacy" class="toggle-true" (click)="itinPrivacy = false">Yes</h4>
-        <h4 *ngIf="itinPrivacy" class="toggle-button-true" (click)="itinPrivacy = false"></h4>
-        <h6 *ngIf="itinPrivacy">New itinerary created by you is private. Only members of itinerary can view.</h6>
-
-        <h4 *ngIf="!itinPrivacy" class="toggle-false" (click)="itinPrivacy = true">No</h4>
-        <h4 *ngIf="!itinPrivacy" class="toggle-button-false" (click)="itinPrivacy = true"></h4>
-        <h6 *ngIf="!itinPrivacy">New itinerary created by you is not private. Followers of members can view.</h6>
-      </div>
-
-      <div class="profile-edit-item" *ngIf="!itinPrivacy">
-        <h5>Itinerary view only</h5>
-
-        <h4 *ngIf="itinView" class="toggle-true" (click)="itinView = false">Yes</h4>
-        <h4 *ngIf="itinView" class="toggle-button-true" (click)="itinView = false"></h4>
-        <h6 *ngIf="itinView">Followers of members can only view the itinerary. They cannot copy.</h6>
-
-        <h4 *ngIf="!itinView" class="toggle-false" (click)="itinView = true">No</h4>
-        <h4 *ngIf="!itinView" class="toggle-button-false" (click)="itinView = true"></h4>
-        <h6 *ngIf="!itinView">Followers of members can view and create a copy of the itinerary.</h6>
-
-      </div>
-
-      <div class="profile-edit-item" *ngIf="itinPrivacy">
-        <h5>Itinerary view only</h5>
-
-        <h5 class="na-text">Not applicable when itinerary privacy is private</h5>
-
-      </div>
-
-      <div class="profile-edit-item">
-        <h5>Favourite privacy</h5>
-
-        <h4 *ngIf="favPrivacy" class="toggle-true" (click)="favPrivacy = false">Yes</h4>
-        <h4 *ngIf="favPrivacy" class="toggle-button-true" (click)="favPrivacy = false"></h4>
-        <h6 *ngIf="favPrivacy">New favourite is private. Only you can view.</h6>
-
-        <h4 *ngIf="!favPrivacy" class="toggle-false" (click)="favPrivacy = true">No</h4>
-        <h4 *ngIf="!favPrivacy" class="toggle-button-false" (click)="favPrivacy = true"></h4>
-        <h6 *ngIf="!favPrivacy">New favourite is not private. Your followers can view.</h6>
-      </div>
-    </div>
-
-
-
-    <h4 class="form-section-header">Others</h4>
-    <h5 class="deactivate-account" (click)="confirmDeactivate()">Deactivate your account</h5>
-
-
-    <div class="action-response">
+    <div class="action-response" *ngIf="!others">
       <h5 class="action-response-secondary" (click)="undo()">UNDO</h5>
       <button type="submit" class="action-response-primary" [disabled]="!editProfileForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE PROFILE</h5></button>
     </div>
   </form>
+
+  <div class="settings-section" *ngIf="others">
+    <h2 class="settings-header">Others</h2>
+
+    <div class="action-response">
+      <div class="action-response-warning">
+        <h5 (click)="confirmDeactivate()">DEACTIVATE ACCOUNT</h5>
+      </div>
+    </div>
+
+  </div>
 
 </div>
 
@@ -164,7 +170,7 @@
 
     <div class="content-without-header-name">
       <div class="new-profile-picture" *ngIf="newProfilePic">
-        <h4>Your new profile picture</h4>
+        <h3>Your new profile picture</h3>
         <img [src]="newProfilePic">
       </div>
     </div>
@@ -249,7 +255,7 @@
 
     <div class="content-without-header-name">
       <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
-      <h4>Deactivating your account will disable your Profile. It will not show up when searched. Information created by you will not be deleted and will not be available unless it is shared with other users.</h4>
+      <h4>Deactivating your account will disable your Profile. It will not show up when searched by other users. Information created by you will not be deleted and will not be available unless it is shared with other users.</h4>
     </div>
 
     <div class="action-response">
