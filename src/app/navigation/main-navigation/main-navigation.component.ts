@@ -282,7 +282,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     this.exitSideNav();
     this.profileOptions = false;
 
-    this.router.navigateByUrl('/me/home-edit');
+    this.router.navigateByUrl('/me/profile-edit');
   }
 
 
