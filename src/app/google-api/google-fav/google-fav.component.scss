@@ -84,25 +84,30 @@
   float: right;
 }
 
-.fav-privacy > label {
-  display: inline-block;
+.fav-privacy > h5:first-of-type {
+  padding-bottom: 3px;
+  color: grey;
+  font-weight: 500;
 }
 
-.fav-privacy h6  {
-  padding-right: 3px;
+.fav-privacy > h5 {
+  font-weight: 400;
 }
-
-
 
 
 
 /* toggle */
+.toggle-true,
+.toggle-false{
+  margin-top: 5px;
+}
+
 .toggle-button-true  {
-  margin: -22px 0 0 136px;
+  margin: -23px 0 0 63px;
 }
 
 .toggle-button-false  {
-  margin: -22px 0 0 168px;
+  margin: -23px 0 0 147px;
 }
 
 .action-response  {

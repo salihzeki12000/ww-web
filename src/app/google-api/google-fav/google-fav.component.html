@@ -26,7 +26,7 @@
   <ww-google-place-search [populate]="''" (placeDetail)="getDetails($event)"></ww-google-place-search>
 </div>
 
-<div *ngIf="searchDone">
+<div *ngIf="searchDone" #form>
   <h5>You may drag the pin to set a new location.</h5>
 
   <h5 *ngIf="locationType !== ''" class="dragged-address">
@@ -34,19 +34,26 @@
   </h5>
 
   <div class="fav-privacy">
-    <label>Keep favourite private?</label>
+    <h5>Keep favourite private?</h5>
 
+    <h5 *ngIf="private"> > Only you can see</h5>
     <h4 *ngIf="private" class="toggle-true" (click)="private = false">Yes</h4>
     <h4 *ngIf="private" class="toggle-button-true" (click)="private = false"></h4>
-    <h6 *ngIf="private">Only you can see</h6>
 
+    <h5 *ngIf="!private"> > You and your followers can see</h5>
     <h4 *ngIf="!private" class="toggle-false" (click)="private = true">No</h4>
     <h4 *ngIf="!private" class="toggle-button-false" (click)="private = true"></h4>
-    <h6 *ngIf="!private">You and your followers can see</h6>
   </div>
 
-  <div class="action-response">
+  <div class="action-response" *ngIf="newPlace">
     <h5 class="action-response-primary" (click)="favourite()">Save favourite</h5>
+  </div>
+
+  <div class="action-response" *ngIf="!newPlace">
+    <div class="next-disabled">
+      <h5 class="place-invalid">Save favourite</h5>
+      <h5 class="invalid-help">You need to select a result from the search dropdown.</h5>
+    </div>
   </div>
 
 </div>

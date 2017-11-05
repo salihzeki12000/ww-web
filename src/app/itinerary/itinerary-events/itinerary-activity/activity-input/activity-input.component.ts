@@ -219,7 +219,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     setTimeout(() => {this.initMap()},100);
   }
 
-  search()  {
+  next()  {
     this.selected = false;
     this.searchDone = true;
   }

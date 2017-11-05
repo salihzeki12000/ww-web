@@ -616,7 +616,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
         this.errorMessageService.handleErrorMessage({
           title: "Error while selecting departure station",
           error:  {
-            message: "You have pressed the enter key without selecting a station/terminal from the dropdown. Please try again."
+            message: "You have pressed the enter key without selecting a station/terminal from the dropdown. You need to select a result from the dropdown. Please try again."
           }
         })
       }
@@ -656,7 +656,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
         this.errorMessageService.handleErrorMessage({
           title: "Error while selecting arrival station",
           error:  {
-            message: "You have pressed the enter key without selecting a station/terminal from the dropdown. Please try again."
+            message: "You have pressed the enter key without selecting a station/terminal from the dropdown. You need to select a result from the dropdown. Please try again."
           }
         })
       }

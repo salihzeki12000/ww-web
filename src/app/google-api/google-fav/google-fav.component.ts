@@ -14,6 +14,8 @@ import { CountryService }     from '../../countries';
 })
 export class GoogleFavComponent implements OnInit, OnDestroy {
   @ViewChild('map') map: ElementRef;
+  @ViewChild('form') form:ElementRef;
+
   locationMap;
   marker;
   lat;
@@ -27,6 +29,7 @@ export class GoogleFavComponent implements OnInit, OnDestroy {
   photos;
   opening_hours;
   url;
+  newPlace;
 
   step1 = true;
   searchLocation = false;
@@ -97,6 +100,7 @@ export class GoogleFavComponent implements OnInit, OnDestroy {
     this.findLocation = false;
     this.searchDone = false;
     this.searchLocation = false;
+    this.newPlace = undefined;
 
     this.clear();
     this.zoomOut();
@@ -105,6 +109,7 @@ export class GoogleFavComponent implements OnInit, OnDestroy {
   backToSearch() {
     this.findLocation = true;
     this.searchDone = false;
+    this.newPlace = undefined;
 
     this.clear();
     this.zoomOut();
@@ -119,6 +124,8 @@ export class GoogleFavComponent implements OnInit, OnDestroy {
   }
 
   getDetails(value)  {
+    this.newPlace = value;
+    this.form.nativeElement.click();
     this.clear();
 
     this.lat = value['geometry'].location.lat();

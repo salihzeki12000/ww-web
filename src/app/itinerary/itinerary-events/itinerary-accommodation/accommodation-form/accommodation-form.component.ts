@@ -172,7 +172,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
   }
 
   // progress bar
-  search()  {
+  next()  {
     this.step1 = false;
     this.searchDone = true;
   }
@@ -182,6 +182,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
     this.searchDone = false;
 
     this.addAccommodationForm.reset();
+    this.newPlace = undefined;
     this.displayPic = undefined;
     this.pictureOptions = [];
     this.dragAddress = '';

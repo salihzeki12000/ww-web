@@ -386,6 +386,35 @@ h5.action-response-primary  {
   }
 }
 
+/* disable next button for google search*/
+.place-invalid  {
+  padding: 5px 10px;
+  color: #808080;
+  border: 2px solid #808080;
+
+  &:hover {
+    cursor: help;
+  }
+}
+
+.invalid-help {
+  display: none;
+}
+
+.next-disabled  {
+  padding: 0;
+}
+
+.next-disabled:hover .invalid-help  {
+  position: absolute;
+  display: block;
+  margin: 1px 0 0 -120px;
+  width: 150px;
+  padding: 5px 10px;
+  color: #F9FBFB;
+  background-color: black;
+  z-index: 1;
+}
 
 
 

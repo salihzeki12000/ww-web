@@ -206,7 +206,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
         this.errorMessageService.handleErrorMessage({
           title: "Error while selecting new city",
           error:  {
-            message: "You have pressed the enter key without selecting a city from the dropdown. Please try again."
+            message: "You have pressed the enter key without selecting a city from the dropdown. You need to select a result from the dropdown. Please try again."
           }
         })
       }

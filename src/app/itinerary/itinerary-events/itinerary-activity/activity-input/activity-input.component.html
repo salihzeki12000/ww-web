@@ -47,8 +47,15 @@
             <span class="dragged-location">Dragged location:</span> {{ dragAddress}}
           </h5>
 
-          <div class="action-response">
-            <h5 class="action-response-primary" (click)="search()">Next</h5>
+          <div class="action-response" *ngIf="newPlace">
+            <h5 class="action-response-primary" (click)="next()">Next</h5>
+          </div>
+
+          <div class="action-response" *ngIf="!newPlace">
+            <div class="next-disabled">
+              <h5 class="place-invalid">Next</h5>
+              <h5 class="invalid-help">You need to select a result from the search dropdown.</h5>
+            </div>
           </div>
 
           <div #map id="map"></div>
