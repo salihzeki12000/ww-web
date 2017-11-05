@@ -7,6 +7,9 @@
     <h3 (click)="navigate('others')" [class.current]="others">Others</h3>
   </div>
 
+  <div class="settings-nav-mobile" (click)="viewNav = true">
+    <i class="fa fa-bars fa-lg" aria-hidden="true"></i>
+  </div>
 
   <form [formGroup]="editProfileForm" (ngSubmit)="saveProfile()">
 
@@ -158,6 +161,26 @@
   </div>
 
 </div>
+
+
+
+<!-- navigation in mobile -->
+<div class="custom-modal view-nav" *ngIf="viewNav">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>Profile settings</h3>
+      <a (click)="viewNav = false">X</a>
+    </div>
+
+    <div class="content-without-header-name">
+      <h3 (click)="navigate('profile')" [class.current]="profile">Profile details</h3>
+      <h3 (click)="navigate('private')" [class.current]="private">Private details</h3>
+      <h3 (click)="navigate('default')" [class.current]="default">Default settings</h3>
+      <h3 (click)="navigate('others')" [class.current]="others">Others</h3>
+    </div>
+  </div>
+</div>
+
 
 
 <!-- change profile pic -->

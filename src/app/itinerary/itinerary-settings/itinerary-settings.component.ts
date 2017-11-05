@@ -29,6 +29,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   shareD = false;
   copy = false;
   others = false;
+  viewNav = false;
 
   editItineraryForm: FormGroup;
   dateChanged = false;
@@ -331,7 +332,8 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     this.shareD = false;
     this.copy = false;
     this.others = false;
-
+    this.viewNav = false;
+    
     if(section === 'basic') this.basic = true;
     if(section === 'member') this.member = true;
     if(section === 'shareD') this.shareD = true;

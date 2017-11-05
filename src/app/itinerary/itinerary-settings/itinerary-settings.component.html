@@ -8,6 +8,10 @@
     <h3 (click)="navigate('others')" [class.current]="others">Others</h3>
   </div>
 
+  <div class="settings-nav-mobile" (click)="viewNav = true">
+    <i class="fa fa-bars fa-lg" aria-hidden="true"></i>
+  </div>
+
   <div class="settings-section" *ngIf="basic">
     <form [formGroup]="editItineraryForm" (ngSubmit)="checkEdit()">
 
@@ -275,6 +279,25 @@
   </div>
 
 </div>
+
+<!-- navigation in mobile -->
+<div class="custom-modal view-nav" *ngIf="viewNav">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>Itinerary settings</h3>
+      <a (click)="viewNav = false">X</a>
+    </div>
+
+    <div class="content-without-header-name">
+      <h3 (click)="navigate('basic')" [class.current]="basic">Basic details</h3>
+      <h3 (click)="navigate('member')" [class.current]="member">Member details</h3>
+      <h3 (click)="navigate('shareD')" [class.current]="shareD">Share details</h3>
+      <h3 (click)="navigate('copy')" [class.current]="copy">Copy details</h3>
+      <h3 (click)="navigate('others')" [class.current]="others">Others</h3>
+    </div>
+  </div>
+</div>
+
 
 <!-- leave itinerary modal -->
 <div class="custom-modal" *ngIf="leaveItinerary">

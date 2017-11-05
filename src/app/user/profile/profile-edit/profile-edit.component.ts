@@ -26,6 +26,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   private = false;
   default = false;
   others = false;
+  viewNav = false;
 
   currentUser;
   currentUserSubscription: Subscription;
@@ -149,6 +150,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     this.private = false;
     this.default = false;
     this.others = false;
+    this.viewNav = false;
 
     if(section === 'profile') this.profile = true;
     if(section === 'default') this.default = true;

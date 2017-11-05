@@ -23,18 +23,13 @@
   margin-top: 20px;
   vertical-align: top;
 
-  @media only screen and (max-width: 450px) {
-    position: relative;
-    margin: 0 0 0 10px;
-  }
-
-  @media only screen and (min-width: 450px) and (max-width: 650px) {
-    position: relative;
-    margin: 0 0 0 35px;
+  @media only screen and (max-width: 650px) {
+    display: none;
   }
 }
 
-.settings-navigation  * {
+.settings-navigation *,
+.view-nav .content-without-header-name * {
   margin: 15px 5px;
   padding: 5px;
   font-weight: 400;
@@ -46,10 +41,27 @@
   }
 }
 
-.settings-navigation .current  {
+.settings-navigation .current,
+.view-nav .content-without-header-name .current  {
   color: #6494ED;
   border-bottom: 2px solid #6494ED;
 }
+
+.settings-nav-mobile  {
+  display: none;
+
+  @media only screen and (max-width: 650px) {
+    position: fixed;
+    display: block;
+    top: 100px;
+    right: 20px;
+    padding: 5px;
+    color: #808080;
+    border: 2px solid #808080;
+    border-radius: 2px;
+  }
+}
+
 
 .settings-section {
   display: inline-block;
@@ -75,11 +87,6 @@
 
   @media only screen and (max-width: 450px) {
     padding-left: 10px;
-  }
-
-  @media only screen and (max-width: 650px) {
-    border-top: 1px solid;
-    padding-top: 40px;
   }
 }
 
