@@ -474,7 +474,8 @@ i.fa-bookmark {
   @media only screen and (max-width: 500px) {
     position: fixed;
     top: 0;
-    right: 40px;
+    right: 32px;
+    font-size: 25px;
   }
 }
 
@@ -482,7 +483,8 @@ i.fa-sticky-note {
   @media only screen and (max-width: 500px) {
     position: fixed;
     top: 0;
-    right: 10px;
+    right: 0;
+    font-size: 25px;
   }
 }
 
