@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import { Router } from '@angular/router';
 declare const FB: any;
@@ -18,6 +18,7 @@ export class AuthService  {
   loginType;
 
   constructor(
+    private zone: NgZone,
     private http: Http,
     private router: Router,
     private userService: UserService,
@@ -153,12 +154,7 @@ export class AuthService  {
     FB.getLoginStatus(response => {
       if (response.status === 'connected') {
         FB.logout((response) => {
-          // Person is now logged out
-          localStorage.clear();
-
-          setTimeout(() =>  {
-            this.router.navigateByUrl('/');
-          },1000)
+          this.navigate();
         })
       }
     });
@@ -167,11 +163,7 @@ export class AuthService  {
   signoutGoogle() {
     let auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(() => {
-      localStorage.clear();
-
-      setTimeout(() =>  {
-        this.router.navigateByUrl('/');
-      },1000)
+      this.navigate();
     });
   }
 
@@ -183,8 +175,14 @@ export class AuthService  {
     } else if(this.loginType === 'google')  {
       this.signoutGoogle();
     } else  {
-      this.router.navigateByUrl('/');
+      this.navigate();
     }
+  }
+
+  navigate()  {
+    this.zone.run(()  =>  {
+      this.router.navigateByUrl('/');
+    })
   }
 
   isLoggedIn()  {

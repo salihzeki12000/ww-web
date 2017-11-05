@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, NgZone } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Ng2DeviceService } from 'ng2-device-detector';
@@ -22,8 +22,9 @@ export class SignupComponent implements OnInit {
   signupForm: FormGroup;
   avatar = 'https://res.cloudinary.com/wwfileupload/image/upload/v1495091346/avatar_neutral_d43pub.png';
   safari;
-  
+
   constructor(
+    private zone: NgZone,
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private userService: UserService,
@@ -44,7 +45,7 @@ export class SignupComponent implements OnInit {
     this.loadingService.setLoader(false, "");
 
     let deviceInfo = this.deviceService.getDeviceInfo();
-    console.log(deviceInfo);
+
     let browser = deviceInfo['browser'];
     let device = deviceInfo['device']
     if(browser === 'safari' && (device === 'iphone' || device === 'ipad'))  {
@@ -66,13 +67,19 @@ export class SignupComponent implements OnInit {
         } else if(this.reload) {
           window.location.reload();
         } else {
-          setTimeout(() =>  {
-            this.router.navigateByUrl(this.reroute);
-          }, 1000)
+          this.navigate();
         }
       },
       error => console.error(error)
     )
+  }
+
+  navigate()  {
+    setTimeout(() =>  {
+      this.zone.run(()  =>  {
+        this.router.navigateByUrl(this.reroute);
+      })
+    }, 1000)
   }
 
   addToItin(user) {
@@ -89,13 +96,10 @@ export class SignupComponent implements OnInit {
 
       this.itineraryService.updateItinUser(this.itinerary).subscribe(
         data => {
-          setTimeout(() =>  {
-            this.router.navigateByUrl(this.reroute);
-          }, 1000)
+          this.navigate();
         })
     } else  {
-      this.router.navigateByUrl(this.reroute);
-      window.location.reload();
+      this.navigate();
     }
   }
 

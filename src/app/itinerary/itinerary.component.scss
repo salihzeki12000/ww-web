@@ -505,6 +505,10 @@ header {
     z-index: 500;
     background-color: white;
     border-top: 1px solid lightgray;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 

@@ -22,6 +22,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
   loading = false;
 
   constructor(
+    private zone: NgZone,
     private authService: AuthService,
     private userService: UserService,
     private itineraryService: ItineraryService,
@@ -101,16 +102,22 @@ export class AuthComponent implements OnInit, AfterViewInit {
       });
   }
 
+  // https://stackoverflow.com/questions/41381421/angular-2-view-not-responding-after-navigate
+  navigate()  {
+    setTimeout(() =>  {
+      this.zone.run(()  =>  {
+        this.router.navigateByUrl(this.reroute);
+      })
+    }, 1000)
+  }
+
   rerouting(user) {
     if(this.itinerary)  {
       this.addToItin(user);
     } else if(this.reload)  {
       window.location.reload();
     } else  {
-      setTimeout(() =>  {
-        this.router.navigateByUrl(this.reroute);
-        window.location.reload();
-      }, 500)
+      this.navigate();
     }
   }
 
@@ -128,14 +135,10 @@ export class AuthComponent implements OnInit, AfterViewInit {
 
       this.itineraryService.updateItinUser(this.itinerary).subscribe(
         data => {
-          setTimeout(() =>  {
-            this.router.navigateByUrl(this.reroute);
-            window.location.reload();
-          }, 1000)
+          this.navigate();
         })
     } else  {
-      this.router.navigateByUrl(this.reroute);
-      window.location.reload();
+      this.navigate();
     }
   }
 

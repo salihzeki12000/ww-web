@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, NgZone } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Ng2DeviceService } from 'ng2-device-detector';
@@ -24,6 +24,7 @@ export class SigninComponent implements OnInit {
   signinForm: FormGroup;
 
   constructor(
+    private zone: NgZone,
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private userService: UserService,
@@ -41,7 +42,7 @@ export class SigninComponent implements OnInit {
     this.loadingService.setLoader(false, "");
 
     let deviceInfo = this.deviceService.getDeviceInfo();
-    console.log(deviceInfo);
+
     let browser = deviceInfo['browser'];
     let device = deviceInfo['device']
     if(browser === 'safari' && (device === 'iphone' || device === 'ipad'))  {
@@ -65,14 +66,19 @@ export class SigninComponent implements OnInit {
         } else if(this.reload) {
           window.location.reload();
         } else {
-          setTimeout(() =>  {
-            console.log('route')
-            this.router.navigateByUrl(this.reroute);
-          }, 1000)
+          this.navigate();
         }
       },
       error => console.error(error)
     )
+  }
+
+  navigate()  {
+    setTimeout(() =>  {
+      this.zone.run(()  =>  {
+        this.router.navigateByUrl(this.reroute);
+      })
+    }, 1000)
   }
 
   checkVerification(user) {
@@ -101,13 +107,10 @@ export class SigninComponent implements OnInit {
 
       this.itineraryService.updateItinUser(this.itinerary).subscribe(
         data => {
-          setTimeout(() =>  {
-            this.router.navigateByUrl(this.reroute);
-          }, 1000)
+          this.navigate();
         })
     } else  {
-      this.router.navigateByUrl(this.reroute);
-      window.location.reload();
+      this.navigate();
     }
   }
 
