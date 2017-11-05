@@ -19,10 +19,10 @@
       </div>
       <div class="item-menu" *ngIf="showMenu">
         <ul>
-          <li (click)=recommend()>
+          <!-- <li (click)=recommend()>
             <h5>Recommend to a friend</h5>
             <i class="fa fa-share" aria-hidden="true"></i>
-          </li>
+          </li> -->
           <li (click)="favourite()" *ngIf="allowFav && activity?.location">
             <h5>Favourite</h5>
             <i class="fa fa-star-o" aria-hidden="true"></i>
