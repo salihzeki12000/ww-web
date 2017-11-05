@@ -473,7 +473,7 @@ ww-notification-list::-webkit-scrollbar-thumb {
 i.fa-bookmark {
   @media only screen and (max-width: 500px) {
     position: fixed;
-    top: 0;
+    top: -1px;
     right: 32px;
     font-size: 25px;
   }
@@ -482,7 +482,7 @@ i.fa-bookmark {
 i.fa-sticky-note {
   @media only screen and (max-width: 500px) {
     position: fixed;
-    top: 0;
+    top: -1px;
     right: 0;
     font-size: 25px;
   }
