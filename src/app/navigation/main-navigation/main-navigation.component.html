@@ -123,7 +123,7 @@
   <div class="nav-notifications">
     <div class="nav-link">
       <i class="fa fa-bell fa-lg" aria-hidden="true" (mouseover)="getNotifications()"></i>
-      <div class="new-indicator" *ngIf='newNotification'>N</div>
+      <div class="new-indicator" *ngIf='newNotification'></div>
 
       <div class="nav-dropdown" *ngIf="notificationOptions">
         <div class="dropdown-arrow"></div>
@@ -178,7 +178,7 @@
 
     <div class="side-nav-bars" (click)="toggleSideNav()">
       <i class="fa fa-bars fa-2x" aria-hidden="true"></i>
-      <h6 *ngIf='newNotification'>N</h6>
+      <h6 *ngIf='newNotification'></h6>
     </div>
 
     <div *ngIf="sideNav">
@@ -245,7 +245,7 @@
 
             <div class="category-item">
               <h5 (click)="routeToNotifications()">View all notifications</h5>
-              <h6 *ngIf='newNotification'>N</h6>
+              <h6 *ngIf='newNotification'></h6>
             </div>
 
             <div class="category-item">

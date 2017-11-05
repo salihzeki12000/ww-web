@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { DOCUMENT } from '@angular/common';
 import { Subscription } from 'rxjs/Rx';
 
 import { User, UserService }                       from '../../user';
@@ -63,6 +64,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   notificationsLimit = true;
 
   constructor(
+    @Inject(DOCUMENT) private _document: HTMLDocument,
     private router: Router,
     private route: ActivatedRoute,
     private renderer: Renderer2,
@@ -160,7 +162,9 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
 
       if(itemDate > checkDate)  {
         this.newNotification = true;
-        i = this.notifications.length;
+        this._document.getElementById('favicon').setAttribute('href', 'assets/ww_thumbnail_notification.png');
+
+        break;
       }
     }
   }
@@ -253,6 +257,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   getNotifications()  {
     this.notificationOptions = true;
     this.newNotification = false;
+    this._document.getElementById('favicon').setAttribute('href', 'assets/wondererwanderer_logo_thumbnail.png');
 
     this.currentUser['check_notification'] = new Date();
     this.userService.editUser(this.currentUser).subscribe(

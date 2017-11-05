@@ -371,11 +371,9 @@
 .new-indicator  {
   position: absolute;
   margin: -20px 0 0 10px;
-  padding: 0 1.5px;
   height: 10px;
   width: 10px;
-  color: white;
-  font-size: 8px;
+  border: 1px solid white;
   border-radius: 50%;
   background-color: red;
 }
@@ -567,11 +565,9 @@ i.fa-sticky-note {
 .side-nav-bars h6 {
   position: absolute;
   margin: -30px 0 0 18px;
-  padding: 1px 3px;
-  height: 12px;
-  width: 12px;
-  color: white;
-  font-size: 8px;
+  height: 10px;
+  width: 10px;
+  border: 1px solid white;
   border-radius: 50%;
   background-color: red;
 }
@@ -720,10 +716,11 @@ i.fa-sticky-note {
 
 .category-item h6 {
   display: inline-block;
-  padding: 2px 3px 1px 3px;
-  color: white;
-  vertical-align: text-bottom;
+  width: 10px;
+  height: 10px;
+  vertical-align: super;
   background-color: red;
+  border: 1px solid white;
   border-radius: 50%;
 }
 
