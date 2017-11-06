@@ -50,15 +50,15 @@ import { CitiesComponent, CityService } from './cities';
 import { AutoGrowDirective } from './directives/auto-grow.directive';
 import { AboutUsComponent, ContactUsComponent, PrivacyPolicyComponent, TermsOfServiceComponent } from './basics';
 
-// Raven
-//   .config('https://5575c781e9054ddd828e3e4b8f90bc55@sentry.io/211359')
-//   .install();
-//
-// export class RavenErrorHandler implements ErrorHandler {
-//   handleError(err:any) : void {
-//     Raven.captureException(err);
-//   }
-// }
+Raven
+  .config('https://5575c781e9054ddd828e3e4b8f90bc55@sentry.io/211359')
+  .install();
+
+export class RavenErrorHandler implements ErrorHandler {
+  handleError(err:any) : void {
+    Raven.captureException(err);
+  }
+}
 
 
 @NgModule({
@@ -180,10 +180,7 @@ import { AboutUsComponent, ContactUsComponent, PrivacyPolicyComponent, TermsOfSe
     Daterangepicker,
     Ng2DeviceDetectorModule.forRoot()
   ],
-  providers: [ Title, AdminService, LoadingService, AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, FileuploadService, CommentService, ErrorMessageService, FavouriteService, RecommendationService, PlaceService, CountryService, CityService, AuthGuard, AdminGuard ],
+  providers: [ Title, AdminService, LoadingService, AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, FileuploadService, CommentService, ErrorMessageService, FavouriteService, RecommendationService, PlaceService, CountryService, CityService, AuthGuard, AdminGuard, { provide: ErrorHandler, useClass: RavenErrorHandler }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
-
-// , { provide: ErrorHandler, useClass: RavenErrorHandler }
