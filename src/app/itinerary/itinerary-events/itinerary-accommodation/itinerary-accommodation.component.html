@@ -2,7 +2,7 @@
 
 <div *ngIf="totalAccommodations" class="event-summary-section" [class.show-summary]="showAccommodationSummary">
 
-  <h4 class="event-summary-header">Accommodation List - {{ totalAccommodations }}</h4>
+  <h4 class="event-list-header">Accommodation List - {{ totalAccommodations }}</h4>
   <h5 class="close-pop-up" (click)="toggleSummary()">X</h5>
 
   <div class="event-summary">
@@ -13,8 +13,8 @@
         <h5 class="date" *ngIf="itinerary?.num_days">{{ event?.check_in_date }} - {{ event?.check_out_date }}</h5>
         <h5 class="date" *ngIf="!itinerary?.num_days">{{ event?.check_in_date | date:'dd MMM yy' }} - {{ event?.check_out_date | date:'dd MMM yy' }}</h5>
 
-        <h5 class="accommodation-summary-header"><i class="fa fa-bed" aria-hidden="true"></i> {{ event?.city | uppercase }}</h5>
-        <h5 class="accommodation-summary-name">{{ event?.name }}</h5>
+        <h5 class="event-summary-header"><i class="fa fa-bed" aria-hidden="true"></i> {{ event?.city | uppercase }}</h5>
+        <h5 class="event-summary-name">{{ event?.name }}</h5>
         <h5 class="event-summary-note truncate">{{ event?.note }}</h5>
 
         <h4 class="event-out-of-range" *ngIf="event?.out_of_range"><i class="fa fa-arrow-up" aria-hidden="true"></i> Out of itinerary date range</h4>

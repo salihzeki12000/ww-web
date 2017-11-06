@@ -351,7 +351,7 @@
 
 /* summary header */
 
-.event-summary-header {
+.event-list-header {
   padding: 10px 10px 5px 10px;
   background-color: rgb(255,161,92);
 
@@ -464,7 +464,6 @@
 /* each summary item */
 
 .event-summary-item {
-  text-align: right;
   border-top: 1px solid lightgray;
 
   &:hover {
@@ -473,9 +472,14 @@
   }
 
   @media only screen and (max-width: 890px) {
-    font-size: 120%;
     border: none;
     border-bottom: 1px solid lightgrey;
+  }
+}
+
+.event-summary-item h5  {
+  @media only screen and (max-width: 450px) {
+    font-size: 13px;
   }
 }
 
@@ -500,13 +504,25 @@
 
 .event-summary-item .date {
   margin-bottom: 5px;
-  padding: 20px 10px 0 10px;
+  padding: 10px 10px 0 35px;
   color: grey;
   font-weight: 500;
 }
 
+.event-summary-header {
+  margin-bottom: 5px;
+  padding: 0 10px 0 35px;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.event-summary-name {
+  padding: 0 10px 10px 35px;
+  font-weight: 500;
+}
+
 .event-summary-note  {
-  padding: 0 10px 10px 10px;
+  padding: 5px 10px 10px 10px;
   color: #808080;
 }
 

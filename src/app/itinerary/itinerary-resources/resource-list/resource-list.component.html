@@ -2,7 +2,7 @@
 
 <div *ngIf="totalResources" class="event-summary-section" [class.show-summary]="showResourceSummary">
 
-  <h4 class="event-summary-header">Resource List - {{ totalResources }}</h4>
+  <h4 class="event-list-header">Resource List - {{ totalResources }}</h4>
   <h5 class="close-pop-up" (click)="showSummary()">X</h5>
 
   <select class="event-summary-filter" [(ngModel)]="selectedCategory" (ngModelChange)="filter($event)">

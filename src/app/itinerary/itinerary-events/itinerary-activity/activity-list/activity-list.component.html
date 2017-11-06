@@ -2,7 +2,7 @@
 
 <div *ngIf="totalActivities" class="event-summary-section" [class.show-summary]="showActivitySummary">
 
-  <h4 class="event-summary-header">Activity List - {{ totalActivities }}</h4>
+  <h4 class="event-list-header">Activity List - {{ totalActivities }}</h4>
   <h5 class="close-pop-up" (click)="toggleSummary()">X</h5>
 
   <div class="event-summary">
@@ -19,7 +19,7 @@
         <h5 class="date" *ngIf="activity?.date === 'any day' || itinerary?.num_days">{{ activity?.date }} - {{ activity?.time }}</h5>
         <h5 class="date" *ngIf="activity?.date !== 'any day' && !itinerary?.num_days">{{ activity?.date | date: 'dd MMM yyyy' }} - {{ activity?.time }}</h5>
 
-        <h5 class='activity-summary-name'>{{ activity?.name }}</h5>
+        <h5 class='event-summary-name'>{{ activity?.name }}</h5>
         <h5 class="event-summary-note truncate">{{ activity?.note }}</h5>
       </a>
     </div>

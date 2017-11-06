@@ -2,7 +2,7 @@
 
 <div *ngIf="totalTransports" class="event-summary-section" [class.show-summary]="showTransportSummary">
 
-  <h4 class="event-summary-header">Transport List - {{ totalTransports }}</h4>
+  <h4 class="event-list-header">Transport List - {{ totalTransports }}</h4>
   <h5 class="close-pop-up" (click)="toggleSummary()">X</h5>
 
   <div class="event-summary">
@@ -14,14 +14,14 @@
         <h5 class="date" *ngIf="!itinerary?.num_days">{{ event?.dep_date | date: 'dd MMM yyyy' }} - {{ event?.dep_time }}</h5>
 
         <div [ngSwitch]="event.transport_type">
-          <h5 class="transport-summary-header" *ngSwitchCase="'flight'"><i class="fa fa-plane" aria-hidden="true"></i> {{ event.reference_number | uppercase }}</h5>
-          <h5 class="transport-summary-header" *ngSwitchCase="'train'"><i class="fa fa-train" aria-hidden="true"></i> Train</h5>
-          <h5 class="transport-summary-header" *ngSwitchCase="'bus'"><i class="fa fa-bus" aria-hidden="true"></i> Bus {{ event.reference_number | uppercase }}</h5>
-          <h5 class="transport-summary-header" *ngSwitchCase="'cruise'"><i class="fa fa-ship" aria-hidden="true"></i> Cruise</h5>
-          <h5 class="transport-summary-header" *ngSwitchCase="'vehicle rental'"><i class="fa fa-car" aria-hidden="true"></i> Vehicle rental</h5>
-          <h5 class="transport-summary-header" *ngSwitchCase="'transport'"><i class="fa fa-rocket" aria-hidden="true"></i> Transport</h5>
+          <h5 class="event-summary-header" *ngSwitchCase="'flight'"><i class="fa fa-plane" aria-hidden="true"></i> {{ event.reference_number | uppercase }}</h5>
+          <h5 class="event-summary-header" *ngSwitchCase="'train'"><i class="fa fa-train" aria-hidden="true"></i> Train</h5>
+          <h5 class="event-summary-header" *ngSwitchCase="'bus'"><i class="fa fa-bus" aria-hidden="true"></i> Bus {{ event.reference_number | uppercase }}</h5>
+          <h5 class="event-summary-header" *ngSwitchCase="'cruise'"><i class="fa fa-ship" aria-hidden="true"></i> Cruise</h5>
+          <h5 class="event-summary-header" *ngSwitchCase="'vehicle rental'"><i class="fa fa-car" aria-hidden="true"></i> Vehicle rental</h5>
+          <h5 class="event-summary-header" *ngSwitchCase="'transport'"><i class="fa fa-rocket" aria-hidden="true"></i> Transport</h5>
         </div>
-        <h5 class="transport-summary-details">from {{ event.dep_city | uppercase }} to {{ event.arr_city | uppercase }}</h5>
+        <h5 class="event-summary-name">from {{ event.dep_city | uppercase }} to {{ event.arr_city | uppercase }}</h5>
         <h5 class="event-summary-note truncate">{{ event?.note }}</h5>
 
         <h4 class="event-out-of-range" *ngIf="event?.out_of_range"><i class="fa fa-arrow-up" aria-hidden="true"></i> Out of itinerary date range</h4>
