@@ -64,6 +64,52 @@
 
 
 
+/*************
+
+  search help for activity/
+  accommodation form
+
+******************************/
+
+.search-help {
+  margin-top: -18px;
+  float: right;
+}
+
+.search-help > h5  {
+  color: #808080;
+  text-decoration: underline;
+
+  &:hover {
+    cursor: help;
+  }
+}
+
+.search-help:hover .help-text{
+  position: absolute;
+  display: block;
+  margin-left: -430px;
+  padding: 5px;
+  width: 450px;
+  background-color: white;
+  border: 1px solid grey;
+  z-index: 1;
+
+  @media only screen and (max-width: 500px) {
+    width: calc(100vw - 30px);
+    margin-left: calc(-100vw - -50px);
+  }
+}
+
+.help-text  {
+  display: none;
+}
+
+.help-text h4 {
+  padding: 10px;
+  font-weight: 400;
+  text-align: justify;
+}
 
 
 /*************

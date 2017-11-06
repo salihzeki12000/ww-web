@@ -19,6 +19,15 @@
         <label>Search accommodation by name or address <span class="required"> - local name or address may be required</span></label>
         <ww-google-place-search [populate]="''" (placeDetail)="getAccommodationDetails($event)"></ww-google-place-search>
 
+        <div class="search-help">
+          <h5>help</h5>
+          <div class="help-text">
+            <h4>1. The search uses names and addresses that are available in Google map. Thus Google map's naming conventions apply.</h4>
+            <h4>2. There may be accommodations listed in their local language (e.g. Japanese, Chinese or Thai) in Google map. As such you will need to search with the local name. This apply to addresses too.</h4>
+            <h4>3. For the 'Next' button to be active, you will need to select a result from the search dropdown. This will allow us to retrieve details associated with your search and organise them for you.</h4>
+          </div>
+        </div>
+
         <h5>You may also search for a nearby location and drag the pin to set a location.</h5>
         <h5>Only address is available when the pin is dragged.</h5>
 
