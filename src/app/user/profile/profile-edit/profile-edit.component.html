@@ -38,8 +38,8 @@
         </div>
 
         <div class="profile-edit-item">
-          <h4>Description</h4>
-          <input type="text" formControlName="description" #description>
+          <h4>Profile description ({{ 100 - description.value.length }} characters left)</h4>
+          <textarea rows="1" formControlName="description" #description   maxlength="100" auto-grow></textarea>
         </div>
 
       </div>

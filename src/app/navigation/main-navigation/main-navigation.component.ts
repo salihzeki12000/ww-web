@@ -20,8 +20,8 @@ import { FlashMessageService }                     from '../../flash-message';
 export class MainNavigationComponent implements OnInit, OnDestroy {
   isLoggedIn = false;
 
-  currentUserSubscription: Subscription;
-  currentUser;
+  userSubscription: Subscription;
+  user;
 
   relationshipSubscription: Subscription;
   socialRelationships = [];
@@ -63,6 +63,9 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
 
   notificationsLimit = true;
 
+  descriptionForm: FormGroup;
+  addDescription = false;
+
   constructor(
     @Inject(DOCUMENT) private _document: HTMLDocument,
     private router: Router,
@@ -76,16 +79,20 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     private itineraryService: ItineraryService,
     private notificationService: NotificationService,
     private flashMessageService: FlashMessageService,
-    private loadingService: LoadingService) { }
+    private loadingService: LoadingService) {
+      this.descriptionForm = this.formBuilder.group({
+        'description': ''
+      })
+    }
 
   ngOnInit() {
     this.isLoggedIn = this.authService.isLoggedIn();
 
-    this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
+    this.userSubscription = this.userService.updateCurrentUser.subscribe(
       result => {
-        this.currentUser = result;
-        this.getFollowings(this.currentUser);
-        this.notificationService.getNotifications(this.currentUser['_id']).subscribe(
+        this.user = result;
+        this.getFollowings(this.user);
+        this.notificationService.getNotifications(this.user['_id']).subscribe(
           data =>{})
       })
 
@@ -120,14 +127,14 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
+    if(this.userSubscription) this.userSubscription.unsubscribe();
     if(this.relationshipSubscription) this.relationshipSubscription.unsubscribe();
     if(this.notificationSubscription) this.notificationSubscription.unsubscribe();
   }
 
-  getFollowings(currentUser) {
+  getFollowings(user) {
     if(this.isLoggedIn) {
-      this.relationshipService.getRelationships(currentUser).subscribe(
+      this.relationshipService.getRelationships(user).subscribe(
         result => {})
     }
   }
@@ -155,7 +162,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   }
 
   checkNewNotification()  {
-    let checkDate = new Date(this.currentUser['check_notification']).getTime();
+    let checkDate = new Date(this.user['check_notification']).getTime();
 
     for (let i = 0; i < this.notifications.length; i++) {
       let itemDate = new Date(this.notifications[i]['created_at']).getTime();
@@ -259,8 +266,8 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     this.newNotification = false;
     this._document.getElementById('favicon').setAttribute('href', 'assets/wondererwanderer_logo_thumbnail.png');
 
-    this.currentUser['check_notification'] = new Date();
-    this.userService.editUser(this.currentUser).subscribe(
+    this.user['check_notification'] = new Date();
+    this.userService.editUser(this.user).subscribe(
       result => {})
   }
 
@@ -303,6 +310,31 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   }
 
 
+  // add description
+
+  getDescription()  {
+    this.addDescription = true;
+    this.sideNav = false;
+    this.preventScroll(true);
+  }
+
+  cancelDescription() {
+    this.addDescription = false;
+    this.descriptionForm.reset();
+    this.preventScroll(false);
+  }
+
+  saveDescription(text) {
+    this.user['description'] = this.descriptionForm.value.description;
+
+    this.userService.editUser(this.user).subscribe(
+      result =>{})
+
+    this.cancelDescription();
+  }
+
+
+
 
   // user search
   getUsers()  {
@@ -323,7 +355,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
 
   follow(user)  {
     let following = {
-      user: this.currentUser,
+      user: this.user,
       following: user,
     }
 
@@ -444,7 +476,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
 
   routeToUser(id) {
     this.cancelShowUsers();
-    if(id === this.currentUser['_id']) {
+    if(id === this.user['_id']) {
       this.router.navigateByUrl('/me/home');
     } else  {
       this.router.navigateByUrl('/wondererwanderer/' + id)

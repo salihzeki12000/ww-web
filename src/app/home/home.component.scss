@@ -15,6 +15,15 @@
   font-weight: 400;
 }
 
+h4.edit-description {
+  text-decoration: underline;
+
+  &:hover {
+    cursor: pointer;
+    color: #6494ED;
+  }
+}
+
 .data-counter * {
   color: #3A4A4D;
 }

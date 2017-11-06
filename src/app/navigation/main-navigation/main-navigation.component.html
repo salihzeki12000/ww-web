@@ -92,18 +92,18 @@
       <div class="nav-dropdown" *ngIf="itineraryOptions">
         <div class="dropdown-arrow"></div>
         <div class="nav-dropdown-header">
-          <h6>{{ currentUser?.itineraries.length > 1 ? 'ITINERARIES' : 'ITINERARY'}}</h6>
+          <h6>{{ user?.itineraries.length > 1 ? 'ITINERARIES' : 'ITINERARY'}}</h6>
           <h5 class="exit-nav-view" (click)="itineraryOptions = false">X</h5>
         </div>
 
         <h5 class="dropdown-new-itinerary" (click)="newItin()"><i class="fa fa-plus" aria-hidden="true"></i> Plan a new itinerary</h5>
 
         <div>
-          <div *ngIf="currentUser?.itineraries.length === 0">
+          <div *ngIf="user?.itineraries.length === 0">
             <h5 class="nil-dropdown-item">No itinerary at the moment</h5>
           </div>
 
-          <div *ngFor="let itinerary of currentUser?.itineraries | slice:0:10" class="dropdown-item">
+          <div *ngFor="let itinerary of user?.itineraries | slice:0:10" class="dropdown-item">
             <div (click)="routeToItinerary(itinerary._id)">
               <h5>{{ itinerary.name }}</h5>
               <h6 *ngIf="!itinerary?.num_days">( {{ itinerary.date_from | date:'dd MMM yy' }} to {{ itinerary.date_to | date:'dd MMM yy' }} )</h6>
@@ -112,7 +112,7 @@
           </div>
         </div>
 
-        <div *ngIf="currentUser?.itineraries.length > 10" class="view-all" (click)="routeToItineraries()">
+        <div *ngIf="user?.itineraries.length > 10" class="view-all" (click)="routeToItineraries()">
           <h5>See all</h5>
         </div>
 
@@ -149,7 +149,7 @@
 
   <div class="nav-profile">
     <div class="nav-link">
-      <img src="{{ currentUser?.display_picture.url }}" class="user-profile-thumbnail" (click)="routeToProfileEdit()" (mouseover)="profileOptions = true">
+      <img src="{{ user?.display_picture.url }}" class="user-profile-thumbnail" (click)="routeToProfileEdit()" (mouseover)="profileOptions = true">
 
       <div class="nav-dropdown" *ngIf="profileOptions">
         <div class="dropdown-arrow"></div>
@@ -184,17 +184,18 @@
     <div *ngIf="sideNav">
 
       <div class="side-nav-profile">
-        <img src="{{ currentUser?.display_picture.url }}" alt="" (click)="routeToProfile()">
+        <img src="{{ user?.display_picture.url }}" alt="" (click)="routeToProfile()">
 
         <div class="edit-profile" (click)="routeToProfileEdit()">
           <i class="fa fa-pencil" aria-hidden="true"></i>
         </div>
 
         <div class="username">
-          <h4 (click)="routeToProfile()">{{ currentUser?.username }}</h4>
+          <h4 (click)="routeToProfile()">{{ user?.username }}</h4>
         </div>
 
-        <h5 class="user-description">{{ currentUser?.description }}</h5>
+        <h5 class="user-description" *ngIf="user?.description !== ''">{{ user?.description }}</h5>
+        <h5 class="edit-description" *ngIf="user?.description === ''" (click)="getDescription()">Tell us what type of traveler you are</h5>
       </div>
 
       <div class="side-nav-menu">
@@ -288,24 +289,24 @@
 
     <input type="text" placeholder="Search for people..." #text (keyup)="filterSearch(text.value)">
 
-    <div *ngFor="let user of filteredUsers | slice:0:30" class="user-card">
-      <ww-user-profile-card [user]="user" [currentUser]="currentUser"></ww-user-profile-card>
+    <div *ngFor="let puser of filteredUsers | slice:0:30" class="user-card">
+      <ww-user-profile-card [user]="puser" [currentUser]="user"></ww-user-profile-card>
 
       <div class="follow-button">
-        <div *ngIf="user.following_status === 'following'">
+        <div *ngIf="puser.following_status === 'following'">
           <div class="following-response">
             <h5 class="already-following"><i class="fa fa-check" aria-hidden="true"></i> Following</h5>
-            <h5 class="unfollow" (click)="unfollow(user)">Stop following</h5>
+            <h5 class="unfollow" (click)="unfollow(puser)">Stop following</h5>
           </div>
         </div>
-        <div *ngIf="user.following_status === 'requestedFollowing'">
+        <div *ngIf="puser.following_status === 'requestedFollowing'">
           <div class="following-response">
             <h5 class="requested-following">Requested</h5>
-            <h5 class="unfollow" (click)="unfollow(user)">Cancel request</h5>
+            <h5 class="unfollow" (click)="unfollow(puser)">Cancel request</h5>
           </div>
         </div>
-        <div *ngIf="user.following_status === ''">
-          <button type="button" class="follow-button" (click)="follow(user)"><h5><i class="fa fa-plus" aria-hidden="true"></i> Follow</h5></button>
+        <div *ngIf="puser.following_status === ''">
+          <button type="button" class="follow-button" (click)="follow(puser)"><h5><i class="fa fa-plus" aria-hidden="true"></i> Follow</h5></button>
         </div>
       </div>
     </div>
@@ -330,6 +331,31 @@
     </div>
   </div>
 </div>
+
+<!-- description form -->
+<div class="custom-modal" *ngIf="addDescription">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>Add profile description</h3>
+      <a (click)="cancelDescription()">X</a>
+    </div>
+
+    <form [formGroup]="descriptionForm" (ngSubmit)="saveDescription()">
+
+      <div class="content-without-header-name">
+        <label>Profile description ({{ 100 - description.value.length }} characters left)</label>
+        <textarea rows="1" formControlName="description" #description maxlength="100" auto-grow></textarea>
+      </div>
+
+      <div class="action-response">
+        <h5 class="action-response-secondary" (click)="cancelDescription()">CANCEL</h5>
+        <button type="submit" class="action-response-primary" [disabled]="!descriptionForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
 
 
 <div class="custom-modal" *ngIf="showSignin">

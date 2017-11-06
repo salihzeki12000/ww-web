@@ -3,7 +3,8 @@
 
   <div class="profile-details">
     <h1>{{ user?.username }}</h1>
-    <h4>{{ user?.description }}</h4>
+    <h4 *ngIf="user?.description !== ''">{{ user?.description }}</h4>
+    <h4 class="edit-description" *ngIf="user?.description === ''" (click)="getDescription()">Tell us what type of traveler you are</h4>
 
     <div class="data-counter" [routerLink]="['/me/relationships/followers']">
       <h2>{{ followers.length }}</h2>
@@ -51,6 +52,28 @@
 </div>
 
 
+<!-- description form -->
+<div class="custom-modal" *ngIf="addDescription">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>Add profile description</h3>
+      <a (click)="cancelDescription()">X</a>
+    </div>
+
+    <form [formGroup]="descriptionForm" (ngSubmit)="saveDescription()">
+
+      <div class="content-without-header-name">
+        <label>Profile description ({{ 100 - description.value.length }} characters left)</label>
+        <textarea rows="1" formControlName="description" #description maxlength="100" auto-grow></textarea>
+      </div>
+
+      <div class="action-response">
+        <h5 class="action-response-secondary" (click)="cancelDescription()">CANCEL</h5>
+        <button type="submit" class="action-response-primary" [disabled]="!descriptionForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
+      </div>
+    </form>
+  </div>
+</div>
 
 <!-- new itin form -->
 <div class="custom-modal" *ngIf="showItineraryForm">

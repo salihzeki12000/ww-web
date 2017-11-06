@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Title }        from '@angular/platform-browser';
 import { Subscription } from 'rxjs/Rx';
 
@@ -43,14 +44,22 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   showItineraryForm = false;
 
+  descriptionForm: FormGroup;
+  addDescription = false;
+
   constructor(
     private titleService: Title,
     private renderer: Renderer2,
     private userService: UserService,
+    private formBuilder: FormBuilder,
     private relationshipService: RelationshipService,
     private loadingService: LoadingService,
     private favouriteService: FavouriteService,
-    private router: Router) { }
+    private router: Router) {
+      this.descriptionForm = this.formBuilder.group({
+        'description': ''
+      })
+    }
 
   ngOnInit() {
     this.loadingService.setLoader(true, "");
@@ -141,18 +150,38 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
 
+  // add description
 
+  getDescription()  {
+    this.addDescription = true;
+    this.preventScroll(true);
+  }
+
+  cancelDescription() {
+    this.addDescription = false;
+    this.descriptionForm.reset();
+    this.preventScroll(false);
+  }
+
+  saveDescription(text) {
+    this.user['description'] = this.descriptionForm.value.description;
+
+    this.userService.editUser(this.user).subscribe(
+      result =>{})
+
+    this.cancelDescription();
+  }
 
   // itinerary related
 
   createItinerary() {
     this.showItineraryForm = true;
-    this.renderer.addClass(document.body, 'prevent-scroll');
+    this.preventScroll(true);
   }
 
   hideItineraryForm(hide) {
     this.showItineraryForm = false;
-    this.renderer.removeClass(document.body, 'prevent-scroll');
+    this.preventScroll(false);
   }
 
   routeToItin(id) {
