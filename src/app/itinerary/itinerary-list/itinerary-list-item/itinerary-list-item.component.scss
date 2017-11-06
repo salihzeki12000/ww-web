@@ -40,9 +40,6 @@ img {
   }
 }
 
-.space-filler  {
-  height: 13px;
-}
 
 
 /* banner for num days */
@@ -80,8 +77,7 @@ img {
 }
 
 .itinerary-details  {
-  min-height: 145px;
-  padding: 20px;
+  padding: 20px 20px 75px 20px;
   text-align: left;
 }
 
@@ -89,50 +85,84 @@ img {
   width: 245px;
 }
 
+.following-member {
+  display: block;
+  padding: 5px 0 5px 5px;
+}
+
+
+
+.stick-btm  {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: left;
+}
+
+/* itinerary stats */
+.itinerary-stats {
+  padding-left: 20px;
+}
+
 .itinerary-list-stats {
   display: inline-block;
-  margin: 10px;
-  width: 50px;
-  padding: 5px 0;
+}
+
+.itinerary-list-stats h5  {
+  display: inline-block;
+  color: #808080;
+}
+
+.dot  {
+  display: inline-block;
+  margin: 0 1px;
+  width: 3px;
+  height: 3px;
+  vertical-align: middle;
+  background-color: #808080;
+  border-radius: 50%;
+}
+
+/* itinerary created by */
+.itinerary-created-by  {
+  padding: 0 20px 3px 20px;
+
+  @media only screen and (max-width: 500px) {
+    font-size: .7em;
+  }
+}
+
+
+/* like save */
+.like-save  {
+  border-top: 1px solid rgba(0,0,0,.1);
+}
+
+.like-save h5  {
+  display: inline-block;
+  width: 148.2px;
+  padding: 10px 0;
   text-align: center;
 }
 
-.following-member {
-  display: block;
-  padding: 10px 0 20px 5px;
-}
+.like {
+  border-right: 1px solid rgba(0,0,0,.1);
 
-
-.like-save  {
-  position: absolute;
-  padding: 5px;
-  top: 195px;
-  right: 0;
-  border: 1px solid lightgray;
-  border-radius: 2px 0 0 2px;
-  border-right: none;
-}
-
-.like-save *  {
-  display: block;
-  padding: 8px 0;
-}
-
-.fa-heart-o {
   &:hover {
     cursor: pointer;
     color: red;
   }
 }
 
-.fa-bookmark-o  {
+.save  {
   &:hover {
     cursor: pointer;
     color: #6494ED;
   }
 }
 
-.fa-heart  {
+.liked  {
+  border-right: 1px solid rgba(0,0,0,.1);
   color: red;
 
   &:hover {
@@ -141,7 +171,7 @@ img {
   }
 }
 
-.fa-bookmark {
+.saved {
   color: #6494ED;
 
   &:hover {
@@ -150,21 +180,14 @@ img {
   }
 }
 
-.itinerary-created-by  {
-  position: absolute;
-  bottom: 15px;
 
-  @media only screen and (max-width: 500px) {
-    font-size: .7em;
-  }
-}
-
+/* completed img */
 .itin-completed  {
   position: absolute;
-  margin: 22px 0 0 170px;
+  margin: -40px 0 0 200px;
 }
 
 .itin-completed img{
   height: 40px;
-  transform: rotate(40deg);
+  transform: rotate(45deg);
 }
