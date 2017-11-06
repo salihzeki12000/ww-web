@@ -18,9 +18,9 @@
 
       <div class="form-section-details">
 
-        <h5 class="profile-date-join">A wonderer wanderer since {{ currentUser?.created_at | date:'dd MMMM y'}}</h5>
+        <h5 class="profile-date-join">A wonderer wanderer since {{ user?.created_at | date:'dd MMMM y'}}</h5>
         <div class="profile-img-edit">
-          <img src="{{ currentUser?.display_picture.url }}" alt="">
+          <img src="{{ user?.display_picture.url }}" alt="">
 
           <label class="fileUpload">
             Change picture
@@ -69,7 +69,7 @@
           (searching)="searching($event)"></ww-google-place-search>
         </div>
 
-        <div *ngIf="!currentUser?.corporate">
+        <div *ngIf="!user?.corporate">
           <div class="profile-edit-item">
             <h4>Date of Birth</h4>
 
@@ -82,7 +82,7 @@
           <div class="profile-edit-item">
             <h4>Gender</h4>
 
-            <select class="profile-gender-select" name="gender" formControlName="gender" [value]="currentUser?.gender">
+            <select class="profile-gender-select" name="gender" formControlName="gender" [value]="user?.gender">
               <option *ngFor="let gender of genders">
                 <h5>{{ gender }}</h5>
               </option>
@@ -200,7 +200,7 @@
 
     <div class="action-response">
       <h5 class="action-response-secondary" (click)="cancelChangePicture()">CANCEL</h5>
-      <h5 class="action-response-primary" (click)="saveProfile()"> CONFIRM CHANGE</h5>
+      <h5 class="action-response-primary" (click)="saveProfilePic()"> CONFIRM CHANGE</h5>
     </div>
   </div>
 

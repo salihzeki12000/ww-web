@@ -11,6 +11,8 @@ import { FlashMessageService } from '../../../flash-message';
 import { FileuploadService }   from '../../../shared';
 import { LoadingService }      from '../../../loading';
 import { ErrorMessageService } from '../../../error-message';
+import { CityService }         from '../../../cities';
+import { CountryService }      from '../../../countries';
 
 @Component({
   selector: 'ww-profile-edit',
@@ -28,13 +30,12 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   others = false;
   viewNav = false;
 
-  currentUser;
-  currentUserSubscription: Subscription;
+  user;
+  userSubscription: Subscription;
 
   editProfileForm: FormGroup;
   changePasswordForm: FormGroup;
 
-  thumbnailImage;
   inputValue = '';
 
   genders = ['Not specified', 'male', 'female'];
@@ -55,6 +56,11 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
 
   city;
   defaultCity;
+  cities;
+  placeIds;
+  countries;
+  countriesName;
+
   changePw = false;
 
   favPrivacy = false;
@@ -72,6 +78,8 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     private errorMessageService: ErrorMessageService,
     private fileuploadService: FileuploadService,
     private loadingService: LoadingService,
+    private countryService: CountryService,
+    private cityService: CityService,
     private router: Router) {
       this.editProfileForm = this.formBuilder.group({
         'username': ['', Validators.required],
@@ -91,58 +99,72 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.titleService.setTitle("Profile Edit");
 
-    this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
+    this.userSubscription = this.userService.updateCurrentUser.subscribe(
      result =>  {
-       this.currentUser = result;
-       this.thumbnailImage = this.currentUser['display_picture']['url'];
+       this.user = result;
        this.patchValue();
 
-       if(this.currentUser['birth_date'] === undefined || this.currentUser['birth_date'] === "")  {
+       if(this.user['birth_date'] === undefined || this.user['birth_date'] === "")  {
          this.birthDate = new Date();
          this.displayDate = "";
        } else {
-         this.birthDate = this.currentUser['birth_date'].slice(0,10);
-         this.displayDate = this.currentUser['birth_date'].slice(0,10)
+         this.birthDate = this.user['birth_date'].slice(0,10);
+         this.displayDate = this.user['birth_date'].slice(0,10)
        }
 
        this.loadingService.setLoader(false, "");
      })
 
+     this.cityService.getCities().subscribe(
+       result => {
+         this.cities = result['cities'];
+         this.getPlaceId();
+       })
+
+     this.countryService.getCountries().subscribe(
+       result => {
+         this.countries = result['countries'];
+         this.getCountriesName();
+       })
+
     this.preventScroll(false);
   }
 
   ngOnDestroy() {
-    if(this.currentUserSubscription) this.currentUserSubscription.unsubscribe();
+    if(this.userSubscription) this.userSubscription.unsubscribe();
 
     this.loadingService.setLoader(true, "");
   }
 
   patchValue()  {
     this.editProfileForm.patchValue({
-      username: this.currentUser['username'],
-      description: this.currentUser['description'],
-      email: this.currentUser['email'],
-      city: this.currentUser['city'],
-      birth_date: this.currentUser['birth_date'],
-      gender: this.currentUser['gender'],
+      username: this.user['username'],
+      description: this.user['description'],
+      email: this.user['email'],
+      city: this.user['city'],
+      birth_date: this.user['birth_date'],
+      gender: this.user['gender'],
     })
 
-    if(this.currentUser['city'])  {
-      this.defaultCity = this.currentUser['city']['name'];
+    if(this.user['city'])  {
+      this.defaultCity = this.user['city']['name'] + ", " + this.user['city']['country']['name'];
     } else  {
       this.defaultCity = '';
     }
 
-    this.favPrivacy = this.currentUser['settings']['favourite_privacy'];
-    this.itinPrivacy = this.currentUser['settings']['itinerary_privacy'];
-    this.itinView = this.currentUser['settings']['itinerary_viewonly'];
+    this.favPrivacy = this.user['settings']['favourite_privacy'];
+    this.itinPrivacy = this.user['settings']['itinerary_privacy'];
+    this.itinView = this.user['settings']['itinerary_viewonly'];
   }
 
-  updateDateRange() {
-    this.picker.datePicker.setStartDate(this.birthDate);
-    this.picker.datePicker.setEndDate(this.birthDate);
-  }
 
+  getCountriesName()  {
+    this.countriesName = [];
+
+    for(let i = 0; i < this.countries.length; i++) {
+      this.countriesName.push(this.countries[i]['name']);
+    }
+  }
 
   // settings navigation
   navigate(section) {
@@ -159,10 +181,17 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     if(section === 'private') {
       this.private = true;
 
-      if(!this.currentUser['corporate'])  {
+      if(!this.user['corporate'])  {
         this.updateDateRange();
       }
     }
+  }
+
+  updateDateRange() {
+    setTimeout(() =>  {
+      this.picker.datePicker.setStartDate(this.birthDate);
+      this.picker.datePicker.setEndDate(this.birthDate);
+    },500)
   }
 
 
@@ -182,7 +211,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
 
         reader.onload = (event) =>  {
           this.newProfilePic = event['target']['result'];
-          this.thumbnailImage = event['target']['result'];
         }
 
         reader.readAsDataURL(event.target.files[0]);
@@ -195,14 +223,23 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     this.inputValue = null;
     this.newProfilePic = '';
     this.newImageFile = '';
-    this.thumbnailImage = this.currentUser['display_picture']['url'];
   }
 
 
 
   // set city of residence
+  getPlaceId()  {
+    this.placeIds = [];
+
+    for (let i = 0; i < this.cities.length; i++) {
+      this.placeIds.push(this.cities[i]['place_id']);
+    }
+  }
 
   searching(event) {
+    this.city = undefined;
+    this.defaultCity = event;
+
     setTimeout(() =>  {
       if(!this.city)  {
         this.errorMessageService.handleErrorMessage({
@@ -212,20 +249,63 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
           }
         })
       }
-    }, 1000)
+    }, 1500)
   }
 
   setCity(data) {
-    this.defaultCity = data['formatted_address'];
+    let index = this.placeIds.indexOf(data['place_id']);
 
-    this.city = {
-      name: data['formatted_address'],
-      lat: data['geometry'].location.lat(),
-      lng: data['geometry'].location.lng(),
+    if(index > -1)  {
+      setTimeout(() =>  {
+        this.city = this.cities[index];
+        this.defaultCity = this.city['name'] + ", " + this.city['country']['name'];
+      }, 500)
+    } else  {
+      let city = {
+        name: data['formatted_address'],
+        lat: data['geometry'].location.lat(),
+        lng: data['geometry'].location.lng(),
+        place_id: data['place_id']
+      }
+
+      this.city = city;
+
+      for (let i = 0; i < data['address_components'].length; i++) {
+        if(data['address_components'][i]['types'][0] === 'country')  {
+          let country = data['address_components'][i]['long_name'];
+
+          setTimeout(() =>  {
+            city['name'] = this.defaultCity.split(country)[0];
+            this.checkCountry(city, country);
+          }, 1000)
+
+        }
+      }
     }
   }
 
+  checkCountry(city, country) {
+    let index = this.countriesName.indexOf(country);
 
+    if(index > -1)  {
+      city['country'] = this.countries[index];
+      this.addCity(city);
+    } else  {
+      this.countryService.addCountry(country).subscribe(
+        result => {
+          city['country'] = result['country'];
+          this.addCity(city);
+        })
+    }
+  }
+
+  addCity(city) {
+    this.cityService.addCity(city).subscribe(
+      result => {
+        this.city = result['city'];
+      }
+    )
+  }
 
   // update birth date
 
@@ -299,34 +379,34 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     let editedProfile = this.editProfileForm.value;
 
     for (let value in editedProfile)  {
-      this.currentUser[value] = editedProfile[value];
+      this.user[value] = editedProfile[value];
     }
 
-    this.currentUser['settings']['itinerary_privacy'] = this.itinPrivacy;
-    this.currentUser['settings']['favourite_privacy'] = this.favPrivacy;
-    this.currentUser['settings']['itinerary_viewonly'] = this.itinView;
+    this.user['settings']['itinerary_privacy'] = this.itinPrivacy;
+    this.user['settings']['favourite_privacy'] = this.favPrivacy;
+    this.user['settings']['itinerary_viewonly'] = this.itinView;
 
     if(this.city) {
-      this.currentUser['city'] = this.city;
+      this.user['city'] = this.city;
     }
 
-    if(this.newImageFile !== '')  {
-      this.fileuploadService.uploadFile(this.newImageFile, "profile").subscribe(
-        result => {
-          this.currentUser['display_picture'] = {
-            url: result.secure_url,
-            public_id: result.public_id
-          }
-          this.updateProfile();
-      })
-    } else  {
-      this.updateProfile();
-    }
+    this.updateProfile();
+  }
+
+  saveProfilePic()  {
+    this.fileuploadService.uploadFile(this.newImageFile, "profile").subscribe(
+      result => {
+        this.user['display_picture'] = {
+          url: result.secure_url,
+          public_id: result.public_id
+        }
+        this.updateProfile();
+    })
   }
 
   updateProfile() {
     this.loadingService.setLoader(true, "Saving your profile...");
-    this.userService.editUser(this.currentUser).subscribe(
+    this.userService.editUser(this.user).subscribe(
       result => {
         this.loadingService.setLoader(false, "");
         this.flashMessageService.handleFlashMessage(result.message);
@@ -334,7 +414,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
         this.inputValue = null;
         this.newProfilePic = '';
         this.newImageFile = '';
-        this.thumbnailImage = this.currentUser['display_picture']['url'];
       })
   }
 

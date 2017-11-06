@@ -37,12 +37,12 @@ export class AdminCitiesComponent implements OnInit {
 
     this.cityService.getCities().subscribe(
       result => {
-        this.cities = result.cities;
+        this.cities = result['cities'];
       })
 
     this.countryService.getCountries().subscribe(
       result => {
-        this.countries = result.countries;
+        this.countries = result['countries'];
         this.getCountriesName();
       })
   }
@@ -56,7 +56,6 @@ export class AdminCitiesComponent implements OnInit {
   }
 
   getCityDetails(value) {
-    console.log(value)
     let address = value['address_components'];
     let country = '';
 
@@ -77,7 +76,8 @@ export class AdminCitiesComponent implements OnInit {
   }
 
   checkCountry(country) {
-    let index = this.countriesName.indexOf(country)
+    let index = this.countriesName.indexOf(country);
+
     if(index > -1)  {
       this.countryID = this.countries[index];
     } else {
