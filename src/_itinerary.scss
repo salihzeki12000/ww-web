@@ -315,9 +315,10 @@
   }
 
   @media only screen and (min-width: 550px) and (max-width: 1090px) {
-    text-align: center;
     margin-top: 150px;
-    margin-left: calc((100vw - 520px)/2)
+    margin-left: calc((100vw - 530px)/2);
+    width: 530px;
+    text-align: center;
   }
 }
 

@@ -152,6 +152,7 @@ hr.header-separator {
 /* individual event item */
 
 .event-item-card  {
+  position: relative;
   padding: 10px;
   border-bottom: 1px solid rgba(0,0,0,.1);
 }
@@ -218,7 +219,6 @@ hr.header-separator {
 
 /* details */
 
-
 .event-name  {
   padding-bottom: 15px;
 }
@@ -235,7 +235,23 @@ hr.header-separator {
   padding-bottom: 5px;
 }
 
+.copy-activity  {
+  position: absolute;
+  right: 10px;
 
+  &:hover {
+    cursor: pointer;
+    color: #808080;
+  }
+}
+
+.form-card  {
+  text-align: left;
+}
+
+span.copy-name  {
+  color: #6494ED;
+}
 
 
 // select date range for copy modal

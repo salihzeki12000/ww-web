@@ -3,8 +3,10 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
 import { ItineraryService, ItineraryEventService, ResourceService }  from '../../itinerary';
-import { LoadingService } from '../../loading';
+import { LoadingService }       from '../../loading';
 import { User, UserService }    from '../../user';
+import { FlashMessageService }  from '../../flash-message';
+import { NotificationService }  from '../../notifications';
 
 @Component({
   selector: 'ww-user-itinerary-summary',
@@ -44,12 +46,19 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
   currentUserSubscription: Subscription;
   currentUser: User;
 
+  // to copy individual activity
+  itineraries;
+  copyActivity;
+  getItineraries;
+
   constructor(
     private renderer: Renderer2,
     private element: ElementRef,
     private route: ActivatedRoute,
     private router: Router,
     private userService: UserService,
+    private notificationService: NotificationService,
+    private flashMessageService: FlashMessageService,
     private itineraryService: ItineraryService,
     private itineraryEventService: ItineraryEventService,
     private resourceService: ResourceService,
@@ -95,6 +104,7 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
     this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
       result => {
         this.currentUser = result;
+        this.itineraries = this.currentUser['itineraries'];
 
         if(this.itinerary) this.checkCopy();
       })
@@ -335,6 +345,62 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
     setTimeout(() =>  {
       this.router.navigateByUrl('/me/itinerary/' + itinerary['_id'] + '/summary');
     }, 5000)
+  }
+
+
+
+
+  // Copy single event
+  copyEvent(event)  {
+    this.getItineraries = true;
+    this.copyActivity = event;
+  }
+
+  cancelCopy()  {
+    this.getItineraries = false;
+    this.copyActivity = undefined;
+  }
+
+  saveActivity(itinerary) {
+    this.loadingService.setLoader(true, "Copying activity...")
+    delete this.copyActivity['_id'];
+    delete this.copyActivity['created_at'];
+    delete this.copyActivity['itinerary'];
+    delete this.copyActivity['user'];
+
+    this.copyActivity['user'] = this.currentUser;
+    this.copyActivity['date'] = 'any day';
+    this.copyActivity['time'] = 'anytime';
+
+    if(this.copyActivity['place']) {
+      this.copyActivity['place_id'] = this.copyActivity['place']['place_id'];
+      this.copyActivity['lat'] = this.copyActivity['place']['lat'];
+      this.copyActivity['lng'] = this.copyActivity['place']['lng'];
+    }
+
+    this.itineraryEventService.copyEvent(this.copyActivity, itinerary).subscribe(
+      result => {
+
+        for (let i = 0; i < itinerary['members'].length; i++) {
+          if(itinerary['members'][i]['_id'] !== this.currentUser['_id'])  {
+
+            let messageBody = 'activity - ' + result['eventItem']['name'];
+
+            this.notificationService.newNotification({
+              recipient: itinerary['members'][i]['_id'],
+              originator: this.currentUser['_id'],
+              message: " has added a new " + messageBody + ' to the itinerary ' + itinerary['name'],
+              link: "/me/itinerary/" + itinerary['_id'] + "/activity",
+              read: false
+            }).subscribe(result => {})
+
+          };
+        }
+
+        this.cancelCopy();
+        this.flashMessageService.handleFlashMessage(result.message)
+        this.loadingService.setLoader(false, "")
+      })
   }
 
 

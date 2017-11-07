@@ -93,6 +93,10 @@
           </div>
 
           <div *ngIf="event.type === 'activity'" class="event-details-card">
+            <div class="copy-activity" (click)="copyEvent(event)">
+              <i class="fa fa-clone" aria-hidden="true"></i>
+            </div>
+
             <div class="activity-indicator pill"></div>
 
             <h4 class="event-name event-header">{{ event.name }}</h4>
@@ -156,4 +160,28 @@
     </div>
   </div>
 
+</div>
+
+
+<div class="custom-modal" *ngIf="getItineraries">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>Select itinerary to copy to</h3>
+      <a (click)="cancelCopy()">X</a>
+    </div>
+
+    <div class="content-without-header-name">
+      <h4>Please select itinerary to copy <span class="copy-name">{{ copyActivity.name }}</span> to:</h4>
+      <div class="copy-to-itinerary-list">
+        <div *ngFor="let itinerary of itineraries" class="copy-to-itinerary" (click)="saveActivity(itinerary)">
+          <h4 *ngIf="!itinerary.num_days">{{ itinerary.name }} - ({{ itinerary.date_from | date:"dd MMM yy" }} to {{ itinerary.date_to | date:"dd MMM yy" }})</h4>
+          <h4 *ngIf="itinerary.num_days">{{ itinerary.name }} - ({{ itinerary.num_days }} days )</h4>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-response">
+      <h5 class="action-response-secondary" (click)="cancelCopy()">CANCEL</h5>
+    </div>
+  </div>
 </div>
