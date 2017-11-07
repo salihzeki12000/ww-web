@@ -332,22 +332,26 @@
 .nil-event-message h4 {
   margin-bottom: 20px;
   line-height: 1.2;
+  font-weight: 400;
 }
-
 
 .nil-event-message li {
   padding-bottom: 10px;
 }
 
-.nil-event-message-mobile  {
+.add-hint  {
+  @media only screen and (max-width: 1090px) {
+    display: none;
+  }
+}
+
+.add-hint-mobile  {
   display: none;
 
   @media only screen and (max-width: 1090px) {
     display: block;
   }
 }
-
-
 
 /* display options to add when no item */
 
