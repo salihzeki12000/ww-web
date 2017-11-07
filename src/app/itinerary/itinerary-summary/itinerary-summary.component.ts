@@ -48,6 +48,8 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
   addAccommodation = false;
   addTransport = false;
   addActivity = false;
+  addDate;
+  addEvent = false;
 
   constructor(
     private titleService: Title,
@@ -319,6 +321,33 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
     return events;
   }
 
+
+  // add event from date
+  add(date) {
+    this.addDate = date;
+    this.addEvent = true;
+  }
+
+  cancelAdd() {
+    this.addDate = undefined;
+    this.addEvent = false;
+  }
+
+  // add forms
+  addAccommodationForm()  {
+    this.addAccommodation = true;
+    this.addEvent = false;
+  }
+
+  addTransportForm()  {
+    this.addTransport = true;
+    this.addEvent = false;
+  }
+
+  addActivityForm()  {
+    this.addActivity = true;
+    this.addEvent = false;
+  }
 
   // hide forms
   hideAccommodationForm(hide)  {

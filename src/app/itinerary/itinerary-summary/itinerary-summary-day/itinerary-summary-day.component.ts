@@ -16,6 +16,7 @@ export class ItinerarySummaryDayComponent implements OnInit {
   @Input() dailyNote;
   @Output() showEventDetails = new EventEmitter();
   @Output() sectionPosition = new EventEmitter();
+  @Output() addNewEvent = new EventEmitter();
 
   editing = false;
   uniqueClass;
@@ -76,5 +77,10 @@ export class ItinerarySummaryDayComponent implements OnInit {
       })
 
     this.editing = false;
+  }
+
+
+  addNew(date)  {
+    this.addNewEvent.emit(date);
   }
 }

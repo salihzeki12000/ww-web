@@ -36,11 +36,11 @@
 </div>
 
 <div *ngIf="date === 'any day' || itinerary?.num_days">
-  <h5 class="event-date">{{ date }}</h5>
+  <h5 class="event-date" (click)="addNew(date)">{{ date }}</h5>
 </div>
 
 <div *ngIf="date !== 'any day' && !itinerary?.num_days">
-  <h5 class="event-date">Day {{ index }} <span>{{ date | date: "dd MMM (EEE)" }}</span></h5>
+  <h5 class="event-date" (click)="addNew(date)">Day {{ index }} <span>{{ date | date: "dd MMM (EEE)" }}</span></h5>
 </div>
 
 <div *ngFor="let event of events">

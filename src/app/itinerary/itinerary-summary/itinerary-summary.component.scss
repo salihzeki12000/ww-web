@@ -110,6 +110,10 @@
   color: #E6E6E6;
   background-color: #567FCC;
   border-right: 1px solid lightgray;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .date span,

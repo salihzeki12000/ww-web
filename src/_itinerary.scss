@@ -10,6 +10,58 @@
 */
 
 
+/*******************
+
+  Modal for adding events from itinerary/itinerary summary
+
+**************************************************************/
+
+.add-new-modal .form-card {
+  width: 400px;
+  top: 40px;
+  left: calc((100vw - 400px) /2);
+
+  @media only screen and (max-width: 450px) {
+    width: 100%;
+    min-width: 300px;
+    max-height: 100vh;
+    left: 0;
+  }
+}
+
+.add-new-modal .form-header  {
+  width: 400px;
+
+  @media only screen and (max-width: 450px) {
+    width: 100%;
+    min-width: 300px;
+  }
+}
+
+.add-new-modal .add-new-opt {
+  margin-bottom: 20px;
+  padding: 10px;
+  width: 320px;
+  text-align: center;
+  color: #567FCC;
+  border: 2px solid #567FCC;
+  border-radius: 5px;
+  &:hover {
+    cursor: pointer;
+    opacity: .7;
+  }
+
+  @media only screen and (max-width: 450px) {
+    width: calc(100vw - 80px);
+    min-width: 220px;
+  }
+}
+
+.add-new-opt h4 {
+  padding-top: 10px;
+  color: #567FCC;
+}
+
 /*******
 
   for accommodation form

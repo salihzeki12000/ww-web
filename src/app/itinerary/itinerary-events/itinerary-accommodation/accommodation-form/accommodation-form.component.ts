@@ -31,7 +31,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
   dragAddress;
   country;
   newPlace;
-
+  @Input() date;
   @Output() hideAccommodationForm = new EventEmitter();
   @Output() changeRoute = new EventEmitter();
 
@@ -57,6 +57,10 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
 
   dateSubscription: Subscription;
   dateRange = [];
+  outDateRange = [];
+  outRange = [];
+  months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  dayWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
   firstDay;
   lastDay;
   timeCheckIn = "15:00";
@@ -122,8 +126,15 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
       result => {
         this.dateRange  = Object.keys(result).map(key => result[key]);
         this.dateRange.splice(0,1);
-        this.firstDay = this.dateRange[0];
+
+        if(this.date && this.date !== 'any day') {
+          this.firstDay = this.date;
+        } else  {
+          this.firstDay = this.dateRange[0];
+        }
+
         this.lastDay = this.dateRange[this.dateRange.length - 1];
+        this.sortDateRange();
     })
 
     setTimeout(() => {this.initMap()},100);
@@ -168,6 +179,63 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
 
     for(let i = 0; i < this.countries.length; i++) {
       this.countriesName.push(this.countries[i]['name']);
+    }
+  }
+
+  sortDateRange() {
+    this.outRange = [];
+
+    for (let i = 0; i < this.dateRange.length; i++) {
+      if(this.itinerary['num_days'])  {
+        this.outRange.push({
+          formatted: this.dateRange[i],
+          date: this.dateRange[i],
+        });
+      } else  {
+        let ndate = new Date(this.dateRange[i])
+        let year = ndate.getFullYear();
+        let month = ndate.getMonth();
+        let date = ndate.getDate();
+        let day = ndate.getDay();
+
+        let fdate;
+        let index = i + 1;
+        if(date < 10) {
+          fdate = '0' + date;
+        } else{
+          fdate = date
+        }
+
+        this.outRange.push({
+          formatted:"Day " + index + ", " + fdate + " " + this.months[month] + " " + year + " (" + this.dayWeek[day] + ")",
+          date: this.dateRange[i]
+        })
+      }
+    }
+
+    this.filterOutRange();
+  }
+
+  filterOutRange()  {
+    let index = this.dateRange.indexOf(this.firstDay);
+    this.outDateRange = this.outRange.slice(index);
+  }
+
+  dateChange()  {
+    let inDate = this.addAccommodationForm.value.check_in_date;
+    let inTime = this.addAccommodationForm.value.check_in_time;
+    let outDate = this.addAccommodationForm.value.check_out_date;
+
+    let index = this.dateRange.indexOf(inDate);
+    this.outDateRange = this.outRange.slice(index);
+
+    if(inDate > outDate)  {
+      this.addAccommodationForm.patchValue({
+        check_out_date: inDate,
+      })
+
+      this.hourOut = inTime.slice(0,2);
+      this.minuteOut = inTime.slice(3,5);
     }
   }
 

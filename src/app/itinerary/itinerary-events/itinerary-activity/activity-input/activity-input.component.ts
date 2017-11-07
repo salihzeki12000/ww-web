@@ -28,7 +28,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   dragAddress;
   country;
   newPlace;
-
+  @Input() date;
   @Output() hideActivityForm = new EventEmitter<boolean>();
   @Output() changeRoute = new EventEmitter();
 
@@ -206,8 +206,15 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     this.searchDone = true;
     this.noLocation = true;
 
+    let date;
+    if(this.date) {
+      date = this.date;
+    } else  {
+      date = 'any day'
+    }
+
     this.addActivityForm.patchValue({
-      date: 'any day',
+      date: date,
     })
   }
 
@@ -418,10 +425,17 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
           this.details['formatted_hours'] = this.details['opening_hours'].replace(/\r?\n/g, '<br/> ');
         }
 
+        let date;
+        if(this.date) {
+          date = this.date;
+        } else  {
+          date = 'any day'
+        }
+
         this.addActivityForm.patchValue({
           Oname: this.details['name'],
           name: this.details['name'],
-          date: 'any day',
+          date: date,
           formatted_address: this.details['formatted_address'],
           lat: this.details['lat'],
           lng: this.details['lng'],

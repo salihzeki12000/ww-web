@@ -25,17 +25,17 @@
   <h4>You have not added any item to display on this summary</h4>
 
   <div class="add-options">
-    <div class="add-opt" (click)="addTransport = true">
+    <div class="add-opt" (click)="addTransportForm()">
       <i class="fa fa-car fa-3x" aria-hidden="true"></i>
       <h4>Add new transport</h4>
     </div>
 
-    <div class="add-opt" (click)="addAccommodation = true">
+    <div class="add-opt" (click)="addAccommodationForm()">
       <i class="fa fa-bed fa-3x" aria-hidden="true"></i>
       <h4>Add new accommodation</h4>
     </div>
 
-    <div class="add-opt" (click)="addActivity = true">
+    <div class="add-opt" (click)="addActivityForm()">
       <i class="fa fa-bicycle fa-3x" aria-hidden="true"></i>
       <h4>Add new activity</h4>
     </div>
@@ -52,11 +52,11 @@
     <div *ngFor="let date of dateRange; let i = index">
 
       <div *ngIf="date === 'any day' || itinerary?.num_days">
-        <h5 class="date">{{ date }}</h5>
+        <h5 class="date" (click)="add(date)">{{ date }}</h5>
       </div>
 
       <div *ngIf="date !== 'any day' && !itinerary?.num_days">
-        <h5 class="date">Day {{ i }} <span>{{ date | date: "dd MMM (EEE)" }}</span></h5>
+        <h5 class="date" (click)="add(date)">Day {{ i }} <span>{{ date | date: "dd MMM (EEE)" }}</span></h5>
       </div>
 
     </div>
@@ -80,7 +80,8 @@
       [dailyNote]="dailyNotes[i]"
       [events]="events"
       (showEventDetails)="showEventDetails($event)"
-      (sectionPosition)="sectionPosition($event)"></ww-itinerary-summary-day>
+      (sectionPosition)="sectionPosition($event)"
+      (addNewEvent)="add(date)"></ww-itinerary-summary-day>
   </div>
 
   <div class="scroll-left" (click)="scrollLeft()" *ngIf="scroll">
@@ -113,7 +114,8 @@
       [dailyNote]="dailyNotes[i]"
       [events]="events"
       (showEventDetails)="showEventDetails($event)"
-      (sectionPosition)="sectionPosition($event)"></ww-itinerary-summary-compressed>
+      (sectionPosition)="sectionPosition($event)"
+      (addNewEvent)="add(date)"></ww-itinerary-summary-compressed>
   </div>
 
 </div>
@@ -158,16 +160,40 @@
 </div>
 
 
+<!-- add event from  -->
+<div class="custom-modal add-new-modal" *ngIf="addEvent">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>Add new</h3>
+      <a (click)="cancelAdd()">X</a>
+    </div>
+
+    <div class="content-without-header-name">
+      <div (click)="addTransportForm()" class="add-new-opt">
+        <i class="fa fa-car fa-3x" aria-hidden="true"></i>
+        <h4>NEW TRANSPORT</h4>
+      </div>
+      <div (click)="addAccommodationForm()" class="add-new-opt">
+        <i class="fa fa-bed fa-3x" aria-hidden="true"></i>
+        <h4>NEW ACCOMMODATION</h4>
+      </div>
+      <div (click)="addActivityForm()" class="add-new-opt">
+        <i class="fa fa-bicycle fa-3x" aria-hidden="true"></i>
+        <h4>NEW ACTIVITY</h4>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 <div *ngIf="addAccommodation" class="custom-modal">
-  <ww-accommodation-form (hideAccommodationForm)="hideAccommodationForm($event)"></ww-accommodation-form>
+  <ww-accommodation-form [date]="addDate" (hideAccommodationForm)="hideAccommodationForm($event)"></ww-accommodation-form>
 </div>
 
 <div *ngIf="addTransport" class="custom-modal">
-  <ww-transport-form (hideTransportForm)="hideTransportForm($event)"></ww-transport-form>
+  <ww-transport-form [date]="addDate" (hideTransportForm)="hideTransportForm($event)"></ww-transport-form>
 </div>
 
 <div *ngIf="addActivity" class="custom-modal">
-  <ww-activity-input (hideActivityForm)="hideActivityForm($event)"></ww-activity-input>
+  <ww-activity-input [date]="addDate" (hideActivityForm)="hideActivityForm($event)"></ww-activity-input>
 </div>

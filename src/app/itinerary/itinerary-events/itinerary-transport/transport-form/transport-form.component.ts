@@ -21,6 +21,7 @@ import { CountryService }      from '../../../../countries';
   styleUrls: ['./transport-form.component.scss']
 })
 export class TransportFormComponent implements OnInit, OnDestroy {
+  @Input() date;
   @Output() hideTransportForm = new EventEmitter();
   @Output() changeRoute = new EventEmitter();
 
@@ -132,7 +133,6 @@ export class TransportFormComponent implements OnInit, OnDestroy {
     this.dateSubscription = this.itineraryService.updateDate.subscribe(
       result => {
         this.dateRange  = Object.keys(result).map(key => result[key]);
-        console.log(this.dateRange)
         this.firstDay = this.dateRange[1];
     })
 
@@ -200,13 +200,38 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   selectTransportType(transport)  {
     this.transportOption = transport;
 
-    if(transport !== 'flight') this.confirmPage = true;
-    if(transport === 'flight') this.searchFlight = true;
+    if(transport !== 'flight') {
+      this.confirmPage = true;
 
-    this.addTransportForm.patchValue({
-      dep_date: this.firstDay,
-      arr_date: this.firstDay,
-    })
+      let date;
+      if(this.date) {
+        date = this.date;
+      } else  {
+        date = this.firstDay
+      }
+
+      this.addTransportForm.patchValue({
+        dep_date: date,
+        arr_date: date,
+      })
+    }
+
+    if(transport === 'flight') {
+      this.searchFlight = true;
+
+      let date;
+      if(this.date && this.date !== 'any day') {
+        date = this.date;
+      } else  {
+        date = this.firstDay;
+      }
+
+      this.searchFlightForm.patchValue({
+        searchDepDate: date
+      })
+    }
+
+
   }
 
 
