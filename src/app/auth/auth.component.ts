@@ -82,7 +82,11 @@ export class AuthComponent implements OnInit, AfterViewInit {
 
   // http://stackoverflow.com/questions/35530483/google-sign-in-for-websites-and-angular-2-using-typescript
   loginGoogle(user) {
-    this.loading = true;
+
+    this.zone.run(()  =>  {
+      this.loading = true;
+    })
+
     let profile = user.getBasicProfile();
 
     let newUser = {
@@ -95,8 +99,6 @@ export class AuthComponent implements OnInit, AfterViewInit {
 
     this.authService.loginGoogle(newUser).subscribe(
       data => {
-        this.loadingService.setLoader(true, "get ready to wonder wander");
-
         let savedUser = {_id: data.userId};
         this.rerouting(savedUser);
       });
