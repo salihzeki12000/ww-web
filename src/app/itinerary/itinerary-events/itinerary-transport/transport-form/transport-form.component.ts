@@ -76,6 +76,10 @@ export class TransportFormComponent implements OnInit, OnDestroy {
 
   dateSubscription: Subscription;
   dateRange = [];
+  outDateRange = [];
+  outRange = [];
+  months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  dayWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   firstDay;
 
   currentUserSubscription: Subscription;
@@ -134,6 +138,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       result => {
         this.dateRange  = Object.keys(result).map(key => result[key]);
         this.firstDay = this.dateRange[1];
+        this.sortDateRange();
     })
 
     this.countryService.getCountries().subscribe(
@@ -168,6 +173,85 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       this.countriesName.push(this.countries[i]['name']);
     }
   }
+
+
+  // manage dates for arrival
+  sortDateRange() {
+    this.outRange = [];
+
+    for (let i = 0; i < this.dateRange.length; i++) {
+      if(this.itinerary['num_days'])  {
+        this.outRange.push({
+          formatted: this.dateRange[i],
+          date: this.dateRange[i],
+        });
+      } else  {
+        if(this.dateRange[i] ===' any day') {
+          this.outRange.push({
+            formatted: this.dateRange[i],
+            date: this.dateRange[i],
+          })
+        } else  {
+          let ndate = new Date(this.dateRange[i])
+          let year = ndate.getFullYear();
+          let month = ndate.getMonth();
+          let date = ndate.getDate();
+          let day = ndate.getDay();
+
+          let fdate;
+          if(date < 10) {
+            fdate = '0' + date;
+          } else{
+            fdate = date
+          }
+
+          this.outRange.push({
+            formatted:"Day " + i + ", " + fdate + " " + this.months[month] + " " + year + " (" + this.dayWeek[day] + ")",
+            date: this.dateRange[i]
+          })
+        }
+
+      }
+    }
+  }
+
+  filterOutRange(date)  {
+    if(date === 'any day')  {
+      this.outDateRange = [{formatted: 'any day', date: 'any day'}];
+    } else  {
+      let index = this.dateRange.indexOf(date);
+      this.outDateRange = this.outRange.slice(index);
+    }
+  }
+
+  dateChange()  {
+    let inDate = this.addTransportForm.value.dep_date;
+    let outDate = this.addTransportForm.value.arr_date;
+
+    if(inDate === 'any day')  {
+      this.outDateRange = [{formatted: 'any day', date: 'any day'}];
+      this.addTransportForm.patchValue({
+        arr_date: inDate,
+      })
+    } else  {
+      let index = this.dateRange.indexOf(inDate);
+      this.outDateRange = this.outRange.slice(index);
+
+      if(inDate > outDate || outDate === 'any day')  {
+        this.addTransportForm.patchValue({
+          arr_date: inDate,
+        })
+
+        if(this.hourDep === 'anytime')  {
+          this.hourArr = 'anytime'
+        } else  {
+          this.hourArr = this.hourDep;
+          this.minuteArr = this.minuteDep;
+        }
+      }
+    }
+  }
+
 
 
   // progress bar
@@ -209,6 +293,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       } else  {
         date = this.firstDay
       }
+      this.filterOutRange(date);
 
       this.addTransportForm.patchValue({
         dep_date: date,
@@ -225,7 +310,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       } else  {
         date = this.firstDay;
       }
-
+      this.filterOutRange(date);
       this.searchFlightForm.patchValue({
         searchDepDate: date
       })
@@ -781,7 +866,6 @@ export class TransportFormComponent implements OnInit, OnDestroy {
       username: this.currentUser['username'],
     }
     newTransport['created_at'] = new Date();
-
     this.itineraryEventService.addEvent(newTransport, this.itinerary).subscribe(
       result => {
         if(this.route.snapshot['_urlSegment'].segments[3].path !== 'summary' &&

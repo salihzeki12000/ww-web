@@ -50,6 +50,12 @@ export class TransportComponent implements OnInit, OnDestroy {
   hourArr = "";
   minuteArr = "";
 
+  // manage arrival date
+  outDateRange = [];
+  outRange = [];
+  months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  dayWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
   constructor(
     private renderer: Renderer2,
     private router: Router,
@@ -86,6 +92,7 @@ export class TransportComponent implements OnInit, OnDestroy {
 
     this.event['formatted_note'] = this.event['note'].replace(/\r?\n/g, '<br/> ');
     this.initTime();
+    this.sortDateRange();
   }
 
   @HostListener('document:click', ['$event'])
@@ -155,6 +162,84 @@ export class TransportComponent implements OnInit, OnDestroy {
     this.initMinuteArr = this.minuteArr;
   }
 
+
+  // manage dates for arrival
+  sortDateRange() {
+    this.outRange = [];
+
+    for (let i = 0; i < this.dateRange.length; i++) {
+      if(this.itinerary['num_days'])  {
+        this.outRange.push({
+          formatted: this.dateRange[i],
+          date: this.dateRange[i],
+        });
+      } else  {
+        if(this.dateRange[i] ===' any day') {
+          this.outRange.push({
+            formatted: this.dateRange[i],
+            date: this.dateRange[i],
+          })
+        } else  {
+          let ndate = new Date(this.dateRange[i])
+          let year = ndate.getFullYear();
+          let month = ndate.getMonth();
+          let date = ndate.getDate();
+          let day = ndate.getDay();
+
+          let fdate;
+          if(date < 10) {
+            fdate = '0' + date;
+          } else{
+            fdate = date
+          }
+
+          this.outRange.push({
+            formatted:"Day " + i + ", " + fdate + " " + this.months[month] + " " + year + " (" + this.dayWeek[day] + ")",
+            date: this.dateRange[i]
+          })
+        }
+      }
+    }
+
+    this.filterOutRange();
+  }
+
+  filterOutRange()  {
+    if(this.event['dep_date'] === 'any day')  {
+      this.outDateRange = [{formatted: 'any day', date: 'any day'}];
+    } else  {
+      let index = this.dateRange.indexOf(this.event['dep_date']);
+      this.outDateRange = this.outRange.slice(index);
+    }
+  }
+
+  dateChange()  {
+    let inDate = this.editTransportForm.value.dep_date;
+    let outDate = this.editTransportForm.value.arr_date;
+
+    if(inDate === 'any day')  {
+      this.outDateRange = [{formatted: 'any day', date: 'any day'}];
+      this.editTransportForm.patchValue({
+        arr_date: inDate,
+      })
+    } else  {
+      let index = this.dateRange.indexOf(inDate);
+      this.outDateRange = this.outRange.slice(index);
+
+      if(inDate > outDate || outDate === 'any day')  {
+        this.editTransportForm.patchValue({
+          arr_date: inDate,
+        })
+
+        if(this.hourDep === 'anytime')  {
+          this.hourArr = 'anytime'
+        } else  {
+          this.hourArr = this.hourDep;
+          this.minuteArr = this.minuteDep;
+        }
+      }
+    }
+  }
 
   // copy section
   copy()  {

@@ -47,7 +47,6 @@ export class ItineraryAccommodationComponent implements OnInit, OnDestroy {
     this.dateSubscription = this.itineraryService.updateDate.subscribe(
       result => {
         this.dateRange = Object.keys(result).map(key => result[key]);
-        this.dateRange.splice(0,1);
     })
 
     this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(

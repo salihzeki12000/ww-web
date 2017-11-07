@@ -60,7 +60,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
   outDateRange = [];
   outRange = [];
   months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  dayWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+  dayWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   firstDay;
   lastDay;
   timeCheckIn = "15:00";
@@ -182,6 +182,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  // manage dates for check out
   sortDateRange() {
     this.outRange = [];
 
@@ -223,7 +224,6 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
 
   dateChange()  {
     let inDate = this.addAccommodationForm.value.check_in_date;
-    let inTime = this.addAccommodationForm.value.check_in_time;
     let outDate = this.addAccommodationForm.value.check_out_date;
 
     let index = this.dateRange.indexOf(inDate);
@@ -234,8 +234,12 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
         check_out_date: inDate,
       })
 
-      this.hourOut = inTime.slice(0,2);
-      this.minuteOut = inTime.slice(3,5);
+      if(this.hourIn === 'anytime') {
+        this.hourOut = 'anytime'
+      } else  {
+        this.hourOut = this.hourIn;
+        this.minuteOut = this.minuteIn;
+      }
     }
   }
 

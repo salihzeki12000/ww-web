@@ -91,7 +91,7 @@
                 <option *ngFor="let itinDate of outDateRange; let i = index" [value]="itinDate.date">
 
                   <div *ngIf="itinerary?.num_days">
-                    <h5>{{ itinDate }}</h5>
+                    <h5>{{ itinDate.formatted }}</h5>
                   </div>
 
                   <div *ngIf="!itinerary?.num_days && itinDate !== 'any day'">

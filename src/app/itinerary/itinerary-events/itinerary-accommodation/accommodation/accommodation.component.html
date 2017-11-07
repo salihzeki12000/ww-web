@@ -234,7 +234,7 @@
             <div class="check-in">
               <div class="date-to-visit">
                 <label>Check In Date <span class="required"> - required</span></label>
-                <select class="select-date" name="check_in_date" formControlName="check_in_date">
+                <select class="select-date" name="check_in_date" formControlName="check_in_date" (change)="dateChange()">
                   <option *ngFor="let itinDate of dateRange; let i = index" [value]="itinDate">
 
                     <div *ngIf="itinerary?.num_days">
@@ -242,7 +242,7 @@
                     </div>
 
                     <div *ngIf="!itinerary?.num_days && itinDate !== 'any day'">
-                      <h5>Day {{ i + 1}}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+                      <h5>Day {{ i }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
                     </div>
 
                   </option>
@@ -267,14 +267,14 @@
               <div class="date-to-visit">
                 <label>Check Out Date <span class="required"> - required</span></label>
                 <select class="select-date" name="check_out_date" formControlName="check_out_date">
-                  <option *ngFor="let itinDate of dateRange; let i = index" [value]="itinDate">
+                  <option *ngFor="let itinDate of outDateRange; let i = index" [value]="itinDate.date">
 
-                    <div *ngIf="itinerary?.num_days">
-                      <h5>{{ itinDate }}</h5>
+                    <div *ngIf="itinerary?.num_days && itinDate !== 'any day'">
+                      <h5>{{ itinDate.formatted }}</h5>
                     </div>
 
                     <div *ngIf="!itinerary?.num_days && itinDate !== 'any day'">
-                      <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+                      <h5>{{ itinDate.formatted }}</h5>
                     </div>
 
                   </option>

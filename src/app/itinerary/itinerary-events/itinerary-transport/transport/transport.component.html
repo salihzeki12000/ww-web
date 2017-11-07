@@ -293,7 +293,7 @@
                   <input type="text" formControlName="dep_station">
 
                   <label>Departure Date (DD/MM/YYYY)</label>
-                  <select class="select-date" name="dep_date" formControlName="dep_date">
+                  <select class="select-date" name="dep_date" formControlName="dep_date" (change)="dateChange()">
                     <option *ngFor="let itinDate of dateRange; let i = index" [value]="itinDate">
 
                       <div *ngIf="itinDate === 'any day' || itinerary?.num_days">
@@ -320,7 +320,7 @@
 
                 <div *ngIf="event.transport_type === 'vehicle rental'">
                   <label>Pick Up Date (DD/MM/YYYY)</label>
-                  <select class="select-date" name="dep_date" formControlName="dep_date">
+                  <select class="select-date" name="dep_date" formControlName="dep_date" (change)="dateChange()">
                     <option *ngFor="let itinDate of dateRange; let i = index" [value]="itinDate">
 
                       <div *ngIf="itinDate === 'any day' || itinerary?.num_days">
@@ -395,14 +395,14 @@
 
                   <label>Arrival Date (DD/MM/YYYY)</label>
                   <select class="select-date" name="arr_date" formControlName="arr_date">
-                    <option *ngFor="let itinDate of dateRange; let i = index" [value]="itinDate">
+                    <option *ngFor="let itinDate of outDateRange; let i = index" [value]="itinDate.date">
 
                       <div *ngIf="itinDate === 'any day' || itinerary?.num_days">
-                        <h5>{{ itinDate }}</h5>
+                        <h5>{{ itinDate.formatted }}</h5>
                       </div>
 
                       <div *ngIf="itinDate !== 'any day' && !itinerary?.num_days">
-                        <h5>Day {{ i + 1 }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+                        <h5>{{ itinDate.formatted }}</h5>
                       </div>
 
                     </option>
@@ -422,14 +422,14 @@
                 <div *ngIf="event.transport_type === 'vehicle rental'">
                   <label>Return Date (DD/MM/YYYY)</label>
                   <select class="select-date" name="arr_date" formControlName="arr_date">
-                    <option *ngFor="let itinDate of dateRange; let i = index" [value]="itinDate">
+                    <option *ngFor="let itinDate of outDateRange; let i = index" [value]="itinDate.date">
 
                       <div *ngIf="itinDate === 'any day' || itinerary?.num_days">
-                        <h5>{{ itinDate }}</h5>
+                        <h5>{{ itinDate.formatted }}</h5>
                       </div>
 
                       <div *ngIf="itinDate !== 'any day' && !itinerary?.num_days">
-                        <h5>Day {{ i }}, {{ itinDate | date: "dd MMM yyyy (EEEE)"}}</h5>
+                        <h5>{{ itinDate.formatted }}</h5>
                       </div>
 
                     </option>

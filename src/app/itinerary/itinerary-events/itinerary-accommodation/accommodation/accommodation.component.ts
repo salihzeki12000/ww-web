@@ -71,6 +71,12 @@ export class AccommodationComponent implements OnInit, OnDestroy {
   selectUsers = true;
   addMsg = false;
 
+  // control check out date edit
+  outDateRange = [];
+  outRange = [];
+  months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  dayWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
   constructor(
     private renderer: Renderer2,
     private router: Router,
@@ -116,6 +122,8 @@ export class AccommodationComponent implements OnInit, OnDestroy {
 
        this.followings = Object.keys(result['followings']).map(key => result['followings'][key]);
      })
+
+     this.sortDateRange();
   }
 
   @HostListener('document:click', ['$event'])
@@ -216,6 +224,72 @@ export class AccommodationComponent implements OnInit, OnDestroy {
     }
 
     this.filteredResult = this.users;
+  }
+
+  // manage dates for check out
+  sortDateRange() {
+    this.outRange = [];
+    for (let i = 0; i < this.dateRange.length; i++) {
+      if(this.itinerary['num_days'])  {
+        this.outRange.push({
+          formatted: this.dateRange[i],
+          date: this.dateRange[i],
+        });
+      } else  {
+        if(this.dateRange[i] === 'any day') {
+          this.outRange.push({
+            formatted: this.dateRange[i],
+            date: this.dateRange[i],
+          })
+        } else  {
+          let ndate = new Date(this.dateRange[i])
+          let year = ndate.getFullYear();
+          let month = ndate.getMonth();
+          let date = ndate.getDate();
+          let day = ndate.getDay();
+
+          let fdate;
+          if(date < 10) {
+            fdate = '0' + date;
+          } else{
+            fdate = date
+          }
+
+          this.outRange.push({
+            formatted:"Day " + i + ", " + fdate + " " + this.months[month] + " " + year + " (" + this.dayWeek[day] + ")",
+            date: this.dateRange[i]
+          })  
+        }
+      }
+    }
+
+    this.filterOutRange();
+  }
+
+  filterOutRange()  {
+    let index = this.dateRange.indexOf(this.event['check_in_date']);
+    this.outDateRange = this.outRange.slice(index);
+  }
+
+  dateChange()  {
+    let inDate = this.editAccommodationForm.value.check_in_date;
+    let outDate = this.editAccommodationForm.value.check_out_date;
+
+    let index = this.dateRange.indexOf(inDate);
+    this.outDateRange = this.outRange.slice(index);
+
+    if(inDate > outDate)  {
+      this.editAccommodationForm.patchValue({
+        check_out_date: inDate,
+      })
+
+      if(this.hourIn === 'anytime') {
+        this.hourOut = 'anytime'
+      } else  {
+        this.hourOut = this.hourIn;
+        this.minuteOut = this.minuteIn;
+      }
+    }
   }
 
   //recommend section
@@ -416,6 +490,7 @@ export class AccommodationComponent implements OnInit, OnDestroy {
     this.preventScroll(false);
   }
 
+
   // select check in time
   selectPickerIn()  {
     this.timePickerIn = true;
@@ -441,6 +516,7 @@ export class AccommodationComponent implements OnInit, OnDestroy {
   selectMinuteOut(m) {
     this.minuteOut = m;
   }
+
 
   saveEdit() {
     this.loadingService.setLoader(true, "Saving...");
