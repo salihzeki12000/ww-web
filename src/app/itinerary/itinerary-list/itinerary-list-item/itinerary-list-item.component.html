@@ -16,11 +16,12 @@
     <i class="fa fa-lock" aria-hidden="true"></i>
   </div>
 
-  <h5 class="copied" *ngIf="copied"><i class="fa fa-clone" aria-hidden="true"></i> You have copied this itinerary</h5>
   <h3 class="itinerary-name" (click)="routeToItin()">{{ itinerary.name }}</h3>
 
   <div *ngIf="itinerary.num_days" class="banner">{{ itinerary.num_days }} {{ itinerary.num_days > 1 ? "days" : "day" }}</div>
   <h5 *ngIf="!itinerary.num_days">{{ itinerary.date_from | date:'dd MMM yy' }} to {{ itinerary.date_to | date:'dd MMM yy' }}</h5>
+
+  <h5 class="copied" *ngIf="copied"><i class="fa fa-clone" aria-hidden="true"></i> You have copied this itinerary</h5>
 
   <div class="following-member" *ngIf="followings">
     <div *ngFor="let member of followings">
