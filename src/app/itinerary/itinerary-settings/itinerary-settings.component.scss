@@ -426,7 +426,17 @@ span.share-info  {
 }
 
 .initial  {
-  margin-bottom: 10px;
+  margin-bottom: 25px;
+
+  @media only screen and (max-width: 450px) {
+    width: 100vw;
+  }
+}
+
+.new-example  {
+  @media only screen and (max-width: 450px) {
+    width: 100vw;
+  }
 }
 
 .date-bar-eg  {
@@ -439,4 +449,70 @@ span.share-info  {
 
 .date-bar-eg h5 {
   color: #F9FBFB;
+}
+
+.point-down {
+  position: absolute;
+  margin-top: -30px;
+  height: 35px;
+  width: 2px;
+  background-color: black;
+}
+
+.point-slant {
+  position: absolute;
+  margin: -118px 0 0 145px;
+  height: 210px;
+  width: 1px;
+  border: 1px dashed black;
+  transform: rotate(83deg);
+}
+
+.arrow-down  {
+  position: absolute;
+  margin: 20px 0 0 -4.5px;
+  width: 0;
+	height: 0;
+	border-top: 5px solid black;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+}
+
+.d-1  {
+  margin: -25px 0 0 25px;
+  height: 25px;
+}
+
+.d-2  {
+  margin: -25px 0 0 100px;
+  height: 25px;
+}
+
+.d-3  {
+  margin: -25px 0 0 190px;
+  height: 25px;
+}
+
+.s-1  {
+  margin-left: 135px;
+  transform: rotate(-45deg);
+}
+
+.s-2  {
+  margin-left: 220px;
+  transform: rotate(-45deg);
+}
+
+.s-1 > .arrow-down,
+.s-2 > .arrow-down  {
+  margin-top: 35px;
+}
+
+.point-slant .arrow-down  {
+  margin: 205px 0 0 -5px;
+}
+
+
+.change-date-content .action-response {
+  margin-top: 30px;
 }
