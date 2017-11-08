@@ -65,9 +65,6 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
       this.compressedView = true;
     }
 
-    let segments = this.route.snapshot['_urlSegment'].segments;
-    if(segments[0]['path'] === 'preview') this.preview = true;
-
     this.events = [];
     this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
        result => {
@@ -77,12 +74,7 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
          this.itinerary = result;
          this.itemPosition = [];
 
-         let header = ''
-         if(this.preview) header = "Preview : ";
-
-         let title = header + this.itinerary['name'] + " | Summary"
-         this.titleService.setTitle(title);
-
+         this.setTitle();
          this.sortDailyNotes();
        })
 
@@ -136,6 +128,20 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
       }
     }
 
+  }
+
+
+  setTitle()  {
+    this.preview = false;
+
+    let segments = this.route.snapshot['_urlSegment'].segments;
+    if(segments[0]['path'] === 'preview') this.preview = true;
+
+    let header = ''
+    if(this.preview) header = "Preview : ";
+
+    let title = header + this.itinerary['name'] + " | Summary"
+    this.titleService.setTitle(title);
   }
 
   sortDailyNotes()  {
