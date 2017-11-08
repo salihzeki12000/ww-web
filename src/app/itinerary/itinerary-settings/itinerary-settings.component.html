@@ -36,11 +36,12 @@
 
           <div class="itinerary-edit-item">
             <h4>Travel dates</h4>
-            <div class="date-picker" daterangepicker [options]="options" (selected)="selectedDate($event)">
+            <h4>We are resolving errors associated with change in travel date. We apologise for any inconvenience caused.</h4>
+            <!-- <div class="date-picker" daterangepicker [options]="options" (selected)="selectedDate($event)">
               <i class="fa fa-calendar" aria-hidden="true"></i>
               <h4><span>From:</span> {{ dateFrom | date: 'dd MMM yyyy'}}</h4>
               <h4><span>To:</span> {{ dateTo | date: 'dd MMM yyyy'}}</h4>
-            </div>
+            </div> -->
           </div>
 
           <div class="itinerary-edit-item num-days" *ngIf="itinerary?.corporate.status">

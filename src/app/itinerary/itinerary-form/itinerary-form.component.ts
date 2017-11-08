@@ -181,7 +181,6 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
         note: ""
       })
     }
-    // console.log(dateRange)
 
     itinerary['corporate'] = { status: this.corporate, publish: false };
     itinerary.private = this.private;

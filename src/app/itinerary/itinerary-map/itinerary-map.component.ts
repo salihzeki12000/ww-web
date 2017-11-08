@@ -346,7 +346,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
 
       this.openInfoWindow(event['place']['lat'], event['place']['lng'])
       this.itinMap.panTo(center);
-      this.itinMap.setZoom(18);
+      this.itinMap.setZoom(16);
     }
 
     this.showMapLegend = false;

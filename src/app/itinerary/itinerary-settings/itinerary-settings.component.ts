@@ -282,13 +282,13 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   }
 
   updateDateRange() {
-    this.dateFrom = this.itinerary['date_from'];
-    this.dateTo = this.itinerary['date_to'];
-
-    setTimeout(() =>  {
-      this.picker.datePicker.setStartDate(this.dateFrom);
-      this.picker.datePicker.setEndDate(this.dateTo);
-    },1000)
+    // this.dateFrom = this.itinerary['date_from'];
+    // this.dateTo = this.itinerary['date_to'];
+    //
+    // setTimeout(() =>  {
+    //   this.picker.datePicker.setStartDate(this.dateFrom);
+    //   this.picker.datePicker.setEndDate(this.dateTo);
+    // },1000)
   }
 
   filterUsers(users)  {
@@ -333,7 +333,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     this.copy = false;
     this.others = false;
     this.viewNav = false;
-    
+
     if(section === 'basic') this.basic = true;
     if(section === 'member') this.member = true;
     if(section === 'shareD') this.shareD = true;
