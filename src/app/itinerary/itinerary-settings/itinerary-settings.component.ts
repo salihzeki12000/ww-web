@@ -282,13 +282,13 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   }
 
   updateDateRange() {
-    // this.dateFrom = this.itinerary['date_from'];
-    // this.dateTo = this.itinerary['date_to'];
-    //
-    // setTimeout(() =>  {
-    //   this.picker.datePicker.setStartDate(this.dateFrom);
-    //   this.picker.datePicker.setEndDate(this.dateTo);
-    // },1000)
+    this.dateFrom = this.itinerary['date_from'];
+    this.dateTo = this.itinerary['date_to'];
+
+    setTimeout(() =>  {
+      this.picker.datePicker.setStartDate(this.dateFrom);
+      this.picker.datePicker.setEndDate(this.dateTo);
+    },1500)
   }
 
   filterUsers(users)  {
@@ -465,7 +465,6 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
       }
 
     }
-
   }
 
 
@@ -476,36 +475,18 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     this.newDateRange.push('any day');
     let editedDetails = this.editItineraryForm.value;
 
-    if(type === 'date') {
+    let i = {
+      date_from: editedDetails['date_from'],
+      date_to: editedDetails['date_to'],
+      num_days: editedDetails['num_days']
+    }
 
-      // let startDate = new Date(editedDetails['date_from']);
-      // let endDate = new Date(editedDetails['date_to']);
+    this.newDateRange = this.itineraryService.setDateRange(i)
 
-      let startArray = editedDetails['date_from'].split(/[- :]/);
-      let startDate = new Date(startArray[2], startArray[0] - 1, startArray[1]);
-
-      let endArray = editedDetails['date_to'].split(/[- :]/);
-      let endDate = new Date(endArray[2], endArray[0] - 1, endArray[1]);
-
-      this.newDateRange.push((new Date(startArray[2], startArray[0] - 1, startArray[1])).toISOString());
-
-      while(startDate < endDate){
-        let addDate = startDate.setDate(startDate.getDate() + 1);
-        let newDate = new Date(addDate);
-        this.newDateRange.push(newDate.toISOString());
-      }
-
-    } else if(type === 'day') {
-
-      for (let i = 0; i < editedDetails['num_days']; i++) {
-        let day = i + 1;
-        this.newDateRange.push("Day " + day);
-      }
-
+    if(type === 'day' && method === "numChange") {
       setTimeout(() =>  {
-        if(method === "numChange")  this.sameDates();
-      }, 500)
-
+        this.sameDates();
+      }, 1000)
     }
 
     this.setDailyNotes();
@@ -517,7 +498,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.newDateRange.length; i++) {
       this.newDailyNote.push({
         date: this.newDateRange[i],
-        note: "e.g. Day trip to the outskirts"
+        note: ""
       })
     }
   }
@@ -529,7 +510,6 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
       if(this.events[i]['type'] === 'activity') {
 
         let index = this.newDateRange.indexOf(this.events[i]['date']);
-
         if(index < 0) {
           this.events[i]['date'] = "any day";
           this.updateEvent(this.events[i]);

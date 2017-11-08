@@ -36,12 +36,11 @@
 
           <div class="itinerary-edit-item">
             <h4>Travel dates</h4>
-            <h4>We are resolving errors associated with change in travel date. We apologise for any inconvenience caused.</h4>
-            <!-- <div class="date-picker" daterangepicker [options]="options" (selected)="selectedDate($event)">
+            <div class="date-picker" daterangepicker [options]="options" (selected)="selectedDate($event)">
               <i class="fa fa-calendar" aria-hidden="true"></i>
               <h4><span>From:</span> {{ dateFrom | date: 'dd MMM yyyy'}}</h4>
               <h4><span>To:</span> {{ dateTo | date: 'dd MMM yyyy'}}</h4>
-            </div> -->
+            </div>
           </div>
 
           <div class="itinerary-edit-item num-days" *ngIf="itinerary?.corporate.status">
@@ -396,6 +395,39 @@
         <h5>Activity and summary note on 05 June 2017 will remain on 05 June 2017.</h5>
         <h5>If the new date range does not include 05 June 2017, the activity will be amended to "any day", summary note will be deleted.</h5>
       </div>
+
+      <!-- <div class="same-date-example">
+        <div class="initial">
+          <div class="date-bar-eg">
+            <h5>any day</h5>
+          </div>
+          <div class="date-bar-eg">
+            <h5>05 JUN (SUN)</h5>
+          </div>
+          <div class="date-bar-eg">
+            <h5>06 JUN (MON)</h5>
+          </div>
+          <div class="date-bar-eg">
+            <h5>07 JUN (TUE)</h5>
+          </div>
+        </div>
+
+        <div class="new">
+          <div class="date-bar-eg">
+            <h5>any day</h5>
+          </div>
+          <div class="date-bar-eg">
+            <h5>04 JUN (SAT)</h5>
+          </div>
+          <div class="date-bar-eg">
+            <h5>05 JUN (SUN)</h5>
+          </div>
+          <div class="date-bar-eg">
+            <h5>06 JUN (MON)</h5>
+          </div>
+        </div>
+
+      </div> -->
 
       <div class="change-date-option">
         <h4 (click)="sameIndex()">Keep to same day of itinerary</h4>
