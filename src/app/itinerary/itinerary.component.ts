@@ -482,39 +482,23 @@ export class ItineraryComponent implements OnInit, OnDestroy {
     if(endMonth < 10) endMonth = "0" + endMonth;
     this.dateTo = endYear + "-" + endMonth + "-" + endDay + "T00:00:00.000Z";
 
-    // this.setDailyNote();
+    this.setDailyNote();
   }
 
   setDailyNote()  {
-    // let startDate = new Date(this.dateFrom);
-    // let endDate = new Date(this.dateTo);
-
-    let startYear = this.dateFrom.slice(0,4);
-    let startMonth = this.dateFrom.slice(5,7);
-    let startDay = this.dateFrom.slice(8,10);
-    let startDate = new Date(startYear, startMonth - 1, startDay);
-
-    let endYear = this.dateTo.slice(0,4);
-    let endMonth = this.dateTo.slice(5,7);
-    let endDay = this.dateTo.slice(8,10);
-    let endDate = new Date(endYear, endMonth - 1, endDay);
-
-    this.newDateRange = [];
-    this.newDateRange.push('any day');
-    this.newDateRange.push((new Date(startYear, startMonth - 1, startDay)).toISOString());
-    console.log(this.newDateRange)
-
-    while(startDate < endDate){
-      let addDate = startDate.setDate(startDate.getDate() + 1);
-      let newDate = new Date(addDate);
-      this.newDateRange.push(newDate.toISOString());
+    let i = {
+      date_from: this.dateFrom,
+      date_to: this.dateTo,
+      num_days: undefined
     }
+
+    this.newDateRange = this.itineraryService.setDateRange(i);
 
     this.dailyNotes = [];
     for (let i = 0; i < this.newDateRange.length; i++) {
       this.dailyNotes.push({
         date: this.newDateRange[i],
-        note: "Note for the day (click to edit)\ne.g. Day trip to the outskirts"
+        note: ""
       })
     }
   }
@@ -531,11 +515,28 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   duplicate() {
     this.loadingService.setLoader(true, "Saving to your list of itineraries. This may take awhile.");
 
+    this.updateCopyBy();
+
+    let previewNote = this.itinerary['daily_note'].length;
+    let newNote = this.newDateRange.length;
+
+    if(previewNote === newNote) {
+      this.dailyNotes = this.itinerary['daily_note'];
+    } else if(previewNote < newNote)  {
+      for (let i = 0; i < previewNote; i++) {
+        this.dailyNotes[i] = this.itinerary['daily_note'][i];
+      }
+    } else if(previewNote > newNote)  {
+      for (let i = 0; i < newNote; i++) {
+        this.dailyNotes[i] = this.itinerary['daily_note'][i];
+      }
+    }
 
     let newItinerary = {
       name: this.itinerary['name'] + " - created by " + this.itinerary['created_by']['username'],
       date_from: this.dateFrom,
       date_to: this.dateTo,
+      daily_note: this.dailyNotes,
       photo: this.itinerary['photo'],
       description: this.itinerary['description'],
       private: this.currentUser['settings']['itinerary_privacy'],
@@ -554,42 +555,11 @@ export class ItineraryComponent implements OnInit, OnDestroy {
 
     this.itineraryService.addItin(newItinerary).subscribe(
       result => {
-        this.setDateRange(result.itinerary);
+        this.shareEvents(result.itinerary);
       })
   }
 
-  setDateRange(itinerary)  {
-    this.newDateRange = this.itineraryService.setDateRange(itinerary);
-
-    let previewNote = itinerary['daily_note'].length;
-    let newNote = this.newDateRange.length;
-
-    let dailyNotes = [];
-    for (let i = 0; i < this.newDateRange.length; i++) {
-      dailyNotes.push({
-        date: this.newDateRange[i],
-        note: ""
-      })
-    }
-
-    if(previewNote === newNote) {
-      dailyNotes = itinerary['daily_note'];
-    } else if(previewNote < newNote)  {
-      for (let i = 0; i < previewNote; i++) {
-        dailyNotes[i] = itinerary['daily_note'][i];
-      }
-    } else if(previewNote > newNote)  {
-      for (let i = 0; i < newNote; i++) {
-        dailyNotes[i] = itinerary['daily_note'][i];
-      }
-    }
-
-    itinerary['daily_note'] = dailyNotes;
-
-    itinerary['members'] = [{
-      _id: this.currentUser['_id']
-    }];
-
+  updateCopyBy()  {
     let newCopy = {
       user: this.currentUser['_id'],
       copied_on: new Date()
@@ -601,18 +571,12 @@ export class ItineraryComponent implements OnInit, OnDestroy {
       this.itinerary['copied_by'] = [newCopy];
     }
 
-    this.itineraryService.editItin(itinerary, "").subscribe(
-      result => {
-        this.shareEvents(result.itinerary);
-        console.log(result)}
-      )
+    this.itineraryService.editItin(this.itinerary, "").subscribe(
+      result => {})
   }
 
   shareEvents(itinerary) {
-    console.log(this.dateRange)
-    console.log(this.newDateRange)
     for (let i = 0; i < this.events.length; i++) {
-      console.log(this.events[i])
       delete this.events[i]['_id'];
       delete this.events[i]['created_at'];
       delete this.events[i]['itinerary'];
