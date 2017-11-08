@@ -167,39 +167,21 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
     let dateRange = [];
     dateRange.push('any day');
 
-    if(itinerary['date_from'] !== "" && itinerary['date_from'] !== undefined) {
-      itinerary['num_days'] = undefined;
-
-      let startArray = itinerary['date_from'].split(/[- :]/);
-      let startDate = new Date(startArray[2], startArray[0] - 1, startArray[1]);
-
-      let endArray = itinerary['date_to'].split(/[- :]/);
-      let endDate = new Date(endArray[2], endArray[0] - 1, endArray[1]);
-
-      dateRange.push((new Date(startArray[2], startArray[0] - 1, startArray[1])).toISOString());
-
-      while(startDate < endDate){
-        let addDate = startDate.setDate(startDate.getDate() + 1);
-        let newDate = new Date(addDate);
-        dateRange.push(newDate.toISOString());
-      }
-    } else  {
-      for (let i = 0; i < itinerary['num_days']; i++) {
-        let day = i + 1;
-        dateRange.push("Day " + day);
-      }
-
-      itinerary['date_from'] = undefined;
-      itinerary['date_to'] = undefined;
-    }
-
+    // if(itinerary['date_from'] !== "" && itinerary['date_from'] !== undefined) {
+    //   itinerary['num_days'] = undefined;
+    // } else  {
+    //   itinerary['date_from'] = undefined;
+    //   itinerary['date_to'] = undefined;
+    // }
+    //
     itinerary["daily_note"] = [];
     for (let i = 0; i < dateRange.length; i++) {
       itinerary['daily_note'].push({
         date: dateRange[i],
-        note: "Note for the day (click to edit)\ne.g. Day trip to the outskirts"
+        note: ""
       })
     }
+    // console.log(dateRange)
 
     itinerary['corporate'] = { status: this.corporate, publish: false };
     itinerary.private = this.private;
@@ -211,10 +193,33 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
 
     this.itineraryService.addItin(itinerary).subscribe(
       data => {
-        this.loadingService.setLoader(false, "");
-        this.router.navigate(['/me/itinerary', data.itinerary._id]);
+        console.log(data)
+        this.setDateRange(data.itinerary)
     });
 
+  }
+
+  setDateRange(itinerary)  {
+    let dateRange = this.itineraryService.setDateRange(itinerary);
+
+    itinerary["daily_note"] = [];
+    for (let i = 0; i < dateRange.length; i++) {
+      itinerary['daily_note'].push({
+        date: dateRange[i],
+        note: ""
+      })
+    }
+
+    itinerary['members'] = [{
+      _id: this.currentUser['_id']
+    }]
+
+    this.itineraryService.editItin(itinerary, "edit").subscribe(
+      result => {
+        this.loadingService.setLoader(false, "");
+        this.router.navigate(['/me/itinerary', itinerary._id]);
+      }
+    )
     this.cancelForm();
   }
 

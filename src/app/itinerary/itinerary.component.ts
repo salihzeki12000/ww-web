@@ -487,15 +487,19 @@ export class ItineraryComponent implements OnInit, OnDestroy {
     // let startDate = new Date(this.dateFrom);
     // let endDate = new Date(this.dateTo);
 
-    let startArray = this.dateFrom.split(/[- :]/);
-    let startDate = new Date(startArray[2], startArray[0] - 1, startArray[1]);
+    let startYear = this.dateFrom.slice(0,4);
+    let startMonth = this.dateFrom.slice(5,7);
+    let startDay = this.dateFrom.slice(8,10);
+    let startDate = new Date(startYear, startMonth - 1, startDay);
 
-    let endArray = this.dateTo.split(/[- :]/);
-    let endDate = new Date(endArray[2], endArray[0] - 1, endArray[1]);
+    let endYear = this.dateTo.slice(0,4);
+    let endMonth = this.dateTo.slice(5,7);
+    let endDay = this.dateTo.slice(8,10);
+    let endDate = new Date(endYear, endMonth - 1, endDay);
 
     this.newDateRange = [];
     this.newDateRange.push('any day');
-    this.newDateRange.push((new Date(startArray[2], startArray[0] - 1, startArray[1])).toISOString());
+    this.newDateRange.push((new Date(startYear, startMonth - 1, startDay)).toISOString());
     console.log(this.newDateRange)
 
     while(startDate < endDate){
