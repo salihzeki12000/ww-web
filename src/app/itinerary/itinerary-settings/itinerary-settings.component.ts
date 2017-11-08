@@ -288,7 +288,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
     setTimeout(() =>  {
       this.picker.datePicker.setStartDate(this.dateFrom);
       this.picker.datePicker.setEndDate(this.dateTo);
-    },1500)
+    },2000)
   }
 
   filterUsers(users)  {
