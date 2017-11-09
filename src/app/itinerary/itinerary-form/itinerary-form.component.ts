@@ -192,7 +192,6 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
 
     this.itineraryService.addItin(itinerary).subscribe(
       data => {
-        console.log(data)
         this.setDateRange(data.itinerary)
     });
 
