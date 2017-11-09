@@ -12,6 +12,7 @@
   <h6>Note</h6>
 
   <div *ngIf="!editing">
+    <h5 class="nil-daily-note" *ngIf="dailyNote === ''">Click to add note for the day. e.g. Day trip to Disneyland</h5>
     <p [ngClass]="[uniqueClass]" [innerHTML]="dailyNote"></p>
   </div>
 
@@ -31,6 +32,7 @@
   <h6>Day {{ index }} note</h6>
 
   <div *ngIf="!editing">
+    <h5 class="nil-daily-note" *ngIf="dailyNote === ''">Click to add note for the day. e.g. Day trip to Disneyland</h5>
     <p [ngClass]="[uniqueClass]" [innerHTML]="dailyNote"></p>
   </div>
 
