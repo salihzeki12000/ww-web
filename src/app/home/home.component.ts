@@ -66,13 +66,13 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.favouriteService.getFavs(this.user['_id']).subscribe(result =>{})
 
 
-        // if(!this.user['new_user_tour'])  {
+        if(!this.user['new_user_tour'])  {
           this.newUser = true;
           this.verifyMsg = true;
           this.preventScroll(true);
-        // } else  {
-        //   this.preventScroll(false);
-        // }
+        } else  {
+          this.preventScroll(false);
+        }
       })
 
     this.relationshipSubscription = this.relationshipService.updateRelationships.subscribe(
