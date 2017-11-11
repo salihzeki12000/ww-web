@@ -25,20 +25,19 @@
 </div>
 
 <div *ngIf="!totalAccommodations && !preview" class="nil-event-message">
-  <img class="img-example" src="assets/arrow.png" alt="">
   <h4>This is a dedicated section for all your accommodation arrangements.</h4>
+  <h4>You do not have any accommodation arrangement in this itinerary.</h4>
 
-  <div class="add-opt" (click)="addAccommodation = true">
+  <div class="add-opt accommodation-text" (click)="addAccommodation = true">
     <i class="fa fa-bed fa-3x" aria-hidden="true"></i>
     <h4>Add new accommodation</h4>
   </div>
 
-  <h4 class="add-hint">You can also add a new arrangement by selecting from the "ADD NEW" tab.</h4>
-  <h4 class="add-hint-mobile">You can also add a new arrangement by selecting from the "ADD NEW" tab located at the bottom left of the screen.</h4>
+  <h4 class="add-hint">You can also add a new arrangement from the "ADD NEW" tab on the left.</h4>
+  <h4 class="add-hint-mobile">You can also add a new arrangement from the "ADD NEW" tab located at the bottom left of the screen.</h4>
 </div>
 
 <div *ngIf="!totalAccommodations && preview" class="nil-event-message">
-  <img class="img-example" src="assets/arrow.png" alt="">
   <h4>There is no accommodation arrangement in this itinerary.</h4>
   <h4>You can copy this itinerary and add your own accommodation arrangement.</h4>
 </div>

@@ -28,20 +28,19 @@
 </div>
 
 <div *ngIf="!totalActivities && !preview" class="nil-event-message">
-  <img class="img-example" src="assets/arrow.png" alt="">
   <h4>This is a dedicated section for all your activities.</h4>
+  <h4>You do not have any activity in this itinerary.</h4>
 
-  <div class="add-opt" (click)="addActivity = true">
+  <div class="add-opt activity-text" (click)="addActivity = true">
     <i class="fa fa-bicycle fa-3x" aria-hidden="true"></i>
     <h4>Add new activity</h4>
   </div>
 
-  <h4 class="add-hint">You can also add a new activity by selecting from the "ADD NEW" tab.</h4>
-  <h4 class="add-hint-mobile">You can also add a new activity by selecting from the "ADD NEW" tab located at the bottom left of the screen.</h4>
+  <h4 class="add-hint">You can also add a new activity from the "ADD NEW" tab on the left.</h4>
+  <h4 class="add-hint-mobile">You can also add a new activity from the "ADD NEW" tab located at the bottom left of the screen.</h4>
 </div>
 
 <div *ngIf="!totalActivities && preview" class="nil-event-message">
-  <img class="img-example" src="assets/arrow.png" alt="">
   <h4>This is no activity in this itinerary.</h4>
   <h4>You can copy this itinerary and add your own activities.</h4>
 </div>

@@ -21,30 +21,30 @@
 </div>
 
 <div *ngIf="!totalEvents" class="nil-event-message">
-  <img class="img-example" src="assets/arrow.png" alt="">
+
   <h4 class="better-experience">For a better experience, it is recommended to plan your itinerary on a laptop or desktop</h4>
-  <h4>You have not added any item to display on this summary</h4>
+  <h3>You do not have any item in this itinerary.</h3>
 
   <div class="add-options">
-    <div class="add-opt" (click)="addTransportForm()">
-      <i class="fa fa-car fa-3x" aria-hidden="true"></i>
-      <h4>Add new transport</h4>
-    </div>
-
-    <div class="add-opt" (click)="addAccommodationForm()">
+    <div class="add-opt accommodation-text" (click)="addAccommodationForm()">
       <i class="fa fa-bed fa-3x" aria-hidden="true"></i>
       <h4>Add new accommodation</h4>
     </div>
 
-    <div class="add-opt" (click)="addActivityForm()">
+    <div class="add-opt activity-text" (click)="addActivityForm()">
       <i class="fa fa-bicycle fa-3x" aria-hidden="true"></i>
       <h4>Add new activity</h4>
+    </div>
+
+    <div class="add-opt transport-text" (click)="addTransportForm()">
+      <i class="fa fa-car fa-3x" aria-hidden="true"></i>
+      <h4>Add new transport</h4>
     </div>
   </div>
 
 
-  <h4 class="add-hint">You can also add a new item by selecting from the "ADD NEW" tab.</h4>
-  <h4 class="add-hint-mobile">You can also add a new item by selecting from the "ADD NEW" tab located at the bottom left of the screen.</h4>
+  <h4 class="add-hint">You can also add a new item from the "ADD NEW" tab on the left.</h4>
+  <h4 class="add-hint-mobile">You can also add a new item from the "ADD NEW" tab located at the bottom left of the screen.</h4>
 </div>
 
 <div *ngIf="totalEvents && !compressed" class="summary-container" (window:resize)="onScroll($event)" (scroll)="onScroll($event)">

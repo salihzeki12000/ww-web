@@ -261,6 +261,18 @@
   background-color: rgba(241,57,77,.8);
 }
 
+.accommodation-text * {
+  color: rgba(118,0,204,.5);
+}
+
+.transport-text * {
+  color: rgba(255, 161, 92,1);
+}
+
+.activity-text * {
+  color: rgba(241,57,77,.8);
+}
+
 
 /* itinerary summary & itinerary nav mobile */
 
@@ -303,8 +315,10 @@
 
 .nil-event-message  {
   position: fixed;
-  margin: 75px 0 0 10px;
+  margin-top: 100px;
   padding: 10px;
+  width: calc(100vw - 200px);
+  text-align: center;
   z-index: 2;
 
   @media only screen and (max-width: 550px) {
@@ -354,6 +368,7 @@
   }
 }
 
+
 /* display options to add when no item */
 
 .add-opt  {
@@ -375,11 +390,6 @@
   color: #6494ED;
 }
 
-.add-opt *  {
-  display: block;
-  font-weight: 400;
-  color: #567FCC;
-}
 
 
 
