@@ -28,16 +28,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   verifyMsg = false;
 
   newUser = false;
-  tourStart = false;
+  newItinerary = true;
+  curated = false;
+  follow = false;
 
-  tourHome = false; //home page
-  tour1 = false;
-  tour2 = false;
-  tour3 = false;
-  tour4 = false;
-  index = 0;
-
-  tourNav = false;
 
   currentUserSubscription: Subscription;
   feedSubscription: Subscription;
@@ -72,14 +66,13 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.favouriteService.getFavs(this.user['_id']).subscribe(result =>{})
 
 
-        if(!this.user['new_user_tour'])  {
+        // if(!this.user['new_user_tour'])  {
           this.newUser = true;
           this.verifyMsg = true;
-          this.tourStart = true;
           this.preventScroll(true);
-        } else  {
-          this.preventScroll(false);
-        }
+        // } else  {
+        //   this.preventScroll(false);
+        // }
       })
 
     this.relationshipSubscription = this.relationshipService.updateRelationships.subscribe(
@@ -116,39 +109,20 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.userService.editUser(this.user).subscribe(result =>{})
   }
 
-  skipTour()  {
+  end()  {
     this.newUser = false;
     this.updateUser();
   }
 
-  startTour() {
-    this.tourStart = false;
-
-    this.tourHome = true;
-    this.tour1 = true;
-    this.index = 1;
+  getCurated()  {
+    this.newItinerary = false;
+    this.curated = true;
   }
 
-  next()  {
-    this.index += 1;
-
-    if(this.index === 2) {
-      this.tour2 = true;
-    } else if(this.index === 3)  {
-      this.tour3 = true;
-    } else if(this.index === 4) {
-      this.tour4 = true;
-    } else if(this.index === 5) {
-      this.tourHome = false;
-      this.tour1 = false;
-      this.tour2 = false;
-      this.tour3 = false;
-      this.tour4 = false;
-
-      this.tourNav = true;
-    }
+  getFollow() {
+    this.curated = false;
+    this.follow = true;
   }
-
 
   // add description
 
