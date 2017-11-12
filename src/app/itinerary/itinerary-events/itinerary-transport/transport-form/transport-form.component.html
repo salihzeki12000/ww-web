@@ -219,7 +219,8 @@
         </div>
 
         <!-- exclude flight, left train, bus, cruise, rental & other transport-->
-        <h4 class="form-section-header">Departure Details</h4>
+        <h4 class="form-section-header" *ngIf="transportOption !== 'vehicle rental'">Departure Details</h4>
+        <h4 class="form-section-header" *ngIf="transportOption === 'vehicle rental'">Pick Up Details</h4>
         <div class="form-section-details">
           <div *ngIf="transportOption === 'bus'">
             <label>Bus Number</label>
@@ -262,6 +263,15 @@
           </div>
 
           <div *ngIf="transportOption === 'vehicle rental'">
+            <label>Pick Up Location</label>
+            <ww-google-place-search
+            [populate]="depStation"
+            (placeDetail)="setDepStation($event)"
+            (searching)="searchingDepStation($event)"></ww-google-place-search>
+
+            <label>Pick Up City <span class="required"> - required</span></label>
+            <input type="text" formControlName="dep_city">
+
             <label>Pick Up Date <span class="required"> - required</span></label>
             <select class="select-date" name="dep_date" formControlName="dep_date">
               <option *ngFor="let itinDate of dateRange; let i = index" [value]="itinDate" (change)="dateChange()">
@@ -289,7 +299,8 @@
         </div>
         <!-- end of departure details -->
 
-        <h4 class="form-section-header">Arrival Details</h4>
+        <h4 class="form-section-header" *ngIf="transportOption !== 'vehicle rental'">Arrival Details</h4>
+        <h4 class="form-section-header" *ngIf="transportOption === 'vehicle rental'">Return Details</h4>
         <div class="form-section-details">
 
           <!-- arrival details for all transport type except vehicle rental-->
@@ -328,6 +339,15 @@
           </div>
 
           <div *ngIf="transportOption === 'vehicle rental'">
+            <label>Return Location</label>
+            <ww-google-place-search
+            [populate]="arrStation"
+            (placeDetail)="setArrStation($event)"
+            (searching)="searchingArrStation($event)"></ww-google-place-search>
+
+            <label>Return City <span class="required"> - required</span></label>
+            <input type="text" formControlName="arr_city">
+
             <label>Return Date</label>
             <select class="select-date" name="arr_date" formControlName="arr_date">
               <option *ngFor="let itinDate of outDateRange; let i = index" [value]="itinDate.date">
