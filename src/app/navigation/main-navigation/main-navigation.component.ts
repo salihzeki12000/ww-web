@@ -169,7 +169,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
 
       if(itemDate > checkDate)  {
         this.newNotification = true;
-        this._document.getElementById('favicon').setAttribute('href', 'assets/ww_thumbnail_notification.png');
+        this._document.getElementById('favicon').setAttribute('href', 'assets/ww_logo_notification.png');
 
         break;
       }
