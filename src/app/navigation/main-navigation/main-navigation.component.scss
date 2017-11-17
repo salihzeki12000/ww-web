@@ -131,12 +131,11 @@
   }
 
   @media only screen and (max-width: 500px) {
-    right: 0;
     height: 0;
   }
 
-  @media only screen and (min-width: 500px) and (max-width: 890px) {
-    right: 8%;
+  @media only screen and (max-width: 890px) {
+    right: 5%;
   }
 }
 
@@ -213,6 +212,10 @@
 .nav-link > i  {
   margin-top: 13px;
   padding-right: 9px;
+
+  @media only screen and (max-width: 500px) {
+    padding-right: 0;
+  }
 }
 
 .nav-link > .user-profile-thumbnail  {
@@ -483,8 +486,11 @@ i.fa-sticky-note {
   @media only screen and (max-width: 500px) {
     position: fixed;
     top: -1px;
-    right: 0;
-    font-size: 25px;
+    right: 5%;
+  }
+
+  @media only screen and (max-width: 890px) {
+    font-size: 25px;    
   }
 }
 

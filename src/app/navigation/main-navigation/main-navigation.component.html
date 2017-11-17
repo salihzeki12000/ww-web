@@ -39,7 +39,7 @@
 
 <div *ngIf="isLoggedIn">
 
-  <div class="nav-bookmark">
+  <!-- <div class="nav-bookmark">
     <div class="nav-link">
       <i class="fa fa-bookmark fa-lg" aria-hidden="true" (mouseover)="bookmarkOptions = true"></i>
 
@@ -50,9 +50,9 @@
           <h5 class="exit-nav-view" (click)="bookmarkOptions = false">X</h5>
         </div>
 
-        <!-- <div class="dropdown-item" (click)="routeToRecommendations()">
+        <div class="dropdown-item" (click)="routeToRecommendations()">
           <h5><i class="fa fa-share fa-fw fa-lg" aria-hidden="true"></i> Recommendations</h5>
-        </div> -->
+        </div>
 
         <div class="nav-sub-header">
           <h5>FAVOURITES</h5>
@@ -67,7 +67,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <div class="nav-search">
     <div class="nav-link">
@@ -248,10 +248,10 @@
               <h5 (click)="routeToNotifications()">View all notifications</h5>
               <h6 *ngIf='newNotification'></h6>
             </div>
-
+<!-- 
             <div class="category-item">
               <h5 (click)="routeToFavs()">View all favourites</h5>
-            </div>
+            </div> -->
 
             <!-- <div class="category-item">
               <h5 (click)="routeToRecommendations()">View all recommendations</h5>
