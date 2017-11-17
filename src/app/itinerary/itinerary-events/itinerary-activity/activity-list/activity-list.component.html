@@ -20,7 +20,7 @@
         <h5 class="date" *ngIf="activity?.date !== 'any day' && !itinerary?.num_days">{{ activity?.date | date: 'dd MMM yyyy' }} - {{ activity?.time }}</h5>
 
         <h5 class='event-summary-name'>{{ activity?.name }}</h5>
-        <h5 class="event-summary-note truncate">{{ activity?.note }}</h5>
+        <h5 class="event-summary-note truncate" *ngIf="activity?.note !== ''">{{ activity?.note }}</h5>
       </a>
     </div>
   </div>

@@ -74,7 +74,7 @@ h4.edit-description {
 }
 
 .verify-message .form-card  {
-  top: 25px;
+  top: 60px;
 }
 
 
@@ -83,27 +83,14 @@ h4.edit-description {
   for new user tour
 
 *********************/
-.desktop  {
-  @media only screen and (max-width: 650px) {
-    display: none;
-  }
-}
-
-.mobile {
-  display: none;
-
-  @media only screen and (max-width: 650px) {
-    display: block;
-    text-align: center;
-  }
-}
-
 .message-box  {
   position: absolute;
-  top: 5px;
+  top: 60px;
   right: calc((100vw - 600px)/2);
+  height: 650px;
   width: 600px;
-  padding: 20px;
+  padding-top: 20px;
+  text-align: center;
   background-color: white;
   -webkit-box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
   -moz-box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
@@ -111,25 +98,24 @@ h4.edit-description {
   border-radius: 2px;
 
   @media only screen and (max-width: 450px) {
-    height: 99.9vh;
-  }
-
-  @media only screen and (max-width: 650px) {
     top: 0;
     right: 0;
+    height: 99.9vh;
     width: 100%;
     min-width: 300px;
-    padding: 20px 0 0 0;
+  }
+
+  @media only screen and (min-width: 450px) and (max-width: 650px) {
+    top: 0;
+    right: 0;
+    height: 500px;
+    width: 100%;
   }
 }
 
 .message-box > img  {
   width: 200px;
-  margin: 5px 0 20px 180px;
-
-  @media only screen and (max-width: 650px) {
-    margin-left: calc((100vw - 200px) /2);
-  }
+  margin: 5px 0 20px 0;
 }
 
 .message-box h3 {
@@ -141,36 +127,8 @@ h4.edit-description {
   }
 }
 
-.message-item {
-  padding: 5px 20px;
-}
 
-.message-item img {
-  display: inline-block;
-  height: 20px;
-  padding-right: 5px;
-}
-
-.message-item h4  {
-  display: inline-block;
-  font-weight: 400;
-}
-
-.end-message  {
-  display: inline-block;
-  padding: 10px 20px;
-  color: #6494ED;
-  border: 2px solid;
-  float: right;
-
-  &:hover{
-    cursor: pointer;
-    color: #3A4A4D;
-  }
-}
-
-
-/* mobile */
+/* message section */
 .message-section  {
   margin-top: 20px;
 }
@@ -185,17 +143,33 @@ h4.edit-description {
 
 .new-itinerary  {
   margin: 20px 0;
-  margin-left: calc((100vw - 300px)/2);
+  margin-left: 150px;
   width: 300px;
-  padding: 30px 20px;
+  padding: 60px 20px;
   border: 3px solid;
   border-radius: 5px;
+
+  @media only screen and (max-width: 650px) {
+    margin-left: calc((100vw - 300px)/2);
+    padding: 30px 20px;
+  }
 }
 
 .new-itinerary *  {
-  display: inline-block;
-  font-weight: 400;
-  vertical-align: middle;
+  padding: 15px 0;
+
+  @media only screen and (max-width: 650px) {
+    display: inline-block;
+    padding: 0;
+    font-weight: 400;
+    vertical-align: middle;
+  }
+}
+
+.new-itinerary i {
+  @media only screen and (max-width: 650px) {
+    font-size: 28px;
+  }
 }
 
 .itinerary-title  {
@@ -221,7 +195,13 @@ h4.edit-description {
 .tracker  {
   position: absolute;
   bottom: 70px;
-  width: 100vw;
+  margin-left: 250px;
+
+  @media only screen and (max-width: 650px) {
+
+    width: 100vw;
+    margin-left: 0;
+  }
 }
 
 .dot  {

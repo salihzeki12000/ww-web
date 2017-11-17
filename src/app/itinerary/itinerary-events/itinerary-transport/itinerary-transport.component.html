@@ -22,7 +22,7 @@
           <h5 class="event-summary-header" *ngSwitchCase="'transport'"><i class="fa fa-rocket" aria-hidden="true"></i> Transport</h5>
         </div>
         <h5 class="event-summary-name">from {{ event.dep_city | uppercase }} to {{ event.arr_city | uppercase }}</h5>
-        <h5 class="event-summary-note truncate">{{ event?.note }}</h5>
+        <h5 class="event-summary-note truncate" *ngIf="event?.note !== ''">{{ event?.note }}</h5>
 
         <h4 class="event-out-of-range" *ngIf="event?.out_of_range"><i class="fa fa-arrow-up" aria-hidden="true"></i> Out of itinerary date range</h4>
       </a>
