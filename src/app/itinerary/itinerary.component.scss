@@ -382,7 +382,8 @@ header {
   letter-spacing: 1px;
   background-color: white;
   border-right: 2px solid lightgray;
-
+  list-style-type: none;
+  
   @media only screen and (max-width: 1090px) {
     position: static;
     width: 100%;

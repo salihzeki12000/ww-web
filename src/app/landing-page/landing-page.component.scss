@@ -97,14 +97,15 @@
 }
 
 .landing-page-tagline > h1  {
-  font-size: 28px;
+  margin-bottom: 20px;
+  font-size: 36px;
   font-weight: 300;
   color: #F9FBFB;
 }
 
-.landing-page-tagline > h2  {
-  margin-top: 20px;
-  font-size: 23px;
+.landing-page-tagline > h3  {
+  margin: 10px 0;
+  font-size: 18px;
   font-weight: 300;
   color: #F9FBFB;
 }
@@ -135,6 +136,17 @@ hr.header-separator {
   border-top: 2px solid #6494ED;
 }
 
+/* how to section */
+#how-to {
+  font-family: 'Fira Sans', sans-serif;
+  text-align: center;
+  background-color: white;
+}
+
+#how-to h1  {
+  padding: 70px 0 20px 0;
+  color: #6494ED;
+}
 
 /* curated itineraries section */
 
@@ -265,7 +277,7 @@ hr.header-separator {
 
 .hwdi-example img {
   margin-bottom: 10px;
-  height: 150px;
+  height: 100px;
 }
 
 .output {
