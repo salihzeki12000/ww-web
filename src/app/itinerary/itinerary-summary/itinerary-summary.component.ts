@@ -33,6 +33,7 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
 
   chosenEvent;
 
+  today;
   scroll = false;
   dateBar;
   dateRow;
@@ -64,6 +65,12 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
     if(this.element.nativeElement.ownerDocument.body.clientWidth > 420)  {
       this.compressedView = true;
     }
+
+    let today = new Date();
+    let year = today.getFullYear();
+    let month = today.getMonth() + 1;
+    let date = today.getDate();
+    this.today = year + "-" + month + "-" + date + "T00:00:00.000Z";
 
     this.events = [];
     this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
@@ -166,6 +173,12 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
 
   sectionPosition(event)  {
     this.itemPosition.push(event);
+
+    if(!this.compressedView)  {
+      if(this.today === event['date'])  {
+        this.element.nativeElement.ownerDocument.scrollingElement.scrollTop = event['position'] - 30;
+      }
+    }
   }
 
   toggleView()  {
