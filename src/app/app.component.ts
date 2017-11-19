@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener }      from '@angular/core';
+import { Component, OnInit, HostListener, Renderer2 } from '@angular/core';
 import { Router, NavigationEnd }  from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private renderer: Renderer2,
     private errorMessageService: ErrorMessageService,
     private authService: AuthService,
     private userService: UserService) { }
@@ -53,6 +54,7 @@ export class AppComponent implements OnInit {
     this.router.events.subscribe((event: NavigationEnd) => {
       if(event instanceof NavigationEnd) {
         window.scrollTo(0, 0);
+        this.renderer.removeClass(document.body, 'prevent-scroll');
       }
     })
   }

@@ -215,13 +215,13 @@
 
             <div class="follower-following-counter">
               <div class="data-counter" (click)="routeToFollowers()">
-                <h4>{{ followers.length }}</h4>
-                <h5>FOLLOWERS</h5>
+                <h3>{{ followers.length }}</h3>
+                <h6>FOLLOWER</h6>
               </div>
 
               <div class="data-counter" (click)="routeToFollowings()">
-                <h4>{{ followings.length }}</h4>
-                <h5>FOLLOWING</h5>
+                <h3>{{ followings.length }}</h3>
+                <h6>FOLLOWING</h6>
               </div>
             </div>
 
@@ -248,7 +248,7 @@
               <h5 (click)="routeToNotifications()">View all notifications</h5>
               <h6 *ngIf='newNotification'></h6>
             </div>
-<!-- 
+<!--
             <div class="category-item">
               <h5 (click)="routeToFavs()">View all favourites</h5>
             </div> -->

@@ -27,6 +27,9 @@
 
 .user-description {
   color: gray;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 
@@ -36,6 +39,10 @@
 
 ************************/
 .username {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
   &:hover {
     cursor: pointer;
     color: #6494ED;
@@ -44,6 +51,10 @@
 
 .username-bold  {
   font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
   &:hover {
     cursor: pointer;
     color: #6494ED;

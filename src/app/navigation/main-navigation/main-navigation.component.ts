@@ -341,6 +341,13 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     this.showUsers = true;
     this.sideNav = false;
     this.preventScroll(true);
+
+    this.userService.getAllUsers().subscribe(
+      result => {
+        this.users = result.users;
+        this.filteredUsers = this.users;
+        this.groupUsers();
+      })
   }
 
   filterSearch(text)  {
