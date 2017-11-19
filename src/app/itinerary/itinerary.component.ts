@@ -235,7 +235,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   }
 
   setInviteLink() {
-    this.inviteLink = 'https://www.wondererwanderer.com/#/invite/me/' + this.itinerary['_id'];
+    this.inviteLink = 'http://www.wondererwanderer.com/#/invite/me/' + this.itinerary['_id'];
   }
 
 

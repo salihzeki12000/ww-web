@@ -18,21 +18,21 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   // pictures
   mtfuji = 'https://res.cloudinary.com/wwfileupload/image/upload/v1505975133/mt_fuji_ggztym.jpg';
 
-  summary = 'https://res.cloudinary.com/wwfileupload/image/upload/v1505975635/landing page/example-summary.png';
-  description = 'https://res.cloudinary.com/wwfileupload/image/upload/v1505975650/landing page/example-description.png';
-  transport = 'https://res.cloudinary.com/wwfileupload/image/upload/v1505975498/landing page/example-transport.png';
-  accommodation = 'https://res.cloudinary.com/wwfileupload/image/upload/v1505975571/landing page/example-accommodation.png';
-  activity = 'https://res.cloudinary.com/wwfileupload/image/upload/v1505975569/landing page/example-activity.png';
-  resource = 'https://res.cloudinary.com/wwfileupload/image/upload/v1505975568/landing page/example-resource.png';
-  map = 'https://res.cloudinary.com/wwfileupload/image/upload/v1505975581/landing page/example-map.png';
+  summary = 'https://res.cloudinary.com/wwfileupload/image/upload/v1511074663/example-summary_x7cc87.png';
+  description = 'https://res.cloudinary.com/wwfileupload/image/upload/v1511074669/example-description_h1lvct.png';
+  transport = 'https://res.cloudinary.com/wwfileupload/image/upload/v1511074659/example-transport_uu1dce.png';
+  accommodation = 'https://res.cloudinary.com/wwfileupload/image/upload/v1511074661/example-accommodation_mvx8y8.png';
+  activity = 'https://res.cloudinary.com/wwfileupload/image/upload/v1511074663/example-activity_m20vdw.png';
+  resource = 'https://res.cloudinary.com/wwfileupload/image/upload/v1511074661/example-resource_kzczxi.png';
+  map = 'https://res.cloudinary.com/wwfileupload/image/upload/v1511074667/example-map_ptgnef.png';
 
-  summaryM = 'https://res.cloudinary.com/wwfileupload/image/upload/v1505976231/landing page/example-summary-mobile.png';
-  descriptionM = 'https://res.cloudinary.com/wwfileupload/image/upload/v1505976285/landing page/example-description-mobile.png';
-  transportM = 'https://res.cloudinary.com/wwfileupload/image/upload/v1505976229/landing page/example-transport-mobile.png';
-  accommodationM = 'https://res.cloudinary.com/wwfileupload/image/upload/v1505976282/landing page/example-accommodation-mobile.png';
-  activityM = 'https://res.cloudinary.com/wwfileupload/image/upload/v1505976284/landing page/example-activity-mobile.png';
-  resourceM = 'https://res.cloudinary.com/wwfileupload/image/upload/v1505976228/landing page/example-resource-mobile.png';
-  mapM = 'https://res.cloudinary.com/wwfileupload/image/upload/v1505976230/landing page/example-map-mobile.png';
+  summaryM = 'https://res.cloudinary.com/wwfileupload/image/upload/v1511075362/example-summary-mobile_hrn5vv.png';
+  descriptionM = 'https://res.cloudinary.com/wwfileupload/image/upload/v1511075360/example-description-mobile_cocrir.png';
+  transportM = 'https://res.cloudinary.com/wwfileupload/image/upload/v1511075361/example-transport-mobile_pqevms.png';
+  accommodationM = 'https://res.cloudinary.com/wwfileupload/image/upload/v1511075364/exmaple-accommodation-mobile_al6yeh.png';
+  activityM = 'https://res.cloudinary.com/wwfileupload/image/upload/v1511075369/example-activity-mobile_npgaay.png';
+  resourceM = 'https://res.cloudinary.com/wwfileupload/image/upload/v1511075359/example-resource-mobile_zrvdu2.png';
+  mapM = 'https://res.cloudinary.com/wwfileupload/image/upload/v1511075364/example-map-mobile_thh8ff.png';
 
   constructor(
     private titleService: Title,

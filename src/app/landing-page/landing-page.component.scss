@@ -104,10 +104,16 @@
 }
 
 .landing-page-tagline > h3  {
-  margin: 10px 0;
+  margin-left: calc((100vw - 470px)/2);
+  width: 470px;
   font-size: 18px;
   font-weight: 300;
   color: #F9FBFB;
+
+  @media only screen and (max-width: 650px) {
+    width: 100%;
+    margin: 0;
+  }
 }
 
 .call-to-action {
@@ -136,6 +142,9 @@ hr.header-separator {
   border-top: 2px solid #6494ED;
 }
 
+
+
+
 /* how to section */
 #how-to {
   font-family: 'Fira Sans', sans-serif;
@@ -147,6 +156,195 @@ hr.header-separator {
   padding: 70px 0 20px 0;
   color: #6494ED;
 }
+
+.how-to-container {
+  width: 770px;
+  margin-left: calc((100vw - 770px) /2);
+
+  @media only screen and (max-width: 770px) {
+    width: 100%;
+    margin: 0;
+  }
+}
+
+.follow-friend,
+.check-itin,
+.copy-it,
+.edit-it  {
+  display: inline-block;
+  margin: 40px;
+  width: 300px;
+  vertical-align: top;
+
+  @media only screen and (max-width: 770px) {
+    margin: 60px 0;
+  }
+}
+
+.seq  {
+  position: absolute;
+  margin-top: -45px;
+}
+
+.seq img  {
+  height: 40px;
+}
+
+.seq h3 {
+  position: absolute;
+  margin: -32px 0 0 17px;
+  color: #6494ED;
+}
+
+/* step 01 follow friend */
+.follow-friend > h3 {
+  padding-bottom: 40px;
+}
+
+.follow-friend > h4 {
+  position: absolute;
+  margin-left: 30px;
+}
+
+.follow-friend h4:nth-of-type(2)  {
+  margin: -50px 0 0 115px;
+  padding: 5px 10px;
+  color: #F9FBFB;
+  background-color: #6494ED;
+  border-radius: 5px;
+}
+
+.follow-friend h4:nth-of-type(3)  {
+  margin-left: 220px;
+}
+
+.follow-friend > img  {
+  margin: 0 50px;
+  height: 70px;
+}
+
+/* step 02 check out itineraries */
+.check-itin h3 {
+  padding-bottom: 20px;
+}
+
+.profile-img-eg {
+  margin-left: 30px;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  border: 2px solid #6494ED;
+}
+
+.profile-img-eg .head {
+  margin: 5px 0 0 10px;
+  height: 15px;
+  width: 15px;
+  background-color: black;
+  border-radius: 50%;
+}
+
+.profile-img-eg .body {
+  margin: 5px 0 0 10px;
+  height: 15px;
+  width: 15px;
+  background-color: black;
+  border-radius: 0 0 20px 0;
+  transform: rotate(45deg);
+}
+
+.profile-name-eg  {
+  position: absolute;
+  margin: -30px 0 0 80px;
+}
+
+.itin-eg  {
+  display: inline-block;
+  margin: 10px 0;
+  width: 120px;
+  background-color: white;
+  -webkit-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
+}
+
+.itin-eg img  {
+  width: 120px;
+  height: 60px;
+}
+
+.itin-eg h5 {
+  padding: 5px;
+  text-align: left;
+}
+
+/* copy it */
+.copy-it > h3 {
+  padding-bottom: 40px;
+}
+
+.copy-it .itin-eg {
+  margin-left: -30px;
+  opacity: .5;
+}
+
+.copy-it .copy-eg {
+  position: absolute;
+  margin: 30px 0 0 -80px;
+  opacity: 1;
+}
+
+/* edit it */
+.edit-it > h3 {
+  padding-bottom: 40px;
+}
+
+.fa-cogs  {
+  padding-bottom: 30px;
+}
+
+.edit-it > a {
+  position: absolute;
+  margin: -35px 0 0 75px;
+  color: #6494ED;
+  text-decoration: underline;
+
+  &:hover {
+    cursor: pointer;
+    opacity: .7;
+  }
+}
+
+/* create it */
+.create-it  {
+  margin: 40px 40px 0 40px;
+  padding-bottom: 60px;
+
+  @media only screen and (max-width: 770px) {
+    width: 300px;
+    margin-left: calc((100vw - 300px)/2);
+  }
+}
+
+.create-it-now  {
+  margin: 40px 0 0 240px;
+  width: 210px;
+  padding: 10px;
+  text-align: center;
+  color: #F9FBFB;
+  background-color: #6494ED;
+  border-radius: 5px;
+
+  &:hover {
+    cursor: pointer;
+    opacity: .7;
+  }
+
+  @media only screen and (max-width: 770px) {
+    margin-left: 45px;
+  }
+}
+
 
 /* curated itineraries section */
 
@@ -306,11 +504,13 @@ hr.header-separator {
 /* slide show section */
 
 #slide-show {
+  position: relative;
   padding: 120px 0;
-  height: 650px;
+  height: 700px;
   width: 100%;
   text-align: center;
   background-color: white;
+  z-index: -1;
 }
 
 .example-header,
@@ -399,7 +599,10 @@ hr.header-separator {
 }
 
 
-
+#slide-show .leading  {
+  padding-top: 500px;
+  font-family: 'Fira Sans', sans-serif;
+}
 
 
 /* share section */
@@ -443,7 +646,6 @@ hr.header-separator {
 #benefit {
   font-family: 'Fira Sans', sans-serif;
   text-align: center;
-  background-color: white;
 }
 
 #benefit h1  {
@@ -525,6 +727,7 @@ hr.header-separator {
   padding: 50px 0;
   text-align: center;
   font-family: 'Fira Sans', sans-serif;
+  background-color: white;
 }
 
 #teaser h3 {

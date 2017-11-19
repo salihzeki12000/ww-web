@@ -15,21 +15,106 @@
 
     <div class="landing-page-tagline">
       <h1>Travel planning made simpler</h1>
-      <h3>Find inspirations through your friends' itineraries</h3>
-      <h3>and make it yours with our user-friendly planning tool</h3>
+      <h3>Find inspirations through your friends' itineraries and make it yours with our user-friendly planning tool</h3>
     </div>
 
-    <h3 class="call-to-action" (click)="getSignup()">Create an itinerary now!</h3>
+    <h3 class="call-to-action" (click)="getSignup()">Experience it now!</h3>
 
   </div>
 
-  <!-- <div id="how-to">
-    <h1>Let us show you how</h1>
+  <div id="how-to">
+    <h1>Getting started</h1>
     <hr class="header-separator">
 
-  </div> -->
+    <div class="how-to-container">
+      <div class="follow-friend">
+        <div class="seq">
+          <img src="assets/bubble.png" alt="">
+          <h3>1</h3>
+        </div>
 
-  <div id="curated">
+        <h3>Find friends to follow</h3>
+        <h4>You</h4>
+        <img src="assets/man2.png" alt="">
+        <h4><i class="fa fa-plus" aria-hidden="true"></i> Follow</h4>
+        <h4>Your friend</h4>
+        <img src="assets/man.png" alt="">
+      </div>
+
+      <div class="check-itin">
+        <div class="seq">
+          <img src="assets/bubble.png" alt="">
+          <h3>2</h3>
+        </div>
+
+        <h3>Check out their itineraries</h3>
+
+        <div class="profile-img-eg">
+          <div class="head"></div>
+          <div class="body"></div>
+        </div>
+        <h4 class="profile-name-eg">Your friend's profile</h4>
+
+        <div class="itin-eg">
+          <img src="https://res.cloudinary.com/wwfileupload/image/upload/v1506413609/Thatbyinnyu_lcovz2.jpg" alt="">
+          <h5>Amazing Bagan</h5>
+        </div>
+
+        <div class="itin-eg">
+          <img src="https://res.cloudinary.com/wwfileupload/image/upload/v1511015328/Reykjavík_Iceland_hyyykm.jpg" alt="">
+          <h5>Ice Ice Baby Iceland</h5>
+        </div>
+
+      </div>
+
+      <div class="copy-it">
+        <div class="seq">
+          <img src="assets/bubble.png" alt="">
+          <h3>3</h3>
+        </div>
+
+        <h3>Like one? Copy it!</h3>
+
+        <div class="itin-eg">
+          <img src="https://res.cloudinary.com/wwfileupload/image/upload/v1506413609/Thatbyinnyu_lcovz2.jpg" alt="">
+          <h5>Amazing Bagan</h5>
+        </div>
+
+        <div class="itin-eg copy-eg">
+          <img src="https://res.cloudinary.com/wwfileupload/image/upload/v1506413609/Thatbyinnyu_lcovz2.jpg" alt="">
+          <h5>Amazing Bagan</h5>
+        </div>
+      </div>
+
+
+      <div class="edit-it">
+        <div class="seq">
+          <img src="assets/bubble.png" alt="">
+          <h3>4</h3>
+        </div>
+
+        <h3>Make it your own</h3>
+
+        <i class="fa fa-cogs fa-5x" aria-hidden="true"></i>
+
+        <h3>with our user-friendly planning tool</h3>
+        <a href="#hwdi">find out more</a>
+      </div>
+
+      <div class="create-it">
+        <div class="seq">
+          <img src="assets/bubble.png" alt="">
+          <h3>5</h3>
+        </div>
+
+        <h3>If you can't find one, create one with our user-friendly planning tool</h3>
+        <h3 class="create-it-now" (click)="getSignup()">Create an itinerary now!</h3>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- <div id="curated">
     <h1>Discover curated itineraries</h1>
     <hr class="header-separator">
 
@@ -52,15 +137,15 @@
       <img src="https://res.cloudinary.com/wwfileupload/image/upload/v1506413609/Thatbyinnyu_lcovz2.jpg" alt="">
       <h3>Jewels of Myanmar</h3>
     </div>
-  </div>
+  </div> -->
 
   <div id="hwdi">
-    <h1>Let's see how we simplify the process</h1>
+    <h1>Our user-friendly planning tool</h1>
     <hr class="header-separator">
 
-    <h2 class="sub">We make it easy to add details</h2>
+    <h2 class="sub">We make adding and editing details a breeze</h2>
 
-    <h3>Give us a name or address and we will populate the basic details for you</h3>
+    <h3>With just a name or address, we will populate the basic details for you</h3>
 
     <div class="hwdi-example">
       <h3>name / address|</h3>
@@ -128,9 +213,11 @@
       </div>
     </div>
 
+    <h2 class="leading">You can now spend your time on real planning and not data entry</h2>
+
   </div>
 
-  <div id="share">
+  <!-- <div id="share">
     <h1>How else we simplify it</h1>
     <hr class="header-separator">
 
@@ -141,11 +228,11 @@
 
     <h2 class="leading">Adopt and adapt travel-ready itineraries for your trip!</h2>
 
-  </div>
+  </div> -->
 
 
   <div id="benefit">
-    <h1>How do we help you</h1>
+    <h1>How do you benefit</h1>
     <hr class="header-separator">
 
     <div class="sub-section">
@@ -154,8 +241,8 @@
       <div class="explanation">
         <h3>SAVE TIME & EFFORT</h3>
         <h4>Adding details is now easier and faster</h4>
-        <h4>Even better when someone shares with you</h4>
         <h4>We do the formatting for you</h4>
+        <h4>Edit from a friend's itinerary. You do not have to start from scratch</h4>
       </div>
     </div>
 
@@ -165,7 +252,7 @@
       <div class="explanation">
         <h3>ORGANISE YOUR TRAVEL DETAILS IN ONE PLACE</h3>
         <h4>No more fumbling for details</h4>
-        <h4>Have a bird's eye view of all your information</h4>
+        <h4>Have a bird's eye view of all the information</h4>
       </div>
     </div>
 
@@ -174,19 +261,19 @@
 
       <div class="explanation">
         <h3>SHARING IS EASIER</h3>
-        <h4>Be inspired by your friend's itinerary</h4>
-        <h4>No more sharing information individually</h4>
+        <h4>Be inspired by your friend's itinerary at any time</h4>
+        <h4>No more waiting for friends to send you their itinerary</h4>
       </div>
     </div>
 
-    <div class="sub-section">
+    <!-- <div class="sub-section">
       <img src="assets/favourite_black.png" alt="">
 
       <div class="explanation">
         <h3>SAVE YOUR FAVOURITE PLACES</h3>
         <h4>We create a special place for your favourite places</h4>
       </div>
-    </div>
+    </div> -->
   </div>
 
 
