@@ -198,64 +198,36 @@ hr.header-separator {
 
 /* step 01 follow friend */
 .follow-friend > h3 {
-  padding-bottom: 40px;
+  padding-bottom: 20px;
 }
 
-.follow-friend > h4 {
-  position: absolute;
+.user-example {
+  padding: 5px 0;
+  text-align: left;
+}
+
+.user-example > h5  {
+  display: inline-block;
   margin-left: 30px;
-}
-
-.follow-friend h4:nth-of-type(2)  {
-  margin: -50px 0 0 115px;
   padding: 5px 10px;
   color: #F9FBFB;
+  vertical-align: super;
   background-color: #6494ED;
   border-radius: 5px;
 }
 
-.follow-friend h4:nth-of-type(3)  {
-  margin-left: 220px;
-}
-
-.follow-friend > img  {
-  margin: 0 50px;
-  height: 70px;
-}
 
 /* step 02 check out itineraries */
 .check-itin h3 {
   padding-bottom: 20px;
 }
 
-.profile-img-eg {
-  margin-left: 30px;
-  height: 40px;
-  width: 40px;
-  border-radius: 50%;
-  border: 2px solid #6494ED;
+.check-itin > .user-example {
+  padding-left: 30px;
 }
 
-.profile-img-eg .head {
-  margin: 5px 0 0 10px;
-  height: 15px;
-  width: 15px;
-  background-color: black;
-  border-radius: 50%;
-}
-
-.profile-img-eg .body {
-  margin: 5px 0 0 10px;
-  height: 15px;
-  width: 15px;
-  background-color: black;
-  border-radius: 0 0 20px 0;
-  transform: rotate(45deg);
-}
-
-.profile-name-eg  {
-  position: absolute;
-  margin: -30px 0 0 80px;
+.check-itin .user-details {
+  width: 60%;
 }
 
 .itin-eg  {
