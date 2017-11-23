@@ -38,12 +38,12 @@ export class AppComponent implements OnInit {
     if(isLoggedIn)  {
       this.currentUserSubscription = this.userService.updateCurrentUser.subscribe(
         result => {
-          let threeDays = 259200000;
+          let oneDay = 86400000; 86400000
           let today = new Date();
           let join = new Date(result['created_at']).getTime();
 
           if(!result['validated'])  {
-            if(today.getTime() >= (join + threeDays) )  {
+            if(today.getTime() >= (join + oneDay) )  {
               this.router.navigateByUrl('/account-not-verified')
             }
           }
