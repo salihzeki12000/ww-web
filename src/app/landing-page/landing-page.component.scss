@@ -77,7 +77,7 @@
   width: 100vw;
   height: 400px;
   text-align: center;
-  background-color: rgba(0,0,0,.2);
+  background-color: rgba(0,0,0,.4);
 
   @media only screen and (max-width: 450px) {
     padding-top: 80px;
@@ -85,35 +85,39 @@
 }
 
 .landing-page-tagline {
-  width: 100vw;
+  margin-left: calc((100vw - 470px)/2);
+  width: 470px;
   color: #F9FBFB;
-  text-align: center;
   vertical-align: top;
   font-family: 'Fira Sans', sans-serif;
 
   @media only screen and (max-width: 650px) {
+    width: 100vw;
+    margin: 0;
     padding: 0 20px;
   }
 }
 
 .landing-page-tagline > h1  {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   font-size: 36px;
   font-weight: 300;
   color: #F9FBFB;
+  text-align: left;
 }
 
 .landing-page-tagline > h3  {
-  margin-left: calc((100vw - 470px)/2);
-  width: 470px;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 300;
   color: #F9FBFB;
+  text-align: justify;
+}
 
-  @media only screen and (max-width: 650px) {
-    width: 100%;
-    margin: 0;
-  }
+.bullet-list h5 {
+  display: inline-block;
+  margin: 10px;
+  font-size: 13px;
+  color: #F9FBFB;
 }
 
 .call-to-action {
