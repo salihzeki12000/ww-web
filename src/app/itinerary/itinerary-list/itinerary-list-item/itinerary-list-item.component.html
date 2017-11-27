@@ -32,7 +32,12 @@
 </div>
 
 <div class="stick-btm">
-  <div class="itinerary-stats" *ngIf="itinerary.likes.length > 0 || itinerary.shares.length > 0 || itinerary.copied_by.length > 0">
+  <div class="itinerary-stats" *ngIf="itinerary.likes.length > 0 || itinerary.shares.length > 0 || itinerary.copied_by.length > 0 || itinerary.views.length > 0">
+    <div class="itinerary-list-stats" *ngIf="itinerary.views.length > 0">
+      <h5>{{ itinerary.views.length }} {{ itinerary.views.length > 1 ? "views" : "view" }}</h5>
+      <div class="dot" *ngIf="itinerary.views.length > 0 && (itinerary.views.length > 0 || itinerary.shares.length > 0 || itinerary.copied_by.length > 0)"></div>
+    </div>
+
     <div class="itinerary-list-stats" *ngIf="itinerary.likes.length > 0">
       <h5>{{ itinerary.likes.length }} {{ itinerary.likes.length > 1 ? "likes" : "like" }}</h5>
       <div class="dot" *ngIf="itinerary.likes.length > 0 && (itinerary.shares.length > 0 || itinerary.copied_by.length > 0)"></div>

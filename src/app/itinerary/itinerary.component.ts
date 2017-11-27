@@ -209,10 +209,6 @@ export class ItineraryComponent implements OnInit, OnDestroy {
       this.loadingMessage = 'You are not authorised to access the selected itinerary.';
       this.loadingService.setLoader(false, "");
     }
-
-    // setTimeout(() =>  {
-    //   this.loadingService.setLoader(false, "");
-    // }, 3000)
   }
 
   getAllUsers() {
