@@ -63,7 +63,7 @@
 /* background image */
 
 .landing-page-image {
-  height: 400px;
+  height: 70vh;
   width: 100vw;
 }
 
@@ -75,7 +75,7 @@
   top: 0;
   padding-top: 100px;
   width: 100vw;
-  height: 400px;
+  height: 70vh;
   text-align: center;
   background-color: rgba(0,0,0,.4);
 
@@ -85,6 +85,7 @@
 }
 
 .landing-page-tagline {
+  margin-top: 60px;
   margin-left: calc((100vw - 470px)/2);
   width: 470px;
   color: #F9FBFB;
@@ -100,7 +101,7 @@
 
 .landing-page-tagline > h1  {
   margin-bottom: 20px;
-  font-size: 36px;
+  font-size: 40px;
   font-weight: 300;
   color: #F9FBFB;
   text-align: left;
@@ -122,7 +123,7 @@
 
 .call-to-action {
   position: absolute;
-  top: 330px;
+  top: 60vh;
   margin-left: calc((100vw - 200px )/2);
   width: 200px;
   padding: 10px;
