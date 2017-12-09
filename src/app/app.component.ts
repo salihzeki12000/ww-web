@@ -1,6 +1,7 @@
 import { Component, OnInit, HostListener, Renderer2 } from '@angular/core';
 import { Router, NavigationEnd }  from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
+declare let ga: any;
 
 import { AuthService }  from './auth';
 import { UserService }  from './user';
@@ -19,7 +20,14 @@ export class AppComponent implements OnInit {
     private renderer: Renderer2,
     private errorMessageService: ErrorMessageService,
     private authService: AuthService,
-    private userService: UserService) { }
+    private userService: UserService) {
+      this.router.events.subscribe(event => {
+        if (event instanceof NavigationEnd) {
+          ga('set', 'page', event.urlAfterRedirects);
+          ga('send', 'pageview');
+        }
+      });
+    }
 
   ngOnInit()  {
     if(!navigator.onLine) {
