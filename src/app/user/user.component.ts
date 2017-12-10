@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, HostListener } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { Title }        from '@angular/platform-browser';
@@ -31,11 +31,13 @@ export class UserComponent implements OnInit, OnDestroy {
   relationship;
 
   favs = [];
+  fixed = false;
 
   constructor(
     private titleService: Title,
     private route: ActivatedRoute,
     private router: Router,
+    private element: ElementRef,
     private postService: PostService,
     private favouriteService: FavouriteService,
     private loadingService: LoadingService,
@@ -94,6 +96,18 @@ export class UserComponent implements OnInit, OnDestroy {
           )
         })
     })
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  checkScroll(event) {
+    let offset = this.element.nativeElement.ownerDocument.scrollingElement.scrollTop;
+    let navPos = this.element.nativeElement.children[1].children[4].offsetTop - 100;
+
+    if(offset > navPos)  {
+      this.fixed = true;
+    } else  {
+      this.fixed = false;
+    }
   }
 
   ngOnDestroy() {

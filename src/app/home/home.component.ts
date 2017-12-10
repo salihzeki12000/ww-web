@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2, ElementRef, HostListener } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Title }        from '@angular/platform-browser';
 import { Subscription } from 'rxjs/Rx';
@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   newItinerary = true;
   curated = false;
   follow = false;
-
+  fixed = false;
 
   currentUserSubscription: Subscription;
   feedSubscription: Subscription;
@@ -44,6 +44,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(
     private titleService: Title,
     private renderer: Renderer2,
+    private element: ElementRef,
     private userService: UserService,
     private formBuilder: FormBuilder,
     private relationshipService: RelationshipService,
@@ -88,6 +89,17 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.loadingService.setLoader(false, "");
 
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  checkScroll(event) {
+    let offset = this.element.nativeElement.ownerDocument.scrollingElement.scrollTop;
+    let navPos = this.element.nativeElement.children[2].offsetTop - 100;
+    if(offset > navPos)  {
+      this.fixed = true;
+    } else  {
+      this.fixed = false;
+    }
   }
 
 

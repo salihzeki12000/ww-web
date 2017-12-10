@@ -36,7 +36,7 @@ export class ItineraryListItemComponent implements OnInit {
       this.checkLike();
       this.checkSave();
       this.checkMember();
-    },1000)
+    },2000)
   }
 
   checkCopy() {
