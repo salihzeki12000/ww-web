@@ -248,23 +248,13 @@
 
 .profile-background  {
   position: absolute;
-  width: 1360px;
-  margin-left: calc((100vw - 1360px) /2);
+  width: 1440px;
+  margin-left: calc((100vw - 1440px) /2);
   z-index: -1;
 
-  @media only screen and (max-width: 680px) {
+  @media only screen and (max-width: 1440px) {
     width: 100%;
     margin-left: 0;
-  }
-
-  @media only screen and (min-width: 680px) and (max-width: 1020px) {
-    width: 680px;
-    margin-left: calc(((100vw - 680px) / 2));
-  }
-
-  @media only screen and (min-width: 1020px) and (max-width: 1360px) {
-    width: 1020px;
-    margin-left: calc(((100vw - 1020px) / 2));
   }
 }
 

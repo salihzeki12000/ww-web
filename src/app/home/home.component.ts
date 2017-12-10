@@ -111,6 +111,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   end()  {
     this.newUser = false;
+    this.preventScroll(false);
     this.updateUser();
   }
 
