@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 import { Title }        from '@angular/platform-browser';
 
@@ -17,12 +17,9 @@ export class ItineraryAllComponent implements OnInit, OnDestroy {
   user;
   userSubscription: Subscription;
 
-  showItineraryForm = false;
-
   constructor(
     private titleService: Title,
     private loadingService: LoadingService,
-    private renderer: Renderer2,
     private userService: UserService) { }
 
   ngOnInit() {
@@ -51,16 +48,6 @@ export class ItineraryAllComponent implements OnInit, OnDestroy {
         itin => itin.name.toLowerCase().indexOf(text.toLowerCase()) > -1
       )
     }
-  }
-
-  createItinerary() {
-    this.showItineraryForm = true;
-    this.renderer.addClass(document.body, 'prevent-scroll');
-  }
-
-  hideItineraryForm(hide) {
-    this.showItineraryForm = false;
-    this.renderer.removeClass(document.body, 'prevent-scroll');
   }
 
 }

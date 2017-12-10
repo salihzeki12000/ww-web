@@ -1,18 +1,15 @@
 <div class="user-profile-container">
 
-  <div class="user-profile-header">
+  <div class="profile-header">
     <img src="{{ currentUser?.display_picture.url }}" alt="">
 
-    <div class="user-profile-details">
+    <div class="profile-details">
       <h4>{{ currentUser?.description }}</h4>
     </div>
   </div>
 
-  <div class="user-profile-background-img">
-    <img src="assets/profile_landmark_2.png">
-  </div>
 
-  <div class="user-profile-background"></div>
+  <div class="profile-background"></div>
 
   <div class="user-profile-counters">
     <div class="data-counter" (click)="routeToFollowers()">

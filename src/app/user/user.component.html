@@ -2,7 +2,22 @@
 
 <div class="user-profile-container">
 
-  <div class="user-profile-follow-status">
+  <div class="profile-background">
+    <img src="{{ user?.background_picture.url }}" alt="">
+  </div>
+
+  <div class="profile-header">
+    <img src="{{ user?.display_picture.url }}" alt="" (click)="routeToProfile()">
+
+    <div class="profile-details">
+      <h2>{{ user?.username }}</h2>
+
+      <h4>{{ user?.description }}</h4>
+      <h4 *ngIf="user?.corporate"><i class="fa fa-envelope" aria-hidden="true"></i> <a href="mailto:{{user?.email}}">{{ user?.email }}</a></h4>
+    </div>
+  </div>
+
+  <div class="profile-follow-status">
     <div class="following-response">
       <h5 *ngIf="followStatus === 'accepted'" class="already-following"><i class="fa fa-check" aria-hidden="true"></i> Following</h5>
       <h5 class="unfollow" (click)="unfollow()">Stop following</h5>
@@ -16,23 +31,9 @@
     <button *ngIf="followStatus === ''" type="button" class="follow-button" (click)="follow()"><h5><i class="fa fa-plus" aria-hidden="true"></i> Follow</h5></button>
   </div>
 
-
-
-  <div class="user-profile-header">
-    <img src="{{ user?.display_picture.url }}" alt="" (click)="routeToProfile()">
-
-    <div class="user-profile-details">
-      <h1>{{ user?.username }}</h1>
-
-      <h4>{{ user?.description }}</h4>
-      <h4 *ngIf="user?.corporate"><i class="fa fa-envelope" aria-hidden="true"></i> <a href="mailto:{{user?.email}}">{{ user?.email }}</a></h4>
-    </div>
+  <div class="not-following" *ngIf="followStatus !== 'accepted'">
+    <h4>You need to follow {{ user?.username }} to view their details.</h4>
   </div>
-
-  <div class="user-profile-background-img">
-    <img src="assets/profile_landmark_2.png">
-  </div>
-  <div class="user-profile-background"></div>
 
   <div class="navigate-bar">
     <header>
@@ -65,10 +66,5 @@
     <router-outlet></router-outlet>
   </div>
 
-
-
-  <div class="router-outlet nil-message-main" *ngIf="followStatus !== 'accepted'">
-    <h4>You need to follow {{ user?.username }} to view their details.</h4>
-  </div>
 
 </div>

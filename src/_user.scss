@@ -201,79 +201,76 @@
 
 *****************************/
 
-.user-profile-header > img  {
+.profile-header > img  {
+  margin-top: 180px;
   margin-left: calc((100vw - 600px)/2);
-  padding: 2px;
-  height: 150px;
-  width: 150px;
+  height: 120px;
+  width: 120px;
   border-radius: 50%;
-  border: 5px solid #5899F0;
-  background-color: white;
+  border: 4px solid #F9FBFB;
+  background-color: #F9FBFB;
   overflow: hidden;
   vertical-align: top;
 
   @media only screen and (max-width: 650px) {
-    margin-top: -30px;
-    margin-left: calc((100vw - 150px) /2);
+    margin-left: calc((100vw - 120px) /2);
   }
 }
 
-.user-profile-details  {
+.profile-details  {
   display: inline-block;
-  margin-top: 35px;
-  width: 360px;
+  margin-top: 210px;
+  padding: 10px;
+  width: 400px;
 
   @media only screen and (max-width: 650px) {
-    margin-top: 10px;
-    width: 100vw;
+    margin-top: 0;
+    width: 100%;
     text-align: center;
   }
 }
 
-.user-profile-details * {
-  font-weight: 400;
-  color: #808080;
-}
-
-.user-profile-details h1  {
-  padding-bottom: 15px;
+.profile-details h2 {
   color: #F9FBFB;
-}
-
-.user-profile-details h4  {
-  padding: 5px;
-}
-
-.user-profile-background  {
-  position: absolute;
-  top: 40px;
-  height: 120px;
-  width: 100%;
-  background: #5899F0;
-  z-index: -1;
+  font-family: 'Lato', sans-serif;
 
   @media only screen and (max-width: 650px) {
-    height: 210px;
+    color: #3A4A4D;
   }
 }
 
-.user-profile-background-img  {
+.profile-details h4 {
+  padding: 10px 5px;
+  color: #808080;
+  font-weight: 400;
+  font-family: 'Lato', sans-serif;
+}
+
+.profile-background  {
   position: absolute;
-  top: 27px;
-  left: calc(((100vw - 600px)/2) + 550px);
+  width: 1360px;
+  margin-left: calc((100vw - 1360px) /2);
+  z-index: -1;
 
-  @media only screen and (max-width: 890px) {
-    display: none;
+  @media only screen and (max-width: 680px) {
+    width: 100%;
+    margin-left: 0;
   }
 
-  @media only screen and (min-width: 890px) and (max-width: 1300px) {
-    left: calc(100vw - 415px);
-    opacity: .5;
+  @media only screen and (min-width: 680px) and (max-width: 1020px) {
+    width: 680px;
+    margin-left: calc(((100vw - 680px) / 2));
+  }
+
+  @media only screen and (min-width: 1020px) and (max-width: 1360px) {
+    width: 1020px;
+    margin-left: calc(((100vw - 1020px) / 2));
   }
 }
 
-.user-profile-background-img img{
-  height: 160px;
+.profile-background img  {
+  width: 100%;
+  height: 250px;
 }
 
 .user-profile-counters  {

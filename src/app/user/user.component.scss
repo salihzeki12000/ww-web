@@ -5,15 +5,23 @@
 
 /* follow status */
 
-.user-profile-follow-status  {
-  position: absolute;
-  left: calc(((100vw - 600px) /2) + 150px);
-  z-index: 3;
+.profile-follow-status  {
+  display: inline-block;
+  margin-left: calc((100vw - 600px)/2);
+  width: 120px;
 
   @media only screen and (max-width: 650px) {
-    top: 60px;
-    left: 20px;
+    margin-left: calc((100vw - 120px)/2);
   }
+}
+
+.following-response {
+  margin: 10px 0;
+  text-align: center;
+}
+
+.follow-button  {
+  width: 120px;
 }
 
 .follow-button h5 {
@@ -43,35 +51,17 @@
 }
 
 
-
-
-/* profile header */
-
-.user-profile-header > img  {
-  &:hover{
-    cursor: pointer;
-  }
-
-  @media only screen and (min-width: 650px) {
-    right: 0;
-    left: calc((100vw - 600px) /2);
-  }
-}
-
-.user-profile-header > h1 {
-  position: absolute;
-  margin-top: -25px;
-  left: calc(((100vw - 600px)/2) + 170px);
-  font-family: 'Alice', serif;
-  color: #f9fbfb;
+.not-following  {
+  display: inline-block;
+  padding-left: 20px;
 
   @media only screen and (max-width: 650px) {
-    left: 0;
-    margin-top: 130px;
-    width: 100vw;
+    width: 100%;
+    padding-left: 0;
     text-align: center;
   }
 }
+
 
 /* navigate bar */
 .navigate-bar ul  {

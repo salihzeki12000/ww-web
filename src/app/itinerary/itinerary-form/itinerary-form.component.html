@@ -21,7 +21,7 @@
       </div>
 
       <label>Travel date from - Travel date to (MM - DD - YYYY)</label>
-      <h5 class="label-note">Do include your date of departure and arrival for details to show up in the itinerary summary</h5>
+      <h5 class="label-note">Do include your date of departure and arrival for details to show up in the itinerary</h5>
 
       <div class="date-picker" daterangepicker [options]="options" (selected)="selectedDate($event)">
         <i class="fa fa-calendar" aria-hidden="true"></i>
@@ -59,8 +59,8 @@
       <h4 *ngIf="private" class="toggle-true" (click)="private = false">Yes</h4>
       <h4 *ngIf="private" class="toggle-button-true" (click)="private = false"></h4>
 
-      <h5 *ngIf="!private && corporate" class="label-note">Your followers can view this itinerary.</h5>
-      <h5 *ngIf="!private && !corporate" class="label-note">Followers of members of this itinerary can view.</h5>
+      <h5 *ngIf="!private && corporate" class="label-note"> > Your followers can view this itinerary.</h5>
+      <h5 *ngIf="!private && !corporate" class="label-note"> > Followers of members of this itinerary can view.</h5>
       <h4 *ngIf="!private" class="toggle-false" (click)="private = true">No</h4>
       <h4 *ngIf="!private" class="toggle-button-false" (click)="private = true"></h4>
 

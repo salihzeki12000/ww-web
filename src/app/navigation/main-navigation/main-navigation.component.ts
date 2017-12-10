@@ -421,6 +421,9 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     this.filteredUsers = this.users;
   }
 
+  hideUserSearch(e)  {
+    this.cancelShowUsers();
+  }
 
 
   // routing to relationships
