@@ -246,19 +246,20 @@
 
 .details-in-summary-container {
   position: fixed;
-  top: 40px;
+  top: 0;
   right: 0;
-  height: 40px;
-  width: 60px;
-  background-color: firebrick;
-  z-index: 3;
+  height: 100vh;
+  width: 600px;
+  background-color: white;
+  border-left: 5px solid rgba(0,0,0,.1);
+  z-index: 501;
 
-  @media only screen and (max-width: 420px) {
-    top: 0;
+  @media only screen and (max-width: 610px) {
     width: 100vw;
-    height: 100vh;
+    padding: 10px;
+    border-left: none;
     z-index: 1000;
-    background-color: rgba(0,0,0,.3);
+    background-color: rgba(0,0,0,.7);
   }
 }
 
@@ -267,10 +268,9 @@
 /* button to hide details */
 
 .hide-details {
-  position: absolute;
-  height: 40px;
-  padding: 14px 0 0 13px;
-  z-index: 3;
+  padding: 13.5px;
+  height: 46px;
+  text-align: right;
 
   &:hover {
     cursor: pointer;
@@ -279,23 +279,19 @@
 
   @media only screen and (max-width: 420px) {
     position: fixed;
-    bottom: 125px;
-    right: 0;
-    width: 100px;
-    padding: 12px 0;
+    top: 10px;
+    right: 10px;
+    width: 50px;
     text-align: center;
-    background-color: firebrick;
-    border-radius: 10px 0 0 10px;
+    background-color: #E6E6E6;
     z-index: 1000;
-    // opacity: .5;
   }
 }
 
 .hide-details > h4  {
-  color: #F9FBFB;
-
   @media only screen and (max-width: 420px) {
     font-size: 1.1em;
+    color: #F9FBFB;
   }
 }
 
@@ -304,23 +300,15 @@
 /* display of details */
 
 .details-in-summary {
-  position: fixed;
-  top: 80px;
-  right: 0;
-  background-color: rgba(0,0,0,.3);
-  border: 5px solid firebrick;
+  overflow: auto;
 
   @media only screen and (max-width: 420px) {
-    top: 0;
     height: calc(100vh - 40px);
-    width: 100vw;
-    padding-left: calc((100vw - 330px)/2);
-    overflow: auto;
-    border: none;
+    border-bottom: 1px solid rgba(0,0,0,.1);
   }
 
-  @media only screen and (max-width: 400px) {
-    padding-left: 0;
+  @media only screen and (max-width: 610px) {
+    background-color: white;
   }
 }
 

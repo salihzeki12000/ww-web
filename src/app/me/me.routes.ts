@@ -6,7 +6,7 @@ import { NotificationsComponent }   from '../notifications';
 import { PostDisplayComponent }     from '../post';
 import { ProfileComponent, ProfileEditComponent }      from '../user';
 import { RelationshipsComponent, RELATIONSHIP_ROUTES } from '../relationships';
-import { RecommendationDisplayComponent, RecommendationsComponent }  from '../recommendations';
+// import { RecommendationDisplayComponent, RecommendationsComponent }  from '../recommendations';
 import { ItineraryComponent, ItineraryListComponent, ITINERARY_ROUTES, ITINERARY_LIST_ROUTES } from '../itinerary';
 
 export const ME_ROUTES: Routes = [

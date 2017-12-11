@@ -42,6 +42,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  vertical-align: middle;
 
   &:hover {
     cursor: pointer;
@@ -240,7 +241,7 @@
 }
 
 .profile-details h4 {
-  padding: 10px 5px;
+  padding: 10px 0;
   color: #808080;
   font-weight: 400;
   font-family: 'Lato', sans-serif;

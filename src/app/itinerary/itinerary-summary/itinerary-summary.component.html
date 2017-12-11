@@ -123,41 +123,39 @@
 
 
 
-<div *ngIf="showDetailsInSummary">
-  <div class="details-in-summary-container">
+<div class="details-in-summary-container"*ngIf="showDetailsInSummary">
 
-    <div class="hide-details" (click)="hideDetailsInSummary()">
-      <h4>close</h4>
-    </div>
-
-    <div *ngIf="chosenEvent?.type === 'transport'" class="details-in-summary">
-      <ww-transport
-        [event]="chosenEvent"
-        [preview]="preview"
-        [dateRange]="dateRange"
-        [itinerary]="itinerary"
-        [summary]="true"></ww-transport>
-    </div>
-
-    <div *ngIf="chosenEvent?.type === 'activity'" class="details-in-summary">
-      <ww-activity
-        [activity]="chosenEvent"
-        [preview]="preview"
-        [dateRange]="dateRange"
-        [itinerary]="itinerary"
-        [summary]="true"></ww-activity>
-    </div>
-
-    <div *ngIf="chosenEvent?.type === 'accommodation'" class="details-in-summary">
-      <ww-accommodation
-        [event]="chosenEvent"
-        [preview]="preview"
-        [dateRange]="dateRange"
-        [itinerary]="itinerary"
-        [summary]="true"></ww-accommodation>
-    </div>
-
+  <div class="hide-details" (click)="hideDetailsInSummary()">
+    <h3>X</h3>
   </div>
+
+  <div *ngIf="chosenEvent?.type === 'activity'" class="details-in-summary">
+    <ww-itinerary-summary-activity
+      [activity]="chosenEvent"
+      [preview]="preview"
+      [dateRange]="dateRange"
+      [itinerary]="itinerary"
+      [summary]="true"></ww-itinerary-summary-activity>
+  </div>
+
+  <div *ngIf="chosenEvent?.type === 'accommodation'" class="details-in-summary">
+    <ww-itinerary-summary-accommodation
+      [event]="chosenEvent"
+      [preview]="preview"
+      [dateRange]="dateRange"
+      [itinerary]="itinerary"
+      [summary]="true"></ww-itinerary-summary-accommodation>
+  </div>
+
+  <div *ngIf="chosenEvent?.type === 'transport'" class="details-in-summary">
+    <ww-itinerary-summary-transport
+      [event]="chosenEvent"
+      [preview]="preview"
+      [dateRange]="dateRange"
+      [itinerary]="itinerary"
+      [summary]="true"></ww-itinerary-summary-transport>
+  </div>
+
 </div>
 
 

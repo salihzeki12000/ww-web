@@ -1,10 +1,9 @@
 import { Routes, RouterModule } from '@angular/router';
 
 import { AdminComponent, AdminLoginComponent, AdminVerifyComponent, ADMIN_ROUTES } from './admin';
-import { LandingPageComponent }         from './landing-page';
-import { MeComponent, ME_ROUTES }     from './me';
-import {  }       from './privacy-policy';
-import { PlaceDisplayComponent }        from './places';
+import { LandingPageComponent }   from './landing-page';
+import { MeComponent, ME_ROUTES } from './me';
+import { PlaceDisplayComponent }  from './places';
 import { ItineraryPreviewComponent,
          ItineraryInviteComponent,
          ItineraryPrintComponent,

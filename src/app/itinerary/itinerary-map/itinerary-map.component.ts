@@ -326,12 +326,20 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
     path.push({ lat: event['dep_station_location']['lat'], lng: event['dep_station_location']['lng']});
     path.push({ lat: event['arr_station_location']['lat'], lng: event['arr_station_location']['lng']});
 
+    let lineSymbol = {
+      path: google.maps.SymbolPath.FORWARD_OPEN_ARROW
+    };
+
     let travelPath = new google.maps.Polyline({
       path: path,
       geodesic: true,
       strokeColor: "#FFA15C",
       strokeOpacity: 1,
-      strokeWeight: 5
+      strokeWeight: 3,
+      icons: [{
+        icon: lineSymbol,
+        offset: '100%'
+      }],
     })
 
     travelPath.setMap(this.itinMap);

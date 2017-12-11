@@ -1,147 +1,136 @@
-<div class="display-photo-card">
+<div class="summary-container">
 
-  <div *ngIf="activity?.photo" class="display-card-image">
+  <div *ngIf="activity?.photo" class="summary-photo">
     <img src="{{activity?.photo.url}}" alt="picture of {{ activity?.name}}">
     <h5 class="photo-credit" [innerHTML]="activity?.photo.credit"></h5>
   </div>
 
-  <div *ngIf="!activity?.photo" class="display-card-image-placeholder">
+  <div *ngIf="!activity?.photo" class="summary-photo-placeholder">
     <i class="fa fa-bicycle fa-4x" aria-hidden="true"></i>
+    <h4>This activity has no photo</h4>
   </div>
 
-  <div class="display-header-background"></div>
-
-  <div class="display-content-housing">
-
-    <div class="dots-menu" (click)="showMenu = true" *ngIf="!preview">
-      <div class="dots-menu-hint">
-        <h6>Click to edit or delete</h6>
-      </div>
-      <div class="item-menu" *ngIf="showMenu">
-        <ul>
-          <!-- <li (click)=recommend()>
-            <h5>Recommend to a friend</h5>
-            <i class="fa fa-share" aria-hidden="true"></i>
-          </li> -->
-          <li (click)="favourite()" *ngIf="allowFav && activity?.location">
-            <h5>Favourite</h5>
-            <i class="fa fa-star-o" aria-hidden="true"></i>
-          </li>
-          <li (click)="copy()">
-            <h5>Copy</h5>
-            <i class="fa fa-clone" aria-hidden="true"></i>
-          </li>
-          <li (click)="edit()" *ngIf="sameUser">
-            <h5>Edit</h5>
-            <i class="fa fa-pencil" aria-hidden="true"></i>
-          </li>
-          <li (click)="delete()" *ngIf="sameUser">
-            <h5>Delete</h5>
-            <i class="fa fa-trash-o" aria-hidden="true"></i>
-          </li>
-        </ul>
-      </div>
+  <div class="dots-menu" (click)="showMenu = true" *ngIf="!preview">
+    <div class="dots-menu-hint">
+      <h6>Click to edit or delete</h6>
     </div>
-
-    <div class="display-date-header" *ngIf="activity?.date === 'any day' || itinerary?.num_days">
-      <h5>{{ activity?.date }} - {{ activity?.time }}</h5>
-      <h5 *ngIf="!summary">{{ index + 1 }} of {{ totalActivities }}</h5>
+    <div class="item-menu" *ngIf="showMenu">
+      <ul>
+        <!-- <li (click)=recommend()>
+          <h5>Recommend to a friend</h5>
+          <i class="fa fa-share" aria-hidden="true"></i>
+        </li> -->
+        <li (click)="favourite()" *ngIf="allowFav && activity?.location">
+          <h5>Favourite</h5>
+          <i class="fa fa-star-o" aria-hidden="true"></i>
+        </li>
+        <li (click)="copy()">
+          <h5>Copy</h5>
+          <i class="fa fa-clone" aria-hidden="true"></i>
+        </li>
+        <li (click)="edit()" *ngIf="sameUser">
+          <h5>Edit</h5>
+          <i class="fa fa-pencil" aria-hidden="true"></i>
+        </li>
+        <li (click)="delete()" *ngIf="sameUser">
+          <h5>Delete</h5>
+          <i class="fa fa-trash-o" aria-hidden="true"></i>
+        </li>
+      </ul>
     </div>
-
-    <div class="display-date-header" *ngIf="activity?.date !== 'any day' && !itinerary?.num_days">
-      <h5>{{ activity?.date | date: 'dd MMM yyyy (EEE)' }} - {{ activity?.time }}</h5>
-      <h5 *ngIf="!summary">{{ index + 1 }} of {{ totalActivities }}</h5>
-    </div>
-
-    <div class="display-details-housing">
-
-      <h6 class="recommended-by-note" *ngIf="activity?.recommended_by" (click)="routeToUser(activity?.recommended_by._id)">
-        Recommended by {{ activity?.recommended_by.username }}
-      </h6>
-
-      <h6 class="favs-note" *ngIf="favDate"><i class="fa fa-star-o" aria-hidden="true"></i> Added as favourite on {{ favDate | date: 'dd MMM yyyy'}}</h6>
-
-      <div *ngIf="mealTag">
-        <div class="meals-display" *ngFor="let meal of activity?.meals">
-          <h5 *ngIf="meal.checked"> {{ meal.value }}</h5>
-        </div>
-      </div>
-
-      <h3 class="activity-header">{{ activity?.name }}</h3>
-
-      <div *ngIf="activity?.location">
-
-        <div class="details-description" *ngIf="activity?.formatted_description">
-          <h4 [innerHTML]="activity?.formatted_description"></h4>
-        </div>
-
-        <div class="details-description" *ngIf="activity?.formatted_sub_description">
-          <h5 *ngIf="!showSub" (click)="showSub = true">show more...</h5>
-          <h4 *ngIf="showSub" [innerHTML]="activity?.formatted_sub_description"></h4>
-          <h5 *ngIf="showSub" (click)="showSub = false">show less...</h5>
-        </div>
-
-        <div class="toggle-contact-details" (click)="showContactDetails = !showContactDetails">
-          <h5>Address and contact number</h5>
-          <h5><i class="fa fa-angle-down" aria-hidden="true"></i></h5>
-        </div>
-
-        <div *ngIf="showContactDetails">
-          <div class="details-item" *ngIf="activity?.place.formatted_address">
-            <i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>
-            <h5> {{ activity?.place.formatted_address }}</h5>
-          </div>
-
-          <div class="details-item" *ngIf="activity?.place.international_phone_number">
-            <i class="fa fa-phone fa-fw" aria-hidden="true"></i>
-            <a href="tel:{{ activity?.place.international_phone_number }}">{{ activity?.place.international_phone_number }}</a>
-          </div>
-        </div>
-
-        <div class="toggle-contact-details" (click)="showHours = !showHours" *ngIf="activity?.formatted_hours || activity?.opening_hours">
-          <h5>Opening hours</h5>
-          <h5><i class="fa fa-angle-down" aria-hidden="true"></i></h5>
-        </div>
-
-        <div *ngIf="showHours">
-          <div class="details-item">
-            <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>
-            <h5 [innerHTML]="activity?.formatted_hours"></h5>
-          </div>
-        </div>
-
-        <div class="details-item" *ngIf="activity?.place?.entry_fee">
-          <i class="fa fa-money fa-fw" aria-hidden="true"></i>
-          <h5>{{ activity?.place.entry_fee }}</h5>
-        </div>
-
-        <div class="details-item" *ngIf="activity?.place?.website">
-          <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
-          <h5 class="truncate">
-            <a href="{{ activity?.place.website }}" target="_blank" class="website-link">{{ activity?.place.website }}</a>
-          </h5>
-        </div>
-
-      </div>
-
-      <div class="details-item">
-        <i class="fa fa-sticky-note-o fa-fw" aria-hidden="true"></i>
-        <h5 class="note" [innerHTML]="activity?.formatted_note"></h5>
-      </div>
-
-      <div class="created-by">
-        <h5 class="username" (click)="routeToUser(activity?.user._id)">{{ activity?.user.username }}</h5>
-        <div class="time-ago">
-          <p *ngIf="activity?.time_ago !== ''">{{ activity?.time_ago }}</p>
-          <p *ngIf="activity?.time_ago === ''">{{ activity?.created_at | date: 'dd MMM yyyy (EEE)' }}</p>
-        </div>
-      </div>
-    </div>
-
   </div>
 
+  <div class="display-date-header" *ngIf="activity?.date === 'any day' || itinerary?.num_days">
+    <h5>{{ activity?.date }} - {{ activity?.time }}</h5>
+  </div>
+
+  <div class="display-date-header" *ngIf="activity?.date !== 'any day' && !itinerary?.num_days">
+    <h5>{{ activity?.date | date: 'dd MMM yyyy (EEE)' }} - {{ activity?.time }}</h5>
+  </div>
+
+  <div class="details-container">
+    <h6 class="recommended-by-note" *ngIf="activity?.recommended_by" (click)="routeToUser(activity?.recommended_by._id)">
+      Recommended by {{ activity?.recommended_by.username }}
+    </h6>
+
+    <h6 class="favs-note" *ngIf="favDate"><i class="fa fa-star-o" aria-hidden="true"></i> Added as favourite on {{ favDate | date: 'dd MMM yyyy'}}</h6>
+
+    <div class="meals-display" *ngFor="let meal of activity?.meals">
+      <h5 *ngIf="meal.checked"> {{ meal.value }}</h5>
+    </div>
+
+    <h3 class="activity-header">{{ activity?.name }}</h3>
+
+    <div *ngIf="activity?.location">
+
+      <div class="details-description" *ngIf="activity?.formatted_description">
+        <h4 [innerHTML]="activity?.formatted_description"></h4>
+      </div>
+
+      <div class="details-description" *ngIf="activity?.formatted_sub_description">
+        <h5 *ngIf="!showSub" (click)="showSub = true">show more...</h5>
+        <h4 *ngIf="showSub" [innerHTML]="activity?.formatted_sub_description"></h4>
+        <h5 *ngIf="showSub" (click)="showSub = false">show less...</h5>
+      </div>
+
+      <div class="toggle-contact-details" (click)="showContactDetails = !showContactDetails">
+        <h5>Address and contact number</h5>
+        <h5><i class="fa fa-angle-down" aria-hidden="true"></i></h5>
+      </div>
+
+      <div *ngIf="showContactDetails">
+        <div class="details-item" *ngIf="activity?.place.formatted_address">
+          <i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>
+          <h5> {{ activity?.place.formatted_address }}</h5>
+        </div>
+
+        <div class="details-item" *ngIf="activity?.place.international_phone_number">
+          <i class="fa fa-phone fa-fw" aria-hidden="true"></i>
+          <a href="tel:{{ activity?.place.international_phone_number }}">{{ activity?.place.international_phone_number }}</a>
+        </div>
+      </div>
+
+      <div class="toggle-contact-details" (click)="showHours = !showHours" *ngIf="activity?.formatted_hours || activity?.opening_hours">
+        <h5>Opening hours</h5>
+        <h5><i class="fa fa-angle-down" aria-hidden="true"></i></h5>
+      </div>
+
+      <div *ngIf="showHours">
+        <div class="details-item">
+          <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>
+          <h5 [innerHTML]="activity?.formatted_hours"></h5>
+        </div>
+      </div>
+
+      <div class="details-item" *ngIf="activity?.place?.entry_fee">
+        <i class="fa fa-money fa-fw" aria-hidden="true"></i>
+        <h5>{{ activity?.place.entry_fee }}</h5>
+      </div>
+
+      <div class="details-item" *ngIf="activity?.place?.website">
+        <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+        <h5 class="truncate">
+          <a href="{{ activity?.place.website }}" target="_blank" class="website-link">{{ activity?.place.website }}</a>
+        </h5>
+      </div>
+
+    </div>
+
+    <div class="details-item">
+      <i class="fa fa-sticky-note-o fa-fw" aria-hidden="true"></i>
+      <h5 class="note" [innerHTML]="activity?.formatted_note"></h5>
+    </div>
+
+    <div class="created-by">
+      <h5 class="username" (click)="routeToUser(activity?.user._id)">{{ activity?.user.username }}</h5>
+      <div class="time-ago">
+        <p *ngIf="activity?.time_ago !== ''">{{ activity?.time_ago }}</p>
+        <p *ngIf="activity?.time_ago === ''">{{ activity?.created_at | date: 'dd MMM yyyy (EEE)' }}</p>
+      </div>
+    </div>
+  </div>
 </div>
-<!-- end of activity display -->
+
 
 <!-- activity recommend modal -->
 <div *ngIf="recommending" class="recommend">

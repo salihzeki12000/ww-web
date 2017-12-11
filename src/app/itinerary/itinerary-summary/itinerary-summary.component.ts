@@ -388,7 +388,19 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
       this.hideDetailsInSummary();
     } else  {
       this.showDetailsInSummary = true;
-      this.chosenEvent = event;
+
+      if(event['approach'] === 'arrival' || event['inOut'] === 'checkout')  {
+        for (let i = 0; i < this.events.length; i++) {
+          if(this.events[i]['_id'] === event['_id'] && (this.events[i]['approach'] === 'departure' || this.events[i]['inOut'] === 'checkin')) {
+            this.events[i]['formatted_note'] = this.events[i]['note'].replace(/\r?\n/g, '<br/> ');
+            this.chosenEvent = this.events[i];
+            break;
+          }
+        }
+      } else  {
+        event['formatted_note'] = event['note'].replace(/\r?\n/g, '<br/> ');
+        this.chosenEvent = event;
+      }
 
       if(this.element.nativeElement.offsetParent.clientWidth < 421) {
         this.preventScroll(true);

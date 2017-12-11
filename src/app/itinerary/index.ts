@@ -19,6 +19,9 @@ export * from './itinerary-invite/itinerary-invite.component';
 export * from './itinerary-description/itinerary-description.component';
 
 export * from './itinerary-summary/itinerary-summary.component';
+export * from './itinerary-summary/itinerary-summary-activity/itinerary-summary-activity.component';
+export * from './itinerary-summary/itinerary-summary-accommodation/itinerary-summary-accommodation.component';
+export * from './itinerary-summary/itinerary-summary-transport/itinerary-summary-transport.component';
 export * from './itinerary-summary/itinerary-summary-day/itinerary-summary-day.component';
 export * from './itinerary-summary/itinerary-summary-compressed/itinerary-summary-compressed.component';
 
