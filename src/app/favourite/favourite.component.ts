@@ -7,7 +7,8 @@ declare var google:any;
 declare var MarkerClusterer:any;
 
 import { FavouriteService }     from './favourite.service';
-import { User, UserService }    from '../user';
+import { User }                 from '../user/user';
+import { UserService }          from '../user/user.service';
 import { LoadingService }       from '../loading';
 import { FlashMessageService }  from '../flash-message';
 

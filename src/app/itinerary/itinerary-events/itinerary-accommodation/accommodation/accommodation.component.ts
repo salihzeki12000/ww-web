@@ -10,7 +10,7 @@ import { UserService }           from '../../../../user';
 import { LoadingService }        from '../../../../loading';
 import { FavouriteService }      from '../../../../favourite';
 import { RelationshipService }   from '../../../../relationships';
-import { RecommendationService } from '../../../../recommendations';
+import { RecommendationService } from '../../../../recommendations/recommendation.service';
 import { FileuploadService }     from '../../../../shared';
 
 @Component({
@@ -258,7 +258,7 @@ export class AccommodationComponent implements OnInit, OnDestroy {
           this.outRange.push({
             formatted:"Day " + i + ", " + fdate + " " + this.months[month] + " " + year + " (" + this.dayWeek[day] + ")",
             date: this.dateRange[i]
-          })  
+          })
         }
       }
     }

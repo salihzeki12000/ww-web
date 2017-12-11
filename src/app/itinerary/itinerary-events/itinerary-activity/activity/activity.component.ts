@@ -11,7 +11,7 @@ import { UserService }           from '../../../../user';
 import { LoadingService }        from '../../../../loading';
 import { FavouriteService }      from '../../../../favourite';
 import { RelationshipService }   from '../../../../relationships';
-import { RecommendationService } from '../../../../recommendations';
+import { RecommendationService } from '../../../../recommendations/recommendation.service';
 import { FileuploadService }     from '../../../../shared';
 
 @Component({

@@ -4,7 +4,7 @@ import { Http, Headers, Response, URLSearchParams, RequestOptions } from '@angul
 import { Observable, ReplaySubject } from 'rxjs';
 
 import { Itinerary }           from './itinerary';
-import { UserService }         from '../user';
+import { UserService }         from '../user/user.service';
 import { ErrorMessageService } from '../error-message';
 
 @Injectable()

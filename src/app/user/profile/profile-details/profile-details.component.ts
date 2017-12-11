@@ -11,7 +11,7 @@ import { RelationshipService } from '../../../relationships/relationship.service
 import { FlashMessageService } from '../../../flash-message';
 import { Post, PostService }   from '../../../post';
 import { LoadingService }      from '../../../loading';
-import { FavouriteService }    from '../../../favourite';
+import { FavouriteService }    from '../../../favourite/favourite.service';
 
 @Component({
   selector: 'ww-profile-details',

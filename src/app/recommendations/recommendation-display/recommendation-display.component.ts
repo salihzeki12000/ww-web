@@ -4,7 +4,7 @@ import { Title }  from '@angular/platform-browser';
 import { Subscription } from 'rxjs/Rx';
 
 import { RecommendationService }  from '../recommendation.service';
-import { ItineraryEventService }  from '../../itinerary';
+import { ItineraryEventService }  from '../../itinerary/itinerary-events/itinerary-event.service';
 import { LoadingService }         from '../../loading';
 import { UserService }            from '../../user';
 import { FlashMessageService }    from '../../flash-message';

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { RecommendationService }  from '../recommendation.service';
-import { ItineraryEventService }  from '../../itinerary';
+import { ItineraryEventService }  from '../../itinerary/itinerary-events/itinerary-event.service';
 import { LoadingService }         from '../../loading';
 import { FlashMessageService }    from '../../flash-message';
 
