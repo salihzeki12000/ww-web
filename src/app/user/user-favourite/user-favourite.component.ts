@@ -6,7 +6,7 @@ import { Title }        from '@angular/platform-browser';
 declare var google:any;
 declare var MarkerClusterer:any;
 
-import { FavouriteService } from '../../favourite';
+import { FavouriteService } from '../../favourite/favourite.service';
 import { LoadingService }   from '../../loading';
 import { UserService }      from '../user.service';
 

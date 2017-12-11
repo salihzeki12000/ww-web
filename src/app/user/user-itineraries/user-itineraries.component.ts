@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 
-import { UserService }    from '../user.service';
-import { LoadingService } from '../../loading';
-import { ItineraryService, ItineraryEventService } from '../../itinerary';
+import { UserService }           from '../user.service';
+import { LoadingService }        from '../../loading';
+import { ItineraryService }      from '../../itinerary/itinerary.service';
+import { ItineraryEventService } from '../../itinerary/itinerary-events/itinerary-event.service';
 
 @Component({
   selector: 'ww-user-itineraries',

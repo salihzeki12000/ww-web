@@ -2,11 +2,13 @@ import { Component, OnInit, OnDestroy, Renderer2, ElementRef, HostListener } fro
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
-import { ItineraryService, ItineraryEventService, ResourceService }  from '../../itinerary';
-import { LoadingService }       from '../../loading';
-import { User, UserService }    from '../../user';
-import { FlashMessageService }  from '../../flash-message';
-import { NotificationService }  from '../../notifications';
+import { ItineraryService }      from '../../itinerary/itinerary.service';
+import { ItineraryEventService } from '../../itinerary/itinerary-events/itinerary-event.service';
+import { ResourceService }       from '../../itinerary/itinerary-resources/resource.service';
+import { LoadingService }        from '../../loading';
+import { User, UserService }     from '../../user';
+import { FlashMessageService }   from '../../flash-message';
+import { NotificationService }   from '../../notifications';
 
 @Component({
   selector: 'ww-user-itinerary-summary',

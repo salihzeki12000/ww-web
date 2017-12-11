@@ -6,7 +6,7 @@ import { Title }        from '@angular/platform-browser';
 import { UserService }         from './user.service';
 import { PostService }         from '../post';
 import { LoadingService }      from '../loading';
-import { FavouriteService }    from '../favourite';
+import { FavouriteService }    from '../favourite/favourite.service';
 import { RelationshipService } from '../relationships/relationship.service';
 import { FlashMessageService } from '../flash-message';
 

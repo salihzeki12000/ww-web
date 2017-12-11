@@ -4,7 +4,7 @@ import 'rxjs/Rx';
 import { Observable, ReplaySubject } from 'rxjs';
 
 import { ErrorMessageService } from '../error-message';
-import { UserService }         from '../user';
+import { UserService }         from '../user/user.service';
 
 @Injectable()
 export class RelationshipService  {

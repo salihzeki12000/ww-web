@@ -3,7 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Title }  from '@angular/platform-browser';
 
 import { LoadingService } from '../../loading';
-import { AuthService }    from '../../auth';
+import { AuthService }    from '../../auth/auth.service';
 import { UserService }    from '../user.service';
 
 @Component({

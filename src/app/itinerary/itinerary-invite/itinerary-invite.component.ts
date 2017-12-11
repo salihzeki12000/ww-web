@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs/Rx';
 import { Itinerary }        from '../itinerary';
 import { ItineraryService } from '../itinerary.service';
 import { LoadingService }   from '../../loading';
-import { AuthService }      from '../../auth';
+import { AuthService }      from '../../auth/auth.service';
 import { UserService }      from '../../user';
 
 @Component({

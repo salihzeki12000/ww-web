@@ -7,7 +7,7 @@ import { ItineraryEventService } from '../../itinerary-events/itinerary-event.se
 import { FlashMessageService }   from '../../../flash-message';
 import { UserService }           from '../../../user';
 import { LoadingService }        from '../../../loading';
-import { FavouriteService }      from '../../../favourite';
+import { FavouriteService }      from '../../../favourite/favourite.service';
 import { RelationshipService }   from '../../../relationships';
 import { RecommendationService } from '../../../recommendations';
 import { FileuploadService }     from '../../../shared';

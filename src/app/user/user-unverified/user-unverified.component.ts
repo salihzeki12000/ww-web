@@ -4,7 +4,7 @@ import { Title }             from '@angular/platform-browser';
 import { Subscription }      from 'rxjs/Rx';
 
 import { LoadingService } from '../../loading';
-import { AuthService }    from '../../auth';
+import { AuthService }    from '../../auth/auth.service';
 import { UserService }    from '../user.service';
 
 @Component({
