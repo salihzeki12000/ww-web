@@ -173,7 +173,7 @@ export class RavenErrorHandler implements ErrorHandler {
     TermsOfServiceComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({appId: 'wondererwanderer'}),
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
