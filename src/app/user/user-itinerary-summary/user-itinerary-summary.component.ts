@@ -6,7 +6,8 @@ import { ItineraryService }      from '../../itinerary/itinerary.service';
 import { ItineraryEventService } from '../../itinerary/itinerary-events/itinerary-event.service';
 import { ResourceService }       from '../../itinerary/itinerary-resources/resource.service';
 import { LoadingService }        from '../../loading';
-import { User, UserService }     from '../../user';
+import { User }                  from '../../user/user';
+import { UserService }           from '../../user/user.service';
 import { FlashMessageService }   from '../../flash-message';
 import { NotificationService }   from '../../notifications';
 
