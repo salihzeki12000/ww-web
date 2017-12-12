@@ -313,16 +313,17 @@
 }
 
 .details-in-summary::-webkit-scrollbar  {
-  width: 1px;
+  width: 4px;
   height: 1px;
+  background-color: rgba(100, 148, 237, 0.3);
 }
 
 .details-in-summary::-webkit-scrollbar-thumb  {
-  background-color: #FFC65C;
+  background-color: #6494ED;
 }
 
 .details-in-summary::-webkit-scrollbar-corner {
-  background-color: #FFC65C;
+  background-color: #6494ED;
 }
 
 

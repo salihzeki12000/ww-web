@@ -32,6 +32,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
   markers = [];
   infoWindows = [];
   flightPath;
+  markerCluster;
 
   month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   dates = [];
@@ -301,7 +302,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
     }
 
     let imagePath = 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
-    let markerCluster = new MarkerClusterer(map, this.markers, {
+    this.markerCluster = new MarkerClusterer(map, this.markers, {
             maxZoom: 15,
             imagePath: imagePath
           });
@@ -354,7 +355,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
 
       this.openInfoWindow(event['place']['lat'], event['place']['lng'])
       this.itinMap.panTo(center);
-      this.itinMap.setZoom(16);
+      this.itinMap.setZoom(15);
     }
 
     this.showMapLegend = false;
@@ -401,23 +402,39 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
       )
     }
 
-    this.changeCenter(this.filteredEvents[0]);
+    let bounds = new google.maps.LatLngBounds();
 
     if(date !== "All dates" && date !== 'any day' && this.filteredEvents.length > 1)  {
       let path = [];
+
       for (let i = 0; i < this.filteredEvents.length; i++) {
         path.push({lat: this.filteredEvents[i]['place']['lat'], lng: this.filteredEvents[i]['place']['lng'] });
+
+        let loc = new google.maps.LatLng(this.filteredEvents[i]['place']['lat'], this.filteredEvents[i]['place']['lng']);
+        bounds.extend(loc);
       }
+
+      let lineSymbol = {
+        path: google.maps.SymbolPath.FORWARD_OPEN_ARROW
+      };
 
       this.flightPath = new google.maps.Polyline({
         path: path,
         geodesic: true,
         strokeColor: '#FF0000',
-        strokeOpacity: 1.0,
-        strokeWeight: 2
+        strokeOpacity: 1,
+        strokeWeight: 2,
+        icons: [{
+          icon: lineSymbol,
+          offset: '100%'
+        }],
       });
 
       this.flightPath.setMap(this.itinMap);
+      this.itinMap.fitBounds(bounds);
+      this.itinMap.panToBounds(bounds);
+    } else  {
+      this.changeCenter(this.filteredEvents[0]);
     }
 
     if(this.element.nativeElement.offsetParent.clientWidth < 891) {

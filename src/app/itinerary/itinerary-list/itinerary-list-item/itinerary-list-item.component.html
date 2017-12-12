@@ -17,6 +17,7 @@
   </div>
 
   <h3 class="itinerary-name" (click)="routeToItin()">{{ itinerary.name }}</h3>
+  <h5 *ngIf="publish && member" class="publish-indicator">PUBLISHED</h5>
 
   <div *ngIf="itinerary.num_days" class="banner">{{ itinerary.num_days }} {{ itinerary.num_days > 1 ? "days" : "day" }}</div>
   <h5 *ngIf="!itinerary.num_days">{{ itinerary.date_from | date:'dd MMM yy' }} to {{ itinerary.date_to | date:'dd MMM yy' }}</h5>

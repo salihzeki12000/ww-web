@@ -48,6 +48,11 @@
             <input type="text" formControlName="num_days" #days (keyup)="logDays(days.value)" min="1">
           </div>
 
+          <div class="itinerary-edit-item">
+            <h4>Walking speed (Default: 12 min/km)</h4>
+            <input type="number" formControlName="walking_speed" class="walking-speed" max="30">
+            <h4 class="unit">min/km</h4>
+          </div>
         </div>
 
 
@@ -252,24 +257,24 @@
       <div class="action-response-primary">
         <h5 class="_p5" (click)="share('Copy')">
           <i class="fa fa-clone fa-lg" aria-hidden="true"></i>
-          COPY ITINERARY
+          DUPLICATE ITINERARY
         </h5>
       </div>
       <span class="copy-info" (click)="copyInfo = true">What is this?</span>
 
       <div class="copy-share-info" *ngIf="copyInfo">
-        <h5>Revisiting a city? Copy activities from this itinerary to a new itinerary you created for the trip.</h5>
+        <h5>Revisiting a city? Duplicate activities from this itinerary to a new itinerary you created for the trip.</h5>
       </div>
 
       <div class="action-response-warning" *ngIf="masterAdmin">
-        <h5 class="_p5" (click)="deleteItinerary = true">
+        <h5 (click)="deleteItinerary = true">
           <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
           DELETE ITINERARY
         </h5>
       </div>
 
       <div class="action-response-warning" *ngIf="!masterAdmin">
-        <h5 class="_p5" (click)="leaveItinerary = true">
+        <h5 (click)="leaveItinerary = true">
           <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
           LEAVE ITINERARY
         </h5>

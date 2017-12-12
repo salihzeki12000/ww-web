@@ -3,6 +3,8 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { Title }        from '@angular/platform-browser';
 
+declare var google:any;
+
 import { ItineraryService }      from '../itinerary.service';
 import { ItineraryEventService } from '../itinerary-events/itinerary-event.service';
 import { LoadingService }        from '../../loading';
@@ -19,7 +21,8 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
   show = false;
 
   eventSubscription: Subscription;
-  events = [];
+  events;
+  cEvents;
   totalEvents = 1;
 
   dateSubscription: Subscription;
@@ -73,12 +76,21 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
     this.today = year + "-" + month + "-" + date + "T00:00:00.000Z";
 
     this.events = [];
+    this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
+      result => {
+        this.showDetailsInSummary = false;
+        this.cEvents = result;
+        if(this.itinerary) this.filterEvents(this.cEvents);
+      })
+
     this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(
        result => {
          this.show = false;
          setTimeout(()  =>  {this.show = true}, 200);
 
          this.itinerary = result;
+         if(this.cEvents) this.filterEvents(this.cEvents);;
+
          this.itemPosition = [];
 
          this.setTitle();
@@ -89,12 +101,6 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
       result => {
         this.dateRange = Object.keys(result).map(key => result[key]);
         this.checkScroll();
-      })
-
-    this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
-      result => {
-        this.showDetailsInSummary = false;
-        this.filterEvents(result);
       })
   }
 
@@ -110,11 +116,10 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
   onWindowScroll() {
     if(!this.compressedView)  {
       for (let i = 0; i < this.itemPosition.length; i++) {
-        // let offset = this.element.nativeElement.offsetParent.scrollTop;
         let offset = this.element.nativeElement.ownerDocument.scrollingElement.scrollTop;
         let item = this.itemPosition[i]['position'] - 45;
         let diff = item - offset;
-        // console.log(this.element.nativeElement.ownerDocument.scrollingElement.scrollTop)
+
         if(diff < 0)  {
           this.currentDate = this.itemPosition[i]['date'];
           this.index = i;
@@ -125,7 +130,7 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
     if(this.compressedView) {
       for (let i = 0; i < this.itemPosition.length; i++) {
         let offset = this.element.nativeElement.ownerDocument.scrollingElement.scrollTop;
-        let item = this.itemPosition[i]['position'] - 50;
+        let item = this.itemPosition[i]['position'] - 130;
         let diff = item - offset;
 
         if(diff < 0)  {
@@ -243,6 +248,7 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
     for (let i = 0; i < events.length; i++) {
 
       if(events[i]['type'] === 'activity')  {
+
         events[i]['summary_date'] = events[i]['date'];
         events[i]['summary_time'] = events[i]['time'];
       }
@@ -277,6 +283,7 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
       }
 
       if(events[i]['type'] === 'transport') {
+
         let copy = Object.assign({}, events[i]);
 
         events[i]['approach'] = 'departure';
@@ -317,6 +324,7 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
     dated = this.sort(dated);
 
     this.events = dated.concat(flex);
+    this.getDistance();
 
     setTimeout(() =>  {this.loadingService.setLoader(false, "")}, 1000);
   }
@@ -340,6 +348,25 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
     return events;
   }
 
+  getDistance() {
+    for (let i = 1; i < this.events.length - 1; i++) {
+      this.events[i]['distance'] = null;
+      this.events[i]['walk'] = null;
+
+      if(this.events[i]['summary_date'] === this.events[i - 1]['summary_date'] && this.events[i]['summary_date'] !== 'any day') {
+        if(this.events[i]['location'] && this.events[i - 1]['location'])  {
+          let aLatLng = new google.maps.LatLng(this.events[i]['place']['lat'], this.events[i]['place']['lng']);
+          let bLatLng = new google.maps.LatLng(this.events[i - 1]['place']['lat'], this.events[i - 1]['place']['lng']);
+
+          let distance = google.maps.geometry.spherical.computeDistanceBetween(aLatLng, bLatLng) / 1000;
+          this.events[i]['distance'] = distance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+          let speed = this.itinerary['walking_speed'] * this.events[i]['distance'];
+          this.events[i]['walk'] = speed.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+        }
+      }
+    }
+  }
 
   // add event from date
   add(date) {

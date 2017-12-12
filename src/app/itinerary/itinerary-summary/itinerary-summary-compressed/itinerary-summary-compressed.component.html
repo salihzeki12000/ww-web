@@ -52,6 +52,13 @@
 <div *ngFor="let event of events">
   <div *ngIf="event?.summary_date === date" class="summary-item-container">
 
+    <div class="get-to" *ngIf="event?.distance">
+      <div class="distance">
+        <h5><i class="fa fa-long-arrow-down" aria-hidden="true"></i> {{ event?.distance }}km</h5>
+        <h5><img src="assets/man.png" alt=""> est {{ event?.walk }} min walk</h5>
+      </div>
+    </div>
+
     <h5 class="event-time">{{ event?.summary_time }}</h5>
 
     <div *ngIf="event?.type === 'accommodation'" class="summary-item" (click)="showDetails(event)">

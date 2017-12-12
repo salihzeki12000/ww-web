@@ -68,6 +68,33 @@ h5.edit-note  {
 
 
 
+/* distance display */
+.get-to {
+  margin-top: 10px;
+}
+
+.distance {
+  display: inline-block;
+  margin-left: 20px;
+  padding: 2px 0;
+  border: 1px solid #808080;
+  border-radius: 2px;
+}
+
+.distance h5 {
+  display: inline-block;
+  padding: 0 5px;
+  color: #808080;
+}
+
+.fa-long-arrow-down {
+  color: #3A4A4D;
+}
+
+.distance img {
+  height: 11px;
+}
+
 /* date display */
 
 .event-date {
@@ -114,7 +141,7 @@ h5.edit-note  {
   margin: 5px 20px 0 20px;
   padding-bottom: 10px;
   width: 240px;
-  border-bottom: 1px solid lightgray;
+  border-bottom: .5px solid rgba(0,0,0,.1);
 
   &:hover {
     cursor: pointer;

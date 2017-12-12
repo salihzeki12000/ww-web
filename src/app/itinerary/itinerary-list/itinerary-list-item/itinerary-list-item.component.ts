@@ -19,6 +19,7 @@ export class ItineraryListItemComponent implements OnInit {
   like = false;
   save = false;
   member = false;
+  publish = false;
   followings = [];
 
   constructor(
@@ -36,6 +37,7 @@ export class ItineraryListItemComponent implements OnInit {
       this.checkLike();
       this.checkSave();
       this.checkMember();
+      this.checkPublish();
     },2000)
   }
 
@@ -74,6 +76,12 @@ export class ItineraryListItemComponent implements OnInit {
         this.member = true;
         break;
       };
+    }
+  }
+
+  checkPublish()  {
+    if(this.itinerary['corporate']['status'] && this.itinerary['corporate']['publish']) {
+      this.publish = true;
     }
   }
 

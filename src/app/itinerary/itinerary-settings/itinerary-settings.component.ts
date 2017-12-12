@@ -111,6 +111,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
         'date_to': '',
         'num_days': '',
         'invite_password': '',
+        'walking_speed': '',
       })
     }
 
@@ -253,6 +254,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
       date_to: this.formatDate(this.itinerary['date_to']),
       num_days: this.itinerary['num_days'],
       invite_password: this.itinerary['invite_password'],
+      walking_speed: this.itinerary['walking_speed'],
     })
 
     if(this.itinerary['num_days'])  {
@@ -605,13 +607,13 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
 
       this.setDateRange("date", "");
       this.dateTypeChanged = true;
-      this.dateTypeChangedMsg = "Itinerary date type has change from number of days to specific travel dates. Activities in the itinerary will be adjusted in sequence - Day 1 activities to first date."
+      this.dateTypeChangedMsg = "Itinerary date type has been updated from number of days to specific travel dates. Activities in the itinerary will be adjusted in sequence - Day 1 activities to first date."
 
     } else if(this.dateType === "Number of days") {
 
       this.setDateRange("day", "");
       this.dateTypeChanged = true;
-      this.dateTypeChangedMsg = "Itinerary date type has change from specific travel dates to number of days. Activities in the itinerary will be adjusted in sequence - first date activities to Day 1."
+      this.dateTypeChangedMsg = "Itinerary date type has been updated from specific travel dates to number of days. Activities in the itinerary will be adjusted in sequence - first date activities to Day 1."
 
     }
   }
