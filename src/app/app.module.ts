@@ -27,7 +27,7 @@ import { PostsComponent, PostComponent, PostInputComponent, PostListComponent, P
 
 import { ItineraryComponent, ItineraryListComponent, ItineraryFormComponent, ItineraryInviteComponent, ItineraryAccommodationComponent, ItineraryTransportComponent, ItineraryService, ItineraryActivityComponent, ItineraryResourcesComponent, ResourceInputComponent, ResourceService, ResourceListComponent, ResourceComponent, ItineraryMapComponent, AccommodationFormComponent, TransportFormComponent, ItineraryEventService, ActivityComponent, ActivityListComponent, ActivityInputComponent, AccommodationComponent, TransportComponent, ItineraryPrintComponent, ItineraryPreviewComponent, ItinerarySummaryComponent, ItinerarySummaryActivityComponent, ItinerarySummaryAccommodationComponent, ItinerarySummaryTransportComponent, ItinerarySummaryDayComponent, ItinerarySummaryCompressedComponent, ItinerarySettingsComponent, ItineraryShareComponent, ItineraryListItemComponent, ItineraryAllComponent, ItinerarySavedComponent, ItineraryCuratedComponent, ItineraryFollowingComponent, ItineraryDescriptionComponent } from './itinerary';
 
-import { GooglePlaceSearchComponent, GoogleFavComponent } from './google-api';
+import { GooglePlaceSearchComponent, GoogleFavComponent, GoogleCalendarService } from './google-api';
 
 import { FlashMessageComponent, FlashMessageService } from './flash-message';
 import { NotificationComponent, NotificationsComponent, NotificationListComponent, NotificationService } from './notifications';
@@ -183,7 +183,7 @@ export class RavenErrorHandler implements ErrorHandler {
     Daterangepicker,
     Ng2DeviceDetectorModule.forRoot()
   ],
-  providers: [ Title, AdminService, LoadingService, AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, FileuploadService, CommentService, ErrorMessageService, FavouriteService, RecommendationService, PlaceService, CountryService, CityService, AuthGuard, AdminGuard, { provide: ErrorHandler, useClass: RavenErrorHandler } ],
+  providers: [ Title, AdminService, LoadingService, AuthService, UserService, PostService, ItineraryService, ItineraryEventService, ResourceService, FlashMessageService, RelationshipService, NotificationService, FileuploadService, CommentService, ErrorMessageService, FavouriteService, RecommendationService, PlaceService, CountryService, CityService, GoogleCalendarService, AuthGuard, AdminGuard, { provide: ErrorHandler, useClass: RavenErrorHandler } ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
