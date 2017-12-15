@@ -101,7 +101,7 @@
 
             <h4 class="event-name event-header">{{ event.name }}</h4>
             <h4 class="summary-description" [innerHTML]="event?.formatted_description" *ngIf="event?.formatted_description"></h4>
-            <h4 class="summary-description" [innerHTML]="event?.formatted_sub_description" *ngIf="event?.formatted_sub_description"></h4>
+            <h4 class="summary-description" [innerHTML]="event?.formatted_long_description" *ngIf="event?.formatted_long_description"></h4>
 
             <div class="details-item" *ngIf="event?.formatted_note !== ''">
               <i class="fa fa-sticky-note-o fa-fw" aria-hidden="true"></i>

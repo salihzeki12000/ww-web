@@ -75,9 +75,9 @@
           <h4 [innerHTML]="activity?.formatted_description"></h4>
         </div>
 
-        <div class="details-description" *ngIf="activity?.formatted_sub_description">
+        <div class="details-description" *ngIf="activity?.formatted_long_description">
           <h5 *ngIf="!showSub" (click)="showSub = true">show more...</h5>
-          <h4 *ngIf="showSub" [innerHTML]="activity?.formatted_sub_description"></h4>
+          <h4 *ngIf="showSub" [innerHTML]="activity?.formatted_long_description"></h4>
           <h5 *ngIf="showSub" (click)="showSub = false">show less...</h5>
         </div>
 

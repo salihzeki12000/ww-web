@@ -226,8 +226,8 @@
                 <h4 [innerHTML]="event?.formatted_description"></h4>
               </div>
 
-              <div class="details-description" *ngIf="event?.place.sub_description">
-                <h4 [innerHTML]="event?.formatted_sub_description"></h4>
+              <div class="details-description" *ngIf="event?.place.long_description">
+                <h4 [innerHTML]="event?.formatted_long_description"></h4>
               </div>
 
               <div class="details-item" *ngIf="event?.place.formatted_address">

@@ -3,12 +3,17 @@
   height: calc(100vh - 100px);
 }
 
+.summary-photo  {
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
 .summary-photo img  {
-  width: 595px;
+  max-width: 595px;
   height: 300px;
 
   @media only screen and (max-width: 610px) {
-    width: 100%;
+    max-width: 100%;
     height: 66vw;
   }
 }

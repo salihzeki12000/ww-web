@@ -143,8 +143,8 @@ export class ItineraryPrintComponent implements OnInit {
           events[i]['formatted_description'] = events[i]['place']['description'].replace(/\r?\n/g, '<br/> ');
         }
 
-        if(events[i]['place']['sub_description']) {
-          events[i]['formatted_sub_description'] = events[i]['place']['sub_description'].replace(/\r?\n/g, '<br/> ');
+        if(events[i]['place']['long_description']) {
+          events[i]['formatted_long_description'] = events[i]['place']['long_description'].replace(/\r?\n/g, '<br/> ');
         }
 
       } else if(events[i]['opening_hours'] !== '' && events[i]['opening_hours'] !== undefined) {

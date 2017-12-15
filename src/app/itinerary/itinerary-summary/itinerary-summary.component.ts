@@ -246,6 +246,8 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
     let numDays = '';
 
     for (let i = 0; i < events.length; i++) {
+      events[i]['distance'] = null;
+      events[i]['walk'] = null;
 
       if(events[i]['type'] === 'activity')  {
 
@@ -350,9 +352,6 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
 
   getDistance() {
     for (let i = 1; i < this.events.length - 1; i++) {
-      this.events[i]['distance'] = null;
-      this.events[i]['walk'] = null;
-
       if(this.events[i]['summary_date'] === this.events[i - 1]['summary_date'] && this.events[i]['summary_date'] !== 'any day') {
         if(this.events[i]['location'] && this.events[i - 1]['location'])  {
           let aLatLng = new google.maps.LatLng(this.events[i]['place']['lat'], this.events[i]['place']['lng']);

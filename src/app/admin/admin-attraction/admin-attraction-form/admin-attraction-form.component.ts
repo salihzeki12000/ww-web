@@ -48,7 +48,7 @@ export class AdminAttractionFormComponent implements OnInit {
       'country': '',
       'city': '',
       'description': '',
-      'sub_description': '',
+      'long_description': '',
       'tips': '',
       'opening_hours': '',
       'entry_fee': '',
@@ -249,7 +249,7 @@ export class AdminAttractionFormComponent implements OnInit {
     this.newAttractionForm.reset([{
       'name': '',
       'description': '',
-      'sub_description': '',
+      'long_description': '',
       'tips': '',
       'opening_hours': '',
       'entry_fee': '',

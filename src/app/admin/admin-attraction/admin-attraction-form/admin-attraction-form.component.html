@@ -20,8 +20,8 @@
         <label>DESCRIPTION ({{description?.value.length}} characters) - keep to 290 characters</label>
         <textarea rows="6" formControlName="description" #description></textarea>
 
-        <label>SUB-DESCRIPTION ({{sub_description?.value.length}} characters) - keep to 290 characters</label>
-        <textarea rows="6" formControlName="sub_description" #sub_description></textarea>
+        <label>SUB-DESCRIPTION ({{long_description?.value.length}} characters) - keep to 290 characters</label>
+        <textarea rows="6" formControlName="long_description" #long_description></textarea>
 
         <label>TIPS ({{tips?.value.length}} characters)</label>
         <textarea rows="3" formControlName="tips" #tips></textarea>
@@ -152,8 +152,8 @@
         <h4>{{ description?.value }}</h4>
       </div>
 
-      <div class="content-details" *ngIf="sub_description?.value !== ''">
-        <h4>{{ sub_description?.value }}</h4>
+      <div class="content-details" *ngIf="long_description?.value !== ''">
+        <h4>{{ long_description?.value }}</h4>
       </div>
 
       <div class="sub-content">
@@ -255,8 +255,8 @@
           <h5>{{ description?.value }}</h5>
         </div>
 
-        <div class="show-details" *ngIf="sub_description?.value !== ''">
-          <h5>{{ sub_description?.value }}</h5>
+        <div class="show-details" *ngIf="long_description?.value !== ''">
+          <h5>{{ long_description?.value }}</h5>
         </div>
 
         <div class="toggle-contact-details" (click)="showContactDetails6 = !showContactDetails6">
@@ -319,8 +319,8 @@
           <h5>{{ description?.value }}</h5>
         </div>
 
-        <div class="show-details" *ngIf="sub_description?.value !== ''">
-          <h5>{{ sub_description?.value }}</h5>
+        <div class="show-details" *ngIf="long_description?.value !== ''">
+          <h5>{{ long_description?.value }}</h5>
         </div>
 
         <div class="toggle-contact-details" (click)="showContactDetails3 = !showContactDetails3">

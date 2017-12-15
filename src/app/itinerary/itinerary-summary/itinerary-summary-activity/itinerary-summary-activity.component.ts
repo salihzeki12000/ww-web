@@ -81,7 +81,7 @@ export class ItinerarySummaryActivityComponent implements OnInit, OnDestroy {
       this.editActivityForm = this.formBuilder.group({
         'name': ['', Validators.required],
         'description': '',
-        'sub_description': '',
+        'long_description': '',
         'opening_hours': '',
         'date': '',
         'time': '',
@@ -150,8 +150,8 @@ export class ItinerarySummaryActivityComponent implements OnInit, OnDestroy {
         this.showHours = false;
       }
 
-      if(this.activity['place']['sub_description'] !== '' && this.activity['place']['sub_description'] !== undefined)  {
-        this.activity['formatted_sub_description'] = this.activity['place']['sub_description'].replace(/\r?\n/g, '<br/> ');
+      if(this.activity['place']['long_description'] !== '' && this.activity['place']['long_description'] !== undefined)  {
+        this.activity['formatted_long_description'] = this.activity['place']['long_description'].replace(/\r?\n/g, '<br/> ');
       }
     }
   }

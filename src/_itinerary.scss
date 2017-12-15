@@ -40,12 +40,11 @@
 
 .add-new-modal .add-new-opt {
   margin-bottom: 20px;
-  padding: 10px;
+  padding: 15px;
   width: 320px;
   text-align: center;
-  color: #567FCC;
-  border: 2px solid #567FCC;
-  border-radius: 5px;
+  color: #F9FBFB;
+  border-radius: 2px;
   &:hover {
     cursor: pointer;
     opacity: .7;
@@ -59,7 +58,9 @@
 
 .add-new-opt h4 {
   padding-top: 10px;
-  color: #567FCC;
+  color: #F9FBFB;
+  letter-spacing: 1px;
+  font-weight: 400;
 }
 
 /*******
@@ -261,6 +262,10 @@
   background-color: rgba(241,57,77,.8);
 }
 
+.resource-indicator {
+  background-color: rgba(13, 191, 83,.8);
+}
+
 .accommodation-text * {
   color: rgba(118,0,204,.5);
 }
@@ -271,6 +276,10 @@
 
 .activity-text * {
   color: rgba(241,57,77,.8);
+}
+
+.resource-text * {
+  color: rgba(13, 191, 83,.8);
 }
 
 

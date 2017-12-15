@@ -155,8 +155,8 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
           this.events[i]['formatted_description'] = this.events[i]['place']['description'].replace(/\r?\n/g, '<br/> ');
         }
 
-        if(this.events[i]['place']['sub_description']) {
-          this.events[i]['formatted_sub_description'] = this.events[i]['place']['sub_description'].replace(/\r?\n/g, '<br/> ');
+        if(this.events[i]['place']['long_description']) {
+          this.events[i]['formatted_long_description'] = this.events[i]['place']['long_description'].replace(/\r?\n/g, '<br/> ');
         }
       }
 

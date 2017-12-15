@@ -418,7 +418,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
   getPlace()  {
     this.newPlace['photos'] = this.pictureOptions;
     this.newPlace['description'] = "";
-    this.newPlace['sub_description'] = "";
+    this.newPlace['long_description'] = "";
     this.newPlace['opening_hours'] = '';
 
     this.placeService.searchPlace(this.newPlace).subscribe(
