@@ -14,6 +14,7 @@
 
   <div class="private-indicator" *ngIf="itinerary.private">
     <i class="fa fa-lock" aria-hidden="true"></i>
+    <h5 class="private-message">This itinerary is private</h5>
   </div>
 
   <h3 class="itinerary-name" (click)="routeToItin()">{{ itinerary.name }}</h3>
@@ -22,13 +23,14 @@
   <div *ngIf="itinerary.num_days" class="banner">{{ itinerary.num_days }} {{ itinerary.num_days > 1 ? "days" : "day" }}</div>
   <h5 *ngIf="!itinerary.num_days">{{ itinerary.date_from | date:'dd MMM yy' }} to {{ itinerary.date_to | date:'dd MMM yy' }}</h5>
 
-  <h5 class="copied" *ngIf="copied"><i class="fa fa-clone" aria-hidden="true"></i> You have copied this itinerary</h5>
-
-  <div class="following-member" *ngIf="followings">
+  <div class="following-member" *ngIf="followings?.length > 0">
+    <h5>Also in itinerary</h5>
     <div *ngFor="let member of followings">
       <h5 class="username-bold" (click)="routeToUser(member._id)"><i class="fa fa-user" aria-hidden="true"></i> {{ member.username }}</h5>
     </div>
   </div>
+
+  <h5 class="copied" *ngIf="copied"><i class="fa fa-clone" aria-hidden="true"></i> You have copied this itinerary</h5>
 
 </div>
 
@@ -56,10 +58,10 @@
 
   <h5 class="itinerary-created-by">Created by <span class="username-bold" (click)="routeToUser(itinerary.created_by._id)">{{ itinerary.created_by.username }}</span> on {{ itinerary.created_at | date: 'dd MMM yy'}}</h5>
 
-  <div class="like-save">
+  <!-- <div class="like-save">
     <h5 class="like" *ngIf="!like" (click)="toggleLike()"><i class="fa fa-heart-o fa-fw fa-lg" aria-hidden="true"></i> Like</h5>
     <h5 class="liked" *ngIf="like" (click)="toggleLike()"><i class="fa fa-heart fa-fw fa-lg" aria-hidden="true"></i> Liked</h5>
     <h5 class="save" *ngIf="!save" (click)="toggleSave()"><i class="fa fa-bookmark-o fa-fw fa-lg" aria-hidden="true"></i> Save</h5>
     <h5 class="saved" *ngIf="save" (click)="toggleSave()"><i class="fa fa-bookmark fa-fw fa-lg" aria-hidden="true"></i> Saved</h5>
-  </div>
+  </div> -->
 </div>

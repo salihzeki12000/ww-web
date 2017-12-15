@@ -3,6 +3,7 @@
   width: 300px;
   text-align: center;
   background-color: rgba(0,0,0,.8);
+  border-radius: 2px 2px 0 0;
 }
 
 .itinerary-photo a {
@@ -14,6 +15,7 @@
 img {
   height: 151px;
   max-width: 300px;
+  border-radius: 2px 2px 0 0;
 }
 
 
@@ -21,6 +23,22 @@ img {
   display: inline-block;
   color: firebrick;
   vertical-align: top;
+}
+
+.private-message  {
+  display: none;
+  position: absolute;
+  margin-top: -40px;
+  padding: 5px 10px;
+  color: #F9FBFB;
+  background-color: #3a4a4d;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.2);
+}
+
+
+.private-indicator:hover .private-message {
+  display: block;
 }
 
 .publish-indicator  {
@@ -82,11 +100,11 @@ img {
 /* itinerary details */
 
 .copied {
-  padding-bottom: 5px;
+  padding-top: 10px;
 }
 
 .itinerary-details  {
-  padding: 20px 20px 100px 20px;
+  padding: 20px 20px 50px 20px;
   text-align: left;
 }
 
@@ -96,10 +114,12 @@ img {
 
 .following-member {
   display: block;
-  padding: 5px 0 5px 5px;
+  padding: 10px 0;
 }
 
-
+.following-member > div > h5  {
+  padding-left: 5px;
+}
 
 .stick-btm  {
   position: absolute;
@@ -134,7 +154,7 @@ img {
 
 /* itinerary created by */
 .itinerary-created-by  {
-  padding: 0 20px 5px 20px;
+  padding: 0 20px 10px 20px;
 
   @media only screen and (max-width: 500px) {
     font-size: .7em;

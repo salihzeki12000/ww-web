@@ -31,6 +31,10 @@ export class ItineraryPreviewComponent implements OnInit, OnDestroy {
           this.currentUser = result;
           if(this.itinerary) this.getStart();
         });
+    } else  {
+      this.currentUser = {
+        _id: "5a33bb68992e9ccd0535213a",
+      }
     }
 
     this.itinerarySubscription = this.itineraryService.currentItinerary.subscribe(

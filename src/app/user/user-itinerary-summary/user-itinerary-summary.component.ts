@@ -45,6 +45,8 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
   newWidth;
 
   copied = false;
+  like = false;
+  save = false;
 
   currentUserSubscription: Subscription;
   currentUser: User;
@@ -261,7 +263,66 @@ export class UserItinerarySummaryComponent implements OnInit, OnDestroy {
         this.copied = true;
       }
     }
+
+    this.checkSave();
+    this.checkLike();
   }
+
+  // like and save
+  checkLike()  {
+    for (let i = 0; i < this.itinerary['likes'].length; i++) {
+      if(this.itinerary['likes'][i] === this.currentUser['_id'])  {
+        this.like = true;
+        break;
+      };
+    }
+  }
+
+  checkSave()  {
+    for (let i = 0; i < this.currentUser['saves']['itineraries'].length; i++) {
+      if(this.currentUser['saves']['itineraries'][i]['_id'] === this.itinerary['_id'])  {
+        this.save = true;
+        break;
+      };
+    }
+  }
+
+  toggleLike()  {
+    this.like = !this.like;
+
+    if(this.like) {
+      this.itinerary['likes'].push(this.currentUser['_id'])
+    } else  {
+      let index = this.itinerary['likes'].indexOf(this.currentUser['_id']);
+
+      this.itinerary['likes'].splice(index, 1)
+    }
+
+    this.itineraryService.updateItinUser(this.itinerary).subscribe(
+      result => {})
+  }
+
+  toggleSave()  {
+    this.save = !this.save;
+
+    if(this.save) {
+      this.currentUser['saves']['itineraries'].push(this.itinerary);
+    } else  {
+      let itineraries = this.currentUser['saves']['itineraries'];
+
+      for (let i = 0; i < itineraries.length; i++) {
+        if(itineraries[i]['_id'] === this.itinerary['_id'])  {
+          this.currentUser['saves']['itineraries'].splice(i, 1);
+          break;
+        }
+      }
+    }
+
+    this.userService.editUser(this.currentUser).subscribe(
+      result => {})
+  }
+
+
 
 
   // Copy itinerary

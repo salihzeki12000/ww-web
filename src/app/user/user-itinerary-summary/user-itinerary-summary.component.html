@@ -8,15 +8,31 @@
     <h5 class="copied" *ngIf="copied"><i class="fa fa-clone" aria-hidden="true"></i> You have copied this itinerary</h5>
 
     <div class="itinerary-action">
-      <h4 class="preview-link" *ngIf="itinerary?.corporate.status" [routerLink]="['/preview/itinerary', itinerary?._id]">
-        <i class="fa fa-external-link" aria-hidden="true"></i>
-        View preview
-      </h4>
 
       <h4 class="copy-itinerary" *ngIf="!itinerary?.view_only" (click)="copy()">
         <i class="fa fa-clone fa-lg" aria-hidden="true"></i>
         Copy itinerary
       </h4>
+
+      <div class="like" *ngIf="!like" (click)="toggleLike()">
+        <h5>Like</h5>
+        <i class="fa fa-heart-o fa-lg" aria-hidden="true"></i>
+      </div>
+
+      <div class="liked" *ngIf="like" (click)="toggleLike()">
+        <h5>Liked</h5>
+        <i class="fa fa-heart fa-lg" aria-hidden="true"></i>
+      </div>
+
+      <div class="save" *ngIf="!save" (click)="toggleSave()">
+        <h5>Save</h5>
+        <i class="fa fa-bookmark-o fa-lg" aria-hidden="true"></i>
+      </div>
+
+      <div class="saved" *ngIf="save" (click)="toggleSave()">
+        <h5>Saved</h5>
+        <i class="fa fa-bookmark fa-lg" aria-hidden="true"></i>
+      </div>
     </div>
   </div>
 

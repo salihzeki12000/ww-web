@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { ItineraryService } from '../../itinerary.service';
 import { UserService }      from '../../../user';
+import { LoadingService}    from '../../../loading';
 
 @Component({
   selector: 'ww-itinerary-list-item',
@@ -19,25 +20,30 @@ export class ItineraryListItemComponent implements OnInit {
   like = false;
   save = false;
   member = false;
+  creator = false;
   publish = false;
   followings = [];
 
   constructor(
     private userService: UserService,
     private itineraryService: ItineraryService,
+    private loadingService: LoadingService,
     private router: Router) { }
 
   ngOnInit() {
+    this.loadingService.setLoader(true,"");
+
     if(this.itinerary.description.photos.length > 0)  {
       this.displayPic = this.itinerary.description.photos[0];
     }
 
     setTimeout(() =>  {
+      this.checkMember();
       this.checkCopy();
       this.checkLike();
       this.checkSave();
-      this.checkMember();
       this.checkPublish();
+      this.loadingService.setLoader(false,"");
     },2000)
   }
 
@@ -49,6 +55,7 @@ export class ItineraryListItemComponent implements OnInit {
     }
 
     this.followings = this.itinerary['following'];
+    if(this.followings) this.removeCreator();
     delete this.itinerary['following'];
   }
 
@@ -82,6 +89,16 @@ export class ItineraryListItemComponent implements OnInit {
   checkPublish()  {
     if(this.itinerary['corporate']['status'] && this.itinerary['corporate']['publish']) {
       this.publish = true;
+    }
+  }
+
+  removeCreator() {
+    for (let i = 0; i < this.followings.length; i++) {
+      if(this.followings[i]['_id'] === this.itinerary['created_by']['_id'])  {
+        this.creator = true;
+        this.followings.splice(i,1);
+        break;
+      }
     }
   }
 
@@ -123,12 +140,14 @@ export class ItineraryListItemComponent implements OnInit {
   routeToItin() {
     if(this.member) {
       this.router.navigateByUrl('/me/itinerary/' + this.itinerary['_id'])
-    } else if(this.itinerary['corporate']['status'] && this.itinerary['corporate']['publish']) {
+    } else if(this.publish) {
       this.router.navigateByUrl('/preview/itinerary/' + this.itinerary['_id'])
-    } else if(this.followings) {
-      this.router.navigateByUrl('/wondererwanderer/' + this.followings[0]['_id'] + '/itinerary/' + this.itinerary['_id'])
+    } else if(this.creator) {
+      this.router.navigateByUrl('/wondererwanderer/' + this.itinerary['created_by']['_id'] + '/itinerary/' + this.itinerary['_id'])
     } else if (this.viewUser) {
       this.router.navigateByUrl('/wondererwanderer/' + this.viewUser['_id'] + '/itinerary/' + this.itinerary['_id'])
+    } else {
+      this.router.navigateByUrl('/wondererwanderer/' + this.itinerary['created_by']['_id'] + '/itinerary/' + this.itinerary['_id'])
     }
   }
 

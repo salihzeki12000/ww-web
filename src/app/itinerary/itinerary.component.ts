@@ -30,6 +30,9 @@ export class ItineraryComponent implements OnInit, OnDestroy {
 
   creator = false; // to hide copy option if creator view preview
 
+  like = false;
+  save = false;
+
   itinerarySubscription: Subscription;
   itinerary;
   events = [];
@@ -126,11 +129,6 @@ export class ItineraryComponent implements OnInit, OnDestroy {
         this.currentRoute = segments[3]['path']
         this.originalFirstDay = this.itinerary['date_from'];
 
-        this.invalidPreview = false;
-        this.validUser = false;
-        this.validAccess = false;
-        this.creator = false;
-
         if(this.currentUser) this.checkPreview();
         if(!this.isLoggedIn) this.checkAccess();
 
@@ -160,6 +158,11 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   }
 
   checkPreview()  {
+    this.invalidPreview = false;
+    this.validUser = false;
+    this.validAccess = false;
+    this.creator = false;
+
     if(this.isLoggedIn) {
       for (let i = 0; i < this.itinerary['members'].length; i++) {
         if(this.itinerary['members'][i]['_id'] === this.currentUser['_id']) {
@@ -178,13 +181,12 @@ export class ItineraryComponent implements OnInit, OnDestroy {
        (this.preview && this.itinerary['corporate']['status'] && !this.itinerary['corporate']['publish'] && !this.creator))  {
       this.invalidPreview = true;
 
-      // setTimeout(() =>  {
-      //   this.loadingService.setLoader(false, "");
-      // }, 3000)
-
     } else  {
       this.checkAccess();
     }
+
+    this.checkLike();
+    this.checkSave();
   }
 
   checkAccess() {
@@ -206,8 +208,11 @@ export class ItineraryComponent implements OnInit, OnDestroy {
         this.previewMessage = false;
       }, 8000)
     } else if(!this.validAccess) {
-      this.loadingMessage = 'You are not authorised to access the selected itinerary.';
-      this.loadingService.setLoader(false, "");
+
+      setTimeout(() =>  {
+        this.loadingMessage = 'You are not authorised to access the selected itinerary.';
+        this.loadingService.setLoader(false, "");
+      }, 2000)
     }
   }
 
@@ -324,6 +329,64 @@ export class ItineraryComponent implements OnInit, OnDestroy {
     this.showCurrentMembers = false;
     this.preventScroll(false);
   }
+
+
+  // like and save
+  checkLike()  {
+    this.like = false;
+    for (let i = 0; i < this.itinerary['likes'].length; i++) {
+      if(this.itinerary['likes'][i] === this.currentUser['_id'])  {
+        this.like = true;
+        break;
+      };
+    }
+  }
+
+  checkSave()  {
+    this.save = false;
+    for (let i = 0; i < this.currentUser['saves']['itineraries'].length; i++) {
+      if(this.currentUser['saves']['itineraries'][i]['_id'] === this.itinerary['_id'])  {
+        this.save = true;
+        break;
+      };
+    }
+  }
+
+  toggleLike()  {
+    this.like = !this.like;
+
+    if(this.like) {
+      this.itinerary['likes'].push(this.currentUser['_id'])
+    } else  {
+      let index = this.itinerary['likes'].indexOf(this.currentUser['_id']);
+
+      this.itinerary['likes'].splice(index, 1)
+    }
+
+    this.itineraryService.updateItinUser(this.itinerary).subscribe(
+      result => {})
+  }
+
+  toggleSave()  {
+    this.save = !this.save;
+
+    if(this.save) {
+      this.currentUser['saves']['itineraries'].push(this.itinerary);
+    } else  {
+      let itineraries = this.currentUser['saves']['itineraries'];
+
+      for (let i = 0; i < itineraries.length; i++) {
+        if(itineraries[i]['_id'] === this.itinerary['_id'])  {
+          this.currentUser['saves']['itineraries'].splice(i, 1);
+          break;
+        }
+      }
+    }
+
+    this.userService.editUser(this.currentUser).subscribe(
+      result => {})
+  }
+
 
 
   // itinerary nav tabs to access forms
@@ -689,11 +752,11 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   }
 
   scrollLeft()  {
-    this.element.nativeElement.firstElementChild.children[4].firstElementChild.firstElementChild.scrollLeft -= 100;
+    this.element.nativeElement.firstElementChild.children[5].firstElementChild.firstElementChild.scrollLeft -= 100;
   }
 
   scrollRight() {
-    this.element.nativeElement.firstElementChild.children[4].firstElementChild.firstElementChild.scrollLeft += 100;
+    this.element.nativeElement.firstElementChild.children[5].firstElementChild.firstElementChild.scrollLeft += 100;
   }
 
   routeToUser(id) {

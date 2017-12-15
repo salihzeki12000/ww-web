@@ -145,7 +145,7 @@
 .members-section  {
   position: fixed;
   left: 0;
-  top: 80px;
+  top: 150px;
   padding: 10px;
   height: 80px;
   width: 200px;
@@ -167,6 +167,7 @@
   &:hover {
     cursor: pointer;
     color: #3A4A4D;
+    text-decoration: underline;
     font-style: italic;
   }
 }
@@ -285,21 +286,132 @@ img.user-profile-thumbnail  {
   overflow: auto;
 }
 
+/* like / save section */
+.like-save  {
+  position: fixed;
+  top: 80px;
+  left: 1px;
+  padding-left: 74px;
+  background-color: white;
+  border-right: 2px solid lightgray;
+  z-index: 1;
+  
+  @media only screen and (max-width: 750px) {
+    display: none;
+  }
 
+  @media only screen and (min-width: 750px) and (max-width: 1090px) {
+    top: unset;
+    bottom: -4px;
+    left: 100px;
+    padding-left: 0;
+    border-top: 1px solid lightgray;
+    border-right: none;
+  }
+}
+
+.like, .save, .liked, .saved  {
+  display: inline-block;
+  width: 60px;
+  padding: 15px 0;
+  text-align: center;
+
+  @media only screen and (min-width: 750px) and (max-width: 1090px) {
+    padding: 0;
+    height: 43px;
+    width: 79px;
+  }
+}
+
+.like {
+  @media only screen and (min-width: 750px) and (max-width: 1090px) {
+    border-left: .5px solid lightgray;
+  }
+
+  &:hover {
+    cursor: pointer;
+    color: red;
+  }
+}
+
+.save  {
+  &:hover {
+    cursor: pointer;
+    color: #6494ED;
+  }
+}
+
+.liked  {
+  color: red;
+
+  &:hover {
+    cursor: pointer;
+    opacity: .6;
+  }
+}
+
+.saved {
+  color: #6494ED;
+
+  &:hover {
+    cursor: pointer;
+    opacity: .6;
+  }
+}
+
+.fa-heart, .fa-heart-o,
+.fa-bookmark, .fa-bookmark-o  {
+  margin-top: 5px;
+  padding: 7.5px 0 0 1px;
+  height: 30px;
+  width: 30px;
+  border: 1px solid;
+  border-radius: 50%;
+}
+
+.fa-bookmark, .fa-bookmark-o  {
+  padding-left: 0;
+}
+
+.like *,
+.save *,
+.liked *,
+.saved *  {
+  @media only screen and (min-width: 750px) and (max-width: 1090px) {
+    display: inline-block;
+  }
+}
+
+
+.show-like  {
+  position: fixed;
+  display: block;
+  top: 80px;
+  padding-left: 30px;
+  border: none;
+  z-index: 501;
+}
+
+.show-like > .like,
+.show-like > .save,
+.show-like > .liked,
+.show-like > .saved {
+  display: block;
+}
 
 /* Itinerary navigation */
 
 header {
-  @media only screen and (max-width: 420px) {
+  @media only screen and (max-width: 750px) {
     display: none;
   }
 
-  @media only screen and (min-width: 420px) and (max-width: 1090px) {
+  @media only screen and (min-width: 750px) and (max-width: 1090px) {
     position: fixed;
     display: block;
     bottom: -4px;
-    left: 160px;
-    width: calc(100vw - 220px);
+    left: 320px;
+    width: calc(100vw - 380px);
     height: 44px;
     z-index: 500;
   }
@@ -316,7 +428,7 @@ header {
 
 .show-nav-menu  {
   display: none;
-  @media only screen and (max-width: 420px) {
+  @media only screen and (max-width: 750px) {
     position: fixed;
     display: block;
     right: 0;
@@ -350,7 +462,7 @@ header {
 .scroll-right {
   display: none;
 
-  @media only screen and (min-width: 420px) and (max-width: 1091px) {
+  @media only screen and (min-width: 750px) and (max-width: 1091px) {
     position: fixed;
     display: block;
     bottom: 0;
@@ -367,7 +479,7 @@ header {
 
 
 .scroll-left  {
-  left: 100px;
+  left: 260px;
 }
 
 /* nav  tabs */
@@ -375,15 +487,15 @@ header {
 .itinerary-nav-tabs {
   position: fixed;
   left: 0;
-  top: 160px;
-  padding: 0;
-  height: calc(100vh - 160px);
+  top: 230px;
+  padding: 20px 0 0 0;
+  height: calc(100vh - 250px);
   width: 200px;
   letter-spacing: 1px;
   background-color: white;
   border-right: 2px solid lightgray;
   list-style-type: none;
-  
+
   @media only screen and (max-width: 1090px) {
     position: static;
     width: 100%;
@@ -395,7 +507,7 @@ header {
     border-top: 1px solid lightgray;
   }
 
-  @media only screen and (max-width: 420px) {
+  @media only screen and (max-width: 750px) {
     height: calc(100vh - 80px);
     padding-top: 10px;
   }
@@ -405,11 +517,11 @@ header {
   padding: 10px 0 10px 10px;
   text-align: right;
 
-  @media only screen and (max-width: 420px) {
+  @media only screen and (max-width: 750px) {
     display: block;
   }
 
-  @media only screen and (min-width: 420px) and (max-width: 1090px) {
+  @media only screen and (min-width: 750px) and (max-width: 1090px) {
     display: inline-block;
     padding: 10px;
   }
@@ -449,7 +561,7 @@ header {
     border-right: none;
   }
 
-  @media only screen and (max-width: 420px) {
+  @media only screen and (max-width: 750px) {
     border: none;
   }
 }
@@ -482,7 +594,7 @@ header {
 
 
 
-/* display in mobile < 420px */
+/* display in mobile < 750px */
 
 .add-new,
 .copy-itinerary  {
@@ -530,7 +642,7 @@ header {
 .current-route  {
   display: none;
 
-  @media only screen and (max-width: 420px) {
+  @media only screen and (max-width: 750px) {
     position: fixed;
     display: block;
     padding: 10px;

@@ -42,6 +42,30 @@
     <i class="fa fa-chevron-right" aria-hidden="true"></i>
   </div>
 
+  <div class="like-save" [class.show-like]="showNav">
+
+    <div class="like" *ngIf="!like" (click)="toggleLike()">
+      <h5>Like</h5>
+      <i class="fa fa-heart-o fa-fw fa-lg" aria-hidden="true"></i>
+    </div>
+
+    <div class="liked" *ngIf="like" (click)="toggleLike()">
+      <h5>Liked</h5>
+      <i class="fa fa-heart fa-fw fa-lg" aria-hidden="true"></i>
+    </div>
+
+    <div class="save" *ngIf="!save" (click)="toggleSave()">
+      <h5>Save</h5>
+      <i class="fa fa-bookmark-o fa-fw fa-lg" aria-hidden="true"></i>
+    </div>
+
+    <div class="saved" *ngIf="save" (click)="toggleSave()">
+      <h5>Saved</h5>
+      <i class="fa fa-bookmark fa-fw fa-lg" aria-hidden="true"></i>
+    </div>
+  </div>
+
+
   <header [class.show-nav]="showNav">
     <nav>
       <ul class="itinerary-nav-tabs">
