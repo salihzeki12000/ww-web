@@ -118,9 +118,9 @@ export class PlaceComponent implements OnInit {
 
     this.placeID = this.place['place_id'];
 
-    if(this.place['city'])  {
-      this.cityName = this.place['city']['name'] + ", " + this.place['country']['name'];
-    }
+    // if(this.place['city'])  {
+    //   this.cityName = this.place['city']['name'] + ", " + this.place['country']['name'];
+    // }
 
     if(this.place['opening_hours']) {
       this.formatted_hours = this.place['opening_hours'].replace(/\r?\n/g, '<br/> ');

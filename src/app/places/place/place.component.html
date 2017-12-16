@@ -13,14 +13,14 @@
       <label>NAME</label>
       <input type="text" formControlName="name" #name>
 
-      <label>DESCRIPTION ({{description?.value.length}} characters) - keep to 300 characters</label>
-      <textarea rows="6" formControlName="description" #description></textarea>
+      <label>DESCRIPTION ({{description?.value.length}} characters) - keep to 100 characters</label>
+      <textarea rows="6" formControlName="description" #description auto-grow></textarea>
 
       <label>SUB-DESCRIPTION ({{long_description?.value.length}} characters) - keep to 300 characters</label>
-      <textarea rows="6" formControlName="long_description" #long_description></textarea>
+      <textarea rows="6" formControlName="long_description" #long_description auto-grow></textarea>
 
       <label>TIPS ({{tips?.value.length}} characters)</label>
-      <textarea rows="6" formControlName="tips" #tips></textarea>
+      <textarea rows="6" formControlName="tips" #tips auto-grow></textarea>
     </div>
 
 
@@ -80,10 +80,10 @@
     <div class="details-section-container">
 
       <label>OPENING HOURS</label>
-      <textarea rows="7" formControlName="opening_hours" #opening_hours (keyup)="logHours(opening_hours.value)"></textarea>
+      <textarea rows="7" formControlName="opening_hours" #opening_hours (keyup)="logHours(opening_hours.value)" auto-grow></textarea>
 
       <label>COST / ENTRY FEE</label>
-      <textarea row="5" formControlName="entry_fee" #entry_fee></textarea>
+      <textarea row="5" formControlName="entry_fee" #entry_fee auto-grow></textarea>
     </div>
 
 
