@@ -38,7 +38,7 @@
 
 
   <div class="description">
-    <h1 class="description-header" *ngIf="itinerary?.description.header !== ''">{{ itinerary?.description.header }}</h1>
+    <h2 class="description-header" *ngIf="itinerary?.description.header !== ''">{{ itinerary?.description.header }}</h2>
 
     <div *ngFor="let section of itinerary?.description.sections" class="section">
       <h3 class="section-header">{{ section.section_header }}</h3>
@@ -67,7 +67,7 @@
   <div class="summary-container">
     <div *ngFor="let date of dateRange; let i = index">
       <div *ngIf="date === 'any day' || itinerary?.num_days" class="day-header">
-        <h3 class="date-display">{{ date }}</h3>
+        <h4 class="date-display">{{ date }}</h4>
 
         <div *ngFor="let note of dailyNotes" class="daily-note">
           <div *ngIf="note.date === date">
@@ -78,7 +78,7 @@
       </div>
 
       <div *ngIf="date !== 'any day' && !itinerary?.num_days" class="day-header">
-        <h3 class="date-display">Day {{ i }} - {{ date | date: "dd MMM (EEE)" }}</h3>
+        <h4 class="date-display">Day {{ i }} - {{ date | date: "dd MMM (EEE)" }}</h4>
 
         <div *ngFor="let note of dailyNotes" class="daily-note">
           <div *ngIf="note.date === date">
@@ -97,7 +97,6 @@
 
             <div *ngIf="event.type === 'activity'" class="event-photo">
               <img src="{{ event.photo.url }}" alt="" *ngIf="event?.photo">
-              <!-- <i class="fa fa-bicycle fa-3x" aria-hidden="true" *ngIf="!event?.photo"></i> -->
             </div>
 
             <div *ngIf="event.type === 'accommodation'" class="event-photo">
@@ -105,12 +104,12 @@
               <i class="fa fa-home fa-3x" aria-hidden="true" *ngIf="!event?.photo"></i>
             </div>
 
-
           </div>
 
           <div *ngIf="event.type === 'activity'" class="event-details-card">
             <div class="copy-activity" (click)="copyEvent(event)">
               <i class="fa fa-clone" aria-hidden="true"></i>
+              <h5 class="copy-message">Copy to itinerary</h5>
             </div>
 
             <div class="activity-indicator pill"></div>

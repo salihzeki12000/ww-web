@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, Renderer2, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder }    from '@angular/forms';
+
 import { DaterangePickerComponent } from 'ng2-daterangepicker';
 import { Subscription } from 'rxjs/Rx';
 import { Router }       from '@angular/router';
@@ -17,7 +18,7 @@ import { CountryService }      from '../../../countries';
 @Component({
   selector: 'ww-profile-edit',
   templateUrl: './profile-edit.component.html',
-  styleUrls: ['./profile-edit.component.scss']
+  styleUrls: ['./profile-edit.component.scss'],
 })
 export class ProfileEditComponent implements OnInit, OnDestroy {
   @ViewChild(DaterangePickerComponent)
@@ -50,6 +51,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     showDropdowns: true,
   }
 
+  // image upload
   fileTypeError = false;
   newProfilePic;
   newImageFile = '';

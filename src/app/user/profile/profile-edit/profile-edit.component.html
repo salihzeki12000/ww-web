@@ -19,9 +19,9 @@
       <div class="form-section-details">
 
         <h5 class="profile-date-join">A wonderer wanderer since {{ user?.created_at | date:'dd MMMM y'}}</h5>
+
         <div class="profile-img-edit">
           <img src="{{ user?.display_picture.url }}" alt="">
-
           <label class="fileUpload">
             Change picture
             <input type="file" (change)="fileUploaded($event)" [value]="inputValue" accept="image/*">
@@ -44,7 +44,6 @@
 
       </div>
     </div>
-
 
     <div class="settings-section" *ngIf="private">
       <h2 class="settings-header">Private Details</h2>
@@ -94,7 +93,6 @@
 
       </div>
     </div>
-
 
     <div class="settings-section" *ngIf="default">
       <h2 class="settings-header">Default Settings</h2>
@@ -192,7 +190,7 @@
     </div>
 
     <div class="content-without-header-name">
-      <div class="new-profile-picture" *ngIf="newProfilePic">
+      <div class="new-profile-picture">
         <h3>Your new profile picture</h3>
         <img [src]="newProfilePic">
       </div>

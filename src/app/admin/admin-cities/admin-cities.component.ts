@@ -123,8 +123,8 @@ export class AdminCitiesComponent implements OnInit {
 
   sortCountryA()  {
     this.cities.sort((a,b)  =>  {
-      if(a['name'] < b['name']) return -1;
-      if(a['name'] > b['name']) return 1;
+      if(a['country']['name'] < b['country']['name']) return -1;
+      if(a['country']['name'] > b['country']['name']) return 1;
       return 0;
     })
   }
