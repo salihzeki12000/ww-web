@@ -32,9 +32,9 @@ import { GooglePlaceSearchComponent, GoogleFavComponent, GoogleCalendarService }
 import { FlashMessageComponent, FlashMessageService } from './flash-message';
 import { NotificationComponent, NotificationsComponent, NotificationListComponent, NotificationService } from './notifications';
 
-import { AdminComponent, AdminService, AdminLoginComponent, AdminVerifyComponent, AdminFormComponent, AdminCountriesComponent, AdminCitiesComponent } from './admin';
+import { AdminComponent, AdminService, AdminLoginComponent, AdminVerifyComponent, AdminFormComponent, AdminCountriesComponent, AdminCitiesComponent, AdminPlacesComponent, AdminPlaceComponent, AdminPlaceFormComponent } from './admin';
+
 import { AttractionsComponent } from './attractions/attractions.component';
-import { AdminAttractionComponent,AdminAttractionFormComponent } from './admin/admin-attraction';
 
 import { FileuploadService, CommentService, TimePickerComponent } from './shared';
 import { LoadingComponent, LoadingService } from './loading';
@@ -134,8 +134,8 @@ export class RavenErrorHandler implements ErrorHandler {
     LandingPageComponent,
     AttractionsComponent,
     AdminComponent,
-    AdminAttractionComponent,
-    AdminAttractionFormComponent,
+    AdminPlaceComponent,
+    AdminPlaceFormComponent,
     HomeComponent,
     ProfileEditComponent,
     RelationshipsComponent,
@@ -171,7 +171,8 @@ export class RavenErrorHandler implements ErrorHandler {
     AutoGrowDirective,
     AboutUsComponent,
     ContactUsComponent,
-    TermsOfServiceComponent
+    TermsOfServiceComponent,
+    AdminPlacesComponent
   ],
   imports: [
     BrowserModule,

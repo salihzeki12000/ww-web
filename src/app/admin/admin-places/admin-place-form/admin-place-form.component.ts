@@ -8,11 +8,11 @@ import { CountryService } from '../../../countries';
 import { CityService }    from '../../../cities';
 
 @Component({
-  selector: 'ww-admin-attraction-form',
-  templateUrl: './admin-attraction-form.component.html',
-  styleUrls: ['./admin-attraction-form.component.scss']
+  selector: 'ww-admin-place-form',
+  templateUrl: './admin-place-form.component.html',
+  styleUrls: ['./admin-place-form.component.scss']
 })
-export class AdminAttractionFormComponent implements OnInit {
+export class AdminPlaceFormComponent implements OnInit {
   @ViewChild('map') map: ElementRef;
   mapPosition;
   lat;
@@ -293,7 +293,7 @@ export class AdminAttractionFormComponent implements OnInit {
 
     place['country'] = this.countryID;
     place['opening_hours_raw'] = this.openingHoursRaw;
-    
+
     this.placeService.addPlace(place).subscribe(
       result => {
         this.resetAttractionForm();
