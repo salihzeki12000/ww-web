@@ -172,6 +172,12 @@
   }
 }
 
+.itin-created-by  {
+  padding: 10px 0;
+  color: grey;
+  letter-spacing: .5px;
+}
+
 img.user-profile-thumbnail  {
   display: inline-block;
   margin-right: 5px;
@@ -260,10 +266,6 @@ img.user-profile-thumbnail  {
 
 /* shift member display if preview is true */
 
-.mt {
-  margin-top: 30px;
-}
-
 .bt {
   bottom: 70%
 }
@@ -295,7 +297,7 @@ img.user-profile-thumbnail  {
   background-color: white;
   border-right: 2px solid lightgray;
   z-index: 1;
-  
+
   @media only screen and (max-width: 750px) {
     display: none;
   }

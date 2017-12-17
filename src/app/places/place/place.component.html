@@ -27,10 +27,7 @@
 
     <h5 class="form-section-header">GETTING THERE</h5>
     <div class="details-section-container">
-
-      <label>GETTING THERE</label>
       <textarea rows="6" formControlName="getting_there" #getting_there></textarea>
-
     </div>
 
 
@@ -53,7 +50,7 @@
       <label>CITY <span class="required"> - for internal use</span></label>
       <select class="select-city" name="city" formControlName="city" [value]="cityName">
         <option *ngFor="let city of citiesName">
-          {{ city }}
+          <h5>{{ city }}</h5>
         </option>
       </select>
 

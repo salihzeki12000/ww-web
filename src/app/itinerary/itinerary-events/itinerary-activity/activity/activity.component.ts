@@ -33,7 +33,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
   sameUser;
   mealTag = false;
   showContactDetails = false;
-  showHours = true;
+  showHours = false;
   showSub = false;
 
   itineraries = [];
@@ -155,7 +155,6 @@ export class ActivityComponent implements OnInit, OnDestroy {
     if(this.activity['place'])  {
       if(this.activity['place']['description'] !== '' && this.activity['place']['description'] !== undefined)  {
         this.activity['formatted_description'] = this.activity['place']['description'].replace(/\r?\n/g, '<br/> ');
-        this.showHours = false;
       }
 
       if(this.activity['place']['long_description'] !== '' && this.activity['place']['long_description'] !== undefined)  {

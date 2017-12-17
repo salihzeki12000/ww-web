@@ -63,7 +63,7 @@
 
     <div *ngIf="activity?.location">
 
-      <div class="details-description" *ngIf="activity?.formatted_description">
+      <div class="details-description" *ngIf="activity?.formatted_description && !showSub">
         <h4 [innerHTML]="activity?.formatted_description"></h4>
       </div>
 
@@ -72,6 +72,8 @@
         <h4 *ngIf="showSub" [innerHTML]="activity?.formatted_long_description"></h4>
         <h5 *ngIf="showSub" (click)="showSub = false">show less...</h5>
       </div>
+
+      <div class="details-seperator"></div>
 
       <div class="toggle-contact-details" (click)="showContactDetails = !showContactDetails">
         <h5>Address and contact number</h5>
@@ -88,6 +90,9 @@
           <i class="fa fa-phone fa-fw" aria-hidden="true"></i>
           <a href="tel:{{ activity?.place.international_phone_number }}">{{ activity?.place.international_phone_number }}</a>
         </div>
+
+        <div class="details-seperator"></div>
+
       </div>
 
       <div class="toggle-contact-details" (click)="showHours = !showHours" *ngIf="activity?.formatted_hours || activity?.opening_hours">
@@ -100,6 +105,9 @@
           <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>
           <h5 [innerHTML]="activity?.formatted_hours"></h5>
         </div>
+
+        <div class="details-seperator"></div>
+
       </div>
 
       <div class="details-item" *ngIf="activity?.place?.entry_fee">

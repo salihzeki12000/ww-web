@@ -606,8 +606,8 @@
 .event-summary-item .index {
   margin: 10px 5px;
   padding: 3px 5px;
-  font-weight: 600;
-  border: 2px solid;
+  font-weight: 500;
+  border: 1px solid;
   border-radius: 2px;
   float: left;
 }
@@ -626,7 +626,6 @@
   margin-bottom: 5px;
   padding: 10px 10px 0 35px;
   color: grey;
-  font-weight: 500;
 }
 
 .event-summary-header {
@@ -945,6 +944,7 @@ ww-resource {
 }
 
 .details-description h4 {
+  margin-bottom: 10px;
   font-weight: normal;
   font-size: 13px;
   line-height: 1.4;
@@ -960,6 +960,12 @@ ww-resource {
   }
 }
 
+.details-seperator  {
+  margin-bottom: 10px;
+  height: 1px;
+  border-top: 1px solid rgba(0,0,0,.1);
+}
+
 .details-item  {
   margin-bottom: 10px;
 }
@@ -972,7 +978,7 @@ ww-resource {
 .details-item > h5 {
   display: inline-block;
   width: calc(100% - 25px);
-  vertical-align: top;
+  vertical-align: text-top;
   color: grey;
   text-align: justify;
   line-height: 1.5;
