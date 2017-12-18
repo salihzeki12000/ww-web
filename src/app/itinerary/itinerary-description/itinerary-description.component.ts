@@ -182,8 +182,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
 
   updateStatus(image) {
     image.status = !image.status;
-
-    for (let i = 0; i < this.itinerary['description']['pictures'].length; i++) {
+    for (let i = 0; i < this.itinerary['description']['photos'].length; i++) {
       if(!this.itinerary['description']['photos'][i]['status'])  {
         this.picDeleted = true;
         i = this.itinerary['description']['photos'].length;
@@ -275,7 +274,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
   }
 
   savePics()  {
-    this.tracker = 0;
+    // this.tracker = 0;
     this.loadingService.setLoader(true, "Saving pictures...");
     this.confirmPics = false;
 
@@ -314,7 +313,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
         )
       }
 
-      this.tracker += 1;
+      // this.tracker += 1;
     }
 
     let delay = this.uploadedPics.length * 1200;
@@ -324,16 +323,15 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
   }
 
   updateEdit()  {
-    if(this.tracker === this.uploadedPics.length) {
+    // if(this.tracker === this.uploadedPics.length) {
 
       this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
         result => {
           this.loadingService.setLoader(false, "");
           this.flashMessageService.handleFlashMessage("Changes to pictures updated");
+          this.sortPhotos();
         })
-    }
-
-    this.sortPhotos();
+    // }
   }
 
 

@@ -26,6 +26,11 @@
     </div>
 
     <div class="form-detail">
+      <label>Zoom</label>
+      <input type="number" formControlName="zoom" #zoom (keyup)="setZoom(zoom.value)">
+    </div>
+
+    <div class="form-detail">
       <label>Continent</label>
       <input type="text" formControlName="continent">
     </div>
@@ -56,5 +61,8 @@
       <h5>{{ country?.name }}</h5>
     </div>
   </div>
+</div>
 
+<div class="map">
+  <div #map id="map"></div>
 </div>

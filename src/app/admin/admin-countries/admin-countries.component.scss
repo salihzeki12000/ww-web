@@ -15,7 +15,6 @@ form  {
 
 .form-detail {
   display: inline-block;
-  margin: 0 10px;
 }
 
 .action-response  {
@@ -51,7 +50,7 @@ form  {
 }
 
 .country  {
-  width: 940px;
+  width: 206px;
   padding: 5px;
   border: 1px solid lightgray;
 
@@ -106,4 +105,15 @@ form  {
   &:hover {
     color: #F9FBFB;
   }
+}
+
+.map  {
+  position: absolute;
+  margin: -90px 0 0 290px;
+}
+
+#map  {
+  display: inline-block;
+  width: 900px;
+  height: 500px;
 }

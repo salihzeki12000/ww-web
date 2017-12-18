@@ -20,6 +20,10 @@
       </div>
 
       <div class="marker-details">
+        <div *ngIf="event.type === 'accommodation'" class="accommodation-indicator pill"></div>
+        <div *ngIf="event.type === 'transport'" class="transport-indicator pill"></div>
+        <div *ngIf="event.type === 'activity'" class="activity-indicator pill"></div>
+        
         <div *ngIf="event.date === 'any day' || itinerary?.num_days">
           <h5 class="marker-date">{{ event.date }} - {{ event.time }}</h5>
         </div>

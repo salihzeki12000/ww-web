@@ -16,11 +16,6 @@
     </div>
   </div>
 
-  <!-- <div *ngIf="!preview" class="manage-pics" (click)="managePictures()">
-    <h5>Manage pictures</h5>
-  </div> -->
-
-
   <div class="description-content">
     <div *ngIf="!editing">
       <div class="edit-description">
@@ -127,13 +122,14 @@
           <input type="file" (change)="fileUploaded($event)" [value]="inputValue" accept="image/*" multiple>
         </label>
 
+        <h5 class="note-message">NOTE</h5>
         <h5>Maximum of 10 pictures for each itinerary</h5>
         <h5>If more than 10 pictures are uploaded, only the first 10 will be saved</h5>
-        <!-- <h5>Optimal dimension for each pictures is w600px x h300px</h5> -->
+        <h5>Optimal dimension for each pictures is w900px x h450px</h5>
       </div>
 
 
-      <h3 class="manage-pic-header">Existing pictures</h3>
+      <h3 class="manage-pic-header" *ngIf="itinerary?.description.photos.length > 0">Existing pictures</h3>
 
       <div *ngFor="let image of itinerary?.description.photos; let i = index" class="manage-pic">
         <div class="pic-div">
@@ -202,7 +198,7 @@
 
       <div *ngFor="let pic of uploadedPics; let i = index" class="manage-pic">
         <div class="pic-div">
-          <img [src]="pic.url" [class.blur]="!pic.status">          
+          <img [src]="pic.url" [class.blur]="!pic.status">
         </div>
 
         <div class="caption">

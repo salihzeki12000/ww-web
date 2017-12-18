@@ -18,6 +18,9 @@
   }
 }
 
+.gm-style-iw {
+  background-color: red;
+}
 
 
 /* legend section */
@@ -162,9 +165,19 @@
   }
 }
 
+.marker-details > div {
+  display: inline-block;
+}
+
+.accommodation-indicator,
+.activity-indicator,
+.transport-indicator  {
+  display: inline-block;
+  margin-left: 5px;
+}
+
 .marker-date {
   margin-bottom: 5px;
-  padding-left: 5px;
   color: grey;
   font-weight: 500;
 }

@@ -10,20 +10,33 @@
 /* default photo */
 
 .description-photo img {
-  height: 300px;
-  width: 100%;
+  height: 450px;
+  width: 900px;
+  margin-left: calc((100vw - 1100px) / 2);
 
-  @media only screen and (max-width: 610px) {
+  @media only screen and (max-width: 910px) {
+    width: 100vw;
     min-width: 300px;
-    height: calc((100vw / 3) * 2);
+    height: calc(100vw / 2);
+    margin-left: 0;
+  }
+
+  @media only screen and (min-width: 910px) and (max-width: 1090px) {
+    margin-left: calc((100vw - 900px) / 2);
   }
 }
 
 .description-photo a  {
   position: absolute;
-  margin-top: -15px;
-  margin-left: 5px;
+  margin-top: 430px;
+  margin-left: -890px;
   font-size: 8px;
+
+  @media only screen and (max-width: 910px) {
+    margin-top: -15px;
+    margin-left: 0;
+    left: 10px;
+  }
 }
 
 
@@ -33,18 +46,14 @@
 
 .description-slider {
   position: relative;
-  height: calc((100vw - 200px) / 3);
+  height: 450px;
   width: 100%;
   text-align: center;
   background-color: rgba(0,0,0,.8);
 
-  @media only screen and (max-width: 610px) {
+  @media only screen and (max-width: 910px) {
     min-width: 300px;
     height: calc(100vw / 2);
-  }
-
-  @media only screen and (min-width: 610px) and (max-width: 1090px) {
-    height: calc(100vw / 3);
   }
 }
 
@@ -52,16 +61,36 @@
   display: inline-block;
 }
 
+.description-images img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 450px;
+  width: 900px;
+  margin-left: calc((100vw - 1100px) / 2);
+  object-fit: cover;
 
+  transition: all linear 500ms;
+  -o-transition: all linear 500ms;
+  -moz-transition: all linear 500ms;
+  -webkit-transition: all linear 500ms;
 
+  @media only screen and (max-width: 910px) {
+    margin-left: 0;
+    min-width: 300px;
+    width: 100vw;
+    height: calc(100vw / 2);
+  }
 
-.description-images input[name='slide_switch'] {
-  display: none;
+  @media only screen and (min-width: 910px) and (max-width: 1090px) {
+    margin-left: calc((100vw - 900px) / 2);
+  }
 }
+
 
 .photo-caption  {
   position: absolute;
-  margin-top: calc((100vw - 200px) / 3);
+  margin-top: 450px;
   left: 0;
   width: 100%;
   min-height: 33px;
@@ -70,21 +99,20 @@
   padding-right: calc((100vw - 800px) / 2);
   background-color: rgba(0,0,0,.1);
 
-  @media only screen and (max-width: 610px) {
+  @media only screen and (max-width: 910px) {
     margin-top: calc(100vw / 2);
     padding: 10px;
   }
+}
 
-  @media only screen and (min-width: 610px) and (max-width: 1090px) {
-    margin-top: calc(100vw / 3);
-    padding-left: calc((100vw - 600px) / 2);
-    padding-right: calc((100vw - 600px) / 2);
-  }
+
+.description-images input[name='slide_switch'] {
+  display: none;
 }
 
 .description-images label {
   margin: 0 3px;
-  margin-top: calc((100vw - 50px) / 3);
+  margin-top: 500px;
   background-color: #E6E6E6;
   border-radius: 50%;
 
@@ -93,12 +121,8 @@
     background-color: #567FCC;
   }
 
-  @media only screen and (max-width: 610px) {
+  @media only screen and (max-width: 910px) {
     margin-top: calc((100vw / 2) + 80px);
-  }
-
-  @media only screen and (min-width: 610px) and (max-width: 1090px) {
-    margin-top: calc((100vw / 3) + 50px);
   }
 }
 
@@ -108,29 +132,6 @@
   height: 20px;
   padding-top: 5px;
   color: #F9FBFB;
-}
-
-.description-images img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: calc((100vw - 200px) / 3);
-  width: 100%;
-  object-fit: contain;
-
-  transition: all linear 500ms;
-  -o-transition: all linear 500ms;
-  -moz-transition: all linear 500ms;
-  -webkit-transition: all linear 500ms;
-
-  @media only screen and (max-width: 610px) {
-    min-width: 300px;
-    height: calc(100vw / 2);
-  }
-
-  @media only screen and (min-width: 610px) and (max-width: 1090px) {
-    height: calc(100vw / 3);
-  }
 }
 
 .description-images input[name='slide_switch']:checked~label  {
@@ -309,11 +310,11 @@
 }
 
 .custom-modal img {
-  height: 120px;
+  height: 185px;
 
   @media only screen and (max-width: 450px) {
     margin-left: 0;
-    height: calc((100vw - 50px) / 3);
+    height: calc((100vw - 50px) / 2);
   }
 }
 
@@ -392,19 +393,16 @@
   margin-bottom: 40px;
 }
 
-.upload-picture h5 {
-  padding: 0 0 5px 10px;
-}
-
 .file-upload {
   overflow: hidden;
   position: relative;
-  padding: 1px 10px;
+  padding: 3px 10px;
   color: #F9FBFB;
   font-size: 13px;
   background-color: #6494ED;
   border: 2px solid #F9FBFB;
-  border-radius: 25px;
+  border-radius: 2px;
+
   &:hover {
     cursor: pointer;
     opacity: .7;
@@ -425,6 +423,16 @@
   }
 }
 
+.upload-picture h5 {
+  padding: 0 0 5px 5px;
+}
+
+.note-message {
+  margin-top: 20px;
+  text-decoration: underline;
+  letter-spacing: 1px;
+  font-weight: 500;
+}
 
 /* display existing pictures */
 

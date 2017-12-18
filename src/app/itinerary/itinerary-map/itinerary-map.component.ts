@@ -28,11 +28,15 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
   eventSubscription: Subscription;
   events: ItineraryEvent[] = [];
   filteredEvents: ItineraryEvent[] = [];
+  originalEvents: ItineraryEvent[] = [];
 
   markers = [];
   infoWindows = [];
   flightPath;
+  travelPaths = [];
   markerCluster;
+  dateSet = 0; // to keep original list of dates
+
 
   month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   dates = [];
@@ -55,6 +59,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
 
     this.eventSubscription = this.itineraryEventService.updateEvent.subscribe(
       result => {
+        this.originalEvents = Object.keys(result).map(key => result[key]);
 
         setTimeout(() =>  {
           this.filterEvents(result);
@@ -129,7 +134,6 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
           index += 1;
 
           this.events.push(arrival);
-
           setTimeout(() =>  {
             this.setTravelPath(events[i]);
           }, 1000)
@@ -138,7 +142,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
 
       if(events[i]['type'] !== 'transport' && events[i]['location'])  {
 
-        if(this.itinerary['num_days'])  {
+        if(this.itinerary['num_days'] || events[i]['date'] === 'any day')  {
           events[i]['converted_date'] = events[i]['date']
         } else  {
           let date = new Date(events[i]['date']);
@@ -157,6 +161,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
   }
 
   initMap() {
+    this.dateSet = 0;
     let mapDiv = this.map.nativeElement;
     let center;
     let zoom;
@@ -177,7 +182,8 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
       styles: [{"stylers": [{ "saturation": -20 }]}]
     });
 
-    this.setMarkers(this.itinMap);
+    // this.setMarkers(this.itinMap);
+    this.setMarkers(this.events);
     this.getCurrentLocation(this.itinMap);
   }
 
@@ -205,67 +211,66 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
     return event['type'] !== 'transport';
   }
 
-  setMarkers(map) {
+  setMarkers(events) {
     let eventMarker = [];
     this.markers = [];
 
-    for (let i = 0; i < this.events.length; i++) {
-      // if(this.events[i]['type'] !== 'transport')  {
-        if(this.events[i]['place']['lat']) {
-          let date;
-          let eventDate;
-          let icon;
-          let color;
+    for (let i = 0; i < events.length; i++) {
+      if(events[i]['place']['lat']) {
+        let date;
+        let eventDate;
+        let icon;
+        let color;
 
-          if(this.events[i]['date'] !== 'any day' && !this.itinerary['num_days'])  {
-            date = new Date(this.events[i]['date'])
-            eventDate = date.getDate() + " " + this.month[date.getMonth()];
-          } else if(this.events[i]['date'] === 'any day' || this.itinerary['num_days']) {
-            eventDate = this.events[i]['date'];
-          }
-
-          if(this.events[i]['type'] === 'activity') {
-            icon = "https://res.cloudinary.com/wwfileupload/image/upload/v1507089951/red_marker2_vet9gn.png";
-            color = "#D6101E";
-          } else if(this.events[i]['type'] === 'accommodation') {
-            icon = "https://res.cloudinary.com/wwfileupload/image/upload/v1507090509/purple_marker2_ohhe64.png";
-            color = "#9421FF";
-          } else if(this.events[i]['type'] === 'transport') {
-            icon = "https://res.cloudinary.com/wwfileupload/image/upload/v1507186249/orange_marker2_ltrumz.png";
-            color = "#FFA15C";
-          }
-
-          eventMarker.push(
-            [ this.events[i]['name'],
-              this.events[i]['place']['lat'],
-              this.events[i]['place']['lng'],
-              eventDate,
-              this.events[i]['time'],
-              this.events[i]['note'],
-              icon,
-              color]
-          )
-        } else if(!this.events[i]['place']['lat']) {
-          this.events.splice(i,1)
-          i--;
+        if(events[i]['date'] !== 'any day' && !this.itinerary['num_days'])  {
+          date = new Date(events[i]['date'])
+          eventDate = date.getDate() + " " + this.month[date.getMonth()];
+        } else if(events[i]['date'] === 'any day' || this.itinerary['num_days']) {
+          eventDate = events[i]['date'];
         }
-      // }
-    }
 
-    this.setDate(eventMarker);
+        if(events[i]['type'] === 'activity') {
+          icon = "https://res.cloudinary.com/wwfileupload/image/upload/v1507089951/red_marker2_vet9gn.png";
+          color = "#D6101E";
+        } else if(events[i]['type'] === 'accommodation') {
+          icon = "https://res.cloudinary.com/wwfileupload/image/upload/v1507090509/purple_marker2_ohhe64.png";
+          color = "#9421FF";
+        } else if(events[i]['type'] === 'transport') {
+          icon = "https://res.cloudinary.com/wwfileupload/image/upload/v1507186249/orange_marker2_ltrumz.png";
+          color = "#FFA15C";
+        }
+
+        eventMarker.push(
+          [ events[i]['name'],
+            events[i]['place']['lat'],
+            events[i]['place']['lng'],
+            eventDate,
+            events[i]['time'],
+            events[i]['note'],
+            icon,
+            color,
+            events[i]['index'],
+          ]
+        )
+      } else if(!events[i]['place']['lat']) {
+        events.splice(i,1)
+        i--;
+      }
+    }
+    if(this.dateSet === 0)  this.setDate(eventMarker);
 
     for (let i = 0; i < eventMarker.length; i++) {
       let event = eventMarker[i];
       let marker = new google.maps.Marker({
         position: { lat: event[1], lng: event[2] },
-        map: map,
+        map: this.itinMap,
         icon: {
           url: event[6],
           labelOrigin: new google.maps.Point(16, 16)
         },
         title: event[0],
         label: {
-          text: '' + (i + 1),
+          text: '' + event[8],
           color: event[7],
           fontSize: '13px',
           fontWeight: 'bold'
@@ -278,9 +283,9 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
 
       let infoWindow = new google.maps.InfoWindow({
         content: '<div id="iw-container">' +
-                    '<h5>' + event[3] + " - " + event[4] + '</h5>' +
-                    '<p style="padding: 10px 5px; font-weight: bold; text-align: center;">' + event[0] + '</p>' +
-                    '<p style="padding-bottom: 15px; color: #808080; text-align: center;">' + event[5] + '</p>' +
+                    '<h5 style="font-weight: bold; min-width: 150px;">' + event[3] + " - " + event[4] + '</h5>' +
+                    '<p style="margin: 10px 0; padding: 5px; font-weight: bold; text-align: center; border-bottom: 1px solid rgba(0,0,0,.1); border-top: 1px solid rgba(0,0,0,.1);">' + event[0] + '</p>' +
+                    '<p style="padding-bottom: 15px; color: #808080;">' + event[5] + '</p>' +
                   '</div>'
       })
 
@@ -297,12 +302,12 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
       // })
 
       marker.addListener('click', ()  =>  {
-        infoWindow.open(map, marker)
+        infoWindow.open(this.itinMap, marker)
       })
     }
 
     let imagePath = 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
-    this.markerCluster = new MarkerClusterer(map, this.markers, {
+    this.markerCluster = new MarkerClusterer(this.itinMap, this.markers, {
             maxZoom: 15,
             imagePath: imagePath
           });
@@ -312,6 +317,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
   }
 
   setDate(events) {
+    this.dateSet += 1;
     this.dates = [];
     for (let i = 0; i < events.length; i++) {
       if(this.dates.indexOf(events[i][3]) < 0) {
@@ -320,6 +326,16 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
     }
     this.dates.unshift("All dates");
     this.selectedDate = this.dates[0];
+  }
+
+  setTravelPaths()  {
+    for (let i = 0; i < this.originalEvents.length; i++) {
+      if(this.originalEvents[i]['dep_station_location'] && this.originalEvents[i]['arr_station_location'])  {
+        setTimeout(() =>  {
+          this.setTravelPath(this.originalEvents[i]);
+        }, 1000)
+      }
+    }
   }
 
   setTravelPath(event) {
@@ -336,13 +352,14 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
       geodesic: true,
       strokeColor: "#FFA15C",
       strokeOpacity: 1,
-      strokeWeight: 3,
+      strokeWeight: 2,
       icons: [{
         icon: lineSymbol,
         offset: '100%'
       }],
     })
 
+    this.travelPaths.push(travelPath);
     travelPath.setMap(this.itinMap);
   }
 
@@ -355,7 +372,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
 
       this.openInfoWindow(event['place']['lat'], event['place']['lng'])
       this.itinMap.panTo(center);
-      this.itinMap.setZoom(15);
+      this.itinMap.setZoom(13);
     }
 
     this.showMapLegend = false;
@@ -382,25 +399,26 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
 
 
   // filter by date
-
   filterMarkers(date) {
     if(this.flightPath !== undefined) this.flightPath.setMap(null);
-
-    for (let i = 0; i < this.markers.length; i++) {
-      if(this.markers[i]['date'] === date || date === "All dates")  {
-        this.markers[i].setVisible(true);
-      } else  {
-        this.markers[i].setVisible(false);
-      }
+    for (let i = 0; i < this.travelPaths.length; i++) {
+      this.travelPaths[i].setMap(null);
     }
+
+    this.travelPaths = [];
+
+    this.markerCluster.clearMarkers();
 
     if(date === "All dates")  {
       this.filteredEvents = this.events;
+      this.setTravelPaths();
     } else  {
       this.filteredEvents = Object.assign([], this.events).filter(
         event => event.converted_date === date
       )
     }
+
+    this.setMarkers(this.filteredEvents);
 
     let bounds = new google.maps.LatLngBounds();
 
@@ -415,7 +433,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
       }
 
       let lineSymbol = {
-        path: google.maps.SymbolPath.FORWARD_OPEN_ARROW
+        path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
       };
 
       this.flightPath = new google.maps.Polyline({
@@ -426,6 +444,7 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
         strokeWeight: 2,
         icons: [{
           icon: lineSymbol,
+          repeat: '150px',
           offset: '100%'
         }],
       });
@@ -434,14 +453,19 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
       this.itinMap.fitBounds(bounds);
       this.itinMap.panToBounds(bounds);
     } else  {
-      this.changeCenter(this.filteredEvents[0]);
+      if(date === "All dates")  {
+        let center = this.filteredEvents.find(this.getCenter)
+        this.changeCenter(center);
+      } else  {
+        this.changeCenter(this.filteredEvents[0]);
+      }
+
     }
 
     if(this.element.nativeElement.offsetParent.clientWidth < 891) {
       this.showMapLegend = true;
     }
   }
-
 
   // others
 
@@ -458,3 +482,170 @@ export class ItineraryMapComponent implements OnInit, OnDestroy {
     }
   }
 }
+
+
+// setMarkers(map) {
+//   let eventMarker = [];
+//   this.markers = [];
+//
+//   for (let i = 0; i < this.events.length; i++) {
+//     // if(this.events[i]['type'] !== 'transport')  {
+//       if(this.events[i]['place']['lat']) {
+//         let date;
+//         let eventDate;
+//         let icon;
+//         let color;
+//
+//         if(this.events[i]['date'] !== 'any day' && !this.itinerary['num_days'])  {
+//           date = new Date(this.events[i]['date'])
+//           eventDate = date.getDate() + " " + this.month[date.getMonth()];
+//         } else if(this.events[i]['date'] === 'any day' || this.itinerary['num_days']) {
+//           eventDate = this.events[i]['date'];
+//         }
+//
+//         if(this.events[i]['type'] === 'activity') {
+//           icon = "https://res.cloudinary.com/wwfileupload/image/upload/v1507089951/red_marker2_vet9gn.png";
+//           color = "#D6101E";
+//         } else if(this.events[i]['type'] === 'accommodation') {
+//           icon = "https://res.cloudinary.com/wwfileupload/image/upload/v1507090509/purple_marker2_ohhe64.png";
+//           color = "#9421FF";
+//         } else if(this.events[i]['type'] === 'transport') {
+//           icon = "https://res.cloudinary.com/wwfileupload/image/upload/v1507186249/orange_marker2_ltrumz.png";
+//           color = "#FFA15C";
+//         }
+//
+//         eventMarker.push(
+//           [ this.events[i]['name'],
+//             this.events[i]['place']['lat'],
+//             this.events[i]['place']['lng'],
+//             eventDate,
+//             this.events[i]['time'],
+//             this.events[i]['note'],
+//             icon,
+//             color]
+//         )
+//       } else if(!this.events[i]['place']['lat']) {
+//         this.events.splice(i,1)
+//         i--;
+//       }
+//     // }
+//   }
+//
+//   this.setDate(eventMarker);
+//
+//   for (let i = 0; i < eventMarker.length; i++) {
+//     let event = eventMarker[i];
+//     let marker = new google.maps.Marker({
+//       position: { lat: event[1], lng: event[2] },
+//       map: map,
+//       icon: {
+//         url: event[6],
+//         labelOrigin: new google.maps.Point(16, 16)
+//       },
+//       title: event[0],
+//       label: {
+//         text: '' + (i + 1),
+//         color: event[7],
+//         fontSize: '13px',
+//         fontWeight: 'bold'
+//       },
+//       date: event[3],
+//       zIndex: i
+//     })
+//
+//     this.markers.push(marker);
+//
+//     let infoWindow = new google.maps.InfoWindow({
+//       content: '<div id="iw-container">' +
+//                   '<h5 style="font-weight: bold; min-width: 150px;">' + event[3] + " - " + event[4] + '</h5>' +
+//                   '<p style="margin: 10px 0; padding: 5px; font-weight: bold; text-align: center; border-bottom: 1px solid rgba(0,0,0,.1); border-top: 1px solid rgba(0,0,0,.1);">' + event[0] + '</p>' +
+//                   '<p style="padding-bottom: 15px; color: #808080;">' + event[5] + '</p>' +
+//                 '</div>'
+//     })
+//
+//     this.infoWindows.push(infoWindow);
+//
+//     // infoWindow.open(map, marker)
+//
+//     // google.maps.event.addListener(map, 'zoom_changed', (e) =>  {
+//     //   if(map.zoom > 16) {
+//     //     infoWindow.open(map, marker)
+//     //   } else  {
+//     //     infoWindow.close()
+//     //   }
+//     // })
+//
+//     marker.addListener('click', ()  =>  {
+//       infoWindow.open(map, marker)
+//     })
+//   }
+//
+//   let imagePath = 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+//   this.markerCluster = new MarkerClusterer(map, this.markers, {
+//           maxZoom: 15,
+//           imagePath: imagePath
+//         });
+//
+//   this.loadingService.setLoader(false, "");
+//   this.preventScroll(false);
+// }
+
+
+  // filterMarkers(date) {
+  //   if(this.flightPath !== undefined) this.flightPath.setMap(null);
+  //
+  //   for (let i = 0; i < this.markers.length; i++) {
+  //     if(this.markers[i]['date'] === date || date === "All dates")  {
+  //       this.markers[i].setVisible(true);
+  //     } else  {
+  //       this.markers[i].setVisible(false);
+  //     }
+  //   }
+  //
+  //   if(date === "All dates")  {
+  //     this.filteredEvents = this.events;
+  //   } else  {
+  //     this.filteredEvents = Object.assign([], this.events).filter(
+  //       event => event.converted_date === date
+  //     )
+  //   }
+  //
+  //   let bounds = new google.maps.LatLngBounds();
+  //
+  //   if(date !== "All dates" && date !== 'any day' && this.filteredEvents.length > 1)  {
+  //     let path = [];
+  //
+  //     for (let i = 0; i < this.filteredEvents.length; i++) {
+  //       path.push({lat: this.filteredEvents[i]['place']['lat'], lng: this.filteredEvents[i]['place']['lng'] });
+  //
+  //       let loc = new google.maps.LatLng(this.filteredEvents[i]['place']['lat'], this.filteredEvents[i]['place']['lng']);
+  //       bounds.extend(loc);
+  //     }
+  //
+  //     let lineSymbol = {
+  //       path: google.maps.SymbolPath.FORWARD_OPEN_ARROW
+  //     };
+  //
+  //     this.flightPath = new google.maps.Polyline({
+  //       path: path,
+  //       geodesic: true,
+  //       strokeColor: '#FF0000',
+  //       strokeOpacity: 1,
+  //       strokeWeight: 2,
+  //       icons: [{
+  //         icon: lineSymbol,
+  //         offset: '100%'
+  //       }],
+  //     });
+  //
+  //     this.flightPath.setMap(this.itinMap);
+  //     this.itinMap.fitBounds(bounds);
+  //     this.itinMap.panToBounds(bounds);
+  //   } else  {
+  //     this.changeCenter(this.filteredEvents[0]);
+  //   }
+  //
+  //   if(this.element.nativeElement.offsetParent.clientWidth < 891) {
+  //     this.showMapLegend = true;
+  //   }
+  // }

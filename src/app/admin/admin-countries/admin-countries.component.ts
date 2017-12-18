@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild, Renderer2 } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+
+declare var google:any;
 
 import { CountryService } from '../../countries';
 import { LoadingService } from '../../loading';
@@ -10,8 +12,13 @@ import { LoadingService } from '../../loading';
   styleUrls: ['./admin-countries.component.scss']
 })
 export class AdminCountriesComponent implements OnInit {
+  @ViewChild('map') map: ElementRef;
+  cMap;
+
   newCountryForm: FormGroup;
   countries;
+  marker;
+  center;
 
   constructor(
     private loadingService: LoadingService,
@@ -23,6 +30,7 @@ export class AdminCountriesComponent implements OnInit {
         'lng': ['', Validators.compose([ Validators.required ])],
         'place_id': ['', Validators.compose([ Validators.required ])],
         'continent': ['', Validators.compose([ Validators.required ])],
+        'zoom': ['', Validators.compose([ Validators.required ])],
       })
      }
 
@@ -32,6 +40,18 @@ export class AdminCountriesComponent implements OnInit {
     this.countryService.getCountries().subscribe(
       result => { this.countries = result.countries }
     )
+
+    this.initMap();
+  }
+
+  initMap() {
+    let mapDiv = this.map.nativeElement;
+
+    this.cMap = new google.maps.Map(mapDiv, {
+      center: {lat: 0, lng: 0},
+      zoom: 2,
+      styles: [{"stylers": [{ "saturation": -20 }]}]
+    })
   }
 
   getCountryDetails(value) {
@@ -41,6 +61,28 @@ export class AdminCountriesComponent implements OnInit {
       lng: value['geometry'].location.lng(),
       place_id: value['place_id']
     })
+
+
+    this.setMarker(value);
+  }
+
+  setMarker(value)  {
+    let lat = value['geometry'].location.lat();
+    let lng = value['geometry'].location.lng();
+
+    this.marker = new google.maps.Marker({
+      position: { lat: lat, lng: lng},
+      map: this.cMap
+    })
+
+    this.center = new google.maps.LatLng(lat, lng);
+    this.cMap.panTo(this.center);
+  }
+
+  setZoom(zoom) {
+    let z = +zoom
+    this.cMap.setZoom(z);
+    this.cMap.panTo(this.center);
   }
 
   onSubmit()  {
@@ -71,6 +113,10 @@ export class AdminCountriesComponent implements OnInit {
       if(a['name'] > b['name']) return -1;
       return 0;
     })
+  }
+
+  routeToCountry(country) {
+
   }
 
 }
