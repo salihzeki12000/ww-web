@@ -113,12 +113,14 @@
 
 .map-event  {
   position: relative;
-  padding: 15px 5px;
+  padding: 10px 5px;
   border-top: 1px solid lightgray;
+
   &:hover{
     background-color: white;
     cursor: pointer;
   }
+
   @media only screen and (max-width: 890px) {
     border-right: none;
   }
@@ -141,8 +143,8 @@
 .marker-index {
   margin: 0 5px;
   padding: 3px 5px;
-  font-weight: 600;
-  border: 2px solid;
+  font-weight: 500;
+  border: 1px solid;
   border-radius: 2px;
   float: left;
 }
@@ -151,6 +153,7 @@
 /* marker details */
 
 .marker-details {
+  margin-top: 5px;
   width: 78%;
 
   @media only screen and (max-width: 890px) {
@@ -179,7 +182,6 @@
 .marker-date {
   margin-bottom: 5px;
   color: grey;
-  font-weight: 500;
 }
 
 .accommodation-summary-header {
