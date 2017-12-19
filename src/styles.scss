@@ -797,7 +797,7 @@ textarea.ng-invalid.ng-touched {
   top: 40px;
   left: calc((100vw - 600px) /2);
   width: 600px;
-  max-height: calc(100vh - 120px);
+  max-height: calc(100vh - 80px);
   background-color: white;
   -webkit-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
   -moz-box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.2);
@@ -810,6 +810,10 @@ textarea.ng-invalid.ng-touched {
     max-height: calc(100vh - 100px);
     top: 0;
     left: 0;
+  }
+
+  @media only screen and (min-width: 650px) and (max-width: 1024px) {
+    max-height: calc(100vh - 150px);
   }
 }
 
