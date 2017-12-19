@@ -13,3 +13,31 @@
 .details-section-container  {
   padding: 10px;
 }
+
+/* add / remove photo */
+
+.blur {
+  opacity: .3;
+}
+
+.remove {
+  padding: 5px 0;
+  color: red;
+  border: 2px solid;
+  border-radius: 5px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.add  {
+  padding: 5px 0;
+  color: #19CC72;
+  border: 2px solid;
+  border-radius: 5px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

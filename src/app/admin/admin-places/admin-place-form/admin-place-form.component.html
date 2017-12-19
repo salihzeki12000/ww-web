@@ -18,13 +18,13 @@
         <input type="text" formControlName="name" #name>
 
         <label>DESCRIPTION ({{description?.value.length}} characters) - keep to 290 characters</label>
-        <textarea rows="6" formControlName="description" #description></textarea>
+        <textarea rows="6" formControlName="description" #description auto-grow></textarea>
 
         <label>LONG-DESCRIPTION ({{long_description?.value.length}} characters) - keep to 290 characters</label>
-        <textarea rows="6" formControlName="long_description" #long_description></textarea>
+        <textarea rows="6" formControlName="long_description" #long_description auto-grow></textarea>
 
         <label>TIPS ({{tips?.value.length}} characters)</label>
-        <textarea rows="3" formControlName="tips" #tips></textarea>
+        <textarea rows="3" formControlName="tips" #tips auto-grow></textarea>
       </div>
 
 
@@ -33,7 +33,7 @@
       <div class="details-section-container">
 
         <label>GETTING THERE</label>
-        <textarea rows="6" formControlName="getting_there" #getting_there></textarea>
+        <textarea rows="6" formControlName="getting_there" #getting_there auto-grow></textarea>
 
       </div>
 
@@ -84,10 +84,10 @@
       <div class="details-section-container">
 
         <label>OPENING HOURS</label>
-        <textarea rows="7" formControlName="opening_hours" #opening_hours (keyup)="logHours(opening_hours.value)"></textarea>
+        <textarea rows="7" formControlName="opening_hours" #opening_hours (keyup)="logHours(opening_hours.value)" auto-grow></textarea>
 
         <label>COST / ENTRY FEE</label>
-        <input type="text" formControlName="entry_fee" #entry_fee>
+        <textarea row="5" formControlName="entry_fee" #entry_fee auto-grow></textarea>
       </div>
 
 
@@ -97,7 +97,7 @@
 
         <div *ngIf="pictureOptions.length > 0">
           <div *ngFor="let photo of pictureOptions; let i = index" class="form-image">
-            <img src="{{ photo.url }}" alt="">
+            <img src="{{ photo.url }}" alt="" [class.blur]="!photo.status">
             <div class="positioning">
               <h5>Current position</h5>
               <h3>{{ i+1 }}</h3>
@@ -109,6 +109,8 @@
                 </option>
               </select>
 
+              <h4 class="remove" *ngIf="photo.status" (click)="photo.status = !photo.status">Remove</h4>
+              <h4 class="add" *ngIf="!photo.status" (click)="photo.status = !photo.status">Add</h4>
             </div>
           </div>
         </div>

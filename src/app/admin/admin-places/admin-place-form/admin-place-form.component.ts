@@ -136,7 +136,8 @@ export class AdminPlaceFormComponent implements OnInit {
         let c = value.photos[i].html_attributions[0]
         this.pictureOptions.push({
           url: value.photos[i].getUrl({'maxWidth': 300, 'maxHeight': 250}),
-          credit: c.slice(0,3) + 'target="_blank" ' + c.slice(3,c.length)
+          credit: c.slice(0,3) + 'target="_blank" ' + c.slice(3,c.length),
+          status: true
         });
       }
     }
@@ -294,9 +295,20 @@ export class AdminPlaceFormComponent implements OnInit {
     place['country'] = this.countryID;
     place['opening_hours_raw'] = this.openingHoursRaw;
 
+    for (let i = 0; i < this.pictureOptions.length; i++) {
+      if(!this.pictureOptions[i]['status'])  {
+        this.pictureOptions.splice(i,1);
+        i--;
+      }
+    }
+
+    place['photos'] = this.pictureOptions;
+
     this.placeService.addPlace(place).subscribe(
       result => {
         this.resetAttractionForm();
+        this.pictureOptions = [];
+        this.reviews = [];
         this.loadingService.setLoader(false, "");
       }
     )

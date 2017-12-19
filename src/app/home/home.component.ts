@@ -94,7 +94,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   @HostListener('window:scroll', ['$event'])
   checkScroll(event) {
     let offset = this.element.nativeElement.ownerDocument.scrollingElement.scrollTop;
-    let navPos = this.element.nativeElement.children[2].offsetTop - 100;
+    let navPos = this.element.nativeElement.children[3].offsetTop - 100;
     if(offset > navPos)  {
       this.fixed = true;
     } else  {

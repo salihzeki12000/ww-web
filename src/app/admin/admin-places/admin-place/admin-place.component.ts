@@ -119,7 +119,6 @@ export class AdminPlaceComponent implements OnInit {
 
     if(this.place['city'])  {
       this.cityName = this.place['city']['name'] + ', ' + this.place['country']['name'];
-      console.log(this.cityName)
     }
 
     if(this.place['opening_hours']) {
