@@ -294,7 +294,7 @@ img.user-profile-thumbnail  {
   padding-left: 74px;
   background-color: white;
   border-right: 2px solid lightgray;
-  z-index: 1;
+  z-index: 500;
 
   @media only screen and (max-width: 750px) {
     display: none;

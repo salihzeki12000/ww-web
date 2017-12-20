@@ -19,7 +19,6 @@ export class ItinerarySummaryCompressedComponent implements OnInit {
   @Output() addNewEvent = new EventEmitter();
 
   editing = false;
-  uniqueClass;
 
   constructor(
     private element: ElementRef,
@@ -27,7 +26,6 @@ export class ItinerarySummaryCompressedComponent implements OnInit {
     private itineraryService: ItineraryService) { }
 
   ngOnInit() {
-    this.uniqueClass = "daily-note-" + this.index;
     this.checkMeal();
   }
 
@@ -35,13 +33,6 @@ export class ItinerarySummaryCompressedComponent implements OnInit {
     setTimeout(() =>  {
       this.sectionPosition.emit({ date: this.date, position: this.element.nativeElement.offsetTop })
     }, 1500)
-  }
-
-  @HostListener('document:click', ['$event'])
-  checkClick(event) {
-    if(!event.target.classList.contains(this.uniqueClass)) {
-      this.editing = false;
-    }
   }
 
   showDetails(event)  {
@@ -68,7 +59,7 @@ export class ItinerarySummaryCompressedComponent implements OnInit {
     this.dailyNote = editedNote.replace(/\r?\n/g, '<br/> ');
     this.itinerary['daily_note'][this.index]['note'] = editedNote;
 
-    this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
+    this.itineraryService.updateItinUser(this.itinerary).subscribe(
       result => {
         this.flashMessageService.handleFlashMessage("Note updated");
       })

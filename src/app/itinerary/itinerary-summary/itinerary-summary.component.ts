@@ -130,7 +130,7 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
     if(this.compressedView) {
       for (let i = 0; i < this.itemPosition.length; i++) {
         let offset = this.element.nativeElement.ownerDocument.scrollingElement.scrollTop;
-        let item = this.itemPosition[i]['position'] - 130;
+        let item = this.itemPosition[i]['position'] - 60;
         let diff = item - offset;
 
         if(diff < 0)  {

@@ -8,43 +8,24 @@
 
 
 
-<div class="daily-note" *ngIf="index === 0" [ngClass]="[uniqueClass]" (click)="editing = true">
-  <h6>Note</h6>
+<div class="daily-note" *ngIf="index === 0" (click)="editing = true">
+  <h6>Note <span *ngIf="dailyNote !== ''">(Click to edit)</span></h6>
 
-  <div *ngIf="!editing">
+  <div>
     <h5 class="nil-daily-note" *ngIf="dailyNote === ''">Click to add note for the day. e.g. Day trip to Disneyland</h5>
-    <p [ngClass]="[uniqueClass]" [innerHTML]="dailyNote"></p>
-  </div>
-
-  <div *ngIf="editing">
-    <textarea rows="2"
-      [ngClass]="[uniqueClass]"
-      [value]="itinerary?.daily_note[index]['note']"
-      (keyup.enter)="updateNote(editedNote.value)"
-      (blur)="editing = false" #editedNote></textarea>
-
-    <h5 class="edit-note">Enter to save, click anywhere else to cancel</h5>
+    <p [innerHTML]="dailyNote"></p>
   </div>
 
 </div>
 
-<div class="daily-note" *ngIf="index > 0" [ngClass]="[uniqueClass]" (click)="editing = true">
-  <h6>Day {{ index }} note</h6>
+<div class="daily-note" *ngIf="index > 0" (click)="editing = true">
+  <h6>Day {{ index }} note <span *ngIf="dailyNote !== ''">(Click to edit)</span></h6>
 
-  <div *ngIf="!editing">
+  <div>
     <h5 class="nil-daily-note" *ngIf="dailyNote === ''">Click to add note for the day. e.g. Day trip to Disneyland</h5>
-    <p [ngClass]="[uniqueClass]" [innerHTML]="dailyNote"></p>
+    <p [innerHTML]="dailyNote"></p>
   </div>
 
-  <div *ngIf="editing">
-    <textarea rows="2"
-      [ngClass]="[uniqueClass]"
-      [value]="itinerary?.daily_note[index]['note']"
-      (keyup.enter)="updateNote(editedNote.value)"
-      (blur)="editing = false" #editedNote></textarea>
-
-    <h5 class="edit-note">Enter to save, click anywhere else to cancel</h5>
-  </div>
 </div>
 
 
@@ -144,5 +125,27 @@
 
     </div>
 
+  </div>
+</div>
+
+<div class="custom-modal" *ngIf="editing">
+  <div class="form-card">
+    <div class="form-header">
+      <h3 *ngIf="index === 0">Edit any day note</h3>
+      <h3 *ngIf="index > 0">Edit Day {{ index }} note</h3>
+      <a (click)="editing = false">X</a>
+    </div>
+
+    <div class="content-without-header-name">
+      <h4 *ngIf="index === 0">Editing any day note</h4>
+      <h4 *ngIf="index > 0">Editing note for {{ date | date: "dd MMM (EEE)" }} - Day {{ index }}</h4>
+
+      <textarea rows="2" [value]="itinerary?.daily_note[index]['note']" #editedNote auto-grow></textarea>
+
+        <div class="action-response">
+          <h5 class="action-response-secondary" (click)="editing = false">CANCEL</h5>
+          <h5 class="action-response-primary" (click)="updateNote(editedNote.value)">SAVE</h5>
+        </div>
+    </div>
   </div>
 </div>
