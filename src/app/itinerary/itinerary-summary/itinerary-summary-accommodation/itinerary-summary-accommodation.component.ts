@@ -40,6 +40,7 @@ export class ItinerarySummaryAccommodationComponent implements OnInit, OnDestroy
   deleteAccommodation = false;
 
   editAccommodationForm: FormGroup;
+  submitted = false;
 
   // time picker
   ats = true;
@@ -347,6 +348,8 @@ export class ItinerarySummaryAccommodationComponent implements OnInit, OnDestroy
   }
 
   recommendTo() {
+    this.submitted = true;
+
     for (let i = 0; i < this.selectedUsers.length; i++) {
       let recommendation = {
         recipient: this.selectedUsers[i]["_id"],
@@ -363,7 +366,7 @@ export class ItinerarySummaryAccommodationComponent implements OnInit, OnDestroy
     }
 
     this.flashMessageService.handleFlashMessage("Recommendation sent");
-
+    this.submitted = false;
     this.cancelRecommend();
   }
 
@@ -516,6 +519,8 @@ export class ItinerarySummaryAccommodationComponent implements OnInit, OnDestroy
 
 
   saveEdit() {
+    this.submitted = true;
+
     this.loadingService.setLoader(true, "Saving...");
 
     let editedAccommodation = this.editAccommodationForm.value;
@@ -561,6 +566,7 @@ export class ItinerarySummaryAccommodationComponent implements OnInit, OnDestroy
         this.flashMessageService.handleFlashMessage(result.message);
       })
 
+    this.submitted = false;
     this.editing = false;
     this.preventScroll(false);
     this.initTime();

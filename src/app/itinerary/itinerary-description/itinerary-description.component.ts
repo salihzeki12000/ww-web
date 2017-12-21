@@ -17,6 +17,7 @@ import { FlashMessageService }   from '../../flash-message';
 })
 export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
   descriptionForm: FormGroup;
+  submitted = false;
 
   itinerarySubscription: Subscription;
   itinerary;
@@ -198,6 +199,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
   }
 
   saveChanges() {
+    this.submitted = true;
     this.loadingService.setLoader(true, "Saving changes...");
 
     for (let i = 0; i < this.itinerary['description']['photos'].length; i++) {
@@ -220,6 +222,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
         this.flashMessageService.handleFlashMessage("Changes to pictures updated");
       })
 
+    this.submitted = false;
     this.managePics = false;
     this.preventScroll(false);
     this.sortPhotos();
@@ -275,6 +278,8 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
 
   savePics()  {
     // this.tracker = 0;
+    this.submitted = true;
+
     this.loadingService.setLoader(true, "Saving pictures...");
     this.confirmPics = false;
 
@@ -330,6 +335,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
           this.loadingService.setLoader(false, "");
           this.flashMessageService.handleFlashMessage("Changes to pictures updated");
           this.sortPhotos();
+          this.submitted = false;
         })
     // }
   }
@@ -340,6 +346,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
   // edit description
 
   onSubmit() {
+    this.submitted = true;
     this.editing = false;
     this.itinerary['description']['header'] = this.descriptionForm.value.header;
     this.itinerary['description']['sections'] = this.descriptionForm.value.sections;
@@ -348,6 +355,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
     this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
       result => {
         this.flashMessageService.handleFlashMessage("Description updated");
+        this.submitted = false;
       })
   }
 

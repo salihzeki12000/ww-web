@@ -33,6 +33,7 @@ export class ResourceComponent implements OnInit, OnDestroy {
   deleteResource = false;
 
   editResourceForm: FormGroup;
+  submitted = false;
   categories = ['', 'Food', 'Accommodation', 'Transport', 'Activity'];
 
   constructor(
@@ -157,6 +158,7 @@ export class ResourceComponent implements OnInit, OnDestroy {
   }
 
   saveEdit()  {
+    this.submitted = true;
     this.loadingService.setLoader(true, "Saving...");
 
     let editedResource = this.editResourceForm.value;
@@ -171,6 +173,7 @@ export class ResourceComponent implements OnInit, OnDestroy {
         this.flashMessageService.handleFlashMessage(result.message);
       })
 
+    this.submitted = false;
     this.editing = false;
     this.preventScroll(false);
   }

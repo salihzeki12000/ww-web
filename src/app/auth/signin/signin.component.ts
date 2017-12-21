@@ -22,6 +22,7 @@ export class SigninComponent implements OnInit {
   safari;
 
   signinForm: FormGroup;
+  submitted = false;
 
   constructor(
     private zone: NgZone,
@@ -51,13 +52,13 @@ export class SigninComponent implements OnInit {
   }
 
   onSubmit()  {
+    this.submitted = true;
     this.loadingService.setLoader(true, "get ready to wonder wander");
 
     this.authService.signin(this.signinForm.value).subscribe(
       data => {
         // this.userService.getCurrentUser().subscribe(
         //   result => {});
-
         if(this.itinerary)  {
           let user = { _id: data.userId };
           this.addToItin(user);
@@ -68,6 +69,8 @@ export class SigninComponent implements OnInit {
         } else {
           this.navigate();
         }
+
+        this.submitted = false;
       },
       error => console.error(error)
     )

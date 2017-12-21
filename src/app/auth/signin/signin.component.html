@@ -24,12 +24,13 @@
     <h4>Safari browser detected. If the website cannot load after log in, please use Chrome browser.</h4>
   </div>
 
-  <button type="submit" class="action-response-primary" [disabled]="!signinForm.valid"><h4>Log In Now</h4></button>
+  <button  *ngIf="!submitted"type="submit" class="action-response-primary" [disabled]="!signinForm.valid"><h4>Log In Now</h4></button>
+  <h4 *ngIf="submitted" class="action-response-submit">Logging in...</h4>
 
 </form>
 
 <h5 class="reset" (click)="routeToForgetPw()">Forgot password</h5>
 
-<div class="action-response">
+<div class="action-response" *ngIf="!submitted">
   <h5 class="action-response-secondary" (click)="cancelAuth()">Cancel</h5>
 </div>

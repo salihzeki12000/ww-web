@@ -26,6 +26,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
   @Output() changeRoute = new EventEmitter();
 
   addTransportForm: FormGroup;
+  submitted = false;
   transportOption = '';
   transportType = [
     { name:'flight', icon: 'plane' },
@@ -322,6 +323,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
 
   // get flight details from flightstats.com
   searchFlightDetails()  {
+    this.submitted = true;
     this.searchFlight = false;
 
     let airlineCode = (this.searchFlightForm.value.searchAirlineCode).toUpperCase();
@@ -522,6 +524,7 @@ export class TransportFormComponent implements OnInit, OnDestroy {
           }
         )//end of subscribe
 
+    this.submitted = false;
     this.searchFlightForm.reset({
       'searchAirlineCode': '',
       'searchFlightNumber': '',
@@ -829,6 +832,8 @@ export class TransportFormComponent implements OnInit, OnDestroy {
 
 
   saveNew()  {
+    this.submitted = true;
+
     let newTransport = this.addTransportForm.value;
 
     if(this.flightSearchDetail)  {
@@ -877,7 +882,8 @@ export class TransportFormComponent implements OnInit, OnDestroy {
           this.router.navigateByUrl('/me/itinerary/' + id + '/transport');
         }
         this.flashMessageService.handleFlashMessage(result.message);
-        this.hideTransportForm.emit(false)
+        this.hideTransportForm.emit(false);
+        this.submitted = false;
       })
   }
 

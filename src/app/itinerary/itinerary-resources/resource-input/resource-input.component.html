@@ -9,7 +9,10 @@
     <div class="form-housing">
 
       <label>Content</label>
-      <textarea rows="4" formControlName="content" placeholder="add a link or type in a note" #text (keyup)="checkLink(text.value)" (paste)="checkLink(text.value)" autofocus auto-grow></textarea>
+      <textarea rows="4" formControlName="content" placeholder="add a link or type in a note" #text
+      (keyup)="checkLink(text.value)"
+      (paste)="checkLink(text.value)"
+      (focus)="checkLink(text.value)" autofocus auto-grow></textarea>
 
       <div class="loading-overlay" *ngIf="fetchLink">
         <div class="loading-message">
@@ -40,8 +43,9 @@
     </div>
 
     <div class="action-response">
-      <h5 class="action-response-secondary" (click)="cancelForm()">CANCEL</h5>
-      <button type="submit" class="action-response-primary" [disabled]="!resourceForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
+      <h5 *ngIf="!submitted" class="action-response-secondary" (click)="cancelForm()">CANCEL</h5>
+      <button type="submit" *ngIf="!submitted" class="action-response-primary" [disabled]="!resourceForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
+      <h5 *ngIf="submitted" class="action-response-submit">Saving...</h5>
     </div>
 
   </div>

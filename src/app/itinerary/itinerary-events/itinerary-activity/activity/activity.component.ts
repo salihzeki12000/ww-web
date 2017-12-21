@@ -47,6 +47,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
   highlight = false;
 
   editActivityForm: FormGroup;
+  submitted = false;
   meals;
   openingHours;
 
@@ -309,6 +310,8 @@ export class ActivityComponent implements OnInit, OnDestroy {
   }
 
   recommendTo() {
+    this.submitted = true;
+
     for (let i = 0; i < this.selectedUsers.length; i++) {
       let recommendation = {
         recipient: this.selectedUsers[i]["_id"],
@@ -324,6 +327,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
         result =>{ })
     }
 
+    this.submitted = false;
     this.cancelRecommend();
 
     this.flashMessageService.handleFlashMessage("Recommendation sent");
@@ -461,6 +465,8 @@ export class ActivityComponent implements OnInit, OnDestroy {
 
 
   saveEdit()  {
+    this.submitted = true;
+
     this.loadingService.setLoader(true, "Saving...");
 
     let editedActivity = this.editActivityForm.value;
@@ -481,7 +487,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
         this.activity['formatted_hours'] = originalActivity['place']['opening_hours'].replace(/\r?\n/g, '<br/> ');
       }
     }
-    
+
     originalActivity['highlight'] = this.highlight;
 
     this.activity['formatted_note'] = originalActivity['note'].replace(/\r?\n/g, '<br/> ');
@@ -492,6 +498,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
         this.flashMessageService.handleFlashMessage(result.message);
       })
 
+    this.submitted = false;
     this.editing = false;
     this.preventScroll(false);
     this.initTime();

@@ -20,6 +20,7 @@ export class SignupComponent implements OnInit {
   @Output() hideSignup = new EventEmitter();
 
   signupForm: FormGroup;
+  submitted = false;
   avatar = 'https://res.cloudinary.com/wwfileupload/image/upload/v1495091346/avatar_neutral_d43pub.png';
   safari;
 
@@ -54,13 +55,13 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit()  {
+    this.submitted = true;
     this.loadingService.setLoader(true, "get ready to wonder wander");
 
     this.authService.signup(this.signupForm.value).subscribe(
       data => {
         // this.userService.getCurrentUser().subscribe(
         //   data => {});
-
         if(this.itinerary)  {
           let user = {_id: data.userId};
           this.addToItin(user);
@@ -69,6 +70,8 @@ export class SignupComponent implements OnInit {
         } else {
           this.navigate();
         }
+
+        this.submitted = false;
       },
       error => console.error(error)
     )

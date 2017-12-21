@@ -33,6 +33,8 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   @Output() changeRoute = new EventEmitter();
 
   addActivityForm: FormGroup;
+  submitted = false;
+
   details;
   noLocation = false;
   highlight = false;
@@ -508,6 +510,8 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
 
   // save
   saveNew()  {
+    this.submitted = true;
+
     let newActivity = this.addActivityForm.value;
 
     if(this.hour === 'anytime')  {
@@ -529,7 +533,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     newActivity['type'] = 'activity';
     newActivity['location'] = !this.noLocation;
     newActivity['highlight'] = this.highlight;
-    
+
     if(this.newImageFile !== '')  {
       this.fileuploadService.uploadFile(this.newImageFile, "event").subscribe(
         result => {
@@ -562,6 +566,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
         this.inputValue = null;
         this.uploadPic = '';
         this.newImageFile = '';
+        this.submitted = false;
         this.hideActivityForm.emit(false);
       });
   }

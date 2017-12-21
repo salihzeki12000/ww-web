@@ -19,6 +19,7 @@ export class ResourceInputComponent implements OnInit, OnDestroy {
   @Output() changeRoute = new EventEmitter();
 
   resourceForm: FormGroup;
+  submitted = false;
   categories = ['', 'Food', 'Accommodation', 'Transport', 'Activity'];
 
   textArea = false;
@@ -106,6 +107,7 @@ export class ResourceInputComponent implements OnInit, OnDestroy {
 
   // save
   saveNew()  {
+    this.submitted = true;
     let resourceTitle;
 
     if(this.link_title && this.resourceForm.value.title === "") {
@@ -145,6 +147,7 @@ export class ResourceInputComponent implements OnInit, OnDestroy {
       }
     )
 
+    this.submitted = false;
     this.linkExist = false;
     this.link_url = '';
     this.link_title = '';

@@ -34,6 +34,7 @@ export class ItineraryShareComponent implements OnInit, OnDestroy {
 
   selectItems = true;
   itemsSelected = false;
+  submitted = false;
 
   shared = false;
   shareAll = true;
@@ -354,6 +355,8 @@ export class ItineraryShareComponent implements OnInit, OnDestroy {
   // share itinerary
 
   shareItinerary()  {
+    this.submitted = true;
+
     for (let i = 0; i < this.selectedUsers.length; i++) {
 
       let newItinerary = {
@@ -451,7 +454,8 @@ export class ItineraryShareComponent implements OnInit, OnDestroy {
           result => {})
       }
     }
-
+    
+    this.submitted = false;
     this.selectItems = true;
     this.filteredUsers = [];
 

@@ -135,9 +135,10 @@
         </div>
 
         <div class="action-response">
-          <h5 class="action-response-secondary" (click)="cancelEdit()">CANCEL</h5>
-          <h5 class="action-response-secondary" (click)="undoEdit()">UNDO</h5>
-          <button type="submit" class="action-response-primary" [disabled]="!editResourceForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
+          <h5 *ngIf="!submitted" class="action-response-secondary" (click)="cancelEdit()">CANCEL</h5>
+          <h5 *ngIf="!submitted" class="action-response-secondary" (click)="undoEdit()">UNDO</h5>
+          <button type="submit" *ngIf="!submitted" class="action-response-primary" [disabled]="!editResourceForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
+          <h5 *ngIf="submitted" class="action-response-submit">Saving...</h5>
         </div>
 
       </form>

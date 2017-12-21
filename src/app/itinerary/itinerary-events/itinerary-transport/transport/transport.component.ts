@@ -35,6 +35,7 @@ export class TransportComponent implements OnInit, OnDestroy {
   deleteTransport = false;
 
   editTransportForm: FormGroup;
+  submitted = false;
 
   // time picker
   ats = true;
@@ -339,6 +340,7 @@ export class TransportComponent implements OnInit, OnDestroy {
 
 
   saveEdit()  {
+    this.submitted = true;
     this.loadingService.setLoader(true, "Saving...");
 
     let editedTransport = this.editTransportForm.value;
@@ -369,6 +371,7 @@ export class TransportComponent implements OnInit, OnDestroy {
         this.flashMessageService.handleFlashMessage(result.message);
       })
 
+    this.submitted = false;
     this.editing = false;
     this.preventScroll(false);
     this.initTime()

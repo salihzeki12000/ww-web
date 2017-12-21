@@ -95,8 +95,9 @@
     </div>
 
     <div class="action-response">
-      <h5 class="action-response-secondary" (click)="cancel()">CANCEL</h5>
-      <button type="button" class="action-response-primary" (click)="shareItinerary()" *ngIf="validAddUser"><h5>SHARE ITINERARY</h5></button>
+      <h5 *ngIf="!submitted" class="action-response-secondary" (click)="cancel()">CANCEL</h5>
+      <button type="button" *ngIf="!submitted && validAddUser" class="action-response-primary" (click)="shareItinerary()"><h5>SHARE ITINERARY</h5></button>
+      <h5 *ngIf="submitted" class="action-response-submit">Sharing...</h5>
     </div>
   </div>
 

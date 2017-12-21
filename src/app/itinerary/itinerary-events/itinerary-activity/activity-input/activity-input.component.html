@@ -197,8 +197,9 @@
       </div>
 
       <div class="action-response" *ngIf="searchDone">
-        <h5 class="action-response-secondary" (click)="cancelForm()">CANCEL</h5>
-        <button type="submit" class="action-response-primary" [disabled]="!addActivityForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
+        <h5 *ngIf="!submitted" class="action-response-secondary" (click)="cancelForm()">CANCEL</h5>
+        <button *ngIf="!submitted" type="submit" class="action-response-primary" [disabled]="!addActivityForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
+        <h5 *ngIf="submitted" class="action-response-submit">Saving...</h5>
       </div>
 
     </div><!-- end of formCard -->

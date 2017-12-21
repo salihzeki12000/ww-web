@@ -36,6 +36,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
   @Output() changeRoute = new EventEmitter();
 
   addAccommodationForm: FormGroup;
+  submitted = false;
   details;
 
   // time picker
@@ -538,6 +539,8 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
 
   // save
   saveNew()  {
+    this.submitted = true;
+
     let newAccommodation = this.addAccommodationForm.value;
 
     if(this.displayPic)  {

@@ -376,6 +376,13 @@ h5.action-response-primary  {
   }
 }
 
+h4.action-response-submit,
+h5.action-response-submit  {
+  padding: 5px 10px;
+  color: #A6A6A6;
+  border: 2px solid #A6A6A6;
+}
+
 .action-response-secondary  {
   color: #A6A6A6;
   &:hover {

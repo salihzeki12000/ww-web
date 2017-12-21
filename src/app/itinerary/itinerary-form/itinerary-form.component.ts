@@ -19,6 +19,7 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
 
   @Output() hideItineraryForm = new EventEmitter();
   itineraryForm: FormGroup;
+  submitted = false;
 
   currentUserSubscription: Subscription;
   currentUser: User;
@@ -161,6 +162,7 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
   }
 
   saveNew()  {
+    this.submitted = true;
     this.loadingService.setLoader(true, "Saving new itinerary...");
 
     let itinerary = this.itineraryForm.value;
@@ -215,6 +217,7 @@ export class ItineraryFormComponent implements OnInit, OnDestroy {
     this.itineraryService.editItin(itinerary, "edit").subscribe(
       result => {
         this.loadingService.setLoader(false, "");
+        this.submitted = false;
         this.router.navigate(['/me/itinerary', itinerary._id]);
       }
     )

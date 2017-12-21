@@ -32,6 +32,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   viewNav = false;
 
   editItineraryForm: FormGroup;
+  submitted = false;
   dateChanged = false;
   dateRange = [];
   newDateRange = [];
@@ -614,7 +615,6 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
       this.setDateRange("day", "");
       this.dateTypeChanged = true;
       this.dateTypeChangedMsg = "Itinerary date type has been updated from specific travel dates to number of days. Activities in the itinerary will be adjusted in sequence - first date activities to Day 1."
-
     }
   }
 
@@ -635,6 +635,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
   }
 
   saveEdit() {
+    this.submitted = true;
     this.loadingService.setLoader(true, "Saving your changes...");
 
     let editedDetails = this.editItineraryForm.value;
@@ -651,7 +652,8 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
       data => {
         this.loadingService.setLoader(false, "");
         this.preventScroll(false);
-
+        this.submitted = false;
+        
         this.flashMessageService.handleFlashMessage(data.message);
       })
   }

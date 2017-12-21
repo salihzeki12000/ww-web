@@ -186,9 +186,10 @@
       </div>
 
       <div class="action-response">
-        <h5 class="action-response-secondary" (click)="cancelRecommend()">CANCEL</h5>
-        <h5 *ngIf="selectUsers && validAddUser" class="action-response-primary" (click)="usersSelected()">NEXT</h5>
-        <h5 *ngIf="addMsg" class="action-response-primary" (click)="recommendTo()">RECOMMEND</h5>
+        <h5 *ngIf="!submitted" class="action-response-secondary" (click)="cancelRecommend()">CANCEL</h5>
+        <h5 *ngIf="!submitted && selectUsers && validAddUser" class="action-response-primary" (click)="usersSelected()">NEXT</h5>
+        <h5 *ngIf="!submitted && addMsg" class="action-response-primary" (click)="recommendTo()">RECOMMEND</h5>
+        <h5 *ngIf="submitted" class="action-response-submit">Saving...</h5>
       </div>
     </div>
   </div>
@@ -306,7 +307,7 @@
                 <h4 *ngIf="!highlight" class="toggle-button-false" (click)="highlight = true"></h4>
               </div>
             </div>
-            
+
           </div>
 
           <h4 class="form-section-header">Note</h4>
@@ -317,9 +318,10 @@
         </div>
 
         <div class="action-response">
-          <h5 class="action-response-secondary" (click)="cancelEdit()">CANCEL</h5>
-          <h5 class="action-response-secondary" (click)="undoEdit()">UNDO</h5>
-          <button type="submit" class="action-response-primary" [disabled]="!editActivityForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
+          <h5 *ngIf="!submitted" class="action-response-secondary" (click)="cancelEdit()">CANCEL</h5>
+          <h5 *ngIf="!submitted" class="action-response-secondary" (click)="undoEdit()">UNDO</h5>
+          <button type="submit" *ngIf="!submitted" class="action-response-primary" [disabled]="!editActivityForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
+          <h5 *ngIf="submitted" class="action-response-submit">Saving...</h5>
         </div>
 
       </form>

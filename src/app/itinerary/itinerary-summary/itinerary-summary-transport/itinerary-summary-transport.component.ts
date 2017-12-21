@@ -40,6 +40,7 @@ export class ItinerarySummaryTransportComponent implements OnInit, OnDestroy, On
   locations = [];
 
   editTransportForm: FormGroup;
+  submitted = false;
 
   // time picker
   ats = true;
@@ -419,6 +420,7 @@ export class ItinerarySummaryTransportComponent implements OnInit, OnDestroy, On
 
 
   saveEdit()  {
+    this.submitted = true;
     this.loadingService.setLoader(true, "Saving...");
 
     let editedTransport = this.editTransportForm.value;
@@ -449,6 +451,7 @@ export class ItinerarySummaryTransportComponent implements OnInit, OnDestroy, On
         this.flashMessageService.handleFlashMessage(result.message);
       })
 
+    this.submitted = false;
     this.editing = false;
     this.preventScroll(false);
     this.initTime()
