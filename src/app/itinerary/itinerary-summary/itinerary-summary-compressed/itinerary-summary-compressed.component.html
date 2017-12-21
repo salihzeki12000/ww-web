@@ -40,7 +40,12 @@
       </div>
     </div>
 
-    <h5 class="event-time">{{ event?.summary_time }}</h5>
+    <div class="summary-time-index">
+      <h5 class="event-time">{{ event?.summary_time }}</h5>
+      <div class="transport-index" *ngIf="event?.type === 'transport'">
+        <h6>G{{ event?.t_index }}</h6>
+      </div>
+    </div>
 
     <div *ngIf="event?.type === 'accommodation'" class="summary-item" (click)="showDetails(event)">
       <div class="accommodation-indicator pill"></div>

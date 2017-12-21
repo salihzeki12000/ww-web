@@ -39,6 +39,9 @@
     <div class="summary-item-container" [class.highlight-activity]="event?.highlight">
 
       <h5 class="event-time">{{ event?.summary_time }}</h5>
+      <div class="transport-index" *ngIf="event?.type === 'transport'">
+        <h6>G{{ event?.t_index }}</h6>
+      </div>
 
       <div *ngIf="event?.type === 'accommodation'" class="summary-item" (click)="showDetails(event)">
         <div class="accommodation-indicator pill"></div>
@@ -92,6 +95,7 @@
       </div>
 
       <div *ngIf="event?.type === 'transport'" class="summary-item" (click)="showDetails(event)">
+
         <div class="transport-indicator pill"></div>
 
         <div *ngIf="event?.approach === 'departure'" class="event-content">

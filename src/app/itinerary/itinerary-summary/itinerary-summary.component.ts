@@ -244,6 +244,7 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
     let summaryEvents = [];
     let copyEvents = [];
     let numDays = '';
+    let tIndex = 1;
 
     for (let i = 0; i < events.length; i++) {
       events[i]['distance'] = null;
@@ -291,12 +292,15 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
         events[i]['approach'] = 'departure';
         events[i]['summary_date'] = events[i]['dep_date'];
         events[i]['summary_time'] = events[i]['dep_time'];
+        events[i]['t_index'] = tIndex
 
         copy['approach'] = 'arrival';
         copy['summary_date'] = events[i]['arr_date'];
         copy['summary_time'] = events[i]['arr_time'];
+        copy['t_index'] = tIndex
 
         copyEvents.push(copy);
+        tIndex += 1;
       }
     }
 

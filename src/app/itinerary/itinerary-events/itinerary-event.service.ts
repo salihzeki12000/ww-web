@@ -41,7 +41,7 @@ export class ItineraryEventService  {
                     .map((response: Response) => {
                       this.events = response.json().events;
 
-                      this.timeAgo(this.events);
+                      this.sortEventByDate(this.events);
                       return this.events;
                     })
                     .catch((error: Response) => {
