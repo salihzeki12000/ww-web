@@ -1,7 +1,16 @@
+.home-container {
+  margin-top: -20px;
+}
+
 .klookaff, .bookingaff {
   @media only screen and (max-width: 750px) {
     display: none;
   }
+}
+
+.profile-background,
+.profile-header {
+  margin-top: 15px;
 }
 
 h4.edit-description {

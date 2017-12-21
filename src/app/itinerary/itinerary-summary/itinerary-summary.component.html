@@ -167,7 +167,10 @@
       <a (click)="cancelAdd()">X</a>
     </div>
 
-    <div class="content-without-header-name">
+    <div class="content-without-header-name add-to-date">
+      <h3 *ngIf="addDate !== 'any day' && !itinerary?.num_days">Adding new item to {{ addDate | date: 'dd MMM yy'}}</h3>
+      <h3 *ngIf="addDate === 'any day' || itinerary?.num_days">Adding new item to {{ addDate }}</h3>
+
       <div (click)="addTransportForm()" class="add-new-opt transport-indicator">
         <i class="fa fa-car fa-2x" aria-hidden="true"></i>
         <h4>NEW TRANSPORT</h4>

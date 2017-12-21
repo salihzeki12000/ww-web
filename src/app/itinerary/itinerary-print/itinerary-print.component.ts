@@ -51,7 +51,10 @@ export class ItineraryPrintComponent implements OnInit {
     this.isLoggedIn = this.authService.isLoggedIn();
 
     this.userService.getCurrentUser().subscribe(
-      result => { this.currentUser = result; });
+      result => {
+        this.currentUser = result; 
+        if(this.itinerary) this.checkAccess();
+      });
 
     this.route.params.forEach((params: Params) => {
       let id = params['id'];
@@ -61,9 +64,7 @@ export class ItineraryPrintComponent implements OnInit {
           if(!result.itinerary) this.pageError = true;
           this.itinerary = result.itinerary;
 
-          setTimeout(() =>  {
-            this.checkAccess();
-          }, 1500)
+          if(this.currentUser) this.checkAccess();
 
           let title = this.itinerary['name'] + " | Save-print"
           this.titleService.setTitle(title);

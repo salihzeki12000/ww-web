@@ -25,6 +25,10 @@
       <input type="text" formControlName="lng">
     </div>
 
+    <div class="form-detail">
+      <label>Zoom</label>
+      <input type="number" formControlName="zoom" #zoom (keyup)="setZoom(zoom.value)">
+    </div>
 
     <div class="action-response">
       <button type="submit" class="action-response-primary" [disabled]="!newCityForm.valid"><h4>Add new city</h4></button>
@@ -60,4 +64,8 @@
       <h5>{{ city?.country.name }}</h5>
     </div>
   </div>
+</div>
+
+<div class="map">
+  <div #map id="map"></div>
 </div>

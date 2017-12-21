@@ -44,6 +44,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
   copying = false;
   editing = false;
   deleteActivity = false;
+  highlight = false;
 
   editActivityForm: FormGroup;
   meals;
@@ -105,6 +106,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
       })
 
     this.activity['formatted_note'] = this.activity['note'].replace(/\r?\n/g, '<br/> ');
+    if(!this.activity['location']) this.highlight = this.activity['highlight'];
 
     this.formatHours();
     this.formatDescription();
@@ -479,7 +481,8 @@ export class ActivityComponent implements OnInit, OnDestroy {
         this.activity['formatted_hours'] = originalActivity['place']['opening_hours'].replace(/\r?\n/g, '<br/> ');
       }
     }
-
+    
+    originalActivity['highlight'] = this.highlight;
 
     this.activity['formatted_note'] = originalActivity['note'].replace(/\r?\n/g, '<br/> ');
 

@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   relationshipSubscription: Subscription;
   followings = [];
   followers = [];
+  pendingFollowers = [];
 
   favSubscription: Subscription;
   favs = [];
@@ -80,6 +81,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       result => {
         this.followers = Object.keys(result['followers']).map(key => result['followers'][key]);
         this.followings = Object.keys(result['followings']).map(key => result['followings'][key]);
+        this.pendingFollowers = Object.keys(result['pendingFollowers']).map(key => result['pendingFollowers'][key]);;
       })
 
     this.favSubscription = this.favouriteService.updateFavs.subscribe(
@@ -94,7 +96,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   @HostListener('window:scroll', ['$event'])
   checkScroll(event) {
     let offset = this.element.nativeElement.ownerDocument.scrollingElement.scrollTop;
-    let navPos = this.element.nativeElement.children[3].offsetTop - 100;
+    let navPos = this.element.nativeElement.children[0].children[3].offsetTop - 100;
+
     if(offset > navPos)  {
       this.fixed = true;
     } else  {

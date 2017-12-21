@@ -354,8 +354,8 @@ export class ItineraryShareComponent implements OnInit, OnDestroy {
   // share itinerary
 
   shareItinerary()  {
-
     for (let i = 0; i < this.selectedUsers.length; i++) {
+
       let newItinerary = {
         name: this.itinerary['name'] + " - shared by " + this.currentUser['username'],
         date_from: this.itinerary['date_from'],

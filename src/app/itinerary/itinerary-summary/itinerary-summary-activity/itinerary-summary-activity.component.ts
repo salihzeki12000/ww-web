@@ -40,6 +40,7 @@ export class ItinerarySummaryActivityComponent implements OnInit, OnDestroy {
   copying = false;
   editing = false;
   deleteActivity = false;
+  highlight = false;
 
   editActivityForm: FormGroup;
   meals;
@@ -102,6 +103,7 @@ export class ItinerarySummaryActivityComponent implements OnInit, OnDestroy {
     this.formatHours();
     this.formatDescription();
     this.initTime();
+    if(!this.activity['location']) this.highlight = this.activity['highlight'];
 
     this.relationshipSubscription = this.relationshipService.updateRelationships.subscribe(
      result => {
@@ -462,7 +464,7 @@ export class ItinerarySummaryActivityComponent implements OnInit, OnDestroy {
         this.activity['formatted_hours'] = originalActivity['place']['opening_hours'].replace(/\r?\n/g, '<br/> ');
       }
     }
-
+    originalActivity['highlight'] = this.highlight;
 
     this.activity['formatted_note'] = originalActivity['note'].replace(/\r?\n/g, '<br/> ');
 

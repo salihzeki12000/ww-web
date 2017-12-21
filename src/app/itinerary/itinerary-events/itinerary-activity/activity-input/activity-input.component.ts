@@ -35,6 +35,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
   addActivityForm: FormGroup;
   details;
   noLocation = false;
+  highlight = false;
 
   // time picker
   ats = true;
@@ -527,7 +528,8 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     newActivity['created_at'] = new Date();
     newActivity['type'] = 'activity';
     newActivity['location'] = !this.noLocation;
-
+    newActivity['highlight'] = this.highlight;
+    
     if(this.newImageFile !== '')  {
       this.fileuploadService.uploadFile(this.newImageFile, "event").subscribe(
         result => {

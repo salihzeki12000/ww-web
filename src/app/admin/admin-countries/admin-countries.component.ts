@@ -35,13 +35,13 @@ export class AdminCountriesComponent implements OnInit {
      }
 
   ngOnInit() {
+    this.initMap();
+
     this.loadingService.setLoader(false, "");
 
     this.countryService.getCountries().subscribe(
       result => { this.countries = result.countries }
     )
-
-    this.initMap();
   }
 
   initMap() {

@@ -293,6 +293,20 @@
             <span class="form-validator"
               *ngIf="editActivityForm.get('name').touched && editActivityForm.get('name').invalid">Name of activity is required</span>
 
+            <div class="details-item" *ngIf="!activity?.location">
+              <label>Highlight note</label>
+
+              <div class="highlight-toggle">
+                <h5> > Highlight important note for it to visually stand out in itinerary summary</h5>
+
+                <h4 *ngIf="highlight" class="toggle-true" (click)="highlight = false">Yes</h4>
+                <h4 *ngIf="highlight" class="toggle-button-true" (click)="highlight = false"></h4>
+
+                <h4 *ngIf="!highlight" class="toggle-false" (click)="highlight = true">No</h4>
+                <h4 *ngIf="!highlight" class="toggle-button-false" (click)="highlight = true"></h4>
+              </div>
+            </div>
+            
           </div>
 
           <h4 class="form-section-header">Note</h4>

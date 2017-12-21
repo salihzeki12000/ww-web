@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Renderer2 } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+
+declare var google:any;
 
 import { LoadingService } from '../../loading';
 import { CountryService } from '../../countries';
@@ -11,8 +13,12 @@ import { CityService }    from '../../cities';
   styleUrls: ['./admin-cities.component.scss']
 })
 export class AdminCitiesComponent implements OnInit {
-  newCityForm: FormGroup;
+  @ViewChild('map') map: ElementRef;
+  cMap;
+  marker;
+  center;
 
+  newCityForm: FormGroup;
   cities;
   countries;
   countriesName;
@@ -29,10 +35,13 @@ export class AdminCitiesComponent implements OnInit {
         'lng': ['', Validators.compose([ Validators.required ])],
         'place_id': ['', Validators.compose([ Validators.required ])],
         'country': ['', Validators.compose([ Validators.required ])],
+        'zoom': ['', Validators.compose([ Validators.required ])],
       })
      }
 
   ngOnInit() {
+    this.initMap();
+
     this.loadingService.setLoader(false, "");
 
     this.cityService.getCities().subscribe(
@@ -45,6 +54,17 @@ export class AdminCitiesComponent implements OnInit {
         this.countries = result['countries'];
         this.getCountriesName();
       })
+
+  }
+
+  initMap() {
+    let mapDiv = this.map.nativeElement;
+
+    this.cMap = new google.maps.Map(mapDiv, {
+      center: {lat: 0, lng: 0},
+      zoom: 2,
+      styles: [{"stylers": [{ "saturation": -20 }]}]
+    })
   }
 
   getCountriesName()  {
@@ -73,6 +93,27 @@ export class AdminCitiesComponent implements OnInit {
       place_id: value['place_id'],
       country: country
     })
+
+    this.setMarker(value);
+  }
+
+  setMarker(value)  {
+    let lat = value['geometry'].location.lat();
+    let lng = value['geometry'].location.lng();
+
+    this.marker = new google.maps.Marker({
+      position: { lat: lat, lng: lng},
+      map: this.cMap
+    })
+
+    this.center = new google.maps.LatLng(lat, lng);
+    this.cMap.panTo(this.center);
+  }
+
+  setZoom(zoom) {
+    let z = +zoom
+    this.cMap.setZoom(z);
+    this.cMap.panTo(this.center);
   }
 
   checkCountry(country) {

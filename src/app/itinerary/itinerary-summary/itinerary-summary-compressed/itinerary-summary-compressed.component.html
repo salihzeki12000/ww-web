@@ -31,7 +31,7 @@
 
 
 <div *ngFor="let event of events">
-  <div *ngIf="event?.summary_date === date" class="summary-item-container">
+  <div *ngIf="event?.summary_date === date" class="summary-item-container"  [class.highlight-activity]="event?.highlight">
 
     <div class="get-to" *ngIf="event?.distance">
       <div class="distance">

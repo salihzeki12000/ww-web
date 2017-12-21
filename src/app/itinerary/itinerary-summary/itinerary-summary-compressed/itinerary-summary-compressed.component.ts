@@ -19,7 +19,7 @@ export class ItinerarySummaryCompressedComponent implements OnInit {
   @Output() addNewEvent = new EventEmitter();
 
   editing = false;
-
+  
   constructor(
     private element: ElementRef,
     private flashMessageService: FlashMessageService,
