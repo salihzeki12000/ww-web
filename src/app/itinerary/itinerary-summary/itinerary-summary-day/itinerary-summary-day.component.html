@@ -26,6 +26,29 @@
   <h5 class="event-date" (click)="addNew(date)">Day {{ index }} <span>{{ date | date: "dd MMM (EEE)" }}</span></h5>
 </div>
 
+<div class="summary-stay">
+
+  <div *ngIf="accommodations.length > 0 && date !== 'any day'">
+    <i class="fa fa-bed fa-lg" aria-hidden="true"></i>
+
+    <div class="accom">
+      <div *ngFor="let accom of accommodations">
+        <h5 class="event-stay-city">{{ accom?.city | uppercase }}</h5>
+        <h5 class="summary-stay-name">{{ accom?.name }}</h5>
+      </div>
+    </div>
+    <h5 *ngIf="accommodations.length > 1" class="multi-accom">There are {{ accommodations.length }} accommodations for this day</h5>
+
+  </div>
+
+  <div class="book-accom" *ngIf="accommodations.length === 0 && date !== 'any day'">
+    <a href="https://www.booking.com/index.html?aid=1439580" target="_blank">
+      Book an accommodation at
+      <img src="assets/booking-com.png" alt="">
+    </a>
+  </div>
+</div>
+
 <div *ngFor="let event of events">
   <div *ngIf="event?.summary_date === date">
 
@@ -40,7 +63,7 @@
 
       <h5 class="event-time">{{ event?.summary_time }}</h5>
       <div class="transport-index" *ngIf="event?.type === 'transport'">
-        <h6>G{{ event?.t_index }}</h6>
+        <h5>G{{ event?.t_index }}</h5>
       </div>
 
       <div *ngIf="event?.type === 'accommodation'" class="summary-item" (click)="showDetails(event)">
@@ -83,7 +106,8 @@
           <div class="activity-indicator pill"></div>
 
           <img src="{{ event?.photo.url }}" alt="" *ngIf="event?.photo">
-          <i class="fa fa-bicycle fa-lg" aria-hidden="true" *ngIf="!event?.photo"></i>
+          <i class="fa fa-bicycle fa-lg" aria-hidden="true" *ngIf="!event?.photo && event?.location"></i>
+          <i class="fa fa-sticky-note-o fa-lg note-icon" aria-hidden="true" *ngIf="!event?.location"></i>
 
           <div class="event-content">
             <h5>{{ event?.name }}</h5>

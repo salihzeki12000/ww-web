@@ -24,6 +24,8 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
   events;
   cEvents;
   totalEvents = 1;
+  accommodations;
+  accomRange;
 
   dateSubscription: Subscription;
   dateRange = [];
@@ -100,6 +102,7 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
     this.dateSubscription = this.itineraryService.updateDate.subscribe(
       result => {
         this.dateRange = Object.keys(result).map(key => result[key]);
+        if(this.accommodations) this.sortAccommodations();
         this.checkScroll();
       })
   }
@@ -239,6 +242,7 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
   // sort events into individual timing
   filterEvents(events)  {
     this.events = [];
+    this.accommodations = [];
     this.totalEvents = events.length;
 
     let summaryEvents = [];
@@ -257,6 +261,7 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
       }
 
       if(events[i]['type'] === 'accommodation') {
+        this.accommodations.push(events[i]);
 
         if(!this.itinerary['num_days']) {
           let oneDay = 24*60*60*1000;
@@ -306,6 +311,7 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
 
     summaryEvents = events.concat(copyEvents);
     this.sortEvents(summaryEvents);
+    if(this.dateRange.length > 0) this.sortAccommodations();
   }
 
   sortEvents(events)  {
@@ -352,6 +358,31 @@ export class ItinerarySummaryComponent implements OnInit, OnDestroy {
     })
 
     return events;
+  }
+
+  sortAccommodations()  {
+    let range = [];
+
+    for (let i = 0; i < this.dateRange.length; i++) {
+      range[i] = {
+        date: this.dateRange[i],
+        accom: []
+      }
+    }
+
+    for (let i = 0; i < this.accommodations.length; i++) {
+      for (let j = 1; j < range.length; j++) {
+        let checkIn = new Date(this.accommodations[i]['check_in_date']).getTime();
+        let checkOut = new Date(this.accommodations[i]['check_out_date']).getTime();
+        let date = new Date(range[j]['date']).getTime();
+
+        if(checkIn <= date && checkOut > date)  {
+          range[j]['accom'].push(this.accommodations[i]);
+        }
+      }
+    }
+
+    this.accomRange = range;
   }
 
   getDistance() {

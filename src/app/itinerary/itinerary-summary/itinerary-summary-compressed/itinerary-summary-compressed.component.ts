@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, OnChanges, AfterViewInit, Input, Output, EventEmitter, ElementRef, HostListener } from '@angular/core';
 
 import { ItineraryService } from '../../itinerary.service';
 import { FlashMessageService } from '../../../flash-message';
@@ -8,17 +8,20 @@ import { FlashMessageService } from '../../../flash-message';
   templateUrl: './itinerary-summary-compressed.component.html',
   styleUrls: ['./itinerary-summary-compressed.component.scss']
 })
-export class ItinerarySummaryCompressedComponent implements OnInit {
+export class ItinerarySummaryCompressedComponent implements OnInit, OnChanges {
   @Input() date;
   @Input() index;
   @Input() events;
   @Input() itinerary;
   @Input() dailyNote;
+  @Input() accomRange;
+
   @Output() showEventDetails = new EventEmitter();
   @Output() sectionPosition = new EventEmitter();
   @Output() addNewEvent = new EventEmitter();
 
   editing = false;
+  accommodations = [""];
   
   constructor(
     private element: ElementRef,
@@ -27,6 +30,11 @@ export class ItinerarySummaryCompressedComponent implements OnInit {
 
   ngOnInit() {
     this.checkMeal();
+    this.checkAccommodations();
+  }
+
+  ngOnChanges() {
+    this.checkAccommodations();
   }
 
   ngAfterViewInit() {
@@ -49,6 +57,14 @@ export class ItinerarySummaryCompressedComponent implements OnInit {
             break;
           };
         }
+      }
+    }
+  }
+
+  checkAccommodations() {
+    for (let i = 0; i < this.accomRange.length; i++) {
+      if(this.accomRange[i]['date'] === this.date)  {
+        this.accommodations = this.accomRange[i]['accom'];
       }
     }
   }
