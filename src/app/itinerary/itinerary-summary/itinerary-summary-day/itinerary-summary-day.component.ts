@@ -36,6 +36,7 @@ export class ItinerarySummaryDayComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
+    this.checkMeal();
     this.checkAccommodations();
   }
 

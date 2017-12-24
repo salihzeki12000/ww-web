@@ -22,7 +22,7 @@ export class ItinerarySummaryCompressedComponent implements OnInit, OnChanges {
 
   editing = false;
   accommodations = [""];
-  
+
   constructor(
     private element: ElementRef,
     private flashMessageService: FlashMessageService,
@@ -34,6 +34,7 @@ export class ItinerarySummaryCompressedComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
+    this.checkMeal();
     this.checkAccommodations();
   }
 
