@@ -270,7 +270,7 @@ export class AdminPlaceComponent implements OnInit {
 
     for (let i = 0; i < this.uploadedPics.length; i++) {
       if(this.uploadedPics[i]['status'])  {
-        this.fileuploadService.uploadFile(this.uploadedPics[i]['file'], "description").subscribe(
+        this.fileuploadService.uploadFile(this.uploadedPics[i]['file']).subscribe(
           result => {
 
             let newPic = {

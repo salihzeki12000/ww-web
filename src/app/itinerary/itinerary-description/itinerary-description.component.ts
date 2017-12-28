@@ -36,7 +36,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
   limitMsg = false;
   exceedMsg = false;
   confirmPics = false;
-  tracker = 0;
+  interval;
   captions = [];
 
   constructor(
@@ -256,6 +256,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
           url: event['target']['result'],
           status: true,
           order: this.itinerary['description']['photos'].length + i + 1,
+          caption: ''
         });
       }
 
@@ -277,7 +278,7 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
   }
 
   savePics()  {
-    // this.tracker = 0;
+    let tracker = 0;
     this.submitted = true;
 
     this.loadingService.setLoader(true, "Saving pictures...");
@@ -288,18 +289,18 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
 
         if(this.itinerary['description']['photos'][i]['public_id']) {
           this.fileuploadService.deleteFile(this.itinerary['description']['photos'][i]['public_id']).subscribe(
-            result => {}
-          )
+            result => {})
         }
 
         this.itinerary['description']['photos'].splice(i,1);
+        this.updateEdit();
         i--;
       }
     }
 
     for (let i = 0; i < this.uploadedPics.length; i++) {
       if(this.uploadedPics[i]['status'])  {
-        this.fileuploadService.uploadFile(this.uploadedPics[i]['file'], "description").subscribe(
+        this.fileuploadService.uploadFile(this.uploadedPics[i]['file']).subscribe(
           result => {
 
             let newPic = {
@@ -311,37 +312,38 @@ export class ItineraryDescriptionComponent implements OnInit, OnDestroy {
 
             if(this.itinerary['description']['photos'].length < 10) {
               this.itinerary['description']['photos'].push(newPic);
+              this.updateEdit();
+              tracker += 1;
             } else  {
               i = this.uploadedPics.length;
+              tracker += 1;
             }
           }
         )
+      } else  {
+        tracker += 1;
       }
-
-      // this.tracker += 1;
     }
 
-    let delay = this.uploadedPics.length * 1200;
-    setTimeout(() =>  {
-      this.updateEdit();
-    }, delay)
+    this.interval = setInterval(()  =>  {
+      this.updateView(tracker);
+    }, 2000)
   }
 
   updateEdit()  {
-    // if(this.tracker === this.uploadedPics.length) {
-
-      this.itineraryService.editItin(this.itinerary, 'edit').subscribe(
-        result => {
-          this.loadingService.setLoader(false, "");
-          this.flashMessageService.handleFlashMessage("Changes to pictures updated");
-          this.sortPhotos();
-          this.submitted = false;
-        })
-    // }
+    this.itineraryService.updateItinUser(this.itinerary).subscribe(
+      result => {})
   }
 
-
-
+  updateView(tracker)  {
+    if(tracker === this.uploadedPics.length)  {
+      clearInterval(this.interval);
+      this.loadingService.setLoader(false, "");
+      this.flashMessageService.handleFlashMessage("Changes to pictures updated");
+      this.sortPhotos();
+      this.submitted = false;
+    }
+  }
 
   // edit description
 

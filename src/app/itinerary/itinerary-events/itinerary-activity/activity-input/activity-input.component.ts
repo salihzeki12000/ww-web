@@ -535,7 +535,7 @@ export class ActivityInputComponent implements OnInit, OnDestroy {
     newActivity['highlight'] = this.highlight;
 
     if(this.newImageFile !== '')  {
-      this.fileuploadService.uploadFile(this.newImageFile, "event").subscribe(
+      this.fileuploadService.uploadFile(this.newImageFile).subscribe(
         result => {
           newActivity['photo'] = {
             url: result.secure_url,

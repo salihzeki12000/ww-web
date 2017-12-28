@@ -68,7 +68,7 @@
   height: 450px;
   width: 900px;
   margin-left: calc((100vw - 1100px) / 2);
-  object-fit: cover;
+  object-fit: contain;
 
   transition: all linear 500ms;
   -o-transition: all linear 500ms;

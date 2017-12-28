@@ -396,7 +396,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   }
 
   saveProfilePic()  {
-    this.fileuploadService.uploadFile(this.newImageFile, "profile").subscribe(
+    this.fileuploadService.uploadProfile(this.newImageFile).subscribe(
       result => {
         this.user['display_picture'] = {
           url: result.secure_url,

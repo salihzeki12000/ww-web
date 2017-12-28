@@ -32,12 +32,17 @@ export class ItinerarySummaryDayComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.checkMeal();
-    this.checkAccommodations();
+
+    setTimeout(() =>  {
+      this.checkAccommodations();
+    }, 1000)
   }
 
   ngOnChanges() {
     this.checkMeal();
-    this.checkAccommodations();
+    setTimeout(() =>  {
+      this.checkAccommodations();
+    }, 1000)
   }
 
   ngAfterViewInit() {

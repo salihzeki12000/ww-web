@@ -1,12 +1,14 @@
 
 ww-notification-list  {
   position: absolute;
-  top: 59.09px;
+  top: 140px;
   max-height: calc(100vh - 135px);
+  margin-left: calc((100vw - 600px) / 2);
   width: 600px;
   overflow: auto;
 
   @media only screen and (max-width: 610px) {
+    margin-left: 0;
     width: 100%;
     min-width: 300px;
   }

@@ -570,7 +570,7 @@ export class AccommodationFormComponent implements OnInit, OnDestroy {
     }
 
     if(this.newImageFile !== '')  {
-      this.fileuploadService.uploadFile(this.newImageFile, "event").subscribe(
+      this.fileuploadService.uploadFile(this.newImageFile).subscribe(
         result => {
           newAccommodation['photo'] = {
             url:result.secure_url,
