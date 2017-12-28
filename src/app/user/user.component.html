@@ -7,7 +7,9 @@
   </div>
 
   <div class="profile-header">
-    <img src="{{ user?.display_picture.url }}" alt="" (click)="routeToProfile()">
+    <div>
+      <img src="{{ user?.display_picture.url }}" alt="" (click)="routeToProfile()">
+    </div>
 
     <div class="profile-details">
       <h2>{{ user?.username }}</h2>

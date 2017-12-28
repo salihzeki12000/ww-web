@@ -202,9 +202,16 @@
 
 *****************************/
 
-.profile-header > img  {
+.profile-header > div:first-of-type {
+  display: initial;
+}
+
+.profile-header > div > img  {
+  position: absolute;
+  display: inline-block;
   margin-top: 180px;
-  margin-left: calc((100vw - 600px)/2);
+  // margin-left: calc((100vw - 600px)/2);
+  left: calc((100vw - 600px)/2);
   height: 120px;
   width: 120px;
   border-radius: 50%;
@@ -214,18 +221,21 @@
   vertical-align: top;
 
   @media only screen and (max-width: 650px) {
+    position: initial;
     margin-left: calc((100vw - 120px) /2);
   }
 }
 
+
 .profile-details  {
   display: inline-block;
   margin-top: 210px;
+  margin-left: calc(((100vw - 600px)/2) + 120px);
   padding: 10px;
   width: 400px;
 
   @media only screen and (max-width: 650px) {
-    margin-top: 0;
+    margin: 0;
     width: 100%;
     text-align: center;
   }

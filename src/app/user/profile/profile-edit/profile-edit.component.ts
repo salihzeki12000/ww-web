@@ -221,6 +221,17 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     }
   }
 
+  saveProfilePic()  {
+    this.fileuploadService.uploadProfile(this.newImageFile).subscribe(
+      result => {
+        this.user['display_picture'] = {
+          url: result.secure_url,
+          public_id: result.public_id
+        }
+        this.updateProfile();
+    })
+  }
+
   cancelChangePicture()  {
     this.inputValue = null;
     this.newProfilePic = '';
@@ -309,6 +320,8 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     )
   }
 
+
+
   // update birth date
 
   selectedDate(value) {
@@ -395,17 +408,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     this.updateProfile();
   }
 
-  saveProfilePic()  {
-    this.fileuploadService.uploadProfile(this.newImageFile).subscribe(
-      result => {
-        this.user['display_picture'] = {
-          url: result.secure_url,
-          public_id: result.public_id
-        }
-        this.updateProfile();
-    })
-  }
-
   updateProfile() {
     this.loadingService.setLoader(true, "Saving your profile...");
     this.userService.editUser(this.user).subscribe(
@@ -413,9 +415,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
         this.loadingService.setLoader(false, "");
         this.flashMessageService.handleFlashMessage(result.message);
 
-        this.inputValue = null;
-        this.newProfilePic = '';
-        this.newImageFile = '';
+        this.cancelChangePicture();
       })
   }
 

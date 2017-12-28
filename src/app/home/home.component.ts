@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy, Renderer2, ElementRef, HostListener } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { Title }        from '@angular/platform-browser';
-import { Subscription } from 'rxjs/Rx';
+import { Ng2DeviceService } from 'ng2-device-detector';
+import { Title }            from '@angular/platform-browser';
+import { Subscription }     from 'rxjs/Rx';
 
 import { Router } from '@angular/router';
 
@@ -9,6 +10,8 @@ import { User, UserService }    from '../user';
 import { LoadingService }       from '../loading';
 import { RelationshipService }  from '../relationships';
 import { FavouriteService }     from '../favourite';
+import { FlashMessageService }  from '../flash-message';
+import { FileuploadService }    from '../shared';
 
 @Component({
   selector: 'ww-home',
@@ -17,6 +20,7 @@ import { FavouriteService }     from '../favourite';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   user;
+  desktop = true;
 
   relationshipSubscription: Subscription;
   followings = [];
@@ -42,6 +46,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   descriptionForm: FormGroup;
   addDescription = false;
 
+  inputValue = '';
+  fileTypeError = false;
+  newProfilePic;
+  newImageFile = '';
+
   constructor(
     private titleService: Title,
     private renderer: Renderer2,
@@ -51,6 +60,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     private relationshipService: RelationshipService,
     private loadingService: LoadingService,
     private favouriteService: FavouriteService,
+    private fileuploadService: FileuploadService,
+    private flashMessageService: FlashMessageService,
+    private deviceService: Ng2DeviceService,
     private router: Router) {
       this.descriptionForm = this.formBuilder.group({
         'description': ''
@@ -91,6 +103,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.loadingService.setLoader(false, "");
 
+    // https://github.com/KoderLabs/ng2-device-detector/blob/master/src/ng2-device.constants.ts
+    let deviceInfo = this.deviceService.getDeviceInfo();
+
+    let device = deviceInfo['device'];
+    if(device !== 'chrome-book' && device !== 'unknown')  {
+      this.desktop = false;
+    }
   }
 
   @HostListener('window:scroll', ['$event'])
@@ -139,6 +158,59 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.curated = false;
     this.follow = true;
   }
+
+  // change profile pic
+
+  fileUploaded(event) {
+    let file = event.target.files[0];
+    let type = file['type'].split('/')[0]
+
+    if (type !== 'image') {
+      this.fileTypeError = true;
+    } else  {
+      if(event.target.files[0]) {
+        this.newImageFile = event.target.files[0];
+        let reader = new FileReader();
+
+        reader.onload = (event) =>  {
+          this.newProfilePic = event['target']['result'];
+        }
+
+        reader.readAsDataURL(event.target.files[0]);
+        return;
+      }
+    }
+  }
+
+  saveProfilePic()  {
+    this.loadingService.setLoader(true, "Saving your profile picture...");
+
+    this.fileuploadService.uploadProfile(this.newImageFile).subscribe(
+      result => {
+        this.user['display_picture'] = {
+          url: result.secure_url,
+          public_id: result.public_id
+        }
+        this.updateProfile();
+    })
+  }
+
+  updateProfile() {
+    this.userService.editUser(this.user).subscribe(
+      result => {
+        this.loadingService.setLoader(false, "");
+        this.flashMessageService.handleFlashMessage(result.message);
+
+        this.cancelChangePicture();
+      })
+  }
+
+  cancelChangePicture()  {
+    this.inputValue = null;
+    this.newProfilePic = '';
+    this.newImageFile = '';
+  }
+
 
   // add description
 

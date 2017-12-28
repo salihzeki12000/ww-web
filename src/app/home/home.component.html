@@ -5,7 +5,7 @@
 <div class="home-container">
   <ins class="bookingaff" data-aid="1440113" data-target_aid="1439580" data-prod="banner" data-width="728" data-height="90" data-lang="en-GB" style="margin-left:calc((100vw - 728px) / 2);">
       <!-- Anything inside will go away once widget is loaded. -->
-      <a href="//www.booking.com?aid=1439580">Booking.com</a>
+      <a href="//www.booking.com?aid=1439580" target="_blank">Booking.com</a>
   </ins>
 
   <div class="profile-background">
@@ -13,7 +13,27 @@
   </div>
 
   <div class="profile-header">
-    <img src="{{ user?.display_picture.url }}" alt="">
+
+    <div class="change-profile-img">
+      <img src="{{ user?.display_picture.url }}" alt="">
+
+      <div class="change-profile-hint">
+        <label class="fileUpload">
+          <i class="fa fa-camera fa-lg" aria-hidden="true"></i>
+          <h5>Change picture</h5>
+          <input type="file" (change)="fileUploaded($event)" [value]="inputValue" accept="image/*">
+        </label>
+      </div>
+
+      <div class="change-profile-device" *ngIf="!desktop">
+        <label class="m-fileUpload">
+          <i class="fa fa-camera fa-lg" aria-hidden="true"></i>
+          Edit
+          <input type="file" (change)="fileUploaded($event)" [value]="inputValue" accept="image/*">
+        </label>
+      </div>
+
+    </div>
 
     <div class="profile-details">
       <h2>{{ user?.username }}</h2>
@@ -103,6 +123,9 @@
   </div>
 </div>
 
+
+
+
 <!-- new itin form -->
 <div class="custom-modal" *ngIf="showItineraryForm">
   <ww-itinerary-form (hideItineraryForm)="hideItineraryForm($event)"></ww-itinerary-form>
@@ -126,6 +149,8 @@
     </div>
   </div>
 </div>
+
+
 
 
 <!-- new user tour -->
@@ -194,4 +219,30 @@
     </div>
 
   </div>
+</div>
+
+
+
+
+<!-- change profile pic -->
+<div class="custom-modal" *ngIf="newProfilePic">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>Change display picture?</h3>
+      <a (click)="cancelChangePicture()">X</a>
+    </div>
+
+    <div class="content-without-header-name">
+      <div class="new-profile-picture">
+        <h3>Your new profile picture</h3>
+        <img [src]="newProfilePic">
+      </div>
+    </div>
+
+    <div class="action-response">
+      <h5 class="action-response-secondary" (click)="cancelChangePicture()">CANCEL</h5>
+      <h5 class="action-response-primary" (click)="saveProfilePic()"> CONFIRM CHANGE</h5>
+    </div>
+  </div>
+
 </div>
