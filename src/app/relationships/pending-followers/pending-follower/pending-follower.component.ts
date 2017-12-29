@@ -31,7 +31,7 @@ export class PendingFollowerComponent implements OnInit {
         recipient: this.pendingFollower['user']['_id'],
         originator: this.pendingFollower['following']['_id'],
         message: " has accepted your follow request",
-        link: "/wondererwanderer" + this.pendingFollower['following']['_id'],
+        link: "/wondererwanderer/" + this.pendingFollower['following']['_id'],
         read: false
       }).subscribe(data => {})
     })

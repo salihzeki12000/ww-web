@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, Renderer2, Inject } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { Subscription } from 'rxjs/Rx';
@@ -51,27 +50,17 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
 
   newNotification = false;
 
-  // side nav
-  sideNav = false;
-  connectionsSection = true;
-  quickLinksSection = true;
-  settingsSection = false;
-
   showUsers = false;
   users: User[] = [];
   filteredUsers;
 
   notificationsLimit = true;
 
-  descriptionForm: FormGroup;
-  addDescription = false;
-
   constructor(
     @Inject(DOCUMENT) private _document: HTMLDocument,
     private router: Router,
     private route: ActivatedRoute,
     private renderer: Renderer2,
-    private formBuilder: FormBuilder,
     private userService: UserService,
     private authService: AuthService,
     private itineraryEventService: ItineraryEventService,
@@ -79,11 +68,7 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
     private itineraryService: ItineraryService,
     private notificationService: NotificationService,
     private flashMessageService: FlashMessageService,
-    private loadingService: LoadingService) {
-      this.descriptionForm = this.formBuilder.group({
-        'description': ''
-      })
-    }
+    private loadingService: LoadingService) {}
 
   ngOnInit() {
     this.isLoggedIn = this.authService.isLoggedIn();
@@ -218,7 +203,6 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   routeToRecommendations() {
     this.loadingService.setLoader(true, "");
     this.bookmarkOptions = false;
-    this.exitSideNav();
 
     this.router.navigateByUrl('/me/recommendations');
   }
@@ -226,7 +210,6 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   routeToFavs()  {
     this.loadingService.setLoader(true, "");
     this.bookmarkOptions = false;
-    this.exitSideNav();
 
     this.router.navigateByUrl('/me/favourite');
   }
@@ -236,7 +219,6 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   // top navigation itinerary
   newItin() {
     this.showItineraryForm = true;
-    // this.preventScroll(true);
   }
 
   routeToItinerary(id) {
@@ -253,7 +235,6 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   routeToItineraries()  {
     this.loadingService.setLoader(true, "");
     this.itineraryOptions = false;
-    this.exitSideNav();
 
     this.router.navigateByUrl('/me/itinerary');
   }
@@ -272,18 +253,14 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   }
 
   routeToNotifications()  {
-    this.exitSideNav();
     this.notificationOptions = false;
 
     this.router.navigateByUrl('/me/notifications');
     this.loadingService.setLoader(true, "");
   }
 
-
-
   // route to profile
   routeToProfile()  {
-    this.exitSideNav();
     this.profileOptions = false;
 
     this.router.navigateByUrl('/me/home');
@@ -291,55 +268,14 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
 
   routeToProfileEdit()  {
     this.loadingService.setLoader(true, "");
-    this.exitSideNav();
     this.profileOptions = false;
 
     this.router.navigateByUrl('/me/profile-edit');
   }
 
-
-  // side navigation
-  toggleSideNav()  {
-    this.sideNav = !this.sideNav;
-    this.preventScroll(this.sideNav);
-  }
-
-  exitSideNav()  {
-    this.sideNav = false;
-    this.preventScroll(false);
-  }
-
-
-  // add description
-
-  getDescription()  {
-    this.addDescription = true;
-    this.sideNav = false;
-    this.preventScroll(true);
-  }
-
-  cancelDescription() {
-    this.addDescription = false;
-    this.descriptionForm.reset();
-    this.preventScroll(false);
-  }
-
-  saveDescription(text) {
-    this.user['description'] = this.descriptionForm.value.description;
-
-    this.userService.editUser(this.user).subscribe(
-      result =>{})
-
-    this.cancelDescription();
-  }
-
-
-
-
   // user search
   getUsers()  {
     this.showUsers = true;
-    this.sideNav = false;
     this.preventScroll(true);
 
     this.userService.getAllUsers().subscribe(
@@ -427,25 +363,11 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
 
 
   // routing to relationships
-  routeToFollowers() {
-    this.loadingService.setLoader(true, "");
-    this.exitSideNav();
-    this.router.navigateByUrl('/me/relationships/followers');
-  }
-
-  routeToFollowings() {
-    this.loadingService.setLoader(true, "");
-    this.exitSideNav();
-    this.router.navigateByUrl('/me/relationships/following');
-  }
-
   routeToPendingFollowers() {
     this.loadingService.setLoader(true, "");
-    this.exitSideNav();
     this.notificationOptions = false;
     this.router.navigateByUrl('/me/relationships/follow-request');
   }
-
 
 
   // new itinerary
@@ -455,16 +377,11 @@ export class MainNavigationComponent implements OnInit, OnDestroy {
   }
 
 
-
-
   // profile options
   logout()  {
     this.authService.logout();
-    this.exitSideNav();
     this.profileOptions = false;
   }
-
-
 
 
   // prevent scroll

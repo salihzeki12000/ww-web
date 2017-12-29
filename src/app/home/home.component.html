@@ -17,7 +17,7 @@
     <div class="change-profile-img">
       <img src="{{ user?.display_picture.url }}" alt="">
 
-      <div class="change-profile-hint">
+      <div class="change-profile-hint" *ngIf="desktop">
         <label class="fileUpload">
           <i class="fa fa-camera fa-lg" aria-hidden="true"></i>
           <h5>Change picture</h5>

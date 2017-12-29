@@ -653,7 +653,7 @@ export class ItinerarySettingsComponent implements OnInit, OnDestroy {
         this.loadingService.setLoader(false, "");
         this.preventScroll(false);
         this.submitted = false;
-        
+
         this.flashMessageService.handleFlashMessage(data.message);
       })
   }

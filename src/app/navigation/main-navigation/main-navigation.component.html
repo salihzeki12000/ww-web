@@ -39,6 +39,10 @@
 
 <div *ngIf="isLoggedIn">
 
+  <div class="nav-home">
+    <i class="fa fa-home fa-lg" aria-hidden="true" (click)="routeToHome()"></i>
+  </div>
+
   <!-- <div class="nav-bookmark">
     <div class="nav-link">
       <i class="fa fa-bookmark fa-lg" aria-hidden="true" (mouseover)="bookmarkOptions = true"></i>
@@ -77,6 +81,7 @@
         <div class="dropdown-arrow"></div>
         <div class="nav-dropdown-header">
           <h6>SELECT SEARCH CATEGORY</h6>
+          <h5 class="exit-nav-view" (click)="searchOptions = false">X</h5>
         </div>
         <div class="dropdown-item" (click)="getUsers()">
           <h5>Search for people</h5>
@@ -98,7 +103,7 @@
 
         <h5 class="dropdown-new-itinerary" (click)="newItin()"><i class="fa fa-plus" aria-hidden="true"></i> Create a new itinerary</h5>
 
-        <div>
+        <div class="dropdown-itin-container">
           <div *ngIf="user?.itineraries.length === 0">
             <h5 class="nil-dropdown-item">No itinerary at the moment</h5>
           </div>
@@ -127,7 +132,9 @@
 
       <div class="nav-dropdown" *ngIf="notificationOptions">
         <div class="dropdown-arrow"></div>
-        <div class="nav-dropdown-header"></div>
+        <div class="nav-dropdown-header">
+          <h5 class="exit-nav-view" (click)="notificationOptions = false">X</h5>
+        </div>
 
         <div class="follower-requests" (click)="routeToPendingFollowers()">
           <h6 class="pending-count" *ngIf="pendingFollowers.length > 1">{{ pendingFollowers.length }}</h6>
@@ -149,12 +156,13 @@
 
   <div class="nav-profile">
     <div class="nav-link">
-      <img src="{{ user?.display_picture.url }}" class="user-profile-thumbnail" (click)="routeToProfileEdit()" (mouseover)="profileOptions = true">
+      <img src="{{ user?.display_picture.url }}" class="user-profile-thumbnail" (mouseover)="profileOptions = true">
 
       <div class="nav-dropdown" *ngIf="profileOptions">
         <div class="dropdown-arrow"></div>
         <div class="nav-dropdown-header">
           <h6>PROFILE SETTINGS</h6>
+          <h5 class="exit-nav-view" (click)="profileOptions = false">X</h5>
         </div>
 
         <!-- <div class="dropdown-item" (click)="routeToProfile()">
@@ -171,111 +179,6 @@
       </div>
     </div>
   </div>
-
-
-  <div class="side-nav">
-    <div class="custom-modal" *ngIf="sideNav" (click)="toggleSideNav()"></div>
-
-    <div class="side-nav-bars" (click)="toggleSideNav()">
-      <i class="fa fa-bars fa-2x" aria-hidden="true"></i>
-      <h6 *ngIf='newNotification'></h6>
-    </div>
-
-    <div *ngIf="sideNav">
-
-      <div class="side-nav-profile">
-        <img src="{{ user?.display_picture.url }}" alt="" (click)="routeToProfile()">
-
-        <div class="edit-profile" (click)="routeToProfileEdit()">
-          <i class="fa fa-pencil" aria-hidden="true"></i>
-        </div>
-
-        <div class="username">
-          <h4 (click)="routeToProfile()">{{ user?.username }}</h4>
-        </div>
-
-        <h5 class="user-description" *ngIf="user?.description !== ''">{{ user?.description }}</h5>
-        <h5 class="edit-description" *ngIf="user?.description === ''" (click)="getDescription()">Tell us what type of traveler you are</h5>
-      </div>
-
-      <div class="side-nav-menu">
-        <div class="side-nav-menu-arrow"></div>
-
-        <div>
-          <div class="category-header" (click)="connectionsSection = !connectionsSection">
-            <h4 *ngIf="!connectionsSection">Connections <i class="fa fa-plus" aria-hidden="true"></i></h4>
-            <h4 *ngIf="connectionsSection">Connections <i class="fa fa-minus" aria-hidden="true"></i></h4>
-          </div>
-
-          <div *ngIf="connectionsSection">
-
-            <div class="category-item" (click)="getUsers()">
-              <h5 class="search-connection">People search <i class="fa fa-search" aria-hidden="true"></i></h5>
-            </div>
-
-            <div class="follower-following-counter">
-              <div class="data-counter" (click)="routeToFollowers()">
-                <h3>{{ followers.length }}</h3>
-                <h6>FOLLOWER</h6>
-              </div>
-
-              <div class="data-counter" (click)="routeToFollowings()">
-                <h3>{{ followings.length }}</h3>
-                <h6>FOLLOWING</h6>
-              </div>
-            </div>
-
-            <div class="category-item" (click)="routeToPendingFollowers()">
-              <h5>Follow requests</h5>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div class="category-header" (click)="quickLinksSection = !quickLinksSection">
-            <h4 *ngIf="!quickLinksSection">Quick links <i class="fa fa-plus" aria-hidden="true"></i></h4>
-            <h4 *ngIf="quickLinksSection">Quick links <i class="fa fa-minus" aria-hidden="true"></i></h4>
-          </div>
-
-
-          <div *ngIf="quickLinksSection">
-
-            <div class="category-item">
-              <h5 (click)="routeToItineraries()">View all itineraries</h5>
-            </div>
-
-            <div class="category-item">
-              <h5 (click)="routeToNotifications()">View all notifications</h5>
-              <h6 *ngIf='newNotification'></h6>
-            </div>
-<!--
-            <div class="category-item">
-              <h5 (click)="routeToFavs()">View all favourites</h5>
-            </div> -->
-
-            <!-- <div class="category-item">
-              <h5 (click)="routeToRecommendations()">View all recommendations</h5>
-            </div> -->
-          </div>
-        </div>
-
-        <div>
-          <div class="category-header" (click)="settingsSection = !settingsSection">
-            <h4 *ngIf="!settingsSection">Settings <i class="fa fa-plus" aria-hidden="true"></i></h4>
-            <h4 *ngIf="settingsSection">Settings <i class="fa fa-minus" aria-hidden="true"></i></h4>
-          </div>
-
-          <div *ngIf="settingsSection">
-            <div class="category-item" (click)="logout()">
-              <h5><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</h5>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</div>
 
 
 <!-- user search -->
@@ -331,31 +234,6 @@
     </div>
   </div>
 </div>
-
-<!-- description form -->
-<div class="custom-modal" *ngIf="addDescription">
-  <div class="form-card">
-    <div class="form-header">
-      <h3>Add profile description</h3>
-      <a (click)="cancelDescription()">X</a>
-    </div>
-
-    <form [formGroup]="descriptionForm" (ngSubmit)="saveDescription()">
-
-      <div class="content-without-header-name">
-        <label>Profile description ({{ 100 - description.value.length }} characters left)</label>
-        <textarea rows="1" formControlName="description" #description maxlength="100" auto-grow></textarea>
-      </div>
-
-      <div class="action-response">
-        <h5 class="action-response-secondary" (click)="cancelDescription()">CANCEL</h5>
-        <button type="submit" class="action-response-primary" [disabled]="!descriptionForm.valid"><h5><i class="fa fa-floppy-o" aria-hidden="true"></i> SAVE</h5></button>
-      </div>
-    </form>
-  </div>
-</div>
-
-
 
 
 <div class="custom-modal" *ngIf="showSignin">

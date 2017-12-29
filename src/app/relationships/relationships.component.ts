@@ -35,7 +35,7 @@ export class RelationshipsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if(this.relationshipSubscription) this.relationshipSubscription.unsubscribe();
-    
+
     this.loadingService.setLoader(true, "");
   }
 
