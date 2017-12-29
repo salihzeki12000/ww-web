@@ -372,12 +372,21 @@
   text-align: center;
   background-color: #416099;
   z-index: 1;
+
+  @media only screen and (max-width: 500px) {
+    padding: 10px 0;
+    height: 40px;
+  }
 }
 
 .nav-dropdown-header > h6 {
   display: inline-block;
   font-weight: 500;
   color: #F9FBFB;
+
+  @media only screen and (max-width: 500px) {
+    font-size: 13px;
+  }
 }
 
 
@@ -466,7 +475,7 @@
 }
 
 .dropdown-itin-container  {
-  max-height: calc(100vh - 170px);
+  max-height: calc(100vh - 190px);
   overflow: auto;
 }
 
@@ -565,7 +574,7 @@
 ww-notification-list  {
   display: block;
   position: relative;
-  max-height: calc(100vh - 200px);
+  max-height: calc(100vh - 220px);
   border-bottom: 1px solid lightgray;
   overflow: overlay;
 }
@@ -584,11 +593,27 @@ ww-notification-list::-webkit-scrollbar-thumb {
 
   @media only screen and (max-width: 500px) {
     display: block;
+    position: absolute;
+    right: 0;
+    margin-top: -20px;
     padding: 3px 15px 0 0;
     color: #CCC;
-    float: right;
   }
 }
+
+.nav-notifications .exit-nav-view {
+  margin-top: 0;
+}
+
+
+/* top nav profile */
+.nav-profile .dropdown-item i {
+  @media only screen and (max-width: 500px) {
+    margin: 0 10px;
+  }
+}
+
+
 
 /*************************
 
